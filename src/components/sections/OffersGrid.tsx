@@ -66,7 +66,7 @@ const OffersGrid = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-300 mb-6">
-                  Join a group of agency owners who understand your stress every single month for 2 hours.
+                  Join a group of agents who understand your stress every single month for 2 hours.
                 </p>
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center text-gray-300">
