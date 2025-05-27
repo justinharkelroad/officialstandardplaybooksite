@@ -1,26 +1,26 @@
 
 import { Card, CardContent } from '@/components/ui/card';
-import { Code, Database, Monitor } from 'lucide-react';
+import { Diamond, TrendingUp, BookStack } from 'lucide-react';
 
 const SoftwareSection = () => {
   const softwareFeatures = [
     {
-      icon: <Monitor className="w-12 h-12 text-primary mb-4" />,
-      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=250&fit=crop",
-      title: "Dashboard Analytics",
-      description: "Real-time performance tracking and business intelligence tools to monitor your growth and identify optimization opportunities."
+      icon: <Diamond className="w-12 h-12 text-primary mb-4" />,
+      image: "/lovable-uploads/c3d40ca0-ec94-4c01-af93-49868153b917.png",
+      title: "DAILY HABITS",
+      description: "Build daily habits that are trackable, measurable, and designed to bring clarity and peace as you follow through"
     },
     {
-      icon: <Code className="w-12 h-12 text-primary-accent mb-4" />,
-      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=250&fit=crop",
-      title: "Automation Tools",
-      description: "Streamline your workflow with powerful automation features that handle repetitive tasks and free up your time for strategic work."
+      icon: <TrendingUp className="w-12 h-12 text-primary mb-4" />,
+      image: "/lovable-uploads/2b29455c-b05c-404c-be6e-72207bf1fa04.png",
+      title: "SETTING GOALS",
+      description: "Set annual goals, then break them down into quarterly targets. Become even more clear in your monthly missions and weekly strikes."
     },
     {
-      icon: <Database className="w-12 h-12 text-primary mb-4" />,
-      image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&h=250&fit=crop",
-      title: "Data Management",
-      description: "Centralized data platform that integrates all your business metrics and provides actionable insights for better decision making."
+      icon: <BookStack className="w-12 h-12 text-primary mb-4" />,
+      image: "/lovable-uploads/d4f5f630-fa1b-4042-b55c-e9f612ef369e.png",
+      title: "SETTING GOALS",
+      description: "Attack with The Stack. Start bring full clarity to your thoughts & feelings to generate actionable solutions."
     }
   ];
 
@@ -32,7 +32,7 @@ const SoftwareSection = () => {
             The Software
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Cutting-edge technology platform designed to accelerate your business growth and optimize performance.
+            The #1 Productivity, Accountability and Growth Program in the World.
           </p>
         </div>
 

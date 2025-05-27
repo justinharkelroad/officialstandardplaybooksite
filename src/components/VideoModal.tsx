@@ -9,7 +9,7 @@ interface VideoModalProps {
   title?: string;
 }
 
-const VideoModal = ({ trigger, videoId = "dQw4w9WgXcQ", title = "Demo Video" }: VideoModalProps) => {
+const VideoModal = ({ trigger, videoId = "gy-8UNhToW8", title = "Demo Video" }: VideoModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -20,7 +20,7 @@ const VideoModal = ({ trigger, videoId = "dQw4w9WgXcQ", title = "Demo Video" }: 
       <DialogContent className="max-w-4xl bg-dark-card border-primary/20">
         <div className="relative aspect-video">
           <iframe
-            src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0`}
             title={title}
             className="w-full h-full rounded-lg"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
