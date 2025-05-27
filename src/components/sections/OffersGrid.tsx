@@ -1,7 +1,8 @@
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Zap, Crown, TrendingUp } from 'lucide-react';
+import { ArrowRight, Users, Zap, Crown, TrendingUp, Shield } from 'lucide-react';
 
 const OffersGrid = () => {
   return (
@@ -35,7 +36,7 @@ const OffersGrid = () => {
                 <p className="text-gray-300 mb-4">
                   Detailed call analysis and scoring to improve your sales and service teams.
                 </p>
-                <a href="https://standardcallscoring.io" target="_blank" rel="noopener noreferrer">
+                <a href="https://app.standardcallscoring.com" target="_blank" rel="noopener noreferrer">
                   <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
                     Learn More
                     <ArrowRight className="w-5 h-5 ml-2" />
@@ -58,13 +59,39 @@ const OffersGrid = () => {
                 <CardDescription className="text-gray-400">
                   Elite community and strategic guidance.
                 </CardDescription>
+                <div className="text-center mt-4">
+                  <span className="text-3xl font-bold text-primary-accent">$299</span>
+                  <span className="text-gray-400">/month</span>
+                </div>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300 mb-4">
+                <p className="text-gray-300 mb-6">
                   Join a group of agents who understand your stress every single month for 2 hours.
                 </p>
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center text-gray-300">
+                    <Shield className="w-4 h-4 text-primary-accent mr-3 flex-shrink-0" />
+                    <span>Monthly 2 Hour Group Zoom Call</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <Shield className="w-4 h-4 text-primary-accent mr-3 flex-shrink-0" />
+                    <span>Stack Level Access Inside The App</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <Shield className="w-4 h-4 text-primary-accent mr-3 flex-shrink-0" />
+                    <span>Standard Playbook Hardcover + Swag</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <Shield className="w-4 h-4 text-primary-accent mr-3 flex-shrink-0" />
+                    <span>24/7 1v1 Video Messaging w/ Justin</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <Shield className="w-4 h-4 text-primary-accent mr-3 flex-shrink-0" />
+                    <span>+ More</span>
+                  </div>
+                </div>
                 <Link to="/boardroom">
-                  <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
+                  <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full">
                     Learn More
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
@@ -86,13 +113,39 @@ const OffersGrid = () => {
                 <CardDescription className="text-gray-400">
                   Intensive coaching and implementation.
                 </CardDescription>
+                <div className="text-center mt-4">
+                  <span className="text-3xl font-bold text-primary-accent">$1500</span>
+                  <span className="text-gray-400">/month</span>
+                </div>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300 mb-4">
+                <p className="text-gray-300 mb-6">
                   Get everything in Boardroom + a one on one 2 hour coaching call with Justin.
                 </p>
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center text-gray-300">
+                    <Shield className="w-4 h-4 text-primary-accent mr-3 flex-shrink-0" />
+                    <span>Everything In Boardroom</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <Shield className="w-4 h-4 text-primary-accent mr-3 flex-shrink-0" />
+                    <span>Full Access Inside The App</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <Shield className="w-4 h-4 text-primary-accent mr-3 flex-shrink-0" />
+                    <span>2 Hour 1 on 1 Coaching Call w/ Justin</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <Shield className="w-4 h-4 text-primary-accent mr-3 flex-shrink-0" />
+                    <span>100 AI Call Scoring Calls</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <Shield className="w-4 h-4 text-primary-accent mr-3 flex-shrink-0" />
+                    <span>+ More</span>
+                  </div>
+                </div>
                 <Link to="/directive">
-                  <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
+                  <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full">
                     Learn More
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
@@ -114,11 +167,37 @@ const OffersGrid = () => {
                 <CardDescription className="text-gray-400">
                   1v1 Coaching for yourself and your team.
                 </CardDescription>
+                <div className="text-center mt-4">
+                  <span className="text-3xl font-bold text-primary-accent">$2000</span>
+                  <span className="text-gray-400">/month</span>
+                </div>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300 mb-4">
+                <p className="text-gray-300 mb-6">
                   The highest level of engagement for serious agency owners.
                 </p>
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center text-gray-300">
+                    <Shield className="w-4 h-4 text-primary-accent mr-3 flex-shrink-0" />
+                    <span>Everything In Boardroom</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <Shield className="w-4 h-4 text-primary-accent mr-3 flex-shrink-0" />
+                    <span>Full Access Inside The App</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <Shield className="w-4 h-4 text-primary-accent mr-3 flex-shrink-0" />
+                    <span>2 Hour 1 on 1 Coaching Call w/ Justin</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <Shield className="w-4 h-4 text-primary-accent mr-3 flex-shrink-0" />
+                    <span>45 Min Team Coaching Call</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <Shield className="w-4 h-4 text-primary-accent mr-3 flex-shrink-0" />
+                    <span>100 AI Call Scoring Calls</span>
+                  </div>
+                </div>
                 <div className="text-center">
                   <span className="text-2xl font-bold text-red-400">SOLD OUT</span>
                 </div>
