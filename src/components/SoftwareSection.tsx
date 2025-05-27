@@ -19,7 +19,7 @@ const SoftwareSection = () => {
     {
       icon: <BookOpen className="w-12 h-12 text-primary mb-4" />,
       image: "/lovable-uploads/d4f5f630-fa1b-4042-b55c-e9f612ef369e.png",
-      title: "SETTING GOALS",
+      title: "THE STACK",
       description: "Attack with The Stack. Start bring full clarity to your thoughts & feelings to generate actionable solutions."
     }
   ];
