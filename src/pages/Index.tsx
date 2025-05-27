@@ -109,7 +109,7 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* External Link */}
-            <a href="https://standardcallscoring.io" target="_blank" rel="noopener noreferrer" className="card-hover">
+            <div className="card-hover">
               <Card className="bg-dark-card border-primary/20 h-full group">
                 <CardHeader>
                   <div className="w-12 h-12 bg-primary-accent rounded-square flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -126,16 +126,18 @@ const Index = () => {
                   <p className="text-gray-300 mb-4">
                     Detailed call analysis and scoring to improve your sales conversions.
                   </p>
-                  <div className="flex items-center text-primary-accent">
-                    <span className="font-semibold">Visit Platform</span>
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </div>
+                  <a href="https://standardcallscoring.io" target="_blank" rel="noopener noreferrer">
+                    <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
+                      Visit Platform
+                      <ArrowRight className="w-5 h-5 ml-2" />
+                    </Button>
+                  </a>
                 </CardContent>
               </Card>
-            </a>
+            </div>
 
             {/* The Boardroom */}
-            <Link to="/boardroom" className="card-hover">
+            <div className="card-hover">
               <Card className="bg-dark-card border-primary/20 h-full group">
                 <CardHeader>
                   <div className="w-12 h-12 bg-primary rounded-square flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -152,16 +154,18 @@ const Index = () => {
                   <p className="text-gray-300 mb-4">
                     Join our exclusive community of high-performing entrepreneurs.
                   </p>
-                  <div className="flex items-center text-primary">
-                    <span className="font-semibold">Learn More</span>
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </div>
+                  <Link to="/boardroom">
+                    <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
+                      Learn More
+                      <ArrowRight className="w-5 h-5 ml-2" />
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
-            </Link>
+            </div>
 
             {/* The Directive */}
-            <Link to="/directive" className="card-hover">
+            <div className="card-hover">
               <Card className="bg-dark-card border-primary/20 h-full group">
                 <CardHeader>
                   <div className="w-12 h-12 bg-primary-accent rounded-square flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -178,16 +182,18 @@ const Index = () => {
                   <p className="text-gray-300 mb-4">
                     Direct access to our coaches with personalized strategies.
                   </p>
-                  <div className="flex items-center text-primary-accent">
-                    <span className="font-semibold">Learn More</span>
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </div>
+                  <Link to="/directive">
+                    <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
+                      Learn More
+                      <ArrowRight className="w-5 h-5 ml-2" />
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
-            </Link>
+            </div>
 
             {/* The Partnership */}
-            <Link to="/partnership" className="card-hover">
+            <div className="card-hover">
               <Card className="bg-dark-card border-primary/20 h-full group">
                 <CardHeader>
                   <div className="w-12 h-12 bg-primary rounded-square flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -204,13 +210,15 @@ const Index = () => {
                   <p className="text-gray-300 mb-4">
                     The highest level of engagement for serious entrepreneurs.
                   </p>
-                  <div className="flex items-center text-primary">
-                    <span className="font-semibold">Learn More</span>
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </div>
+                  <Link to="/partnership">
+                    <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
+                      Learn More
+                      <ArrowRight className="w-5 h-5 ml-2" />
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
-            </Link>
+            </div>
           </div>
         </div>
       </section>
