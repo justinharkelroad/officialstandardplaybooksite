@@ -1,7 +1,7 @@
-
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import VideoModal from '@/components/VideoModal';
+import SoftwareSection from '@/components/SoftwareSection';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -60,15 +60,17 @@ const Index = () => {
             elevate your mindset, and join the ranks of high performers.
           </p>
 
-          {/* Video Frame with Neon Ring */}
+          {/* Video Frame with Background Glow */}
           <div className="relative max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>
-            <div className="neon-ring absolute -inset-4"></div>
+            <div className="video-glow absolute -inset-4"></div>
             <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary-accent/20 flex items-center justify-center">
                 <VideoModal
                   trigger={
                     <Button className="btn-primary text-lg px-8 py-4">
-                      <Play className="w-6 h-6 mr-2" />
+                      <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
                       Watch Demo
                     </Button>
                   }
@@ -77,25 +79,20 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: '0.6s' }}>
+          <div className="animate-fade-up" style={{ animationDelay: '0.6s' }}>
             <Button 
-              onClick={() => scrollToSection('pricing')}
+              onClick={() => scrollToSection('offers')}
               className="btn-primary text-lg px-8 py-4"
             >
-              Start Free Trial
+              SEE OPTIONS
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
-            <VideoModal
-              trigger={
-                <Button className="btn-ghost text-lg px-8 py-4">
-                  <Play className="w-5 h-5 mr-2" />
-                  Watch Demo
-                </Button>
-              }
-            />
           </div>
         </div>
       </section>
+
+      {/* The Software Section */}
+      <SoftwareSection />
 
       {/* Offers Grid */}
       <section id="offers" className="py-20 relative">

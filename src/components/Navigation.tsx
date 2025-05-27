@@ -36,10 +36,12 @@ const Navigation = () => {
     }`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-square flex items-center justify-center">
-              <span className="text-white font-rajdhani font-bold text-lg">S</span>
-            </div>
+          <Link to="/" className="flex items-center space-x-3">
+            <img 
+              src="/lovable-uploads/4deb3fe9-ca1d-47f7-83bb-8df8138f576b.png" 
+              alt="The Standard Logo" 
+              className="h-10 w-auto"
+            />
             <span className="text-white font-rajdhani font-bold text-xl uppercase tracking-wide">
               The Standard
             </span>
