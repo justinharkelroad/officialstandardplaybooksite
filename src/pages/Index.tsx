@@ -103,37 +103,11 @@ const Index = () => {
               Choose Your Path
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Five distinct programs designed for different stages of your entrepreneurial journey.
+              Four distinct programs designed for different stages of your entrepreneurial journey.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* App Access */}
-            <Link to="/app" className="card-hover">
-              <Card className="bg-dark-card border-primary/20 h-full group">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-primary rounded-square flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Target className="w-6 h-6 text-white" />
-                  </div>
-                  <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide">
-                    App Access Only
-                  </CardTitle>
-                  <CardDescription className="text-gray-400">
-                    Get started with our foundational tools and resources.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-300 mb-4">
-                    Perfect for entrepreneurs just beginning their journey to excellence.
-                  </p>
-                  <div className="flex items-center text-primary">
-                    <span className="font-semibold">Learn More</span>
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* External Link */}
             <a href="https://standardcallscoring.io" target="_blank" rel="noopener noreferrer" className="card-hover">
               <Card className="bg-dark-card border-primary/20 h-full group">
@@ -187,7 +161,7 @@ const Index = () => {
             </Link>
 
             {/* The Directive */}
-            <Link to="/directive" className="card-hover lg:col-start-2">
+            <Link to="/directive" className="card-hover">
               <Card className="bg-dark-card border-primary/20 h-full group">
                 <CardHeader>
                   <div className="w-12 h-12 bg-primary-accent rounded-square flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -238,6 +212,43 @@ const Index = () => {
               </Card>
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Do It Yourself Access Section */}
+      <section className="py-12 relative">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="font-rajdhani font-bold text-3xl md:text-4xl uppercase tracking-wide text-white mb-4">
+              Do It Yourself Access
+            </h2>
+          </div>
+
+          <Link to="/app" className="block max-w-4xl mx-auto card-hover">
+            <Card className="bg-dark-card border-primary/20 group">
+              <CardContent className="p-8">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-6">
+                    <div className="w-16 h-16 bg-primary rounded-square flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Target className="w-8 h-8 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-white font-rajdhani text-3xl uppercase tracking-wide mb-2">
+                        App Access Only
+                      </h3>
+                      <p className="text-gray-300 text-lg">
+                        Perfect for entrepreneurs just beginning their journey to excellence. Get started with our foundational tools and resources.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center text-primary">
+                    <span className="font-semibold text-lg">Learn More</span>
+                    <ArrowRight className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
         </div>
       </section>
 
