@@ -24,7 +24,7 @@ const PricingSection = () => {
                 The Boardroom
               </CardTitle>
               <div className="mb-4">
-                <span className="text-5xl font-bold text-white">$350</span>
+                <span className="text-5xl font-bold text-white">$299</span>
                 <span className="text-gray-400">/month</span>
               </div>
               <CardDescription className="text-gray-400">
@@ -35,19 +35,23 @@ const PricingSection = () => {
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center text-gray-300">
                   <Shield className="w-5 h-5 text-primary mr-3" />
-                  Weekly group coaching calls
+                  Monthly 2 Hour Group Zoom Call
                 </li>
                 <li className="flex items-center text-gray-300">
                   <Shield className="w-5 h-5 text-primary mr-3" />
-                  Private community access
+                  Stack Level Access Inside The App
                 </li>
                 <li className="flex items-center text-gray-300">
                   <Shield className="w-5 h-5 text-primary mr-3" />
-                  Monthly strategy sessions
+                  Standard Playbook Hardcover + Swag
                 </li>
                 <li className="flex items-center text-gray-300">
                   <Shield className="w-5 h-5 text-primary mr-3" />
-                  Resource library access
+                  24/7 1v1 Video Messaging w/ Justin
+                </li>
+                <li className="flex items-center text-gray-300">
+                  <Shield className="w-5 h-5 text-primary mr-3" />
+                  + More
                 </li>
               </ul>
               <Button className="btn-primary w-full">
@@ -68,7 +72,7 @@ const PricingSection = () => {
                 The Directive
               </CardTitle>
               <div className="mb-4">
-                <span className="text-5xl font-bold text-white">$750</span>
+                <span className="text-5xl font-bold text-white">$1500</span>
                 <span className="text-gray-400">/month</span>
               </div>
               <CardDescription className="text-gray-400">
@@ -79,23 +83,23 @@ const PricingSection = () => {
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center text-gray-300">
                   <Shield className="w-5 h-5 text-primary mr-3" />
-                  Everything in Boardroom
+                  Everything In Boardroom
                 </li>
                 <li className="flex items-center text-gray-300">
                   <Shield className="w-5 h-5 text-primary mr-3" />
-                  Bi-weekly 1:1 coaching
+                  Full Access Inside The App
                 </li>
                 <li className="flex items-center text-gray-300">
                   <Shield className="w-5 h-5 text-primary mr-3" />
-                  Custom strategy development
+                  2 Hour 1 on 1 Coaching Call w/ Justin
                 </li>
                 <li className="flex items-center text-gray-300">
                   <Shield className="w-5 h-5 text-primary mr-3" />
-                  Implementation tracking
+                  100 AI Call Scoring Calls
                 </li>
                 <li className="flex items-center text-gray-300">
                   <Shield className="w-5 h-5 text-primary mr-3" />
-                  Priority support
+                  + More
                 </li>
               </ul>
               <Button className="btn-primary w-full bg-primary-accent hover:bg-primary-light">
@@ -111,33 +115,34 @@ const PricingSection = () => {
                 The Partnership
               </CardTitle>
               <div className="mb-4">
-                <span className="text-3xl font-bold text-white">Custom</span>
+                <span className="text-5xl font-bold text-white">$2000</span>
+                <span className="text-gray-400">/month</span>
               </div>
               <CardDescription className="text-gray-400">
-                White-glove service and true partnership
+                1v1 Coaching for yourself and your team.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center text-gray-300">
                   <Crown className="w-5 h-5 text-primary mr-3" />
-                  Everything in Directive
+                  Everything In Boardroom
                 </li>
                 <li className="flex items-center text-gray-300">
                   <Crown className="w-5 h-5 text-primary mr-3" />
-                  Weekly 1:1 sessions
+                  Full Access Inside The App
                 </li>
                 <li className="flex items-center text-gray-300">
                   <Crown className="w-5 h-5 text-primary mr-3" />
-                  Direct phone access
+                  2 Hour 1 on 1 Coaching Call w/ Justin
                 </li>
                 <li className="flex items-center text-gray-300">
                   <Crown className="w-5 h-5 text-primary mr-3" />
-                  Business partnership
+                  45 Min Team Coaching Call
                 </li>
                 <li className="flex items-center text-gray-300">
                   <Crown className="w-5 h-5 text-primary mr-3" />
-                  Revenue sharing opportunities
+                  100 AI Call Scoring Calls
                 </li>
               </ul>
               <Button className="btn-ghost w-full">
