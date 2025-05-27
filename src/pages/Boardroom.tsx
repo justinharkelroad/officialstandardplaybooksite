@@ -1,4 +1,3 @@
-
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import VideoModal from '@/components/VideoModal';
@@ -38,7 +37,7 @@ const Boardroom = () => {
           </h1>
           
           <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-            Join an elite community of high-performing entrepreneurs. Get strategic guidance, accountability, 
+            Join an elite community of high-performing agency owners. Get strategic guidance, accountability, 
             and the network you need to scale to the next level.
           </p>
 
@@ -67,7 +66,7 @@ const Boardroom = () => {
               The Isolation Challenge
             </h2>
             <p className="text-xl text-gray-300 leading-relaxed mb-8">
-              Entrepreneurship can be lonely. You're surrounded by people who don't understand the challenges, 
+              Running an agency can be lonely. You're surrounded by people who don't understand the challenges, 
               pressure, and decisions you face daily. Making critical business decisions in isolation often 
               leads to costly mistakes and missed opportunities.
             </p>
@@ -87,7 +86,7 @@ const Boardroom = () => {
               Your Strategic Network
             </h2>
             <p className="text-xl text-gray-300 leading-relaxed">
-              The Standard Boardroom connects you with ambitious entrepreneurs at your level. Get strategic advice, 
+              The Standard Boardroom connects you with ambitious agency owners at your level. Get strategic advice, 
               accountability, and the peer support that accelerates growth while avoiding common pitfalls.
             </p>
           </div>
@@ -103,7 +102,7 @@ const Boardroom = () => {
                   Weekly Group Calls
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  Strategic sessions with fellow entrepreneurs and expert facilitators
+                  Strategic sessions with fellow agency owners and expert facilitators
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -171,7 +170,7 @@ const Boardroom = () => {
               Inside The Boardroom
             </h2>
             <p className="text-xl text-gray-300">
-              Experience what it's like to be part of our elite entrepreneur community.
+              Experience what it's like to be part of our elite agency owner community.
             </p>
           </div>
 
@@ -206,7 +205,7 @@ const Boardroom = () => {
                   <span className="text-gray-400 text-xl">/month</span>
                 </div>
                 <CardDescription className="text-gray-400 text-lg">
-                  Everything you need to connect, learn, and grow with like-minded entrepreneurs
+                  Everything you need to connect, learn, and grow with like-minded agency owners
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -255,10 +254,10 @@ const Boardroom = () => {
             <Accordion type="single" collapsible className="space-y-4">
               <AccordionItem value="item-1" className="bg-dark-card border border-primary/20 rounded-lg px-6">
                 <AccordionTrigger className="text-white font-rajdhani text-lg uppercase tracking-wide">
-                  What type of entrepreneurs are in The Boardroom?
+                  What type of agency owners are in The Boardroom?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-300">
-                  Our members are serious entrepreneurs typically generating $100K+ annually, ranging from scaling startups to established business owners looking to optimize and grow. The common thread is ambition and commitment to excellence.
+                  Our members are serious agency owners typically generating $100K+ annually, ranging from scaling startups to established business owners looking to optimize and grow. The common thread is ambition and commitment to excellence.
                 </AccordionContent>
               </AccordionItem>
 

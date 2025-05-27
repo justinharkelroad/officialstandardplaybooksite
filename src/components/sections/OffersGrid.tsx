@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
@@ -118,7 +117,7 @@ const OffersGrid = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-300 mb-4">
-                  The highest level of engagement for serious entrepreneurs.
+                  The highest level of engagement for serious agency owners.
                 </p>
                 <div className="text-center">
                   <span className="text-2xl font-bold text-red-400">SOLD OUT</span>
