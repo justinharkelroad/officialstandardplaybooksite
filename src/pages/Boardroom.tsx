@@ -6,8 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Users, Calendar, FileText, MessageCircle, ArrowRight, Play } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Boardroom = () => {
+  const navigate = useNavigate();
+
+  const handleJoinNow = () => {
+    navigate('/', { state: { scrollToPricing: true } });
+  };
+
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -36,7 +43,7 @@ const Boardroom = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: '0.4s' }}>
-            <Button className="btn-primary text-lg px-8 py-4">
+            <Button onClick={handleJoinNow} className="btn-primary text-lg px-8 py-4">
               Join The Boardroom - $350/mo
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
@@ -223,7 +230,7 @@ const Boardroom = () => {
                     </ul>
                   </div>
                 </div>
-                <Button className="btn-primary text-lg px-8 py-4 mb-4">
+                <Button onClick={handleJoinNow} className="btn-primary text-lg px-8 py-4 mb-4">
                   Join The Boardroom Now
                 </Button>
                 <p className="text-gray-400 text-sm">
@@ -288,7 +295,7 @@ const Boardroom = () => {
 
       {/* Sticky CTA for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 bg-dark-card border-t border-primary/20 p-4 md:hidden z-40">
-        <Button className="btn-primary w-full">
+        <Button onClick={handleJoinNow} className="btn-primary w-full">
           Join The Boardroom - $350/mo
         </Button>
       </div>

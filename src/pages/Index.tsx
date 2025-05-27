@@ -1,4 +1,3 @@
-
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import VideoModal from '@/components/VideoModal';
@@ -6,12 +5,13 @@ import SoftwareSection from '@/components/SoftwareSection';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight, Play, Target, Users, Zap, Crown, Shield, TrendingUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const Index = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const location = useLocation();
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -24,6 +24,16 @@ const Index = () => {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  useEffect(() => {
+    // Check if we need to scroll to pricing section after navigation
+    if (location.state?.scrollToPricing) {
+      const timer = setTimeout(() => {
+        scrollToSection('pricing');
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [location.state]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
