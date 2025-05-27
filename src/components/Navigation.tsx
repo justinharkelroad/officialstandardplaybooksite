@@ -36,7 +36,7 @@ const Navigation = () => {
     }`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-3">
+          <Link to="/" className="flex items-center">
             <img 
               src="/lovable-uploads/24e794d7-4e09-4244-9d1e-df95f10e3f3f.png" 
               alt="The Standard Logo" 
@@ -46,9 +46,6 @@ const Navigation = () => {
                 e.currentTarget.style.display = 'none';
               }}
             />
-            <span className="text-white font-rajdhani font-bold text-xl uppercase tracking-wide">
-              The Standard
-            </span>
           </Link>
 
           {/* Desktop Navigation */}

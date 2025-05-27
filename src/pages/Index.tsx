@@ -1,6 +1,7 @@
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import VideoModal from '@/components/VideoModal';
+import VideoPlayer from '@/components/VideoPlayer';
 import SoftwareSection from '@/components/SoftwareSection';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -75,12 +76,10 @@ const Index = () => {
           <div className="relative max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>
             <div className="video-glow absolute -inset-4"></div>
             <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
-              <iframe
-                src="https://www.youtube.com/embed/gy-8UNhToW8?autoplay=1&mute=0"
+              <VideoPlayer 
+                videoId="gy-8UNhToW8"
                 title="Demo Video"
                 className="w-full h-full rounded-lg"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
               />
             </div>
           </div>
