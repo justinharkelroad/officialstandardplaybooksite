@@ -1,3 +1,4 @@
+
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import VideoModal from '@/components/VideoModal';
@@ -36,7 +37,7 @@ const Index = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
         {/* Parallax Background Elements */}
         <div 
           className="absolute inset-0 opacity-20"
@@ -49,7 +50,7 @@ const Index = () => {
         </div>
 
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="font-rajdhani font-bold text-6xl md:text-8xl uppercase tracking-wide text-white mb-6 animate-fade-up">
+          <h1 className="font-rajdhani font-bold text-4xl md:text-6xl lg:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up">
             Raise Your Standard.
             <br />
             <span className="text-gradient">Live the Playbook.</span>
