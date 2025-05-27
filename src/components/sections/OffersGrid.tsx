@@ -13,7 +13,7 @@ const OffersGrid = () => {
             Choose Your Path
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Four distinct programs designed for different stages of your entrepreneurial journey.
+            Whether you are just looking for technology to hold your teams accountable, group coaching or 1 on 1 exclusive coaching with Justin. We got you.
           </p>
         </div>
 
@@ -29,16 +29,16 @@ const OffersGrid = () => {
                   Call Scoring
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  Advanced analytics for sales performance optimization.
+                  Download Call. Drop Call. You're Done.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-300 mb-4">
-                  Detailed call analysis and scoring to improve your sales conversions.
+                  Detailed call analysis and scoring to improve your sales and service teams.
                 </p>
                 <a href="https://standardcallscoring.io" target="_blank" rel="noopener noreferrer">
                   <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
-                    Visit Platform
+                    Learn More
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
                 </a>
@@ -54,7 +54,7 @@ const OffersGrid = () => {
                   <Users className="w-6 h-6 text-white" />
                 </div>
                 <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide">
-                  The Standard Boardroom
+                  Boardroom
                 </CardTitle>
                 <CardDescription className="text-gray-400">
                   Elite community and strategic guidance.
@@ -62,7 +62,7 @@ const OffersGrid = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-300 mb-4">
-                  Join our exclusive community of high-performing entrepreneurs.
+                  Join a group of agents who understand your stress every single month for 2 hours.
                 </p>
                 <Link to="/boardroom">
                   <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
@@ -90,7 +90,7 @@ const OffersGrid = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-300 mb-4">
-                  Direct access to our coaches with personalized strategies.
+                  Get everything in Boardroom + a one on one 2 hour coaching call with Justin.
                 </p>
                 <Link to="/directive">
                   <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
@@ -110,7 +110,7 @@ const OffersGrid = () => {
                   <Crown className="w-6 h-6 text-white" />
                 </div>
                 <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide">
-                  The Partnership
+                  1v1 Coaching for yourself and your team.
                 </CardTitle>
                 <CardDescription className="text-gray-400">
                   Ultimate white-glove service and partnership.
@@ -120,12 +120,9 @@ const OffersGrid = () => {
                 <p className="text-gray-300 mb-4">
                   The highest level of engagement for serious entrepreneurs.
                 </p>
-                <Link to="/partnership">
-                  <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
-                    Learn More
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </Button>
-                </Link>
+                <div className="text-center">
+                  <span className="text-2xl font-bold text-red-400">SOLD OUT</span>
+                </div>
               </CardContent>
             </Card>
           </div>
