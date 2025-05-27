@@ -53,14 +53,16 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-white hover:text-primary transition-colors">
-              Home
-            </Link>
+            {!isHomePage && (
+              <Link to="/" className="text-white hover:text-primary transition-colors">
+                Home
+              </Link>
+            )}
             <button 
               onClick={() => scrollToSection('offers')}
               className="text-white hover:text-primary transition-colors"
             >
-              Offers
+              Access Levels
             </button>
             <button 
               onClick={() => scrollToSection('pricing')}
@@ -68,21 +70,6 @@ const Navigation = () => {
             >
               Pricing
             </button>
-            <button 
-              onClick={() => scrollToSection('testimonials')}
-              className="text-white hover:text-primary transition-colors"
-            >
-              Testimonials
-            </button>
-            <button 
-              onClick={() => scrollToSection('faq')}
-              className="text-white hover:text-primary transition-colors"
-            >
-              FAQ
-            </button>
-            <Link to="/about" className="text-white hover:text-primary transition-colors">
-              About
-            </Link>
             <Link to="/contact" className="text-white hover:text-primary transition-colors">
               Contact
             </Link>
@@ -116,14 +103,16 @@ const Navigation = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden mt-4 pb-4 border-t border-primary/20">
             <div className="flex flex-col space-y-4 pt-4">
-              <Link to="/" className="text-white hover:text-primary transition-colors">
-                Home
-              </Link>
+              {!isHomePage && (
+                <Link to="/" className="text-white hover:text-primary transition-colors">
+                  Home
+                </Link>
+              )}
               <button 
                 onClick={() => scrollToSection('offers')}
                 className="text-white hover:text-primary transition-colors text-left"
               >
-                Offers
+                Access Levels
               </button>
               <button 
                 onClick={() => scrollToSection('pricing')}
@@ -131,21 +120,6 @@ const Navigation = () => {
               >
                 Pricing
               </button>
-              <button 
-                onClick={() => scrollToSection('testimonials')}
-                className="text-white hover:text-primary transition-colors text-left"
-              >
-                Testimonials
-              </button>
-              <button 
-                onClick={() => scrollToSection('faq')}
-                className="text-white hover:text-primary transition-colors text-left"
-              >
-                FAQ
-              </button>
-              <Link to="/about" className="text-white hover:text-primary transition-colors">
-                About
-              </Link>
               <Link to="/contact" className="text-white hover:text-primary transition-colors">
                 Contact
               </Link>
