@@ -38,7 +38,7 @@ const Navigation = () => {
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-3">
             <img 
-              src="/lovable-uploads/4deb3fe9-ca1d-47f7-83bb-8df8138f576b.png" 
+              src="/lovable-uploads/24e794d7-4e09-4244-9d1e-df95f10e3f3f.png" 
               alt="The Standard Logo" 
               className="h-12 w-auto object-contain"
               onError={(e) => {
