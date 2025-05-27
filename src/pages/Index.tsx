@@ -75,18 +75,13 @@ const Index = () => {
           <div className="relative max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>
             <div className="video-glow absolute -inset-4"></div>
             <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary-accent/20 flex items-center justify-center">
-                <VideoModal
-                  trigger={
-                    <Button className="btn-primary text-lg px-8 py-4">
-                      <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z"/>
-                      </svg>
-                      Watch Demo
-                    </Button>
-                  }
-                />
-              </div>
+              <iframe
+                src="https://www.youtube.com/embed/gy-8UNhToW8?autoplay=1&mute=0"
+                title="Demo Video"
+                className="w-full h-full rounded-lg"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
             </div>
           </div>
 
