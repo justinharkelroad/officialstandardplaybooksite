@@ -110,10 +110,10 @@ const OffersGrid = () => {
                   <Crown className="w-6 h-6 text-white" />
                 </div>
                 <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide">
-                  1v1 Coaching for yourself and your team.
+                  The Partnership
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  Ultimate white-glove service and partnership.
+                  1v1 Coaching for yourself and your team.
                 </CardDescription>
               </CardHeader>
               <CardContent>
