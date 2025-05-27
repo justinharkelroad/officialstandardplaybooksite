@@ -224,7 +224,7 @@ const Index = () => {
             </h2>
           </div>
 
-          <Link to="/app" className="block max-w-4xl mx-auto card-hover">
+          <div className="max-w-4xl mx-auto card-hover">
             <Card className="bg-dark-card border-primary/20 group">
               <CardContent className="p-8">
                 <div className="flex items-center justify-between">
@@ -241,14 +241,18 @@ const Index = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center text-primary">
-                    <span className="font-semibold text-lg">Learn More</span>
-                    <ArrowRight className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" />
+                  <div>
+                    <Link to="/app">
+                      <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
+                        SEE OPTIONS
+                        <ArrowRight className="w-5 h-5 ml-2" />
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </CardContent>
             </Card>
-          </Link>
+          </div>
         </div>
       </section>
 
