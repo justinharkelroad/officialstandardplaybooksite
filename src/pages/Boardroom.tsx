@@ -1,6 +1,8 @@
+
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import VideoModal from '@/components/VideoModal';
+import VideoPlayer from '@/components/VideoPlayer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -11,7 +13,7 @@ const Boardroom = () => {
   const navigate = useNavigate();
 
   const handleJoinNow = () => {
-    navigate('/', { state: { scrollToPricing: true } });
+    window.open('https://link.fastpaydirect.com/payment-link/68371b280a5741f8835218c8', '_blank');
   };
 
   return (
@@ -41,19 +43,23 @@ const Boardroom = () => {
             and the network you need to scale to the next level.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: '0.4s' }}>
+          {/* Video Frame with Background Glow */}
+          <div className="relative max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>
+            <div className="video-glow absolute -inset-4"></div>
+            <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
+              <VideoPlayer 
+                videoId="gy-8UNhToW8"
+                title="Boardroom Demo Video"
+                className="w-full h-full rounded-lg"
+              />
+            </div>
+          </div>
+
+          <div className="animate-fade-up" style={{ animationDelay: '0.6s' }}>
             <Button onClick={handleJoinNow} className="btn-primary text-lg px-8 py-4">
-              Join The Boardroom - $350/mo
+              Join The Boardroom
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
-            <VideoModal
-              trigger={
-                <Button className="btn-ghost text-lg px-8 py-4">
-                  <Play className="w-5 h-5 mr-2" />
-                  See Inside
-                </Button>
-              }
-            />
           </div>
         </div>
       </section>
@@ -99,7 +105,7 @@ const Boardroom = () => {
                   <Calendar className="w-8 h-8 text-white" />
                 </div>
                 <CardTitle className="text-white font-rajdhani text-xl uppercase tracking-wide">
-                  Weekly Group Calls
+                  Monthly 2 Hour Call
                 </CardTitle>
                 <CardDescription className="text-gray-400">
                   Strategic sessions with fellow agency owners and expert facilitators
@@ -121,7 +127,7 @@ const Boardroom = () => {
                   <MessageCircle className="w-8 h-8 text-white" />
                 </div>
                 <CardTitle className="text-white font-rajdhani text-xl uppercase tracking-wide">
-                  Private Community
+                  Private Chat App
                 </CardTitle>
                 <CardDescription className="text-gray-400">
                   24/7 access to an exclusive network of high-performers
@@ -154,7 +160,7 @@ const Boardroom = () => {
                   <li>• Strategic planning templates</li>
                   <li>• Financial modeling tools</li>
                   <li>• Growth playbooks</li>
-                  <li>• Monthly industry reports</li>
+                  <li>• AI Process Trainings</li>
                 </ul>
               </CardContent>
             </Card>
@@ -162,29 +168,22 @@ const Boardroom = () => {
         </div>
       </section>
 
-      {/* Video Demo Section */}
+      {/* Why We Exist Section */}
       <section className="py-20 relative">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center mb-12">
+          <div className="max-w-4xl mx-auto text-center">
             <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
-              Inside The Boardroom
+              Why We Exist
             </h2>
-            <p className="text-xl text-gray-300">
-              Experience what it's like to be part of our elite agency owner community.
-            </p>
-          </div>
-
-          <div className="relative max-w-4xl mx-auto">
-            <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden border border-primary/20">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary-accent/20 flex items-center justify-center">
-                <VideoModal
-                  trigger={
-                    <Button className="btn-primary text-lg px-8 py-4">
-                      <Play className="w-6 h-6 mr-2" />
-                      Tour The Boardroom
-                    </Button>
-                  }
-                />
+            <div className="text-xl text-gray-300 leading-relaxed space-y-6">
+              <p>
+                Most entrepreneurs drift. Targets live in their heads, not on paper, so results feel random. We fix that. Inside The Boardroom you'll:
+              </p>
+              <div className="text-left max-w-2xl mx-auto space-y-4">
+                <p>• Pin down exact 90-day outcomes for every area of life.</p>
+                <p>• Map the daily actions that guarantee progress.</p>
+                <p>• Track wins, losses, and lessons in real time.</p>
+                <p>• Sit shoulder-to-shoulder with owners who play at your pace.</p>
               </div>
             </div>
           </div>
@@ -295,7 +294,7 @@ const Boardroom = () => {
       {/* Sticky CTA for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 bg-dark-card border-t border-primary/20 p-4 md:hidden z-40">
         <Button onClick={handleJoinNow} className="btn-primary w-full">
-          Join The Boardroom - $350/mo
+          Join The Boardroom
         </Button>
       </div>
 
