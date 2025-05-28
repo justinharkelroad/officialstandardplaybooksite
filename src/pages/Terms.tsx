@@ -18,7 +18,7 @@ const Terms = () => {
           
           <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto animate-fade-up" style={{ animationDelay: '0.2s' }}>
             Please read these terms carefully before using our services. 
-            By accessing our platform, you agree to be bound by these terms.
+            By engaging our services, you agree to be bound by these Terms of Service.
           </p>
         </div>
       </section>
@@ -29,199 +29,138 @@ const Terms = () => {
           <div className="max-w-4xl mx-auto prose prose-invert prose-lg">
             <div className="space-y-12 text-gray-300">
               
+              <div className="text-center mb-12">
+                <p className="text-lg leading-relaxed">
+                  <strong>The Standard Playbook, LLC</strong> ("Company," "we," "us," or "our") provides coaching and consulting 
+                  services to insurance agencies ("Client," "you," or "your") under the following terms. By engaging our services, 
+                  you agree to be bound by these Terms of Service ("TOS").
+                </p>
+              </div>
+
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  Agreement to Terms
+                  1. Services Provided
                 </h2>
                 <div className="space-y-4">
                   <p>
-                    By accessing and using The Standard Playbook services, you accept and agree to be bound 
-                    by the terms and provision of this agreement. If you do not agree to abide by the above, 
-                    please do not use this service.
+                    The Standard Playbook offers business coaching, consulting, and resources designed to help insurance 
+                    agencies grow and improve operations. Services include, but are not limited to:
                   </p>
-                  <p>
-                    These terms apply to all visitors, users, and others who access or use our services.
-                  </p>
+                  <ul className="list-disc list-inside space-y-2 ml-4">
+                    <li>One-on-one coaching</li>
+                    <li>Group consulting sessions</li>
+                    <li>Access to educational materials, courses, and tools</li>
+                  </ul>
+                  <p>The specific scope of services will be outlined in a separate proposal or agreement.</p>
                 </div>
               </div>
 
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  Service Description
+                  2. Payment Terms
                 </h2>
                 <div className="space-y-4">
-                  <p>
-                    The Standard Playbook provides business coaching, educational content, community access, 
-                    and related services to entrepreneurs and business professionals.
-                  </p>
-                  <p>
-                    Our services include but are not limited to:
-                  </p>
                   <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Online coaching programs and courses</li>
-                    <li>Group and individual coaching sessions</li>
-                    <li>Community forums and networking opportunities</li>
-                    <li>Educational resources and materials</li>
-                    <li>Live events and workshops</li>
+                    <li>All fees are due upfront or on a recurring basis, as specified in your plan</li>
+                    <li>By signing up for any recurring service, you authorize us to automatically charge the payment method on file at the agreed-upon intervals</li>
+                    <li>Any failure to make timely payments may result in suspension or termination of services</li>
                   </ul>
                 </div>
               </div>
 
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  User Accounts
+                  3. Termination of Services & Recurring Charges
                 </h2>
                 <div className="space-y-4">
-                  <p>
-                    To access certain features of our services, you must create an account. You are responsible 
-                    for maintaining the confidentiality of your account information and password.
-                  </p>
-                  <p>
-                    You agree to:
-                  </p>
                   <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Provide accurate and complete information</li>
-                    <li>Keep your account information updated</li>
-                    <li>Maintain the security of your account</li>
-                    <li>Notify us immediately of any unauthorized use</li>
-                    <li>Be responsible for all activities under your account</li>
+                    <li>To terminate any recurring service or subscription, you must submit a written cancellation request via email</li>
+                    <li>Cancellations must be received at least three (3) business days before the next billing cycle to avoid being charged</li>
+                    <li>No refunds will be issued for partial billing cycles or unused portions of services</li>
                   </ul>
                 </div>
               </div>
 
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  Payment Terms
+                  4. Refund Policy
                 </h2>
                 <div className="space-y-4">
-                  <p>
-                    Payment for services is due in advance according to the billing schedule you select. 
-                    All fees are non-refundable except as expressly stated in our refund policy.
-                  </p>
-                  <p>
-                    By providing payment information, you:
-                  </p>
                   <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Authorize us to charge the agreed amount</li>
-                    <li>Confirm you are authorized to use the payment method</li>
-                    <li>Accept responsibility for all charges incurred</li>
-                    <li>Agree to pay any applicable taxes or fees</li>
+                    <li>No refunds are offered once services have been delivered or accessed</li>
+                    <li>Physical products such as the Playbook will be shipped within 30 days. No refunds will be provided once the order is placed</li>
                   </ul>
                 </div>
               </div>
 
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  Refund Policy
+                  5. Confidentiality
                 </h2>
                 <div className="space-y-4">
-                  <p>
-                    We offer a 30-day money-back guarantee for new members of The Boardroom program. 
-                    Refund requests must be submitted within 30 days of initial purchase.
-                  </p>
-                  <p>
-                    Refunds are not available for:
-                  </p>
                   <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Directive or Partnership programs</li>
-                    <li>Services already delivered or consumed</li>
-                    <li>Violation of these terms of service</li>
-                    <li>Requests made after the guarantee period</li>
+                    <li>Both parties agree to maintain confidentiality of any proprietary or sensitive information shared during the course of services</li>
+                    <li>This obligation will survive the termination of services</li>
                   </ul>
                 </div>
               </div>
 
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  Intellectual Property
+                  6. Disclaimer
                 </h2>
                 <div className="space-y-4">
-                  <p>
-                    All content, materials, and intellectual property provided through our services remain 
-                    the exclusive property of The Standard Playbook or our licensors.
-                  </p>
-                  <p>
-                    You may not:
-                  </p>
                   <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Copy, distribute, or reproduce our content</li>
-                    <li>Create derivative works from our materials</li>
-                    <li>Share your account access with others</li>
-                    <li>Use our content for commercial purposes</li>
-                    <li>Reverse engineer any part of our services</li>
+                    <li>Results from coaching and consulting services vary based on client participation and market conditions. We do not guarantee specific outcomes or performance</li>
+                    <li>The information provided during sessions is for educational and advisory purposes only and does not constitute legal, financial, or professional advice</li>
                   </ul>
                 </div>
               </div>
 
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  User Conduct
+                  7. Liability Limitation
                 </h2>
                 <div className="space-y-4">
-                  <p>
-                    You agree to use our services responsibly and in accordance with these terms. 
-                    Prohibited activities include but are not limited to:
-                  </p>
                   <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Harassing, threatening, or intimidating other users</li>
-                    <li>Posting spam, offensive, or inappropriate content</li>
-                    <li>Attempting to gain unauthorized access to our systems</li>
-                    <li>Interfering with the proper functioning of our services</li>
-                    <li>Violating any applicable laws or regulations</li>
+                    <li>In no event shall The Standard Playbook be held liable for any direct, indirect, incidental, or consequential damages arising from the use of our services</li>
+                    <li>Our maximum liability to any client shall not exceed the total amount paid for services within the past 12 months</li>
                   </ul>
                 </div>
               </div>
 
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  Limitation of Liability
+                  8. Force Majeure
                 </h2>
                 <div className="space-y-4">
                   <p>
-                    Our services are provided "as is" without warranties of any kind. We do not guarantee 
-                    specific results from our coaching or educational programs.
-                  </p>
-                  <p>
-                    To the maximum extent permitted by law, The Standard Playbook shall not be liable for 
-                    any indirect, incidental, special, or consequential damages arising from your use of 
-                    our services.
+                    We are not responsible for delays or failures to perform due to causes beyond our reasonable control, 
+                    including natural disasters, government actions, or technological failures.
                   </p>
                 </div>
               </div>
 
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  Termination
+                  9. Governing Law
                 </h2>
                 <div className="space-y-4">
                   <p>
-                    You may cancel your subscription at any time. We reserve the right to terminate or 
-                    suspend your account for violation of these terms.
+                    These Terms of Service are governed by and construed in accordance with the laws of the State of Indiana, 
+                    without regard to its conflict of law principles.
                   </p>
-                  <p>
-                    Upon termination:
-                  </p>
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Your access to services will cease immediately</li>
-                    <li>You remain liable for all charges incurred</li>
-                    <li>These terms will continue to apply as relevant</li>
-                    <li>You must discontinue use of our materials</li>
-                  </ul>
                 </div>
               </div>
 
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  Changes to Terms
+                  10. Amendments
                 </h2>
                 <div className="space-y-4">
                   <p>
-                    We reserve the right to modify these terms at any time. We will notify users of 
-                    significant changes via email or through our platform.
-                  </p>
-                  <p>
-                    Continued use of our services after changes are posted constitutes acceptance of 
-                    the modified terms.
+                    We reserve the right to update or modify these TOS at any time without prior notice. Continued use of 
+                    services constitutes acceptance of the latest version of the TOS.
                   </p>
                 </div>
               </div>
@@ -235,6 +174,7 @@ const Terms = () => {
                     If you have questions about these terms, please contact us:
                   </p>
                   <div className="bg-dark-card border border-primary/20 rounded-lg p-6">
+                    <p><strong>The Standard Playbook, LLC</strong></p>
                     <p><strong>Email:</strong> legal@standardplaybook.com</p>
                     <p><strong>Phone:</strong> +1 (555) 123-4567</p>
                     <p><strong>Address:</strong> The Standard Playbook, Austin, TX, USA</p>

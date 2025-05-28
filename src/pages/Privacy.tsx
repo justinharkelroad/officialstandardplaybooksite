@@ -17,8 +17,8 @@ const Privacy = () => {
           </h1>
           
           <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto animate-fade-up" style={{ animationDelay: '0.2s' }}>
-            Your privacy is important to us. This policy outlines how we collect, 
-            use, and protect your personal information.
+            At The Standard Playbook INC, we value and prioritize your privacy. 
+            This policy outlines how we collect, use, and protect your information.
           </p>
         </div>
       </section>
@@ -29,153 +29,155 @@ const Privacy = () => {
           <div className="max-w-4xl mx-auto prose prose-invert prose-lg">
             <div className="space-y-12 text-gray-300">
               
+              <div className="text-center mb-12">
+                <p className="text-lg leading-relaxed">
+                  At <strong>The Standard Playbook INC</strong> ("Company," "we," "our," or "us"), we value and prioritize your privacy. 
+                  This Privacy Policy outlines the information we collect, how it is used, and your rights regarding the data you provide 
+                  through our services, including our website and coaching programs. By using our services, you agree to the collection 
+                  and use of information in accordance with this policy.
+                </p>
+              </div>
+
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  Information We Collect
+                  1. Information We Collect
                 </h2>
                 <div className="space-y-4">
-                  <p>
-                    We collect information you provide directly to us, such as when you create an account, 
-                    subscribe to our services, participate in our programs, or contact us for support.
-                  </p>
-                  <p>
-                    This may include:
-                  </p>
+                  <p>We collect the following types of information:</p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-rajdhani font-semibold text-xl text-white mb-2">Personal Information:</h3>
+                      <ul className="list-disc list-inside space-y-2 ml-4">
+                        <li>Name, email address, phone number, billing information, and other identifying data</li>
+                        <li>Communication preferences (email and SMS permissions)</li>
+                        <li>Business information related to your insurance agency for consulting purposes</li>
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-rajdhani font-semibold text-xl text-white mb-2">Usage Data:</h3>
+                      <ul className="list-disc list-inside space-y-2 ml-4">
+                        <li>Information on how you interact with our website, services, and emails (e.g., browser type, IP address, and cookies)</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
+                  2. How We Use Your Information
+                </h2>
+                <div className="space-y-4">
+                  <p>The data collected is used for the following purposes:</p>
                   <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Name, email address, and contact information</li>
-                    <li>Business information and goals</li>
-                    <li>Payment and billing information</li>
-                    <li>Communications with our team</li>
-                    <li>Program participation and progress data</li>
+                    <li><strong>To provide and improve services:</strong> Deliver coaching, track progress, and provide tailored recommendations</li>
+                    <li><strong>Communication purposes:</strong> Send important updates, newsletters, marketing messages, or personalized content via email and SMS (as allowed by you)</li>
+                    <li><strong>Billing and transactions:</strong> Process payments for our recurring subscription services</li>
+                    <li><strong>Compliance:</strong> Ensure compliance with legal obligations, agreements, and contracts</li>
                   </ul>
                 </div>
               </div>
 
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  How We Use Your Information
+                  3. Email and SMS Consent
                 </h2>
                 <div className="space-y-4">
                   <p>
-                    We use the information we collect to:
+                    By providing your contact information, you consent to receive communications from <strong>The Standard Playbook INC</strong>, including:
                   </p>
                   <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Provide, maintain, and improve our services</li>
-                    <li>Process transactions and send related information</li>
-                    <li>Send technical notices, updates, and support messages</li>
-                    <li>Respond to your comments, questions, and requests</li>
-                    <li>Communicate about programs, features, and promotional offers</li>
-                    <li>Monitor and analyze trends and usage</li>
-                    <li>Detect, investigate, and prevent fraudulent transactions</li>
+                    <li>Marketing updates, newsletters, and offers related to our services</li>
+                    <li>Important notices and service-related announcements (e.g., billing or policy updates)</li>
+                  </ul>
+                  <p>
+                    You may opt out of non-essential emails and SMS notifications at any time by following the instructions 
+                    included in each message or contacting us directly.
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
+                  4. Data Sharing and Selling
+                </h2>
+                <div className="space-y-4">
+                  <p className="text-primary font-semibold">
+                    We do not sell your personal data to third parties for marketing or any other purposes.
+                  </p>
+                  <p>We only share your information:</p>
+                  <ul className="list-disc list-inside space-y-2 ml-4">
+                    <li>With service providers (e.g., payment processors or email platforms) to facilitate our services</li>
+                    <li>When legally required or to protect the rights and safety of our business and users</li>
                   </ul>
                 </div>
               </div>
 
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  Information Sharing
+                  5. Data Security
                 </h2>
                 <div className="space-y-4">
                   <p>
-                    We do not sell, trade, or otherwise transfer your personal information to third parties 
-                    without your consent, except as described in this policy.
+                    We use commercially reasonable methods to safeguard your data, including encryption and secure storage. 
+                    However, no method of transmission over the Internet is 100% secure. We cannot guarantee absolute security, 
+                    but we take proactive measures to protect your information.
                   </p>
-                  <p>
-                    We may share your information in the following situations:
-                  </p>
+                </div>
+              </div>
+
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
+                  6. Your Rights
+                </h2>
+                <div className="space-y-4">
+                  <p>You have the following rights regarding your personal data:</p>
                   <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>With service providers who assist in operating our business</li>
-                    <li>To comply with legal obligations or protect our rights</li>
-                    <li>In connection with a business transfer or acquisition</li>
-                    <li>With your explicit consent</li>
+                    <li><strong>Access and correction:</strong> Request access to the information we hold about you and ask for corrections if needed</li>
+                    <li><strong>Data deletion:</strong> Request deletion of your personal data, subject to legal and operational limitations</li>
+                    <li><strong>Opt-out:</strong> Withdraw consent for marketing emails and SMS communications at any time</li>
                   </ul>
                 </div>
               </div>
 
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  Data Security
+                  7. Cookies and Tracking Technologies
                 </h2>
                 <div className="space-y-4">
                   <p>
-                    We implement appropriate technical and organizational measures to protect your personal 
-                    information against unauthorized access, alteration, disclosure, or destruction.
-                  </p>
-                  <p>
-                    These measures include:
-                  </p>
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Encryption of sensitive data in transit and at rest</li>
-                    <li>Regular security assessments and updates</li>
-                    <li>Access controls and authentication requirements</li>
-                    <li>Employee training on data protection practices</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div>
-                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  Your Rights
-                </h2>
-                <div className="space-y-4">
-                  <p>
-                    Depending on your location, you may have certain rights regarding your personal information:
-                  </p>
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Access to your personal information</li>
-                    <li>Correction of inaccurate information</li>
-                    <li>Deletion of your personal information</li>
-                    <li>Restriction of processing</li>
-                    <li>Data portability</li>
-                    <li>Objection to processing</li>
-                  </ul>
-                  <p>
-                    To exercise these rights, please contact us using the information provided below.
+                    Our website may use cookies to enhance your experience. Cookies help us understand how visitors interact 
+                    with our site, enabling us to improve performance and usability. You can adjust your browser settings to 
+                    refuse cookies, though some features may be impacted.
                   </p>
                 </div>
               </div>
 
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  Cookies and Tracking
+                  8. Changes to This Policy
                 </h2>
                 <div className="space-y-4">
                   <p>
-                    We use cookies and similar tracking technologies to collect and use personal information. 
-                    This helps us provide a better user experience and analyze how our services are used.
-                  </p>
-                  <p>
-                    You can control cookie settings through your browser, but disabling cookies may affect 
-                    the functionality of our services.
+                    We reserve the right to update or modify this Privacy Policy at any time. Changes will be effective 
+                    immediately upon posting to our website. Please review this policy periodically to stay informed about 
+                    how we protect your information.
                   </p>
                 </div>
               </div>
 
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  Changes to This Policy
+                  9. Contact Us
                 </h2>
                 <div className="space-y-4">
                   <p>
-                    We may update this privacy policy from time to time. We will notify you of any changes 
-                    by posting the new policy on this page and updating the "Last Updated" date.
-                  </p>
-                  <p>
-                    We encourage you to review this policy periodically to stay informed about how we 
-                    protect your information.
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  Contact Information
-                </h2>
-                <div className="space-y-4">
-                  <p>
-                    If you have any questions about this privacy policy or our data practices, please contact us:
+                    If you have any questions or concerns about this Privacy Policy or your data, please contact us:
                   </p>
                   <div className="bg-dark-card border border-primary/20 rounded-lg p-6">
+                    <p><strong>The Standard Playbook INC</strong></p>
                     <p><strong>Email:</strong> privacy@standardplaybook.com</p>
                     <p><strong>Phone:</strong> +1 (555) 123-4567</p>
                     <p><strong>Address:</strong> The Standard Playbook, Austin, TX, USA</p>
