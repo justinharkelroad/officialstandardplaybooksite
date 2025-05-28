@@ -37,7 +37,7 @@ const OffersGrid = () => {
                   Your or your manager work one on one with Justin to build out your agency sales process.
                 </p>
                 <Link to="/sales-experience">
-                  <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
+                  <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full">
                     Learn More
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
