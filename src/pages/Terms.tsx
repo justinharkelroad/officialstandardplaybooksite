@@ -175,9 +175,9 @@ const Terms = () => {
                   </p>
                   <div className="bg-dark-card border border-primary/20 rounded-lg p-6">
                     <p><strong>The Standard Playbook, LLC</strong></p>
-                    <p><strong>Email:</strong> legal@standardplaybook.com</p>
-                    <p><strong>Phone:</strong> +1 (555) 123-4567</p>
-                    <p><strong>Address:</strong> The Standard Playbook, Austin, TX, USA</p>
+                    <p><strong>Email:</strong> info@standardplaybook.com</p>
+                    <p><strong>Phone:</strong> +1 (260) 515-1349</p>
+                    <p><strong>Address:</strong> Fort Wayne, IN, USA</p>
                   </div>
                 </div>
               </div>
