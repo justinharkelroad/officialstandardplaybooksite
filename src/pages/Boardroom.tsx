@@ -48,7 +48,7 @@ const Boardroom = () => {
             <div className="video-glow absolute -inset-4"></div>
             <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
               <VideoPlayer 
-                videoId="gy-8UNhToW8"
+                videoId="36Ns-DrlHEA"
                 title="Boardroom Demo Video"
                 className="w-full h-full rounded-lg"
               />
@@ -158,7 +158,7 @@ const Boardroom = () => {
               <CardContent>
                 <ul className="text-gray-300 space-y-2 text-left">
                   <li>• Strategic planning templates</li>
-                  <li>• Financial modeling tools</li>
+                  <li>• 24/7 Justin Video Chat</li>
                   <li>• Growth playbooks</li>
                   <li>• AI Process Trainings</li>
                 </ul>
@@ -200,7 +200,7 @@ const Boardroom = () => {
                   Boardroom Membership
                 </CardTitle>
                 <div className="mb-4">
-                  <span className="text-6xl font-bold text-white">$350</span>
+                  <span className="text-6xl font-bold text-white">$299</span>
                   <span className="text-gray-400 text-xl">/month</span>
                 </div>
                 <CardDescription className="text-gray-400 text-lg">
@@ -212,7 +212,7 @@ const Boardroom = () => {
                   <div className="text-left">
                     <h4 className="text-white font-rajdhani text-lg uppercase tracking-wide mb-3">Community Access</h4>
                     <ul className="space-y-2 text-gray-300">
-                      <li>• Weekly group coaching calls</li>
+                      <li>• Monthly 2 Hour Group Calls</li>
                       <li>• Private member community</li>
                       <li>• Monthly strategy sessions</li>
                       <li>• Peer accountability system</li>
@@ -228,12 +228,9 @@ const Boardroom = () => {
                     </ul>
                   </div>
                 </div>
-                <Button onClick={handleJoinNow} className="btn-primary text-lg px-8 py-4 mb-4">
+                <Button onClick={handleJoinNow} className="btn-primary text-lg px-8 py-4">
                   Join The Boardroom Now
                 </Button>
-                <p className="text-gray-400 text-sm">
-                  30-day money-back guarantee • Cancel anytime
-                </p>
               </CardContent>
             </Card>
           </div>
@@ -256,7 +253,7 @@ const Boardroom = () => {
                   What type of agency owners are in The Boardroom?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-300">
-                  Our members are serious agency owners typically generating $100K+ annually, ranging from scaling startups to established business owners looking to optimize and grow. The common thread is ambition and commitment to excellence.
+                  Our agency owners have one single thing in common: To expand their lives through the process of "Having It All". Any and all are fully accepted with open arms.
                 </AccordionContent>
               </AccordionItem>
 
@@ -265,7 +262,7 @@ const Boardroom = () => {
                   How often are the group coaching calls?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-300">
-                  We host weekly group coaching calls every Tuesday at 2 PM EST. Each call is 90 minutes and includes hot seat coaching, strategy discussions, and expert presentations. All calls are recorded for members who can't attend live.
+                  We host monthly coaching calls on the second Tuesday of every month from 3pm-5pm EST. Each call is 2 hours and strategically planned out to allow breakout sessions and authentic conversations to happen. Every Boardroom call is recorded and posted inside of the Armory on the app.
                 </AccordionContent>
               </AccordionItem>
 
