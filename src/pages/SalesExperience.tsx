@@ -1,11 +1,11 @@
 
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import VideoModal from '@/components/VideoModal';
+import VideoPlayer from '@/components/VideoPlayer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Target, Calendar, Users, CheckCircle, ArrowRight, Play } from 'lucide-react';
+import { Target, Calendar, Users, CheckCircle, ArrowRight, Shield } from 'lucide-react';
 
 const SalesExperience = () => {
   return (
@@ -34,19 +34,85 @@ const SalesExperience = () => {
             Build a Sales Process, Accountability Frame and Consequence Ladder with precision. Work one-on-one with Justin to transform your agency's sales approach.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: '0.4s' }}>
-            <Button className="btn-primary text-lg px-8 py-4">
+          {/* Video Frame with Background Glow */}
+          <div className="relative max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>
+            <div className="video-glow absolute -inset-4"></div>
+            <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
+              <VideoPlayer 
+                videoId="kJWh8cVHoFs"
+                title="8-Week Sales Experience Overview"
+                className="w-full h-full rounded-lg"
+              />
+            </div>
+          </div>
+
+          <div className="animate-fade-up" style={{ animationDelay: '0.6s' }}>
+            <Button 
+              onClick={() => window.open('https://createthestandard.com/8weekxppayment', '_blank')}
+              className="btn-primary text-lg px-8 py-4"
+            >
               Get Started Now
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
-            <VideoModal
-              trigger={
-                <Button className="btn-ghost text-lg px-8 py-4">
-                  <Play className="w-5 h-5 mr-2" />
-                  Watch Overview
-                </Button>
-              }
-            />
+          </div>
+        </div>
+      </section>
+
+      {/* Here's What You Get Section */}
+      <section className="py-20 relative">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
+              Here's What You Get
+            </h2>
+            <p className="text-xl text-gray-300 leading-relaxed">
+              Everything you need to build a world-class sales operation in just 8 weeks.
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <Card className="bg-dark-card border-primary/20">
+              <CardContent className="p-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="flex items-start space-x-3">
+                    <CheckCircle className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
+                    <span className="text-gray-300">HARD COPY BOOK MAILED FOR YOU/YOUR MANAGER</span>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <CheckCircle className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
+                    <span className="text-gray-300">4 GRADED CALLS PER SALES TEAM MEMBER PER WEEK</span>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <CheckCircle className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
+                    <span className="text-gray-300">WEEKLY MONDAY SALES QUICK HIT TRAINING VIDEO EMAILED TO TEAM</span>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <CheckCircle className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
+                    <span className="text-gray-300">WEEKLY WEDNESDAY TRAINING DOCUMENT EMAILED TO TEAM</span>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <CheckCircle className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
+                    <span className="text-gray-300">30 MINUTE ZOOMS WEEKLY (8X) w/ AGENT or MANAGER</span>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <CheckCircle className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
+                    <span className="text-gray-300">1 ON 1 VIDEO COACHING ANYTIME VIA MARCO POLO APP FOR YOU OR MANAGER</span>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <CheckCircle className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
+                    <span className="text-gray-300">FULLY BUILT OUT SALES PROCESS DOCUMENTED BY END OF EXPERIENCE</span>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <CheckCircle className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
+                    <span className="text-gray-300">FULLY BUILT OUT ACCOUNTABILITY PROCESS DEPLOYED BY END OF EXPERIENCE</span>
+                  </div>
+                  <div className="flex items-start space-x-3 md:col-span-2 md:justify-center">
+                    <CheckCircle className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
+                    <span className="text-gray-300">FULLY BUILT OUT CONSEQUENCE LADDER DEPLOYED BY END OF EXPERIENCE</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -154,31 +220,27 @@ const SalesExperience = () => {
         </div>
       </section>
 
-      {/* Video Demo Section */}
+      {/* Money Back Guarantee Section */}
       <section className="py-20 relative">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center mb-12">
-            <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
-              See The Process
-            </h2>
-            <p className="text-xl text-gray-300">
-              Get a preview of how the 8-Week Sales Experience works and the transformation you can expect.
-            </p>
-          </div>
-
-          <div className="relative max-w-4xl mx-auto">
-            <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden border border-primary/20">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary-accent/20 flex items-center justify-center">
-                <VideoModal
-                  trigger={
-                    <Button className="btn-primary text-lg px-8 py-4">
-                      <Play className="w-6 h-6 mr-2" />
-                      Watch Demo
-                    </Button>
-                  }
-                />
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="relative mb-12">
+              {/* Guarantee Badge */}
+              <div className="inline-flex items-center justify-center w-32 h-32 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full border-8 border-yellow-300 shadow-2xl mb-8">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-black">100%</div>
+                  <div className="text-xs font-semibold text-black uppercase">Money Back</div>
+                  <div className="text-xs font-semibold text-black uppercase">Guarantee</div>
+                </div>
               </div>
             </div>
+            
+            <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
+              If You Don't See The Value After [8] Weeks, I'll Give You Your Money Back... Straight Up
+            </h2>
+            <p className="text-xl text-gray-300 leading-relaxed">
+              All I ask is you <span className="text-primary font-semibold underline">COMMIT TO THE WORK</span>
+            </p>
           </div>
         </div>
       </section>
@@ -236,7 +298,10 @@ const SalesExperience = () => {
 
       {/* Sticky CTA for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 bg-dark-card border-t border-primary/20 p-4 md:hidden z-40">
-        <Button className="btn-primary w-full">
+        <Button 
+          onClick={() => window.open('https://createthestandard.com/8weekxppayment', '_blank')}
+          className="btn-primary w-full"
+        >
           Start 8-Week Sales Experience
         </Button>
       </div>
