@@ -64,12 +64,12 @@ const OffersGrid = () => {
                 <p className="text-gray-300 mb-6">
                   Join a group of agents who understand your stress every single month for 2 hours.
                 </p>
-                <a href="https://link.fastpaydirect.com/payment-link/68371b280a5741f8835218c8" target="_blank" rel="noopener noreferrer">
+                <Link to="/boardroom">
                   <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full">
                     Learn More
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
-                </a>
+                </Link>
               </CardContent>
             </Card>
           </div>
@@ -92,12 +92,12 @@ const OffersGrid = () => {
                 <p className="text-gray-300 mb-6">
                   Get everything in Boardroom + a one on one 2 hour coaching call with Justin.
                 </p>
-                <a href="https://link.fastpaydirect.com/payment-link/670ff5735146ea77a16c5106" target="_blank" rel="noopener noreferrer">
+                <Link to="/directive">
                   <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full">
                     Learn More
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
-                </a>
+                </Link>
               </CardContent>
             </Card>
           </div>
