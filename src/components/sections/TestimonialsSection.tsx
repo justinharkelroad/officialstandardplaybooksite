@@ -23,16 +23,16 @@ const TestimonialsSection = () => {
                   ))}
                 </div>
                 <blockquote className="text-gray-300 italic">
-                  "The Standard Playbook completely transformed how I approach business. The strategies are game-changing."
+                  "Working with Justin Harkelroad has truly transformed my insurance agency, both professionally and personally. His quick responses over text and always spot-on advice have been invaluable, helping me navigate challenges with confidence and clarity. Justin's mentorship has been a game-changer, and I'm incredibly grateful for his guidance and impact on my journey"
                 </blockquote>
               </div>
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-3">
-                  <span className="text-white font-semibold">MJ</span>
+                  <span className="text-white font-semibold">JC</span>
                 </div>
                 <div>
-                  <p className="text-white font-semibold">Michael Johnson</p>
-                  <p className="text-gray-400 text-sm">CEO, TechVentures</p>
+                  <p className="text-white font-semibold">Jackie Crane</p>
+                  <p className="text-gray-400 text-sm">Allstate Insurance</p>
                 </div>
               </div>
             </CardContent>
@@ -49,16 +49,16 @@ const TestimonialsSection = () => {
                   ))}
                 </div>
                 <blockquote className="text-gray-300 italic">
-                  "Working with The Standard team elevated my business to seven figures. The community is incredible."
+                  "Justin has been instrumental in helping me achieve balance in both my personal life and business. His guidance has not only fostered my personal growth but has also elevated my business and team to levels I'm incredibly proud of. I'm appreciative of Justin's time and dedication to my continued growth, making the journey exciting as I strive to win at this thing called life!"
                 </blockquote>
               </div>
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-primary-accent rounded-full flex items-center justify-center mr-3">
-                  <span className="text-white font-semibold">SR</span>
+                  <span className="text-white font-semibold">HE</span>
                 </div>
                 <div>
-                  <p className="text-white font-semibold">Sarah Rodriguez</p>
-                  <p className="text-gray-400 text-sm">Founder, Digital Empire</p>
+                  <p className="text-white font-semibold">Heather Ebersole</p>
+                  <p className="text-gray-400 text-sm">Allstate Insurance</p>
                 </div>
               </div>
             </CardContent>
@@ -75,16 +75,16 @@ const TestimonialsSection = () => {
                   ))}
                 </div>
                 <blockquote className="text-gray-300 italic">
-                  "The accountability and strategic guidance helped me scale faster than I ever thought possible."
+                  "While searching for standout consultants, Justin Harkelroad's name consistently surfaced—and for good reason. Justin has far exceeded expectations, guiding my team and me through every challenge our business has faced. Grounded in God-fearing principles, his coaching has transformed not only how I manage my business but also how I engage with my family. He continually pushes me to grow into a better man. His sharp attention to detail and strong business acumen are just the icing on the cake of the invaluable lessons he's imparted."
                 </blockquote>
               </div>
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-3">
-                  <span className="text-white font-semibold">DK</span>
+                  <span className="text-white font-semibold">NS</span>
                 </div>
                 <div>
-                  <p className="text-white font-semibold">David Kim</p>
-                  <p className="text-gray-400 text-sm">Co-Founder, Growth Labs</p>
+                  <p className="text-white font-semibold">Nick Siciliano</p>
+                  <p className="text-gray-400 text-sm">Allstate Insurance</p>
                 </div>
               </div>
             </CardContent>
