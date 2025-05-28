@@ -31,7 +31,7 @@ const AISection = () => {
                   </div>
                 </div>
                 <div>
-                  <a href="https://app.standardcallscoring.com" target="_blank" rel="noopener noreferrer">
+                  <a href="https://standardcallscoring.com" target="_blank" rel="noopener noreferrer">
                     <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
                       Learn More
                       <ArrowRight className="w-5 h-5 ml-2" />

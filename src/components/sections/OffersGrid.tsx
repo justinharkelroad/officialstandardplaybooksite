@@ -64,12 +64,12 @@ const OffersGrid = () => {
                 <p className="text-gray-300 mb-6">
                   Join a group of agents who understand your stress every single month for 2 hours.
                 </p>
-                <Link to="/boardroom">
+                <a href="https://link.fastpaydirect.com/payment-link/68371b280a5741f8835218c8" target="_blank" rel="noopener noreferrer">
                   <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full">
                     Learn More
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
-                </Link>
+                </a>
               </CardContent>
             </Card>
           </div>
@@ -92,12 +92,12 @@ const OffersGrid = () => {
                 <p className="text-gray-300 mb-6">
                   Get everything in Boardroom + a one on one 2 hour coaching call with Justin.
                 </p>
-                <Link to="/directive">
+                <a href="https://link.fastpaydirect.com/payment-link/670ff5735146ea77a16c5106" target="_blank" rel="noopener noreferrer">
                   <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full">
                     Learn More
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
-                </Link>
+                </a>
               </CardContent>
             </Card>
           </div>
@@ -121,7 +121,9 @@ const OffersGrid = () => {
                   The highest level of engagement for serious agency owners.
                 </p>
                 <div className="text-center">
-                  <span className="text-2xl font-bold text-red-400">SOLD OUT</span>
+                  <Button className="text-lg px-8 py-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium rounded-pill w-full cursor-not-allowed" disabled>
+                    SOLD OUT
+                  </Button>
                 </div>
               </CardContent>
             </Card>
