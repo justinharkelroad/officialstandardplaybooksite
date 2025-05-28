@@ -54,9 +54,11 @@ const PricingSection = () => {
                   + More
                 </li>
               </ul>
-              <Button className="btn-primary w-full">
-                Join The Boardroom
-              </Button>
+              <a href="https://link.fastpaydirect.com/payment-link/68371b280a5741f8835218c8" target="_blank" rel="noopener noreferrer">
+                <Button className="btn-primary w-full">
+                  Join The Boardroom
+                </Button>
+              </a>
             </CardContent>
           </Card>
 
@@ -102,9 +104,11 @@ const PricingSection = () => {
                   + More
                 </li>
               </ul>
-              <Button className="btn-primary w-full bg-primary-accent hover:bg-primary-light">
-                Join The Directive
-              </Button>
+              <a href="https://link.fastpaydirect.com/payment-link/670ff5735146ea77a16c5106" target="_blank" rel="noopener noreferrer">
+                <Button className="btn-primary w-full bg-primary-accent hover:bg-primary-light">
+                  Join The Directive
+                </Button>
+              </a>
             </CardContent>
           </Card>
 
@@ -145,8 +149,8 @@ const PricingSection = () => {
                   100 AI Call Scoring Calls
                 </li>
               </ul>
-              <Button className="btn-ghost w-full">
-                Apply Now
+              <Button className="text-lg px-8 py-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium rounded-pill w-full cursor-not-allowed" disabled>
+                SOLD OUT
               </Button>
             </CardContent>
           </Card>
