@@ -3,6 +3,7 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import SoftwareSection from '@/components/SoftwareSection';
 import HeroSection from '@/components/sections/HeroSection';
+import AISection from '@/components/sections/AISection';
 import OffersGrid from '@/components/sections/OffersGrid';
 import DIYAccessSection from '@/components/sections/DIYAccessSection';
 import PricingSection from '@/components/sections/PricingSection';
@@ -36,6 +37,7 @@ const Index = () => {
       <Navigation />
       <HeroSection onScrollToSection={scrollToSection} />
       <SoftwareSection />
+      <AISection />
       <OffersGrid />
       <DIYAccessSection />
       <PricingSection />

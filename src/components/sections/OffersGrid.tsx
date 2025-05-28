@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Zap, Crown, TrendingUp, Shield } from 'lucide-react';
+import { ArrowRight, Users, Zap, Crown, Target } from 'lucide-react';
 
 const OffersGrid = () => {
   return (
@@ -18,30 +18,30 @@ const OffersGrid = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {/* Call Scoring */}
+          {/* 8 Week Sales Experience */}
           <div className="card-hover">
             <Card className="bg-dark-card border-primary/20 h-full group">
               <CardHeader>
                 <div className="w-12 h-12 bg-primary-accent rounded-square flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <TrendingUp className="w-6 h-6 text-white" />
+                  <Target className="w-6 h-6 text-white" />
                 </div>
                 <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide">
-                  Call Scoring
+                  8 Week Sales Experience
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  Download Call. Drop Call. You're Done.
+                  Build a Sales Process, Accountability Frame and Consequence Ladder with precision
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-300 mb-4">
-                  Detailed call analysis and scoring to improve your sales and service teams.
+                  Your or your manager work one on one with Justin to build out your agency sales process.
                 </p>
-                <a href="https://app.standardcallscoring.com" target="_blank" rel="noopener noreferrer">
+                <Link to="/sales-experience">
                   <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
                     Learn More
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
-                </a>
+                </Link>
               </CardContent>
             </Card>
           </div>

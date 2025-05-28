@@ -9,6 +9,7 @@ import AppAccess from "./pages/AppAccess";
 import Boardroom from "./pages/Boardroom";
 import Directive from "./pages/Directive";
 import Partnership from "./pages/Partnership";
+import SalesExperience from "./pages/SalesExperience";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/boardroom" element={<Boardroom />} />
           <Route path="/directive" element={<Directive />} />
           <Route path="/partnership" element={<Partnership />} />
+          <Route path="/sales-experience" element={<SalesExperience />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
