@@ -121,8 +121,9 @@ const OffersGrid = () => {
                   The highest level of engagement for serious agency owners.
                 </p>
                 <div className="text-center">
-                  <Button className="text-lg px-8 py-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium rounded-pill w-full cursor-not-allowed" disabled>
-                    SOLD OUT
+                  <Button className="text-lg px-8 py-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium rounded-pill w-full">
+                    Apply Now
+                    <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
                 </div>
               </CardContent>
