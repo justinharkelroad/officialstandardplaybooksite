@@ -2,7 +2,6 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Zap, User, Target, BarChart, ArrowRight } from 'lucide-react';
 import VideoPlayer from '@/components/VideoPlayer';
 
@@ -227,57 +226,6 @@ const Directive = () => {
                 </p>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-20 relative">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-6">
-              Directive FAQ
-            </h2>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            <Accordion type="single" collapsible className="space-y-4">
-              <AccordionItem value="item-1" className="bg-dark-card border border-primary-accent/20 rounded-lg px-6">
-                <AccordionTrigger className="text-white font-rajdhani text-lg uppercase tracking-wide">
-                  Who is The Directive best suited for?
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-300">
-                  The Directive is perfect for entrepreneurs generating $250K+ annually who need intensive support to break through growth barriers. You should be committed to implementation and ready to invest significant time in your development.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-2" className="bg-dark-card border border-primary-accent/20 rounded-lg px-6">
-                <AccordionTrigger className="text-white font-rajdhani text-lg uppercase tracking-wide">
-                  How is this different from The Boardroom?
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-300">
-                  While Boardroom focuses on community and group learning, The Directive provides intensive 1:1 coaching, custom strategy development, and hands-on implementation support. You get everything from Boardroom plus personalized attention.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-3" className="bg-dark-card border border-primary-accent/20 rounded-lg px-6">
-                <AccordionTrigger className="text-white font-rajdhani text-lg uppercase tracking-wide">
-                  What kind of time commitment is required?
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-300">
-                  Expect to invest 3-5 hours per week including coaching sessions, implementation work, and progress reviews. The more you invest, the better your results will be.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-4" className="bg-dark-card border border-primary-accent/20 rounded-lg px-6">
-                <AccordionTrigger className="text-white font-rajdhani text-lg uppercase tracking-wide">
-                  Is there a minimum commitment period?
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-300">
-                  We recommend a minimum 6-month commitment to see significant results. However, you can cancel with 30 days notice. Most members stay longer because they see the value and results.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
           </div>
         </div>
       </section>
