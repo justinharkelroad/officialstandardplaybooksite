@@ -1,4 +1,3 @@
-
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -39,7 +38,7 @@ const Directive = () => {
           <div className="max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.3s' }}>
             <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
               <img 
-                src="/lovable-uploads/bcdac0f8-459b-420f-a62d-0ab9b6afc846.png"
+                src="/lovable-uploads/c046f138-ec79-47c2-8cee-9e5198756308.png"
                 alt="1v1 Coaching Session"
                 className="w-full h-full object-cover rounded-lg"
               />
