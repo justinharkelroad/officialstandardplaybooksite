@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Zap, User, Target, BarChart, ArrowRight, Play } from 'lucide-react';
+import VideoPlayer from '@/components/VideoPlayer';
 
 const Directive = () => {
   return (
@@ -80,8 +81,8 @@ const Directive = () => {
               Intensive Implementation
             </h2>
             <p className="text-xl text-gray-300 leading-relaxed">
-              The Directive provides personalized coaching and implementation support. Work directly with our 
-              experts to develop custom strategies, execute systematically, and achieve breakthrough results.
+              The Directive provides personalized coaching and implementation support. Work directly with Justin 
+              to develop custom strategies, execute systematically, and achieve breakthrough results.
             </p>
           </div>
 
@@ -93,16 +94,16 @@ const Directive = () => {
                   <User className="w-8 h-8 text-white" />
                 </div>
                 <CardTitle className="text-white font-rajdhani text-xl uppercase tracking-wide">
-                  Bi-Weekly 1:1 Coaching
+                  PRIVATE 1:1 COACHING
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  Direct access to expert coaches for personalized guidance
+                  Direct access to Justin for personalized guidance
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="text-gray-300 space-y-2 text-left">
-                  <li>• 90-minute intensive sessions</li>
-                  <li>• Custom strategy development</li>
+                  <li>• One 2 Hour Call Per Month</li>
+                  <li>• Custom strategy development and deployment</li>
                   <li>• Real-time problem solving</li>
                   <li>• Performance optimization</li>
                 </ul>
@@ -115,7 +116,7 @@ const Directive = () => {
                   <Target className="w-8 h-8 text-white" />
                 </div>
                 <CardTitle className="text-white font-rajdhani text-xl uppercase tracking-wide">
-                  Implementation Tracking
+                  AUTHENTIC ACCOUNTABILITY
                 </CardTitle>
                 <CardDescription className="text-gray-400">
                   Systematic execution with accountability and progress monitoring
@@ -123,10 +124,10 @@ const Directive = () => {
               </CardHeader>
               <CardContent>
                 <ul className="text-gray-300 space-y-2 text-left">
-                  <li>• Weekly check-in protocols</li>
-                  <li>• Progress tracking dashboards</li>
-                  <li>• Milestone celebrations</li>
-                  <li>• Course correction strategies</li>
+                  <li>• Weekly Check In Protocols</li>
+                  <li>• Custom strategy development and deployment</li>
+                  <li>• Monthly Mission Check In's</li>
+                  <li>• Course Correction Strategies</li>
                 </ul>
               </CardContent>
             </Card>
@@ -137,18 +138,18 @@ const Directive = () => {
                   <BarChart className="w-8 h-8 text-white" />
                 </div>
                 <CardTitle className="text-white font-rajdhani text-xl uppercase tracking-wide">
-                  Custom Strategy Development
+                  TECHNOLOGY & AI STRATEGIES
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  Tailored plans designed specifically for your business and goals
+                  Work 1 on 1 w/ Justin to implement and deploy the latest tech and AI solutions
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="text-gray-300 space-y-2 text-left">
-                  <li>• Comprehensive business analysis</li>
-                  <li>• Growth opportunity identification</li>
-                  <li>• Resource optimization plans</li>
-                  <li>• Risk mitigation strategies</li>
+                  <li>• 100 Calls Graded Per Month Included</li>
+                  <li>• Custom AI Agent Buildouts on calls</li>
+                  <li>• Custom Reporting Build outs for your agency</li>
+                  <li>• Process Optimization</li>
                 </ul>
               </CardContent>
             </Card>
@@ -156,55 +157,70 @@ const Directive = () => {
         </div>
       </section>
 
-      {/* Results Section */}
+      {/* ITS NOT JUST BUSINESS Section */}
       <section className="py-20 relative">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center mb-12">
+          <div className="text-center mb-16">
             <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
-              Real Results
+              ITS NOT JUST BUSINESS...
             </h2>
-            <p className="text-xl text-gray-300">
-              See how Directive members have transformed their businesses with intensive coaching.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
-            <Card className="bg-dark-card border-primary-accent/20 text-center">
-              <CardContent className="pt-8">
-                <div className="text-4xl font-bold text-primary-accent mb-2">300%</div>
-                <p className="text-white font-rajdhani text-lg uppercase tracking-wide">Revenue Growth</p>
-                <p className="text-gray-400 mt-2">Average increase in 6 months</p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-dark-card border-primary-accent/20 text-center">
-              <CardContent className="pt-8">
-                <div className="text-4xl font-bold text-primary-accent mb-2">90%</div>
-                <p className="text-white font-rajdhani text-lg uppercase tracking-wide">Goal Achievement</p>
-                <p className="text-gray-400 mt-2">Members hit their targets</p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-dark-card border-primary-accent/20 text-center">
-              <CardContent className="pt-8">
-                <div className="text-4xl font-bold text-primary-accent mb-2">45</div>
-                <p className="text-white font-rajdhani text-lg uppercase tracking-wide">Days Average</p>
-                <p className="text-gray-400 mt-2">To see significant results</p>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="relative max-w-4xl mx-auto">
-            <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden border border-primary-accent/20">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-accent/20 to-primary/20 flex items-center justify-center">
-                <VideoModal
-                  trigger={
-                    <Button className="btn-primary text-lg px-8 py-4 bg-primary-accent hover:bg-primary-light">
-                      <Play className="w-6 h-6 mr-2" />
-                      Watch Success Stories
-                    </Button>
-                  }
+          <div className="max-w-6xl mx-auto space-y-16">
+            {/* First Video - BEING */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
+                <VideoPlayer 
+                  videoId="jFDqWyLuwHI"
+                  title="Being - Your Connection To God"
+                  className="w-full h-full rounded-lg"
                 />
+              </div>
+              <div className="text-center lg:text-left">
+                <h3 className="font-rajdhani font-bold text-3xl md:text-4xl uppercase tracking-wide text-white mb-4">
+                  BEING
+                </h3>
+                <p className="text-lg text-gray-300 leading-relaxed">
+                  Sharpen your mind and spirit so you can lead w/ clarity alongside of God & your purpose. Daily stacks, meditation, and scripture reflections inside the app lock in purpose before the workday starts
+                </p>
+              </div>
+            </div>
+
+            {/* Second Video - BODY */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden lg:order-2">
+                <VideoPlayer 
+                  videoId="qUWOzQF1Xrg"
+                  title="Body - Weaponize Your Health"
+                  className="w-full h-full rounded-lg"
+                />
+              </div>
+              <div className="text-center lg:text-left lg:order-1">
+                <h3 className="font-rajdhani font-bold text-3xl md:text-4xl uppercase tracking-wide text-white mb-4">
+                  BODY
+                </h3>
+                <p className="text-lg text-gray-300 leading-relaxed">
+                  Body fuels everything else. Simple workout templates, macro goals, and a habit tracker record every rep and meal, making high energy your new baseline.
+                </p>
+              </div>
+            </div>
+
+            {/* Third Video - BALANCE */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
+                <VideoPlayer 
+                  videoId="RMsIHtsv2ak"
+                  title="Balance - Your Relationships Matter"
+                  className="w-full h-full rounded-lg"
+                />
+              </div>
+              <div className="text-center lg:text-left">
+                <h3 className="font-rajdhani font-bold text-3xl md:text-4xl uppercase tracking-wide text-white mb-4">
+                  BALANCE
+                </h3>
+                <p className="text-lg text-gray-300 leading-relaxed">
+                  Balance keeps marriage and kids at the center of the mission. We schedule date nights, one-on-one time with each child, and fast family check-ins so your home life shows measurable progress too.
+                </p>
               </div>
             </div>
           </div>
