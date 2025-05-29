@@ -33,6 +33,13 @@ const BoardroomBusiness = () => {
 
           {/* Second Video - BODY */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden lg:order-2">
+              <VideoPlayer 
+                videoId="qUWOzQF1Xrg"
+                title="Body - Weaponize Your Health"
+                className="w-full h-full rounded-lg"
+              />
+            </div>
             <div className="text-center lg:text-left lg:order-1">
               <h3 className="font-rajdhani font-bold text-3xl md:text-4xl uppercase tracking-wide text-white mb-4">
                 BODY
@@ -40,13 +47,6 @@ const BoardroomBusiness = () => {
               <p className="text-lg text-gray-300 leading-relaxed">
                 Body fuels everything else. Simple workout templates, macro goals, and a habit tracker record every rep and meal, making high energy your new baseline.
               </p>
-            </div>
-            <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden lg:order-2">
-              <VideoPlayer 
-                videoId="qUWOzQF1Xrg"
-                title="Body - Weaponize Your Health"
-                className="w-full h-full rounded-lg"
-              />
             </div>
           </div>
 
