@@ -1,11 +1,10 @@
 
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import VideoModal from '@/components/VideoModal';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Zap, User, Target, BarChart, ArrowRight, Play } from 'lucide-react';
+import { Zap, User, Target, BarChart, ArrowRight } from 'lucide-react';
 import VideoPlayer from '@/components/VideoPlayer';
 
 const Directive = () => {
@@ -36,19 +35,25 @@ const Directive = () => {
             accountability, and hands-on guidance to accelerate your growth exponentially.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: '0.4s' }}>
-            <Button className="btn-primary text-lg px-8 py-4 bg-primary-accent hover:bg-primary-light">
-              Apply for The Directive - $750/mo
+          {/* Hero Image */}
+          <div className="max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+            <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
+              <img 
+                src="/lovable-uploads/bcdac0f8-459b-420f-a62d-0ab9b6afc846.png"
+                alt="1v1 Coaching Session"
+                className="w-full h-full object-cover rounded-lg"
+              />
+            </div>
+          </div>
+
+          <div className="flex justify-center animate-fade-up" style={{ animationDelay: '0.4s' }}>
+            <Button 
+              className="btn-primary text-lg px-8 py-4 bg-primary-accent hover:bg-primary-light"
+              onClick={() => window.open('https://link.fastpaydirect.com/payment-link/670ff5735146ea77a16c5106', '_blank')}
+            >
+              Join The Directive
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
-            <VideoModal
-              trigger={
-                <Button className="btn-ghost text-lg px-8 py-4 border-primary-accent text-primary-accent hover:bg-primary-accent">
-                  <Play className="w-5 h-5 mr-2" />
-                  See Results
-                </Button>
-              }
-            />
           </div>
         </div>
       </section>
@@ -280,8 +285,11 @@ const Directive = () => {
 
       {/* Sticky CTA for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 bg-dark-card border-t border-primary-accent/20 p-4 md:hidden z-40">
-        <Button className="btn-primary w-full bg-primary-accent hover:bg-primary-light">
-          Apply for The Directive - $750/mo
+        <Button 
+          className="btn-primary w-full bg-primary-accent hover:bg-primary-light"
+          onClick={() => window.open('https://link.fastpaydirect.com/payment-link/670ff5735146ea77a16c5106', '_blank')}
+        >
+          Join The Directive
         </Button>
       </div>
 
