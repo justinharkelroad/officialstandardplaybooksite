@@ -25,8 +25,8 @@ const BoardroomBusiness = () => {
               <h3 className="font-rajdhani font-bold text-3xl md:text-4xl uppercase tracking-wide text-white mb-4">
                 BEING
               </h3>
-              <p className="text-xl text-gray-300">
-                Your Connection To God
+              <p className="text-lg text-gray-300 leading-relaxed">
+                Sharpen your mind and spirit so you can lead w/ clarity alongside of God & your purpose. Daily stacks, meditation, and scripture reflections inside the app lock in purpose before the workday starts
               </p>
             </div>
           </div>
@@ -37,8 +37,8 @@ const BoardroomBusiness = () => {
               <h3 className="font-rajdhani font-bold text-3xl md:text-4xl uppercase tracking-wide text-white mb-4">
                 BODY
               </h3>
-              <p className="text-xl text-gray-300">
-                Weaponize Your Health
+              <p className="text-lg text-gray-300 leading-relaxed">
+                Body fuels everything else. Simple workout templates, macro goals, and a habit tracker record every rep and meal, making high energy your new baseline.
               </p>
             </div>
             <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden lg:order-2">
@@ -63,8 +63,8 @@ const BoardroomBusiness = () => {
               <h3 className="font-rajdhani font-bold text-3xl md:text-4xl uppercase tracking-wide text-white mb-4">
                 BALANCE
               </h3>
-              <p className="text-xl text-gray-300">
-                Your Relationships Matter
+              <p className="text-lg text-gray-300 leading-relaxed">
+                Balance keeps marriage and kids at the center of the mission. We schedule date nights, one-on-one time with each child, and fast family check-ins so your home life shows measurable progress too.
               </p>
             </div>
           </div>

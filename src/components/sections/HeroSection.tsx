@@ -24,7 +24,7 @@ const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
   }, []);
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32">
       {/* Parallax Background Elements */}
       <div 
         className="absolute inset-0 opacity-20"
