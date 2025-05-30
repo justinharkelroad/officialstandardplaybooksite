@@ -4,9 +4,16 @@ import VideoPlayer from '@/components/VideoPlayer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Target, Calendar, Users, CheckCircle, ArrowRight, Shield, TrendingUp, Video, FileText, User } from 'lucide-react';
+import { Target, Calendar, Users, CheckCircle, ArrowRight, Shield, TrendingUp, Video, FileText, User, CreditCard, DollarSign } from 'lucide-react';
 
 const SalesExperience = () => {
+  const scrollToPayment = () => {
+    const paymentSection = document.getElementById('payment');
+    if (paymentSection) {
+      paymentSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const weeklyFramework = [
     {
       week: 1,
@@ -130,7 +137,7 @@ const SalesExperience = () => {
 
           <div className="animate-fade-up" style={{ animationDelay: '0.6s' }}>
             <Button 
-              onClick={() => window.open('https://createthestandard.com/8weekxppayment', '_blank')}
+              onClick={scrollToPayment}
               className="btn-primary text-lg px-8 py-4"
             >
               Get Started Now
@@ -327,6 +334,116 @@ const SalesExperience = () => {
         </div>
       </section>
 
+      {/* Payment Section */}
+      <section id="payment" className="py-20 relative">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
+              Choose Your Payment Option
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Select the payment plan that works best for your business
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Weekly Pay Option */}
+            <Card className="bg-dark-card border-primary/20 card-hover">
+              <CardHeader className="text-center">
+                <div className="w-16 h-16 bg-primary rounded-square flex items-center justify-center mx-auto mb-4">
+                  <CreditCard className="w-8 h-8 text-white" />
+                </div>
+                <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide mb-4">
+                  Weekly Pay Option
+                </CardTitle>
+                <div className="mb-4">
+                  <span className="text-4xl font-bold text-white">$625</span>
+                  <span className="text-gray-400">/week</span>
+                </div>
+                <CardDescription className="text-gray-400">
+                  Pay weekly for 8 weeks
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-center">
+                <ul className="space-y-3 mb-8 text-left">
+                  <li className="flex items-center text-gray-300">
+                    <CheckCircle className="w-5 h-5 text-primary mr-3" />
+                    Flexible weekly payments
+                  </li>
+                  <li className="flex items-center text-gray-300">
+                    <CheckCircle className="w-5 h-5 text-primary mr-3" />
+                    Full 8-week experience
+                  </li>
+                  <li className="flex items-center text-gray-300">
+                    <CheckCircle className="w-5 h-5 text-primary mr-3" />
+                    Complete transformation program
+                  </li>
+                  <li className="flex items-center text-gray-300">
+                    <CheckCircle className="w-5 h-5 text-primary mr-3" />
+                    Total Investment: $5,000
+                  </li>
+                </ul>
+                <a href="https://link.fastpaydirect.com/payment-link/67b9e53c156a771b286e2ca6" target="_blank" rel="noopener noreferrer">
+                  <Button className="btn-primary w-full">
+                    Start Weekly Payments
+                  </Button>
+                </a>
+              </CardContent>
+            </Card>
+
+            {/* Pay In Full Option */}
+            <Card className="bg-dark-card border-primary relative card-hover animate-pulse-neon">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <span className="bg-primary text-white px-4 py-1 rounded-pill text-sm font-semibold uppercase tracking-wide">
+                  Save $500
+                </span>
+              </div>
+              <CardHeader className="text-center">
+                <div className="w-16 h-16 bg-primary-accent rounded-square flex items-center justify-center mx-auto mb-4">
+                  <DollarSign className="w-8 h-8 text-white" />
+                </div>
+                <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide mb-4">
+                  Pay In Full Option
+                </CardTitle>
+                <div className="mb-4">
+                  <div className="text-lg text-gray-400 line-through">$5,000</div>
+                  <span className="text-4xl font-bold text-white">$4,500</span>
+                  <span className="text-gray-400"> one-time</span>
+                </div>
+                <CardDescription className="text-gray-400">
+                  Save $500 with upfront payment
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-center">
+                <ul className="space-y-3 mb-8 text-left">
+                  <li className="flex items-center text-gray-300">
+                    <CheckCircle className="w-5 h-5 text-primary mr-3" />
+                    $500 discount savings
+                  </li>
+                  <li className="flex items-center text-gray-300">
+                    <CheckCircle className="w-5 h-5 text-primary mr-3" />
+                    Full 8-week experience
+                  </li>
+                  <li className="flex items-center text-gray-300">
+                    <CheckCircle className="w-5 h-5 text-primary mr-3" />
+                    Complete transformation program
+                  </li>
+                  <li className="flex items-center text-gray-300">
+                    <CheckCircle className="w-5 h-5 text-primary mr-3" />
+                    No recurring payments
+                  </li>
+                </ul>
+                <a href="https://link.fastpaydirect.com/payment-link/67b9e4c1020837472ed0b709" target="_blank" rel="noopener noreferrer">
+                  <Button className="btn-primary w-full bg-primary-accent hover:bg-primary-light">
+                    Pay In Full & Save
+                  </Button>
+                </a>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* 8-Week Experience Framework Section */}
       <section className="py-20 relative">
         <div className="container mx-auto px-4">
@@ -429,7 +546,7 @@ const SalesExperience = () => {
       {/* Sticky CTA for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 bg-dark-card border-t border-primary/20 p-4 md:hidden z-40">
         <Button 
-          onClick={() => window.open('https://createthestandard.com/8weekxppayment', '_blank')}
+          onClick={scrollToPayment}
           className="btn-primary w-full"
         >
           Start 8-Week Sales Experience
