@@ -1,3 +1,4 @@
+
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import VideoModal from '@/components/VideoModal';
@@ -43,9 +44,9 @@ const AppAccess = () => {
           {/* Hero Image */}
           <div className="max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.3s' }}>
             <img 
-              src="/lovable-uploads/c3d40ca0-ec94-4c01-af93-49868153b917.png"
+              src="/lovable-uploads/33c19236-cc4d-46b8-9b30-461dc652c7e7.png"
               alt="App Access Interface"
-              className="w-full h-auto max-w-2xl mx-auto"
+              className="w-full h-auto max-w-4xl mx-auto"
             />
           </div>
 
