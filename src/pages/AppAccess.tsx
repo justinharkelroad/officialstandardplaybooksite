@@ -1,4 +1,3 @@
-
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import VideoModal from '@/components/VideoModal';
@@ -78,9 +77,10 @@ const AppAccess = () => {
             {/* Stack Level Access */}
             <Card className="bg-dark-card border-primary/20 card-hover">
               <CardHeader className="text-center">
-                <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide mb-4">
+                <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide mb-2">
                   Stack Level Access
                 </CardTitle>
+                <p className="text-primary text-sm font-medium mb-4">Included in Boardroom</p>
                 <div className="mb-4">
                   <span className="text-5xl font-bold text-white">$70</span>
                   <span className="text-gray-400">/month</span>
@@ -121,9 +121,10 @@ const AppAccess = () => {
             {/* Arsenal Level Access */}
             <Card className="bg-dark-card border-primary relative card-hover">
               <CardHeader className="text-center">
-                <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide mb-4">
+                <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide mb-2">
                   Arsenal Level Access
                 </CardTitle>
+                <p className="text-primary text-sm font-medium mb-4">Included in Directive and Partnership</p>
                 <div className="mb-4">
                   <span className="text-5xl font-bold text-white">$125</span>
                   <span className="text-gray-400">/month</span>
