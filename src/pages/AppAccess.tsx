@@ -1,10 +1,10 @@
-
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import VideoModal from '@/components/VideoModal';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Target, BookOpen, Video, Users, ArrowRight, Shield } from 'lucide-react';
+import { Target, BookOpen, Video, Users, ArrowRight, Shield, Play } from 'lucide-react';
 
 const AppAccess = () => {
   const scrollToPricing = () => {
