@@ -54,6 +54,10 @@ const AppAccessPricing = () => {
                   <Shield className="w-5 h-5 text-primary mr-3" />
                   Chat
                 </li>
+                <li className="flex items-center text-gray-300">
+                  <Shield className="w-5 h-5 text-primary mr-3" />
+                  Stack
+                </li>
               </ul>
               <Button className="btn-primary w-full">
                 Get Stack Access
