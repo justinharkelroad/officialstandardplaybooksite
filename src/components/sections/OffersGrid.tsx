@@ -18,7 +18,7 @@ const OffersGrid = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {/* 8 Week Sales Experience */}
+          {/* 8 Week Sales Management Training */}
           <div className="card-hover">
             <Card className="bg-dark-card border-primary/20 h-full group">
               <CardHeader>
@@ -26,15 +26,15 @@ const OffersGrid = () => {
                   <Target className="w-6 h-6 text-white" />
                 </div>
                 <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide">
-                  8 Week Sales Experience
+                  8 Week Sales Management Training
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  Build a Sales Process, Accountability Frame and Consequence Ladder with precision
+                  Build effective sales management systems with precision training
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-300 mb-4">
-                  Your or your manager work one on one with Justin to build out your agency sales process.
+                  You or your manager work one on one with Justin to transform your team's sales management approach.
                 </p>
                 <Link to="/sales-experience">
                   <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full">
