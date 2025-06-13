@@ -116,11 +116,11 @@ const SalesExperience = () => {
           <h1 className="font-rajdhani font-bold text-6xl md:text-8xl uppercase tracking-wide text-white mb-6 animate-fade-up">
             8 Week Sales
             <br />
-            <span className="text-gradient">Experience</span>
+            <span className="text-gradient">Management Training</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-            Build a Sales Process, Accountability Frame and Consequence Ladder with precision. Work one-on-one with Justin to transform your agency's sales approach.
+            Build effective sales management systems with precision training. Work one-on-one with Justin to transform your team's sales management approach.
           </p>
 
           {/* Video Frame with Background Glow */}
@@ -129,7 +129,7 @@ const SalesExperience = () => {
             <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
               <VideoPlayer 
                 videoId="kJWh8cVHoFs"
-                title="8-Week Sales Experience Overview"
+                title="8-Week Sales Management Training Overview"
                 className="w-full h-full rounded-lg"
               />
             </div>
@@ -155,7 +155,7 @@ const SalesExperience = () => {
               Here's What You Get
             </h2>
             <p className="text-xl text-gray-300 leading-relaxed">
-              Everything you need to build a world-class sales operation in just 8 weeks.
+              Everything you need to build world-class sales management systems in just 8 weeks.
             </p>
           </div>
 
@@ -223,15 +223,15 @@ const SalesExperience = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
-              The Sales Process Problem
+              The Sales Management Problem
             </h2>
             <p className="text-xl text-gray-300 leading-relaxed mb-8">
-              Most agencies struggle with inconsistent sales processes, lack of accountability, and unclear consequences for underperformance. 
+              Most agencies struggle with ineffective sales management, lack of accountability systems, and unclear performance standards. 
               This leads to missed opportunities, frustrated teams, and unpredictable revenue.
             </p>
             <p className="text-lg text-gray-400">
-              Without a systematic approach to sales, even talented teams can't reach their full potential. 
-              You need structure, accountability, and proven frameworks to build a high-performing sales organization.
+              Without proper sales management training, even talented managers can't reach their full potential. 
+              You need structured management systems, accountability frameworks, and proven methodologies to build a high-performing sales organization.
             </p>
           </div>
         </div>
@@ -242,15 +242,14 @@ const SalesExperience = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
-              The 8-Week Transformation
+              The 8-Week Management Transformation
             </h2>
             <p className="text-xl text-gray-300 leading-relaxed">
-              Work directly with Justin over 8 intensive weeks to build a complete sales system. 
-              Create processes, establish accountability measures, and implement consequence ladders that drive consistent results.
+              Work directly with Justin over 8 intensive weeks to build comprehensive sales management systems. 
+              Create management processes, establish performance accountability, and implement leadership structures that drive consistent results.
             </p>
           </div>
 
-          {/* Features Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <Card className="bg-dark-card border-primary/20 card-hover text-center">
               <CardHeader>
@@ -384,11 +383,11 @@ const SalesExperience = () => {
                   </li>
                   <li className="flex items-center text-gray-300">
                     <CheckCircle className="w-5 h-5 text-primary mr-3" />
-                    Full 8-week experience
+                    Full 8-week training program
                   </li>
                   <li className="flex items-center text-gray-300">
                     <CheckCircle className="w-5 h-5 text-primary mr-3" />
-                    Complete transformation program
+                    Complete management transformation
                   </li>
                   <li className="flex items-center text-gray-300">
                     <CheckCircle className="w-5 h-5 text-primary mr-3" />
@@ -434,11 +433,11 @@ const SalesExperience = () => {
                   </li>
                   <li className="flex items-center text-gray-300">
                     <CheckCircle className="w-5 h-5 text-primary mr-3" />
-                    Full 8-week experience
+                    Full 8-week training program
                   </li>
                   <li className="flex items-center text-gray-300">
                     <CheckCircle className="w-5 h-5 text-primary mr-3" />
-                    Complete transformation program
+                    Complete management transformation
                   </li>
                   <li className="flex items-center text-gray-300">
                     <CheckCircle className="w-5 h-5 text-primary mr-3" />
@@ -461,10 +460,10 @@ const SalesExperience = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
-              The 8 Week Experience Framework
+              The 8 Week Management Training Framework
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              A structured, week-by-week roadmap that transforms your sales team through progressive skill building and continuous improvement.
+              A structured, week-by-week roadmap that transforms your sales management through progressive skill building and continuous improvement.
             </p>
           </div>
 
@@ -509,7 +508,7 @@ const SalesExperience = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-6">
-              Sales Experience FAQ
+              Sales Management Training FAQ
             </h2>
           </div>
 
@@ -517,10 +516,10 @@ const SalesExperience = () => {
             <Accordion type="single" collapsible className="space-y-4">
               <AccordionItem value="item-1" className="bg-dark-card border border-primary/20 rounded-lg px-6">
                 <AccordionTrigger className="text-white font-rajdhani text-lg uppercase tracking-wide">
-                  What's included in the 8-week program?
+                  What's included in the 8-week training program?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-300">
-                  You get 8 weeks of direct one-on-one coaching with Justin, custom sales process development, accountability framework creation, consequence ladder implementation, and ongoing support throughout the transformation.
+                  You get 8 weeks of direct one-on-one coaching with Justin, custom sales management process development, accountability framework creation, consequence ladder implementation, and ongoing support throughout the transformation.
                 </AccordionContent>
               </AccordionItem>
 
@@ -529,7 +528,7 @@ const SalesExperience = () => {
                   Who participates in the sessions?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-300">
-                  Either you as the agency owner or your sales manager can participate in the one-on-one sessions with Justin. We recommend whoever will be directly implementing and overseeing the sales process on a daily basis.
+                  Either you as the agency owner or your sales manager can participate in the one-on-one sessions with Justin. We recommend whoever will be directly implementing and overseeing the sales management processes on a daily basis.
                 </AccordionContent>
               </AccordionItem>
 
@@ -538,16 +537,16 @@ const SalesExperience = () => {
                   How quickly will we see results?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-300">
-                  Most agencies start seeing improvements in sales activity and accountability within the first 2-3 weeks. Full transformation and consistent results typically manifest by week 6-8 and continue growing from there.
+                  Most agencies start seeing improvements in sales management effectiveness and team accountability within the first 2-3 weeks. Full transformation and consistent results typically manifest by week 6-8 and continue growing from there.
                 </AccordionContent>
               </AccordionItem>
 
               <AccordionItem value="item-4" className="bg-dark-card border border-primary/20 rounded-lg px-6">
                 <AccordionTrigger className="text-white font-rajdhani text-lg uppercase tracking-wide">
-                  What if our current sales process is already established?
+                  What if our current sales management process is already established?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-300">
-                  We'll audit your existing process and identify gaps or inefficiencies. The program focuses on optimization and enhancement, building on what works while fixing what doesn't to create a more effective system.
+                  We'll audit your existing management processes and identify gaps or inefficiencies. The program focuses on optimization and enhancement, building on what works while fixing what doesn't to create a more effective management system.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -561,7 +560,7 @@ const SalesExperience = () => {
           onClick={scrollToPayment}
           className="btn-primary w-full"
         >
-          Start 8-Week Sales Experience
+          Start 8-Week Sales Management Training
         </Button>
       </div>
 
