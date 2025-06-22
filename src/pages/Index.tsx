@@ -8,6 +8,7 @@ import OffersGrid from '@/components/sections/OffersGrid';
 import DIYAccessSection from '@/components/sections/DIYAccessSection';
 import PricingSection from '@/components/sections/PricingSection';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
+import AITrainingBanner from '@/components/sections/AITrainingBanner';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -34,6 +35,7 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
+      <AITrainingBanner />
       <HeroSection onScrollToSection={scrollToSection} />
       <SoftwareSection />
       <AISection />
