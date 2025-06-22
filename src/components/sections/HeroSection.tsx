@@ -1,6 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import VideoPlayer from '@/components/VideoPlayer';
+import AITrainingBanner from '@/components/sections/AITrainingBanner';
 import { ArrowRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
@@ -47,6 +48,11 @@ const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
           Elite coaching for entrepreneurs who refuse to settle. Transform your business, 
           elevate your mindset, and join the ranks of high performers.
         </p>
+
+        {/* AI Training Banner */}
+        <div className="animate-fade-up mb-12" style={{ animationDelay: '0.3s' }}>
+          <AITrainingBanner />
+        </div>
 
         {/* Video Frame with Background Glow */}
         <div className="relative max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>
