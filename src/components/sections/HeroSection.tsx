@@ -1,6 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Play } from 'lucide-react';
+import VideoPlayer from '@/components/VideoPlayer';
 import VideoModal from '@/components/VideoModal';
 
 interface HeroSectionProps {
@@ -27,7 +28,19 @@ const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
           Stop hoping for results. Start getting them with systems that work.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-up" style={{ animationDelay: '0.3s' }}>
+        {/* Video Frame */}
+        <div className="relative max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+          <div className="video-glow absolute -inset-4"></div>
+          <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
+            <VideoPlayer 
+              videoId="dQw4w9WgXcQ"
+              title="Demo Video"
+              className="w-full h-full rounded-lg"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-up" style={{ animationDelay: '0.4s' }}>
           <Button className="btn-primary text-lg px-8 py-4">
             Get Started Today
             <ArrowRight className="ml-2 h-5 w-5" />
