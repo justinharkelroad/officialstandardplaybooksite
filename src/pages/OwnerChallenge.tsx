@@ -112,9 +112,7 @@ const OwnerChallenge = () => {
   };
 
   const handleEnrollClick = (option: any) => {
-    // Placeholder for Stripe payment link
-    console.log('Enroll clicked for:', option.title);
-    // You'll replace this with actual Stripe payment URLs
+    window.open("https://buy.stripe.com/cNifZh3GK0Ye9S835y4Vy07", "_blank");
   };
 
   return (
@@ -123,7 +121,7 @@ const OwnerChallenge = () => {
       <ChallengeHero
         title="Raise the Standard of Your Agency in 42 Days"
         subtitle="6-Week Core 4 & Leadership Challenge."
-        videoId="placeholder-video-id"
+        videoId="vPPKhd4B2Tk"
         onEnrollClick={scrollToPricing}
       />
       <ChallengePainSolution

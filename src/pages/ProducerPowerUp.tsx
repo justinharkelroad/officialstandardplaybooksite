@@ -83,9 +83,11 @@ const ProducerPowerUp = () => {
   };
 
   const handleEnrollClick = (option: any) => {
-    // Placeholder for Stripe payment link
-    console.log('Enroll clicked for:', option.title);
-    // You'll replace this with actual Stripe payment URLs
+    if (option.title === "Single Seat") {
+      window.open("https://buy.stripe.com/9B6bJ11yCcGW9S8gWo4Vy05", "_blank");
+    } else if (option.title === "Team Pack (5+)") {
+      window.open("https://buy.stripe.com/cNidR9b9cgXc4xO21u4Vy06", "_blank");
+    }
   };
 
   return (
@@ -94,7 +96,7 @@ const ProducerPowerUp = () => {
       <ChallengeHero
         title="Producer Power-Up"
         subtitle="Stack habits. Supercharge sales and life—in 42 days."
-        videoId="placeholder-video-id"
+        videoId="1UhWckfDqDw"
         onEnrollClick={scrollToPricing}
       />
       <ChallengePainSolution
