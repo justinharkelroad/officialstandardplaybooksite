@@ -16,7 +16,7 @@ const ProducerPowerUp = () => {
   ];
 
   const solutions = [
-    "+125% activity increase through systematic approach",
+    "Increased daily activity through systematic approach",
     "Fluent discovery conversations that uncover needs",
     "Objection-to-decision mastery that closes deals",
     "Core 4 power score habit stack for peak performance"
@@ -25,19 +25,19 @@ const ProducerPowerUp = () => {
   const features = [
     {
       title: "Daily Micro-Videos",
-      description: "30 weekday micro-videos (≈3 min each) delivered 7 AM"
+      description: "30 weekday micro-videos delivered 7 AM"
     },
     {
-      title: "60-Day Stack Access",
+      title: "60-Day App Access",
       description: "Private stacking, habit streaks, Core 4 tracker"
     },
     {
-      title: "Weekly Emails",
+      title: "Assignments",
       description: "Friday Discovery-Stack + Sunday 'General's Tent' planning emails"
     },
     {
       title: "Lifetime Access",
-      description: "Lifetime replay & concierge onboarding (credentials within 48 h)"
+      description: "Lifetime Access to emailed trainings"
     }
   ];
 
@@ -52,7 +52,7 @@ const ProducerPowerUp = () => {
       price: "$249",
       badge: "Owner Seat FREE",
       features: ["Per seat pricing", "Free owner enrollment when you buy 5+"],
-      highlighted: true
+      highlighted: false
     }
   ];
 
@@ -94,7 +94,7 @@ const ProducerPowerUp = () => {
       <ChallengeHero
         title="Producer Power-Up"
         subtitle="Stack habits. Supercharge sales and life—in 42 days."
-        backgroundImage="/lovable-uploads/c3d40ca0-ec94-4c01-af93-49868153b917.png"
+        videoId="placeholder-video-id"
         onEnrollClick={scrollToPricing}
       />
       <ChallengePainSolution

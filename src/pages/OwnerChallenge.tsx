@@ -8,12 +8,14 @@ import ChallengePricing from '@/components/sections/ChallengePricing';
 import ChallengeTimeline from '@/components/sections/ChallengeTimeline';
 import ChallengeFAQ from '@/components/sections/ChallengeFAQ';
 import ChallengeNavigation from '@/components/sections/ChallengeNavigation';
+import TeamPromotion from '@/components/sections/TeamPromotion';
 
 const OwnerChallenge = () => {
   const painPoints = [
     "Groundhog-Day operations with no clear progress",
     "Eroding energy and strained relationships",
-    "No playbook for systematic growth and accountability"
+    "No playbook for systematic growth and accountability",
+    "Constantly trying to re-discover your purpose"
   ];
 
   const solutions = [
@@ -25,22 +27,22 @@ const OwnerChallenge = () => {
 
   const features = [
     {
-      title: "30 weekday owner-level micro-lessons (≈3 min)"
+      title: "30 WEEKDAY OWNER-LEVEL MICRO-LESSONS"
     },
     {
-      title: "60-day App Access for Core 4 tracking & stacking"
+      title: "60-DAY APP ACCESS FOR CORE 4 TRACKING & STACKING"
     },
     {
-      title: "CEO templates & SOP swipe files"
+      title: "CEO TEMPLATES & SOP SWIPE FILES"
     },
     {
-      title: "Friday Discovery-Stacks & Sunday General's Tent emails"
+      title: "FRIDAY DISCOVERY-STACKS & SUNDAY GENERAL'S TENT EMAILS"
     },
     {
-      title: "Lifetime replay of emailed resources"
+      title: "LIFETIME REPLAY OF EMAILED RESOURCES"
     },
     {
-      title: "Credentials delivered within 48 h; start first Sunday"
+      title: "CREDENTIALS DELIVERED WITHIN 48 H; START FIRST SUNDAY"
     }
   ];
 
@@ -48,14 +50,15 @@ const OwnerChallenge = () => {
     {
       title: "Owner Seat",
       price: "$399",
-      highlighted: true
+      highlighted: false
     },
     {
       title: "Owner + Debrief",
-      price: "$499",
-      originalPrice: "$898",
-      features: ["Includes Week-7 1-hour debrief call"],
-      badge: "Best Value"
+      price: "$898",
+      originalPrice: "$1,399",
+      features: ["Final Week 1 Hour Debrief and Coaching Call"],
+      badge: "Best Value",
+      highlighted: false
     }
   ];
 
@@ -120,13 +123,14 @@ const OwnerChallenge = () => {
       <ChallengeHero
         title="Raise the Standard of Your Agency in 42 Days"
         subtitle="6-Week Core 4 & Leadership Challenge."
-        backgroundImage="/lovable-uploads/c046f138-ec79-47c2-8cee-9e5198756308.png"
+        videoId="placeholder-video-id"
         onEnrollClick={scrollToPricing}
       />
       <ChallengePainSolution
         painPoints={painPoints}
         solutions={solutions}
       />
+      <TeamPromotion />
       <ChallengeFeatures
         title="Exactly What You Get"
         features={features}

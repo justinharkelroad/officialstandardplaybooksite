@@ -32,11 +32,7 @@ const ChallengePricing = ({ title, options, onEnrollClick }: ChallengePricingPro
           {options.map((option, index) => (
             <Card 
               key={index} 
-              className={`relative ${
-                option.highlighted 
-                  ? 'bg-gradient-to-br from-primary/20 to-primary-accent/20 border-primary shadow-2xl' 
-                  : 'bg-dark-card border-primary/20'
-              } hover:shadow-xl transition-all duration-300`}
+              className="relative bg-dark-card border-primary/20 hover:shadow-xl transition-all duration-300"
             >
               {option.badge && (
                 <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary text-white">
