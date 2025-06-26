@@ -4,7 +4,11 @@ import { ArrowRight, Play } from 'lucide-react';
 import { useState } from 'react';
 import VideoModal from '@/components/VideoModal';
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  onScrollToSection?: (sectionId: string) => void;
+}
+
+const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   const handleWatchDemo = () => {
@@ -26,7 +30,7 @@ const HeroSection = () => {
 
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="font-rajdhani font-bold text-4xl md:text-6xl lg:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up">
-            <span className="text-purple-500">Live the Playbook</span>
+            <span className="text-purple-400">Live the Playbook</span>
             <br />
             <span className="text-gradient">Execute Daily</span>
           </h1>
