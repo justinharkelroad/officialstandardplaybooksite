@@ -128,6 +128,20 @@ const OwnerChallenge = () => {
         painPoints={painPoints}
         solutions={solutions}
       />
+      
+      {/* App Demo Image Section */}
+      <section className="py-16 relative">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto text-center">
+            <img 
+              src="/lovable-uploads/d9dddbd2-3799-4f48-9c81-3d75640ea134.png" 
+              alt="App Demo - All Built on an App That Creates Power for Your Life" 
+              className="w-full h-auto rounded-lg shadow-2xl"
+            />
+          </div>
+        </div>
+      </section>
+      
       <TeamPromotion />
       <ChallengeFeatures
         title="Exactly What You Get"
