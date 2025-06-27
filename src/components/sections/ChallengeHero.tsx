@@ -19,6 +19,8 @@ const ChallengeHero = ({
   onEnrollClick, 
   showEnrollButton = true 
 }: ChallengeHeroProps) => {
+  const isImageTitle = title.startsWith('/lovable-uploads/');
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32">
       {/* Background with subtle overlay */}
@@ -28,9 +30,19 @@ const ChallengeHero = ({
       </div>
 
       <div className="container mx-auto px-4 text-center relative z-10">
-        <h1 className="font-rajdhani font-bold text-4xl md:text-6xl lg:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up">
-          {title}
-        </h1>
+        {isImageTitle ? (
+          <div className="mb-6 animate-fade-up">
+            <img 
+              src={title} 
+              alt="Challenge Title" 
+              className="mx-auto max-w-full h-auto max-h-48 object-contain"
+            />
+          </div>
+        ) : (
+          <h1 className="font-rajdhani font-bold text-4xl md:text-6xl lg:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up">
+            {title}
+          </h1>
+        )}
         
         <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.2s' }}>
           {subtitle}

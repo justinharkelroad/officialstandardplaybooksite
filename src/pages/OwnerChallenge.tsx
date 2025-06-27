@@ -119,7 +119,7 @@ const OwnerChallenge = () => {
     <div className="min-h-screen">
       <Navigation />
       <ChallengeHero
-        title="Raise the Standard of Your Agency in 42 Days"
+        title="/lovable-uploads/70586c79-98cd-42f1-8a44-5625af2a88f7.png"
         subtitle="6-Week Core 4 & Leadership Challenge."
         videoId="vPPKhd4B2Tk"
         onEnrollClick={scrollToPricing}

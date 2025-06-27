@@ -94,7 +94,7 @@ const ProducerPowerUp = () => {
     <div className="min-h-screen">
       <Navigation />
       <ChallengeHero
-        title="Producer Power-Up"
+        title="/lovable-uploads/ec2eda85-7cf5-4aa9-8997-cee842066d4b.png"
         subtitle="Stack habits. Supercharge sales and life—in 42 days."
         videoId="1UhWckfDqDw"
         onEnrollClick={scrollToPricing}
