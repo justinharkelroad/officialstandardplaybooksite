@@ -103,6 +103,20 @@ const ProducerPowerUp = () => {
         painPoints={painPoints}
         solutions={solutions}
       />
+      
+      {/* App Demo Image Section */}
+      <section className="py-16 relative">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto text-center">
+            <img 
+              src="/lovable-uploads/862c875f-96ae-42fe-b043-eec8370ea39e.png" 
+              alt="App Demo - Track Daily Habits and Build Culture" 
+              className="w-full h-auto rounded-lg shadow-2xl"
+            />
+          </div>
+        </div>
+      </section>
+      
       <ChallengeFeatures
         title="What You Get"
         features={features}
