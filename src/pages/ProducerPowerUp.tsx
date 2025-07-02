@@ -104,6 +104,49 @@ const ProducerPowerUp = () => {
         solutions={solutions}
       />
       
+      {/* What Can The Agency Owner Expect Section */}
+      <section className="py-16 relative">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-12">
+              What Can The Agency Owner Expect?
+            </h2>
+            <div className="bg-dark-card border-primary/20 rounded-lg p-8">
+              <ul className="space-y-4 text-left">
+                <li className="flex items-start">
+                  <span className="text-primary mr-3 mt-1">•</span>
+                  <span className="text-gray-300">Weekly Discovery Stacks every Friday from Each Team Member</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-3 mt-1">•</span>
+                  <span className="text-gray-300">Activation of Personal Accountability Mindset for Team Members</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-3 mt-1">•</span>
+                  <span className="text-gray-300">Activity = Results Understanding</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-3 mt-1">•</span>
+                  <span className="text-gray-300">Owner Fast Track Coaching PDF Based On The 30 Lessons</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-3 mt-1">•</span>
+                  <span className="text-gray-300">60 Days of Access to the Standard App (42 Days Challenge & 18 Days for Reinforcement of Habits)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-3 mt-1">•</span>
+                  <span className="text-gray-300">Cultural Lift</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-3 mt-1">•</span>
+                  <span className="text-gray-300">Access To Standard Membership & 25% OFF First Month Post Challenge</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      
       {/* App Demo Image Section */}
       <section className="py-16 relative">
         <div className="container mx-auto px-4">
