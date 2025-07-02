@@ -1,6 +1,6 @@
 
 import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, ZoomIn } from 'lucide-react';
 
 interface ChallengeFeature {
   title: string;
@@ -25,20 +25,36 @@ const ChallengeFeatures = ({ title, features, layout = 'grid' }: ChallengeFeatur
 
         <div className="max-w-6xl mx-auto">
           {layout === 'grid' ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {features.map((feature, index) => (
-                <Card key={index} className="bg-dark-card border-primary/20 hover:shadow-xl transition-shadow duration-300">
-                  <CardContent className="p-6 text-center">
-                    <CheckCircle className="w-8 h-8 text-primary mx-auto mb-4" />
-                    <h3 className="font-rajdhani font-bold text-lg text-white mb-2 uppercase">
-                      {feature.title}
-                    </h3>
-                    {feature.description && (
-                      <p className="text-gray-300 text-sm">{feature.description}</p>
-                    )}
-                  </CardContent>
-                </Card>
-              ))}
+            <div className="space-y-6">
+              {/* Challenge Onboarding Call - Full Width Box */}
+              <Card className="bg-dark-card border-primary/20 hover:shadow-xl transition-shadow duration-300">
+                <CardContent className="p-8 text-center">
+                  <ZoomIn className="w-12 h-12 text-primary mx-auto mb-6" />
+                  <h3 className="font-rajdhani font-bold text-2xl text-white mb-4 uppercase">
+                    Challenge On Boarding Call Before Launch
+                  </h3>
+                  <p className="text-gray-300 text-base max-w-4xl mx-auto">
+                    You will book a 30 Minute Launch Call the week before your challenge will begin to understand every detail and ask all the clarifying questions
+                  </p>
+                </CardContent>
+              </Card>
+              
+              {/* Original 4 Feature Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {features.map((feature, index) => (
+                  <Card key={index} className="bg-dark-card border-primary/20 hover:shadow-xl transition-shadow duration-300">
+                    <CardContent className="p-6 text-center">
+                      <CheckCircle className="w-8 h-8 text-primary mx-auto mb-4" />
+                      <h3 className="font-rajdhani font-bold text-lg text-white mb-2 uppercase">
+                        {feature.title}
+                      </h3>
+                      {feature.description && (
+                        <p className="text-gray-300 text-sm">{feature.description}</p>
+                      )}
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
           ) : (
             <Card className="bg-dark-card border-primary/20">
