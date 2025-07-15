@@ -10,8 +10,14 @@ const DIYAccessSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="font-rajdhani font-bold text-3xl md:text-4xl uppercase tracking-wide text-white mb-4">
-            Do It Yourself Access
+            The Lie You Tell Yourself Every Night
           </h2>
+          <div className="max-w-3xl mx-auto space-y-2 text-gray-300">
+            <p>"I just need the right system."</p>
+            <p>"I just need more information."</p>
+            <p>"I just need to get organized."</p>
+            <p className="text-primary font-medium">No. You need to stop negotiating with your potential.</p>
+          </div>
         </div>
 
         <div className="max-w-4xl mx-auto card-hover">
@@ -24,18 +30,20 @@ const DIYAccessSection = () => {
                   </div>
                   <div>
                     <h3 className="text-white font-rajdhani text-3xl uppercase tracking-wide mb-2">
-                      App Access Only
+                      APP ACCESS: The Mirror You've Been Avoiding
                     </h3>
-                    <p className="text-gray-300 text-lg">
-                      Perfect for entrepreneurs just beginning their journey to excellence. Get started with our foundational tools and resources.
-                    </p>
+                    <div className="space-y-2 text-lg text-gray-300">
+                      <p>The Stack shows you exactly who you are.</p>
+                      <p className="text-primary font-medium">The question is: Can you handle it?</p>
+                      <p className="text-sm">$70/month to stop lying to yourself.</p>
+                      <p className="text-sm text-gray-400">$0 to keep pretending tomorrow is different.</p>
+                    </div>
                   </div>
                 </div>
                 <div>
                   <Link to="/app">
                     <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
-                      SEE OPTIONS
-                      <ArrowRight className="w-5 h-5 ml-2" />
+                      FACE YOUR TRUTH →
                     </Button>
                   </Link>
                 </div>

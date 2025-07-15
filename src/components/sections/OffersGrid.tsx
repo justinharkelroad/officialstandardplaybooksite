@@ -26,20 +26,28 @@ const OffersGrid = () => {
                   <Target className="w-6 h-6 text-white" />
                 </div>
                 <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide">
-                  8 Week Sales Management Training
+                  8 WEEK SALES MANAGEMENT TRAINING
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  Build effective sales management systems with precision training
+                  Your team doesn't need motivation. They need a leader worth following.
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300 mb-4">
-                  You or your manager work one on one with Justin to transform your team's sales management approach.
-                </p>
+                <div className="space-y-3 mb-6">
+                  <p className="text-gray-300">Stop managing salespeople. Start manufacturing killers.</p>
+                  
+                  <div className="space-y-2 text-sm text-gray-400">
+                    <p><strong>Week 1:</strong> They'll hate you.</p>
+                    <p><strong>Week 4:</strong> They'll fear you.</p>
+                    <p><strong>Week 8:</strong> They'll thank you.</p>
+                  </div>
+                  
+                  <p className="text-primary font-medium">Because mediocrity is comfortable. Excellence hurts.</p>
+                  <p className="text-gray-300 italic">Choose pain with purpose or accept pain without progress.</p>
+                </div>
                 <Link to="/sales-experience">
                   <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full">
-                    Learn More
-                    <ArrowRight className="w-5 h-5 ml-2" />
+                    STOP MANAGING. START DOMINATING →
                   </Button>
                 </Link>
               </CardContent>
@@ -54,20 +62,23 @@ const OffersGrid = () => {
                   <Users className="w-6 h-6 text-white" />
                 </div>
                 <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide">
-                  Boardroom
+                  THE BOARDROOM
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  Elite community and strategic guidance.
+                  Isolation is where good agencies go to die.
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300 mb-6">
-                  Join a group of agents who understand your stress every single month for 2 hours.
-                </p>
+                <div className="space-y-3 mb-6">
+                  <p className="text-gray-300">Every month, you sit across from owners who've already been where you're trying to go. They see through your excuses. They call out your blind spots. They refuse to let you hide.</p>
+                  
+                  <p className="text-primary font-medium">This isn't networking. It's chemotherapy for your comfort zone.</p>
+                  
+                  <p className="text-gray-300 italic">Your competition hopes you'll stay comfortable.</p>
+                </div>
                 <Link to="/boardroom">
                   <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full">
-                    Learn More
-                    <ArrowRight className="w-5 h-5 ml-2" />
+                    BURN THE BOATS →
                   </Button>
                 </Link>
               </CardContent>
@@ -82,20 +93,25 @@ const OffersGrid = () => {
                   <Zap className="w-6 h-6 text-white" />
                 </div>
                 <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide">
-                  The Directive
+                  THE DIRECTIVE
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  Intensive coaching and implementation.
+                  When good enough isn't good enough anymore.
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300 mb-6">
-                  Get everything in Boardroom + a one on one 2 hour coaching call with Justin.
-                </p>
+                <div className="space-y-3 mb-6">
+                  <p className="text-gray-300">2 hours. You and Justin. No hiding.</p>
+                  
+                  <p className="text-gray-300">He's built what you're trying to build. Sold what you're trying to sell. Failed where you're about to fail.</p>
+                  
+                  <p className="text-primary font-medium">The only question: Are you coachable or just curious?</p>
+                  
+                  <p className="text-gray-300 italic">Curious people take notes. Coachable people take action.</p>
+                </div>
                 <Link to="/directive">
                   <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full">
-                    Learn More
-                    <ArrowRight className="w-5 h-5 ml-2" />
+                    BOOK YOUR EXECUTION →
                   </Button>
                 </Link>
               </CardContent>
@@ -110,16 +126,22 @@ const OffersGrid = () => {
                   <Crown className="w-6 h-6 text-white" />
                 </div>
                 <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide">
-                  The Partnership
+                  THE PARTNERSHIP
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  1v1 Coaching for yourself and your team.
+                  Your agency is a direct reflection of your leadership.
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300 mb-6">
-                  The highest level of engagement for serious agency owners.
-                </p>
+                <div className="space-y-3 mb-6">
+                  <p className="text-gray-300">You get The Directive. Your team gets transformation.</p>
+                  
+                  <p className="text-gray-300">Because the gap between your vision and their execution? That's on you.</p>
+                  
+                  <p className="text-primary font-medium">Stop hoping they'll figure it out. Start showing them how.</p>
+                  
+                  <p className="text-gray-300 italic">Hope is not a strategy. But neither is hiding.</p>
+                </div>
                 <div className="text-center">
                   <Button className="text-lg px-8 py-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium rounded-pill w-full cursor-not-allowed" disabled>
                     SOLD OUT

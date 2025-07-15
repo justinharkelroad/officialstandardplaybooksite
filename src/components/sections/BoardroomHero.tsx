@@ -20,16 +20,23 @@ const BoardroomHero = () => {
           <Users className="w-8 h-8 text-white" />
         </div>
         
-        <h1 className="font-rajdhani font-bold text-6xl md:text-8xl uppercase tracking-wide text-white mb-6 animate-fade-up">
-          The Standard
-          <br />
-          <span className="text-gradient">Boardroom</span>
+        <h1 className="font-rajdhani font-bold text-4xl md:text-6xl lg:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up">
+          The Room Where Excuses Go to Die
         </h1>
         
-        <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-          Join an elite community of high-performing agency owners. Get strategic guidance, accountability, 
-          and the network you need to scale to the next level.
-        </p>
+        <div className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8 animate-fade-up space-y-4" style={{ animationDelay: '0.2s' }}>
+          <h2 className="text-white font-bold text-2xl md:text-3xl">Every Empire Has a War Room. Yours is Empty.</h2>
+          
+          <p>While you're having your 47th "strategy session" with people who've never built anything, there are 12 agency owners in a room you can't access.</p>
+          
+          <p>They're not smarter than you.<br />
+          They're not more talented than you.<br />
+          They just stopped asking broke people for rich advice.</p>
+          
+          <p>It's Tuesday, 2:15 PM. You just lost another producer to your competitor. The one who "couldn't afford" to stay? He's making 40% more across town.</p>
+          
+          <p className="text-primary font-medium">And you're still Googling "retention strategies" like the answer is free.</p>
+        </div>
 
         <div className="relative max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>
           <div className="video-glow absolute -inset-4"></div>
@@ -44,8 +51,7 @@ const BoardroomHero = () => {
 
         <div className="animate-fade-up" style={{ animationDelay: '0.6s' }}>
           <Button onClick={handleJoinNow} className="btn-primary text-lg px-8 py-4">
-            Join The Boardroom
-            <ArrowRight className="w-5 h-5 ml-2" />
+            CLAIM YOUR SEAT AT THE TABLE →
           </Button>
         </div>
       </div>

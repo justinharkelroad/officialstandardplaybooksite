@@ -29,11 +29,23 @@ const SoftwareSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="font-rajdhani font-bold text-4xl md:text-6xl uppercase tracking-wide text-white mb-6">
-            The Software
+            Your Brain Is a Weapon. Most People Use It Against Themselves.
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            The #1 Productivity, Accountability and Growth Program in the World.
-          </p>
+          <div className="max-w-4xl mx-auto space-y-4 text-xl text-gray-300">
+            <p className="text-primary font-medium">Small wins are cocaine for your confidence.</p>
+            
+            <p>Every producer reading this has two choices:</p>
+            <p>1. Keep lying to yourself about "tomorrow"</p>
+            <p>2. Stack evidence that you're exactly who you claim to be</p>
+            
+            <p className="text-white font-medium">The Standard app doesn't motivate you. It exposes you.</p>
+            
+            <p><strong>Daily Habits?</strong> Your family sees who you really are at 5 AM.</p>
+            <p><strong>Setting Goals?</strong> Your bank account already knows if you're serious.</p>
+            <p><strong>The Stack?</strong> 47 other agents watched their excuses die here.</p>
+            
+            <p className="text-primary font-medium">Because accountability without consequences is just expensive friendship.</p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">

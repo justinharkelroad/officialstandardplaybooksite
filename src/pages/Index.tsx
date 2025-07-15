@@ -7,6 +7,7 @@ import OffersGrid from '@/components/sections/OffersGrid';
 import DIYAccessSection from '@/components/sections/DIYAccessSection';
 import PricingSection from '@/components/sections/PricingSection';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
+import FivePillarsSection from '@/components/sections/FivePillarsSection';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -40,6 +41,7 @@ const Index = () => {
       <DIYAccessSection />
       <PricingSection />
       <TestimonialsSection />
+      <FivePillarsSection />
       <Footer />
     </div>
   );
