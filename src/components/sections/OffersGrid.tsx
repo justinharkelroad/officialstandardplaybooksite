@@ -36,11 +36,6 @@ const OffersGrid = () => {
                 <div className="space-y-3 mb-6">
                   <p className="text-gray-300">Stop managing salespeople. Start manufacturing killers.</p>
                   
-                  <div className="space-y-2 text-sm text-gray-400">
-                    <p><strong>Week 1:</strong> They'll hate you.</p>
-                    <p><strong>Week 4:</strong> They'll fear you.</p>
-                    <p><strong>Week 8:</strong> They'll thank you.</p>
-                  </div>
                   
                   <p className="text-primary font-medium">Because mediocrity is comfortable. Excellence hurts.</p>
                   <p className="text-gray-300 italic">Choose pain with purpose or accept pain without progress.</p>
