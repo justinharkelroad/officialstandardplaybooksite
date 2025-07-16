@@ -9,11 +9,19 @@ const SalesPayment = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
-            Choose Your Payment Option
+            Commit completely. Transform immediately. Maximum pain, maximum gain.
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Select the payment plan that works best for your business
-          </p>
+          <div className="text-xl text-gray-300 max-w-3xl mx-auto space-y-4">
+            <p>But here's the real math:</p>
+            <div className="bg-dark-card border border-primary/20 p-6 rounded-lg">
+              <p>Cost of this program: $4,500</p>
+              <p>Cost of one bad producer: $50,000/year</p>
+              <p className="text-primary font-medium">Cost of no system: Your sanity</p>
+            </div>
+            <p className="text-primary font-medium">You're not buying training. You're buying transformation.</p>
+            <p>For your team. For your business. For your family.</p>
+            <p className="text-primary font-medium">The only thing more expensive than investing in your team?<br />Not investing in your team.</p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -108,6 +116,14 @@ const SalesPayment = () => {
               </a>
             </CardContent>
           </Card>
+        </div>
+        
+        <div className="text-center mt-12">
+          <a href="https://AGENCYCOACHING.as.me/standardfit" target="_blank" rel="noopener noreferrer">
+            <Button className="btn-primary text-lg px-8 py-4">
+              STOP MANAGING. START MANUFACTURING →
+            </Button>
+          </a>
         </div>
       </div>
     </section>

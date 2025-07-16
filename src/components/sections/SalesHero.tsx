@@ -20,15 +20,16 @@ const SalesHero = ({ onScrollToPayment }: SalesHeroProps) => {
           <Target className="w-8 h-8 text-white" />
         </div>
         
-        <h1 className="font-rajdhani font-bold text-6xl md:text-8xl uppercase tracking-wide text-white mb-6 animate-fade-up">
-          8 Week Sales
-          <br />
-          <span className="text-gradient">Management Training</span>
+        <h1 className="font-rajdhani font-bold text-5xl md:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up">
+          Your Sales Team Is a Direct Reflection of Your Leadership
         </h1>
         
-        <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-          Build effective sales management systems with precision training. Work one-on-one with Justin to transform your team's sales management approach.
-        </p>
+        <div className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8 animate-fade-up space-y-4" style={{ animationDelay: '0.2s' }}>
+          <p className="text-primary font-medium">And Right Now? They're Reflecting Your Confusion.</p>
+          <p>Every missed close. Every burned lead. Every "great conversation" that goes nowhere.</p>
+          <p>That's not a sales problem. That's a leadership problem.</p>
+          <p className="text-primary font-medium">And leadership problems have names. Yours.</p>
+        </div>
 
         <div className="relative max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>
           <div className="video-glow absolute -inset-4"></div>
@@ -46,7 +47,7 @@ const SalesHero = ({ onScrollToPayment }: SalesHeroProps) => {
             onClick={onScrollToPayment}
             className="btn-primary text-lg px-8 py-4"
           >
-            Get Started Now
+            STOP MANAGING. START DOMINATING
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
         </div>

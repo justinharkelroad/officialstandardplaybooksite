@@ -20,11 +20,33 @@ const SalesFeatures = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center mb-16">
           <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
-            Here's What You Get
+            8 Weeks to Sales Transformation: Access + Acceleration Architecture
           </h2>
-          <p className="text-xl text-gray-300 leading-relaxed">
-            Everything you need to build world-class sales management systems in just 8 weeks.
-          </p>
+          <div className="text-xl text-gray-300 leading-relaxed space-y-4">
+            <p>Most sales training gives you scripts. We give you the first two pillars of transformation:</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+              <div className="bg-dark-card border border-primary/20 p-6 rounded-lg">
+                <h3 className="font-rajdhani font-bold text-2xl uppercase tracking-wide text-primary mb-4">WEEKS 1-4: ACCESS PHASE</h3>
+                <ul className="text-left space-y-2 text-gray-300">
+                  <li>• The Proven Process Armory: Not theory, battle-tested systems</li>
+                  <li>• Direct Weekly Access to Justin's mind</li>
+                  <li>• Call Scoring Access: See truth, not hope</li>
+                  <li>• Framework Access: The exact blueprints that built empires</li>
+                </ul>
+              </div>
+              <div className="bg-dark-card border border-primary/20 p-6 rounded-lg">
+                <h3 className="font-rajdhani font-bold text-2xl uppercase tracking-wide text-primary mb-4">WEEKS 5-8: ACCELERATION PHASE</h3>
+                <ul className="text-left space-y-2 text-gray-300">
+                  <li>• Compress 20 years of sales mistakes into 8 weeks</li>
+                  <li>• Steal systems that took decades to perfect</li>
+                  <li>• Skip the learning curve through structured implementation</li>
+                  <li>• Your team inherits wisdom without the wounds</li>
+                </ul>
+              </div>
+            </div>
+            <p className="text-primary font-medium mt-8">"Why learn from your failures when you can download ours?"</p>
+            <p className="text-sm text-gray-400">But here's the truth: This gives you ACCESS and ACCELERATION.<br />For full transformation, you need all five pillars.<br />That's why 73% of graduates step into The Boardroom or Directive.</p>
+          </div>
         </div>
 
         <div className="max-w-4xl mx-auto">
