@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import ChallengeHero from '@/components/sections/ChallengeHero';
 import ChallengePainSolution from '@/components/sections/ChallengePainSolution';
 import ChallengeFeatures from '@/components/sections/ChallengeFeatures';
-import ChallengePricing from '@/components/sections/ChallengePricing';
+
 import ChallengeFAQ from '@/components/sections/ChallengeFAQ';
 import ChallengeNavigation from '@/components/sections/ChallengeNavigation';
 
@@ -41,20 +41,6 @@ const ProducerPowerUp = () => {
     }
   ];
 
-  const pricingOptions = [
-    {
-      title: "Single Seat",
-      price: "$299",
-      highlighted: false
-    },
-    {
-      title: "Team Pack (5+)",
-      price: "$249",
-      badge: "Owner Seat FREE",
-      features: ["Per seat pricing", "Free owner enrollment when you buy 5+"],
-      highlighted: false
-    }
-  ];
 
   const faqs = [
     {
@@ -75,20 +61,6 @@ const ProducerPowerUp = () => {
     }
   ];
 
-  const scrollToPricing = () => {
-    const element = document.getElementById('pricing');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleEnrollClick = (option: any) => {
-    if (option.title === "Single Seat") {
-      window.open("https://buy.stripe.com/9B6bJ11yCcGW9S8gWo4Vy05", "_blank");
-    } else if (option.title === "Team Pack (5+)") {
-      window.open("https://buy.stripe.com/cNidR9b9cgXc4xO21u4Vy06", "_blank");
-    }
-  };
 
   return (
     <div className="min-h-screen">
@@ -97,7 +69,8 @@ const ProducerPowerUp = () => {
         title="/lovable-uploads/ec2eda85-7cf5-4aa9-8997-cee842066d4b.png"
         subtitle="Stack habits. Supercharge sales and life—in 42 days."
         videoId="1UhWckfDqDw"
-        onEnrollClick={scrollToPricing}
+        showEnrollButton={false}
+        onEnrollClick={() => {}}
       />
       <ChallengePainSolution
         painPoints={painPoints}
@@ -165,13 +138,18 @@ const ProducerPowerUp = () => {
         features={features}
         layout="grid"
       />
-      <div id="pricing">
-        <ChallengePricing
-          title="Pricing & Team Bonus"
-          options={pricingOptions}
-          onEnrollClick={handleEnrollClick}
-        />
-      </div>
+      {/* Coming Soon Section */}
+      <section className="py-20 relative">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="bg-dark-card border-primary/20 rounded-lg p-12">
+              <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-red-500 mb-4">
+                COMING IN FALL OF 2025
+              </h2>
+            </div>
+          </div>
+        </div>
+      </section>
       <ChallengeFAQ faqs={faqs} />
       <ChallengeNavigation
         otherChallenge={{

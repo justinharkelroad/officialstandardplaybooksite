@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import ChallengeHero from '@/components/sections/ChallengeHero';
 import ChallengePainSolution from '@/components/sections/ChallengePainSolution';
 import ChallengeFeatures from '@/components/sections/ChallengeFeatures';
-import ChallengePricing from '@/components/sections/ChallengePricing';
+
 import ChallengeTimeline from '@/components/sections/ChallengeTimeline';
 import ChallengeFAQ from '@/components/sections/ChallengeFAQ';
 import ChallengeNavigation from '@/components/sections/ChallengeNavigation';
@@ -46,21 +46,6 @@ const OwnerChallenge = () => {
     }
   ];
 
-  const pricingOptions = [
-    {
-      title: "Owner Seat",
-      price: "$399",
-      highlighted: false
-    },
-    {
-      title: "Owner + Debrief",
-      price: "$898",
-      originalPrice: "$1,399",
-      features: ["Final Week 1 Hour Debrief and Coaching Call"],
-      badge: "Best Value",
-      highlighted: false
-    }
-  ];
 
   const timelineSteps = [
     {
@@ -104,16 +89,6 @@ const OwnerChallenge = () => {
     }
   ];
 
-  const scrollToPricing = () => {
-    const element = document.getElementById('pricing');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleEnrollClick = (option: any) => {
-    window.open("https://buy.stripe.com/cNifZh3GK0Ye9S835y4Vy07", "_blank");
-  };
 
   return (
     <div className="min-h-screen">
@@ -122,7 +97,8 @@ const OwnerChallenge = () => {
         title="/lovable-uploads/70586c79-98cd-42f1-8a44-5625af2a88f7.png"
         subtitle="6-Week Core 4 & Leadership Challenge."
         videoId="vPPKhd4B2Tk"
-        onEnrollClick={scrollToPricing}
+        showEnrollButton={false}
+        onEnrollClick={() => {}}
       />
       <ChallengePainSolution
         painPoints={painPoints}
@@ -148,13 +124,18 @@ const OwnerChallenge = () => {
         features={features}
         layout="list"
       />
-      <div id="pricing">
-        <ChallengePricing
-          title="Investment & Options"
-          options={pricingOptions}
-          onEnrollClick={handleEnrollClick}
-        />
-      </div>
+      {/* Coming Soon Section */}
+      <section className="py-20 relative">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="bg-dark-card border-primary/20 rounded-lg p-12">
+              <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-red-500 mb-4">
+                COMING IN FALL OF 2025
+              </h2>
+            </div>
+          </div>
+        </div>
+      </section>
       <ChallengeTimeline
         title="How Enrollment Works"
         steps={timelineSteps}
