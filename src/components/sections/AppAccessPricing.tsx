@@ -11,9 +11,6 @@ const AppAccessPricing = () => {
           <h2 className="font-rajdhani font-bold text-4xl md:text-6xl uppercase tracking-wide text-white mb-6">
             Choose Your Access Level
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Select the level that matches your commitment to transformation.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -21,46 +18,37 @@ const AppAccessPricing = () => {
           <Card className="bg-dark-card border-primary/20 card-hover">
             <CardHeader className="text-center">
               <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide mb-2">
-                Stack Level Access
+                Stack Level Access: The First Two Pillars
               </CardTitle>
-              <p className="text-primary text-sm font-medium mb-4">Included in Boardroom</p>
               <div className="mb-4">
                 <span className="text-5xl font-bold text-white">$70</span>
                 <span className="text-gray-400">/month</span>
               </div>
-              <CardDescription className="text-gray-400">
-                Essential tools to start your transformation
+              <CardDescription className="text-gray-300 mb-4">
+                ACCESS: Core frameworks and daily habit architecture
+                <br />
+                ASSOCIATION: Connect with others stacking their way up
               </CardDescription>
+              <p className="text-primary italic font-medium">"Start here. But don't stay here."</p>
             </CardHeader>
             <CardContent>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center text-gray-300">
-                  <Shield className="w-5 h-5 text-primary mr-3" />
-                  Core4
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <Shield className="w-5 h-5 text-primary mr-3" />
-                  Notes
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <Shield className="w-5 h-5 text-primary mr-3" />
-                  Assessments
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <Shield className="w-5 h-5 text-primary mr-3" />
-                  Tribe
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <Shield className="w-5 h-5 text-primary mr-3" />
-                  Chat
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <Shield className="w-5 h-5 text-primary mr-3" />
-                  Stack
-                </li>
-              </ul>
+              <div className="mb-6">
+                <h4 className="text-white font-semibold mb-3">What Stack Level Includes:</h4>
+                <ul className="space-y-2 text-gray-300 text-sm">
+                  <li>• Core4 daily tracking that exposes your real priorities</li>
+                  <li>• Notes that become blueprints, not just thoughts</li>
+                  <li>• Assessments that reveal what you've been avoiding</li>
+                  <li>• Tribe connection with people who get the grind</li>
+                  <li>• Chat with others fighting the same fight</li>
+                  <li>• Stack methodology that builds momentum</li>
+                  <li>• Armory: The vault of proven systems and strategies</li>
+                </ul>
+              </div>
+              <p className="text-gray-400 text-sm mb-6 italic">
+                Perfect for those ready to face the mirror but not ready for the whole truth.
+              </p>
               <Button className="btn-primary w-full">
-                Get Stack Access
+                CHOOSE YOUR MIRROR →
               </Button>
             </CardContent>
           </Card>
@@ -69,58 +57,37 @@ const AppAccessPricing = () => {
           <Card className="bg-dark-card border-primary relative card-hover">
             <CardHeader className="text-center">
               <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide mb-2">
-                Arsenal Level Access
+                Arsenal Level Access: Four Pillars Activated
               </CardTitle>
-              <p className="text-primary text-sm font-medium mb-4">Included in Directive and Partnership</p>
               <div className="mb-4">
                 <span className="text-5xl font-bold text-white">$125</span>
                 <span className="text-gray-400">/month</span>
               </div>
-              <CardDescription className="text-gray-400">
-                Complete access to all transformation tools
+              <CardDescription className="text-gray-300 mb-4">
+                Everything in Stack PLUS:
+                <br />
+                ACCOUNTABILITY: Advanced tracking and consequence systems
+                <br />
+                ACCELERATION: The Armory vault of advanced frameworks + Monthly Mission Tracking
               </CardDescription>
+              <p className="text-primary italic font-medium">"This is where transformation gets teeth."</p>
             </CardHeader>
             <CardContent>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center text-gray-300">
-                  <Shield className="w-5 h-5 text-primary mr-3" />
-                  Core4
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <Shield className="w-5 h-5 text-primary mr-3" />
-                  Notes
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <Shield className="w-5 h-5 text-primary mr-3" />
-                  Assessments
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <Shield className="w-5 h-5 text-primary mr-3" />
-                  Tribe
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <Shield className="w-5 h-5 text-primary mr-3" />
-                  Chat
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <Shield className="w-5 h-5 text-primary mr-3" />
-                  Stack
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <Shield className="w-5 h-5 text-primary mr-3" />
-                  Door
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <Shield className="w-5 h-5 text-primary mr-3" />
-                  Game
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <Shield className="w-5 h-5 text-primary mr-3" />
-                  Armory
-                </li>
-              </ul>
-              <Button className="btn-primary w-full bg-primary-accent hover:bg-primary-light">
-                Get Arsenal Access
+              <div className="mb-6">
+                <h4 className="text-white font-semibold mb-3">Additional Arsenal Features:</h4>
+                <ul className="space-y-2 text-gray-300 text-sm">
+                  <li>• Door: Access to frameworks that built empires</li>
+                  <li>• Game: Competitive elements that make growth addictive</li>
+                </ul>
+              </div>
+              <p className="text-gray-400 text-sm mb-4 italic">
+                This is for operators ready to become owners.
+              </p>
+              <p className="text-primary text-sm mb-6 font-medium">
+                Note: Full ASCENSION requires human collision. That happens in The Boardroom.
+              </p>
+              <Button className="btn-primary w-full">
+                CHOOSE YOUR MIRROR →
               </Button>
             </CardContent>
           </Card>

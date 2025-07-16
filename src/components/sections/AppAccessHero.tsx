@@ -19,15 +19,31 @@ const AppAccessHero = ({ onGetStartedClick }: AppAccessHeroProps) => {
           <Target className="w-8 h-8 text-white" />
         </div>
         
-        <h1 className="font-rajdhani font-bold text-6xl md:text-8xl uppercase tracking-wide text-white mb-6 animate-fade-up">
-          App Access
+        <h1 className="font-rajdhani font-bold text-4xl md:text-6xl lg:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up leading-tight">
+          The App That Knows You're Lying
           <br />
-          <span className="text-gradient">Only</span>
+          <span className="text-gradient">Before You Do</span>
         </h1>
         
-        <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-          Even if you aren't ready for group or 1 on 1 coaching, let the app itself start the shift you need in your life. Choose from 2 levels of access below.
-        </p>
+        <div className="max-w-4xl mx-auto space-y-6 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+          <p className="text-xl md:text-2xl text-gray-300">
+            The Standard app doesn't motivate. It mirrors.
+            <br />
+            Every stack. Every skip. Every excuse.
+            <br />
+            All reflected back until you can't unsee who you really are.
+          </p>
+          
+          <p className="text-lg md:text-xl text-gray-300">
+            Most apps help you feel better.
+            <br />
+            This one helps you become better.
+          </p>
+          
+          <p className="text-xl md:text-2xl text-primary font-medium">
+            Violently. Honestly. Permanently.
+          </p>
+        </div>
 
         {/* Hero Image */}
         <div className="max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.3s' }}>
@@ -43,7 +59,7 @@ const AppAccessHero = ({ onGetStartedClick }: AppAccessHeroProps) => {
             className="btn-primary text-lg px-8 py-4"
             onClick={onGetStartedClick}
           >
-            Get Started Now
+            CHOOSE YOUR MIRROR
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
         </div>

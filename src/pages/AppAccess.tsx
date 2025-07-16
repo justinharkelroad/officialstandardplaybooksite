@@ -25,7 +25,7 @@ const AppAccess = () => {
       {/* Sticky CTA for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 bg-dark-card border-t border-primary/20 p-4 md:hidden z-40">
         <Button className="btn-primary w-full">
-          Get Started - App Access Only
+          CHOOSE YOUR MIRROR →
         </Button>
       </div>
 
