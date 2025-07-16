@@ -68,9 +68,6 @@ const Navigation = () => {
             >
               Access Levels
             </button>
-            <Link to="/directive" className="text-white hover:text-primary transition-colors">
-              The Directive
-            </Link>
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center text-white hover:text-primary transition-colors">
                 6 Week Challenge
@@ -89,12 +86,6 @@ const Navigation = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <button 
-              onClick={() => scrollToSection('pricing')}
-              className="text-white hover:text-primary transition-colors"
-            >
-              Pricing
-            </button>
             <Link to="/contact" className="text-white hover:text-primary transition-colors">
               Contact
             </Link>
@@ -139,9 +130,6 @@ const Navigation = () => {
               >
                 Access Levels
               </button>
-              <Link to="/directive" className="text-white hover:text-primary transition-colors">
-                The Directive
-              </Link>
               <div className="text-white">
                 <div className="font-medium mb-2">6 Week Challenge</div>
                 <div className="pl-4 space-y-2">
@@ -153,12 +141,6 @@ const Navigation = () => {
                   </Link>
                 </div>
               </div>
-              <button 
-                onClick={() => scrollToSection('pricing')}
-                className="text-white hover:text-primary transition-colors text-left"
-              >
-                Pricing
-              </button>
               <Link to="/contact" className="text-white hover:text-primary transition-colors">
                 Contact
               </Link>
