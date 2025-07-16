@@ -30,13 +30,11 @@ const DIYAccessSection = () => {
                   </div>
                   <div>
                     <h3 className="text-white font-rajdhani text-3xl uppercase tracking-wide mb-2">
-                      APP ACCESS: The Mirror You've Been Avoiding
+                      APP ACCESS ONLY: The Mirror You've Been Avoiding
                     </h3>
                     <div className="space-y-2 text-lg text-gray-300">
                       <p>The Stack shows you exactly who you are.</p>
                       <p className="text-primary font-medium">The question is: Can you handle it?</p>
-                      <p className="text-sm">$70/month to stop lying to yourself.</p>
-                      <p className="text-sm text-gray-400">$0 to keep pretending tomorrow is different.</p>
                     </div>
                   </div>
                 </div>
