@@ -93,10 +93,10 @@ const Navigation = () => {
 
           <div className="hidden md:block">
             <Button 
-              onClick={() => scrollToSection('pricing')}
-              className="btn-primary"
+              onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
+              className="bg-white text-primary font-bold hover:bg-gray-100"
             >
-              Join Now
+              BOOK FREE CALL
             </Button>
           </div>
 
@@ -145,10 +145,10 @@ const Navigation = () => {
                 Contact
               </Link>
               <Button 
-                onClick={() => scrollToSection('pricing')}
-                className="btn-primary self-start"
+                onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
+                className="bg-white text-primary font-bold self-start hover:bg-gray-100"
               >
-                Join Now
+                BOOK FREE CALL
               </Button>
             </div>
           </div>

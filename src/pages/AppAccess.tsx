@@ -24,8 +24,11 @@ const AppAccess = () => {
 
       {/* Sticky CTA for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 bg-dark-card border-t border-primary/20 p-4 md:hidden z-40">
-        <Button className="btn-primary w-full">
-          CHOOSE YOUR MIRROR →
+        <Button 
+          className="bg-white text-primary font-bold w-full hover:bg-gray-100"
+          onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
+        >
+          BOOK FREE CALL →
         </Button>
       </div>
 
