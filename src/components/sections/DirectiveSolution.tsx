@@ -58,6 +58,7 @@ const DirectiveSolution = () => {
                 <li>• Custom strategy development and deployment</li>
                 <li>• Monthly Mission Check In's</li>
                 <li>• Course Correction Strategies</li>
+                <li>• One 2 Hour Group Boardroom Call</li>
               </ul>
             </CardContent>
           </Card>
