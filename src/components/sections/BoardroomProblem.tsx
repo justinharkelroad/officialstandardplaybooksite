@@ -1,7 +1,5 @@
-
 const BoardroomProblem = () => {
-  return (
-    <section className="py-20 relative">
+  return <section className="py-20 relative">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
@@ -10,7 +8,7 @@ const BoardroomProblem = () => {
           <div className="text-xl text-gray-300 leading-relaxed space-y-6">
             <p>That decision you're about to make? The one keeping you up at night? Three Boardroom members already made it. Two lost, but one person won.</p>
             
-            <p className="text-primary font-medium">Guess which one you'll be?</p>
+            <p className="text-slate-50 font-semibold text-4xl">GUESS WHICH ONE YOU'LL BE</p>
             
             <p>Without their scars, you don't get their wisdom.<br />
             Without their wisdom, you get their scars.</p>
@@ -31,8 +29,6 @@ const BoardroomProblem = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default BoardroomProblem;
