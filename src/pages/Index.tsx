@@ -1,5 +1,6 @@
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import { Button } from '@/components/ui/button';
 import SoftwareSection from '@/components/SoftwareSection';
 import HeroSection from '@/components/sections/HeroSection';
 import AISection from '@/components/sections/AISection';
@@ -37,6 +38,17 @@ const Index = () => {
       <HeroSection onScrollToSection={scrollToSection} />
       <SoftwareSection />
       <AISection />
+      
+      {/* CTA Button above Choose Your Path section */}
+      <div className="py-16 text-center">
+        <Button 
+          className="bg-white text-primary font-bold text-xl px-10 py-6 hover:bg-gray-100"
+          onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
+        >
+          BOOK FREE CALL
+        </Button>
+      </div>
+      
       <OffersGrid />
       <DIYAccessSection />
       <PricingSection />
