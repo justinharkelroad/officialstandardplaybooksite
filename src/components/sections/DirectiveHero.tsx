@@ -3,8 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Zap, ArrowRight } from 'lucide-react';
 
 const DirectiveHero = () => {
-  const handleJoinDirective = () => {
-    window.open('https://link.fastpaydirect.com/payment-link/670ff5735146ea77a16c5106', '_blank');
+  const handleBookCall = () => {
+    window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank');
   };
 
   return (
@@ -43,10 +43,10 @@ const DirectiveHero = () => {
 
         <div className="flex justify-center animate-fade-up" style={{ animationDelay: '0.4s' }}>
           <Button 
-            className="btn-primary text-lg px-8 py-4 bg-primary-accent hover:bg-primary-light"
-            onClick={handleJoinDirective}
+            className="bg-white text-primary font-bold text-lg px-8 py-4 hover:bg-gray-100"
+            onClick={handleBookCall}
           >
-            Join The Directive
+            BOOK FREE CALL
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
         </div>

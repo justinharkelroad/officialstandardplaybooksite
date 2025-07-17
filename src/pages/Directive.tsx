@@ -15,15 +15,26 @@ const Directive = () => {
       <DirectiveHero />
       <DirectiveProblem />
       <DirectiveSolution />
+      
+      {/* Extra CTA Button */}
+      <div className="py-16 text-center">
+        <Button 
+          className="bg-white text-primary font-bold text-xl px-10 py-6 hover:bg-gray-100"
+          onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
+        >
+          BOOK FREE CALL
+        </Button>
+      </div>
+      
       <DirectiveBusiness />
 
       {/* Sticky CTA for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 bg-dark-card border-t border-primary-accent/20 p-4 md:hidden z-40">
         <Button 
-          className="btn-primary w-full bg-primary-accent hover:bg-primary-light"
-          onClick={() => window.open('https://link.fastpaydirect.com/payment-link/670ff5735146ea77a16c5106', '_blank')}
+          className="bg-white text-primary font-bold w-full hover:bg-gray-100"
+          onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
         >
-          Join The Directive
+          BOOK FREE CALL
         </Button>
       </div>
 
