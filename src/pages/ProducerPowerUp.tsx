@@ -7,6 +7,7 @@ import ChallengeFeatures from '@/components/sections/ChallengeFeatures';
 
 import ChallengeFAQ from '@/components/sections/ChallengeFAQ';
 import ChallengeNavigation from '@/components/sections/ChallengeNavigation';
+import GHLFormPopup from '@/components/GHLFormPopup';
 
 const ProducerPowerUp = () => {
   const painPoints = [
@@ -199,6 +200,12 @@ const ProducerPowerUp = () => {
       <section className="py-20 relative">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
+            <div className="mb-8">
+              <GHLFormPopup 
+                buttonText="GET NOTIFIED WHEN AVAILABLE"
+                buttonClassName="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 text-lg font-bold rounded-lg"
+              />
+            </div>
             <div className="bg-dark-card border-primary/20 rounded-lg p-12">
               <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-red-500 mb-4">
                 COMING IN FALL OF 2025
