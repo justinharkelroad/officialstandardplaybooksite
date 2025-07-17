@@ -31,7 +31,7 @@ const GHLFormPopup: React.FC<GHLFormPopupProps> = ({ buttonText, buttonClassName
           {buttonText}
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl w-full max-h-[90vh] overflow-hidden p-0">
+      <DialogContent className="max-w-4xl w-full max-h-[90vh] overflow-hidden p-0 bg-black border-gray-800">
         <div className="w-full h-[700px]">
           <iframe
             src="https://api.leadconnectorhq.com/widget/form/BO7x3XIfcMhtVBymoEeI"
