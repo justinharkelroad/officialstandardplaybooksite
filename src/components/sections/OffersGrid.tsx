@@ -25,7 +25,7 @@ const OffersGrid = () => {
                 <div className="w-12 h-12 bg-primary-accent rounded-square flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <Target className="w-6 h-6 text-white" />
                 </div>
-                <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide">
+                <CardTitle className="text-white font-rajdhani text-xl md:text-2xl uppercase tracking-wide">
                   8 WEEK SALES MANAGEMENT TRAINING
                 </CardTitle>
                 <CardDescription className="text-gray-400">
@@ -41,8 +41,9 @@ const OffersGrid = () => {
                   <p className="text-gray-300 italic">Choose pain with purpose or accept pain without progress.</p>
                 </div>
                 <Link to="/sales-experience">
-                  <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full">
-                    STOP MANAGING. START DOMINATING →
+                  <Button className="btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full truncate">
+                    STOP MANAGING. START DOMINATING
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
                   </Button>
                 </Link>
               </CardContent>
@@ -56,7 +57,7 @@ const OffersGrid = () => {
                 <div className="w-12 h-12 bg-primary rounded-square flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <Users className="w-6 h-6 text-white" />
                 </div>
-                <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide">
+                <CardTitle className="text-white font-rajdhani text-xl md:text-2xl uppercase tracking-wide">
                   THE BOARDROOM
                 </CardTitle>
                 <CardDescription className="text-gray-400">
@@ -72,8 +73,9 @@ const OffersGrid = () => {
                   <p className="text-gray-300 italic">Your competition hopes you'll stay comfortable.</p>
                 </div>
                 <Link to="/boardroom">
-                  <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full">
-                    BURN THE BOATS →
+                  <Button className="btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full truncate">
+                    BURN THE BOATS
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
                   </Button>
                 </Link>
               </CardContent>
@@ -87,7 +89,7 @@ const OffersGrid = () => {
                 <div className="w-12 h-12 bg-primary-accent rounded-square flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <Zap className="w-6 h-6 text-white" />
                 </div>
-                <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide">
+                <CardTitle className="text-white font-rajdhani text-xl md:text-2xl uppercase tracking-wide">
                   THE DIRECTIVE
                 </CardTitle>
                 <CardDescription className="text-gray-400">
@@ -105,8 +107,9 @@ const OffersGrid = () => {
                   <p className="text-gray-300 italic">Curious people take notes. Coachable people take action.</p>
                 </div>
                 <Link to="/directive">
-                  <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full">
-                    BOOK YOUR EXECUTION →
+                  <Button className="btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full truncate">
+                    BOOK YOUR EXECUTION
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
                   </Button>
                 </Link>
               </CardContent>
@@ -120,7 +123,7 @@ const OffersGrid = () => {
                 <div className="w-12 h-12 bg-primary rounded-square flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <Crown className="w-6 h-6 text-white" />
                 </div>
-                <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide">
+                <CardTitle className="text-white font-rajdhani text-xl md:text-2xl uppercase tracking-wide">
                   THE PARTNERSHIP
                 </CardTitle>
                 <CardDescription className="text-gray-400">
@@ -138,7 +141,7 @@ const OffersGrid = () => {
                   <p className="text-gray-300 italic">Hope is not a strategy. But neither is hiding.</p>
                 </div>
                 <div className="text-center">
-                  <Button className="text-lg px-8 py-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium rounded-pill w-full cursor-not-allowed" disabled>
+                  <Button className="text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium rounded-pill w-full cursor-not-allowed" disabled>
                     SOLD OUT
                   </Button>
                 </div>

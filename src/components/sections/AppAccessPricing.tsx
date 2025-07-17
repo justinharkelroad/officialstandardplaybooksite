@@ -47,8 +47,12 @@ const AppAccessPricing = () => {
               <p className="text-gray-400 text-sm mb-6 italic">
                 Perfect for those ready to face the mirror but not ready for the whole truth.
               </p>
-              <Button className="btn-primary w-full">
-                CHOOSE YOUR MIRROR →
+              <Button 
+                className="bg-white text-primary font-bold text-sm sm:text-base px-4 sm:px-6 py-3 hover:bg-gray-100 w-full truncate"
+                onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
+              >
+                BOOK FREE CALL
+                <Shield className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
               </Button>
             </CardContent>
           </Card>
@@ -86,8 +90,12 @@ const AppAccessPricing = () => {
               <p className="text-primary text-sm mb-6 font-medium">
                 Note: Full ASCENSION requires human collision. That happens in The Boardroom.
               </p>
-              <Button className="btn-primary w-full">
-                CHOOSE YOUR MIRROR →
+              <Button 
+                className="bg-white text-primary font-bold text-sm sm:text-base px-4 sm:px-6 py-3 hover:bg-gray-100 w-full truncate"
+                onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
+              >
+                BOOK FREE CALL
+                <Shield className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
               </Button>
             </CardContent>
           </Card>

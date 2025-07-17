@@ -56,11 +56,11 @@ const AppAccessHero = ({ onGetStartedClick }: AppAccessHeroProps) => {
 
         <div className="flex justify-center animate-fade-up" style={{ animationDelay: '0.4s' }}>
           <Button 
-            className="bg-white text-primary font-bold text-lg px-8 py-4 hover:bg-gray-100"
+            className="bg-white text-primary font-bold text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 hover:bg-gray-100 truncate max-w-[90%]"
             onClick={onGetStartedClick}
           >
             CHOOSE YOUR MIRROR
-            <ArrowRight className="w-5 h-5 ml-2" />
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 flex-shrink-0" />
           </Button>
         </div>
       </div>
