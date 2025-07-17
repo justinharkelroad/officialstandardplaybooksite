@@ -10,6 +10,7 @@ import BoardroomWhy from '@/components/sections/BoardroomWhy';
 import BoardroomFivePillars from '@/components/sections/BoardroomFivePillars';
 import BoardroomPricing from '@/components/sections/BoardroomPricing';
 import BoardroomFAQ from '@/components/sections/BoardroomFAQ';
+import BoardroomIncludes from '@/components/sections/BoardroomIncludes';
 
 const Boardroom = () => {
   const handleJoinNow = () => {
@@ -26,6 +27,7 @@ const Boardroom = () => {
       <BoardroomFeatures />
       <BoardroomBusiness />
       <BoardroomWhy />
+      <BoardroomIncludes />
       <BoardroomPricing />
       
       {/* Final CTA Section */}
