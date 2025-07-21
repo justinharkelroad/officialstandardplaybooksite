@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -19,6 +18,7 @@ import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import Particles from "./components/Particles";
 import ScrollToTop from "./components/ScrollToTop";
+import SEOHead from "./components/SEOHead";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +29,7 @@ const App = () => (
       <Sonner />
       <Particles />
       <BrowserRouter>
+        <SEOHead />
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />

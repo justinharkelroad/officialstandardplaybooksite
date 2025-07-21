@@ -1,8 +1,8 @@
-
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import Breadcrumb from '@/components/Breadcrumb';
 
 const Contact = () => {
   return (
@@ -16,22 +16,25 @@ const Contact = () => {
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary-accent/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
         </div>
 
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="font-rajdhani font-bold text-6xl md:text-8xl uppercase tracking-wide text-white mb-6 animate-fade-up">
-            Contact
-            <br />
-            <span className="text-gradient">The Standard</span>
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto animate-fade-up" style={{ animationDelay: '0.2s' }}>
-            Ready to raise your standard? Get in touch with our team to discuss how 
-            we can help accelerate your success.
-          </p>
+        <div className="container mx-auto px-4 relative z-10">
+          <Breadcrumb />
+          <div className="text-center">
+            <h1 className="font-rajdhani font-bold text-6xl md:text-8xl uppercase tracking-wide text-white mb-6 animate-fade-up">
+              Contact
+              <br />
+              <span className="text-gradient">The Standard</span>
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto animate-fade-up" style={{ animationDelay: '0.2s' }}>
+              Ready to raise your standard? Get in touch with our team to discuss how 
+              we can help accelerate your success.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 relative">
+      <main className="py-20 relative">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             
@@ -108,7 +111,7 @@ const Contact = () => {
             </div>
           </div>
         </div>
-      </section>
+      </main>
 
       {/* Map Section */}
       <section className="py-20 relative">
