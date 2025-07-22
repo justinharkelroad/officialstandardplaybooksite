@@ -23,24 +23,12 @@ const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
       </div>
 
       <div className="container mx-auto px-4 text-center relative z-10">
-        <h1 className="font-rajdhani font-bold text-4xl md:text-6xl lg:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up">
-          The 3am Truth Nobody Talks About
+        <h1 className="font-rajdhani font-bold text-5xl md:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up">
+          YOU ARE THE #1 ASSET TO YOUR AGENCY
         </h1>
         
-        <div className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8 animate-fade-up space-y-4" style={{ animationDelay: '0.2s' }}>
-          <p className="text-white font-medium">You're not struggling. You're dying.</p>
-          
-          <p>Dying the slow death of a thousand compromises. Another day pretending your "good enough" is actually good enough while your kids watch you settle for mediocrity.</p>
-          
-          <p>It's 3:47 AM and you're staring at the ceiling again. Not because you're excited about tomorrow - because you know tomorrow will be exactly like today. And today was exactly like yesterday.</p>
-          
-          <p>The same excuses. The same results. The same YOU.</p>
-          
-          <p className="text-primary font-medium">But here's what's keeping you awake:</p>
-          
-          <p className="text-white font-medium">You know EXACTLY what to do. You just don't do it.</p>
-          
-          <p>And that knowledge? It's eating you alive.</p>
+        <div className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+          <p className="text-white font-medium">JOIN AGENCY OWNERS ACROSS THE COUNTRY WHO HAVE CHOSEN TO CREATE FREEDOM IN THEIR LIVES BY REALIZING THEY MUST BE THE EXAMPLE FOR THEIR TEAMS, THEIR FAMILIES AND THEMSELVES.</p>
         </div>
 
         {/* Video Frame */}
