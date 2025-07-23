@@ -91,14 +91,6 @@ const Navigation = () => {
             </Link>
           </div>
 
-          <div className="hidden md:block">
-            <Button 
-              onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
-              className="bg-white text-primary font-bold hover:bg-gray-100"
-            >
-              BOOK FREE CALL
-            </Button>
-          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -144,12 +136,6 @@ const Navigation = () => {
               <Link to="/contact" className="text-white hover:text-primary transition-colors">
                 Contact
               </Link>
-              <Button 
-                onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
-                className="bg-white text-primary font-bold self-start hover:bg-gray-100"
-              >
-                BOOK FREE CALL
-              </Button>
             </div>
           </div>
         )}
