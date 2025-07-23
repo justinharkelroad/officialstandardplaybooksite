@@ -63,7 +63,7 @@ const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
             className="btn-primary text-lg px-8 py-4"
             onClick={handleSeeOptions}
           >
-            FACE YOUR TRUTH
+            LEARN MORE
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
         </div>

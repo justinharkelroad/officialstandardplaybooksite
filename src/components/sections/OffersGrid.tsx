@@ -42,7 +42,7 @@ const OffersGrid = () => {
                 </div>
                 <Link to="/sales-experience">
                   <Button className="btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full truncate">
-                    STOP MANAGING. START DOMINATING
+                    LEARN MORE
                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
                   </Button>
                 </Link>
@@ -74,7 +74,7 @@ const OffersGrid = () => {
                 </div>
                 <Link to="/boardroom">
                   <Button className="btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full truncate">
-                    BURN THE BOATS
+                    LEARN MORE
                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
                   </Button>
                 </Link>
@@ -108,7 +108,7 @@ const OffersGrid = () => {
                 </div>
                 <Link to="/directive">
                   <Button className="btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full truncate">
-                    BOOK YOUR EXECUTION
+                    LEARN MORE
                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
                   </Button>
                 </Link>

@@ -56,7 +56,7 @@ const PricingSection = () => {
               </ul>
               <a href="https://link.fastpaydirect.com/payment-link/68371b280a5741f8835218c8" target="_blank" rel="noopener noreferrer">
                 <Button className="btn-primary w-full">
-                  Join The Boardroom
+                  LEARN MORE
                 </Button>
               </a>
             </CardContent>
@@ -106,7 +106,7 @@ const PricingSection = () => {
               </ul>
               <a href="https://link.fastpaydirect.com/payment-link/670ff5735146ea77a16c5106" target="_blank" rel="noopener noreferrer">
                 <Button className="btn-primary w-full bg-primary-accent hover:bg-primary-light">
-                  Join The Directive
+                  LEARN MORE
                 </Button>
               </a>
             </CardContent>

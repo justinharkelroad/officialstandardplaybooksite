@@ -1,9 +1,7 @@
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import SoftwareSection from '@/components/SoftwareSection';
 import HeroSection from '@/components/sections/HeroSection';
-import AISection from '@/components/sections/AISection';
 import OffersGrid from '@/components/sections/OffersGrid';
 import DIYAccessSection from '@/components/sections/DIYAccessSection';
 import PricingSection from '@/components/sections/PricingSection';
@@ -36,8 +34,6 @@ const Index = () => {
     <div className="min-h-screen">
       <Navigation />
       <HeroSection onScrollToSection={scrollToSection} />
-      <SoftwareSection />
-      <AISection />
       
       {/* CTA Button above Choose Your Path section */}
       <div className="py-16 text-center">

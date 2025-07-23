@@ -41,7 +41,7 @@ const DIYAccessSection = () => {
                 <div>
                   <Link to="/app">
                     <Button className="btn-primary text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary">
-                      FACE YOUR TRUTH →
+                      LEARN MORE →
                     </Button>
                   </Link>
                 </div>
