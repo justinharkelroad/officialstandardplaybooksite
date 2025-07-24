@@ -27,6 +27,14 @@ export const packageFeatures: PackageFeature[] = [
   { name: 'Video Training Armory', category: 'app' },
   { name: 'Weekly Goal Tracking', category: 'app' },
   { name: 'Annual and Monthly Goal Tracking', category: 'app' },
+  
+  // Coaching Features
+  { name: 'Monthly 2 Hour Group Boardroom Call', category: 'coaching' },
+  { name: '24/7 Video Messaging 1v1 Coaching', category: 'coaching' },
+  { name: 'Monthly 2 Hour 1 on 1 Coaching Call', category: 'coaching' },
+  { name: 'Monthly 45 Min Team Coaching Call', category: 'coaching' },
+  
+  // Tools Features
   { name: 'AI Call Scoring (# Per Month)', category: 'tools' },
   { name: 'Daily Accountability Tools', category: 'tools' },
   
@@ -35,12 +43,6 @@ export const packageFeatures: PackageFeature[] = [
   { name: 'I AM THE STANDARD T Shirt', category: 'swag' },
   { name: 'I AM THE STANDARD Pen', category: 'swag' },
   { name: 'I AM THE STANDARD Wristband', category: 'swag' },
-  
-  // Coaching Features
-  { name: 'Monthly 2 Hour Group Boardroom Call', category: 'coaching' },
-  { name: '24/7 Video Messaging 1v1 Coaching', category: 'coaching' },
-  { name: 'Monthly 2 Hour 1 on 1 Coaching Call', category: 'coaching' },
-  { name: 'Monthly 45 Min Team Coaching Call', category: 'coaching' },
 ];
 
 export const packages: Package[] = [
