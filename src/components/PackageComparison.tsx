@@ -22,7 +22,6 @@ const PackageComparison = ({ trigger }: PackageComparisonProps) => {
   const [open, setOpen] = useState(false);
 
   const membershipPackages = packages.filter(pkg => pkg.type === 'membership');
-  const challengePackages = packages.filter(pkg => pkg.type === 'challenge');
 
   const filteredFeatures = selectedCategory === 'all' 
     ? packageFeatures 
@@ -55,8 +54,7 @@ const PackageComparison = ({ trigger }: PackageComparisonProps) => {
                       {pkg.name}
                     </span>
                   </div>
-                  <div className="text-primary font-bold text-xl">{pkg.price}</div>
-                  <div className="text-gray-400 text-sm">{pkg.duration}</div>
+                   <div className="text-primary font-bold text-xl">{pkg.price}</div>
                   {!pkg.available && (
                     <Badge variant="destructive" className="text-xs">SOLD OUT</Badge>
                   )}
@@ -124,16 +122,7 @@ const PackageComparison = ({ trigger }: PackageComparisonProps) => {
           </DialogTitle>
         </DialogHeader>
         
-        <Tabs defaultValue="memberships" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-6 bg-primary/10">
-            <TabsTrigger value="memberships" className="data-[state=active]:bg-primary">
-              Membership Levels
-            </TabsTrigger>
-            <TabsTrigger value="challenges" className="data-[state=active]:bg-primary">
-              Training Programs
-            </TabsTrigger>
-          </TabsList>
-          
+        <div className="w-full">
           {/* Feature Category Filter */}
           <div className="flex flex-wrap gap-2 mb-6">
             <Button
@@ -144,7 +133,7 @@ const PackageComparison = ({ trigger }: PackageComparisonProps) => {
             >
               All Features
             </Button>
-            {['access', 'coaching', 'training', 'support', 'tools'].map((category) => (
+            {['coaching', 'swag', 'tools'].map((category) => (
               <Button
                 key={category}
                 size="sm"
@@ -157,14 +146,10 @@ const PackageComparison = ({ trigger }: PackageComparisonProps) => {
             ))}
           </div>
 
-          <TabsContent value="memberships" className="overflow-auto max-h-[60vh]">
+          <div className="overflow-auto max-h-[60vh]">
             <ComparisonTable packagesToShow={membershipPackages} />
-          </TabsContent>
-          
-          <TabsContent value="challenges" className="overflow-auto max-h-[60vh]">
-            <ComparisonTable packagesToShow={challengePackages} />
-          </TabsContent>
-        </Tabs>
+          </div>
+        </div>
       </DialogContent>
     </Dialog>
   );
