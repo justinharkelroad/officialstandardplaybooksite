@@ -28,6 +28,7 @@ export const packageFeatures: PackageFeature[] = [
   { name: 'Weekly Goal Tracking', category: 'app' },
   { name: 'Annual and Monthly Goal Tracking', category: 'app' },
   { name: 'AI Call Scoring (# Per Month)', category: 'tools' },
+  { name: 'Daily Accountability Tools', category: 'tools' },
   
   // Swag Features
   { name: 'Standard Playbook Hardcover', category: 'swag' },
@@ -62,6 +63,7 @@ export const packages: Package[] = [
       'Weekly Goal Tracking': false,
       'Annual and Monthly Goal Tracking': false,
       'AI Call Scoring (# Per Month)': '20',
+      'Daily Accountability Tools': false,
       'Standard Playbook Hardcover': true,
       'I AM THE STANDARD T Shirt': true,
       'I AM THE STANDARD Pen': true,
@@ -91,6 +93,7 @@ export const packages: Package[] = [
       'Weekly Goal Tracking': true,
       'Annual and Monthly Goal Tracking': true,
       'AI Call Scoring (# Per Month)': '100',
+      'Daily Accountability Tools': true,
       'Standard Playbook Hardcover': true,
       'I AM THE STANDARD T Shirt': true,
       'I AM THE STANDARD Pen': true,
@@ -121,6 +124,7 @@ export const packages: Package[] = [
       'Weekly Goal Tracking': true,
       'Annual and Monthly Goal Tracking': true,
       'AI Call Scoring (# Per Month)': '100',
+      'Daily Accountability Tools': true,
       'Standard Playbook Hardcover': true,
       'I AM THE STANDARD T Shirt': true,
       'I AM THE STANDARD Pen': true,

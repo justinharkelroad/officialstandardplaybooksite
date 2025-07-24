@@ -64,27 +64,44 @@ const PackageComparison = ({ trigger }: PackageComparisonProps) => {
           </tr>
         </thead>
         <tbody>
-          {filteredFeatures.map((feature) => (
-            <tr key={feature.name} className="border-b border-primary/10 hover:bg-primary/5">
-              <td className="p-4 sticky left-0 bg-dark-card z-10">
-                <div>
-                  <div className="text-white font-medium">{feature.name}</div>
-                  {feature.description && (
-                    <div className="text-gray-400 text-sm mt-1">{feature.description}</div>
+          {filteredFeatures.map((feature, index) => {
+            const isAppFeature = feature.category === 'app';
+            const isFirstAppFeature = index === 0 && isAppFeature;
+            const isLastAppFeature = feature.category === 'app' && 
+              (index === filteredFeatures.length - 1 || filteredFeatures[index + 1]?.category !== 'app');
+            
+            return (
+              <tr key={feature.name} className="border-b border-primary/10 hover:bg-primary/5">
+                <td className={`p-4 sticky left-0 bg-dark-card z-10 relative ${
+                  isAppFeature ? 'border-l-2 border-primary/30' : ''
+                }`}>
+                  {isAppFeature && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent pointer-events-none" />
                   )}
-                </div>
-              </td>
-              {packagesToShow.map((pkg) => (
-                <td key={`${pkg.id}-${feature.name}`} className="p-4 text-center">
-                  {renderFeatureValue(pkg.features[feature.name])}
+                  {isFirstAppFeature && (
+                    <div className="absolute -top-4 left-2 text-xs text-primary/60 font-medium tracking-wider uppercase">
+                      Standard App
+                    </div>
+                  )}
+                  <div className="relative">
+                    <div className="text-white font-medium">{feature.name}</div>
+                    {feature.description && (
+                      <div className="text-gray-400 text-sm mt-1">{feature.description}</div>
+                    )}
+                  </div>
                 </td>
-              ))}
-            </tr>
-          ))}
-          <tr className="border-t border-primary/20">
-            <td className="p-4 sticky left-0 bg-dark-card z-10">
-              <span className="text-white font-medium">Action</span>
-            </td>
+                {packagesToShow.map((pkg) => (
+                  <td key={`${pkg.id}-${feature.name}`} className={`p-4 text-center ${
+                    isAppFeature ? 'bg-primary/5' : ''
+                  }`}>
+                    {renderFeatureValue(pkg.features[feature.name])}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
+          <tr className="border-t-2 border-primary/20">
+            <td className="p-4 sticky left-0 bg-dark-card z-10"></td>
             {packagesToShow.map((pkg) => (
               <td key={`${pkg.id}-action`} className="p-4 text-center">
                 {pkg.available ? (
