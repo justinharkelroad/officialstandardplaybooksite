@@ -2,7 +2,8 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Zap, Crown, Target } from 'lucide-react';
+import { ArrowRight, Users, Zap, Crown } from 'lucide-react';
+import PackageComparison from '@/components/PackageComparison';
 
 const OffersGrid = () => {
   return (
@@ -17,9 +18,7 @@ const OffersGrid = () => {
           </p>
           
           {/* Compare Packages Button */}
-          <Button className="bg-white text-primary font-bold text-lg px-8 py-4 hover:bg-gray-100 mb-8">
-            COMPARE PACKAGES
-          </Button>
+          <PackageComparison />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
