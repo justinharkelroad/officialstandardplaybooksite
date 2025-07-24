@@ -134,7 +134,7 @@ const PackageComparison = ({ trigger }: PackageComparisonProps) => {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-7xl max-h-[90vh] overflow-hidden bg-dark-card border-primary/20">
+      <DialogContent className="max-w-7xl max-h-[90vh] overflow-hidden bg-dark-card border-primary/20 [&>button]:text-white [&>button]:hover:text-primary">
         <DialogHeader>
           <DialogTitle className="text-white font-rajdhani text-2xl uppercase text-center">
             Compare Packages
@@ -165,7 +165,11 @@ const PackageComparison = ({ trigger }: PackageComparisonProps) => {
             ))}
           </div>
 
-          <div className="overflow-auto max-h-[60vh]">
+          <div className="overflow-auto max-h-[60vh] -mx-6 px-6" style={{
+            WebkitOverflowScrolling: 'touch',
+            scrollbarWidth: 'thin',
+            scrollbarColor: 'hsl(var(--primary)) transparent'
+          }}>
             <ComparisonTable packagesToShow={membershipPackages} />
           </div>
         </div>
