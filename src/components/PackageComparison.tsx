@@ -39,101 +39,7 @@ const PackageComparison = ({ trigger }: PackageComparisonProps) => {
     return <Check className="w-5 h-5 text-green-500 mx-auto" />;
   };
 
-  const ComparisonTable = ({ packagesToShow }: { packagesToShow: typeof packages }) => (
-    <div className="w-full">
-      <div 
-        className="overflow-x-auto overflow-y-visible touch-pan-x" 
-        style={{
-          WebkitOverflowScrolling: 'touch',
-          touchAction: 'pan-x',
-          scrollbarWidth: 'thin',
-          scrollbarColor: 'hsl(var(--primary)) transparent'
-        }}
-      >
-        <table className="w-full border-collapse" style={{ minWidth: '800px', width: 'max-content' }}>
-          <thead>
-            <tr className="border-b border-primary/20">
-              <th className="text-left p-2 md:p-4 text-white font-medium sticky left-0 bg-dark-card z-10 min-w-[150px]">
-                Features
-              </th>
-              {packagesToShow.map((pkg) => (
-                <th key={pkg.id} className="p-2 md:p-4 text-center min-w-[200px]">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-center gap-2">
-                      {pkg.highlighted && <Crown className="w-4 h-4 text-yellow-500" />}
-                      <span className="text-white font-rajdhani text-base md:text-lg uppercase tracking-wide">
-                        {pkg.name}
-                      </span>
-                    </div>
-                     <div className="text-primary font-bold text-lg md:text-xl">{pkg.price}</div>
-                    {!pkg.available && (
-                      <Badge variant="destructive" className="text-xs">SOLD OUT</Badge>
-                    )}
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {filteredFeatures.map((feature, index) => {
-              const isAppFeature = feature.category === 'app';
-              const isFirstAppFeature = index === 0 && isAppFeature;
-              const isLastAppFeature = feature.category === 'app' && 
-                (index === filteredFeatures.length - 1 || filteredFeatures[index + 1]?.category !== 'app');
-              
-              return (
-                <tr key={feature.name} className="border-b border-primary/10 hover:bg-primary/5">
-                  <td className={`p-2 md:p-4 sticky left-0 bg-dark-card z-10 relative min-w-[150px] ${
-                    isAppFeature ? 'border-l-2 border-primary/30' : ''
-                  }`}>
-                    {isAppFeature && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent pointer-events-none" />
-                    )}
-                    {isFirstAppFeature && (
-                      <div className="absolute -top-4 left-2 text-xs text-primary/60 font-medium tracking-wider uppercase">
-                        Standard App
-                      </div>
-                    )}
-                    <div className="relative">
-                      <div className="text-white font-medium text-sm md:text-base">{feature.name}</div>
-                      {feature.description && (
-                        <div className="text-gray-400 text-xs md:text-sm mt-1">{feature.description}</div>
-                      )}
-                    </div>
-                  </td>
-                  {packagesToShow.map((pkg) => (
-                    <td key={`${pkg.id}-${feature.name}`} className={`p-2 md:p-4 text-center ${
-                      isAppFeature ? 'bg-primary/5' : ''
-                    }`}>
-                      {renderFeatureValue(pkg.features[feature.name])}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-            <tr className="border-t-2 border-primary/20">
-              <td className="p-2 md:p-4 sticky left-0 bg-dark-card z-10"></td>
-              {packagesToShow.map((pkg) => (
-                <td key={`${pkg.id}-action`} className="p-2 md:p-4 text-center">
-                  {pkg.available ? (
-                    <Link to={pkg.link} onClick={() => setOpen(false)}>
-                      <Button className="bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full text-sm md:text-base">
-                        LEARN MORE
-                      </Button>
-                    </Link>
-                  ) : (
-                    <Button disabled className="bg-red-500 hover:bg-red-600 w-full cursor-not-allowed text-sm md:text-base">
-                      SOLD OUT
-                    </Button>
-                  )}
-                </td>
-              ))}
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+  // ComparisonTable component is now inlined in the main component
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -176,10 +82,95 @@ const PackageComparison = ({ trigger }: PackageComparisonProps) => {
           </div>
 
           <div 
-            className="max-h-[65vh] md:max-h-[60vh] overflow-y-auto"
-            style={{ touchAction: 'pan-y' }}
+            className="max-h-[65vh] md:max-h-[60vh] overflow-auto"
+            style={{ 
+              touchAction: 'auto',
+              WebkitOverflowScrolling: 'touch',
+              scrollbarWidth: 'thin',
+              scrollbarColor: 'hsl(var(--primary)) transparent'
+            }}
           >
-            <ComparisonTable packagesToShow={membershipPackages} />
+            <table className="w-full border-collapse" style={{ minWidth: '800px', width: 'max-content' }}>
+              <thead>
+                <tr className="border-b border-primary/20">
+                  <th className="text-left p-2 md:p-4 text-white font-medium sticky left-0 bg-dark-card z-10 min-w-[150px]">
+                    Features
+                  </th>
+                  {membershipPackages.map((pkg) => (
+                    <th key={pkg.id} className="p-2 md:p-4 text-center min-w-[200px]">
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-center gap-2">
+                          {pkg.highlighted && <Crown className="w-4 h-4 text-yellow-500" />}
+                          <span className="text-white font-rajdhani text-base md:text-lg uppercase tracking-wide">
+                            {pkg.name}
+                          </span>
+                        </div>
+                         <div className="text-primary font-bold text-lg md:text-xl">{pkg.price}</div>
+                        {!pkg.available && (
+                          <Badge variant="destructive" className="text-xs">SOLD OUT</Badge>
+                        )}
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {filteredFeatures.map((feature, index) => {
+                  const isAppFeature = feature.category === 'app';
+                  const isFirstAppFeature = index === 0 && isAppFeature;
+                  const isLastAppFeature = feature.category === 'app' && 
+                    (index === filteredFeatures.length - 1 || filteredFeatures[index + 1]?.category !== 'app');
+                  
+                  return (
+                    <tr key={feature.name} className="border-b border-primary/10 hover:bg-primary/5">
+                      <td className={`p-2 md:p-4 sticky left-0 bg-dark-card z-10 relative min-w-[150px] ${
+                        isAppFeature ? 'border-l-2 border-primary/30' : ''
+                      }`}>
+                        {isAppFeature && (
+                          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent pointer-events-none" />
+                        )}
+                        {isFirstAppFeature && (
+                          <div className="absolute -top-4 left-2 text-xs text-primary/60 font-medium tracking-wider uppercase">
+                            Standard App
+                          </div>
+                        )}
+                        <div className="relative">
+                          <div className="text-white font-medium text-sm md:text-base">{feature.name}</div>
+                          {feature.description && (
+                            <div className="text-gray-400 text-xs md:text-sm mt-1">{feature.description}</div>
+                          )}
+                        </div>
+                      </td>
+                      {membershipPackages.map((pkg) => (
+                        <td key={`${pkg.id}-${feature.name}`} className={`p-2 md:p-4 text-center ${
+                          isAppFeature ? 'bg-primary/5' : ''
+                        }`}>
+                          {renderFeatureValue(pkg.features[feature.name])}
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })}
+                <tr className="border-t-2 border-primary/20">
+                  <td className="p-2 md:p-4 sticky left-0 bg-dark-card z-10"></td>
+                  {membershipPackages.map((pkg) => (
+                    <td key={`${pkg.id}-action`} className="p-2 md:p-4 text-center">
+                      {pkg.available ? (
+                        <Link to={pkg.link} onClick={() => setOpen(false)}>
+                          <Button className="bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full text-sm md:text-base">
+                            LEARN MORE
+                          </Button>
+                        </Link>
+                      ) : (
+                        <Button disabled className="bg-red-500 hover:bg-red-600 w-full cursor-not-allowed text-sm md:text-base">
+                          SOLD OUT
+                        </Button>
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </DialogContent>
