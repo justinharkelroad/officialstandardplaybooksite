@@ -41,12 +41,16 @@ const PackageComparison = ({ trigger }: PackageComparisonProps) => {
 
   const ComparisonTable = ({ packagesToShow }: { packagesToShow: typeof packages }) => (
     <div className="w-full">
-      <div className="overflow-x-auto overflow-y-visible" style={{
-        WebkitOverflowScrolling: 'touch',
-        scrollbarWidth: 'thin',
-        scrollbarColor: 'hsl(var(--primary)) transparent'
-      }}>
-        <table className="w-full border-collapse min-w-[800px]">
+      <div 
+        className="overflow-x-auto overflow-y-visible touch-pan-x" 
+        style={{
+          WebkitOverflowScrolling: 'touch',
+          touchAction: 'pan-x',
+          scrollbarWidth: 'thin',
+          scrollbarColor: 'hsl(var(--primary)) transparent'
+        }}
+      >
+        <table className="w-full border-collapse" style={{ minWidth: '800px', width: 'max-content' }}>
           <thead>
             <tr className="border-b border-primary/20">
               <th className="text-left p-2 md:p-4 text-white font-medium sticky left-0 bg-dark-card z-10 min-w-[150px]">
@@ -171,7 +175,10 @@ const PackageComparison = ({ trigger }: PackageComparisonProps) => {
             ))}
           </div>
 
-          <div className="max-h-[65vh] md:max-h-[60vh] overflow-y-auto">
+          <div 
+            className="max-h-[65vh] md:max-h-[60vh] overflow-y-auto"
+            style={{ touchAction: 'pan-y' }}
+          >
             <ComparisonTable packagesToShow={membershipPackages} />
           </div>
         </div>
