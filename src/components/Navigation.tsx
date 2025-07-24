@@ -70,10 +70,15 @@ const Navigation = () => {
             </button>
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center text-white hover:text-primary transition-colors">
-                6 Week Challenge
+                Special Programs
                 <ChevronDown className="w-4 h-4 ml-1" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-dark-card border-primary/20">
+                <DropdownMenuItem>
+                  <Link to="/sales-experience" className="text-white hover:text-primary">
+                    8 Week Sales Management Training
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Link to="/producer-power-up" className="text-white hover:text-primary">
                     Producer Power-Up
@@ -123,8 +128,11 @@ const Navigation = () => {
                 Access Levels
               </button>
               <div className="text-white">
-                <div className="font-medium mb-2">6 Week Challenge</div>
+                <div className="font-medium mb-2">Special Programs</div>
                 <div className="pl-4 space-y-2">
+                  <Link to="/sales-experience" className="block text-gray-300 hover:text-primary transition-colors">
+                    8 Week Sales Management Training
+                  </Link>
                   <Link to="/producer-power-up" className="block text-gray-300 hover:text-primary transition-colors">
                     Producer Power-Up
                   </Link>

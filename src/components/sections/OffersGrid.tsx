@@ -12,44 +12,17 @@ const OffersGrid = () => {
           <h2 className="font-rajdhani font-bold text-4xl md:text-6xl uppercase tracking-wide text-white mb-6">
             Choose Your Path
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Whether you are just looking for technology to hold your teams accountable, group coaching or 1 on 1 exclusive coaching with Justin. We got you.
           </p>
+          
+          {/* Compare Packages Button */}
+          <Button className="bg-white text-primary font-bold text-lg px-8 py-4 hover:bg-gray-100 mb-8">
+            COMPARE PACKAGES
+          </Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {/* 8 Week Sales Management Training */}
-          <div className="card-hover">
-            <Card className="bg-dark-card border-primary/20 h-full group">
-              <CardHeader>
-                <div className="w-12 h-12 bg-primary-accent rounded-square flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <Target className="w-6 h-6 text-white" />
-                </div>
-                <CardTitle className="text-white font-rajdhani text-xl md:text-2xl uppercase tracking-wide">
-                  8 WEEK SALES MANAGEMENT TRAINING
-                </CardTitle>
-                <CardDescription className="text-gray-400">
-                  Your team doesn't need motivation. They need a leader worth following.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3 mb-6">
-                  <p className="text-gray-300">Stop managing salespeople. Start manufacturing killers.</p>
-                  
-                  
-                  <p className="text-primary font-medium">Because mediocrity is comfortable. Excellence hurts.</p>
-                  <p className="text-gray-300 italic">Choose pain with purpose or accept pain without progress.</p>
-                </div>
-                <Link to="/sales-experience">
-                  <Button className="btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full truncate">
-                    LEARN MORE
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          </div>
-
           {/* The Boardroom */}
           <div className="card-hover">
             <Card className="bg-dark-card border-primary/20 h-full group">
