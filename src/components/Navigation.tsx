@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ChevronDown } from 'lucide-react';
+import PackageComparison from '@/components/PackageComparison';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -62,12 +63,13 @@ const Navigation = () => {
                 Home
               </Link>
             )}
-            <button 
-              onClick={() => scrollToSection('offers')}
-              className="text-white hover:text-primary transition-colors"
-            >
-              Access Levels
-            </button>
+            <PackageComparison 
+              trigger={
+                <button className="text-white hover:text-primary transition-colors">
+                  Access Levels
+                </button>
+              }
+            />
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center text-white hover:text-primary transition-colors">
                 Special Programs
@@ -121,12 +123,13 @@ const Navigation = () => {
                   Home
                 </Link>
               )}
-              <button 
-                onClick={() => scrollToSection('offers')}
-                className="text-white hover:text-primary transition-colors text-left"
-              >
-                Access Levels
-              </button>
+              <PackageComparison 
+                trigger={
+                  <button className="text-white hover:text-primary transition-colors text-left">
+                    Access Levels
+                  </button>
+                }
+              />
               <div className="text-white">
                 <div className="font-medium mb-2">Special Programs</div>
                 <div className="pl-4 space-y-2">

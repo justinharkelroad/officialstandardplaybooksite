@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, Crown } from 'lucide-react';
+import PackageComparison from '@/components/PackageComparison';
 
 const PricingSection = () => {
   return (
@@ -11,9 +12,14 @@ const PricingSection = () => {
           <h2 className="font-rajdhani font-bold text-4xl md:text-6xl uppercase tracking-wide text-white mb-6">
             Investment Levels
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Choose the level of commitment that matches your ambition.
           </p>
+          
+          {/* Compare Packages Button */}
+          <div className="mb-8">
+            <PackageComparison />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">

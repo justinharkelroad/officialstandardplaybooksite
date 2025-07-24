@@ -16,12 +16,9 @@ const OffersGrid = () => {
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Whether you are just looking for technology to hold your teams accountable, group coaching or 1 on 1 exclusive coaching with Justin. We got you.
           </p>
-          
-          {/* Compare Packages Button */}
-          <PackageComparison />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* The Boardroom */}
           <div className="card-hover">
             <Card className="bg-dark-card border-primary/20 h-full group">
