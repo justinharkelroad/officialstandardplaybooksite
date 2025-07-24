@@ -24,12 +24,6 @@ const SalesHero = ({ onScrollToPayment }: SalesHeroProps) => {
           Your Sales Team Is a Direct Reflection of Your Leadership
         </h1>
         
-        <div className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8 animate-fade-up space-y-4" style={{ animationDelay: '0.2s' }}>
-          <p className="text-primary font-medium">And Right Now? They're Reflecting Your Confusion.</p>
-          <p>Every missed close. Every burned lead. Every "great conversation" that goes nowhere.</p>
-          <p>That's not a sales problem. That's a leadership problem.</p>
-          <p className="text-primary font-medium">And leadership problems have names. Yours.</p>
-        </div>
 
         <div className="relative max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>
           <div className="video-glow absolute -inset-4"></div>
