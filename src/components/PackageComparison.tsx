@@ -9,8 +9,8 @@ import {
 } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { packages, packageFeatures, Package } from '@/data/packagesData';
-import { Check, X, Crown, Zap } from 'lucide-react';
+import { packages, packageFeatures } from '@/data/packagesData';
+import { Check, X, Crown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface PackageComparisonProps {
@@ -28,18 +28,17 @@ const PackageComparison = ({ trigger }: PackageComparisonProps) => {
     ? packageFeatures 
     : packageFeatures.filter(feature => feature.category === selectedCategory);
 
-  const renderFeatureValue = (value: boolean | string) => {
+  const renderFeatureValue = (value: boolean | string | undefined) => {
+    if (value === undefined || value === false) {
+      return <X className="w-5 h-5 text-gray-400 mx-auto" />;
+    }
     if (typeof value === 'string') {
       return <span className="text-primary font-medium">{value}</span>;
     }
-    return value ? (
-      <Check className="w-5 h-5 text-green-500 mx-auto" />
-    ) : (
-      <X className="w-5 h-5 text-gray-400 mx-auto" />
-    );
+    return <Check className="w-5 h-5 text-green-500 mx-auto" />;
   };
 
-  const ComparisonTable = ({ packagesToShow }: { packagesToShow: Package[] }) => (
+  const ComparisonTable = ({ packagesToShow }: { packagesToShow: typeof packages }) => (
     <div className="overflow-x-auto">
       <table className="w-full border-collapse">
         <thead>
