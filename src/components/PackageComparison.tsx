@@ -25,6 +25,8 @@ const PackageComparison = ({ trigger }: PackageComparisonProps) => {
 
   const filteredFeatures = selectedCategory === 'all' 
     ? packageFeatures 
+    : selectedCategory === 'tools'
+    ? packageFeatures.filter(feature => feature.category === 'tools' || feature.category === 'app')
     : packageFeatures.filter(feature => feature.category === selectedCategory);
 
   const renderFeatureValue = (value: boolean | string | undefined) => {
