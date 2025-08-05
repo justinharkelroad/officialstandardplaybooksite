@@ -16,7 +16,7 @@ const BoardroomHero = () => {
       </div>
 
       <div className="container mx-auto px-4 text-center relative z-10">
-        <div className="w-16 h-16 bg-primary rounded-square flex items-center justify-center mx-auto mb-8 animate-fade-up">
+        <div className="w-16 h-16 bg-primary rounded-square flex items-center justify-center mx-auto mb-12 animate-fade-up">
           <Users className="w-8 h-8 text-white" />
         </div>
         
