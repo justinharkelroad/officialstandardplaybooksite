@@ -21,22 +21,8 @@ const BoardroomHero = () => {
         </div>
         
         <h1 className="font-rajdhani font-bold text-4xl md:text-6xl lg:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up">
-          The Room Where Excuses Go to Die
+          WELCOME TO THE BOARDROOM
         </h1>
-        
-        <div className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8 animate-fade-up space-y-4" style={{ animationDelay: '0.2s' }}>
-          <h2 className="text-white font-bold text-2xl md:text-3xl">Every Empire Has a War Room. Yours is Empty.</h2>
-          
-          <p>While you're having your 47th "strategy session" with people who've never built anything, there are 12 agency owners in a room you can't access.</p>
-          
-          <p>They're not smarter than you.<br />
-          They're not more talented than you.<br />
-          They just stopped asking broke people for rich advice.</p>
-          
-          <p>It's Tuesday, 2:15 PM. You just lost another producer to your competitor. The one who "couldn't afford" to stay? He's making 40% more across town.</p>
-          
-          <p className="text-primary font-medium">And you're still Googling "retention strategies" like the answer is free.</p>
-        </div>
 
         <div className="relative max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>
           <div className="video-glow absolute -inset-4"></div>
