@@ -70,19 +70,9 @@ const Navigation = () => {
                 </button>
               }
             />
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center text-white hover:text-primary transition-colors">
-                Special Programs
-                <ChevronDown className="w-4 h-4 ml-1" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-dark-card border-primary/20">
-                <DropdownMenuItem>
-                  <Link to="/sales-experience" className="text-white hover:text-primary">
-                    8 Week Sales Management Training
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Link to="/sales-experience" className="text-white hover:text-primary transition-colors">
+              8 Week Training
+            </Link>
             <Link to="/contact" className="text-white hover:text-primary transition-colors">
               Contact
             </Link>
@@ -120,14 +110,9 @@ const Navigation = () => {
                   </button>
                 }
               />
-              <div className="text-white">
-                <div className="font-medium mb-2">Special Programs</div>
-                <div className="pl-4 space-y-2">
-                  <Link to="/sales-experience" className="block text-gray-300 hover:text-primary transition-colors">
-                    8 Week Sales Management Training
-                  </Link>
-                </div>
-              </div>
+              <Link to="/sales-experience" className="text-white hover:text-primary transition-colors">
+                8 Week Training
+              </Link>
               <Link to="/contact" className="text-white hover:text-primary transition-colors">
                 Contact
               </Link>
