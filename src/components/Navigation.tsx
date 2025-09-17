@@ -81,16 +81,6 @@ const Navigation = () => {
                     8 Week Sales Management Training
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link to="/producer-power-up" className="text-white hover:text-primary">
-                    Producer Power-Up
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link to="/owner-challenge" className="text-white hover:text-primary">
-                    Owner Challenge
-                  </Link>
-                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
             <Link to="/contact" className="text-white hover:text-primary transition-colors">
@@ -135,12 +125,6 @@ const Navigation = () => {
                 <div className="pl-4 space-y-2">
                   <Link to="/sales-experience" className="block text-gray-300 hover:text-primary transition-colors">
                     8 Week Sales Management Training
-                  </Link>
-                  <Link to="/producer-power-up" className="block text-gray-300 hover:text-primary transition-colors">
-                    Producer Power-Up
-                  </Link>
-                  <Link to="/owner-challenge" className="block text-gray-300 hover:text-primary transition-colors">
-                    Owner Challenge
                   </Link>
                 </div>
               </div>
