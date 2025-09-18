@@ -67,7 +67,7 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
       <div className="min-h-screen">
         <Navigation />
         {/* Hero Section with Video and Form */}
-        <section className="py-12 md:py-20 relative">
+        <section className="pt-20 md:pt-32 pb-12 md:pb-20 relative">
           <div className="container mx-auto px-4 max-w-7xl">
             <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 ${formPosition === 'left' ? 'lg:grid-flow-col-dense' : ''}`}>
               
