@@ -9,6 +9,13 @@ interface SalesHeroProps {
 const SalesHero = ({ onScrollToPayment }: SalesHeroProps) => {
   return (
     <section className="relative pt-32 pb-20 overflow-hidden">
+      {/* Title Section Above Hero */}
+      <div className="container mx-auto px-4 text-center relative z-10 mb-16">
+        <h1 className="font-rajdhani font-bold text-5xl md:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up">
+          Your Sales Team Is a Direct Reflection of Your Leadership
+        </h1>
+      </div>
+
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary-accent/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
@@ -21,28 +28,25 @@ const SalesHero = ({ onScrollToPayment }: SalesHeroProps) => {
             <div className="relative max-w-md mx-auto animate-fade-up">
               <div className="video-glow absolute -inset-4"></div>
               <div className="relative bg-dark-card rounded-lg overflow-hidden" style={{ aspectRatio: '9/16' }}>
-                <script src="https://fast.wistia.com/player.js" async></script>
-                <script src="https://fast.wistia.com/embed/cixz70ajf6.js" async type="module"></script>
-                <style dangerouslySetInnerHTML={{
-                  __html: `
-                    wistia-player[media-id='cixz70ajf6']:not(:defined) {
-                      background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/cixz70ajf6/swatch');
-                      display: block; 
-                      filter: blur(5px); 
-                      padding-top:177.78%;
-                    }
-                  `
-                }} />
-                <wistia-player media-id="cixz70ajf6" aspect="0.5625"></wistia-player>
+                <iframe
+                  src="https://fast.wistia.net/embed/iframe/cixz70ajf6?autoPlay=false&fullscreenButton=true&playButton=true&smallPlayButton=true&volumeControl=true&controlsVisibleOnLoad=true"
+                  title="Sales Training Video"
+                  allow="autoplay; fullscreen"
+                  allowFullScreen
+                  frameBorder="0"
+                  scrolling="no"
+                  className="w-full h-full rounded-lg"
+                  style={{ aspectRatio: '9/16' }}
+                />
               </div>
             </div>
           </div>
 
           {/* Right Column - Hero Content */}
           <div className="order-2 lg:order-2 animate-fade-up text-center lg:text-left" style={{ animationDelay: '0.2s' }}>
-            <h1 className="font-rajdhani font-bold text-4xl md:text-5xl lg:text-6xl uppercase tracking-wide text-white mb-6">
+            <h2 className="font-rajdhani font-bold text-4xl md:text-5xl lg:text-6xl uppercase tracking-wide text-white mb-6">
               GET COMPLETE CLARITY IN HOW TO HOLD YOUR TEAMS ACCOUNTABLE TO HOW THEY SELL AND WHAT THEY DO IN JUST 8 WEEKS. GUARANTEED
-            </h1>
+            </h2>
             <p className="text-xl text-gray-300 mb-8">
               You will get these 3 things immediately handed to you:
             </p>
