@@ -104,8 +104,8 @@ const SalesPayment = () => {
         
         <div className="text-center mt-12">
           <a href="https://AGENCYCOACHING.as.me/standardfit" target="_blank" rel="noopener noreferrer">
-            <Button className="btn-primary text-lg px-8 py-4">
-              STOP MANAGING. START MANUFACTURING →
+            <Button className="bg-red-600 hover:bg-red-700 text-white text-lg px-8 py-4">
+              Book A Call →
             </Button>
           </a>
         </div>
