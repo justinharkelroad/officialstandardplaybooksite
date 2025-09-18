@@ -6,14 +6,8 @@ const SalesFAQ = () => {
   return (
     <section className="py-20 relative">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-6">
-            Sales Management Training FAQ
-          </h2>
-        </div>
-
         <div className="max-w-4xl mx-auto">
-          <div className="bg-dark-card border border-primary/20 rounded-lg p-8 mb-8">
+          <div className="bg-dark-card border border-primary/20 rounded-lg p-8 mb-8 text-center">
             <h3 className="font-rajdhani font-bold text-2xl uppercase tracking-wide text-white mb-4">
               The Only Guarantee That Matters
             </h3>

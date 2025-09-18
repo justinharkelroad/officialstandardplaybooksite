@@ -9,7 +9,7 @@ const SalesSuccessStory = () => {
               Instead of taking our word for it, please listen to one of our success stories:
             </h2>
             <p className="text-2xl text-primary font-medium">
-              I'm Dan Westrick, Allstate Agent.
+              Dan Westrick - Allstate Agency Owner
             </p>
           </div>
 
