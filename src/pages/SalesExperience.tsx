@@ -2,12 +2,11 @@
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import SalesHero from '@/components/sections/SalesHero';
-import SalesFeatures from '@/components/sections/SalesFeatures';
+import SalesBoxedFeatures from '@/components/sections/SalesBoxedFeatures';
+import SalesButtonCTA from '@/components/sections/SalesButtonCTA';
 import SalesCallCTA from '@/components/sections/SalesCallCTA';
 import SalesProblem from '@/components/sections/SalesProblem';
-import SalesSolution from '@/components/sections/SalesSolution';
-import SalesGuarantee from '@/components/sections/SalesGuarantee';
-import SalesPayment from '@/components/sections/SalesPayment';
+import SalesSuccessStory from '@/components/sections/SalesSuccessStory';
 import SalesFramework from '@/components/sections/SalesFramework';
 import SalesFAQ from '@/components/sections/SalesFAQ';
 import { Button } from '@/components/ui/button';
@@ -25,12 +24,11 @@ const SalesExperience = () => {
       <Navigation />
       
       <SalesHero onScrollToPayment={scrollToPayment} />
-      <SalesFeatures />
+      <SalesButtonCTA onScrollToPayment={scrollToPayment} />
+      <SalesBoxedFeatures />
+      <SalesSuccessStory />
       <SalesCallCTA />
       <SalesProblem />
-      <SalesSolution />
-      <SalesGuarantee />
-      <SalesPayment />
       <SalesFramework />
       <SalesFAQ />
 
