@@ -5,8 +5,8 @@ import SalesHero from '@/components/sections/SalesHero';
 import SalesBoxedFeatures from '@/components/sections/SalesBoxedFeatures';
 import SalesButtonCTA from '@/components/sections/SalesButtonCTA';
 import SalesCallCTA from '@/components/sections/SalesCallCTA';
-import SalesProblem from '@/components/sections/SalesProblem';
 import SalesSuccessStory from '@/components/sections/SalesSuccessStory';
+import SalesPayment from '@/components/sections/SalesPayment';
 import SalesFramework from '@/components/sections/SalesFramework';
 import SalesFAQ from '@/components/sections/SalesFAQ';
 import { Button } from '@/components/ui/button';
@@ -28,7 +28,7 @@ const SalesExperience = () => {
       <SalesBoxedFeatures />
       <SalesSuccessStory />
       <SalesCallCTA />
-      <SalesProblem />
+      <SalesPayment />
       <SalesFramework />
       <SalesFAQ />
 
