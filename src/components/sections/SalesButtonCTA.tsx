@@ -11,9 +11,9 @@ const SalesButtonCTA = ({ onScrollToPayment }: SalesButtonCTAProps) => {
       <div className="container mx-auto px-4 text-center">
         <Button 
           onClick={onScrollToPayment}
-          className="btn-primary text-lg px-8 py-4"
+          className="bg-red-600 hover:bg-red-700 text-white text-lg px-8 py-4"
         >
-          STOP MANAGING. START DOMINATING
+          Book A Call
           <ArrowRight className="w-5 h-5 ml-2" />
         </Button>
       </div>

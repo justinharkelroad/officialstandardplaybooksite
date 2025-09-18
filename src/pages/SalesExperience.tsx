@@ -4,7 +4,6 @@ import Footer from '@/components/Footer';
 import SalesHero from '@/components/sections/SalesHero';
 import SalesBoxedFeatures from '@/components/sections/SalesBoxedFeatures';
 import SalesButtonCTA from '@/components/sections/SalesButtonCTA';
-import SalesCallCTA from '@/components/sections/SalesCallCTA';
 import SalesSuccessStory from '@/components/sections/SalesSuccessStory';
 import SalesPayment from '@/components/sections/SalesPayment';
 import SalesFramework from '@/components/sections/SalesFramework';
@@ -27,7 +26,6 @@ const SalesExperience = () => {
       <SalesButtonCTA onScrollToPayment={scrollToPayment} />
       <SalesBoxedFeatures />
       <SalesSuccessStory />
-      <SalesCallCTA />
       <SalesPayment />
       <SalesFramework />
       <SalesFAQ />
