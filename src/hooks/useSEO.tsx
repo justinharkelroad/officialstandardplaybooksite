@@ -14,6 +14,11 @@ export const useSEO = (customConfig?: Partial<SEOConfig>) => {
     // Update document title
     document.title = finalConfig.title;
     
+    // Add noindex for /thechallenge
+    if (pathname === '/thechallenge') {
+      updateMetaTag('robots', 'noindex,nofollow', 'name');
+    }
+    
     // Update meta description
     updateMetaTag('description', finalConfig.description);
     

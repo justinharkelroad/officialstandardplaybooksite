@@ -95,6 +95,13 @@ export const seoConfig: Record<string, SEOConfig> = {
     ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
     type: 'article'
   },
+  '/thechallenge': {
+    title: 'The Challenge - Private Landing Page',
+    description: 'Private challenge page',
+    keywords: [],
+    type: 'website' as const,
+    canonical: 'https://standardplaybook.com/thechallenge',
+  },
   '/privacy': {
     title: 'Privacy Policy - The Standard Playbook',
     description: 'Read our privacy policy to understand how The Standard Playbook protects and uses your personal information.',
