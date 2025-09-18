@@ -50,18 +50,23 @@ const SalesHero = ({ onScrollToPayment }: SalesHeroProps) => {
             <p className="text-xl text-gray-300 mb-8">
               You will get these 3 things immediately handed to you:
             </p>
-            <div className="space-y-4 text-left">
-              <div className="flex items-center space-x-3">
-                <BookOpen className="w-5 h-5 text-primary flex-shrink-0" />
-                <span className="text-primary font-medium text-lg">SALES PROCESS FRAMEWORK</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <BookOpen className="w-5 h-5 text-primary flex-shrink-0" />
-                <span className="text-primary font-medium text-lg">ACCOUNTABILITY SYSTEM</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <BookOpen className="w-5 h-5 text-primary flex-shrink-0" />
-                <span className="text-primary font-medium text-lg">CONSEQUENCE LADDER</span>
+            <div className="relative">
+              <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 to-primary-accent/20 rounded-lg blur-lg opacity-60"></div>
+              <div className="relative bg-dark-card border border-primary/20 rounded-lg p-8">
+                <div className="space-y-6">
+                  <div className="flex items-center space-x-4">
+                    <BookOpen className="w-8 h-8 text-primary flex-shrink-0" />
+                    <span className="text-primary font-medium text-2xl">SALES PROCESS FRAMEWORK</span>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <BookOpen className="w-8 h-8 text-primary flex-shrink-0" />
+                    <span className="text-primary font-medium text-2xl">ACCOUNTABILITY SYSTEM</span>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <BookOpen className="w-8 h-8 text-primary flex-shrink-0" />
+                    <span className="text-primary font-medium text-2xl">CONSEQUENCE LADDER</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
