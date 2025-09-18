@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import SEOHead from '@/components/SEOHead';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 
 // Declare Wistia custom element for TypeScript
 declare global {
@@ -62,7 +64,8 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
         keywords: [],
       }} />
       
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen">
+        <Navigation />
         {/* Hero Section with Video and Form */}
         <section className="py-12 md:py-20 relative">
           <div className="container mx-auto px-4 max-w-7xl">
@@ -167,6 +170,8 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
             </div>
           </div>
         </section>
+        
+        <Footer />
       </div>
     </>
   );
