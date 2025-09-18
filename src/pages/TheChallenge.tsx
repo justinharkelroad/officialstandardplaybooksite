@@ -66,8 +66,21 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
       
       <div className="min-h-screen">
         <Navigation />
+        {/* Title Section */}
+        <section className="pt-20 md:pt-32 pb-8 md:pb-12 relative">
+          <div className="container mx-auto px-4 text-center relative z-10">
+            <h1 className="font-rajdhani font-bold text-5xl md:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up">
+              CAN WE STOP LYING?
+            </h1>
+            
+            <div className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto animate-fade-up" style={{ animationDelay: '0.2s' }}>
+              <p className="text-white font-medium">MOST TRAINING MODULES IN OUR SPACE MAKE OUR TEAMS DREAD THEIR MORNING REQUIREMENTS. WE'RE ON A MISSION TO CHANGE THAT.</p>
+            </div>
+          </div>
+        </section>
+
         {/* Hero Section with Video and Form */}
-        <section className="pt-20 md:pt-32 pb-12 md:pb-20 relative">
+        <section className="pb-12 md:pb-20 relative">
           <div className="container mx-auto px-4 max-w-7xl">
             <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 ${formPosition === 'left' ? 'lg:grid-flow-col-dense' : ''}`}>
               
