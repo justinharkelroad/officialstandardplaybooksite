@@ -19,7 +19,7 @@ const FormulaAI = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="py-20 relative">
+      <section className="pt-32 pb-20 relative">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
