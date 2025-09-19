@@ -2,6 +2,7 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import VideoPlayer from '@/components/VideoPlayer';
 import SEOHead from '@/components/SEOHead';
+import { Circle } from 'lucide-react';
 
 const FormulaAI = () => {
   return (
@@ -50,6 +51,12 @@ const FormulaAI = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-16">
               {/* Left Column - Text */}
               <div className="order-2 lg:order-1">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="relative">
+                    <Circle className="w-8 h-8 text-primary fill-primary/20" />
+                    <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-sm">1</span>
+                  </div>
+                </div>
                 <h2 className="font-rajdhani font-bold text-3xl md:text-4xl uppercase tracking-wide text-white mb-4">
                   Build Your Own Role-Play Voice Agent
                 </h2>
