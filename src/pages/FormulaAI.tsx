@@ -42,6 +42,24 @@ const FormulaAI = () => {
         </div>
       </section>
 
+      {/* AI Call Scoring Section */}
+      <section className="py-12 relative">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <a 
+              href="https://standardcallscoring.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-block"
+            >
+              <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white hover:text-primary transition-colors">
+                AI Call Scoring
+              </h2>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Video Tutorials Section */}
       <section className="py-20 relative">
         <div className="container mx-auto px-4">
