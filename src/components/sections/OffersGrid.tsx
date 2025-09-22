@@ -75,12 +75,12 @@ const OffersGrid = () => {
                   
                   <p className="text-gray-300 italic">Curious people take notes. Coachable people take action.</p>
                 </div>
-                <Link to="/directive">
+                <a href="https://agencycoaching.as.me/schedule/4db44546/appointment/77447936/calendar/7710787?appointmentTypeIds[]=77447936" target="_blank" rel="noopener noreferrer">
                   <Button className="btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full truncate">
                     LEARN MORE
                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
                   </Button>
-                </Link>
+                </a>
               </CardContent>
             </Card>
           </div>
