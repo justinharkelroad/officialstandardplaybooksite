@@ -53,30 +53,6 @@ const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
           </div>
         </div>
 
-        {/* New Five Pillars Introduction */}
-        <div className="max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.5s' }}>
-          <div className="bg-dark-card border-primary/20 rounded-lg p-8 text-center">
-            <h3 className="font-rajdhani font-bold text-2xl uppercase tracking-wide text-white mb-4">
-              THE STANDARD ISN'T A PROGRAM. IT'S A PROGRESSION.
-            </h3>
-            <p className="text-xl text-primary font-medium mb-4">
-              ACCESS → ASSOCIATION → ACCOUNTABILITY → ACCELERATION → ASCENSION
-            </p>
-            <p className="text-gray-300 text-lg">
-              Most people die with their potential still inside them. We extract it.
-            </p>
-          </div>
-        </div>
-
-        <div className="flex justify-center animate-fade-up" style={{ animationDelay: '0.6s' }}>
-          <Button 
-            className="btn-primary text-lg px-8 py-4"
-            onClick={handleSeeOptions}
-          >
-            LEARN MORE
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-        </div>
       </div>
     </section>
   );
