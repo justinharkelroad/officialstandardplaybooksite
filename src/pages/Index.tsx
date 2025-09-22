@@ -3,8 +3,6 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import HeroSection from '@/components/sections/HeroSection';
 import OffersGrid from '@/components/sections/OffersGrid';
-import DIYAccessSection from '@/components/sections/DIYAccessSection';
-import PricingSection from '@/components/sections/PricingSection';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import FivePillarsSection from '@/components/sections/FivePillarsSection';
 import { useLocation } from 'react-router-dom';
@@ -36,8 +34,6 @@ const Index = () => {
       <HeroSection onScrollToSection={scrollToSection} />
       
       <OffersGrid />
-      <DIYAccessSection />
-      <PricingSection />
       <TestimonialsSection />
       <FivePillarsSection />
       <Footer />

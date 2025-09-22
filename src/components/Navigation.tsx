@@ -63,6 +63,9 @@ const Navigation = () => {
                 Home
               </Link>
             )}
+            <Link to="/app" className="text-white hover:text-primary transition-colors">
+              Standard App
+            </Link>
             <PackageComparison 
               trigger={
                 <button className="text-white hover:text-primary transition-colors">
@@ -103,6 +106,9 @@ const Navigation = () => {
                   Home
                 </Link>
               )}
+              <Link to="/app" className="text-white hover:text-primary transition-colors">
+                Standard App
+              </Link>
               <PackageComparison 
                 trigger={
                   <button className="text-white hover:text-primary transition-colors text-left">
