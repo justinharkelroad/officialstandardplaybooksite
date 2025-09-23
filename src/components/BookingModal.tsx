@@ -42,10 +42,10 @@ const BookingModal = ({ trigger }: BookingModalProps) => {
       <DialogTrigger asChild>
         {trigger}
       </DialogTrigger>
-      <DialogContent className="max-w-4xl w-full bg-dark-card border-primary/20 max-h-[90vh] overflow-hidden">
-        <div className="w-full h-[800px]">
+      <DialogContent className="max-w-4xl w-full bg-dark-card border-primary/20 max-h-[90vh] overflow-y-auto p-0">
+        <div className="w-full h-[80vh]">
           <iframe 
-            src="https://app.acuityscheduling.com/schedule.php?owner=27963178&appointmentType=77447936" 
+            src="https://app.acuityscheduling.com/schedule.php?owner=27963178&appointmentType=73884639" 
             width="100%" 
             height="100%" 
             frameBorder="0" 
