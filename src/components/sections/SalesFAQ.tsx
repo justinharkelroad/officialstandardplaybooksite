@@ -19,7 +19,7 @@ const SalesFAQ = () => {
               <p>Fair?</p>
             </div>
             <div className="mt-8">
-              <a href="https://AGENCYCOACHING.as.me/standardfit" target="_blank" rel="noopener noreferrer">
+              <a href="https://AGENCYCOACHING.as.me/8week" target="_blank" rel="noopener noreferrer">
                 <Button className="btn-primary">
                   BOOK YOUR TRANSFORMATION CALL →
                 </Button>

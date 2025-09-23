@@ -2,11 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { BookOpen } from 'lucide-react';
 
-interface SalesHeroProps {
-  onScrollToPayment: () => void;
-}
-
-const SalesHero = ({ onScrollToPayment }: SalesHeroProps) => {
+const SalesHero = () => {
   return (
     <section className="relative pt-32 pb-20 overflow-hidden">
       {/* Title Section Above Hero */}

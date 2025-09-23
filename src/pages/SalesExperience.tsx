@@ -21,8 +21,8 @@ const SalesExperience = () => {
     <div className="min-h-screen">
       <Navigation />
       
-      <SalesHero onScrollToPayment={scrollToChoosePath} />
-      <SalesButtonCTA onScrollToPayment={scrollToChoosePath} />
+      <SalesHero />
+      <SalesButtonCTA />
       <SalesBoxedFeatures />
       <SalesSuccessStory />
       <SalesFramework />
