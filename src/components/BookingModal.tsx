@@ -17,40 +17,37 @@ const BookingModal = ({ trigger }: BookingModalProps) => {
       script.async = true;
       document.body.appendChild(script);
 
-      // Listen for booking completion
+      // Listen for booking completion - only respond when this modal is open
       const handleMessage = (event: MessageEvent) => {
         try {
-          console.log('Acuity postMessage:', event.origin, event.data);
+          // Only process messages when this specific modal instance is open
+          if (!isOpen) return;
+
+          console.log('BookingModal postMessage:', event.origin, event.data);
+          
           const origin = event.origin || '';
           const isAcuityOrigin =
             typeof origin === 'string' &&
             (origin.includes('acuityscheduling.com') || origin.includes('as.me'));
 
           const data: any = event.data;
-          const type =
-            (typeof data === 'string' ? data : data?.type || data?.event || data?.name || '').toString().toLowerCase();
+          
+          // Ultra-specific: Only respond to our exact custom snippet message
+          const isOurCustomSnippet =
+            typeof data === 'object' && 
+            data !== null && 
+            data?.type === 'acuity-appointment-booked';
 
-          const isBookingComplete =
-            type.includes('acuity-appointment-booked') ||
-            type.includes('acuity.appointment.scheduled') ||
-            type.includes('appointment-booked') ||
-            type.includes('appointment.scheduled') ||
-            type.includes('booked') ||
-            type.includes('scheduled');
-
-          // If user added the custom snippet, accept it regardless of origin
-          const explicitSnippet =
-            typeof data === 'object' && data?.type === 'acuity-appointment-booked';
-
-          if ((isAcuityOrigin && isBookingComplete) || explicitSnippet) {
-            console.log('Booking completed, redirecting...');
+          // Security: Only accept from Acuity origins and our specific message
+          if (isAcuityOrigin && isOurCustomSnippet) {
+            console.log('Booking completed via custom snippet, redirecting...');
             setIsOpen(false);
             setTimeout(() => {
               window.location.href = '/thank-you';
             }, 50);
           }
         } catch (e) {
-          console.warn('Error handling Acuity postMessage', e);
+          console.warn('Error handling BookingModal postMessage', e);
         }
       };
 
