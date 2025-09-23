@@ -19,25 +19,38 @@ const BookingModal = ({ trigger }: BookingModalProps) => {
 
       // Listen for booking completion
       const handleMessage = (event: MessageEvent) => {
-        console.log('Received postMessage:', event.origin, event.data);
-        
-        // Check for various Acuity completion events
-        if (event.origin === 'https://app.acuityscheduling.com') {
-          const isBookingComplete = 
-            event.data === 'acuity-appointment-booked' ||
-            event.data?.type === 'acuity-appointment-booked' ||
-            event.data === 'acuity.appointment.scheduled' ||
-            event.data?.type === 'acuity.appointment.scheduled' ||
-            (typeof event.data === 'string' && event.data.includes('booked')) ||
-            (typeof event.data === 'string' && event.data.includes('scheduled'));
-            
-          if (isBookingComplete) {
+        try {
+          console.log('Acuity postMessage:', event.origin, event.data);
+          const origin = event.origin || '';
+          const isAcuityOrigin =
+            typeof origin === 'string' &&
+            (origin.includes('acuityscheduling.com') || origin.includes('as.me'));
+
+          const data: any = event.data;
+          const type =
+            (typeof data === 'string' ? data : data?.type || data?.event || data?.name || '').toString().toLowerCase();
+
+          const isBookingComplete =
+            type.includes('acuity-appointment-booked') ||
+            type.includes('acuity.appointment.scheduled') ||
+            type.includes('appointment-booked') ||
+            type.includes('appointment.scheduled') ||
+            type.includes('booked') ||
+            type.includes('scheduled');
+
+          // If user added the custom snippet, accept it regardless of origin
+          const explicitSnippet =
+            typeof data === 'object' && data?.type === 'acuity-appointment-booked';
+
+          if ((isAcuityOrigin && isBookingComplete) || explicitSnippet) {
             console.log('Booking completed, redirecting...');
             setIsOpen(false);
             setTimeout(() => {
               window.location.href = '/thank-you';
-            }, 100);
+            }, 50);
           }
+        } catch (e) {
+          console.warn('Error handling Acuity postMessage', e);
         }
       };
 
@@ -59,8 +72,8 @@ const BookingModal = ({ trigger }: BookingModalProps) => {
         <DialogTitle className="sr-only">Book Your Consultation</DialogTitle>
         <DialogDescription className="sr-only">Schedule your consultation appointment</DialogDescription>
         <div className="w-full h-[80vh]">
-          <iframe 
-            src="https://app.acuityscheduling.com/schedule.php?owner=27963178&appointmentType=73884639" 
+          <iframe title="Schedule your consultation" 
+            src="https://app.acuityscheduling.com/schedule.php?owner=27963178&appointmentType=73884639&embed=1" 
             width="100%" 
             height="100%" 
             frameBorder="0" 
