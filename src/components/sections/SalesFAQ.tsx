@@ -1,6 +1,7 @@
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
+import BookingModal from '@/components/BookingModal';
 
 const SalesFAQ = () => {
   return (
@@ -19,11 +20,13 @@ const SalesFAQ = () => {
               <p>Fair?</p>
             </div>
             <div className="mt-8">
-              <a href="https://AGENCYCOACHING.as.me/8week" target="_blank" rel="noopener noreferrer">
-                <Button className="btn-primary">
-                  BOOK YOUR TRANSFORMATION CALL →
-                </Button>
-              </a>
+              <BookingModal
+                trigger={
+                  <Button className="btn-primary">
+                    BOOK YOUR TRANSFORMATION CALL →
+                  </Button>
+                }
+              />
             </div>
           </div>
         </div>

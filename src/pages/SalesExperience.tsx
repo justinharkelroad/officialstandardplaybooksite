@@ -9,6 +9,7 @@ import SalesFramework from '@/components/sections/SalesFramework';
 import SalesFAQ from '@/components/sections/SalesFAQ';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import BookingModal from '@/components/BookingModal';
 
 const SalesExperience = () => {
   const navigate = useNavigate();
@@ -30,12 +31,13 @@ const SalesExperience = () => {
 
       {/* Sticky CTA for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 bg-dark-card border-t border-primary/20 p-4 md:hidden z-40">
-        <Button 
-          onClick={scrollToChoosePath}
-          className="btn-primary w-full"
-        >
-          Choose Your Path
-        </Button>
+        <BookingModal
+          trigger={
+            <Button className="btn-primary w-full">
+              Book A Call
+            </Button>
+          }
+        />
       </div>
 
       <Footer />
