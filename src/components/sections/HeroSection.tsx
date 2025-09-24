@@ -1,7 +1,6 @@
 
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
-import VideoPlayer from '@/components/VideoPlayer';
+import VideoFlowSection from './VideoFlowSection';
 
 interface HeroSectionProps {
   onScrollToSection?: (sectionId: string) => void;
@@ -31,8 +30,8 @@ const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
           <p className="text-white font-medium">JOIN AGENCY OWNERS ACROSS THE COUNTRY WHO HAVE CHOSEN TO CREATE FREEDOM IN THEIR LIVES BY REALIZING THEY MUST BE THE EXAMPLE FOR THEIR TEAMS, THEIR FAMILIES AND THEMSELVES.</p>
         </div>
 
-        {/* BOOK FREE CALL Button above video */}
-        <div className="flex justify-center mb-8 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+        {/* BOOK FREE CALL Button */}
+        <div className="flex justify-center mb-16 animate-fade-up" style={{ animationDelay: '0.3s' }}>
           <Button 
             className="bg-white text-primary font-bold text-xl px-10 py-6 hover:bg-gray-100"
             onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
@@ -41,19 +40,10 @@ const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
           </Button>
         </div>
 
-        {/* Video Frame */}
-        <div className="relative max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>
-          <div className="video-glow absolute -inset-4"></div>
-          <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
-            <VideoPlayer 
-              videoId="gy-8UNhToW8"
-              title="Demo Video"
-              className="w-full h-full rounded-lg"
-            />
-          </div>
-        </div>
-
       </div>
+      
+      {/* Video Flow Section */}
+      <VideoFlowSection />
     </section>
   );
 };
