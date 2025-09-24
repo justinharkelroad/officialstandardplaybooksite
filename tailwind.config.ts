@@ -33,7 +33,7 @@ export default {
         },
         "primary-accent": "#30A4FF",
         "primary-light": "#4DA3FF",
-        "dark-card": "#0F1419",
+        "dark-card": "hsl(var(--dark-card))",
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
