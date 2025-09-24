@@ -2,6 +2,7 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import HeroSection from '@/components/sections/HeroSection';
+import VideoFlowSection from '@/components/sections/VideoFlowSection';
 import OffersGrid from '@/components/sections/OffersGrid';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import { useLocation } from 'react-router-dom';
@@ -31,7 +32,7 @@ const Index = () => {
     <div className="min-h-screen">
       <Navigation />
       <HeroSection onScrollToSection={scrollToSection} />
-      
+      <VideoFlowSection />
       <OffersGrid />
       <TestimonialsSection />
       <Footer />

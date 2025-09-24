@@ -1,6 +1,5 @@
 
 import { Button } from '@/components/ui/button';
-import VideoFlowSection from './VideoFlowSection';
 
 interface HeroSectionProps {
   onScrollToSection?: (sectionId: string) => void;
@@ -41,9 +40,6 @@ const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
         </div>
 
       </div>
-      
-      {/* Video Flow Section */}
-      <VideoFlowSection />
     </section>
   );
 };
