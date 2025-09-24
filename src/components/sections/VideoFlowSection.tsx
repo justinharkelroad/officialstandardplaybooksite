@@ -44,26 +44,27 @@ const VideoFlowSection = () => {
 
           <div className="space-y-20">
             {videos.map((video, index) => (
-              <div key={video.id} className="relative">
-                {/* Centered Hero-style Video Section */}
-                <div className="text-center space-y-8">
-                  {/* Title */}
-                  <div className="space-y-2">
-                    <h3 className="font-rajdhani font-bold text-3xl md:text-4xl uppercase tracking-wide text-white">
-                      <span className="text-primary-accent drop-shadow-lg font-black text-4xl md:text-5xl">
+              <div key={video.id} className="relative min-h-screen flex items-center">
+                {/* Two Column Layout */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+                  
+                  {/* Left Side - Content */}
+                  <div className="space-y-6">
+                    <h3 className="font-rajdhani font-bold text-4xl md:text-6xl uppercase tracking-wide text-white leading-tight">
+                      <span className="text-primary-accent drop-shadow-lg font-black">
                         {video.emphasis}
                       </span>
-                      <span className="ml-2">
+                      <span className="block">
                         {video.title.replace(video.emphasis, '').trim()}
                       </span>
                     </h3>
-                    <p className="text-lg text-gray-300 leading-relaxed max-w-2xl mx-auto">
+                    <p className="text-xl text-gray-300 leading-relaxed max-w-lg">
                       {video.description}
                     </p>
                   </div>
 
-                  {/* Centered Video Player */}
-                  <div className="relative max-w-4xl mx-auto">
+                  {/* Right Side - Video */}
+                  <div className="relative">
                     <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
                       <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 to-primary-accent/20 rounded-lg blur-sm"></div>
                       <div className="relative">
