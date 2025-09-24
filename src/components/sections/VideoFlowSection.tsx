@@ -42,41 +42,37 @@ const VideoFlowSection = () => {
             </p>
           </div>
 
-          <div className="space-y-16">
+          <div className="space-y-20">
             {videos.map((video, index) => (
               <div key={video.id} className="relative">
-                {/* Video Section */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                  {/* Video Player */}
-                  <div className={`relative aspect-video bg-dark-card rounded-lg overflow-hidden ${
-                    index % 2 === 1 ? 'lg:order-2' : ''
-                  }`}>
-                    <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 to-primary-accent/20 rounded-lg blur-sm"></div>
-                    <div className="relative">
-                      <VideoPlayer 
-                        videoId={video.id}
-                        title={video.title}
-                        className="w-full h-full rounded-lg"
-                      />
-                    </div>
+                {/* Centered Hero-style Video Section */}
+                <div className="text-center space-y-8">
+                  {/* Title */}
+                  <div className="space-y-2">
+                    <h3 className="font-rajdhani font-bold text-3xl md:text-4xl uppercase tracking-wide text-white">
+                      <span className="text-primary-accent drop-shadow-lg font-black text-4xl md:text-5xl">
+                        {video.emphasis}
+                      </span>
+                      <span className="ml-2">
+                        {video.title.replace(video.emphasis, '').trim()}
+                      </span>
+                    </h3>
+                    <p className="text-lg text-gray-300 leading-relaxed max-w-2xl mx-auto">
+                      {video.description}
+                    </p>
                   </div>
 
-                  {/* Content */}
-                  <div className={`text-center lg:text-left space-y-4 ${
-                    index % 2 === 1 ? 'lg:order-1' : ''
-                  }`}>
-                    <div className="space-y-2">
-                      <h3 className="font-rajdhani font-bold text-3xl md:text-4xl uppercase tracking-wide text-white">
-                        <span className="text-primary-accent drop-shadow-lg font-black text-4xl md:text-5xl">
-                          {video.emphasis}
-                        </span>
-                        <span className="ml-2">
-                          {video.title.replace(video.emphasis, '').trim()}
-                        </span>
-                      </h3>
-                      <p className="text-lg text-gray-300 leading-relaxed max-w-lg mx-auto lg:mx-0">
-                        {video.description}
-                      </p>
+                  {/* Centered Video Player */}
+                  <div className="relative max-w-4xl mx-auto">
+                    <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
+                      <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 to-primary-accent/20 rounded-lg blur-sm"></div>
+                      <div className="relative">
+                        <VideoPlayer 
+                          videoId={video.id}
+                          title={video.title}
+                          className="w-full h-full rounded-lg"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

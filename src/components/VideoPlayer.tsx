@@ -28,7 +28,7 @@ const VideoPlayer = ({ videoId, title = "Demo Video", className = "" }: VideoPla
   return (
     <iframe
       ref={iframeRef}
-      src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&enablejsapi=1&controls=1`}
+      src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&controls=1`}
       title={title}
       className={className}
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
