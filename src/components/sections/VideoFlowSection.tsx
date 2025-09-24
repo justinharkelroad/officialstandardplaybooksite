@@ -29,7 +29,7 @@ const VideoFlowSection = () => {
   ];
 
   return (
-    <section className="pt-8 pb-20 relative">
+    <section className="pt-2 pb-20 relative">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="space-y-32">

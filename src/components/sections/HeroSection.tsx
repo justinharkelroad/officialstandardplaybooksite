@@ -30,7 +30,7 @@ const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
         </div>
 
         {/* BOOK FREE CALL Button */}
-        <div className="flex justify-center mb-8 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+        <div className="flex justify-center mb-2 animate-fade-up" style={{ animationDelay: '0.3s' }}>
           <Button 
             className="bg-white text-primary font-bold text-xl px-10 py-6 hover:bg-gray-100"
             onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
