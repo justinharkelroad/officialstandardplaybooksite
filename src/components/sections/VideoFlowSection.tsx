@@ -52,15 +52,12 @@ const VideoFlowSection = () => {
 
                 {/* Centered Full-Width Video */}
                 <div className="relative max-w-5xl mx-auto">
-                  <div className="relative aspect-video rounded-lg overflow-hidden">
-                    <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 to-primary-accent/20 rounded-lg blur-sm"></div>
-                    <div className="relative bg-black rounded-lg overflow-hidden">
-                      <VideoPlayer 
-                        videoId={video.id}
-                        title={video.title}
-                        className="w-full h-full rounded-lg"
-                      />
-                    </div>
+                  <div className="relative aspect-video overflow-hidden rounded-lg bg-black">
+                    <VideoPlayer
+                      videoId={video.id}
+                      title={video.title}
+                      className="absolute inset-0 w-full h-full"
+                    />
                   </div>
                 </div>
               </div>
