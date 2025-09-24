@@ -42,38 +42,34 @@ const VideoFlowSection = () => {
             </p>
           </div>
 
-          <div className="space-y-20">
+          <div className="space-y-32">
             {videos.map((video, index) => (
-              <div key={video.id} className="relative min-h-screen flex items-center">
-                {/* Two Column Layout */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
-                  
-                  {/* Left Side - Content */}
-                  <div className="space-y-6">
-                    <h3 className="font-rajdhani font-bold text-4xl md:text-6xl uppercase tracking-wide text-white leading-tight">
-                      <span className="text-primary-accent drop-shadow-lg font-black">
-                        {video.emphasis}
-                      </span>
-                      <span className="block">
-                        {video.title.replace(video.emphasis, '').trim()}
-                      </span>
-                    </h3>
-                    <p className="text-xl text-gray-300 leading-relaxed max-w-lg">
-                      {video.description}
-                    </p>
-                  </div>
+              <div key={video.id} className="relative text-center">
+                {/* Centered Title */}
+                <div className="space-y-6 mb-12">
+                  <h3 className="font-rajdhani font-bold text-4xl md:text-6xl uppercase tracking-wide text-white">
+                    <span className="text-primary-accent drop-shadow-lg font-black">
+                      {video.emphasis}
+                    </span>
+                    <span className="ml-2">
+                      {video.title.replace(video.emphasis, '').trim()}
+                    </span>
+                  </h3>
+                  <p className="text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
+                    {video.description}
+                  </p>
+                </div>
 
-                  {/* Right Side - Video */}
-                  <div className="relative">
-                    <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
-                      <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 to-primary-accent/20 rounded-lg blur-sm"></div>
-                      <div className="relative">
-                        <VideoPlayer 
-                          videoId={video.id}
-                          title={video.title}
-                          className="w-full h-full rounded-lg"
-                        />
-                      </div>
+                {/* Centered Full-Width Video */}
+                <div className="relative max-w-5xl mx-auto">
+                  <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
+                    <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 to-primary-accent/20 rounded-lg blur-sm"></div>
+                    <div className="relative">
+                      <VideoPlayer 
+                        videoId={video.id}
+                        title={video.title}
+                        className="w-full h-full rounded-lg"
+                      />
                     </div>
                   </div>
                 </div>
