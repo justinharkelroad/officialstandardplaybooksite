@@ -1,6 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Target, ArrowRight } from 'lucide-react';
+import VideoPlayer from '@/components/VideoPlayer';
 
 interface AppAccessHeroProps {
   onGetStartedClick: () => void;
@@ -20,9 +21,7 @@ const AppAccessHero = ({ onGetStartedClick }: AppAccessHeroProps) => {
         </div>
         
         <h1 className="font-rajdhani font-bold text-4xl md:text-6xl lg:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up leading-tight">
-          The App That Knows You're Lying
-          <br />
-          <span className="text-gradient">Before You Do</span>
+          <span className="text-gradient">Gamification</span> to strengthen your health, connection to God, your relationships and your agency
         </h1>
         
         <div className="max-w-4xl mx-auto space-y-6 animate-fade-up" style={{ animationDelay: '0.2s' }}>
@@ -45,8 +44,21 @@ const AppAccessHero = ({ onGetStartedClick }: AppAccessHeroProps) => {
           </p>
         </div>
 
+        {/* Video Section */}
+        <div className="max-w-4xl mx-auto mb-8 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+          <div className="relative aspect-video overflow-hidden rounded-lg bg-black">
+            <iframe
+              src="https://www.youtube.com/embed/mcm-EJ57j4s?enablejsapi=1&controls=1&autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1"
+              title="Standard App Demo"
+              className="absolute inset-0 w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </div>
+
         {/* Hero Image */}
-        <div className="max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+        <div className="max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>
           <img 
             src="/lovable-uploads/33c19236-cc4d-46b8-9b30-461dc652c7e7.png"
             alt="App Access Interface"
@@ -54,7 +66,7 @@ const AppAccessHero = ({ onGetStartedClick }: AppAccessHeroProps) => {
           />
         </div>
 
-        <div className="flex justify-center animate-fade-up" style={{ animationDelay: '0.4s' }}>
+        <div className="flex justify-center animate-fade-up" style={{ animationDelay: '0.5s' }}>
           <Button 
             className="bg-white text-primary font-bold text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 hover:bg-gray-100 truncate max-w-[90%]"
             onClick={onGetStartedClick}
