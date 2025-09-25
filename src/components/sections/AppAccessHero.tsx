@@ -20,29 +20,9 @@ const AppAccessHero = ({ onGetStartedClick }: AppAccessHeroProps) => {
           <Target className="w-8 h-8 text-white" />
         </div>
         
-        <h1 className="font-rajdhani font-bold text-4xl md:text-6xl lg:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up leading-tight">
+        <h1 className="font-rajdhani font-bold text-4xl md:text-6xl lg:text-7xl uppercase tracking-wide text-white mb-8 animate-fade-up leading-tight">
           <span className="text-gradient">Gamification</span> to strengthen your health, connection to God, your relationships and your agency
         </h1>
-        
-        <div className="max-w-4xl mx-auto space-y-6 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-          <p className="text-xl md:text-2xl text-gray-300">
-            The Standard app doesn't motivate. It mirrors.
-            <br />
-            Every stack. Every skip. Every excuse.
-            <br />
-            All reflected back until you can't unsee who you really are.
-          </p>
-          
-          <p className="text-lg md:text-xl text-gray-300">
-            Most apps help you feel better.
-            <br />
-            This one helps you become better.
-          </p>
-          
-          <p className="text-xl md:text-2xl text-primary font-medium">
-            Violently. Honestly. Permanently.
-          </p>
-        </div>
 
         {/* Video Section */}
         <div className="max-w-4xl mx-auto mb-8 animate-fade-up" style={{ animationDelay: '0.3s' }}>

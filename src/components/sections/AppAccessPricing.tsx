@@ -1,7 +1,6 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Shield } from 'lucide-react';
 
 const AppAccessPricing = () => {
@@ -16,11 +15,12 @@ const AppAccessPricing = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Stack Level Access */}
-          <Card className="bg-dark-card border-primary/20 card-hover relative">
-            <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-red-600 text-white text-xs px-3 py-1">
-              Included in Boardroom Membership
-            </Badge>
-            <CardHeader className="text-center">
+          <div>
+            <p className="text-red-500 text-sm font-bold uppercase text-center mb-4">
+              INCLUDED IN BOARDROOM MEMBERSHIP
+            </p>
+            <Card className="bg-dark-card border-primary/20 card-hover">
+              <CardHeader className="text-center">
               <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide mb-2">
                 Stack Level Access: The First Two Pillars
               </CardTitle>
@@ -60,13 +60,15 @@ const AppAccessPricing = () => {
               </Button>
             </CardContent>
           </Card>
+          </div>
 
           {/* Arsenal Level Access */}
-          <Card className="bg-dark-card border-primary relative card-hover">
-            <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-red-600 text-white text-xs px-3 py-1">
-              Included in Directive Membership
-            </Badge>
-            <CardHeader className="text-center">
+          <div>
+            <p className="text-red-500 text-sm font-bold uppercase text-center mb-4">
+              INCLUDED IN DIRECTIVE MEMBERSHIP
+            </p>
+            <Card className="bg-dark-card border-primary relative card-hover">
+              <CardHeader className="text-center">
               <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide mb-2">
                 Arsenal Level Access: Four Pillars Activated
               </CardTitle>
@@ -106,6 +108,7 @@ const AppAccessPricing = () => {
               </Button>
             </CardContent>
           </Card>
+          </div>
         </div>
       </div>
     </section>
