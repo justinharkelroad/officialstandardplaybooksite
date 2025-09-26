@@ -66,13 +66,6 @@ const Navigation = () => {
             <Link to="/app" className="text-white hover:text-primary transition-colors">
               Standard App
             </Link>
-            <PackageComparison 
-              trigger={
-                <button className="text-white hover:text-primary transition-colors">
-                  Access Levels
-                </button>
-              }
-            />
             <Link to="/sales-experience" className="text-white hover:text-primary transition-colors">
               8 Week Training
             </Link>
@@ -109,13 +102,6 @@ const Navigation = () => {
               <Link to="/app" className="text-white hover:text-primary transition-colors">
                 Standard App
               </Link>
-              <PackageComparison 
-                trigger={
-                  <button className="text-white hover:text-primary transition-colors text-left">
-                    Access Levels
-                  </button>
-                }
-              />
               <Link to="/sales-experience" className="text-white hover:text-primary transition-colors">
                 8 Week Training
               </Link>
