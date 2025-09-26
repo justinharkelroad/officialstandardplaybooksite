@@ -66,7 +66,7 @@ const Navigation = () => {
             <Link to="/app" className="text-white hover:text-primary transition-colors">
               Standard App
             </Link>
-            <Link to="/challenge" className="text-white hover:text-primary transition-colors">
+            <Link to="/thechallenge" className="text-white hover:text-primary transition-colors">
               LSP Challenge
             </Link>
             <Link to="/sales-experience" className="text-white hover:text-primary transition-colors">
@@ -105,7 +105,7 @@ const Navigation = () => {
               <Link to="/app" className="text-white hover:text-primary transition-colors">
                 Standard App
               </Link>
-              <Link to="/challenge" className="text-white hover:text-primary transition-colors">
+              <Link to="/thechallenge" className="text-white hover:text-primary transition-colors">
                 LSP Challenge
               </Link>
               <Link to="/sales-experience" className="text-white hover:text-primary transition-colors">
