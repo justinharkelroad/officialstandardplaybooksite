@@ -10,6 +10,11 @@ const Links = () => {
       external: false,
     },
     {
+      title: '8 WEEK SALES MANAGEMENT TRAINING',
+      href: '/sales-experience',
+      external: false,
+    },
+    {
       title: 'TEAM CHALLENGE',
       href: 'https://standardplaybook.com/thechallenge',
       external: true,
