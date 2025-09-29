@@ -34,7 +34,7 @@ const Links = () => {
           <img 
             src={profileImage} 
             alt="Profile" 
-            className="w-40 h-40 rounded-full object-cover border-4 border-primary/30 shadow-lg"
+            className="w-48 h-48 rounded-full object-cover object-center border-4 border-primary/40 shadow-xl shadow-primary/20"
           />
         </div>
 
