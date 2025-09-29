@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import BookingModal from '@/components/BookingModal';
 import profileImage from '@/assets/profile-image.png';
 
 const Links = () => {
@@ -67,14 +65,15 @@ const Links = () => {
           ))}
 
           {/* Book a Call Button */}
-          <BookingModal
-            trigger={
-              <button className="btn-primary w-full h-16 flex items-center justify-between px-8 text-lg font-rajdhani font-bold tracking-wide group">
-                <span>BOOK FREE CALL</span>
-                <ArrowRight className="w-6 h-6 transition-transform group-hover:translate-x-1" />
-              </button>
-            }
-          />
+          <a
+            href="https://AGENCYCOACHING.as.me/standardfit"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary w-full h-16 flex items-center justify-between px-8 text-lg font-rajdhani font-bold tracking-wide group"
+          >
+            <span>BOOK FREE CALL</span>
+            <ArrowRight className="w-6 h-6 transition-transform group-hover:translate-x-1" />
+          </a>
         </div>
       </div>
     </div>
