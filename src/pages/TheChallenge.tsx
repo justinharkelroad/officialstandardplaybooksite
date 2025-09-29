@@ -3,6 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import SEOHead from '@/components/SEOHead';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import ChallengeCoreCards from '@/components/sections/ChallengeCoreCards';
 
 // Declare Wistia custom element for TypeScript
 declare global {
@@ -140,6 +141,9 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
             </div>
           </div>
         </section>
+
+        {/* Core Cards Section */}
+        <ChallengeCoreCards />
 
         {/* Identity Transformation Section - Reused from ProducerPowerUp */}
         <section className="py-16 relative">
