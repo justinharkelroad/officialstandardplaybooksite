@@ -13,7 +13,7 @@ const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
   };
 
   return (
-    <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden pt-24 pb-12">
+    <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden pt-32 pb-12">
       {/* Background with subtle overlay */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
