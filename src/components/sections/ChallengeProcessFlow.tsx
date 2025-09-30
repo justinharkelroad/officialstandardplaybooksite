@@ -74,12 +74,6 @@ export default function ChallengeProcessFlow() {
                 <CarouselItem key={step.number} className="md:basis-4/5 lg:basis-3/4">
                   <div className="bg-dark-card border border-primary/20 rounded-lg p-8 mx-4 animate-fade-up">
                     <div className="text-center">
-                      <div className="text-4xl font-rajdhani font-bold text-primary mb-4">
-                        STEP {step.number}
-                      </div>
-                      <div className="text-2xl font-rajdhani font-bold text-white mb-6 uppercase">
-                        {step.name}
-                      </div>
                       <img 
                         src={step.image} 
                         alt={`Step ${step.number} - ${step.name}`} 
