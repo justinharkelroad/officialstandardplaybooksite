@@ -58,7 +58,7 @@ const OffersGrid = () => {
       emphasis: 'Average is the enemy of excellence.',
       italic: 'Stop accepting excuses. Start demanding results.',
       icon: Crown,
-      link: '/producer-challenge',
+      link: '/thechallenge',
       color: 'primary-accent',
     },
   ];
