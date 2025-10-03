@@ -41,9 +41,16 @@ const DirectiveHero = () => {
           </div>
         </div>
 
-        <div className="flex justify-center animate-fade-up" style={{ animationDelay: '0.4s' }}>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: '0.4s' }}>
           <Button 
-            className="bg-white text-primary font-bold text-lg px-8 py-4 hover:bg-gray-100"
+            className="bg-primary text-white font-bold text-lg px-8 py-4 hover:bg-primary/90"
+            onClick={handleBookCall}
+          >
+            BOOK FREE CALL
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </Button>
+          <Button 
+            className="bg-transparent text-white font-bold text-lg px-8 py-4 border-2 border-white hover:bg-primary hover:border-primary transition-all duration-300"
             onClick={handleBookCall}
           >
             BOOK FREE CALL

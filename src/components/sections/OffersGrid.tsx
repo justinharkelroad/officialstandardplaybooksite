@@ -31,6 +31,17 @@ const OffersGrid = () => {
       color: 'primary-accent',
     },
     {
+      title: 'THE PARTNERSHIP',
+      description: 'Exclusive 1-on-1 coaching with Justin.',
+      copy: 'Full partnership with direct access, custom strategy, and accountability at the highest level. Limited availability.',
+      emphasis: 'This is the inner circle.',
+      italic: 'Not for everyone. Reserved for the serious.',
+      icon: Shield,
+      link: '/partnership',
+      color: 'primary',
+      soldOut: true
+    },
+    {
       title: '8-WEEK SALES MANAGEMENT',
       description: 'Master the art of building a sales machine.',
       copy: 'Transform your sales team with our proven 8-week training system. Stop hoping for results and start systematizing success.',
@@ -49,17 +60,6 @@ const OffersGrid = () => {
       icon: Crown,
       link: '/producer-challenge',
       color: 'primary-accent',
-    },
-    {
-      title: 'THE PARTNERSHIP',
-      description: 'Exclusive 1-on-1 coaching with Justin.',
-      copy: 'Full partnership with direct access, custom strategy, and accountability at the highest level. Limited availability.',
-      emphasis: 'This is the inner circle.',
-      italic: 'Not for everyone. Reserved for the serious.',
-      icon: Shield,
-      link: '/partnership',
-      color: 'primary',
-      soldOut: true
     },
   ];
 
@@ -81,13 +81,14 @@ const OffersGrid = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
           {programs.map((program, index) => {
-            const parallaxRef = useParallax(0.02 * (index % 2 === 0 ? 1 : -1));
+            // Removed parallax to prevent overlap issues
+            const { ref: cardRef } = useScrollReveal();
             
             return (
               <div 
                 key={program.title}
-                ref={parallaxRef as React.RefObject<HTMLDivElement>}
-                className="card-hover parallax-layer"
+                ref={cardRef as React.RefObject<HTMLDivElement>}
+                className="card-hover"
               >
                 <Card className="bg-dark-surface border-primary/20 h-full group hover:border-primary/50 transition-all duration-300">
                   <CardHeader>
