@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Zap, Crown, Briefcase } from 'lucide-react';
+import { ArrowRight, Users, Zap, Crown, Briefcase, Shield } from 'lucide-react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { useParallax } from '@/hooks/useParallax';
 
@@ -50,6 +50,17 @@ const OffersGrid = () => {
       link: '/producer-challenge',
       color: 'primary-accent',
     },
+    {
+      title: 'THE PARTNERSHIP',
+      description: 'Exclusive 1-on-1 coaching with Justin.',
+      copy: 'Full partnership with direct access, custom strategy, and accountability at the highest level. Limited availability.',
+      emphasis: 'This is the inner circle.',
+      italic: 'Not for everyone. Reserved for the serious.',
+      icon: Shield,
+      link: '/partnership',
+      color: 'primary',
+      soldOut: true
+    },
   ];
 
   return (
@@ -61,10 +72,10 @@ const OffersGrid = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="font-oswald font-bold text-4xl md:text-6xl uppercase tracking-tight text-white mb-6">
-            Choose Your Path
+            CHOOSE YOUR PATH
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-            Whether you are just looking for technology to hold your teams accountable, group coaching or 1 on 1 exclusive coaching with Justin. We got you.
+          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+            Whether you are just looking for technology to hold your teams accountable, group coaching or 1 on 1 exclusive coaching.
           </p>
         </div>
 
@@ -98,12 +109,18 @@ const OffersGrid = () => {
                       
                       <p className="text-gray-300 italic">{program.italic}</p>
                     </div>
-                    <Link to={program.link}>
-                      <Button className="btn-primary text-lg px-8 py-4 w-full button-press">
-                        LEARN MORE
-                        <ArrowRight className="w-5 h-5 ml-2" />
+                    {program.soldOut ? (
+                      <Button disabled className="bg-stroke/50 text-muted font-bold text-lg px-8 py-4 w-full cursor-not-allowed">
+                        SOLD OUT
                       </Button>
-                    </Link>
+                    ) : (
+                      <Link to={program.link}>
+                        <Button className="btn-primary text-lg px-8 py-4 w-full button-press">
+                          LEARN MORE
+                          <ArrowRight className="w-5 h-5 ml-2" />
+                        </Button>
+                      </Link>
+                    )}
                   </CardContent>
                 </Card>
               </div>

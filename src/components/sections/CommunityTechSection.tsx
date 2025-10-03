@@ -9,7 +9,7 @@ const CommunityTechSection = () => {
   const techCards = [
     {
       icon: Smartphone,
-      title: 'Habits App',
+      title: 'STANDARD APP',
       description: 'Daily accountability and tracking system designed for agency owners who refuse to settle for mediocrity.',
       link: '/app',
     },

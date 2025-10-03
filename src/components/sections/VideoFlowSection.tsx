@@ -25,14 +25,14 @@ const VideoFlowSection = () => {
   ];
 
   return (
-    <section className="pt-20 pb-20 relative">
+    <section className="pt-32 pb-20 relative">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Section Title */}
           <div className="text-center mb-20">
-            <h2 className="font-oswald font-bold text-4xl md:text-6xl uppercase tracking-tight text-white mb-6">
+            <h1 className="font-oswald font-bold text-5xl md:text-7xl uppercase tracking-tight text-white mb-6">
               <span className="text-primary">FOR WHO?</span> THE COMMITTED
-            </h2>
+            </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Three pillars that define who we serve and how we serve them
             </p>
@@ -56,8 +56,8 @@ const VideoFlowSection = () => {
                   )}
                   
                   {/* Centered Title */}
-                  <div className="space-y-6 mb-12">
-                    <h3 className="font-oswald font-bold text-4xl md:text-6xl uppercase tracking-tight text-white">
+                  <div className="space-y-4 mb-12">
+                    <h3 className="font-oswald font-bold text-3xl md:text-5xl uppercase tracking-tight text-white">
                       <span className="text-primary drop-shadow-lg font-black">
                         {video.emphasis}
                       </span>
@@ -65,7 +65,7 @@ const VideoFlowSection = () => {
                         {video.title.replace(video.emphasis, '').trim()}
                       </span>
                     </h3>
-                    <p className="text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
+                    <p className="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto">
                       {video.description}
                     </p>
                   </div>

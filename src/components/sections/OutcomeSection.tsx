@@ -9,6 +9,9 @@ const OutcomeSection = () => {
       ref={ref as React.RefObject<HTMLElement>}
       className={`py-32 relative transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
     >
+      {/* Blue accent divider */}
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1 h-12 bg-gradient-to-b from-primary to-transparent" />
+      
       {/* Calm gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-dark-surface/50 to-dark-bg" />
       
