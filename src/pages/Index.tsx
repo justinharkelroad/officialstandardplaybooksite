@@ -1,5 +1,6 @@
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import HeroSection from '@/components/sections/HeroSection';
 import VideoFlowSection from '@/components/sections/VideoFlowSection';
 import OutcomeSection from '@/components/sections/OutcomeSection';
 import CommunityTechSection from '@/components/sections/CommunityTechSection';
@@ -33,6 +34,7 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
+      <HeroSection onScrollToSection={scrollToSection} />
       <VideoFlowSection />
       <OutcomeSection />
       <CommunityTechSection />

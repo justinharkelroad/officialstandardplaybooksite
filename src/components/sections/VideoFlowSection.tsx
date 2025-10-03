@@ -25,19 +25,9 @@ const VideoFlowSection = () => {
   ];
 
   return (
-    <section className="pt-32 pb-20 relative">
+    <section className="py-20 relative">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          {/* Section Title */}
-          <div className="text-center mb-20">
-            <h1 className="font-oswald font-bold text-5xl md:text-7xl uppercase tracking-tight text-white mb-6">
-              <span className="text-primary">FOR WHO?</span> THE COMMITTED
-            </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Three pillars that define who we serve and how we serve them
-            </p>
-          </div>
-
           <div className="space-y-32">
             {videos.map((video, index) => {
               const { ref, isVisible } = useScrollReveal();
