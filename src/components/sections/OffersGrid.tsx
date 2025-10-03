@@ -2,15 +2,65 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Zap, Crown } from 'lucide-react';
-import PackageComparison from '@/components/PackageComparison';
+import { ArrowRight, Users, Zap, Crown, Briefcase } from 'lucide-react';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { useParallax } from '@/hooks/useParallax';
 
 const OffersGrid = () => {
+  const { ref: sectionRef, isVisible } = useScrollReveal();
+
+  const programs = [
+    {
+      title: 'THE BOARDROOM',
+      description: 'Isolation is where good agencies go to die.',
+      copy: 'Every month, you sit across from owners who\'ve already been where you\'re trying to go. They see through your excuses. They call out your blind spots. They refuse to let you hide.',
+      emphasis: 'This isn\'t networking. It\'s chemotherapy for your comfort zone.',
+      italic: 'Your competition hopes you\'ll stay comfortable.',
+      icon: Users,
+      link: '/boardroom',
+      color: 'primary',
+    },
+    {
+      title: 'THE DIRECTIVE',
+      description: 'When good enough isn\'t good enough anymore.',
+      copy: '2 hours. You and Justin. No hiding. He\'s built what you\'re trying to build. Sold what you\'re trying to sell. Failed where you\'re about to fail.',
+      emphasis: 'The only question: Are you coachable or just curious?',
+      italic: 'Curious people take notes. Coachable people take action.',
+      icon: Zap,
+      link: '/directive',
+      color: 'primary-accent',
+    },
+    {
+      title: '8-WEEK SALES MANAGEMENT',
+      description: 'Master the art of building a sales machine.',
+      copy: 'Transform your sales team with our proven 8-week training system. Stop hoping for results and start systematizing success.',
+      emphasis: 'Sales isn\'t luck. It\'s a system.',
+      italic: 'Your best salespeople aren\'t born. They\'re built.',
+      icon: Briefcase,
+      link: '/sales-experience',
+      color: 'primary',
+    },
+    {
+      title: 'PRODUCER CHALLENGE',
+      description: 'For managers and agents ready to dominate.',
+      copy: 'A 6-week intensive that transforms average producers into elite performers. Your agency deserves better than mediocrity.',
+      emphasis: 'Average is the enemy of excellence.',
+      italic: 'Stop accepting excuses. Start demanding results.',
+      icon: Crown,
+      link: '/producer-challenge',
+      color: 'primary-accent',
+    },
+  ];
+
   return (
-    <section id="offers" className="py-20 relative">
+    <section 
+      ref={sectionRef as React.RefObject<HTMLElement>}
+      id="offers" 
+      className={`py-20 relative transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+    >
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="font-rajdhani font-bold text-4xl md:text-6xl uppercase tracking-wide text-white mb-6">
+          <h2 className="font-oswald font-bold text-4xl md:text-6xl uppercase tracking-tight text-white mb-6">
             Choose Your Path
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
@@ -18,105 +68,47 @@ const OffersGrid = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* The Boardroom */}
-          <div className="card-hover">
-            <Card className="bg-dark-card border-primary/20 h-full group">
-              <CardHeader>
-                <div className="w-12 h-12 bg-primary rounded-square flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <Users className="w-6 h-6 text-white" />
-                </div>
-                <CardTitle className="text-white font-rajdhani text-xl md:text-2xl uppercase tracking-wide">
-                  THE BOARDROOM
-                </CardTitle>
-                <CardDescription className="text-gray-400">
-                  Isolation is where good agencies go to die.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3 mb-6">
-                  <p className="text-gray-300">Every month, you sit across from owners who've already been where you're trying to go. They see through your excuses. They call out your blind spots. They refuse to let you hide.</p>
-                  
-                  <p className="text-primary font-medium">This isn't networking. It's chemotherapy for your comfort zone.</p>
-                  
-                  <p className="text-gray-300 italic">Your competition hopes you'll stay comfortable.</p>
-                </div>
-                <Link to="/boardroom">
-                  <Button className="btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full truncate">
-                    LEARN MORE
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* The Directive */}
-          <div className="card-hover">
-            <Card className="bg-dark-card border-primary/20 h-full group">
-              <CardHeader>
-                <div className="w-12 h-12 bg-primary-accent rounded-square flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <Zap className="w-6 h-6 text-white" />
-                </div>
-                <CardTitle className="text-white font-rajdhani text-xl md:text-2xl uppercase tracking-wide">
-                  THE DIRECTIVE
-                </CardTitle>
-                <CardDescription className="text-gray-400">
-                  When good enough isn't good enough anymore.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3 mb-6">
-                  <p className="text-gray-300">2 hours. You and Justin. No hiding.</p>
-                  
-                  <p className="text-gray-300">He's built what you're trying to build. Sold what you're trying to sell. Failed where you're about to fail.</p>
-                  
-                  <p className="text-primary font-medium">The only question: Are you coachable or just curious?</p>
-                  
-                  <p className="text-gray-300 italic">Curious people take notes. Coachable people take action.</p>
-                </div>
-                <a href="https://agencycoaching.as.me/schedule/4db44546/appointment/77447936/calendar/7710787?appointmentTypeIds[]=77447936" target="_blank" rel="noopener noreferrer">
-                  <Button className="btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary to-primary-accent hover:from-primary-light hover:to-primary w-full truncate">
-                    LEARN MORE
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
-                  </Button>
-                </a>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* The Partnership */}
-          <div className="card-hover">
-            <Card className="bg-dark-card border-primary/20 h-full group">
-              <CardHeader>
-                <div className="w-12 h-12 bg-primary rounded-square flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <Crown className="w-6 h-6 text-white" />
-                </div>
-                <CardTitle className="text-white font-rajdhani text-xl md:text-2xl uppercase tracking-wide">
-                  THE PARTNERSHIP
-                </CardTitle>
-                <CardDescription className="text-gray-400">
-                  Your agency is a direct reflection of your leadership.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3 mb-6">
-                  <p className="text-gray-300">You get The Directive. Your team gets transformation.</p>
-                  
-                  <p className="text-gray-300">Because the gap between your vision and their execution? That's on you.</p>
-                  
-                  <p className="text-primary font-medium">Stop hoping they'll figure it out. Start showing them how.</p>
-                  
-                  <p className="text-gray-300 italic">Hope is not a strategy. But neither is hiding.</p>
-                </div>
-                <div className="text-center">
-                  <Button className="text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium rounded-pill w-full cursor-not-allowed" disabled>
-                    SOLD OUT
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
+          {programs.map((program, index) => {
+            const parallaxRef = useParallax(0.02 * (index % 2 === 0 ? 1 : -1));
+            
+            return (
+              <div 
+                key={program.title}
+                ref={parallaxRef as React.RefObject<HTMLDivElement>}
+                className="card-hover parallax-layer"
+              >
+                <Card className="bg-dark-surface border-primary/20 h-full group hover:border-primary/50 transition-all duration-300">
+                  <CardHeader>
+                    <div className={`w-12 h-12 bg-${program.color}/10 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform accent-glow`}>
+                      <program.icon className={`w-6 h-6 text-${program.color}`} />
+                    </div>
+                    <CardTitle className="text-white font-oswald text-2xl md:text-3xl uppercase tracking-wide">
+                      {program.title}
+                    </CardTitle>
+                    <CardDescription className="text-dark-muted">
+                      {program.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3 mb-6">
+                      <p className="text-gray-300">{program.copy}</p>
+                      
+                      <p className="text-primary font-medium">{program.emphasis}</p>
+                      
+                      <p className="text-gray-300 italic">{program.italic}</p>
+                    </div>
+                    <Link to={program.link}>
+                      <Button className="btn-primary text-lg px-8 py-4 w-full button-press">
+                        LEARN MORE
+                        <ArrowRight className="w-5 h-5 ml-2" />
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

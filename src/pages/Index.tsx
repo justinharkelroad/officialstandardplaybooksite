@@ -1,10 +1,13 @@
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
 import HeroSection from '@/components/sections/HeroSection';
 import VideoFlowSection from '@/components/sections/VideoFlowSection';
+import OutcomeSection from '@/components/sections/OutcomeSection';
+import CommunityTechSection from '@/components/sections/CommunityTechSection';
 import OffersGrid from '@/components/sections/OffersGrid';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
+import ClosingCTA from '@/components/sections/ClosingCTA';
+import StickyCTA from '@/components/StickyCTA';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -33,8 +36,12 @@ const Index = () => {
       <Navigation />
       <HeroSection onScrollToSection={scrollToSection} />
       <VideoFlowSection />
+      <OutcomeSection />
+      <CommunityTechSection />
       <OffersGrid />
       <TestimonialsSection />
+      <ClosingCTA />
+      <StickyCTA />
       <Footer />
     </div>
   );

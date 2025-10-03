@@ -1,12 +1,19 @@
 
 import { Card, CardContent } from '@/components/ui/card';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 const TestimonialsSection = () => {
+  const { ref, isVisible } = useScrollReveal();
+  
   return (
-    <section id="testimonials" className="py-20 relative">
+    <section 
+      ref={ref as React.RefObject<HTMLElement>}
+      id="testimonials" 
+      className={`py-20 relative transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+    >
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="font-rajdhani font-bold text-4xl md:text-6xl uppercase tracking-wide text-white mb-6">
+          <h2 className="font-oswald font-bold text-4xl md:text-6xl uppercase tracking-tight text-white mb-6">
             Success Stories
           </h2>
         </div>

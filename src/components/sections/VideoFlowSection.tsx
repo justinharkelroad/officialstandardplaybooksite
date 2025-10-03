@@ -1,6 +1,8 @@
 import VideoPlayer from '@/components/VideoPlayer';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 const VideoFlowSection = () => {
+  // Only the first 3 videos - 4th moved to OutcomeSection
   const videos = [
     {
       id: 'mnFNUSuJ4eA',
@@ -19,49 +21,69 @@ const VideoFlowSection = () => {
       title: 'WHAT DO YOU GET?',
       emphasis: 'WHAT', 
       description: 'The complete transformation package waiting for you'
-    },
-    {
-      id: 'nJXdk5ymg-I',
-      title: 'WHY DOES THIS MATTER?',
-      emphasis: 'WHY',
-      description: 'The deeper purpose behind everything we do'
     }
   ];
 
   return (
-    <section className="pt-2 pb-20 relative">
+    <section className="pt-20 pb-20 relative">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="space-y-32">
-            {videos.map((video) => (
-              <div key={video.id} className="relative text-center">
-                {/* Centered Title */}
-                <div className="space-y-6 mb-12">
-                  <h3 className="font-rajdhani font-bold text-4xl md:text-6xl uppercase tracking-wide text-white">
-                    <span className="text-primary-accent drop-shadow-lg font-black">
-                      {video.emphasis}
-                    </span>
-                    <span className="ml-2">
-                      {video.title.replace(video.emphasis, '').trim()}
-                    </span>
-                  </h3>
-                  <p className="text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
-                    {video.description}
-                  </p>
-                </div>
+          {/* Section Title */}
+          <div className="text-center mb-20">
+            <h2 className="font-oswald font-bold text-4xl md:text-6xl uppercase tracking-tight text-white mb-6">
+              <span className="text-primary">FOR WHO?</span> THE COMMITTED
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Three pillars that define who we serve and how we serve them
+            </p>
+          </div>
 
-                {/* Centered Full-Width Video */}
-                <div className="relative max-w-5xl mx-auto">
-                  <div className="relative aspect-video overflow-hidden rounded-lg bg-black">
-                    <VideoPlayer
-                      videoId={video.id}
-                      title={video.title}
-                      className="absolute inset-0 w-full h-full"
-                    />
+          <div className="space-y-32">
+            {videos.map((video, index) => {
+              const { ref, isVisible } = useScrollReveal();
+              
+              return (
+                <div 
+                  key={video.id} 
+                  ref={ref as React.RefObject<HTMLDivElement>}
+                  className={`relative text-center transition-all duration-500 ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                  }`}
+                >
+                  {/* Blue accent divider */}
+                  {index > 0 && (
+                    <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 w-1 h-12 bg-gradient-to-b from-primary to-transparent" />
+                  )}
+                  
+                  {/* Centered Title */}
+                  <div className="space-y-6 mb-12">
+                    <h3 className="font-oswald font-bold text-4xl md:text-6xl uppercase tracking-tight text-white">
+                      <span className="text-primary drop-shadow-lg font-black">
+                        {video.emphasis}
+                      </span>
+                      <span className="ml-2">
+                        {video.title.replace(video.emphasis, '').trim()}
+                      </span>
+                    </h3>
+                    <p className="text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
+                      {video.description}
+                    </p>
+                  </div>
+
+                  {/* Interactive Card with Accent Glow */}
+                  <div className="relative max-w-5xl mx-auto group">
+                    <div className="absolute -inset-2 bg-primary/10 rounded-lg blur-xl group-hover:bg-primary/20 transition-all duration-300" />
+                    <div className="relative aspect-video overflow-hidden rounded-lg bg-black border border-primary/20 group-hover:border-primary/40 transition-all duration-300">
+                      <VideoPlayer
+                        videoId={video.id}
+                        title={video.title}
+                        className="absolute inset-0 w-full h-full"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

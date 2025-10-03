@@ -1,19 +1,12 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { ChevronDown } from 'lucide-react';
-import PackageComparison from '@/components/PackageComparison';
+import { useScrollDirection } from '@/hooks/useScrollDirection';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const scrollDirection = useScrollDirection();
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
@@ -40,7 +33,9 @@ const Navigation = () => {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'glass-nav py-2' : 'bg-dark-card/90 backdrop-blur-md py-4'
+      isScrolled ? 'glass-nav py-2' : 'bg-dark-surface/95 backdrop-blur-lg py-4'
+    } ${
+      scrollDirection === 'down' && isScrolled ? '-translate-y-full' : 'translate-y-0'
     }`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
@@ -63,16 +58,16 @@ const Navigation = () => {
                 Home
               </Link>
             )}
-            <Link to="/app" className="text-white hover:text-primary transition-colors">
+            <Link to="/app" className="text-white hover:text-primary transition-colors link-underline">
               Standard App
             </Link>
-            <Link to="/thechallenge" className="text-white hover:text-primary transition-colors">
+            <Link to="/thechallenge" className="text-white hover:text-primary transition-colors link-underline">
               LSP Challenge
             </Link>
-            <Link to="/sales-experience" className="text-white hover:text-primary transition-colors">
+            <Link to="/sales-experience" className="text-white hover:text-primary transition-colors link-underline">
               8 Week Training
             </Link>
-            <Link to="/contact" className="text-white hover:text-primary transition-colors">
+            <Link to="/contact" className="text-white hover:text-primary transition-colors link-underline">
               Contact
             </Link>
           </div>
@@ -95,23 +90,23 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-primary/20">
-            <div className="flex flex-col space-y-4 pt-4">
+          <div className="md:hidden fixed inset-0 top-[72px] bg-dark-surface/98 backdrop-blur-xl z-40 animate-fade-in">
+            <div className="flex flex-col space-y-6 p-8 h-full overflow-y-auto">
               {!isHomePage && (
-                <Link to="/" className="text-white hover:text-primary transition-colors">
+                <Link to="/" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                   Home
                 </Link>
               )}
-              <Link to="/app" className="text-white hover:text-primary transition-colors">
+              <Link to="/app" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                 Standard App
               </Link>
-              <Link to="/thechallenge" className="text-white hover:text-primary transition-colors">
+              <Link to="/thechallenge" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                 LSP Challenge
               </Link>
-              <Link to="/sales-experience" className="text-white hover:text-primary transition-colors">
+              <Link to="/sales-experience" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                 8 Week Training
               </Link>
-              <Link to="/contact" className="text-white hover:text-primary transition-colors">
+              <Link to="/contact" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                 Contact
               </Link>
             </div>

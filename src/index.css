@@ -85,8 +85,10 @@
 
   body {
     @apply bg-background text-foreground font-inter;
-    background: radial-gradient(ellipse at center, #0A0F25 0%, #141B34 100%);
+    background: #0B0B0C;
     min-height: 100vh;
+    font-size: 18px;
+    line-height: 1.75;
   }
 
   /* Custom scrollbar */
@@ -118,8 +120,16 @@
     box-shadow: 0 0 0 2px #2080FF inset, 0 0 18px #30A4FF;
   }
 
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+
   .btn-ghost {
     @apply border-2 border-primary text-primary hover:bg-primary hover:text-white font-medium px-6 py-3 rounded-pill transition-all duration-200 hover:scale-105;
+  }
+
+  .btn-ghost:active {
+    transform: scale(0.98);
   }
 
   .card-hover {
@@ -129,6 +139,27 @@
 
   .card-hover:hover {
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 20px rgba(32, 128, 255, 0.3);
+  }
+
+  .accent-glow {
+    box-shadow: 0 0 64px rgba(37, 99, 235, 0.25);
+  }
+
+  .accent-glow-intense {
+    box-shadow: 0 0 96px rgba(37, 99, 235, 0.4);
+  }
+
+  .parallax-layer {
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .link-underline {
+    @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
+  }
+
+  .button-press {
+    @apply active:scale-[0.98] transition-transform;
   }
 
   .video-glow {
@@ -247,4 +278,15 @@
 
 .rounded-pill {
   border-radius: 30px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
