@@ -46,7 +46,7 @@ const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
           </Button>
           <Button 
             variant="outline"
-            className="border-2 border-primary text-white font-bold text-xl px-12 py-6 hover:bg-primary hover:text-white rounded-pill button-press"
+            className="border-2 border-primary text-primary font-bold text-xl px-12 py-6 hover:bg-primary hover:text-white rounded-pill button-press"
             onClick={handleSeeOptions}
           >
             EXPLORE PROGRAMS

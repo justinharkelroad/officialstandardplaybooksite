@@ -70,7 +70,7 @@ const OffersGrid = () => {
       className={`py-20 relative transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
     >
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="text-center mb-24">
           <h2 className="font-oswald font-bold text-4xl md:text-6xl uppercase tracking-tight text-white mb-6">
             CHOOSE YOUR PATH
           </h2>
@@ -88,7 +88,7 @@ const OffersGrid = () => {
               <div 
                 key={program.title}
                 ref={cardRef as React.RefObject<HTMLDivElement>}
-                className="card-hover"
+                className="transition-all duration-300"
               >
                 <Card className="bg-dark-surface border-primary/20 h-full group hover:border-primary/50 transition-all duration-300">
                   <CardHeader>
