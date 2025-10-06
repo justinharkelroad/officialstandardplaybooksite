@@ -157,14 +157,14 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
           </div>
         </section>
 
+        {/* Weekly Breakdown Section */}
+        <ChallengeWeeklyBreakdown />
+
         {/* Process Flow Section */}
         <ChallengeProcessFlow />
 
         {/* Core Cards Section */}
         <ChallengeCoreCards />
-
-        {/* Weekly Breakdown Section */}
-        <ChallengeWeeklyBreakdown />
 
         {/* Identity Transformation Section - Reused from ProducerPowerUp */}
         <section className="py-16 relative">
