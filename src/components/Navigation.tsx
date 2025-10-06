@@ -54,11 +54,11 @@ const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {!isHomePage && (
-              <Link to="/" className="text-white hover:text-primary transition-colors">
+            <Link to="/" className="text-white hover:text-primary transition-colors">
                 Home
               </Link>
             )}
-            <Link to="/app" className="text-white hover:text-primary transition-colors link-underline">
+            <Link to="/appinfo" className="text-white hover:text-primary transition-colors link-underline">
               The App
             </Link>
             <Link to="/thechallenge" className="text-white hover:text-primary transition-colors link-underline">
@@ -96,11 +96,11 @@ const Navigation = () => {
           <div className="md:hidden fixed inset-0 top-[72px] bg-dark-surface/98 backdrop-blur-xl z-40 animate-fade-in">
             <div className="flex flex-col space-y-6 p-8 h-full overflow-y-auto">
               {!isHomePage && (
-                <Link to="/" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link to="/" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                   Home
                 </Link>
               )}
-              <Link to="/app" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link to="/appinfo" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                 The App
               </Link>
               <Link to="/thechallenge" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>

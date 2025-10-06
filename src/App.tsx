@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import AppAccess from "./pages/AppAccess";
+import AppRedirect from "./pages/AppRedirect";
 import Boardroom from "./pages/Boardroom";
 import Directive from "./pages/Directive";
 import Partnership from "./pages/Partnership";
@@ -38,7 +39,8 @@ const App = () => (
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/app" element={<AppAccess />} />
+          <Route path="/app" element={<AppRedirect />} />
+          <Route path="/appinfo" element={<AppAccess />} />
           <Route path="/boardroom" element={<Boardroom />} />
           <Route path="/directive" element={<Directive />} />
           <Route path="/partnership" element={<Partnership />} />
