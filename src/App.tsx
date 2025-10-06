@@ -13,6 +13,7 @@ import ProducerPowerUp from "./pages/ProducerPowerUp";
 import OwnerChallenge from "./pages/OwnerChallenge";
 import TheChallenge from "./pages/TheChallenge";
 import FormulaAI from "./pages/FormulaAI";
+import CallScoring from "./pages/CallScoring";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
@@ -46,6 +47,7 @@ const App = () => (
           <Route path="/owner-challenge" element={<OwnerChallenge />} />
           <Route path="/thechallenge" element={<TheChallenge />} />
           <Route path="/formulaai" element={<FormulaAI />} />
+          <Route path="/call-scoring" element={<CallScoring />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
