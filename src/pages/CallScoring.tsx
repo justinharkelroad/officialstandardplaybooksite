@@ -7,7 +7,7 @@ import CallScoringFeatures from '@/components/sections/CallScoringFeatures';
 import CallScoringDemo from '@/components/sections/CallScoringDemo';
 import CallScoringTeam from '@/components/sections/CallScoringTeam';
 import CallScoringTypes from '@/components/sections/CallScoringTypes';
-import CallScoringSupport from '@/components/sections/CallScoringSupport';
+
 import CallScoringPricing from '@/components/sections/CallScoringPricing';
 import CallScoringFAQ from '@/components/sections/CallScoringFAQ';
 import CallScoringCTA from '@/components/sections/CallScoringCTA';
@@ -28,7 +28,7 @@ const CallScoring = () => {
         <CallScoringDemo />
         <CallScoringTeam />
         <CallScoringTypes />
-        <CallScoringSupport />
+        
         <CallScoringPricing />
         <CallScoringFAQ />
         <CallScoringCTA />
