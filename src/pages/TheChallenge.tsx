@@ -143,6 +143,19 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
           </div>
         </section>
 
+        {/* CTA Button Section */}
+        <section className="pb-12 relative">
+          <div className="container mx-auto px-4 text-center">
+            <button 
+              onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
+              className="bg-primary text-white font-bold text-lg px-8 py-4 rounded-lg hover:bg-primary/90 transition-all duration-300 inline-flex items-center gap-2"
+            >
+              Have Questions? Book A Quick Call
+              <span className="text-xl">&gt;</span>
+            </button>
+          </div>
+        </section>
+
         {/* Process Flow Section */}
         <ChallengeProcessFlow />
 

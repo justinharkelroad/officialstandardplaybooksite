@@ -12,18 +12,21 @@ const CommunityTechSection = () => {
       title: 'STANDARD APP',
       description: 'Daily accountability and tracking system designed for agency owners who refuse to settle for mediocrity.',
       link: '/app',
+      isExternal: false,
     },
     {
       icon: Brain,
       title: 'Agency Brain',
       description: 'Your centralized command center. Every system, every process, every answer - organized and accessible.',
-      link: '/app',
+      link: 'https://MyAgencyBrain.com',
+      isExternal: true,
     },
     {
       icon: TrendingUp,
       title: 'Call Scoring',
       description: 'Real-time analytics and scoring of your sales calls. Know exactly what\'s working and what\'s not.',
-      link: '/app',
+      link: 'https://standardcallscoring.com',
+      isExternal: true,
     },
   ];
 
@@ -46,23 +49,43 @@ const CommunityTechSection = () => {
           {/* Three Interactive Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {techCards.map((card, index) => (
-              <Link to={card.link} key={index}>
-                <Card className="bg-dark-surface border-primary/20 h-full group card-hover cursor-pointer transition-all duration-300 hover:border-primary/50">
-                  <CardHeader>
-                    <div className="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300 accent-glow">
-                      <card.icon className="w-7 h-7 text-primary" />
-                    </div>
-                    <CardTitle className="text-white font-oswald text-2xl uppercase tracking-wide">
-                      {card.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-300 leading-relaxed">
-                      {card.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              </Link>
+              card.isExternal ? (
+                <a href={card.link} target="_blank" rel="noopener noreferrer" key={index}>
+                  <Card className="bg-dark-surface border-primary/20 h-full group card-hover cursor-pointer transition-all duration-300 hover:border-primary/50">
+                    <CardHeader>
+                      <div className="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300 accent-glow">
+                        <card.icon className="w-7 h-7 text-primary" />
+                      </div>
+                      <CardTitle className="text-white font-oswald text-2xl uppercase tracking-wide">
+                        {card.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-gray-300 leading-relaxed">
+                        {card.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </a>
+              ) : (
+                <Link to={card.link} key={index}>
+                  <Card className="bg-dark-surface border-primary/20 h-full group card-hover cursor-pointer transition-all duration-300 hover:border-primary/50">
+                    <CardHeader>
+                      <div className="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300 accent-glow">
+                        <card.icon className="w-7 h-7 text-primary" />
+                      </div>
+                      <CardTitle className="text-white font-oswald text-2xl uppercase tracking-wide">
+                        {card.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-gray-300 leading-relaxed">
+                        {card.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </Link>
+              )
             ))}
           </div>
         </div>
