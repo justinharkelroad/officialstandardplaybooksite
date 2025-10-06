@@ -59,22 +59,13 @@ const Navigation = () => {
               </Link>
             )}
             <Link to="/app" className="text-white hover:text-primary transition-colors link-underline">
-              Standard App
+              The App
             </Link>
             <Link to="/thechallenge" className="text-white hover:text-primary transition-colors link-underline">
-              LSP Challenge
+              Staff Challenge
             </Link>
             <Link to="/sales-experience" className="text-white hover:text-primary transition-colors link-underline">
               8 Week Training
-            </Link>
-            <Link to="/boardroom" className="text-white hover:text-primary transition-colors link-underline">
-              Boardroom
-            </Link>
-            <Link to="/directive" className="text-white hover:text-primary transition-colors link-underline">
-              Directive
-            </Link>
-            <Link to="/partnership" className="text-white hover:text-primary transition-colors link-underline">
-              Partnership
             </Link>
             <Link to="/about" className="text-white hover:text-primary transition-colors link-underline">
               About
@@ -110,22 +101,13 @@ const Navigation = () => {
                 </Link>
               )}
               <Link to="/app" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
-                Standard App
+                The App
               </Link>
               <Link to="/thechallenge" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
-                LSP Challenge
+                Staff Challenge
               </Link>
               <Link to="/sales-experience" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                 8 Week Training
-              </Link>
-              <Link to="/boardroom" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
-                Boardroom
-              </Link>
-              <Link to="/directive" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
-                Directive
-              </Link>
-              <Link to="/partnership" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
-                Partnership
               </Link>
               <Link to="/about" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                 About
