@@ -5,6 +5,7 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import ChallengeCoreCards from '@/components/sections/ChallengeCoreCards';
 import ChallengeProcessFlow from '@/components/sections/ChallengeProcessFlow';
+import ChallengeWeeklyBreakdown from '@/components/sections/ChallengeWeeklyBreakdown';
 
 // Declare Wistia custom element for TypeScript
 declare global {
@@ -161,6 +162,9 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
 
         {/* Core Cards Section */}
         <ChallengeCoreCards />
+
+        {/* Weekly Breakdown Section */}
+        <ChallengeWeeklyBreakdown />
 
         {/* Identity Transformation Section - Reused from ProducerPowerUp */}
         <section className="py-16 relative">
