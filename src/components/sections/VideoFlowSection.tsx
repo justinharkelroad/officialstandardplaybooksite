@@ -68,6 +68,7 @@ const VideoFlowSection = () => {
                         videoId={video.id}
                         title={video.title}
                         className="absolute inset-0 w-full h-full"
+                        autoplay={index === 0}
                       />
                     </div>
                   </div>
