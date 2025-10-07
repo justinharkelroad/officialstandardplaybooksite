@@ -8,8 +8,6 @@ import CallScoringTeam from '@/components/sections/CallScoringTeam';
 import CallScoringTypes from '@/components/sections/CallScoringTypes';
 
 import CallScoringPricing from '@/components/sections/CallScoringPricing';
-import CallScoringFAQ from '@/components/sections/CallScoringFAQ';
-import CallScoringCTA from '@/components/sections/CallScoringCTA';
 
 const CallScoring = () => {
   return (
@@ -28,8 +26,6 @@ const CallScoring = () => {
         <CallScoringTypes />
         
         <CallScoringPricing />
-        <CallScoringFAQ />
-        <CallScoringCTA />
         <Footer />
       </div>
     </>
