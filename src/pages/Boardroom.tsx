@@ -21,8 +21,8 @@ const Boardroom = () => {
       
       <BoardroomHero />
       <BoardroomIncludes />
-      <BoardroomBusiness />
       <BoardroomPricing />
+      <BoardroomBusiness />
       <BoardroomFAQ />
 
       {/* Sticky CTA for Mobile */}
