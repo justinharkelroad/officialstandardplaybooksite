@@ -61,6 +61,16 @@ const OffersGrid = () => {
       link: '/thechallenge',
       color: 'primary-accent',
     },
+    {
+      title: 'CALL SCORING',
+      description: 'Real-time analytics and scoring of your sales calls.',
+      copy: 'Know exactly what\'s working and what\'s not. Transform your sales coaching in minutes with AI-powered call scoring.',
+      emphasis: 'Stop guessing. Start knowing.',
+      italic: 'Your competition is already using data. Are you?',
+      icon: Zap,
+      link: '/callscoring',
+      color: 'primary',
+    },
   ];
 
   return (

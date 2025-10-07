@@ -67,6 +67,9 @@ const Navigation = () => {
             <Link to="/sales-experience" className="text-white hover:text-primary transition-colors link-underline">
               8 Week Training
             </Link>
+            <Link to="/callscoring" className="text-white hover:text-primary transition-colors link-underline">
+              Call Scoring
+            </Link>
             <Link to="/about" className="text-white hover:text-primary transition-colors link-underline">
               About
             </Link>
@@ -108,6 +111,9 @@ const Navigation = () => {
               </Link>
               <Link to="/sales-experience" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                 8 Week Training
+              </Link>
+              <Link to="/callscoring" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                Call Scoring
               </Link>
               <Link to="/about" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                 About
