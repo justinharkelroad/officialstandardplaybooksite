@@ -66,7 +66,14 @@ const CallScoringPricing = () => {
           <div className="text-center mb-12">
             <Button 
               className="bg-primary text-white font-bold text-lg px-8 py-6 hover:bg-primary/90 mb-16"
-              onClick={() => window.open('/Example_Sales_Call_Result.pdf', '_blank')}
+              onClick={() => {
+                const link = document.createElement('a');
+                link.href = '/Example_Sales_Call_Result.pdf';
+                link.download = 'Example_Sales_Call_Result.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }}
             >
               <Download className="w-5 h-5 mr-2" />
               See Example Call Score Result
