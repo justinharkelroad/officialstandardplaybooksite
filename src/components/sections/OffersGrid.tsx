@@ -1,13 +1,14 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Users, Zap, Crown, Briefcase, Shield } from 'lucide-react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { useParallax } from '@/hooks/useParallax';
 
 const OffersGrid = () => {
   const { ref: sectionRef, isVisible } = useScrollReveal();
+  const navigate = useNavigate();
 
   const programs = [
     {
@@ -125,12 +126,13 @@ const OffersGrid = () => {
                         SOLD OUT
                       </Button>
                     ) : (
-                      <Link to={program.link}>
-                        <Button className="btn-primary text-lg px-8 py-4 w-full button-press">
-                          LEARN MORE
-                          <ArrowRight className="w-5 h-5 ml-2" />
-                        </Button>
-                      </Link>
+                      <Button 
+                        onClick={() => navigate(program.link)}
+                        className="btn-primary text-lg px-8 py-4 w-full button-press"
+                      >
+                        LEARN MORE
+                        <ArrowRight className="w-5 h-5 ml-2" />
+                      </Button>
                     )}
                   </CardContent>
                 </Card>
