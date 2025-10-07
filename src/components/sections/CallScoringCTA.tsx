@@ -37,7 +37,7 @@ const CallScoringCTA = () => {
             </Button>
             <Button 
               variant="outline"
-              className="border-primary/50 text-white font-bold text-xl px-12 py-6 hover:bg-primary/10"
+              className="border-primary/50 text-white font-bold text-xl px-12 py-6 hover:bg-primary/10 bg-transparent"
               onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
             >
               BOOK A DEMO

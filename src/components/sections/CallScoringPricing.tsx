@@ -134,7 +134,7 @@ const CallScoringPricing = () => {
             </p>
             <Button 
               variant="outline"
-              className="border-primary/50 text-white hover:bg-primary/10"
+              className="border-primary/50 text-white hover:bg-primary/10 bg-transparent"
               onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
             >
               BOOK A STRATEGY CALL
