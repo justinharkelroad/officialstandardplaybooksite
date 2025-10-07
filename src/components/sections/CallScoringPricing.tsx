@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Check } from 'lucide-react';
+import { Check, Download } from 'lucide-react';
 
 const CallScoringPricing = () => {
   const pricingTiers = [
@@ -63,6 +63,16 @@ const CallScoringPricing = () => {
     <section id="pricing" className="py-20 relative bg-dark-card/30">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <Button 
+              className="bg-primary text-white font-bold text-lg px-8 py-6 hover:bg-primary/90 mb-16"
+              onClick={() => window.open('/Example_Sales_Call_Result.pdf', '_blank')}
+            >
+              <Download className="w-5 h-5 mr-2" />
+              See Example Call Score Result
+            </Button>
+          </div>
+
           <div className="text-center mb-16">
             <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-6">
               Choose Your
