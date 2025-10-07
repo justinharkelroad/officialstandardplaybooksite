@@ -1,8 +1,11 @@
-import { X } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const BoardroomIncludes = () => {
   const includedItems = [
+    "2 Hour Group Boardroom Call",
+    "Boardroom Level Access To Standard App",
+    "AgencyBrain Access",
     "The Standard Playbook Hardcover",
     "I AM THE STANDARD T Shirt",
     "I AM THE STANDARD wristband",
@@ -30,8 +33,8 @@ const BoardroomIncludes = () => {
             <ul className="space-y-4">
               {includedItems.map((item, index) => (
                 <li key={index} className="flex items-center gap-3 text-xl text-gray-300 font-medium py-2 border-b border-gray-800">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-red-900/30 flex items-center justify-center">
-                    <X className="w-5 h-5 text-red-500" />
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                    <Check className="w-5 h-5 text-primary" />
                   </span>
                   <span>{item}</span>
                 </li>
