@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Play } from 'lucide-react';
+import JotFormModal from '@/components/JotFormModal';
 
 // Declare Wistia custom element for TypeScript
 declare global {
@@ -38,13 +37,6 @@ const CallScoringHero = () => {
     };
   }, []);
 
-  const handleCTA = () => {
-    // Scroll to pricing section
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
@@ -89,21 +81,11 @@ const CallScoringHero = () => {
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: '0.4s' }}>
-          <Button 
-            className="bg-primary text-white font-bold text-lg px-8 py-4 hover:bg-primary/90"
-            onClick={handleCTA}
-          >
-            <Play className="w-5 h-5 mr-2" />
-            START SCORING
-          </Button>
-          <Button 
-            variant="outline"
-            className="border-primary/50 text-white font-bold text-lg px-8 py-4 hover:bg-primary/10"
-            onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
-          >
-            BOOK A DEMO
-          </Button>
+        <div className="flex justify-center animate-fade-up" style={{ animationDelay: '0.4s' }}>
+          <JotFormModal 
+            buttonText="GET SAMPLE SCORING OF YOUR OWN TEAM"
+            buttonClassName="bg-primary text-white font-bold text-lg px-8 py-4 hover:bg-primary/90"
+          />
         </div>
       </div>
     </section>
