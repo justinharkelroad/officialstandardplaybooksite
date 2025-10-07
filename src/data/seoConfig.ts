@@ -102,7 +102,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     type: 'website' as const,
     canonical: 'https://standardplaybook.com/thechallenge',
   },
-  '/call-scoring': {
+  '/callscoring': {
     title: 'Standard Call Scoring - AI-Powered Call Evaluation | The Standard Playbook',
     description: 'Transform your sales coaching in minutes. AI-powered call scoring that gives instant insights, consistent feedback, and accelerates team performance.',
     keywords: ['call scoring', 'sales coaching', 'AI call analysis', 'sales training', 'call evaluation', 'team coaching', 'call grading'],

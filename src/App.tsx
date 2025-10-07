@@ -49,7 +49,7 @@ const App = () => (
           <Route path="/owner-challenge" element={<OwnerChallenge />} />
           <Route path="/thechallenge" element={<TheChallenge />} />
           <Route path="/formulaai" element={<FormulaAI />} />
-          <Route path="/call-scoring" element={<CallScoring />} />
+          <Route path="/callscoring" element={<CallScoring />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
