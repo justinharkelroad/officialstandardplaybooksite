@@ -4,7 +4,6 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import CallScoringHero from '@/components/sections/CallScoringHero';
 import CallScoringFeatures from '@/components/sections/CallScoringFeatures';
-import CallScoringDemo from '@/components/sections/CallScoringDemo';
 import CallScoringTeam from '@/components/sections/CallScoringTeam';
 import CallScoringTypes from '@/components/sections/CallScoringTypes';
 
@@ -25,7 +24,6 @@ const CallScoring = () => {
         <Navigation />
         <CallScoringHero />
         <CallScoringFeatures />
-        <CallScoringDemo />
         <CallScoringTeam />
         <CallScoringTypes />
         
