@@ -3,11 +3,9 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import BoardroomHero from '@/components/sections/BoardroomHero';
-import BoardroomProblem from '@/components/sections/BoardroomProblem';
 import BoardroomFeatures from '@/components/sections/BoardroomFeatures';
 import BoardroomBusiness from '@/components/sections/BoardroomBusiness';
 import BoardroomWhy from '@/components/sections/BoardroomWhy';
-import BoardroomFivePillars from '@/components/sections/BoardroomFivePillars';
 import BoardroomPricing from '@/components/sections/BoardroomPricing';
 import BoardroomFAQ from '@/components/sections/BoardroomFAQ';
 import BoardroomIncludes from '@/components/sections/BoardroomIncludes';
@@ -22,8 +20,6 @@ const Boardroom = () => {
       <Navigation />
       
       <BoardroomHero />
-      <BoardroomProblem />
-      <BoardroomFivePillars />
       <BoardroomIncludes />
       <BoardroomBusiness />
       <BoardroomWhy />
