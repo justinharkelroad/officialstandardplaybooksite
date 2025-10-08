@@ -60,17 +60,6 @@ const CallScoringHero = () => {
           Every call scored. Every agent better. Every day.
         </p>
 
-        <div className="text-center mb-6 animate-fade-up" style={{ animationDelay: '0.25s' }}>
-          <p className="text-xl font-rajdhani font-bold text-white uppercase tracking-wide mb-2">
-            See It In Action
-          </p>
-          <div className="flex justify-center gap-2">
-            <span className="text-primary text-2xl">↓</span>
-            <span className="text-primary text-2xl">↓</span>
-            <span className="text-primary text-2xl">↓</span>
-          </div>
-        </div>
-
         {/* Wistia Video */}
         <div className="max-w-4xl mx-auto mb-8 animate-fade-up" style={{ animationDelay: '0.3s' }}>
           <div className="w-full aspect-video rounded-lg overflow-hidden bg-black shadow-2xl">
@@ -89,6 +78,17 @@ const CallScoringHero = () => {
               `
             }} />
             <wistia-player media-id="2up9n0g3tz" aspect="1.7778"></wistia-player>
+          </div>
+        </div>
+
+        <div className="text-center mb-6 animate-fade-up" style={{ animationDelay: '0.35s' }}>
+          <p className="text-xl font-rajdhani font-bold text-white uppercase tracking-wide mb-2">
+            See It In Action
+          </p>
+          <div className="flex justify-center gap-2">
+            <span className="text-primary text-2xl">↓</span>
+            <span className="text-primary text-2xl">↓</span>
+            <span className="text-primary text-2xl">↓</span>
           </div>
         </div>
 
