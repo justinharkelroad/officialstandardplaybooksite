@@ -96,29 +96,57 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden fixed inset-0 top-[72px] bg-dark-surface/98 backdrop-blur-xl z-40 animate-fade-in">
-            <div className="flex flex-col space-y-6 p-8 h-full overflow-y-auto">
+          <div className="md:hidden mt-4 pb-4 animate-fade-in">
+            <div className="flex flex-col space-y-4">
               {!isHomePage && (
-              <Link to="/" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                <Link 
+                  to="/" 
+                  className="text-white text-lg font-medium hover:text-primary transition-colors py-2" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
                   Home
                 </Link>
               )}
-              <Link to="/appinfo" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link 
+                to="/appinfo" 
+                className="text-white text-lg font-medium hover:text-primary transition-colors py-2" 
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 The App
               </Link>
-              <Link to="/thechallenge" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link 
+                to="/thechallenge" 
+                className="text-white text-lg font-medium hover:text-primary transition-colors py-2" 
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 Staff Challenge
               </Link>
-              <Link to="/sales-experience" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link 
+                to="/sales-experience" 
+                className="text-white text-lg font-medium hover:text-primary transition-colors py-2" 
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 8 Week Training
               </Link>
-              <Link to="/callscoring" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link 
+                to="/callscoring" 
+                className="text-white text-lg font-medium hover:text-primary transition-colors py-2" 
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 Call Scoring
               </Link>
-              <Link to="/about" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link 
+                to="/about" 
+                className="text-white text-lg font-medium hover:text-primary transition-colors py-2" 
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 About
               </Link>
-              <Link to="/contact" className="text-white text-xl font-medium hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link 
+                to="/contact" 
+                className="text-white text-lg font-medium hover:text-primary transition-colors py-2" 
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 Contact
               </Link>
             </div>
