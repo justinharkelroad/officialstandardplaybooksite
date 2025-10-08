@@ -1,7 +1,35 @@
+import { useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
+// Declare the custom element type for TypeScript
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'wistia-player': any;
+    }
+  }
+}
+
 const CallScoringDemo = () => {
+  useEffect(() => {
+    const script1 = document.createElement('script');
+    script1.src = 'https://fast.wistia.com/player.js';
+    script1.async = true;
+
+    const script2 = document.createElement('script');
+    script2.src = 'https://fast.wistia.com/embed/t8m2sv6yma.js';
+    script2.async = true;
+    script2.type = 'module';
+
+    document.body.appendChild(script1);
+    document.body.appendChild(script2);
+
+    return () => {
+      if (script1.parentNode) script1.parentNode.removeChild(script1);
+      if (script2.parentNode) script2.parentNode.removeChild(script2);
+    };
+  }, []);
   return (
     <section className="py-20 relative bg-dark-card/30">
       <div className="container mx-auto px-4">
@@ -16,46 +44,28 @@ const CallScoringDemo = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Left: Dashboard View */}
+            {/* Left: Video */}
             <Card className="bg-dark-card border-primary/20 overflow-hidden relative group hover:border-primary/40 transition-all">
               <div className="absolute top-4 right-4 z-10">
                 <Badge className="bg-primary text-white">
-                  EDIT IS BUILT-IN
+                  REAL RESULTS
                 </Badge>
               </div>
-              <div className="aspect-[4/3] bg-gradient-to-br from-primary/5 to-primary-accent/5 p-8 flex items-center justify-center">
-                <div className="w-full space-y-4">
-                  <div className="bg-dark-card/80 rounded-lg p-4 border border-primary/20">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-gray-400 text-sm">Call Score</span>
-                      <span className="text-primary font-bold text-2xl">8.5/10</span>
-                    </div>
-                    <div className="w-full bg-gray-700 rounded-full h-2">
-                      <div className="bg-primary h-2 rounded-full" style={{ width: '85%' }}></div>
-                    </div>
-                  </div>
-                  <div className="bg-dark-card/80 rounded-lg p-4 border border-primary/20 space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-400">Opening</span>
-                      <span className="text-green-400">✓ Strong</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-400">Discovery</span>
-                      <span className="text-green-400">✓ Strong</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-400">Objections</span>
-                      <span className="text-yellow-400">⚠ Needs Work</span>
-                    </div>
-                  </div>
+              <div className="aspect-square bg-gradient-to-br from-primary/5 to-primary-accent/5 p-4 flex items-center justify-center">
+                <div className="w-full h-full">
+                  <wistia-player 
+                    media-id="t8m2sv6yma" 
+                    aspect="1.0"
+                    className="w-full h-full"
+                  />
                 </div>
               </div>
               <div className="p-6 border-t border-primary/20">
                 <h3 className="font-rajdhani font-bold text-xl text-white mb-2 uppercase">
-                  Call Scoring Dashboard
+                  See The Impact
                 </h3>
                 <p className="text-gray-400 text-sm">
-                  Quick overview of performance metrics with instant editing capabilities
+                  Watch how Standard Call Scoring transforms team performance in real-time
                 </p>
               </div>
             </Card>
