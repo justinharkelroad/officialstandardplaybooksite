@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import ChallengeCoreCards from '@/components/sections/ChallengeCoreCards';
 import ChallengeProcessFlow from '@/components/sections/ChallengeProcessFlow';
 import ChallengeWeeklyBreakdown from '@/components/sections/ChallengeWeeklyBreakdown';
+import ChallengeTransformation from '@/components/sections/ChallengeTransformation';
 
 // Declare Wistia custom element for TypeScript
 declare global {
@@ -157,6 +158,9 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
           </div>
         </section>
 
+        {/* Identity Transformation Section with Video */}
+        <ChallengeTransformation />
+
         {/* Weekly Breakdown Section */}
         <ChallengeWeeklyBreakdown />
 
@@ -165,49 +169,6 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
 
         {/* Core Cards Section */}
         <ChallengeCoreCards />
-
-        {/* Identity Transformation Section - Reused from ProducerPowerUp */}
-        <section className="py-16 relative">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-12">
-                How This Transforms Your Team's Identity
-              </h2>
-              <div className="bg-dark-card border-primary/20 rounded-lg p-8">
-                <ul className="space-y-4 text-left">
-                  <li className="flex items-start">
-                    <span className="text-primary mr-3 mt-1">•</span>
-                    <span className="text-gray-300">Weekly Discovery Stacks that reinforce your team's identity as value-first professionals</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-primary mr-3 mt-1">•</span>
-                    <span className="text-gray-300">Personal accountability mindset activation that transforms how team members see themselves</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-primary mr-3 mt-1">•</span>
-                    <span className="text-gray-300">Activity-to-results understanding that builds confidence in their producer identity</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-primary mr-3 mt-1">•</span>
-                    <span className="text-gray-300">Owner Fast Track Coaching PDF to accelerate leadership identity development</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-primary mr-3 mt-1">•</span>
-                    <span className="text-gray-300">60 days of identity-reinforcing habit development through The Standard App</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-primary mr-3 mt-1">•</span>
-                    <span className="text-gray-300">Cultural transformation that elevates everyone's professional identity</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-primary mr-3 mt-1">•</span>
-                    <span className="text-gray-300">Continued growth through Standard Membership with 25% discount</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
         
         <Footer />
       </div>

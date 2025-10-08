@@ -1,26 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { CheckCircle } from 'lucide-react';
-import { useEffect } from 'react';
 
 const CallScoringTeam = () => {
-  useEffect(() => {
-    // Load Wistia player scripts
-    const script1 = document.createElement('script');
-    script1.src = 'https://fast.wistia.com/player.js';
-    script1.async = true;
-    document.body.appendChild(script1);
-
-    const script2 = document.createElement('script');
-    script2.src = 'https://fast.wistia.com/embed/t8m2sv6yma.js';
-    script2.async = true;
-    script2.type = 'module';
-    document.body.appendChild(script2);
-
-    return () => {
-      document.body.removeChild(script1);
-      document.body.removeChild(script2);
-    };
-  }, []);
   const benefits = [
     "Point out specific wins they might have missed",
     "Build confidence through data-backed performance insights",
@@ -70,10 +51,28 @@ const CallScoringTeam = () => {
               </Button>
             </div>
 
-            {/* Right: Video */}
+            {/* Right: Visual Element */}
             <div className="relative">
-              <div className="aspect-square rounded-lg overflow-hidden border border-primary/20">
-                <wistia-player media-id="t8m2sv6yma" aspect="1.0"></wistia-player>
+              <div className="aspect-square bg-gradient-to-br from-primary/10 to-primary-accent/10 rounded-lg border border-primary/20 p-8 flex items-center justify-center">
+                <div className="text-center space-y-6">
+                  <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center mx-auto">
+                    <CheckCircle className="w-12 h-12 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-5xl font-rajdhani font-bold text-white mb-2">100%</p>
+                    <p className="text-gray-300 text-lg">Of calls scored</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 pt-4">
+                    <div className="bg-dark-card/50 rounded-lg p-4 border border-primary/10">
+                      <p className="text-3xl font-rajdhani font-bold text-primary">4.8</p>
+                      <p className="text-gray-400 text-sm">Avg Score</p>
+                    </div>
+                    <div className="bg-dark-card/50 rounded-lg p-4 border border-primary/10">
+                      <p className="text-3xl font-rajdhani font-bold text-primary-accent">↑32%</p>
+                      <p className="text-gray-400 text-sm">Improvement</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
