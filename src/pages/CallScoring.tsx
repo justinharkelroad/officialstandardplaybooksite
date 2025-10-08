@@ -6,7 +6,7 @@ import CallScoringHero from '@/components/sections/CallScoringHero';
 import CallScoringFeatures from '@/components/sections/CallScoringFeatures';
 import CallScoringTeam from '@/components/sections/CallScoringTeam';
 import CallScoringTypes from '@/components/sections/CallScoringTypes';
-
+import CallScoringDemo from '@/components/sections/CallScoringDemo';
 import CallScoringPricing from '@/components/sections/CallScoringPricing';
 
 const CallScoring = () => {
@@ -24,6 +24,7 @@ const CallScoring = () => {
         <CallScoringFeatures />
         <CallScoringTeam />
         <CallScoringTypes />
+        <CallScoringDemo />
         
         <CallScoringPricing />
         <Footer />
