@@ -25,8 +25,8 @@ const CommunityTechSection = () => {
       icon: TrendingUp,
       title: 'Call Scoring',
       description: 'Real-time analytics and scoring of your sales calls. Know exactly what\'s working and what\'s not.',
-      link: 'https://standardcallscoring.com',
-      isExternal: true,
+      link: '/callscoring',
+      isExternal: false,
     },
   ];
 
