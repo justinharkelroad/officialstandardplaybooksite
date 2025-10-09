@@ -41,6 +41,29 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
     wistiaEmbedScript.type = 'module';
     document.body.appendChild(wistiaEmbedScript);
 
+    // Facebook Pixel tracking script for form submission
+    const fbPixelScript = document.createElement('script');
+    fbPixelScript.innerHTML = `
+      document.addEventListener('DOMContentLoaded', function() {
+        const observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+              const thankYouText = document.querySelector('div, p, span');
+              if (thankYouText && thankYouText.innerText.includes('Thank you. We will be in contact')) {
+                fbq('track', 'Lead', {
+                  content_name: 'Producer Challenge Prelaunch',
+                  status: 'ModalThankYou'
+                });
+                observer.disconnect();
+              }
+            }
+          });
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+      });
+    `;
+    document.body.appendChild(fbPixelScript);
+
     return () => {
       // Cleanup scripts when component unmounts
       const existingGHLScript = document.querySelector('script[src="https://link.msgsndr.com/js/form_embed.js"]');
@@ -56,6 +79,10 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
       const existingWistiaEmbed = document.querySelector('script[src="https://fast.wistia.com/embed/1bz6nrl5ip.js"]');
       if (existingWistiaEmbed) {
         document.body.removeChild(existingWistiaEmbed);
+      }
+
+      if (fbPixelScript && fbPixelScript.parentNode) {
+        document.body.removeChild(fbPixelScript);
       }
     };
   }, []);
