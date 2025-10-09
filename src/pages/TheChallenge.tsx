@@ -45,21 +45,14 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
     const fbPixelScript = document.createElement('script');
     fbPixelScript.innerHTML = `
       document.addEventListener('DOMContentLoaded', function() {
-        const observer = new MutationObserver(function(mutations) {
-          mutations.forEach(function(mutation) {
-            if (mutation.type === 'childList') {
-              const thankYouText = document.querySelector('div, p, span');
-              if (thankYouText && thankYouText.innerText.includes('Thank you. We will be in contact')) {
-                fbq('track', 'Lead', {
-                  content_name: 'Producer Challenge Prelaunch',
-                  status: 'ModalThankYou'
-                });
-                observer.disconnect();
-              }
-            }
-          });
+        const observer = new MutationObserver(() => {
+          const modal = document.querySelector('div, p, span');
+          if (modal && modal.innerText.toLowerCase().includes('thank you')) {
+            fbq('track', 'Lead', {content_name: 'Producer Challenge Prelaunch'});
+            observer.disconnect();
+          }
         });
-        observer.observe(document.body, { childList: true, subtree: true });
+        observer.observe(document.body, {childList: true, subtree: true});
       });
     `;
     document.body.appendChild(fbPixelScript);
