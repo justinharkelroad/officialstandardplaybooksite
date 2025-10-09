@@ -20,6 +20,7 @@ import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import ThankYou from "./pages/ThankYou";
+import ChallengeThankYou from "./pages/ChallengeThankYou";
 import Links from "./pages/Links";
 import NotFound from "./pages/NotFound";
 import Particles from "./components/Particles";
@@ -55,6 +56,7 @@ const App = () => (
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/thank-you" element={<ThankYou />} />
+          <Route path="/challenge-thank-you" element={<ChallengeThankYou />} />
           <Route path="/links" element={<Links />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
