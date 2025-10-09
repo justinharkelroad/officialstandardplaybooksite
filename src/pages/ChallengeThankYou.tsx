@@ -1,6 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const ChallengeThankYou = () => {
+  useEffect(() => {
+    const fbPixelScript = document.createElement('script');
+    fbPixelScript.innerHTML = `
+      fbq('track','Lead',{content_name:'Producer Challenge Prelaunch'});
+    `;
+    document.body.appendChild(fbPixelScript);
+
+    return () => {
+      if (fbPixelScript.parentNode) {
+        fbPixelScript.parentNode.removeChild(fbPixelScript);
+      }
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="max-w-2xl mx-auto text-center space-y-8">
