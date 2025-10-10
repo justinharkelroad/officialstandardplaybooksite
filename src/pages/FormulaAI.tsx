@@ -52,9 +52,16 @@ const FormulaAI = () => {
               rel="noopener noreferrer"
               className="inline-block"
             >
-              <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white hover:text-primary transition-colors">
+              <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white hover:text-primary transition-colors mb-6">
                 AI TRAINING
               </h2>
+            </a>
+            <a 
+              href="/Insurance_Agency_Prompts_Formula.pdf" 
+              download="Insurance_Agency_Prompts_Formula.pdf"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md font-medium transition-all"
+            >
+              Download Insurance Agency Prompts
             </a>
           </div>
         </div>
