@@ -135,6 +135,41 @@ const FormulaAI = () => {
               </div>
             </div>
 
+            {/* Third Video */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mt-16">
+              {/* Left Column - Text */}
+              <div className="order-2 lg:order-1">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="relative">
+                    <Circle className="w-8 h-8 text-primary fill-primary/20" />
+                    <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-sm">3</span>
+                  </div>
+                </div>
+                <h2 className="font-rajdhani font-bold text-3xl md:text-4xl uppercase tracking-wide text-white mb-4">
+                  Google Notebook LM for Agency Training
+                </h2>
+                <div className="text-gray-300 leading-relaxed text-sm md:text-base">
+                  <p>
+                    Justin gives a practical tour of Google's Notebook LM for agency training. He loads the Requote Process PDF and shows how it becomes an interactive audio overview, a video explainer, flashcards, and ready-made reports and study guides. He demonstrates editing the audio host focus, building quizzes, and using these outputs to onboard new hires and reinforce SOPs. A fast, free way to turn your own documents into repeatable training assets.
+                  </p>
+                </div>
+              </div>
+
+              {/* Right Column - Video */}
+              <div className="order-1 lg:order-2">
+                <div className="relative">
+                  <div className="video-glow absolute -inset-4"></div>
+                  <div className="relative bg-dark-card rounded-lg overflow-hidden border border-primary/20">
+                    <VideoPlayer 
+                      videoId="yfTMa_9TEsU"
+                      title="Google Notebook LM for Agency Training"
+                      className="w-full aspect-video"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
