@@ -59,7 +59,7 @@ const FormulaAI = () => {
             <a 
               href="/Insurance_Agency_Prompts_Formula.pdf" 
               download="Insurance_Agency_Prompts_Formula.pdf"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md font-medium transition-all"
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md font-medium transition-all mx-auto w-fit"
             >
               Download Insurance Agency Prompts
             </a>
