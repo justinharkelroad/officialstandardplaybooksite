@@ -53,7 +53,7 @@ const FormulaAI = () => {
               className="inline-block"
             >
               <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white hover:text-primary transition-colors">
-                AI Call Scoring
+                AI TRAINING
               </h2>
             </a>
           </div>
@@ -93,6 +93,41 @@ const FormulaAI = () => {
                     <VideoPlayer 
                       videoId="ifcjsowTb_o"
                       title="Build Your Own Role-Play Voice Agent"
+                      className="w-full aspect-video"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Second Video */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+              {/* Left Column - Text */}
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="relative">
+                    <Circle className="w-8 h-8 text-primary fill-primary/20" />
+                    <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-sm">2</span>
+                  </div>
+                </div>
+                <h2 className="font-rajdhani font-bold text-3xl md:text-4xl uppercase tracking-wide text-white mb-4">
+                  Crafting Powerful AI Prompts
+                </h2>
+                <div className="text-gray-300 leading-relaxed text-sm md:text-base">
+                  <p>
+                    This video breaks down how to craft powerful AI prompts that actually produce useful, high-quality results. Justin explains why simply asking a chatbot for answers isn't enough—you must define its role, goal, audience, inputs, deliverables, format, and quality bar. Using a real insurance marketing example, he shows how specificity turns vague requests into complete, actionable outputs like email sequences, call flows, and KPI dashboards. The key lesson: the more context and detail you give the model, the more value and clarity you'll get back.
+                  </p>
+                </div>
+              </div>
+
+              {/* Right Column - Video */}
+              <div>
+                <div className="relative">
+                  <div className="video-glow absolute -inset-4"></div>
+                  <div className="relative bg-dark-card rounded-lg overflow-hidden border border-primary/20">
+                    <VideoPlayer 
+                      videoId="q1lGz1G0baQ"
+                      title="Crafting Powerful AI Prompts"
                       className="w-full aspect-video"
                     />
                   </div>
