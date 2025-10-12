@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import SEOHead from '@/components/SEOHead';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -9,6 +10,21 @@ import CallScoringTypes from '@/components/sections/CallScoringTypes';
 import CallScoringPricing from '@/components/sections/CallScoringPricing';
 
 const CallScoring = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Check if we need to scroll to pricing section after navigation
+    if (location.state?.scrollToPricing) {
+      const timer = setTimeout(() => {
+        const element = document.getElementById('pricing');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [location.state]);
+
   return (
     <>
       <SEOHead config={{
