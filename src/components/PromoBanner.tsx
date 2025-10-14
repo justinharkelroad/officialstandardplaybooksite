@@ -14,11 +14,19 @@ const PromoBanner = () => {
   };
 
   return (
-    <div className="w-full bg-gradient-to-r from-orange-500 via-orange-600 to-red-600 py-4 px-4">
+    <div className="w-full bg-gradient-to-r from-orange-500 via-orange-600 to-red-600 py-4 px-4 mt-20 md:mt-24">
       <div className="max-w-6xl mx-auto">
         {/* Top tier - Logo */}
         <div className="flex justify-center mb-4">
-          <img src={promoLogo} alt="Formula Logo" className="w-20 h-20 object-contain" />
+          <img 
+            src={promoLogo} 
+            alt="Formula Logo" 
+            className="w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-md"
+            onError={(e) => {
+              console.error('Logo failed to load:', e);
+              e.currentTarget.style.display = 'none';
+            }}
+          />
         </div>
 
         {/* Bottom tier - Two columns with buttons */}
