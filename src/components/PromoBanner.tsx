@@ -14,23 +14,10 @@ const PromoBanner = () => {
   };
 
   return (
-    <div className="w-full bg-gradient-to-r from-orange-500 via-orange-600 to-red-600 py-4 px-4 mt-20 md:mt-24">
-      <div className="max-w-6xl mx-auto">
-        {/* Top tier - Logo */}
-        <div className="flex justify-center mb-4">
-          <img 
-            src={promoLogo} 
-            alt="Formula Logo" 
-            className="w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-md"
-            onError={(e) => {
-              console.error('Logo failed to load:', e);
-              e.currentTarget.style.display = 'none';
-            }}
-          />
-        </div>
-
-        {/* Bottom tier - Two columns with buttons */}
-        <div className="grid md:grid-cols-2 gap-6">
+    <div className="w-full bg-gradient-to-r from-orange-500 via-orange-600 to-red-600 py-6 px-4 mt-20 md:mt-24">
+      <div className="max-w-6xl mx-auto relative">
+        {/* Two columns with buttons */}
+        <div className="grid md:grid-cols-2 gap-6 relative">
           {/* Left column - Call Scoring */}
           <div className="bg-white/10 backdrop-blur-sm rounded-lg pt-8 pb-6 px-6 flex flex-col items-center text-center relative overflow-visible">
             <p className="text-white text-sm mb-4 leading-relaxed">
@@ -66,6 +53,19 @@ const PromoBanner = () => {
               </Button>
             </div>
           </div>
+        </div>
+
+        {/* Centered Logo Overlay */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+          <img 
+            src={promoLogo} 
+            alt="Formula Logo" 
+            className="w-24 h-24 md:w-32 md:h-32 object-contain drop-shadow-2xl"
+            onError={(e) => {
+              console.error('Logo failed to load:', e);
+              e.currentTarget.style.display = 'none';
+            }}
+          />
         </div>
       </div>
     </div>
