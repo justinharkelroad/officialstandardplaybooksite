@@ -24,7 +24,7 @@ const PromoBanner = () => {
               Special Formula Offer for Limited Time. Get Any Level of Call Scoring for 50% Off The First Month. No Commitment
             </p>
             <div className="relative">
-              <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
+              <div className="absolute -top-2 left-1/2 -translate-x-1/2 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap z-10">
                 AI Call Scoring
               </div>
               <Button
@@ -42,7 +42,7 @@ const PromoBanner = () => {
               Book a Discovery Call & Sign Up For One on One Coaching to Receive One Free Team Call.
             </p>
             <div className="relative">
-              <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-blue-400 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
+              <div className="absolute -top-2 left-1/2 -translate-x-1/2 bg-blue-400 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap z-10">
                 1 v 1 Coaching
               </div>
               <Button
