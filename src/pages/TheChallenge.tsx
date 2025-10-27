@@ -163,7 +163,7 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
                 {/* CTA Button */}
                 <CheckoutModal 
                   buttonText="ENROLL MY TEAM MEMBER"
-                  buttonClassName="btn-primary text-lg lg:text-xl px-8 py-4 lg:py-6 w-full inline-flex items-center justify-center gap-2"
+                  buttonClassName="btn-primary text-lg lg:text-xl px-8 py-4 lg:py-6 w-full inline-flex items-center justify-center gap-2 animate-pulse hover:animate-none shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] transition-all duration-300"
                 />
               </div>
             </div>
