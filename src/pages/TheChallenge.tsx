@@ -7,7 +7,7 @@ import ChallengeProcessFlow from '@/components/sections/ChallengeProcessFlow';
 import ChallengeWeeklyBreakdown from '@/components/sections/ChallengeWeeklyBreakdown';
 import ChallengeTransformation from '@/components/sections/ChallengeTransformation';
 import ChallengePainSolution from '@/components/sections/ChallengePainSolution';
-import CheckoutModal from '@/components/CheckoutModal';
+import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 
 // Declare Wistia custom element for TypeScript
@@ -161,10 +161,12 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
                 </div>
 
                 {/* CTA Button */}
-                <CheckoutModal 
-                  buttonText="ENROLL MY TEAM MEMBER"
-                  buttonClassName="btn-primary text-lg lg:text-xl px-8 py-4 lg:py-6 w-full inline-flex items-center justify-center gap-2 animate-pulse hover:animate-none shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] transition-all duration-300"
-                />
+                <Button 
+                  onClick={() => window.open('https://createthestandard.com/producer-power-up-checkout-page', '_blank')}
+                  className="btn-primary text-lg lg:text-xl px-8 py-4 lg:py-6 w-full inline-flex items-center justify-center gap-2 animate-pulse hover:animate-none shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] transition-all duration-300"
+                >
+                  ENROLL MY TEAM MEMBER
+                </Button>
               </div>
             </div>
           </div>
