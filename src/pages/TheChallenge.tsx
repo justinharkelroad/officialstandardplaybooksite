@@ -105,28 +105,64 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
           </div>
         </section>
 
-        {/* Problem & Possibility Section */}
-        <ChallengePainSolution 
-          painPoints={[
-            "Your team is yearning for a training course that creates actual takeaways and action items instead of boring quizzes at the end"
-          ]}
-          solutions={[
-            "After 6 weeks your team member is showing up for themselves, their families and the agency in a way they never have before."
-          ]}
-        />
+        {/* Hero Section with Video */}
+        <section className="pb-12 md:pb-20 relative">
+          <div className="container mx-auto px-4 max-w-7xl">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+              
+              {/* Video Column */}
+              <div>
+                <div className="w-full aspect-[9/16] rounded-lg overflow-hidden bg-black shadow-2xl">
+                  <style dangerouslySetInnerHTML={{
+                    __html: `
+                      wistia-player[media-id='1bz6nrl5ip']:not(:defined) { 
+                        background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/1bz6nrl5ip/swatch'); 
+                        display: block; 
+                        filter: blur(5px); 
+                        padding-top:177.78%; 
+                      }
+                      wistia-player[media-id='1bz6nrl5ip'] {
+                        width: 100%;
+                        height: 100%;
+                      }
+                    `
+                  }} />
+                  <wistia-player media-id="1bz6nrl5ip" aspect="0.5625"></wistia-player>
+                </div>
+              </div>
 
-        {/* Pricing and CTA Section */}
-        <section className="py-12 relative">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <div className="bg-dark-card border border-primary/20 rounded-lg p-8 md:p-12 shadow-2xl">
-                <h3 className="font-rajdhani font-bold text-3xl md:text-4xl text-white mb-8 uppercase">
-                  6 WEEKS - 30 TRAININGS - $299
-                </h3>
-                <CheckoutModal 
-                  buttonText="ENROLL MY TEAM MEMBER"
-                  buttonClassName="btn-primary text-lg px-12 py-6 w-full md:w-auto"
-                />
+              {/* Right Column with Problem, Possibility, and CTA */}
+              <div className="flex flex-col gap-6">
+                {/* Problem */}
+                <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6">
+                  <h3 className="font-rajdhani font-bold text-xl text-red-400 uppercase mb-4">
+                    PROBLEM
+                  </h3>
+                  <p className="text-white text-lg leading-relaxed">
+                    YOUR TEAM IS YEARNING FOR A TRAINING COURSE THAT CREATES ACTUAL TAKEAWAYS AND ACTION ITEMS INSTEAD OF BORING QUIZZES AT THE END
+                  </p>
+                </div>
+
+                {/* Possibility */}
+                <div className="bg-green-900/20 border border-primary/30 rounded-lg p-6">
+                  <h3 className="font-rajdhani font-bold text-xl text-primary uppercase mb-4">
+                    POSSIBILITY
+                  </h3>
+                  <p className="text-white text-lg leading-relaxed">
+                    AFTER 6 WEEKS YOUR TEAM MEMBER IS SHOWING UP FOR THEMSELVES, THEIR FAMILIES AND THE AGENCY IN A WAY THEY NEVER HAVE BEFORE.
+                  </p>
+                </div>
+
+                {/* Pricing CTA */}
+                <div className="bg-dark-card border border-primary/20 rounded-lg p-6 text-center">
+                  <h3 className="font-rajdhani font-bold text-2xl text-white mb-4 uppercase">
+                    6 WEEKS - 30 TRAININGS - $299
+                  </h3>
+                  <CheckoutModal 
+                    buttonText="ENROLL MY TEAM MEMBER"
+                    buttonClassName="btn-primary text-lg px-8 py-4 w-full inline-flex items-center justify-center gap-2"
+                  />
+                </div>
               </div>
             </div>
           </div>
