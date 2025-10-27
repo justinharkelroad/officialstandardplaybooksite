@@ -61,9 +61,6 @@ const Navigation = () => {
             <Link to="/appinfo" className="text-white hover:text-primary transition-colors link-underline">
               The App
             </Link>
-            <Link to="/thechallenge" className="text-white hover:text-primary transition-colors link-underline">
-              Staff Challenge
-            </Link>
             <Link to="/sales-experience" className="text-white hover:text-primary transition-colors link-underline">
               8 Week Training
             </Link>
@@ -113,13 +110,6 @@ const Navigation = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 The App
-              </Link>
-              <Link 
-                to="/thechallenge" 
-                className="text-white text-lg font-medium hover:text-primary transition-colors py-2" 
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Staff Challenge
               </Link>
               <Link 
                 to="/sales-experience" 
