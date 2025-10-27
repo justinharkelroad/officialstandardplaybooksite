@@ -108,7 +108,7 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
         {/* Hero Section with Video */}
         <section className="pb-12 md:pb-20 relative">
           <div className="container mx-auto px-4 max-w-7xl">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               
               {/* Video Column */}
               <div>
@@ -153,16 +153,18 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
                   </p>
                 </div>
 
-                {/* Pricing CTA */}
+                {/* Pricing Box */}
                 <div className="bg-dark-card border border-primary/20 rounded-lg p-6 lg:p-8 text-center">
-                  <h3 className="font-rajdhani font-bold text-2xl lg:text-4xl text-white mb-4 lg:mb-6 uppercase">
+                  <h3 className="font-rajdhani font-bold text-2xl lg:text-4xl text-white uppercase">
                     6 WEEKS - 30 TRAININGS - $299
                   </h3>
-                  <CheckoutModal 
-                    buttonText="ENROLL MY TEAM MEMBER"
-                    buttonClassName="btn-primary text-lg lg:text-xl px-8 py-4 lg:py-6 w-full inline-flex items-center justify-center gap-2"
-                  />
                 </div>
+
+                {/* CTA Button */}
+                <CheckoutModal 
+                  buttonText="ENROLL MY TEAM MEMBER"
+                  buttonClassName="btn-primary text-lg lg:text-xl px-8 py-4 lg:py-6 w-full inline-flex items-center justify-center gap-2"
+                />
               </div>
             </div>
           </div>
