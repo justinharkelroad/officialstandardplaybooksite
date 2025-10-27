@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import SEOHead from '@/components/SEOHead';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -7,6 +6,9 @@ import ChallengeCoreCards from '@/components/sections/ChallengeCoreCards';
 import ChallengeProcessFlow from '@/components/sections/ChallengeProcessFlow';
 import ChallengeWeeklyBreakdown from '@/components/sections/ChallengeWeeklyBreakdown';
 import ChallengeTransformation from '@/components/sections/ChallengeTransformation';
+import ChallengePainSolution from '@/components/sections/ChallengePainSolution';
+import CheckoutModal from '@/components/CheckoutModal';
+import { ArrowRight } from 'lucide-react';
 
 // Declare Wistia custom element for TypeScript
 declare global {
@@ -103,63 +105,28 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
           </div>
         </section>
 
-        {/* Hero Section with Video and Form */}
-        <section className="pb-12 md:pb-20 relative">
-          <div className="container mx-auto px-4 max-w-7xl">
-            <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 ${formPosition === 'left' ? 'lg:grid-flow-col-dense' : ''}`}>
-              
-              {/* Video Column */}
-              <div className={`${formPosition === 'left' ? 'lg:col-start-2' : ''}`}>
-                <div className="w-full aspect-[9/16] rounded-lg overflow-hidden bg-black shadow-2xl">
-                  <style dangerouslySetInnerHTML={{
-                    __html: `
-                      wistia-player[media-id='1bz6nrl5ip']:not(:defined) { 
-                        background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/1bz6nrl5ip/swatch'); 
-                        display: block; 
-                        filter: blur(5px); 
-                        padding-top:177.78%; 
-                      }
-                      wistia-player[media-id='1bz6nrl5ip'] {
-                        width: 100%;
-                        height: 100%;
-                      }
-                    `
-                  }} />
-                  <wistia-player media-id="1bz6nrl5ip" aspect="0.5625"></wistia-player>
-                </div>
-              </div>
+        {/* Problem & Possibility Section */}
+        <ChallengePainSolution 
+          painPoints={[
+            "Your team is yearning for a training course that creates actual takeaways and action items instead of boring quizzes at the end"
+          ]}
+          solutions={[
+            "After 6 weeks your team member is showing up for themselves, their families and the agency in a way they never have before."
+          ]}
+        />
 
-              {/* Form Column */}
-              <div className={`${formPosition === 'left' ? 'lg:col-start-1' : ''} flex items-center`}>
-                <Card className="w-full bg-dark-card border-primary/20 shadow-2xl min-h-[600px] lg:min-h-[700px]">
-                  <CardContent className="p-0 h-full">
-                    <div className="w-full h-full min-h-[600px] lg:min-h-[700px]">
-                      <iframe 
-                        src="https://api.leadconnectorhq.com/widget/form/kCpBJeUPD521D7yEnskY" 
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          border: 'none',
-                          borderRadius: '3px',
-                          minHeight: '600px'
-                        }}
-                        id="inline-kCpBJeUPD521D7yEnskY" 
-                        data-layout="{'id':'INLINE'}" 
-                        data-trigger-type="alwaysShow" 
-                        data-trigger-value="" 
-                        data-activation-type="alwaysActivated" 
-                        data-activation-value="" 
-                        data-deactivation-type="neverDeactivate" 
-                        data-deactivation-value="" 
-                        data-form-name="Form 6" 
-                        data-height="902" 
-                        data-layout-iframe-id="inline-kCpBJeUPD521D7yEnskY" 
-                        data-form-id="kCpBJeUPD521D7yEnskY" 
-                        title="Form 6"
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
+        {/* Pricing and CTA Section */}
+        <section className="py-12 relative">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="bg-dark-card border border-primary/20 rounded-lg p-8 md:p-12 shadow-2xl">
+                <h3 className="font-rajdhani font-bold text-3xl md:text-4xl text-white mb-8 uppercase">
+                  6 WEEKS - 30 TRAININGS - $299
+                </h3>
+                <CheckoutModal 
+                  buttonText="ENROLL MY TEAM MEMBER"
+                  buttonClassName="btn-primary text-lg px-12 py-6 w-full md:w-auto"
+                />
               </div>
             </div>
           </div>
