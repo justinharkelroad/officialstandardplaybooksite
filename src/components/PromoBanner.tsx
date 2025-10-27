@@ -1,71 +1,35 @@
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import promoLogo from '@/assets/promo-logo.png';
+import challengeBanner from '@/assets/challenge-banner.png';
 
 const PromoBanner = () => {
   const navigate = useNavigate();
 
-  const handleCallScoringClick = () => {
-    navigate('/callscoring', { state: { scrollToPricing: true } });
-  };
-
-  const handleCoachingClick = () => {
-    window.open('https://agencycoaching.as.me/standardfit', '_blank');
-  };
-
   return (
-    <div className="w-full bg-gradient-to-r from-orange-500 via-orange-600 to-red-600 py-6 px-4 mt-20 md:mt-24">
-      <div className="max-w-6xl mx-auto relative">
-        {/* Two columns with buttons */}
-        <div className="grid md:grid-cols-2 gap-6 relative">
-          {/* Left column - Call Scoring */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg pt-8 pb-6 px-6 flex flex-col items-center text-center relative overflow-visible">
-            <p className="text-white text-sm mb-4 leading-relaxed">
-              Special Formula Offer for Limited Time. Get Any Level of Call Scoring for 50% Off The First Month. No Commitment
-            </p>
-            <div className="relative">
-              <div className="absolute -top-2 left-1/2 -translate-x-1/2 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap z-10">
-                AI Call Scoring
-              </div>
-              <Button
-                onClick={handleCallScoringClick}
-                className="bg-white text-orange-600 hover:bg-gray-100 font-bold px-8 py-6 text-lg mt-3"
-              >
-                GET 50% OFF FIRST MONTH
-              </Button>
-            </div>
+    <div className="w-full bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 py-8 px-4 mt-20 md:mt-24">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          {/* Image */}
+          <div className="flex-shrink-0">
+            <img 
+              src={challengeBanner} 
+              alt="Producer Power Up Challenge" 
+              className="w-48 h-48 md:w-56 md:h-56 object-contain drop-shadow-2xl"
+            />
           </div>
-
-          {/* Right column - Coaching */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg pt-8 pb-6 px-6 flex flex-col items-center text-center relative overflow-visible">
-            <p className="text-white text-sm mb-4 leading-relaxed">
-              Book a Discovery Call & Sign Up For One on One Coaching to Receive One Free Team Call.
-            </p>
-            <div className="relative">
-              <div className="absolute -top-2 left-1/2 -translate-x-1/2 bg-blue-400 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap z-10">
-                1 v 1 Coaching
-              </div>
-              <Button
-                onClick={handleCoachingClick}
-                className="bg-white text-orange-600 hover:bg-gray-100 font-bold px-8 py-6 text-lg mt-3"
-              >
-                Get Free Team Coaching Call*
-              </Button>
-            </div>
+          
+          {/* Content */}
+          <div className="flex-1 text-center md:text-left">
+            <h2 className="text-white text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
+              6 Weeks - 30 Trainings - 1 Producer Finding Their Power
+            </h2>
+            <Button
+              onClick={() => navigate('/thechallenge')}
+              className="bg-white text-blue-600 hover:bg-gray-100 font-bold px-8 py-6 text-lg"
+            >
+              Learn More
+            </Button>
           </div>
-        </div>
-
-        {/* Centered Logo Overlay */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-          <img 
-            src={promoLogo} 
-            alt="Formula Logo" 
-            className="w-24 h-24 md:w-32 md:h-32 object-contain drop-shadow-2xl"
-            onError={(e) => {
-              console.error('Logo failed to load:', e);
-              e.currentTarget.style.display = 'none';
-            }}
-          />
         </div>
       </div>
     </div>
