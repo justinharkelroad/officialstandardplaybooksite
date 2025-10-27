@@ -41,7 +41,7 @@ const OwnerChallenge = () => {
     },
     {
       title: "WEEKLY LEADERSHIP REINFORCEMENT",
-      description: "Friday Discovery-Stacks and Sunday General's Tent emails for identity development"
+      description: "Friday Discovery-Stacks and Sunday Sunday Service emails for identity development"
     },
     {
       title: "LIFETIME TRANSFORMATION ACCESS",

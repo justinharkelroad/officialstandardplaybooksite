@@ -52,7 +52,7 @@ const ChallengeCoreCards = () => {
           </li>
           <li className="flex items-start">
             <CheckSquare className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
-            <span>Optional Sunday "General's Tent" email + planning form</span>
+            <span>Optional Sunday "Sunday Service" email + planning form</span>
           </li>
           <li className="flex items-start">
             <CheckSquare className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />

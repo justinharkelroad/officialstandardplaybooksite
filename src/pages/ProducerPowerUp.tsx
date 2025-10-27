@@ -35,7 +35,7 @@ const ProducerPowerUp = () => {
     },
     {
       title: "WEEKLY IDENTITY REINFORCEMENT",
-      description: "Friday Discovery-Stacks and Sunday General's Tent emails that strengthen your producer identity"
+      description: "Friday Discovery-Stacks and Sunday Sunday Service emails that strengthen your producer identity"
     },
     {
       title: "LIFETIME TRANSFORMATION ACCESS",
