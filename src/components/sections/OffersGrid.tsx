@@ -61,6 +61,7 @@ const OffersGrid = () => {
       icon: Crown,
       link: '/thechallenge',
       color: 'primary-accent',
+      disabled: true
     },
     {
       title: 'CALL SCORING',
@@ -124,6 +125,11 @@ const OffersGrid = () => {
                     {program.soldOut ? (
                       <Button disabled className="bg-stroke/50 text-muted font-bold text-lg px-8 py-4 w-full cursor-not-allowed">
                         SOLD OUT
+                      </Button>
+                    ) : program.disabled ? (
+                      <Button className="btn-primary text-lg px-8 py-4 w-full">
+                        LEARN MORE
+                        <ArrowRight className="w-5 h-5 ml-2" />
                       </Button>
                     ) : (
                       <Button 
