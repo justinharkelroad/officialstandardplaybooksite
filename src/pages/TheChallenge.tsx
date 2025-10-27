@@ -134,33 +134,33 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
               {/* Right Column with Problem, Possibility, and CTA */}
               <div className="flex flex-col gap-6">
                 {/* Problem */}
-                <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6">
-                  <h3 className="font-rajdhani font-bold text-xl text-red-400 uppercase mb-4">
+                <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6 lg:p-8">
+                  <h3 className="font-rajdhani font-bold text-xl lg:text-3xl text-red-400 uppercase mb-4">
                     PROBLEM
                   </h3>
-                  <p className="text-white text-lg leading-relaxed">
+                  <p className="text-white text-lg lg:text-2xl leading-relaxed">
                     YOUR TEAM IS YEARNING FOR A TRAINING COURSE THAT CREATES ACTUAL TAKEAWAYS AND ACTION ITEMS INSTEAD OF BORING QUIZZES AT THE END
                   </p>
                 </div>
 
                 {/* Possibility */}
-                <div className="bg-green-900/20 border border-primary/30 rounded-lg p-6">
-                  <h3 className="font-rajdhani font-bold text-xl text-primary uppercase mb-4">
+                <div className="bg-green-900/20 border border-primary/30 rounded-lg p-6 lg:p-8">
+                  <h3 className="font-rajdhani font-bold text-xl lg:text-3xl text-primary uppercase mb-4">
                     POSSIBILITY
                   </h3>
-                  <p className="text-white text-lg leading-relaxed">
+                  <p className="text-white text-lg lg:text-2xl leading-relaxed">
                     AFTER 6 WEEKS YOUR TEAM MEMBER IS SHOWING UP FOR THEMSELVES, THEIR FAMILIES AND THE AGENCY IN A WAY THEY NEVER HAVE BEFORE.
                   </p>
                 </div>
 
                 {/* Pricing CTA */}
-                <div className="bg-dark-card border border-primary/20 rounded-lg p-6 text-center">
-                  <h3 className="font-rajdhani font-bold text-2xl text-white mb-4 uppercase">
+                <div className="bg-dark-card border border-primary/20 rounded-lg p-6 lg:p-8 text-center">
+                  <h3 className="font-rajdhani font-bold text-2xl lg:text-4xl text-white mb-4 lg:mb-6 uppercase">
                     6 WEEKS - 30 TRAININGS - $299
                   </h3>
                   <CheckoutModal 
                     buttonText="ENROLL MY TEAM MEMBER"
-                    buttonClassName="btn-primary text-lg px-8 py-4 w-full inline-flex items-center justify-center gap-2"
+                    buttonClassName="btn-primary text-lg lg:text-xl px-8 py-4 lg:py-6 w-full inline-flex items-center justify-center gap-2"
                   />
                 </div>
               </div>
