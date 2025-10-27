@@ -102,11 +102,11 @@ const ProducerPowerUp = () => {
                 </li>
                 <li className="flex items-start">
                   <span className="text-primary mr-3 mt-1">•</span>
-                  <span className="text-gray-300">Owner Fast Track Coaching PDF to accelerate leadership identity development</span>
+                  <span className="text-gray-300">Agency Owner or Manager will receive a "What To Expect" PDF detailing out what exact deliverables they should be looking for from their team throughout the 6 weeks.</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-primary mr-3 mt-1">•</span>
-                  <span className="text-gray-300">60 days of identity-reinforcing habit development through The Standard App</span>
+                  <span className="text-gray-300">42 Days of identity-reinforcing habit development through The Standard App</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-primary mr-3 mt-1">•</span>
@@ -114,7 +114,7 @@ const ProducerPowerUp = () => {
                 </li>
                 <li className="flex items-start">
                   <span className="text-primary mr-3 mt-1">•</span>
-                  <span className="text-gray-300">Continued growth through Standard Membership with 25% discount</span>
+                  <span className="text-gray-300">Option to continue with one of the Standard programs at a 25% discount for life</span>
                 </li>
               </ul>
             </div>

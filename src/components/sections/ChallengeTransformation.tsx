@@ -33,10 +33,10 @@ const ChallengeTransformation = () => {
     "Weekly Discovery Stacks that reinforce your team's identity as value-first professionals",
     "Personal accountability mindset activation that transforms how team members see themselves",
     "Activity-to-results understanding that builds confidence in their producer identity",
-    "Owner Fast Track Coaching PDF to accelerate leadership identity development",
-    "60 days of identity-reinforcing habit development through The Standard App",
+    "Agency Owner or Manager will receive a 'What To Expect' PDF detailing out what exact deliverables they should be looking for from their team throughout the 6 weeks.",
+    "42 Days of identity-reinforcing habit development through The Standard App",
     "Cultural transformation that elevates everyone's professional identity",
-    "Continued growth through Standard Membership with 25% discount"
+    "Option to continue with one of the Standard programs at a 25% discount for life"
   ];
 
   return (
