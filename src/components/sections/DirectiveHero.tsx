@@ -1,6 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Zap, ArrowRight } from 'lucide-react';
+import VideoPlayer from '@/components/VideoPlayer';
 
 const DirectiveHero = () => {
   const handleBookCall = () => {
@@ -30,13 +31,13 @@ const DirectiveHero = () => {
           accountability, and hands-on guidance to accelerate your growth exponentially.
         </p>
 
-        {/* Hero Image */}
+        {/* Hero Video */}
         <div className="max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.3s' }}>
           <div className="relative aspect-video bg-dark-card rounded-lg overflow-hidden">
-            <img 
-              src="/lovable-uploads/c046f138-ec79-47c2-8cee-9e5198756308.png"
-              alt="1v1 Coaching Session"
-              className="w-full h-full object-cover rounded-lg"
+            <VideoPlayer 
+              videoId="GWA98sEVrVE"
+              title="The Directive Overview"
+              className="w-full h-full rounded-lg"
             />
           </div>
         </div>
