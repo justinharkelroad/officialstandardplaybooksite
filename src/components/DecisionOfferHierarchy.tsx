@@ -47,7 +47,7 @@ const DecisionOfferHierarchy = () => {
             { label: '20 calls of call scoring', value: '$200/m' },
             { label: 'Standard Stack Level Access', value: '$70/m' },
             { label: 'Group Zoom call (2h monthly)', value: 'Included' },
-            { label: 'Hardcover book included', value: 'Included' }
+            { label: 'Swag Box (Book, T-Shirt, Wristband + More)', value: 'Included' }
           ],
           totalValue: '$270/m'
         };
@@ -58,7 +58,7 @@ const DecisionOfferHierarchy = () => {
             { label: '100 Calls scored', value: '$499/m' },
             { label: 'Full Standard App Access', value: '$125/m' },
             { label: "80% off Producer Challenges for team", value: '$249' },
-            { label: '1:1 coaching call (2h monthly)', value: 'Included' },
+            { label: '1:1 coaching call ($1500/m value) (2h monthly)', value: 'Included' },
             { label: '24/7 video messaging', value: 'Included' }
           ],
           totalValue: '$1,172/m'
@@ -71,7 +71,7 @@ const DecisionOfferHierarchy = () => {
             { label: '1 Team Call 45min monthly', value: '$749/m' },
             { label: 'Full Standard App Access', value: '$125/m' },
             { label: "80% off Producer Challenges for team", value: '$249' },
-            { label: '1:1 coaching call', value: 'Included' },
+            { label: '1:1 coaching call ($1500/m value) (2h monthly)', value: 'Included' },
             { label: '24/7 video messaging', value: 'Included' }
           ],
           totalValue: '$1,921/m'
@@ -122,9 +122,12 @@ const DecisionOfferHierarchy = () => {
                     <CardTitle className="font-rajdhani text-3xl uppercase text-white mb-4">
                       {membership.name}
                     </CardTitle>
-                    <div className="mb-4">
-                      <span className="text-6xl font-bold text-primary">${membership.price}</span>
-                      <span className="text-gray-400 text-xl">/month</span>
+                    <div className="mb-2">
+                      <div className="text-gray-400 text-sm mb-1">Value</div>
+                      <div className="mb-4">
+                        <span className="text-6xl font-bold text-primary">${membership.price}</span>
+                        <span className="text-gray-400 text-xl">/month</span>
+                      </div>
                     </div>
                   </CardHeader>
 
@@ -141,14 +144,6 @@ const DecisionOfferHierarchy = () => {
                             </li>
                           ))}
                         </ul>
-                        <div className="mt-4 pt-4 border-t border-primary/20 flex justify-between items-center">
-                          <span className="text-white font-bold">Total Value:</span>
-                          <span className="text-primary text-xl font-bold">{valueBreakdown.totalValue}</span>
-                        </div>
-                        <div className="flex justify-between items-center mt-2">
-                          <span className="text-white font-bold">You Pay:</span>
-                          <span className="text-white text-xl font-bold">${membership.price}/m</span>
-                        </div>
                       </div>
                     )}
 
@@ -172,7 +167,7 @@ const DecisionOfferHierarchy = () => {
                         className="w-full btn-primary"
                         onClick={() => window.open(membership.links.details, '_blank')}
                       >
-                        LEARN MORE →
+                        SECURE NOW
                       </Button>
                     )}
                   </CardContent>
@@ -253,7 +248,7 @@ const DecisionOfferHierarchy = () => {
                     className="w-full btn-primary"
                     onClick={() => window.open(salesExperience.links.checkout || '#', '_blank')}
                   >
-                    GET STARTED →
+                    SECURE NOW
                   </Button>
                 </CardContent>
               </Card>
@@ -299,7 +294,7 @@ const DecisionOfferHierarchy = () => {
                     className="w-full btn-primary"
                     onClick={() => window.open(producerChallenge.links.checkout || '#', '_blank')}
                   >
-                    GET STARTED →
+                    SECURE NOW
                   </Button>
                 </CardContent>
               </Card>
@@ -407,7 +402,7 @@ const DecisionOfferHierarchy = () => {
                     className="w-full bg-primary text-white hover:bg-primary/90 font-bold text-xl py-8"
                     onClick={() => window.open(callScoringData[selectedCallTier].link, '_blank')}
                   >
-                    PURCHASE NOW
+                    SECURE NOW
                   </Button>
 
                   <p className="text-gray-400 text-sm">Month-to-month. No contract.</p>
@@ -424,7 +419,7 @@ const DecisionOfferHierarchy = () => {
                 className="border-primary/50 text-white hover:bg-primary/10 bg-transparent"
                 onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
               >
-                BOOK A STRATEGY CALL
+                SECURE NOW
               </Button>
             </div>
           </div>
@@ -483,7 +478,7 @@ const DecisionOfferHierarchy = () => {
                     className="bg-white text-primary font-bold text-sm sm:text-base px-4 sm:px-6 py-3 hover:bg-gray-100 w-full truncate"
                     onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
                   >
-                    BOOK FREE CALL
+                    SECURE NOW
                     <Shield className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
                   </Button>
                 </CardContent>
@@ -531,7 +526,7 @@ const DecisionOfferHierarchy = () => {
                     className="bg-white text-primary font-bold text-sm sm:text-base px-4 sm:px-6 py-3 hover:bg-gray-100 w-full truncate"
                     onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
                   >
-                    BOOK FREE CALL
+                    SECURE NOW
                     <Shield className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
                   </Button>
                 </CardContent>
