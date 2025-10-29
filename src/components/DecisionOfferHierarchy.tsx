@@ -57,7 +57,7 @@ const DecisionOfferHierarchy = () => {
             { label: 'All Boardroom', value: '$299/m' },
             { label: '100 Calls scored', value: '$499/m' },
             { label: 'Full Standard App Access', value: '$125/m' },
-            { label: "80% off Producer Challenges for team", value: '$249' },
+            { label: "Special Staff Challenge Fee", value: (<><span className="line-through text-gray-400">$299</span> $50</>) },
             { label: '1:1 coaching call (2h monthly)', value: '$1500/m' },
             { label: '24/7 video messaging', value: 'Included' }
           ],
@@ -70,7 +70,7 @@ const DecisionOfferHierarchy = () => {
             { label: '100 Calls scored', value: '$499/m' },
             { label: '1 Team Call 45min monthly', value: '$749/m' },
             { label: 'Full Standard App Access', value: '$125/m' },
-            { label: "80% off Producer Challenges for team", value: '$249' },
+            { label: "Special Staff Challenge Fee", value: (<><span className="line-through text-gray-400">$299</span> $50</>) },
             { label: '1:1 coaching call (2h monthly)', value: '$1500/m' },
             { label: '24/7 video messaging', value: 'Included' }
           ],
