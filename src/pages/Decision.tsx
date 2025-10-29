@@ -11,10 +11,10 @@ const Decision = () => {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
+      <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center space-y-6">
-            <h1 className="font-rajdhani font-bold text-5xl md:text-6xl lg:text-7xl uppercase tracking-wide text-white">
+            <h1 className="font-rajdhani font-bold text-5xl md:text-6xl lg:text-7xl uppercase tracking-wide text-primary">
               MAKE THE DECISION
             </h1>
             <p className="text-xl text-gray-300">
