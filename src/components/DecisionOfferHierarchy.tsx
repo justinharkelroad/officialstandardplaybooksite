@@ -478,9 +478,9 @@ const DecisionOfferHierarchy = () => {
               <Button 
                 variant="outline"
                 className="border-primary/50 text-white hover:bg-primary/10 bg-transparent"
-                onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
+                onClick={() => window.location.href = 'mailto:justin@createthestandard.com'}
               >
-                SECURE NOW
+                EMAIL ME
               </Button>
             </div>
           </div>
