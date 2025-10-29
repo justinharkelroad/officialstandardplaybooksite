@@ -58,7 +58,7 @@ const DecisionOfferHierarchy = () => {
             { label: '100 Calls scored', value: '$499/m' },
             { label: 'Full Standard App Access', value: '$125/m' },
             { label: "80% off Producer Challenges for team", value: '$249' },
-            { label: '1:1 coaching call ($1500/m value) (2h monthly)', value: 'Included' },
+            { label: '1:1 coaching call (2h monthly)', value: '$1500/m' },
             { label: '24/7 video messaging', value: 'Included' }
           ],
           totalValue: '$1,172/m'
@@ -71,7 +71,7 @@ const DecisionOfferHierarchy = () => {
             { label: '1 Team Call 45min monthly', value: '$749/m' },
             { label: 'Full Standard App Access', value: '$125/m' },
             { label: "80% off Producer Challenges for team", value: '$249' },
-            { label: '1:1 coaching call ($1500/m value) (2h monthly)', value: 'Included' },
+            { label: '1:1 coaching call (2h monthly)', value: '$1500/m' },
             { label: '24/7 video messaging', value: 'Included' }
           ],
           totalValue: '$1,921/m'
@@ -119,15 +119,13 @@ const DecisionOfferHierarchy = () => {
                   )}
 
                   <CardHeader className="text-center pb-4">
-                    <CardTitle className="font-rajdhani text-3xl uppercase text-white mb-4">
+                    <CardTitle className="font-rajdhani text-3xl uppercase text-white mb-6">
                       {membership.name}
                     </CardTitle>
-                    <div className="mb-2">
-                      <div className="text-gray-400 text-sm mb-1">Value</div>
-                      <div className="mb-4">
-                        <span className="text-6xl font-bold text-primary">${membership.price}</span>
-                        <span className="text-gray-400 text-xl">/month</span>
-                      </div>
+                    <div className="text-gray-400 text-sm uppercase tracking-wide mb-2">Value</div>
+                    <div className="mb-4">
+                      <span className="text-6xl font-bold text-primary">${membership.price}</span>
+                      <span className="text-gray-400 text-xl">/month</span>
                     </div>
                   </CardHeader>
 
@@ -197,7 +195,7 @@ const DecisionOfferHierarchy = () => {
                     <Shield className="w-12 h-12 text-primary" />
                   </div>
                   <CardTitle className="font-rajdhani text-2xl uppercase text-white mb-4">
-                    {salesExperience.name}
+                    8 WEEK SALES MGMT TRAINING
                   </CardTitle>
                   <div className="space-y-2">
                     {salesExperience.price_options?.map((option, idx) => (
@@ -215,18 +213,42 @@ const DecisionOfferHierarchy = () => {
                   <div>
                     <h4 className="text-white font-semibold mb-3 text-sm uppercase tracking-wide">Program Includes:</h4>
                     <ul className="space-y-2">
-                      {salesExperience.inclusions.deliverables?.map((item, idx) => (
-                        <li key={idx} className="flex items-start text-gray-300 text-sm">
-                          <Check className="w-4 h-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                      {salesExperience.inclusions.app_access && (
-                        <li className="flex items-start text-gray-300 text-sm">
-                          <Check className="w-4 h-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                          <span>{salesExperience.inclusions.app_access} included</span>
-                        </li>
-                      )}
+                      <li className="flex items-start text-gray-300 text-sm">
+                        <Check className="w-4 h-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                        <span>How to Build A Sales Experience E-Book</span>
+                      </li>
+                      <li className="flex items-start text-gray-300 text-sm">
+                        <Check className="w-4 h-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                        <span>8 Monday video trainings</span>
+                      </li>
+                      <li className="flex items-start text-gray-300 text-sm">
+                        <Check className="w-4 h-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                        <span>8 Wednesday training documents</span>
+                      </li>
+                      <li className="flex items-start text-gray-300 text-sm">
+                        <Check className="w-4 h-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                        <span>Sales team call scoring (4 calls/rep/week, unlimited reps)</span>
+                      </li>
+                      <li className="flex items-start text-gray-300 text-sm">
+                        <Check className="w-4 h-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                        <span>Fully deployed Sales Process</span>
+                      </li>
+                      <li className="flex items-start text-gray-300 text-sm">
+                        <Check className="w-4 h-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                        <span>Accountability Process document</span>
+                      </li>
+                      <li className="flex items-start text-gray-300 text-sm">
+                        <Check className="w-4 h-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                        <span>Consequence Process document</span>
+                      </li>
+                      <li className="flex items-start text-gray-300 text-sm">
+                        <Check className="w-4 h-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                        <span>8 1:1 Zoom Calls w/ Agency Owner or Manager</span>
+                      </li>
+                      <li className="flex items-start text-gray-300 text-sm">
+                        <Check className="w-4 h-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                        <span>Stack Access</span>
+                      </li>
                     </ul>
                   </div>
 
@@ -268,6 +290,27 @@ const DecisionOfferHierarchy = () => {
                 </CardHeader>
 
                 <CardContent className="space-y-6">
+                  {/* PROBLEM Box */}
+                  <div className="border border-red-500/30 rounded-lg p-4 bg-red-500/5">
+                    <h4 className="text-red-400 font-bold text-sm uppercase tracking-wide mb-2">
+                      PROBLEM
+                    </h4>
+                    <p className="text-white text-sm leading-relaxed">
+                      YOUR TEAM IS YEARNING FOR A TRAINING COURSE THAT CREATES ACTUAL TAKEAWAYS AND ACTION ITEMS INSTEAD OF BORING QUIZZES AT THE END
+                    </p>
+                  </div>
+
+                  {/* POSSIBILITY Box */}
+                  <div className="border border-primary/30 rounded-lg p-4 bg-primary/5">
+                    <h4 className="text-primary font-bold text-sm uppercase tracking-wide mb-2">
+                      POSSIBILITY
+                    </h4>
+                    <p className="text-white text-sm leading-relaxed">
+                      AFTER 6 WEEKS YOUR TEAM MEMBER IS SHOWING UP FOR THEMSELVES, THEIR FAMILIES AND THE AGENCY IN A WAY THEY NEVER HAVE BEFORE.
+                    </p>
+                  </div>
+
+                  {/* Program Includes */}
                   <div>
                     <h4 className="text-white font-semibold mb-3 text-sm uppercase tracking-wide">Program Includes:</h4>
                     <ul className="space-y-2">
