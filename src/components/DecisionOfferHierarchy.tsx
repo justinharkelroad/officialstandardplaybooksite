@@ -165,7 +165,14 @@ const DecisionOfferHierarchy = () => {
                     ) : (
                       <Button 
                         className="w-full btn-primary"
-                        onClick={() => window.open(membership.links.details, '_blank')}
+                        onClick={() => {
+                          const links: Record<string, string> = {
+                            'directive': 'https://buy.stripe.com/bJe6oHdhk6iy7K035y4Vy08',
+                            'boardroom': 'https://link.fastpaydirect.com/payment-link/68371b280a5741f8835218c8',
+                            'partnership': membership.links.details
+                          };
+                          window.open(links[membership.slug] || membership.links.details, '_blank');
+                        }}
                       >
                         SECURE NOW
                       </Button>
@@ -270,7 +277,7 @@ const DecisionOfferHierarchy = () => {
 
                   <Button 
                     className="w-full btn-primary"
-                    onClick={() => window.open(salesExperience.links.checkout || '#', '_blank')}
+                    onClick={() => window.open('https://link.fastpaydirect.com/payment-link/67b9e4c1020837472ed0b709', '_blank')}
                   >
                     SECURE NOW
                   </Button>
@@ -337,7 +344,7 @@ const DecisionOfferHierarchy = () => {
 
                   <Button 
                     className="w-full btn-primary"
-                    onClick={() => window.open(producerChallenge.links.checkout || '#', '_blank')}
+                    onClick={() => window.open('https://createthestandard.com/producer-power-up-checkout-page', '_blank')}
                   >
                     SECURE NOW
                   </Button>
@@ -521,7 +528,7 @@ const DecisionOfferHierarchy = () => {
                   </p>
                   <Button 
                     className="bg-white text-primary font-bold text-sm sm:text-base px-4 sm:px-6 py-3 hover:bg-gray-100 w-full truncate"
-                    onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
+                    onClick={() => window.open('https://buy.stripe.com/8x228r7X0cGWfcsbC44Vy0c', '_blank')}
                   >
                     SECURE NOW
                     <Shield className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
@@ -569,7 +576,7 @@ const DecisionOfferHierarchy = () => {
                   </p>
                   <Button 
                     className="bg-white text-primary font-bold text-sm sm:text-base px-4 sm:px-6 py-3 hover:bg-gray-100 w-full truncate"
-                    onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
+                    onClick={() => window.open('https://buy.stripe.com/6oU28rcdg5euggw21u4Vy0d', '_blank')}
                   >
                     SECURE NOW
                     <Shield className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 flex-shrink-0" />
