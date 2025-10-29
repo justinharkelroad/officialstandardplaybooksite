@@ -194,7 +194,7 @@ const DecisionResults = ({ result, onStartOver }: DecisionResultsProps) => {
                   className={`p-6 rounded-lg border-2 transition-all ${
                     isSelected
                       ? 'border-primary bg-primary/10'
-                      : 'border-primary/20 bg-background hover:border-primary/40'
+                      : 'border-primary/20 bg-dark-card hover:border-primary/40'
                   }`}
                 >
                   <div className="text-center space-y-2">
