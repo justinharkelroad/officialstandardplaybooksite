@@ -59,7 +59,7 @@ const DecisionForm = ({ onSubmit }: DecisionFormProps) => {
           <Textarea
             id="situation"
             placeholder="Tell us where you are right now..."
-            className="min-h-[120px] bg-background border-primary/20 text-white placeholder:text-gray-500"
+            className="min-h-[120px] bg-dark-card border-primary/20 text-white placeholder:text-gray-500"
             {...form.register('situation')}
           />
           {form.formState.errors.situation && (
@@ -77,7 +77,7 @@ const DecisionForm = ({ onSubmit }: DecisionFormProps) => {
             type="number"
             min="0"
             placeholder="How many people on your team?"
-            className="bg-background border-primary/20 text-white placeholder:text-gray-500"
+            className="bg-dark-card border-primary/20 text-white placeholder:text-gray-500"
             {...form.register('team_size')}
           />
         </div>
@@ -90,7 +90,7 @@ const DecisionForm = ({ onSubmit }: DecisionFormProps) => {
           <Textarea
             id="ninety_day_win"
             placeholder="What does success look like?"
-            className="min-h-[120px] bg-background border-primary/20 text-white placeholder:text-gray-500"
+            className="min-h-[120px] bg-dark-card border-primary/20 text-white placeholder:text-gray-500"
             {...form.register('ninety_day_win')}
           />
           {form.formState.errors.ninety_day_win && (
@@ -142,10 +142,10 @@ const DecisionForm = ({ onSubmit }: DecisionFormProps) => {
             value={form.watch('coaching_mode')}
             onValueChange={(value) => form.setValue('coaching_mode', value)}
           >
-            <SelectTrigger className="bg-background border-primary/20 text-white">
+            <SelectTrigger className="bg-dark-card border-primary/20 text-white">
               <SelectValue placeholder="Select coaching preference" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-dark-card text-white border-primary/20 z-50">
               {coachingModeField?.options?.map((option) => (
                 <SelectItem key={option} value={option}>
                   {option}
@@ -167,10 +167,10 @@ const DecisionForm = ({ onSubmit }: DecisionFormProps) => {
             value={form.watch('urgency')}
             onValueChange={(value) => form.setValue('urgency', value)}
           >
-            <SelectTrigger className="bg-background border-primary/20 text-white">
+            <SelectTrigger className="bg-dark-card border-primary/20 text-white">
               <SelectValue placeholder="When do you want to start?" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-dark-card text-white border-primary/20 z-50">
               {urgencyField?.options?.map((option) => (
                 <SelectItem key={option} value={option}>
                   {option}
