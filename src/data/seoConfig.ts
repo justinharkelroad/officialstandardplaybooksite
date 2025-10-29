@@ -122,5 +122,12 @@ export const seoConfig: Record<string, SEOConfig> = {
     keywords: ['terms of service', 'legal terms', 'service agreement'],
     ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
     type: 'article'
+  },
+  '/decision': {
+    title: 'The Decision | Find Your Path | The Standard Playbook',
+    description: 'Tell us your situation and goals. Get personalized recommendations for the right coaching and tools.',
+    keywords: ['insurance coaching', 'agency consulting', 'find my program', 'personalized coaching', 'business assessment'],
+    ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
+    type: 'article'
   }
 };
