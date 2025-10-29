@@ -167,6 +167,11 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
                 >
                   ENROLL MY TEAM MEMBER
                 </Button>
+                
+                {/* Enrollment Info */}
+                <p className="text-gray-300 text-center text-sm lg:text-base leading-relaxed mt-4">
+                  ⭐️⭐️ The Challenge is always LIVE. Your LSP begins the first Monday after enrollment. They'll get app access immediately upon checkout and receive their Challenge introduction the Sunday before their start date. ⭐️⭐️
+                </p>
               </div>
             </div>
           </div>
