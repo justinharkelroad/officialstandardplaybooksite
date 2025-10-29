@@ -4,69 +4,33 @@ const ChallengeWeeklyBreakdown = () => {
   const weeks = [
     {
       week: 1,
-      title: "Foundation",
-      days: [
-        { day: "Monday", text: "Start your proof game." },
-        { day: "Tuesday", text: "Find the gift in what happened." },
-        { day: "Wednesday", text: "Fuel the rocket before launch." },
-        { day: "Thursday", text: "Win small, win fast." },
-        { day: "Friday", text: "Discover what this week taught you." }
-      ]
+      title: "Foundation & Proof",
+      description: "Producers learn how the challenge works, anchor to the Core 4 system, and build momentum through gratitude, micro wins, and honest reflection. The goal is structure, honesty, and visible daily proof of progress."
     },
     {
       week: 2,
-      title: "Consistency & Systems",
-      days: [
-        { day: "Monday", text: "Decide what's non-negotiable." },
-        { day: "Tuesday", text: "Build your follow-up rhythm." },
-        { day: "Wednesday", text: "Ask the question no one expects." },
-        { day: "Thursday", text: "Lock the next call in stone." },
-        { day: "Friday", text: "Reflect. Adjust. Evolve." }
-      ]
+      title: "Consistency & Cadence",
+      description: "Focus shifts to discipline—locking in personal standards, follow-up structure, and appointment integrity. Producers move from reactive selling to predictable systems that create trust and follow-through."
     },
     {
       week: 3,
-      title: "Communication & Clarity",
-      days: [
-        { day: "Monday", text: "Fix what's slipping through the cracks." },
-        { day: "Tuesday", text: "Speed beats perfection." },
-        { day: "Wednesday", text: "Show up in a new way." },
-        { day: "Thursday", text: "Clean your buckets. Clear your mind." },
-        { day: "Friday", text: "Simplify your system." }
-      ]
+      title: "Process & Precision",
+      description: "Follow-up becomes a science with cadence, speed, and smarter communication. Producers clean their buckets, tighten CRMs, and learn that clarity and documentation eliminate chaos."
     },
     {
       week: 4,
-      title: "Relationships & Retention",
-      days: [
-        { day: "Monday", text: "Earn the right to be referred." },
-        { day: "Tuesday", text: "Deliver the first experience they'll remember." },
-        { day: "Wednesday", text: "Connect with zero agenda." },
-        { day: "Thursday", text: "Zero the clutter." },
-        { day: "Friday", text: "Close the loop and capture clarity." }
-      ]
+      title: "Retention & Relationships",
+      description: "Referrals, onboarding, and relationship-building take center stage. The week converts short-term sales habits into long-term client trust and structural prospecting systems."
     },
     {
       week: 5,
-      title: "Mastery of Sales",
-      days: [
-        { day: "Monday", text: "Start conversations that feed you." },
-        { day: "Tuesday", text: "Turn price into purpose." },
-        { day: "Wednesday", text: "Ask for the truth—yes or no." },
-        { day: "Thursday", text: "Assume the win." },
-        { day: "Friday", text: "Lose with grace. Win later." }
-      ]
+      title: "Mastery & Momentum",
+      description: "Producers level up to advanced sales strategy—building COI pipelines, reframing price, closing confidently, and handling rejection with grace. It's about professional tone, confidence, and leverage."
     },
     {
       week: 6,
-      title: "Identity & Next Level",
-      days: [
-        { day: "Monday", text: "Be grateful—for you." },
-        { day: "Tuesday", text: "Raise your personal bar." },
-        { day: "Wednesday", text: "Keep what works. Cut what doesn't." },
-        { day: "Thursday", text: "Set the next target." },
-        { day: "Friday", text: "Own who you've become." }
-      ]
+      title: "Reflection & Expansion",
+      description: "The final week turns results into identity. Producers celebrate growth, set new measurable standards, map 90-day targets, and finish with deep reflection on who they've become."
     }
   ];
 
@@ -82,31 +46,36 @@ const ChallengeWeeklyBreakdown = () => {
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto space-y-12">
-          {weeks.map((week) => (
-            <div key={week.week} className="space-y-6">
-              <h3 className="font-rajdhani font-bold text-2xl md:text-3xl uppercase tracking-wide text-primary text-center">
-                Week {week.week} – {week.title}
-              </h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                {week.days.map((day, index) => (
-                  <Card 
-                    key={index} 
-                    className="bg-dark-card border-primary/20 card-hover shadow-lg hover:shadow-primary/20 transition-all duration-300"
-                  >
-                    <CardContent className="p-6 text-center space-y-3">
-                      <div className="font-rajdhani font-bold text-lg text-primary uppercase">
-                        {day.day}
-                      </div>
-                      <p className="text-gray-300 text-sm leading-relaxed">
-                        {day.text}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
+        <div className="max-w-6xl mx-auto space-y-8">
+          {weeks.map((week, index) => (
+            <Card 
+              key={week.week} 
+              className="bg-gradient-to-br from-dark-card to-dark-card/80 border-primary/30 shadow-xl hover:shadow-primary/30 transition-all duration-300 overflow-hidden group"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <CardContent className="p-8 md:p-10">
+                <div className="flex flex-col md:flex-row md:items-start gap-6">
+                  {/* Week Number Badge */}
+                  <div className="flex-shrink-0">
+                    <div className="w-20 h-20 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <span className="text-3xl font-bold text-white">
+                        {week.week}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="flex-1 space-y-4">
+                    <h3 className="font-rajdhani font-bold text-2xl md:text-3xl uppercase tracking-wide text-primary">
+                      Week {week.week} – {week.title}
+                    </h3>
+                    <p className="text-gray-300 text-lg leading-relaxed">
+                      {week.description}
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>
