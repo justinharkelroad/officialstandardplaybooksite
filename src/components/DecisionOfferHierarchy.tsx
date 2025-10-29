@@ -47,6 +47,7 @@ const DecisionOfferHierarchy = () => {
             { label: '20 calls of call scoring', value: '$200/m' },
             { label: 'Standard Stack Level Access', value: '$70/m' },
             { label: 'Group Zoom call (2h monthly)', value: 'Included' },
+            { label: "Special Staff Challenge Fee", value: (<><span className="line-through text-gray-400">$299</span> $99</>) },
             { label: 'Swag Box (Book, T-Shirt, Wristband + More)', value: 'Included' }
           ],
           totalValue: '$270/m'
@@ -70,7 +71,7 @@ const DecisionOfferHierarchy = () => {
             { label: '100 Calls scored', value: '$499/m' },
             { label: '1 Team Call 45min monthly', value: '$749/m' },
             { label: 'Full Standard App Access', value: '$125/m' },
-            { label: "Special Staff Challenge Fee", value: (<><span className="line-through text-gray-400">$299</span> $50</>) },
+            { label: "Special Staff Challenge Fee", value: 'Free' },
             { label: '1:1 coaching call (2h monthly)', value: '$1500/m' },
             { label: '24/7 video messaging', value: 'Included' }
           ],
