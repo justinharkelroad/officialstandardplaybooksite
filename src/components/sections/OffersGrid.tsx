@@ -88,6 +88,24 @@ const OffersGrid = () => {
           <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
             Whether you are just looking for technology to hold your teams accountable, group coaching or 1 on 1 exclusive coaching.
           </p>
+          
+          {/* Compare Options Box */}
+          <div className="max-w-2xl mx-auto mb-16">
+            <Card className="bg-dark-surface border-primary/30 hover:border-primary/60 transition-all duration-300">
+              <CardContent className="p-8 text-center">
+                <p className="text-gray-300 mb-6 text-lg">
+                  Not sure which path is right for you?
+                </p>
+                <Button 
+                  onClick={() => navigate('/decision')}
+                  className="btn-primary text-lg px-8 py-4 button-press"
+                >
+                  COMPARE ALL OPTIONS FOR MY AGENCY
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
