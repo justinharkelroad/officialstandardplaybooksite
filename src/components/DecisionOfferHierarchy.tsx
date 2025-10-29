@@ -122,7 +122,6 @@ const DecisionOfferHierarchy = () => {
                     <CardTitle className="font-rajdhani text-3xl uppercase text-white mb-6">
                       {membership.name}
                     </CardTitle>
-                    <div className="text-gray-400 text-sm uppercase tracking-wide mb-2">Value</div>
                     <div className="mb-4">
                       <span className="text-6xl font-bold text-primary">${membership.price}</span>
                       <span className="text-gray-400 text-xl">/month</span>
@@ -133,7 +132,10 @@ const DecisionOfferHierarchy = () => {
                     {/* Value Breakdown */}
                     {valueBreakdown && (
                       <div className="border-t border-primary/20 pt-4">
-                        <h4 className="text-white font-semibold mb-3 text-sm uppercase tracking-wide">What's Included:</h4>
+                        <div className="flex justify-between items-center mb-3">
+                          <h4 className="text-white font-semibold text-sm uppercase tracking-wide">What's Included:</h4>
+                          <span className="text-gray-400 text-sm uppercase tracking-wide">Value</span>
+                        </div>
                         <ul className="space-y-2">
                           {valueBreakdown.items.map((item, idx) => (
                             <li key={idx} className="flex justify-between items-start text-sm">
