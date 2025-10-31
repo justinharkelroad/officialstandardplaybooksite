@@ -36,19 +36,55 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
     },
     {
       question: "How does enrollment work?",
-      answer: "Enrollment is continuous. Anyone who signs up Monday through Saturday will automatically receive their pre-launch message on Sunday at 9:00 AM, preparing them for the challenge kickoff the following day. If someone enrolls after 8:55 AM on Sunday, they'll start the next week's challenge instead."
+      answer: (
+        <>
+          <p className="mb-3">Enrollment is continuous. Anyone who signs up Monday through Saturday will automatically receive their <strong>pre-launch message on Sunday at 9:00 AM</strong>, preparing them for the challenge kickoff the following day.</p>
+          <p>If someone enrolls after 8:55 AM on Sunday, they'll start the <strong>next week's</strong> challenge instead.</p>
+        </>
+      )
     },
     {
       question: "What happens after I enroll a team member?",
-      answer: "They will receive login credentials for the app, get an onboarding email and text Sunday morning with optional pre-work, and begin their first training Monday morning with an alert to complete Module 1. You will receive an emailed video and receipt outlining the structure of the challenge and what to expect."
+      answer: (
+        <>
+          <p className="mb-3">They will:</p>
+          <ol className="list-decimal ml-6 space-y-2 mb-4">
+            <li>Receive login credentials for the app.</li>
+            <li>Get an onboarding email and text Sunday morning with optional pre-work.</li>
+            <li>Begin their first training Monday morning with an alert to complete Module 1.</li>
+          </ol>
+          <p>You will receive an emailed video and receipt outlining the structure of the challenge and what to expect.</p>
+        </>
+      )
     },
     {
       question: "What's the daily routine inside the Challenge?",
-      answer: "Monday–Friday: Watch the training video, submit the daily form with your key takeaway and action step, and mark your Core 4 progress: Body, Being, Balance, Business. On Fridays they will complete a Discovery Stack and share with Agent. On Sunday they can optionally choose to do 'Sunday Service' work and declare 1 big action they will accomplish in each domain that week."
+      answer: (
+        <>
+          <p className="mb-3 font-semibold">Monday–Friday:</p>
+          <ul className="list-disc ml-6 space-y-2 mb-4">
+            <li>Watch the training video.</li>
+            <li>Submit the daily form with your key takeaway and action step.</li>
+            <li>Mark your Core 4 progress: <strong>Body, Being, Balance, Business</strong></li>
+            <li>On Fridays they will complete a Discovery Stack and share with Agent</li>
+            <li>On Sunday they can optionally choose to do "Sunday Service" work and declare 1 big action they will accomplish in each domain that week.</li>
+          </ul>
+        </>
+      )
     },
     {
       question: "What is the \"Core 4\"?",
-      answer: "The Core 4 tracks daily habits that drive performance: Body (health and energy), Being (mindset and spiritual alignment), Balance (relationships and gratitude), and Business (productivity and sales execution). Each checked box = proof of daily integrity."
+      answer: (
+        <>
+          <p className="mb-3">The Core 4 tracks daily habits that drive performance:</p>
+          <ul className="list-disc ml-6 space-y-2">
+            <li><strong>Body:</strong> health and energy</li>
+            <li><strong>Being:</strong> mindset and spiritual alignment</li>
+            <li><strong>Balance:</strong> relationships and gratitude</li>
+            <li><strong>Business:</strong> productivity and sales execution<br/>Each checked box = proof of daily integrity.</li>
+          </ul>
+        </>
+      )
     },
     {
       question: "What is a \"Discovery Stack\"?",
@@ -56,23 +92,69 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
     },
     {
       question: "How is progress measured?",
-      answer: "The game in the app will have each participant can earn up to 35 points per week: 28 points from Core 4 completions and 7 points from daily Stack reflections. Scores appear on the live dashboard for easy tracking. The real-time feedback for the Agency Owner per week includes daily takeaway + action item sent to Agency Owner email (30), Friday Discovery Stack Lessons shared with Agency Owner (6), and optional Sunday Service 'One Big Thing' declaration form for each domain (7) - 43 total possible feedback loops for Agency Owner within the 42 days!"
+      answer: (
+        <>
+          <p className="mb-3">The game in the app will have each participant can earn up to 35 points per week:</p>
+          <ul className="list-disc ml-6 space-y-2 mb-4">
+            <li>28 points from Core 4 completions</li>
+            <li>7 points from daily Stack reflections<br/>Scores appear on the live dashboard for easy tracking.</li>
+          </ul>
+          <p className="mb-2 font-semibold">The real-time feedback for the Agency Owner per week:</p>
+          <ul className="list-disc ml-6 space-y-2 mb-3">
+            <li>Daily takeaway + action item sent to Agency Owner email (30)</li>
+            <li>Friday Discovery Stack Lessons shared with Agency Owner (6)</li>
+            <li>Optional Sunday Service "One Big Thing" declaration form for each domain (7)</li>
+          </ul>
+          <p className="font-semibold">43 total possible feedback loops for Agency Owner within the 42 days!</p>
+        </>
+      )
     },
     {
       question: "What topics are covered in the 6 weeks?",
-      answer: "Sales, communication, and leadership skills including: Consistency & Non-Negotiables, Follow-Up Systems, Speed to Contact, The Three-Bucket System, Referrals & Retention, Objection Handling, Closing Confidence, and Setting 90-Day Targets."
+      answer: (
+        <>
+          <p className="mb-3">Sales, communication, and leadership skills including:</p>
+          <ul className="list-disc ml-6 space-y-1">
+            <li>Consistency & Non-Negotiables</li>
+            <li>Follow-Up Systems</li>
+            <li>Speed to Contact</li>
+            <li>The Three-Bucket System</li>
+            <li>Referrals & Retention</li>
+            <li>Objection Handling</li>
+            <li>Closing Confidence</li>
+            <li>Setting 90-Day Targets</li>
+          </ul>
+        </>
+      )
     },
     {
       question: "How long do I have access to the app?",
-      answer: "49 days from the enrollment date—enough to finish all modules and reflections. After 49 days, you can upgrade to full Arsenal-level access to keep your data, continue tracking, and unlock advanced modules."
+      answer: (
+        <>
+          49 days from the enrollment date—enough to finish all modules and reflections. After 49 days, you can upgrade to full <strong>Arsenal-level access</strong> to keep your data, continue tracking, and unlock advanced modules.
+        </>
+      )
     },
     {
       question: "What does the agency owner receive during the challenge?",
-      answer: "Daily takeaway + action item sent to Agency Owner email (30), Friday Discovery Stack Lessons shared with Agency Owner (6), and optional Sunday Service 'One Big Thing' declaration form for each domain (7) - 43 total possible feedback loops for Agency Owner within the 42 days."
+      answer: (
+        <>
+          <ul className="list-disc ml-6 space-y-2 mb-3">
+            <li>Daily takeaway + action item sent to Agency Owner email (30)</li>
+            <li>Friday Discovery Stack Lessons shared with Agency Owner (6)</li>
+            <li>Optional Sunday Service "One Big Thing" declaration form for each domain (7)</li>
+          </ul>
+          <p>43 total possible feedback loops for Agency Owner within the 42 days</p>
+        </>
+      )
     },
     {
       question: "What is the main goal of the Challenge?",
-      answer: "To build a culture of clarity, communication, and consistency. Producers learn to align their actions with agency expectations and develop daily proof of performance instead of relying on motivation."
+      answer: (
+        <>
+          To build a <strong>culture of clarity, communication, and consistency.</strong> Producers learn to align their actions with agency expectations and develop daily proof of performance instead of relying on motivation.
+        </>
+      )
     },
     {
       question: "Is there a refund policy?",
@@ -80,15 +162,27 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
     },
     {
       question: "What happens after completion?",
-      answer: "At the six-week mark, participants can continue using the app via monthly membership (Stack or Arsenal). Agency Owners can get access to 25% off a Membership Level in Standard for life."
+      answer: (
+        <>
+          <p className="mb-3">At the six-week mark, participants can:</p>
+          <ul className="list-disc ml-6 space-y-2">
+            <li>Continue using the app via monthly membership (<strong>Stack</strong> or <strong>Arsenal</strong>)</li>
+            <li>Agency Owners can get access to 25% off a Membership Level in Standard for life.</li>
+          </ul>
+        </>
+      )
     },
     {
       question: "How do agencies purchase seats?",
-      answer: "Agency owners can buy individual seats on StandardPlaybook.com. Purchases trigger instant onboarding for each participant."
+      answer: (
+        <>
+          Agency owners can buy individual seats on <strong>StandardPlaybook.com</strong>. Purchases trigger instant onboarding for each participant.
+        </>
+      )
     },
     {
       question: "How much time does it take each day?",
-      answer: "Modules average 8–10 minutes per day plus 5 minutes to complete the form—about 15 minutes total. Days where stacking is requested that would extend to about 30 mins (Fridays + 2 other modules)."
+      answer: "Modules average 8–10 minutes per day plus 5 minutes to complete the form—about 15 minutes total. Days where stacking is requested that would extend to about 30 mins (Fridays + 2 other modules)"
     },
     {
       question: "What if I miss a day?",
@@ -96,7 +190,11 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
     },
     {
       question: "Who runs the program?",
-      answer: "The Producer Challenge is produced by The Standard Playbook, founded by Justin E. Harkelroad, specializing in structured accountability systems for insurance agencies and business teams."
+      answer: (
+        <>
+          The Producer Challenge is produced by <strong>The Standard Playbook</strong>, founded by <strong>Justin E. Harkelroad</strong>, specializing in structured accountability systems for insurance agencies and business teams.
+        </>
+      )
     }
   ];
 

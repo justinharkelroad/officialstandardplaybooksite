@@ -8,7 +8,7 @@ import {
 
 interface FAQItem {
   question: string;
-  answer: string;
+  answer: string | React.ReactNode;
 }
 
 interface ChallengeFAQProps {
