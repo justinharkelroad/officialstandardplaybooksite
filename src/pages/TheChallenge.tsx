@@ -7,6 +7,7 @@ import ChallengeProcessFlow from '@/components/sections/ChallengeProcessFlow';
 import ChallengeWeeklyBreakdown from '@/components/sections/ChallengeWeeklyBreakdown';
 import ChallengeTransformation from '@/components/sections/ChallengeTransformation';
 import ChallengePainSolution from '@/components/sections/ChallengePainSolution';
+import ChallengeFAQ from '@/components/sections/ChallengeFAQ';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 
@@ -24,6 +25,81 @@ interface TheChallengeProps {
 }
 
 const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
+  const faqs = [
+    {
+      question: "What is the Producer Challenge?",
+      answer: "The Producer Challenge is a six-week accountability and training program for insurance producers, LSPs, and agency team members. Each weekday includes a short video lesson, a daily form submission, and clear action steps. Every Friday, participants complete a Discovery Stack reflection that summarizes their week and sends insights directly to leadership."
+    },
+    {
+      question: "Who is the challenge designed for?",
+      answer: "It's built for agency teams—producers, service staff, and sales leaders—who want daily structure, measurable results, and better communication inside the agency."
+    },
+    {
+      question: "How does enrollment work?",
+      answer: "Enrollment is continuous. Anyone who signs up Monday through Saturday will automatically receive their pre-launch message on Sunday at 9:00 AM, preparing them for the challenge kickoff the following day. If someone enrolls after 8:55 AM on Sunday, they'll start the next week's challenge instead."
+    },
+    {
+      question: "What happens after I enroll a team member?",
+      answer: "They will receive login credentials for the app, get an onboarding email and text Sunday morning with optional pre-work, and begin their first training Monday morning with an alert to complete Module 1. You will receive an emailed video and receipt outlining the structure of the challenge and what to expect."
+    },
+    {
+      question: "What's the daily routine inside the Challenge?",
+      answer: "Monday–Friday: Watch the training video, submit the daily form with your key takeaway and action step, and mark your Core 4 progress: Body, Being, Balance, Business. On Fridays they will complete a Discovery Stack and share with Agent. On Sunday they can optionally choose to do 'Sunday Service' work and declare 1 big action they will accomplish in each domain that week."
+    },
+    {
+      question: "What is the \"Core 4\"?",
+      answer: "The Core 4 tracks daily habits that drive performance: Body (health and energy), Being (mindset and spiritual alignment), Balance (relationships and gratitude), and Business (productivity and sales execution). Each checked box = proof of daily integrity."
+    },
+    {
+      question: "What is a \"Discovery Stack\"?",
+      answer: "A guided reflection form completed each Friday. It helps participants process lessons, wins, and challenges for the week, then share the link with leadership for visibility."
+    },
+    {
+      question: "How is progress measured?",
+      answer: "The game in the app will have each participant can earn up to 35 points per week: 28 points from Core 4 completions and 7 points from daily Stack reflections. Scores appear on the live dashboard for easy tracking. The real-time feedback for the Agency Owner per week includes daily takeaway + action item sent to Agency Owner email (30), Friday Discovery Stack Lessons shared with Agency Owner (6), and optional Sunday Service 'One Big Thing' declaration form for each domain (7) - 43 total possible feedback loops for Agency Owner within the 42 days!"
+    },
+    {
+      question: "What topics are covered in the 6 weeks?",
+      answer: "Sales, communication, and leadership skills including: Consistency & Non-Negotiables, Follow-Up Systems, Speed to Contact, The Three-Bucket System, Referrals & Retention, Objection Handling, Closing Confidence, and Setting 90-Day Targets."
+    },
+    {
+      question: "How long do I have access to the app?",
+      answer: "49 days from the enrollment date—enough to finish all modules and reflections. After 49 days, you can upgrade to full Arsenal-level access to keep your data, continue tracking, and unlock advanced modules."
+    },
+    {
+      question: "What does the agency owner receive during the challenge?",
+      answer: "Daily takeaway + action item sent to Agency Owner email (30), Friday Discovery Stack Lessons shared with Agency Owner (6), and optional Sunday Service 'One Big Thing' declaration form for each domain (7) - 43 total possible feedback loops for Agency Owner within the 42 days."
+    },
+    {
+      question: "What is the main goal of the Challenge?",
+      answer: "To build a culture of clarity, communication, and consistency. Producers learn to align their actions with agency expectations and develop daily proof of performance instead of relying on motivation."
+    },
+    {
+      question: "Is there a refund policy?",
+      answer: "No refunds. This mirrors The Standard Playbook's standard policy across all programs."
+    },
+    {
+      question: "What happens after completion?",
+      answer: "At the six-week mark, participants can continue using the app via monthly membership (Stack or Arsenal). Agency Owners can get access to 25% off a Membership Level in Standard for life."
+    },
+    {
+      question: "How do agencies purchase seats?",
+      answer: "Agency owners can buy individual seats on StandardPlaybook.com. Purchases trigger instant onboarding for each participant."
+    },
+    {
+      question: "How much time does it take each day?",
+      answer: "Modules average 8–10 minutes per day plus 5 minutes to complete the form—about 15 minutes total. Days where stacking is requested that would extend to about 30 mins (Fridays + 2 other modules)."
+    },
+    {
+      question: "What if I miss a day?",
+      answer: "You can catch up inside the app anytime, but missed forms reduce your weekly score. Consistency is the metric that matters most."
+    },
+    {
+      question: "Who runs the program?",
+      answer: "The Producer Challenge is produced by The Standard Playbook, founded by Justin E. Harkelroad, specializing in structured accountability systems for insurance agencies and business teams."
+    }
+  ];
+
   useEffect(() => {
     // Load the GHL form script
     const script = document.createElement('script');
@@ -201,6 +277,12 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
 
         {/* Core Cards Section */}
         <ChallengeCoreCards />
+        
+        {/* FAQ Section */}
+        <ChallengeFAQ 
+          title="Producer Challenge — Frequently Asked Questions"
+          faqs={faqs}
+        />
         
         <Footer />
       </div>
