@@ -10,6 +10,7 @@ import ChallengePainSolution from '@/components/sections/ChallengePainSolution';
 import ChallengeFAQ from '@/components/sections/ChallengeFAQ';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import VideoModal from '@/components/VideoModal';
 
 // Declare Wistia custom element for TypeScript
 declare global {
@@ -341,6 +342,20 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
                 >
                   ENROLL MY TEAM MEMBER
                 </Button>
+
+                {/* Quick Explainer Button */}
+                <VideoModal 
+                  videoId="1NzNXlsGOQs"
+                  title="Challenge Quick Explainer"
+                  trigger={
+                    <Button 
+                      variant="outline"
+                      className="text-base lg:text-lg px-8 py-4 lg:py-6 w-full inline-flex items-center justify-center gap-2 border-primary/50 hover:bg-primary/10"
+                    >
+                      Quick Explainer
+                    </Button>
+                  }
+                />
                 
                 {/* Enrollment Info */}
                 <p className="text-gray-300 text-center text-sm lg:text-base leading-relaxed mt-4">
