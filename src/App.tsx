@@ -23,6 +23,7 @@ import ThankYou from "./pages/ThankYou";
 import ChallengeThankYou from "./pages/ChallengeThankYou";
 import Links from "./pages/Links";
 import NotFound from "./pages/NotFound";
+import WelcomeToCoaching from "./pages/WelcomeToCoaching";
 import Particles from "./components/Particles";
 import ScrollToTop from "./components/ScrollToTop";
 import SEOHead from "./components/SEOHead";
@@ -58,6 +59,7 @@ const App = () => (
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/challenge-thank-you" element={<ChallengeThankYou />} />
           <Route path="/links" element={<Links />} />
+          <Route path="/welcometocoaching" element={<WelcomeToCoaching />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
