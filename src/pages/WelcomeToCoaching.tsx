@@ -52,19 +52,19 @@ const WelcomeToCoaching = () => {
             {/* CTA Buttons */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
               <Button 
-                onClick={() => window.open('YOUR_1_CALL_BOOKING_URL', '_blank')}
+                onClick={() => window.open('https://AGENCYCOACHING.as.me/2HR', '_blank')}
                 className="btn-primary text-lg py-6"
               >
                 BOOK 1-ON-1 CALL
               </Button>
               <Button 
-                onClick={() => window.open('YOUR_BOARDROOM_BOOKING_URL', '_blank')}
+                onClick={() => window.open('https://us06web.zoom.us/meeting/register/tZIvdOuurTkvGtB3DFPus_VohU6a22LFlb8t', '_blank')}
                 className="btn-primary text-lg py-6"
               >
                 BOOK BOARDROOM
               </Button>
               <Button 
-                onClick={() => window.open('YOUR_SWAG_URL', '_blank')}
+                onClick={() => window.open('https://form.jotform.com/242944208646159', '_blank')}
                 className="btn-primary text-lg py-6"
               >
                 GET FREE SWAG
@@ -123,8 +123,17 @@ const WelcomeToCoaching = () => {
       <section className="py-20 relative bg-dark-card/50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
-            {/* Info Left */}
-            <Card className="bg-dark-card border-primary/20">
+            {/* Video - appears first on mobile, second on desktop */}
+            <div className="aspect-video w-full rounded-lg overflow-hidden border border-primary/20 order-1 lg:order-2">
+              <VideoPlayer 
+                videoId="YOUR_CALL_SCORING_VIDEO_ID"
+                title="Call Scoring Demo"
+                className="w-full h-full"
+              />
+            </div>
+
+            {/* Info - appears second on mobile, first on desktop */}
+            <Card className="bg-dark-card border-primary/20 order-2 lg:order-1">
               <CardContent className="p-8">
                 <h2 className="font-rajdhani font-bold text-3xl lg:text-4xl uppercase tracking-wide text-white mb-6">
                   CALL SCORING
@@ -151,15 +160,6 @@ const WelcomeToCoaching = () => {
                 </div>
               </CardContent>
             </Card>
-
-            {/* Video Right */}
-            <div className="aspect-video w-full rounded-lg overflow-hidden border border-primary/20">
-              <VideoPlayer 
-                videoId="YOUR_CALL_SCORING_VIDEO_ID"
-                title="Call Scoring Demo"
-                className="w-full h-full"
-              />
-            </div>
           </div>
         </div>
       </section>
@@ -213,8 +213,17 @@ const WelcomeToCoaching = () => {
       <section className="py-20 relative bg-dark-card/50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
-            {/* Info Left */}
-            <Card className="bg-dark-card border-primary/20">
+            {/* Video - appears first on mobile, second on desktop */}
+            <div className="aspect-video w-full rounded-lg overflow-hidden border border-primary/20 order-1 lg:order-2">
+              <VideoPlayer 
+                videoId="YOUR_TEAM_CHALLENGE_VIDEO_ID"
+                title="Team Challenge Demo"
+                className="w-full h-full"
+              />
+            </div>
+
+            {/* Info - appears second on mobile, first on desktop */}
+            <Card className="bg-dark-card border-primary/20 order-2 lg:order-1">
               <CardContent className="p-8">
                 <h2 className="font-rajdhani font-bold text-3xl lg:text-4xl uppercase tracking-wide text-white mb-6">
                   TEAM CHALLENGE
@@ -241,15 +250,6 @@ const WelcomeToCoaching = () => {
                 </div>
               </CardContent>
             </Card>
-
-            {/* Video Right */}
-            <div className="aspect-video w-full rounded-lg overflow-hidden border border-primary/20">
-              <VideoPlayer 
-                videoId="YOUR_TEAM_CHALLENGE_VIDEO_ID"
-                title="Team Challenge Demo"
-                className="w-full h-full"
-              />
-            </div>
           </div>
         </div>
       </section>
