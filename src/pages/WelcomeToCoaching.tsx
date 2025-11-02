@@ -261,14 +261,14 @@ const WelcomeToCoaching = () => {
               <Button 
                 onClick={() => window.open('https://createthestandard.com/zoom', '_blank')}
                 variant="outline"
-                className="text-lg py-6 border-primary/50 hover:bg-primary/10"
+                className="text-lg py-6 border-primary text-white hover:bg-primary/10"
               >
                 ACCESS MY ZOOM ROOM
               </Button>
               <Button 
                 onClick={() => window.open('https://www.facebook.com/justin.ncorinaharkelroad', '_blank')}
                 variant="outline"
-                className="text-lg py-6 border-primary/50 hover:bg-primary/10"
+                className="text-lg py-6 border-primary text-white hover:bg-primary/10"
               >
                 CONNECT ON SOCIAL
               </Button>
