@@ -236,7 +236,7 @@ const WelcomeToCoaching = () => {
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>To enroll them, just visit StandardChallenge.com</span>
+                      <span>To enroll them, just visit <a href="https://StandardChallenge.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">StandardChallenge.com</a></span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
