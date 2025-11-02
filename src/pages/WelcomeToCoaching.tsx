@@ -43,7 +43,7 @@ const WelcomeToCoaching = () => {
             {/* Welcome Video */}
             <div className="aspect-video w-full mb-12 rounded-lg overflow-hidden border border-primary/20">
               <VideoPlayer 
-                videoId="YOUR_WELCOME_VIDEO_ID"
+                videoId="iHdAjyoYHuQ"
                 title="Welcome to The Standard"
                 className="w-full h-full"
               />
