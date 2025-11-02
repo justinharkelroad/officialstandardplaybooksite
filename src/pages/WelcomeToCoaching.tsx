@@ -81,7 +81,7 @@ const WelcomeToCoaching = () => {
             {/* Video Left */}
             <div className="aspect-video w-full rounded-lg overflow-hidden border border-primary/20">
               <VideoPlayer 
-                videoId="YOUR_STANDARD_APP_VIDEO_ID"
+                videoId="LDc3jLIrZRw"
                 title="The Standard App Demo"
                 className="w-full h-full"
               />
@@ -97,19 +97,19 @@ const WelcomeToCoaching = () => {
                   <ul className="space-y-3">
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>Access all your coaching materials in one place</span>
+                      <span>You will receive password reset from support@wakeupwarrior.com</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>Track your progress and metrics in real-time</span>
+                      <span>Once logged in you will complete your profile</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>Watch training videos and complete assignments</span>
+                      <span>Head to "Armory" tab to view Training Videos</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>Connect with your coach and team members</span>
+                      <span>You have FULL ACCESS to the app w/ your level of membership</span>
                     </li>
                   </ul>
                 </div>
@@ -126,7 +126,7 @@ const WelcomeToCoaching = () => {
             {/* Video - appears first on mobile, second on desktop */}
             <div className="aspect-video w-full rounded-lg overflow-hidden border border-primary/20 order-1 lg:order-2">
               <VideoPlayer 
-                videoId="YOUR_CALL_SCORING_VIDEO_ID"
+                videoId="4sbJ4amGuE8"
                 title="Call Scoring Demo"
                 className="w-full h-full"
               />
@@ -142,19 +142,19 @@ const WelcomeToCoaching = () => {
                   <ul className="space-y-3">
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>AI-powered analysis of your sales calls</span>
+                      <span>Your modules and program are ready</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>Detailed scoring against proven frameworks</span>
+                      <span>Head to app.standardcallscoring.com and click on (forgot?) to receive a password reset link for access</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>Personalized feedback and improvement tips</span>
+                      <span>Drop a couple calls to get feedback and determine adjustments you'd like</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>Track improvement over time with metrics</span>
+                      <span>You have 100 calls per month with your level of membership</span>
                     </li>
                   </ul>
                 </div>
@@ -171,7 +171,7 @@ const WelcomeToCoaching = () => {
             {/* Video Left */}
             <div className="aspect-video w-full rounded-lg overflow-hidden border border-primary/20">
               <VideoPlayer 
-                videoId="YOUR_AGENCY_BRAIN_VIDEO_ID"
+                videoId="Xj32FPpgTBc"
                 title="Agency Brain Demo"
                 className="w-full h-full"
               />
@@ -187,19 +187,15 @@ const WelcomeToCoaching = () => {
                   <ul className="space-y-3">
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>Your AI-powered agency assistant</span>
+                      <span>To set up your AgencyBrain, visit myagencybrain.com</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>Get instant answers to agency questions</span>
+                      <span>Click on "Create Account"</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>Access proven scripts and frameworks</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-primary mr-2">•</span>
-                      <span>Generate custom solutions for your challenges</span>
+                      <span>Input your info and your passcode is: 3148178</span>
                     </li>
                   </ul>
                 </div>
@@ -216,7 +212,7 @@ const WelcomeToCoaching = () => {
             {/* Video - appears first on mobile, second on desktop */}
             <div className="aspect-video w-full rounded-lg overflow-hidden border border-primary/20 order-1 lg:order-2">
               <VideoPlayer 
-                videoId="YOUR_TEAM_CHALLENGE_VIDEO_ID"
+                videoId="1NzNXlsGOQs"
                 title="Team Challenge Demo"
                 className="w-full h-full"
               />
@@ -232,19 +228,15 @@ const WelcomeToCoaching = () => {
                   <ul className="space-y-3">
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>8-week intensive team transformation program</span>
+                      <span>You receive the team challenge at a wholesale cost of $50 per team member</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>Weekly coaching calls and accountability</span>
+                      <span>To enroll them, just visit StandardChallenge.com</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>Proven systems to scale your agency</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-primary mr-2">•</span>
-                      <span>Enroll your team members to accelerate growth</span>
+                      <span>Use code STANDARD50 to get $249 off each access pass</span>
                     </li>
                   </ul>
                 </div>
