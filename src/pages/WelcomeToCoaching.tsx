@@ -111,6 +111,10 @@ const WelcomeToCoaching = () => {
                       <span className="text-primary mr-2">•</span>
                       <span>You have FULL ACCESS to the app w/ your level of membership</span>
                     </li>
+                    <li className="flex items-start">
+                      <span className="text-primary mr-2">•</span>
+                      <span>Direct App Access @ <a href="https://standardplaybook.com/app" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">standardplaybook.com/app</a></span>
+                    </li>
                   </ul>
                 </div>
               </CardContent>
@@ -146,7 +150,7 @@ const WelcomeToCoaching = () => {
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>Head to app.standardcallscoring.com and click on (forgot?) to receive a password reset link for access</span>
+                      <span>Head to <a href="https://app.standardcallscoring.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">app.standardcallscoring.com</a> and click on (forgot?) to receive a password reset link for access</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
@@ -187,7 +191,7 @@ const WelcomeToCoaching = () => {
                   <ul className="space-y-3">
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>To set up your AgencyBrain, visit myagencybrain.com</span>
+                      <span>To set up your AgencyBrain, visit <a href="https://myagencybrain.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">myagencybrain.com</a></span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
