@@ -259,18 +259,22 @@ const WelcomeToCoaching = () => {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Button 
-                onClick={() => window.open('https://createthestandard.com/zoom', '_blank')}
+                asChild
                 variant="outline"
-                className="text-lg py-6 border-primary text-white hover:bg-primary/10"
+                className="text-lg py-6 border-primary bg-transparent !text-white hover:bg-primary/10"
               >
-                ACCESS MY ZOOM ROOM
+                <a href="https://createthestandard.com/zoom" target="_blank" rel="noopener noreferrer">
+                  ACCESS MY ZOOM ROOM
+                </a>
               </Button>
               <Button 
-                onClick={() => window.open('https://www.facebook.com/justin.ncorinaharkelroad', '_blank')}
+                asChild
                 variant="outline"
-                className="text-lg py-6 border-primary text-white hover:bg-primary/10"
+                className="text-lg py-6 border-primary bg-transparent !text-white hover:bg-primary/10"
               >
-                CONNECT ON SOCIAL
+                <a href="https://www.facebook.com/justin.ncorinaharkelroad" target="_blank" rel="noopener noreferrer">
+                  CONNECT ON SOCIAL
+                </a>
               </Button>
             </div>
           </div>
