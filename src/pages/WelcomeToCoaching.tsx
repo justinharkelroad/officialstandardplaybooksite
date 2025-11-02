@@ -255,61 +255,20 @@ const WelcomeToCoaching = () => {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Button 
-                onClick={() => window.open('YOUR_LINK_1_URL', '_blank')}
+                onClick={() => window.open('https://createthestandard.com/zoom', '_blank')}
                 variant="outline"
                 className="text-lg py-6 border-primary/50 hover:bg-primary/10"
               >
-                Resource Library
+                ACCESS MY ZOOM ROOM
               </Button>
               <Button 
-                onClick={() => window.open('YOUR_LINK_2_URL', '_blank')}
+                onClick={() => window.open('https://www.facebook.com/justin.ncorinaharkelroad', '_blank')}
                 variant="outline"
                 className="text-lg py-6 border-primary/50 hover:bg-primary/10"
               >
-                Community Forum
-              </Button>
-              <Button 
-                onClick={() => window.open('YOUR_LINK_3_URL', '_blank')}
-                variant="outline"
-                className="text-lg py-6 border-primary/50 hover:bg-primary/10"
-              >
-                Training Calendar
-              </Button>
-              <Button 
-                onClick={() => window.open('YOUR_LINK_4_URL', '_blank')}
-                variant="outline"
-                className="text-lg py-6 border-primary/50 hover:bg-primary/10"
-              >
-                Support Portal
+                CONNECT ON SOCIAL
               </Button>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-20 relative bg-dark-card/50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="font-rajdhani font-bold text-4xl lg:text-5xl uppercase tracking-wide text-white mb-12 text-center">
-              FREQUENTLY ASKED QUESTIONS
-            </h2>
-            <Accordion type="single" collapsible className="w-full space-y-4">
-              {faqs.map((faq, index) => (
-                <AccordionItem 
-                  key={index} 
-                  value={`item-${index}`}
-                  className="bg-dark-card border border-primary/20 rounded-lg px-6"
-                >
-                  <AccordionTrigger className="text-left text-white hover:text-primary text-lg font-medium">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-gray-300 text-base leading-relaxed">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
           </div>
         </div>
       </section>
