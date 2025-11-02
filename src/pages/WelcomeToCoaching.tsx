@@ -26,17 +26,17 @@ const WelcomeToCoaching = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-dark text-white">
       <Navigation />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-20 relative">
+      <section className="pt-32 pb-20 relative bg-dark">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto text-center">
             <h1 className="font-rajdhani font-bold text-5xl lg:text-7xl uppercase tracking-wide text-white mb-4">
               WELCOME TO THE STANDARD
             </h1>
-            <p className="text-xl lg:text-2xl text-gray-400 mb-12">
+            <p className="text-xl lg:text-2xl text-gray-300 mb-12">
               THIS IS YOUR WELCOME PAGE
             </p>
             
@@ -75,7 +75,7 @@ const WelcomeToCoaching = () => {
       </section>
 
       {/* The Standard App Section */}
-      <section className="py-20 relative">
+      <section className="py-20 relative bg-dark">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
             {/* Video Left */}
@@ -120,7 +120,7 @@ const WelcomeToCoaching = () => {
       </section>
 
       {/* Call Scoring Section */}
-      <section className="py-20 relative bg-dark-card/30">
+      <section className="py-20 relative bg-dark-card/50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
             {/* Info Left */}
@@ -165,7 +165,7 @@ const WelcomeToCoaching = () => {
       </section>
 
       {/* Agency Brain Section */}
-      <section className="py-20 relative">
+      <section className="py-20 relative bg-dark">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
             {/* Video Left */}
@@ -210,7 +210,7 @@ const WelcomeToCoaching = () => {
       </section>
 
       {/* Team Challenge Section */}
-      <section className="py-20 relative bg-dark-card/30">
+      <section className="py-20 relative bg-dark-card/50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
             {/* Info Left */}
@@ -255,7 +255,7 @@ const WelcomeToCoaching = () => {
       </section>
 
       {/* Other Relevant Links Section */}
-      <section className="py-20 relative">
+      <section className="py-20 relative bg-dark">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="font-rajdhani font-bold text-4xl lg:text-5xl uppercase tracking-wide text-white mb-12">
@@ -296,7 +296,7 @@ const WelcomeToCoaching = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 relative bg-dark-card/30">
+      <section className="py-20 relative bg-dark-card/50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="font-rajdhani font-bold text-4xl lg:text-5xl uppercase tracking-wide text-white mb-12 text-center">
