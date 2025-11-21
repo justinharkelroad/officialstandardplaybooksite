@@ -114,7 +114,7 @@ export const packages: Package[] = [
     duration: 'Custom',
     description: 'Complete agency transformation program',
     available: false,
-    link: '/partnership',
+    link: null,
     highlighted: true,
     features: {
       'Daily Habit (Core4)': true,

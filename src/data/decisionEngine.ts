@@ -152,7 +152,7 @@ export const OFFER_CATALOG: { version: string; currency: string; offers: Offer[]
       notes: ["Sold Out"],
       links: {
         checkout: null,
-        details: "https://standardplaybook.com/partnership"
+        details: null
       },
       display_order: 30
     },
