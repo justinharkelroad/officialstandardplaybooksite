@@ -18,28 +18,25 @@ const SalesHero = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start max-w-6xl mx-auto">
-          {/* Left Column - Video */}
-          <div className="order-1 lg:order-1">
-            <div className="relative max-w-md mx-auto animate-fade-up">
+        <div className="max-w-6xl mx-auto space-y-12">
+          {/* Video Section */}
+          <div className="animate-fade-up">
+            <div className="relative max-w-4xl mx-auto">
               <div className="video-glow absolute -inset-4"></div>
-              <div className="relative bg-dark-card rounded-lg overflow-hidden" style={{ aspectRatio: '9/16' }}>
+              <div className="relative bg-dark-card rounded-lg overflow-hidden" style={{ aspectRatio: '16/9' }}>
                 <iframe
-                  src="https://fast.wistia.net/embed/iframe/cixz70ajf6?autoPlay=false&fullscreenButton=true&playButton=true&smallPlayButton=true&volumeControl=true&controlsVisibleOnLoad=true"
+                  src="https://www.youtube.com/embed/-VVRsXGZUaI?enablejsapi=1&controls=1&rel=0&modestbranding=1"
                   title="Sales Training Video"
-                  allow="autoplay; fullscreen"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
-                  frameBorder="0"
-                  scrolling="no"
                   className="w-full h-full rounded-lg"
-                  style={{ aspectRatio: '9/16' }}
                 />
               </div>
             </div>
           </div>
 
-          {/* Right Column - Hero Content */}
-          <div className="order-2 lg:order-2 animate-fade-up text-center lg:text-left" style={{ animationDelay: '0.2s' }}>
+          {/* Content Section */}
+          <div className="animate-fade-up text-center max-w-4xl mx-auto" style={{ animationDelay: '0.2s' }}>
             <h2 className="font-rajdhani font-bold text-4xl md:text-5xl lg:text-6xl uppercase tracking-wide text-white mb-6">
               GET COMPLETE CLARITY IN HOW TO HOLD YOUR TEAMS ACCOUNTABLE TO HOW THEY SELL AND WHAT THEY DO IN JUST 8 WEEKS. GUARANTEED
             </h2>
