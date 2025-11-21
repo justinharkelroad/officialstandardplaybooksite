@@ -8,7 +8,6 @@ import AppAccess from "./pages/AppAccess";
 import AppRedirect from "./pages/AppRedirect";
 import Boardroom from "./pages/Boardroom";
 import Directive from "./pages/Directive";
-import Partnership from "./pages/Partnership";
 import SalesExperience from "./pages/SalesExperience";
 import ProducerPowerUp from "./pages/ProducerPowerUp";
 import OwnerChallenge from "./pages/OwnerChallenge";
@@ -46,7 +45,6 @@ const App = () => (
           <Route path="/appinfo" element={<AppAccess />} />
           <Route path="/boardroom" element={<Boardroom />} />
           <Route path="/directive" element={<Directive />} />
-          <Route path="/partnership" element={<Partnership />} />
           <Route path="/sales-experience" element={<SalesExperience />} />
           <Route path="/producer-power-up" element={<ProducerPowerUp />} />
           <Route path="/owner-challenge" element={<OwnerChallenge />} />

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Users, Zap, Crown, Briefcase, Shield } from 'lucide-react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { useParallax } from '@/hooks/useParallax';
+import PartnershipSoldOutModal from '@/components/PartnershipSoldOutModal';
 
 const OffersGrid = () => {
   const { ref: sectionRef, isVisible } = useScrollReveal();
@@ -38,7 +39,7 @@ const OffersGrid = () => {
       emphasis: 'This is the inner circle.',
       italic: 'Not for everyone. Reserved for the serious.',
       icon: Shield,
-      link: '/partnership',
+      link: null,
       color: 'primary',
       soldOut: true
     },
@@ -140,9 +141,13 @@ const OffersGrid = () => {
                       <p className="text-gray-300 italic">{program.italic}</p>
                     </div>
                     {program.soldOut ? (
-                      <Button disabled className="bg-stroke/50 text-muted font-bold text-lg px-8 py-4 w-full cursor-not-allowed">
-                        SOLD OUT
-                      </Button>
+                      <PartnershipSoldOutModal
+                        trigger={
+                          <Button className="bg-stroke/50 text-muted font-bold text-lg px-8 py-4 w-full">
+                            SOLD OUT
+                          </Button>
+                        }
+                      />
                     ) : (
                       <Button 
                         onClick={() => navigate(program.link)}

@@ -6,7 +6,6 @@ export const generateSitemap = () => {
     { path: '/app', priority: '0.8', changefreq: 'weekly' },
     { path: '/boardroom', priority: '0.8', changefreq: 'weekly' },
     { path: '/directive', priority: '0.8', changefreq: 'weekly' },
-    { path: '/partnership', priority: '0.8', changefreq: 'weekly' },
     { path: '/sales-experience', priority: '0.8', changefreq: 'weekly' },
     { path: '/producer-power-up', priority: '0.8', changefreq: 'weekly' },
     { path: '/owner-challenge', priority: '0.8', changefreq: 'weekly' },

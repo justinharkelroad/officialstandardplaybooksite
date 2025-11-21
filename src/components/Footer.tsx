@@ -1,6 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Facebook, Linkedin } from 'lucide-react';
+import PartnershipSoldOutModal from './PartnershipSoldOutModal';
 
 const Footer = () => {
   return (
@@ -40,7 +41,15 @@ const Footer = () => {
               <li><Link to="/appinfo" className="text-dark-muted hover:text-primary transition-colors">App Access</Link></li>
               <li><Link to="/boardroom" className="text-dark-muted hover:text-primary transition-colors">The Boardroom</Link></li>
               <li><Link to="/directive" className="text-dark-muted hover:text-primary transition-colors">The Directive</Link></li>
-              <li><Link to="/partnership" className="text-dark-muted hover:text-primary transition-colors">The Partnership</Link></li>
+              <li>
+                <PartnershipSoldOutModal 
+                  trigger={
+                    <button className="text-dark-muted hover:text-primary transition-colors">
+                      The Partnership
+                    </button>
+                  }
+                />
+              </li>
             </ul>
           </div>
 
