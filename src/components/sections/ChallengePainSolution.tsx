@@ -12,7 +12,7 @@ const ChallengePainSolution = ({ painPoints, solutions }: ChallengePainSolutionP
     <section className="py-20 relative">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white text-center mb-16">
+          <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white text-center mb-16">
             Pain → Possibility
           </h2>
           
@@ -22,7 +22,7 @@ const ChallengePainSolution = ({ painPoints, solutions }: ChallengePainSolutionP
               <CardContent className="p-8">
                 <div className="flex items-center mb-6">
                   <X className="w-8 h-8 text-red-400 mr-3" />
-                  <h3 className="font-rajdhani font-bold text-2xl text-red-400 uppercase">
+                  <h3 className="font-oswald font-bold text-2xl text-red-400 uppercase">
                     Current Pain
                   </h3>
                 </div>
@@ -42,7 +42,7 @@ const ChallengePainSolution = ({ painPoints, solutions }: ChallengePainSolutionP
               <CardContent className="p-8">
                 <div className="flex items-center mb-6">
                   <ArrowRight className="w-8 h-8 text-primary mr-3" />
-                  <h3 className="font-rajdhani font-bold text-2xl text-primary uppercase">
+                  <h3 className="font-oswald font-bold text-2xl text-primary uppercase">
                     Future Possibility
                   </h3>
                 </div>

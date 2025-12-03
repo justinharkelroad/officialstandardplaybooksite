@@ -39,7 +39,7 @@ const ChallengeHero = ({
             />
           </div>
         ) : (
-          <h1 className="font-rajdhani font-bold text-4xl md:text-6xl lg:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up">
+          <h1 className="font-oswald font-bold text-4xl md:text-6xl lg:text-7xl uppercase tracking-tight text-white mb-6 animate-fade-up">
             {title}
           </h1>
         )}

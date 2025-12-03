@@ -55,7 +55,7 @@ const CallScoringPricing = () => {
           </div>
 
           <div className="text-center mb-12">
-            <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-6">
+            <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-6">
               Choose Your
               <br />
               <span className="text-gradient">Investment Level</span>
@@ -79,7 +79,7 @@ const CallScoringPricing = () => {
           <div className="max-w-2xl mx-auto">
             <Card className="bg-dark-card border-primary/20 shadow-2xl shadow-primary/10">
               <CardHeader className="text-center pb-6">
-                <h3 className="font-rajdhani font-bold text-3xl text-white uppercase mb-4">
+                <h3 className="font-oswald font-bold text-3xl text-white uppercase mb-4">
                   See Pricing
                 </h3>
                 <p className="text-gray-300 mb-6">Choose which level you'd like</p>

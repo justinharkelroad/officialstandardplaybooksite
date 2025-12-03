@@ -7,7 +7,7 @@ const SalesHero = () => {
     <section className="relative pt-32 pb-20 overflow-hidden">
       {/* Title Section Above Hero */}
       <div className="container mx-auto px-4 text-center relative z-10 mb-16">
-        <h1 className="font-rajdhani font-bold text-5xl md:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up">
+        <h1 className="font-oswald font-bold text-5xl md:text-7xl uppercase tracking-tight text-white mb-6 animate-fade-up">
           Your Sales Team Is a Direct Reflection of Your Leadership
         </h1>
       </div>
@@ -37,7 +37,7 @@ const SalesHero = () => {
 
           {/* Content Section */}
           <div className="animate-fade-up text-center max-w-4xl mx-auto" style={{ animationDelay: '0.2s' }}>
-            <h2 className="font-rajdhani font-bold text-4xl md:text-5xl lg:text-6xl uppercase tracking-wide text-white mb-6">
+            <h2 className="font-oswald font-bold text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight text-white mb-6">
               GET COMPLETE CLARITY IN HOW TO HOLD YOUR TEAMS ACCOUNTABLE TO HOW THEY SELL AND WHAT THEY DO IN JUST 8 WEEKS. GUARANTEED
             </h2>
             <p className="text-xl text-gray-300 mb-8">

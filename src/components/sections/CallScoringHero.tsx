@@ -46,7 +46,7 @@ const CallScoringHero = () => {
       </div>
 
       <div className="container mx-auto px-4 text-center relative z-10 py-20">
-        <h1 className="font-rajdhani font-bold text-5xl md:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up">
+        <h1 className="font-oswald font-bold text-5xl md:text-7xl uppercase tracking-tight text-white mb-6 animate-fade-up">
           Stop Spending Hours
           <br />
           <span className="text-gradient">Reviewing Calls</span>

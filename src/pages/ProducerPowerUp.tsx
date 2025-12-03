@@ -83,7 +83,7 @@ const ProducerPowerUp = () => {
       <section className="py-16 relative">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-12">
+            <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-12">
               How This Transforms Your Team's Identity
             </h2>
             <div className="bg-dark-card border-primary/20 rounded-lg p-8">
@@ -145,7 +145,7 @@ const ProducerPowerUp = () => {
       <section className="py-20 relative">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto text-center mb-16">
-            <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
+            <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-8">
               Built on The Standard's Five Pillars
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -207,7 +207,7 @@ const ProducerPowerUp = () => {
               />
             </div>
             <div className="bg-dark-card border-primary/20 rounded-lg p-12">
-              <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-red-500 mb-4">
+              <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-red-500 mb-4">
                 COMING IN FALL OF 2025
               </h2>
             </div>
