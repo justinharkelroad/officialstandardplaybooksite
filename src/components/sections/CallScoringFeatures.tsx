@@ -39,7 +39,7 @@ const CallScoringFeatures = () => {
     <section className="py-20 relative">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center mb-16">
-          <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-6">
+          <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-6">
             Coaching & Scoring
             <br />
             <span className="text-gradient">Made Simple</span>

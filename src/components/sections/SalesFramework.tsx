@@ -90,7 +90,7 @@ const SalesFramework = () => {
     <section className="py-20 relative">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
+          <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-8">
             The 8 Week Management Training Framework
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
