@@ -38,7 +38,7 @@ const ChallengeWeeklyBreakdown = () => {
     <section className="py-16 relative">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center mb-12">
-          <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-4">
+          <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-4">
             Your 6-Week Journey
           </h2>
           <p className="text-gray-300 text-lg">
@@ -66,7 +66,7 @@ const ChallengeWeeklyBreakdown = () => {
                   
                   {/* Content */}
                   <div className="flex-1 space-y-4">
-                    <h3 className="font-rajdhani font-bold text-2xl md:text-3xl uppercase tracking-wide text-primary">
+                    <h3 className="font-oswald font-bold text-2xl md:text-3xl uppercase tracking-tight text-primary">
                       Week {week.week} – {week.title}
                     </h3>
                     <p className="text-gray-300 text-lg leading-relaxed">
