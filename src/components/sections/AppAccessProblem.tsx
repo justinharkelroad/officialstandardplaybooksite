@@ -4,7 +4,7 @@ const AppAccessProblem = () => {
     <section className="py-20 relative">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
+          <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-8">
             The Foundation Problem
           </h2>
           <p className="text-xl text-gray-300 leading-relaxed mb-8">

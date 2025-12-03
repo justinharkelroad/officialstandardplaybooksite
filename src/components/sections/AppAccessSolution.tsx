@@ -7,7 +7,7 @@ const AppAccessSolution = () => {
     <section className="py-20 relative">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center mb-16">
-          <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
+          <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-8">
             The Standard Solution
           </h2>
           <p className="text-xl text-gray-300 leading-relaxed">
@@ -23,7 +23,7 @@ const AppAccessSolution = () => {
               <div className="w-16 h-16 bg-primary rounded-square flex items-center justify-center mx-auto mb-4">
                 <BookOpen className="w-8 h-8 text-white" />
               </div>
-              <CardTitle className="text-white font-rajdhani text-xl uppercase tracking-wide">
+              <CardTitle className="text-white font-oswald text-xl uppercase tracking-tight">
                 Core Curriculum
               </CardTitle>
               <CardDescription className="text-gray-400">
@@ -45,7 +45,7 @@ const AppAccessSolution = () => {
               <div className="w-16 h-16 bg-primary-accent rounded-square flex items-center justify-center mx-auto mb-4">
                 <Video className="w-8 h-8 text-white" />
               </div>
-              <CardTitle className="text-white font-rajdhani text-xl uppercase tracking-wide">
+              <CardTitle className="text-white font-oswald text-xl uppercase tracking-tight">
                 Video Library
               </CardTitle>
               <CardDescription className="text-gray-400">
@@ -67,7 +67,7 @@ const AppAccessSolution = () => {
               <div className="w-16 h-16 bg-primary rounded-square flex items-center justify-center mx-auto mb-4">
                 <Users className="w-8 h-8 text-white" />
               </div>
-              <CardTitle className="text-white font-rajdhani text-xl uppercase tracking-wide">
+              <CardTitle className="text-white font-oswald text-xl uppercase tracking-tight">
                 Community Access
               </CardTitle>
               <CardDescription className="text-gray-400">

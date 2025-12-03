@@ -6,7 +6,7 @@ const AppAccessFAQ = () => {
     <section className="py-20 relative">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-6">
+          <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-6">
             App Access FAQ
           </h2>
         </div>
@@ -14,7 +14,7 @@ const AppAccessFAQ = () => {
         <div className="max-w-4xl mx-auto">
           <Accordion type="single" collapsible className="space-y-4">
             <AccordionItem value="item-1" className="bg-dark-card border border-primary/20 rounded-lg px-6">
-              <AccordionTrigger className="text-white font-rajdhani text-lg uppercase tracking-wide">
+              <AccordionTrigger className="text-white font-oswald text-lg uppercase tracking-tight">
                 What's included in App Access Only?
               </AccordionTrigger>
               <AccordionContent className="text-gray-300">
@@ -23,7 +23,7 @@ const AppAccessFAQ = () => {
             </AccordionItem>
 
             <AccordionItem value="item-2" className="bg-dark-card border border-primary/20 rounded-lg px-6">
-              <AccordionTrigger className="text-white font-rajdhani text-lg uppercase tracking-wide">
+              <AccordionTrigger className="text-white font-oswald text-lg uppercase tracking-tight">
                 Can I upgrade to higher programs later?
               </AccordionTrigger>
               <AccordionContent className="text-gray-300">
@@ -32,7 +32,7 @@ const AppAccessFAQ = () => {
             </AccordionItem>
 
             <AccordionItem value="item-3" className="bg-dark-card border border-primary/20 rounded-lg px-6">
-              <AccordionTrigger className="text-white font-rajdhani text-lg uppercase tracking-wide">
+              <AccordionTrigger className="text-white font-oswald text-lg uppercase tracking-tight">
                 How long does it take to see results?
               </AccordionTrigger>
               <AccordionContent className="text-gray-300">
@@ -41,7 +41,7 @@ const AppAccessFAQ = () => {
             </AccordionItem>
 
             <AccordionItem value="item-4" className="bg-dark-card border border-primary/20 rounded-lg px-6">
-              <AccordionTrigger className="text-white font-rajdhani text-lg uppercase tracking-wide">
+              <AccordionTrigger className="text-white font-oswald text-lg uppercase tracking-tight">
                 Is this suitable for complete beginners?
               </AccordionTrigger>
               <AccordionContent className="text-gray-300">
