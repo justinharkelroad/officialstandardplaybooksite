@@ -8,7 +8,7 @@ const AppAccessPricing = () => {
     <section id="pricing" className="py-20 relative">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="font-rajdhani font-bold text-4xl md:text-6xl uppercase tracking-wide text-white mb-6">
+          <h2 className="font-oswald font-bold text-4xl md:text-6xl uppercase tracking-tight text-white mb-6">
             Choose Your Access Level
           </h2>
         </div>
@@ -21,7 +21,7 @@ const AppAccessPricing = () => {
             </p>
             <Card className="bg-dark-card border-primary/20 card-hover">
               <CardHeader className="text-center">
-              <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide mb-2">
+              <CardTitle className="text-white font-oswald text-2xl uppercase tracking-tight mb-2">
                 Stack Level Access: The First Two Pillars
               </CardTitle>
               <div className="mb-4">
@@ -69,7 +69,7 @@ const AppAccessPricing = () => {
             </p>
             <Card className="bg-dark-card border-primary relative card-hover">
               <CardHeader className="text-center">
-              <CardTitle className="text-white font-rajdhani text-2xl uppercase tracking-wide mb-2">
+              <CardTitle className="text-white font-oswald text-2xl uppercase tracking-tight mb-2">
                 Arsenal Level Access: Four Pillars Activated
               </CardTitle>
               <div className="mb-4">

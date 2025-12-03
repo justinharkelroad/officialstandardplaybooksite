@@ -20,7 +20,7 @@ const AppAccessHero = ({ onGetStartedClick }: AppAccessHeroProps) => {
           <Target className="w-8 h-8 text-white" />
         </div>
         
-        <h1 className="font-rajdhani font-bold text-4xl md:text-6xl lg:text-7xl uppercase tracking-wide text-white mb-8 animate-fade-up leading-tight">
+        <h1 className="font-oswald font-bold text-4xl md:text-6xl lg:text-7xl uppercase tracking-tight text-white mb-8 animate-fade-up leading-tight">
           <span className="text-gradient">Gamification</span> to strengthen your health, connection to God, your relationships and your agency
         </h1>
 
