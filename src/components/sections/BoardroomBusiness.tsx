@@ -6,9 +6,12 @@ const BoardroomBusiness = () => {
     <section className="py-20 relative">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8">
+          <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-4">
             ITS NOT JUST BUSINESS...
           </h2>
+          <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+            Running a thriving agency isn't just about numbers. The Boardroom isn't like other agency coaching—we help agency owners be spiritually grounded, physically strong, and relationally at rest.
+          </p>
         </div>
 
         <div className="max-w-6xl mx-auto space-y-16">

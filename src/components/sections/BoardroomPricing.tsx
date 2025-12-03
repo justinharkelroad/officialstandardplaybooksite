@@ -13,9 +13,12 @@ const BoardroomPricing = () => {
         <div className="max-w-4xl mx-auto">
           <Card className="bg-dark-card border-primary text-center card-hover">
             <CardHeader className="pb-4">
-              <CardTitle className="text-white font-rajdhani text-3xl uppercase tracking-wide mb-4">
+            <CardTitle className="text-white font-rajdhani text-3xl uppercase tracking-wide mb-4">
                 JOIN THE BOARDROOM
               </CardTitle>
+              <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-6">
+                Join fellow agency owners/principal agents. Make valuable face-to-face contacts. Build a mastermind so extreme no one else can.
+              </p>
               <div className="mb-4">
                 <span className="text-6xl font-bold text-white">$299</span>
                 <span className="text-gray-400 text-xl">/month</span>

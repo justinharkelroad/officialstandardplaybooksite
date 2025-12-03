@@ -1,7 +1,6 @@
 
 import { Button } from '@/components/ui/button';
 import VideoPlayer from '@/components/VideoPlayer';
-import { Users, ArrowRight } from 'lucide-react';
 
 const BoardroomHero = () => {
   const handleJoinNow = () => {
@@ -10,19 +9,16 @@ const BoardroomHero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary-accent/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
-      </div>
+      <div className="absolute inset-0 bg-gradient-to-b from-[hsl(220,30%,10%)] via-dark-bg to-dark-bg" />
 
       <div className="container mx-auto px-4 text-center relative z-10">
-        <div className="w-16 h-16 bg-primary rounded-square flex items-center justify-center mx-auto mb-12 animate-fade-up">
-          <Users className="w-8 h-8 text-white" />
-        </div>
-        
         <h1 className="font-rajdhani font-bold text-4xl md:text-6xl lg:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up">
-          WELCOME TO THE BOARDROOM
+          THE ELITE MASTERMIND FOR INSURANCE AGENCY OWNERS
         </h1>
+
+        <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+          Where Agency Owners Stop Guessing and Start Leading. $299/month for Direct Access to Proven Operators Who've Built What You're Trying to Build.
+        </p>
 
         <div className="relative max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>
           <div className="video-glow absolute -inset-4"></div>
