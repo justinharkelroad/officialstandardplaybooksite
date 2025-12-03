@@ -89,7 +89,7 @@ const ChallengeCoreCards = () => {
                   </div>
 
                   {/* Heading */}
-                  <h3 className="font-rajdhani font-bold text-2xl md:text-3xl uppercase tracking-wide text-white mb-4 text-center">
+                  <h3 className="font-oswald font-bold text-2xl md:text-3xl uppercase tracking-tight text-white mb-4 text-center">
                     {card.title}
                   </h3>
 

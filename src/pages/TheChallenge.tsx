@@ -270,7 +270,7 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
         {/* Title Section */}
         <section className="pt-20 md:pt-32 pb-8 md:pb-12 relative">
           <div className="container mx-auto px-4 text-center relative z-10">
-            <h1 className="font-rajdhani font-bold text-5xl md:text-7xl uppercase tracking-wide text-white mb-6 animate-fade-up">
+            <h1 className="font-oswald font-bold text-5xl md:text-7xl uppercase tracking-tight text-white mb-6 animate-fade-up">
               CAN WE STOP LYING?
             </h1>
             
@@ -310,7 +310,7 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
               <div className="flex flex-col gap-6">
                 {/* Problem */}
                 <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6 lg:p-8">
-                  <h3 className="font-rajdhani font-bold text-xl lg:text-3xl text-red-400 uppercase mb-4">
+                  <h3 className="font-oswald font-bold text-xl lg:text-3xl text-red-400 uppercase mb-4">
                     PROBLEM
                   </h3>
                   <p className="text-white text-lg lg:text-2xl leading-relaxed">
@@ -320,7 +320,7 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
 
                 {/* Possibility */}
                 <div className="bg-green-900/20 border border-primary/30 rounded-lg p-6 lg:p-8">
-                  <h3 className="font-rajdhani font-bold text-xl lg:text-3xl text-primary uppercase mb-4">
+                  <h3 className="font-oswald font-bold text-xl lg:text-3xl text-primary uppercase mb-4">
                     POSSIBILITY
                   </h3>
                   <p className="text-white text-lg lg:text-2xl leading-relaxed">
@@ -330,7 +330,7 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
 
                 {/* Pricing Box */}
                 <div className="bg-dark-card border border-primary/20 rounded-lg p-6 lg:p-8 text-center">
-                  <h3 className="font-rajdhani font-bold text-2xl lg:text-4xl text-white uppercase">
+                  <h3 className="font-oswald font-bold text-2xl lg:text-4xl text-white uppercase">
                     6 WEEKS - 30 TRAININGS - $299
                   </h3>
                 </div>

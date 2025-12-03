@@ -59,7 +59,7 @@ export default function ChallengeProcessFlow() {
   return (
     <section className="py-16 md:py-24">
       <div className="container mx-auto px-4">
-        <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-12 text-center animate-fade-up">
+        <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-12 text-center animate-fade-up">
           INTENTIONALLY MADE EXTREMELY SIMPLE TO FOLLOW
         </h2>
         

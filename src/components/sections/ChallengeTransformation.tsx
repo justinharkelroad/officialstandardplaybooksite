@@ -43,7 +43,7 @@ const ChallengeTransformation = () => {
     <section className="py-16 relative">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-12 text-center">
+          <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-12 text-center">
             How This Transforms Your Team's Identity
           </h2>
           
