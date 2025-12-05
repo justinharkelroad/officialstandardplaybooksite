@@ -1,219 +1,69 @@
-
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import ChallengeHero from '@/components/sections/ChallengeHero';
-import ChallengePainSolution from '@/components/sections/ChallengePainSolution';
-import ChallengeFeatures from '@/components/sections/ChallengeFeatures';
-
+import ProducerCorePromise from '@/components/sections/ProducerCorePromise';
+import ProducerSystemNotCourse from '@/components/sections/ProducerSystemNotCourse';
+import ProducerAccountability from '@/components/sections/ProducerAccountability';
+import ProducerDailyRhythm from '@/components/sections/ProducerDailyRhythm';
+import ProducerCurriculum from '@/components/sections/ProducerCurriculum';
+import ProducerCulturalImpact from '@/components/sections/ProducerCulturalImpact';
+import ProducerTechStack from '@/components/sections/ProducerTechStack';
+import ProducerROI from '@/components/sections/ProducerROI';
+import ProducerOutcome from '@/components/sections/ProducerOutcome';
+import ProducerLogistics from '@/components/sections/ProducerLogistics';
+import ProducerFinalCTA from '@/components/sections/ProducerFinalCTA';
 import ChallengeFAQ from '@/components/sections/ChallengeFAQ';
 import ChallengeNavigation from '@/components/sections/ChallengeNavigation';
-import GHLFormPopup from '@/components/GHLFormPopup';
 
 const ProducerPowerUp = () => {
-  const painPoints = [
-    "You know you're capable of more, but fear holds you back from making the calls",
-    "Price objections defeat you because you don't believe in your own value",
-    "Inconsistent results drain your energy and erode your identity as a high performer",
-    "You're stuck in cycles that don't match who you're meant to become"
-  ];
-
-  const solutions = [
-    "Daily activity becomes natural when aligned with your identity as a high performer",
-    "Discovery conversations flow effortlessly from a place of genuine service and value",
-    "Objection handling transforms into confident value presentation from someone who knows their worth",
-    "Core 4 habits create the foundation for sustained excellence and personal transformation"
-  ];
-
-  const features = [
-    {
-      title: "IDENTITY-DRIVEN MICRO-LESSONS",
-      description: "30 weekday micro-videos that rewire your identity as a high-performing producer"
-    },
-    {
-      title: "CORE 4 TRANSFORMATION TRACKER",
-      description: "60-day app access to build the habits that define excellence in your field"
-    },
-    {
-      title: "WEEKLY IDENTITY REINFORCEMENT",
-      description: "Friday Discovery-Stacks and Sunday Sunday Service emails that strengthen your producer identity"
-    },
-    {
-      title: "LIFETIME TRANSFORMATION ACCESS",
-      description: "Permanent access to all training materials for ongoing identity development"
-    }
-  ];
-
-
   const faqs = [
     {
-      question: "When does my identity transformation begin?",
-      answer: "Your producer identity transformation starts every Sunday. You'll receive your credentials within 48 hours of enrollment to begin building your new identity immediately."
+      question: "When does the challenge start?",
+      answer: "The Producer Challenge runs on a rolling enrollment basis. Sign up any producer by Friday and they will automatically begin the following Monday. There are no fixed cohort dates—the system is always ready."
     },
     {
-      question: "How much time is required for this identity shift?",
-      answer: "Just 3 minutes daily for the micro-videos, plus time to implement the identity-reinforcing strategies. Designed to fit into your schedule while maximizing identity development."
+      question: "How much time does this require daily?",
+      answer: "Each daily module takes approximately 3-5 minutes to watch. Including the action declaration and submission, expect 10-15 minutes per day. The weekly Discovery Stack takes about 20-30 minutes on Fridays."
     },
     {
-      question: "What if I miss a day during my transformation?",
-      answer: "No problem! You have lifetime access to all content for ongoing identity development. The app tracks your progress and habit streaks to maintain your producer identity growth."
+      question: "What if my producer misses a day?",
+      answer: "All content remains accessible throughout the 6-week period. While daily completion is encouraged for building the habit loop, producers can catch up if needed. You'll see exactly which modules they've completed through the daily reports."
+    },
+    {
+      question: "What access do I get as the owner?",
+      answer: "You receive every daily action report via email, plus the full PDF of each weekly Discovery Stack. This gives you unprecedented visibility into your producer's engagement, takeaways, and action commitments."
+    },
+    {
+      question: "What's included in the app access?",
+      answer: "Your producer gets 60 days of full access to The Standard App, including The Armory (30 training modules), Core 4 Tracker (habit gamification), and all 19 Stacking frameworks for emotional processing and reflection."
     },
     {
       question: "What's the investment policy?",
-      answer: "All investments are final. We provide immediate access to identity-transforming content and are confident in the producer transformation you'll experience."
+      answer: "All enrollments are final. We provide immediate access to the full system and are confident in the transformation your producer will experience. After completion, producers can continue with Standard programs at a 25% lifetime discount."
     }
   ];
-
 
   return (
     <div className="min-h-screen">
       <Navigation />
       <ChallengeHero
         title="/lovable-uploads/ec2eda85-7cf5-4aa9-8997-cee842066d4b.png"
-        subtitle="Stack habits. Supercharge sales and life—in 42 days."
+        subtitle="Transform your producer from reactive chaos to systematic execution—in 42 days. You'll see every step."
         videoId="1UhWckfDqDw"
         showEnrollButton={false}
         onEnrollClick={() => {}}
       />
-      <ChallengePainSolution
-        painPoints={painPoints}
-        solutions={solutions}
-      />
-      
-      {/* Identity Transformation for Teams Section */}
-      <section className="py-16 relative">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-12">
-              How This Transforms Your Team's Identity
-            </h2>
-            <div className="bg-dark-card border-primary/20 rounded-lg p-8">
-              <ul className="space-y-4 text-left">
-                <li className="flex items-start">
-                  <span className="text-primary mr-3 mt-1">•</span>
-                  <span className="text-gray-300">Weekly Discovery Stacks that reinforce your team's identity as value-first professionals</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-primary mr-3 mt-1">•</span>
-                  <span className="text-gray-300">Personal accountability mindset activation that transforms how team members see themselves</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-primary mr-3 mt-1">•</span>
-                  <span className="text-gray-300">Activity-to-results understanding that builds confidence in their producer identity</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-primary mr-3 mt-1">•</span>
-                  <span className="text-gray-300">Agency Owner or Manager will receive a "What To Expect" PDF detailing out what exact deliverables they should be looking for from their team throughout the 6 weeks.</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-primary mr-3 mt-1">•</span>
-                  <span className="text-gray-300">42 Days of identity-reinforcing habit development through The Standard App</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-primary mr-3 mt-1">•</span>
-                  <span className="text-gray-300">Cultural transformation that elevates everyone's professional identity</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-primary mr-3 mt-1">•</span>
-                  <span className="text-gray-300">Option to continue with one of the Standard programs at a 25% discount for life</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* App Demo Image Section */}
-      <section className="py-16 relative">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto text-center">
-            <img 
-              src="/lovable-uploads/862c875f-96ae-42fe-b043-eec8370ea39e.png" 
-              alt="App Demo - Track Daily Habits and Build Culture" 
-              className="w-full h-auto rounded-lg shadow-2xl"
-            />
-          </div>
-        </div>
-      </section>
-      
-      <ChallengeFeatures
-        title="Your Complete Identity Transformation Package"
-        features={features}
-        layout="grid"
-      />
-      
-      {/* Five Pillars Integration */}
-      <section className="py-20 relative">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto text-center mb-16">
-            <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-8">
-              Built on The Standard's Five Pillars
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              This challenge transforms your producer identity through our proven framework for excellence
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="bg-dark-card border-primary/20 rounded-lg p-6 text-center">
-              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-primary font-bold text-xl">1</span>
-              </div>
-              <h3 className="font-rajdhani font-bold text-xl text-white mb-2">IDENTITY</h3>
-              <p className="text-gray-300 text-sm">Transform how you see yourself as a producer</p>
-            </div>
-            
-            <div className="bg-dark-card border-primary/20 rounded-lg p-6 text-center">
-              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-primary font-bold text-xl">2</span>
-              </div>
-              <h3 className="font-rajdhani font-bold text-xl text-white mb-2">HABITS</h3>
-              <p className="text-gray-300 text-sm">Build the Core 4 habits that sustain excellence</p>
-            </div>
-            
-            <div className="bg-dark-card border-primary/20 rounded-lg p-6 text-center">
-              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-primary font-bold text-xl">3</span>
-              </div>
-              <h3 className="font-rajdhani font-bold text-xl text-white mb-2">SYSTEMS</h3>
-              <p className="text-gray-300 text-sm">Implement systematic approaches to sales success</p>
-            </div>
-            
-            <div className="bg-dark-card border-primary/20 rounded-lg p-6 text-center">
-              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-primary font-bold text-xl">4</span>
-              </div>
-              <h3 className="font-rajdhani font-bold text-xl text-white mb-2">ACCOUNTABILITY</h3>
-              <p className="text-gray-300 text-sm">Create personal responsibility for results</p>
-            </div>
-            
-            <div className="bg-dark-card border-primary/20 rounded-lg p-6 text-center">
-              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-primary font-bold text-xl">5</span>
-              </div>
-              <h3 className="font-rajdhani font-bold text-xl text-white mb-2">RESULTS</h3>
-              <p className="text-gray-300 text-sm">Achieve measurable transformation in 42 days</p>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* Coming Soon Section */}
-      <section className="py-20 relative">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="mb-8">
-              <GHLFormPopup 
-                buttonText="GET NOTIFIED WHEN AVAILABLE"
-                buttonClassName="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 text-lg font-bold rounded-lg"
-              />
-            </div>
-            <div className="bg-dark-card border-primary/20 rounded-lg p-12">
-              <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-red-500 mb-4">
-                COMING IN FALL OF 2025
-              </h2>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ProducerCorePromise />
+      <ProducerSystemNotCourse />
+      <ProducerAccountability />
+      <ProducerDailyRhythm />
+      <ProducerCurriculum />
+      <ProducerCulturalImpact />
+      <ProducerTechStack />
+      <ProducerROI />
+      <ProducerOutcome />
+      <ProducerLogistics />
+      <ProducerFinalCTA />
       <ChallengeFAQ faqs={faqs} />
       <ChallengeNavigation
         otherChallenge={{
