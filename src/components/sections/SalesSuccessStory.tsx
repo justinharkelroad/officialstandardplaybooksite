@@ -7,7 +7,7 @@ const SalesSuccessStory = () => {
           <div className="order-1 lg:order-1 text-center lg:text-left">
             <p className="text-primary font-medium text-lg mb-4 uppercase tracking-wider">Success Story</p>
             <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-6">
-              From Chaos to Certainty
+              He Paid Attention to My Culture First
             </h2>
             <p className="text-2xl text-primary font-medium">
               Dan Westrick - Allstate Agency Owner
