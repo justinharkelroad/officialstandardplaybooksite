@@ -276,18 +276,18 @@ const DecisionOfferHierarchy = () => {
                     </div>
                   )}
 
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <Button 
-                      className="w-full btn-primary"
+                      className="w-full btn-primary text-sm sm:text-base px-3 sm:px-4 py-3"
                       onClick={() => window.open('https://link.fastpaydirect.com/payment-link/67b9e4c1020837472ed0b709', '_blank')}
                     >
-                      SECURE PIF NOW
+                      SECURE PIF
                     </Button>
                     <Button 
-                      className="w-full btn-primary"
+                      className="w-full btn-primary text-sm sm:text-base px-3 sm:px-4 py-3"
                       onClick={() => window.open('https://link.fastpaydirect.com/payment-link/67b9e53c156a771b286e2ca6', '_blank')}
                     >
-                      SECURE WEEKLY NOW
+                      SECURE WEEKLY
                     </Button>
                   </div>
                 </CardContent>

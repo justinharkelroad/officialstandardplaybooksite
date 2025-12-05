@@ -32,8 +32,9 @@ const BoardroomHero = () => {
         </div>
 
         <div className="animate-fade-up" style={{ animationDelay: '0.6s' }}>
-          <Button onClick={handleJoinNow} className="btn-primary text-lg px-8 py-4">
-            CLAIM YOUR SEAT AT THE TABLE →
+          <Button onClick={handleJoinNow} className="btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4">
+            <span className="hidden sm:inline">CLAIM YOUR SEAT AT THE TABLE →</span>
+            <span className="sm:hidden">JOIN NOW →</span>
           </Button>
         </div>
       </div>

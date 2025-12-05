@@ -99,10 +99,11 @@ const OffersGrid = () => {
                 </p>
                 <Button 
                   onClick={() => navigate('/decision')}
-                  className="btn-primary text-lg px-8 py-4 button-press"
+                  className="btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 button-press whitespace-normal text-center"
                 >
-                  COMPARE ALL OPTIONS FOR MY AGENCY
-                  <ArrowRight className="w-5 h-5 ml-2" />
+                  <span className="hidden sm:inline">COMPARE ALL OPTIONS FOR MY AGENCY</span>
+                  <span className="sm:hidden">COMPARE OPTIONS</span>
+                  <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 ml-2 flex-shrink-0" />
                 </Button>
               </CardContent>
             </Card>
@@ -143,7 +144,7 @@ const OffersGrid = () => {
                     {program.soldOut ? (
                       <PartnershipSoldOutModal
                         trigger={
-                          <Button className="bg-stroke/50 text-muted font-bold text-lg px-8 py-4 w-full">
+                          <Button className="bg-stroke/50 text-muted font-bold text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 w-full">
                             SOLD OUT
                           </Button>
                         }
@@ -151,10 +152,10 @@ const OffersGrid = () => {
                     ) : (
                       <Button 
                         onClick={() => navigate(program.link)}
-                        className="btn-primary text-lg px-8 py-4 w-full button-press"
+                        className="btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 w-full button-press"
                       >
                         LEARN MORE
-                        <ArrowRight className="w-5 h-5 ml-2" />
+                        <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 ml-2" />
                       </Button>
                     )}
                   </CardContent>

@@ -45,7 +45,7 @@ const SalesHero = () => {
             </p>
             <BookingModal
               trigger={
-                <Button className="btn-primary text-lg px-8 py-6">
+                <Button className="btn-primary text-sm sm:text-lg px-4 sm:px-8 py-4 sm:py-6">
                   BOOK YOUR STRATEGY CALL
                 </Button>
               }
