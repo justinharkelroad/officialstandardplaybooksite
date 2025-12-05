@@ -5,8 +5,9 @@ const SalesSuccessStory = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
           {/* Left Column - Text */}
           <div className="order-1 lg:order-1 text-center lg:text-left">
-            <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-6">
-              Instead of taking our word for it, please listen to one of our success stories:
+            <p className="text-primary font-medium text-lg mb-4 uppercase tracking-wider">Success Story</p>
+            <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-6">
+              From Chaos to Certainty
             </h2>
             <p className="text-2xl text-primary font-medium">
               Dan Westrick - Allstate Agency Owner
