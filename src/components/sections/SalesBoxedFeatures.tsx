@@ -15,9 +15,15 @@ const SalesBoxedFeatures = () => {
   ];
 
   return (
-    <section className="py-12 relative">
+    <section className="py-20 relative">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-primary font-medium text-lg mb-4 uppercase tracking-wider">What's Included</p>
+            <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-6">
+              What You Get In 8 Weeks
+            </h2>
+          </div>
           <Card className="bg-dark-card border-primary/20">
             <CardContent className="p-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

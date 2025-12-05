@@ -1,6 +1,6 @@
 
+import BookingModal from '@/components/BookingModal';
 import { Button } from '@/components/ui/button';
-import { BookOpen } from 'lucide-react';
 
 const SalesHero = () => {
   return (
@@ -8,8 +8,11 @@ const SalesHero = () => {
       {/* Title Section Above Hero */}
       <div className="container mx-auto px-4 text-center relative z-10 mb-16">
         <h1 className="font-oswald font-bold text-5xl md:text-7xl uppercase tracking-tight text-white mb-6 animate-fade-up">
-          Your Sales Team Is a Direct Reflection of Your Leadership
+          The Blueprint for a Scalable Sales Team
         </h1>
+        <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto animate-fade-up" style={{ animationDelay: '0.1s' }}>
+          A proven 8-week system to install certainty, accountability, and high performance in your agency.
+        </p>
       </div>
 
       <div className="absolute inset-0 opacity-20">
@@ -35,33 +38,18 @@ const SalesHero = () => {
             </div>
           </div>
 
-          {/* Content Section */}
+          {/* CTA Section */}
           <div className="animate-fade-up text-center max-w-4xl mx-auto" style={{ animationDelay: '0.2s' }}>
-            <h2 className="font-oswald font-bold text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight text-white mb-6">
-              GET COMPLETE CLARITY IN HOW TO HOLD YOUR TEAMS ACCOUNTABLE TO HOW THEY SELL AND WHAT THEY DO IN JUST 8 WEEKS. GUARANTEED
-            </h2>
             <p className="text-xl text-gray-300 mb-8">
-              You will get these 3 things immediately handed to you:
+              In just 8 weeks, you'll have complete clarity on how to hold your team accountable—to how they sell and what they do. Guaranteed.
             </p>
-            <div className="relative">
-              <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 to-primary-accent/20 rounded-lg blur-lg opacity-60"></div>
-              <div className="relative bg-dark-card border border-primary/20 rounded-lg p-8">
-                <div className="space-y-6">
-                  <div className="flex items-center space-x-4">
-                    <BookOpen className="w-8 h-8 text-primary flex-shrink-0" />
-                    <span className="text-primary font-medium text-2xl">SALES PROCESS FRAMEWORK</span>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <BookOpen className="w-8 h-8 text-primary flex-shrink-0" />
-                    <span className="text-primary font-medium text-2xl">ACCOUNTABILITY SYSTEM</span>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <BookOpen className="w-8 h-8 text-primary flex-shrink-0" />
-                    <span className="text-primary font-medium text-2xl">CONSEQUENCE LADDER</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <BookingModal
+              trigger={
+                <Button className="btn-primary text-lg px-8 py-6">
+                  BOOK YOUR STRATEGY CALL
+                </Button>
+              }
+            />
           </div>
         </div>
       </div>

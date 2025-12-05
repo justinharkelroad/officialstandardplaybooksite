@@ -2,31 +2,32 @@
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import SalesHero from '@/components/sections/SalesHero';
+import SalesProblem from '@/components/sections/SalesProblem';
+import SalesThreePillars from '@/components/sections/SalesThreePillars';
+import SalesPillarOne from '@/components/sections/SalesPillarOne';
+import SalesPillarTwo from '@/components/sections/SalesPillarTwo';
+import SalesPillarThree from '@/components/sections/SalesPillarThree';
 import SalesBoxedFeatures from '@/components/sections/SalesBoxedFeatures';
-import SalesButtonCTA from '@/components/sections/SalesButtonCTA';
 import SalesSuccessStory from '@/components/sections/SalesSuccessStory';
-import SalesFramework from '@/components/sections/SalesFramework';
+import SalesTransformation from '@/components/sections/SalesTransformation';
 import SalesFAQ from '@/components/sections/SalesFAQ';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
 import BookingModal from '@/components/BookingModal';
 
 const SalesExperience = () => {
-  const navigate = useNavigate();
-  
-  const scrollToChoosePath = () => {
-    navigate('/', { state: { scrollToPricing: true } });
-  };
-
   return (
     <div className="min-h-screen">
       <Navigation />
       
       <SalesHero />
-      <SalesButtonCTA />
+      <SalesProblem />
+      <SalesThreePillars />
+      <SalesPillarOne />
+      <SalesPillarTwo />
+      <SalesPillarThree />
       <SalesBoxedFeatures />
       <SalesSuccessStory />
-      <SalesFramework />
+      <SalesTransformation />
       <SalesFAQ />
 
       {/* Sticky CTA for Mobile */}
