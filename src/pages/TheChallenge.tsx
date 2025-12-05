@@ -2,14 +2,18 @@ import React, { useEffect } from 'react';
 import SEOHead from '@/components/SEOHead';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import ChallengeCoreCards from '@/components/sections/ChallengeCoreCards';
-import ChallengeProcessFlow from '@/components/sections/ChallengeProcessFlow';
-import ChallengeWeeklyBreakdown from '@/components/sections/ChallengeWeeklyBreakdown';
-import ChallengeTransformation from '@/components/sections/ChallengeTransformation';
-import ChallengePainSolution from '@/components/sections/ChallengePainSolution';
+import ProducerCorePromise from '@/components/sections/ProducerCorePromise';
+import ProducerSystemNotCourse from '@/components/sections/ProducerSystemNotCourse';
+import ProducerAccountability from '@/components/sections/ProducerAccountability';
+import ProducerDailyRhythm from '@/components/sections/ProducerDailyRhythm';
+import ProducerCurriculum from '@/components/sections/ProducerCurriculum';
+import ProducerCulturalImpact from '@/components/sections/ProducerCulturalImpact';
+import ProducerTechStack from '@/components/sections/ProducerTechStack';
+import ProducerROI from '@/components/sections/ProducerROI';
+import ProducerOutcome from '@/components/sections/ProducerOutcome';
+import ProducerLogistics from '@/components/sections/ProducerLogistics';
 import ChallengeFAQ from '@/components/sections/ChallengeFAQ';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
 import VideoModal from '@/components/VideoModal';
 
 // Declare Wistia custom element for TypeScript
@@ -28,174 +32,44 @@ interface TheChallengeProps {
 const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
   const faqs = [
     {
-      question: "What is the Producer Challenge?",
-      answer: "The Producer Challenge is a six-week accountability and training program for insurance producers, LSPs, and agency team members. Each weekday includes a short video lesson, a daily form submission, and clear action steps. Every Friday, participants complete a Discovery Stack reflection that summarizes their week and sends insights directly to leadership."
+      question: "When does the challenge start?",
+      answer: "The Producer Challenge runs on a rolling enrollment basis. Sign up any producer by Friday and they will automatically begin the following Monday. There are no fixed cohort dates—the system is always ready."
     },
     {
-      question: "Who is the challenge designed for?",
-      answer: "It's built for agency teams—producers, service staff, and sales leaders—who want daily structure, measurable results, and better communication inside the agency."
+      question: "How much time does this require daily?",
+      answer: "Each daily module takes approximately 3-5 minutes to watch. Including the action declaration and submission, expect 10-15 minutes per day. The weekly Discovery Stack takes about 20-30 minutes on Fridays."
     },
     {
-      question: "How does enrollment work?",
-      answer: (
-        <>
-          <p className="mb-3">Enrollment is continuous. Anyone who signs up Monday through Saturday will automatically receive their <strong>pre-launch message on Sunday at 9:00 AM</strong>, preparing them for the challenge kickoff the following day.</p>
-          <p>If someone enrolls after 8:55 AM on Sunday, they'll start the <strong>next week's</strong> challenge instead.</p>
-        </>
-      )
+      question: "What if my producer misses a day?",
+      answer: "All content remains accessible throughout the 6-week period. While daily completion is encouraged for building the habit loop, producers can catch up if needed. You'll see exactly which modules they've completed through the daily reports."
     },
     {
-      question: "What happens after I enroll a team member?",
-      answer: (
-        <>
-          <p className="mb-3">They will:</p>
-          <ol className="list-decimal ml-6 space-y-2 mb-4">
-            <li>Receive login credentials for the app.</li>
-            <li>Get an onboarding email and text Sunday morning with optional pre-work.</li>
-            <li>Begin their first training Monday morning with an alert to complete Module 1.</li>
-          </ol>
-          <p>You will receive an emailed video and receipt outlining the structure of the challenge and what to expect.</p>
-        </>
-      )
+      question: "What access do I get as the owner?",
+      answer: "You receive every daily action report via email, plus the full PDF of each weekly Discovery Stack. This gives you unprecedented visibility into your producer's engagement, takeaways, and action commitments."
     },
     {
-      question: "What's the daily routine inside the Challenge?",
-      answer: (
-        <>
-          <p className="mb-3 font-semibold">Monday–Friday:</p>
-          <ul className="list-disc ml-6 space-y-2 mb-4">
-            <li>Watch the training video.</li>
-            <li>Submit the daily form with your key takeaway and action step.</li>
-            <li>Mark your Core 4 progress: <strong>Body, Being, Balance, Business</strong></li>
-            <li>On Fridays they will complete a Discovery Stack and share with Agent</li>
-            <li>On Sunday they can optionally choose to do "Sunday Service" work and declare 1 big action they will accomplish in each domain that week.</li>
-          </ul>
-        </>
-      )
+      question: "What's included in the app access?",
+      answer: "Your producer gets 60 days of full access to The Standard App, including The Armory (30 training modules), Core 4 Tracker (habit gamification), and all 19 Stacking frameworks for emotional processing and reflection."
     },
     {
       question: "What is the \"Core 4\"?",
-      answer: (
-        <>
-          <p className="mb-3">The Core 4 tracks daily habits that drive performance:</p>
-          <ul className="list-disc ml-6 space-y-2">
-            <li><strong>Body:</strong> health and energy</li>
-            <li><strong>Being:</strong> mindset and spiritual alignment</li>
-            <li><strong>Balance:</strong> relationships and gratitude</li>
-            <li><strong>Business:</strong> productivity and sales execution<br/>Each checked box = proof of daily integrity.</li>
-          </ul>
-        </>
-      )
+      answer: "The Core 4 tracks daily habits that drive performance: Body (health and energy), Being (mindset and spiritual alignment), Balance (relationships and gratitude), and Business (productivity and sales execution). Each checked box equals proof of daily integrity."
     },
     {
       question: "What is a \"Discovery Stack\"?",
       answer: "A guided reflection form completed each Friday. It helps participants process lessons, wins, and challenges for the week, then share the link with leadership for visibility."
     },
     {
-      question: "How is progress measured?",
-      answer: (
-        <>
-          <p className="mb-3">The game in the app will have each participant can earn up to 35 points per week:</p>
-          <ul className="list-disc ml-6 space-y-2 mb-4">
-            <li>28 points from Core 4 completions</li>
-            <li>7 points from daily Stack reflections<br/>Scores appear on the live dashboard for easy tracking.</li>
-          </ul>
-          <p className="mb-2 font-semibold">The real-time feedback for the Agency Owner per week:</p>
-          <ul className="list-disc ml-6 space-y-2 mb-3">
-            <li>Daily takeaway + action item sent to Agency Owner email (30)</li>
-            <li>Friday Discovery Stack Lessons shared with Agency Owner (6)</li>
-            <li>Optional Sunday Service "One Big Thing" declaration form for each domain (7)</li>
-          </ul>
-          <p className="font-semibold">43 total possible feedback loops for Agency Owner within the 42 days!</p>
-        </>
-      )
-    },
-    {
       question: "What topics are covered in the 6 weeks?",
-      answer: (
-        <>
-          <p className="mb-3">Sales, communication, and leadership skills including:</p>
-          <ul className="list-disc ml-6 space-y-1">
-            <li>Consistency & Non-Negotiables</li>
-            <li>Follow-Up Systems</li>
-            <li>Speed to Contact</li>
-            <li>The Three-Bucket System</li>
-            <li>Referrals & Retention</li>
-            <li>Objection Handling</li>
-            <li>Closing Confidence</li>
-            <li>Setting 90-Day Targets</li>
-          </ul>
-        </>
-      )
-    },
-    {
-      question: "How long do I have access to the app?",
-      answer: (
-        <>
-          49 days from the enrollment date—enough to finish all modules and reflections. After 49 days, you can upgrade to full <strong>Arsenal-level access</strong> to keep your data, continue tracking, and unlock advanced modules.
-        </>
-      )
-    },
-    {
-      question: "What does the agency owner receive during the challenge?",
-      answer: (
-        <>
-          <ul className="list-disc ml-6 space-y-2 mb-3">
-            <li>Daily takeaway + action item sent to Agency Owner email (30)</li>
-            <li>Friday Discovery Stack Lessons shared with Agency Owner (6)</li>
-            <li>Optional Sunday Service "One Big Thing" declaration form for each domain (7)</li>
-          </ul>
-          <p>43 total possible feedback loops for Agency Owner within the 42 days</p>
-        </>
-      )
-    },
-    {
-      question: "What is the main goal of the Challenge?",
-      answer: (
-        <>
-          To build a <strong>culture of clarity, communication, and consistency.</strong> Producers learn to align their actions with agency expectations and develop daily proof of performance instead of relying on motivation.
-        </>
-      )
-    },
-    {
-      question: "Is there a refund policy?",
-      answer: "No refunds. This mirrors The Standard Playbook's standard policy across all programs."
+      answer: "Sales, communication, and leadership skills including: Consistency & Non-Negotiables, Follow-Up Systems, Speed to Contact, The Three-Bucket System, Referrals & Retention, Objection Handling, Closing Confidence, and Setting 90-Day Targets."
     },
     {
       question: "What happens after completion?",
-      answer: (
-        <>
-          <p className="mb-3">At the six-week mark, participants can:</p>
-          <ul className="list-disc ml-6 space-y-2">
-            <li>Continue using the app via monthly membership (<strong>Stack</strong> or <strong>Arsenal</strong>)</li>
-            <li>Agency Owners can get access to 25% off a Membership Level in Standard for life.</li>
-          </ul>
-        </>
-      )
+      answer: "At the six-week mark, participants can continue using the app via monthly membership (Stack or Arsenal). Agency Owners can get access to 25% off a Membership Level in Standard for life."
     },
     {
-      question: "How do agencies purchase seats?",
-      answer: (
-        <>
-          Agency owners can buy individual seats on <strong>StandardPlaybook.com</strong>. Purchases trigger instant onboarding for each participant.
-        </>
-      )
-    },
-    {
-      question: "How much time does it take each day?",
-      answer: "Modules average 8–10 minutes per day plus 5 minutes to complete the form—about 15 minutes total. Days where stacking is requested that would extend to about 30 mins (Fridays + 2 other modules)"
-    },
-    {
-      question: "What if I miss a day?",
-      answer: "You can catch up inside the app anytime, but missed forms reduce your weekly score. Consistency is the metric that matters most."
-    },
-    {
-      question: "Who runs the program?",
-      answer: (
-        <>
-          The Producer Challenge is produced by <strong>The Standard Playbook</strong>, founded by <strong>Justin E. Harkelroad</strong>, specializing in structured accountability systems for insurance agencies and business teams.
-        </>
-      )
+      question: "What's the investment policy?",
+      answer: "All enrollments are final. We provide immediate access to the full system and are confident in the transformation your producer will experience."
     }
   ];
 
@@ -235,7 +109,6 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
     document.body.appendChild(fbPixelScript);
 
     return () => {
-      // Cleanup scripts when component unmounts
       const existingGHLScript = document.querySelector('script[src="https://link.msgsndr.com/js/form_embed.js"]');
       if (existingGHLScript) {
         document.body.removeChild(existingGHLScript);
@@ -260,27 +133,30 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
   return (
     <>
       <SEOHead config={{
-        title: "The Challenge - Private Landing Page",
-        description: "Private challenge page",
-        keywords: [],
+        title: "The Producer Challenge - 6-Week Sales Transformation",
+        description: "Transform your producer from reactive chaos to systematic execution in 42 days. Daily accountability, weekly reports, and full visibility into their growth.",
+        keywords: ["producer challenge", "sales training", "insurance producer", "accountability", "team development"],
       }} />
       
       <div className="min-h-screen">
         <Navigation />
-        {/* Title Section */}
+        
+        {/* Hero Section */}
         <section className="pt-20 md:pt-32 pb-8 md:pb-12 relative">
           <div className="container mx-auto px-4 text-center relative z-10">
-            <h1 className="font-oswald font-bold text-5xl md:text-7xl uppercase tracking-tight text-white mb-6 animate-fade-up">
-              CAN WE STOP LYING?
-            </h1>
+            <img 
+              src="/lovable-uploads/ec2eda85-7cf5-4aa9-8997-cee842066d4b.png" 
+              alt="The Producer Challenge" 
+              className="mx-auto max-w-full h-auto max-h-48 object-contain mb-6 animate-fade-up"
+            />
             
-            <div className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto animate-fade-up" style={{ animationDelay: '0.2s' }}>
-              <p className="text-white font-medium">MOST TRAINING MODULES IN OUR SPACE MAKE OUR TEAMS DREAD THEIR MORNING REQUIREMENTS. WE'RE ON A MISSION TO CHANGE THAT.</p>
-            </div>
+            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto animate-fade-up" style={{ animationDelay: '0.2s' }}>
+              Transform your producer from reactive chaos to systematic execution—in 42 days. You'll see every step.
+            </p>
           </div>
         </section>
 
-        {/* Hero Section with Video */}
+        {/* Video + CTA Section */}
         <section className="pb-12 md:pb-20 relative">
           <div className="container mx-auto px-4 max-w-7xl">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -306,25 +182,25 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
                 </div>
               </div>
 
-              {/* Right Column with Problem, Possibility, and CTA */}
+              {/* Right Column */}
               <div className="flex flex-col gap-6">
                 {/* Problem */}
                 <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6 lg:p-8">
                   <h3 className="font-oswald font-bold text-xl lg:text-3xl text-red-400 uppercase mb-4">
-                    PROBLEM
+                    THE PROBLEM
                   </h3>
-                  <p className="text-white text-lg lg:text-2xl leading-relaxed">
-                    YOUR TEAM IS YEARNING FOR A TRAINING COURSE THAT CREATES ACTUAL TAKEAWAYS AND ACTION ITEMS INSTEAD OF BORING QUIZZES AT THE END
+                  <p className="text-white text-lg lg:text-xl leading-relaxed">
+                    Your producer relies on mood and motivation. Follow-up is emotional and chaotic. They operate without a documented system and communication with you is reactive.
                   </p>
                 </div>
 
                 {/* Possibility */}
                 <div className="bg-green-900/20 border border-primary/30 rounded-lg p-6 lg:p-8">
                   <h3 className="font-oswald font-bold text-xl lg:text-3xl text-primary uppercase mb-4">
-                    POSSIBILITY
+                    THE POSSIBILITY
                   </h3>
-                  <p className="text-white text-lg lg:text-2xl leading-relaxed">
-                    AFTER 6 WEEKS YOUR TEAM MEMBER IS SHOWING UP FOR THEMSELVES, THEIR FAMILIES AND THE AGENCY IN A WAY THEY NEVER HAVE BEFORE.
+                  <p className="text-white text-lg lg:text-xl leading-relaxed">
+                    After 6 weeks, they execute based on a daily system. Follow-up becomes predictable. They proactively communicate takeaways and action items—directly to you.
                   </p>
                 </div>
 
@@ -340,7 +216,7 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
                   onClick={() => window.open('https://createthestandard.com/credit-card-page', '_blank')}
                   className="btn-primary text-lg lg:text-xl px-8 py-4 lg:py-6 w-full inline-flex items-center justify-center gap-2 animate-pulse hover:animate-none shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] transition-all duration-300"
                 >
-                  ENROLL MY TEAM MEMBER
+                  ENROLL MY PRODUCER NOW
                 </Button>
 
                 {/* Quick Explainer Button */}
@@ -358,40 +234,62 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
                 />
                 
                 {/* Enrollment Info */}
-                <p className="text-gray-300 text-center text-sm lg:text-base leading-relaxed mt-4">
-                  ⭐️⭐️ The Challenge is always LIVE. Your LSP begins the first Monday after enrollment. They'll get app access immediately upon checkout and receive their Challenge introduction the Sunday before their start date. ⭐️⭐️
+                <p className="text-gray-300 text-center text-sm lg:text-base leading-relaxed mt-2">
+                  Rolling enrollment—sign up by Friday, they start Monday. App access immediately upon checkout.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* CTA Button Section */}
-        <section className="pb-12 relative">
-          <div className="container mx-auto px-4 text-center">
-            <button 
-              onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
-              className="bg-primary text-white font-bold text-lg px-8 py-4 rounded-lg hover:bg-primary/90 transition-all duration-300 inline-flex items-center gap-2"
-            >
-              Have Questions? Book A Quick Call
-              <span className="text-xl">&gt;</span>
-            </button>
+        {/* New Sections */}
+        <ProducerCorePromise />
+        <ProducerSystemNotCourse />
+        <ProducerAccountability />
+        <ProducerDailyRhythm />
+        <ProducerCurriculum />
+        <ProducerCulturalImpact />
+        <ProducerTechStack />
+        <ProducerROI />
+        <ProducerOutcome />
+        <ProducerLogistics />
+
+        {/* Final CTA Section */}
+        <section className="py-20 relative">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-6">
+                Ready to Build Your Next Top Producer?
+              </h2>
+              <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                Enroll your producer by Friday to secure their spot for Monday's kickoff.
+              </p>
+              
+              <div className="bg-dark-card border border-primary/20 rounded-lg p-8 md:p-12">
+                <div className="text-3xl md:text-4xl font-oswald font-bold text-white mb-6">
+                  $299 <span className="text-gray-400 text-xl">/ per producer</span>
+                </div>
+                <Button 
+                  onClick={() => window.open('https://createthestandard.com/credit-card-page', '_blank')}
+                  className="btn-primary text-lg lg:text-xl px-8 py-4 lg:py-6 inline-flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] transition-all duration-300"
+                >
+                  ENROLL MY PRODUCER NOW
+                </Button>
+                <p className="text-gray-400 text-sm mt-4">
+                  30 daily reports + 6 weekly reflections sent directly to you
+                </p>
+              </div>
+
+              <button 
+                onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
+                className="mt-8 text-primary hover:text-primary/80 font-medium text-lg transition-colors"
+              >
+                Have Questions? Book A Quick Call →
+              </button>
+            </div>
           </div>
         </section>
 
-        {/* Identity Transformation Section with Video */}
-        <ChallengeTransformation />
-
-        {/* Weekly Breakdown Section */}
-        <ChallengeWeeklyBreakdown />
-
-        {/* Process Flow Section */}
-        <ChallengeProcessFlow />
-
-        {/* Core Cards Section */}
-        <ChallengeCoreCards />
-        
-        {/* FAQ Section */}
         <ChallengeFAQ 
           title="Producer Challenge — Frequently Asked Questions"
           faqs={faqs}
