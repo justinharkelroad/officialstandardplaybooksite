@@ -214,9 +214,9 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
                 {/* CTA Button */}
                 <Button 
                   onClick={() => window.open('https://createthestandard.com/credit-card-page', '_blank')}
-                  className="btn-primary text-lg lg:text-xl px-8 py-4 lg:py-6 w-full inline-flex items-center justify-center gap-2 animate-pulse hover:animate-none shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] transition-all duration-300"
+                  className="btn-primary text-sm sm:text-lg lg:text-xl px-4 sm:px-8 py-3 sm:py-4 lg:py-6 w-full inline-flex items-center justify-center gap-2 animate-pulse hover:animate-none shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] transition-all duration-300"
                 >
-                  ENROLL MY PRODUCER NOW
+                  ENROLL NOW
                 </Button>
 
                 {/* Quick Explainer Button */}
@@ -271,9 +271,9 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
                 </div>
                 <Button 
                   onClick={() => window.open('https://createthestandard.com/credit-card-page', '_blank')}
-                  className="btn-primary text-lg lg:text-xl px-8 py-4 lg:py-6 inline-flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] transition-all duration-300"
+                  className="btn-primary text-sm sm:text-lg lg:text-xl px-4 sm:px-8 py-3 sm:py-4 lg:py-6 inline-flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] transition-all duration-300"
                 >
-                  ENROLL MY PRODUCER NOW
+                  ENROLL NOW
                 </Button>
                 <p className="text-gray-400 text-sm mt-4">
                   30 daily reports + 6 weekly reflections sent directly to you

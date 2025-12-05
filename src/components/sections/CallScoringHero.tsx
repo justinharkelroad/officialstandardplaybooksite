@@ -94,8 +94,8 @@ const CallScoringHero = () => {
 
         <div className="flex justify-center animate-fade-up" style={{ animationDelay: '0.4s' }}>
           <JotFormModal 
-            buttonText="GET SAMPLE SCORING OF YOUR OWN TEAM"
-            buttonClassName="bg-primary text-white font-bold text-lg px-8 py-4 hover:bg-primary/90"
+            buttonText="GET SAMPLE SCORING"
+            buttonClassName="bg-primary text-white font-bold text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 hover:bg-primary/90"
           />
         </div>
       </div>

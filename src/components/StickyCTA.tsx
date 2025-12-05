@@ -41,7 +41,7 @@ const StickyCTA = () => {
       }`}
     >
       <Button
-        className="w-full bg-primary hover:bg-primary-light text-white font-bold py-4 rounded-pill"
+        className="w-full bg-primary hover:bg-primary-light text-white font-bold text-sm py-4 rounded-pill"
         onClick={() => window.open(link, '_blank')}
       >
         {text}

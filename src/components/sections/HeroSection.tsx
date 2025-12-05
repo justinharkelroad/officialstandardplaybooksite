@@ -30,14 +30,14 @@ const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
         {/* Dual CTA Buttons */}
         <div className="flex flex-col sm:flex-row justify-center gap-4 mb-4 animate-fade-slide" style={{ animationDelay: '400ms' }}>
           <Button 
-            className="bg-primary text-white font-bold text-xl px-12 py-6 hover:bg-primary-light rounded-pill button-press accent-glow"
+            className="bg-primary text-white font-bold text-base sm:text-xl px-6 sm:px-12 py-4 sm:py-6 hover:bg-primary-light rounded-pill button-press accent-glow"
             onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
           >
             BOOK FREE CALL
           </Button>
           <Button 
             variant="outline"
-            className="border-2 border-primary text-primary font-bold text-xl px-12 py-6 hover:bg-primary hover:text-white rounded-pill button-press"
+            className="border-2 border-primary text-primary font-bold text-base sm:text-xl px-6 sm:px-12 py-4 sm:py-6 hover:bg-primary hover:text-white rounded-pill button-press"
             onClick={handleSeeOptions}
           >
             EXPLORE PROGRAMS

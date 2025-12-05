@@ -21,7 +21,7 @@ const ClosingCTA = () => {
             Join agency owners across the country who have chosen to create freedom in their lives.
           </p>
           <Button 
-            className="bg-primary text-white font-bold text-xl px-16 py-8 hover:bg-primary-light rounded-pill button-press accent-glow animate-accent-glow"
+            className="bg-primary text-white font-bold text-base sm:text-xl px-8 sm:px-16 py-4 sm:py-8 hover:bg-primary-light rounded-pill button-press accent-glow animate-accent-glow"
             onClick={() => window.open('https://AGENCYCOACHING.as.me/standardfit', '_blank')}
           >
             BOOK YOUR FREE CALL
