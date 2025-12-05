@@ -337,7 +337,7 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
 
                 {/* CTA Button */}
                 <Button 
-                  onClick={() => window.open('https://createthestandard.com/producer-power-up-checkout-page', '_blank')}
+                  onClick={() => window.open('https://createthestandard.com/credit-card-page', '_blank')}
                   className="btn-primary text-lg lg:text-xl px-8 py-4 lg:py-6 w-full inline-flex items-center justify-center gap-2 animate-pulse hover:animate-none shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] transition-all duration-300"
                 >
                   ENROLL MY TEAM MEMBER

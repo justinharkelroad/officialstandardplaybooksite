@@ -353,7 +353,7 @@ const DecisionOfferHierarchy = () => {
 
                   <Button 
                     className="w-full btn-primary"
-                    onClick={() => window.open('https://createthestandard.com/producer-power-up-checkout-page', '_blank')}
+                    onClick={() => window.open('https://createthestandard.com/credit-card-page', '_blank')}
                   >
                     SECURE NOW
                   </Button>
