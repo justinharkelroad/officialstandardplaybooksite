@@ -37,7 +37,7 @@ const SalesTransformation = () => {
             {outcomes.map((outcome, index) => (
               <div 
                 key={index}
-                className="relative bg-background border border-primary/30 rounded-lg p-8 hover:border-primary/50 transition-all duration-300 group"
+                className="relative bg-dark-card border border-primary/30 rounded-lg p-8 hover:border-primary/50 transition-all duration-300 group"
               >
                 <div className="absolute -top-1 left-0 right-0 h-1 bg-gradient-to-r from-primary/0 via-primary to-primary/0 group-hover:via-primary-accent transition-colors" />
                 <div className="text-center">

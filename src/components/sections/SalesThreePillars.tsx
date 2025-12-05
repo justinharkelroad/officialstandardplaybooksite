@@ -37,7 +37,7 @@ const SalesThreePillars = () => {
             {pillars.map((pillar, index) => (
               <div 
                 key={index}
-                className="relative bg-background border border-primary/20 rounded-lg p-8 hover:border-primary/40 transition-all duration-300 group"
+                className="relative bg-dark-card border border-primary/20 rounded-lg p-8 hover:border-primary/40 transition-all duration-300 group"
               >
                 <div className="absolute -top-4 -left-4 w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
                   <span className="font-oswald font-bold text-lg text-primary-foreground">{pillar.number}</span>

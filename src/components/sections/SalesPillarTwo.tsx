@@ -32,7 +32,7 @@ const SalesPillarTwo = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* The Quad */}
-            <div className="bg-background border border-primary/20 rounded-lg p-8">
+            <div className="bg-dark-card border border-primary/20 rounded-lg p-8">
               <div className="flex items-center gap-4 mb-6">
                 <div className="p-3 bg-primary/10 rounded-lg">
                   <BarChart3 className="w-8 h-8 text-primary" />
@@ -55,7 +55,7 @@ const SalesPillarTwo = () => {
             </div>
 
             {/* Consequence Ladder */}
-            <div className="bg-background border border-primary/20 rounded-lg p-8">
+            <div className="bg-dark-card border border-primary/20 rounded-lg p-8">
               <div className="flex items-center gap-4 mb-6">
                 <div className="p-3 bg-primary/10 rounded-lg">
                   <AlertTriangle className="w-8 h-8 text-primary" />
@@ -78,7 +78,7 @@ const SalesPillarTwo = () => {
             </div>
 
             {/* Call Scoring */}
-            <div className="bg-background border border-primary/20 rounded-lg p-8">
+            <div className="bg-dark-card border border-primary/20 rounded-lg p-8">
               <div className="flex items-center gap-4 mb-6">
                 <div className="p-3 bg-primary/10 rounded-lg">
                   <ClipboardCheck className="w-8 h-8 text-primary" />
