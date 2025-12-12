@@ -68,9 +68,9 @@ const ProducerChallengeLanding = () => {
         keywords: ["producer challenge", "sales training", "insurance producer", "accountability", "team development"],
       }} />
       
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-dark">
         {/* Hero Section - No Navigation, No Logo */}
-        <section className="pt-12 md:pt-20 pb-8 md:pb-12 relative">
+        <section className="pt-12 md:pt-20 pb-8 md:pb-12 relative bg-dark">
           <div className="container mx-auto px-4 text-center relative z-10">
             <h1 className="font-oswald font-bold text-2xl md:text-4xl lg:text-5xl uppercase tracking-tight text-white max-w-4xl mx-auto mb-8 animate-fade-up">
               Transform your producer from reactive chaos to systematic execution—in 42 days. You'll see every step.
@@ -79,7 +79,7 @@ const ProducerChallengeLanding = () => {
         </section>
 
         {/* Full Width YouTube Video */}
-        <section className="pb-12 md:pb-20 relative">
+        <section className="pb-12 md:pb-20 relative bg-dark">
           <div className="container mx-auto px-4 max-w-5xl">
             <div className="relative aspect-video rounded-xl overflow-hidden shadow-2xl shadow-primary/20">
               <iframe
@@ -94,7 +94,7 @@ const ProducerChallengeLanding = () => {
         </section>
 
         {/* Problem → Possibility Section (Stacked with Arrow) */}
-        <section className="py-12 md:py-20 relative">
+        <section className="py-12 md:py-20 relative bg-dark">
           <div className="container mx-auto px-4 max-w-3xl">
             <div className="flex flex-col items-center gap-6">
               {/* Problem */}
@@ -128,7 +128,7 @@ const ProducerChallengeLanding = () => {
         </section>
 
         {/* Pricing + CTA Section */}
-        <section className="py-12 md:py-16 relative">
+        <section className="py-12 md:py-16 relative bg-dark">
           <div className="container mx-auto px-4 max-w-2xl text-center">
             <div className="bg-dark-card border border-primary/20 rounded-lg p-8 md:p-12">
               <h3 className="font-oswald font-bold text-2xl md:text-4xl text-white uppercase mb-6">
@@ -177,7 +177,7 @@ const ProducerChallengeLanding = () => {
         <ProducerLogistics />
 
         {/* Final CTA Section */}
-        <section className="py-20 relative">
+        <section className="py-20 relative bg-dark">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="font-oswald font-bold text-3xl md:text-5xl uppercase tracking-tight text-white mb-6">
