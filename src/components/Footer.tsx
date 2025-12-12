@@ -1,13 +1,12 @@
 
 import { Link } from 'react-router-dom';
 import { Facebook, Linkedin } from 'lucide-react';
-import PartnershipSoldOutModal from './PartnershipSoldOutModal';
 
 const Footer = () => {
   return (
     <footer className="bg-dark-surface border-t border-primary/20 py-12">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center mb-4">
               <img 
@@ -31,26 +30,6 @@ const Footer = () => {
                 <Linkedin className="w-6 h-6" />
               </a>
             </div>
-          </div>
-          
-          <div>
-            <h4 className="text-white font-oswald font-semibold text-lg mb-4 uppercase tracking-wide">
-              Programs
-            </h4>
-            <ul className="space-y-2">
-              <li><Link to="/appinfo" className="text-dark-muted hover:text-primary transition-colors">App Access</Link></li>
-              <li><Link to="/boardroom" className="text-dark-muted hover:text-primary transition-colors">The Boardroom</Link></li>
-              <li><Link to="/directive" className="text-dark-muted hover:text-primary transition-colors">The Directive</Link></li>
-              <li>
-                <PartnershipSoldOutModal 
-                  trigger={
-                    <button className="text-dark-muted hover:text-primary transition-colors">
-                      The Partnership
-                    </button>
-                  }
-                />
-              </li>
-            </ul>
           </div>
 
           <div>
