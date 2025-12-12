@@ -91,6 +91,18 @@ const ProducerChallengeLanding = () => {
               />
             </div>
           </div>
+          
+          {/* Enroll Now CTA */}
+          <div className="mt-10 text-center">
+            <a 
+              href="https://createthestandard.com/credit-card-page"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-primary hover:bg-primary/90 text-primary-foreground font-oswald font-bold text-xl md:text-2xl uppercase px-12 py-4 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg shadow-primary/30"
+            >
+              Enroll Now
+            </a>
+          </div>
         </section>
 
         {/* Problem → Possibility Section (Stacked with Arrow) */}
