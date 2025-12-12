@@ -83,7 +83,7 @@ const ProducerChallengeLanding = () => {
           <div className="container mx-auto px-4 max-w-5xl">
             <div className="relative aspect-video rounded-xl overflow-hidden shadow-2xl shadow-primary/20">
               <iframe
-                src="https://www.youtube.com/embed/2R8Q3PGA77I?rel=0&modestbranding=1"
+                src="https://www.youtube.com/embed/2R8Q3PGA77I?rel=0&modestbranding=1&autoplay=1&mute=1"
                 title="Producer Challenge Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
