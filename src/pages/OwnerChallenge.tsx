@@ -210,13 +210,6 @@ const OwnerChallenge = () => {
         steps={timelineSteps}
       />
       <ChallengeFAQ faqs={faqs} />
-      <ChallengeNavigation
-        otherChallenge={{
-          title: "Producer Power-Up Challenge",
-          description: "Stack habits. Supercharge sales and life—in 42 days. Perfect for individual producers and sales teams.",
-          link: "/producer-power-up"
-        }}
-      />
       <Footer />
     </div>
   );

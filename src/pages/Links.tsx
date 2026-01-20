@@ -15,11 +15,6 @@ const Links = () => {
       external: false,
     },
     {
-      title: 'TEAM CHALLENGE',
-      href: 'https://standardplaybook.com/thechallenge',
-      external: true,
-    },
-    {
       title: 'AI CALL SCORING',
       href: 'https://standardcallscoring.com',
       external: true,

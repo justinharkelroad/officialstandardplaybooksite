@@ -351,12 +351,9 @@ const DecisionOfferHierarchy = () => {
                     </ul>
                   </div>
 
-                  <Button 
-                    className="w-full btn-primary"
-                    onClick={() => window.open('https://createthestandard.com/credit-card-page', '_blank')}
-                  >
-                    SECURE NOW
-                  </Button>
+                  <div className="bg-primary/20 text-primary font-bold text-lg px-4 py-3 w-full text-center rounded-md">
+                    2.0 COMING SOON
+                  </div>
                 </CardContent>
               </Card>
             )}

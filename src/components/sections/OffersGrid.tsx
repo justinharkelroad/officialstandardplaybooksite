@@ -60,8 +60,9 @@ const OffersGrid = () => {
       emphasis: 'Average is the enemy of excellence.',
       italic: 'Stop accepting excuses. Start demanding results.',
       icon: Crown,
-      link: '/thechallenge',
+      link: null,
       color: 'primary-accent',
+      comingSoon: true,
     },
     {
       title: 'CALL SCORING',
@@ -149,6 +150,10 @@ const OffersGrid = () => {
                           </Button>
                         }
                       />
+                    ) : program.comingSoon ? (
+                      <div className="bg-primary/20 text-primary font-bold text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 w-full text-center rounded-md">
+                        2.0 COMING SOON
+                      </div>
                     ) : (
                       <Button 
                         onClick={() => navigate(program.link)}
