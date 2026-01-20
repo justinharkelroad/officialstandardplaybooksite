@@ -67,9 +67,6 @@ const Navigation = () => {
             <Link to="/callscoring" className="text-white hover:text-primary transition-colors link-underline">
               Call Scoring
             </Link>
-            <Link to="/thechallenge" className="text-white hover:text-primary transition-colors link-underline">
-              Staff Challenge
-            </Link>
             <Link to="/contact" className="text-white hover:text-primary transition-colors link-underline">
               Contact
             </Link>
@@ -124,13 +121,6 @@ const Navigation = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Call Scoring
-              </Link>
-              <Link 
-                to="/thechallenge" 
-                className="text-white text-lg font-medium hover:text-primary transition-colors py-2" 
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Staff Challenge
               </Link>
               <Link 
                 to="/contact" 

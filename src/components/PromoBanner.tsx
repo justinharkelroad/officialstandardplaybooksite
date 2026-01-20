@@ -24,12 +24,9 @@ const PromoBanner = () => {
               6 WEEKS - 30 TRAININGS<br />
               1 PRODUCER FINDING THEIR POWER
             </h2>
-            <Button
-              onClick={() => navigate('/thechallenge')}
-              className="bg-white text-blue-600 hover:bg-gray-100 font-bold px-6 py-3 text-base"
-            >
-              Learn More
-            </Button>
+            <div className="bg-white/20 text-white font-bold px-6 py-3 text-base rounded-md">
+              2.0 Coming Soon
+            </div>
           </div>
         </div>
       </div>
