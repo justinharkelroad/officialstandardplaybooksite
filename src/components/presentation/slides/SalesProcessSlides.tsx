@@ -144,6 +144,12 @@ export const ThreePartProcessSlide = () => (
         </div>
       </div>
     </div>
+    
+    <div className="mt-8 bg-primary/10 border border-primary/30 rounded-lg p-4 max-w-2xl text-center animate-fade-in" style={{ animationDelay: '450ms' }}>
+      <p className="text-gray-300">
+        <span className="text-primary font-semibold">The Result:</span> Every call follows a structure that captures maximum premium and closes efficiently.
+      </p>
+    </div>
   </div>
 );
 
