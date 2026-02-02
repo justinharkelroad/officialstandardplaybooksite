@@ -140,6 +140,23 @@ export const QuadRuleSlide = () => (
   </div>
 );
 
+// Slide: Accountability Core
+export const AccountabilityCoreSlide = () => (
+  <div className="w-full h-full flex flex-col items-center justify-center px-8">
+    <div className="text-center">
+      <h2 className="font-oswald font-bold text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight text-gray-300 mb-8 animate-fade-in">
+        Accountability at its core is
+      </h2>
+      <h1 
+        className="font-oswald font-bold text-6xl md:text-7xl lg:text-8xl uppercase tracking-tight text-primary animate-scale-in"
+        style={{ animationDelay: '800ms', animationFillMode: 'both' }}
+      >
+        Consequences
+      </h1>
+    </div>
+  </div>
+);
+
 // Slide 18: Consequence Ladder Title
 export const ConsequenceTitleSlide = () => (
   <div className="w-full h-full flex flex-col items-center justify-center px-8">
