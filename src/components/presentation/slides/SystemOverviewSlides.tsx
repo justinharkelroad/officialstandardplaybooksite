@@ -17,7 +17,7 @@ export const SolutionSlide = () => (
       </div>
       <div className="mt-12 h-1 w-32 bg-primary/50 mx-auto"></div>
       <p className="text-xl text-gray-400 mt-8 max-w-3xl mx-auto">
-        We install systems that turn disciplined attention to detail into predictable, scalable profit.
+        Install systems that turn disciplined attention to detail into predictable, scalable profit.
       </p>
     </div>
   </div>
