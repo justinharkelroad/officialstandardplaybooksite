@@ -13,8 +13,7 @@ import {
 import {
   Pillar1TitleSlide,
   WhyItMattersSlide,
-  ThreePartProcessSlide,
-  ProcessFlowSlide
+  ThreePartProcessSlide
 } from '@/components/presentation/slides/SalesProcessSlides';
 import {
   Pillar2TitleSlide,
@@ -72,7 +71,6 @@ const Presentation = () => {
       <Pillar1TitleSlide />
       <WhyItMattersSlide />
       <ThreePartProcessSlide />
-      <ProcessFlowSlide />
       
       {/* Pillar 2: Accountability Engine (Slides 13-21) */}
       <Pillar2TitleSlide />
