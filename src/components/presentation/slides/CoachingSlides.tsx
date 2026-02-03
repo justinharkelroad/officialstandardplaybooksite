@@ -87,7 +87,7 @@ export const WeeklyRhythmSlide = () => {
   );
 };
 
-// Slide 24: Why Rhythm Matters
+// Slide 20: Why Rhythm Matters
 export const RhythmMattersSlide = () => (
   <div className="w-full h-full flex flex-col items-center justify-center px-8">
     <div className="text-center animate-fade-in max-w-5xl">
@@ -99,7 +99,7 @@ export const RhythmMattersSlide = () => (
         <span className="text-primary font-semibold">small problems</span> from becoming<br />
         <span className="text-red-400 font-semibold">expensive ones</span>.
       </p>
-      <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+      <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-10">
         <div className="bg-dark-card border border-primary/20 rounded-lg p-6 animate-fade-in">
           <CheckCircle className="w-8 h-8 text-primary mx-auto mb-3" />
           <p className="text-gray-300 text-sm">Weekly touchpoints catch skill gaps early</p>
@@ -113,6 +113,9 @@ export const RhythmMattersSlide = () => (
           <p className="text-gray-300 text-sm">Accountability becomes cultural, not confrontational</p>
         </div>
       </div>
+      <h3 className="font-oswald font-bold text-2xl md:text-3xl uppercase tracking-tight text-white animate-fade-in" style={{ animationDelay: '450ms' }}>
+        Someone in your agency must <span className="text-red-400 font-bold">own</span> this process.
+      </h3>
     </div>
   </div>
 );
