@@ -24,7 +24,7 @@ export const WeeklyRhythmSlide = () => {
     {
       day: "Monday",
       icon: Target,
-      title: "Goal Setting",
+      title: "Target Setting",
       detail: "Set weekly targets and align focus",
       prevention: "Prevents aimless weeks"
     },
@@ -32,20 +32,20 @@ export const WeeklyRhythmSlide = () => {
       day: "Tues / Thurs",
       icon: Headphones,
       title: "1-on-1 Call Reviews",
-      detail: "Individual coaching using call scores",
+      detail: "What's working and what's not working",
       prevention: "Catches issues before they compound"
     },
     {
       day: "Wednesday",
       icon: Users,
-      title: "Role-Playing",
+      title: "Learning Cycle",
       detail: "Live practice on weak areas",
       prevention: "Skills reinforced through repetition"
     },
     {
       day: "Friday",
       icon: Award,
-      title: "Performance Review",
+      title: "Return and Report",
       detail: "Assess results, celebrate wins, reset",
       prevention: "No week ends without accountability"
     }
