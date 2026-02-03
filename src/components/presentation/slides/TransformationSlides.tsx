@@ -31,30 +31,24 @@ export const PromiseSlide = () => (
       </h2>
       <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-8">
         <span className="text-primary font-semibold">Profit</span> is not luck.<br /><br />
-        Your <span className="text-primary font-semibold">business</span> is a result of your<br />
+        Your <span className="text-primary font-bold uppercase">Business</span> is a result of your<br />
         <span className="text-primary font-semibold">disciplined attention to detail</span>.
       </p>
       
       {/* Core Focus Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-8">
         <div className="bg-dark-card border border-primary/30 rounded-lg p-5 animate-fade-in" style={{ animationDelay: '200ms' }}>
-          <div className="p-2 bg-primary/20 rounded-full w-fit mx-auto mb-3">
-            <Heart className="w-6 h-6 text-primary" />
-          </div>
+          <div className="text-3xl mb-3">💪🏼</div>
           <h3 className="font-oswald font-bold text-sm uppercase text-primary mb-2">Body</h3>
-          <p className="text-gray-300 text-sm">Your body is a direct result of how you fuel it</p>
+          <p className="text-gray-300 text-sm">Your body is a direct result of how you move it and fuel it</p>
         </div>
         <div className="bg-dark-card border border-primary/30 rounded-lg p-5 animate-fade-in" style={{ animationDelay: '350ms' }}>
-          <div className="p-2 bg-primary/20 rounded-full w-fit mx-auto mb-3">
-            <Sparkles className="w-6 h-6 text-primary" />
-          </div>
+          <div className="text-3xl mb-3">✝️</div>
           <h3 className="font-oswald font-bold text-sm uppercase text-primary mb-2">Being</h3>
           <p className="text-gray-300 text-sm">Your being is a direct result of your pursuit of your connection to God</p>
         </div>
         <div className="bg-dark-card border border-primary/30 rounded-lg p-5 animate-fade-in" style={{ animationDelay: '500ms' }}>
-          <div className="p-2 bg-primary/20 rounded-full w-fit mx-auto mb-3">
-            <Users className="w-6 h-6 text-primary" />
-          </div>
+          <div className="text-3xl mb-3">❤️</div>
           <h3 className="font-oswald font-bold text-sm uppercase text-primary mb-2">Balance</h3>
           <p className="text-gray-300 text-sm">Your balance is a direct result of your attention to your spouse</p>
         </div>
