@@ -3,7 +3,7 @@ import { QRCodeSVG } from 'qrcode.react';
 
 // Final Slide: Questions to Ponder
 export const CTASlide = () => {
-  const bookingUrl = "https://api.leadconnectorhq.com/widget/booking/kNoEGfGlVlBEn3Fvtqrz";
+  const bookingUrl = "https://AGENCYCOACHING.as.me/standardfit";
   
   const questions = [
     "Can I explain my sales process with clarity to my team members?",
