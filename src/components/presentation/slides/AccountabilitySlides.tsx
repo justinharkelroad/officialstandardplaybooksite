@@ -133,34 +133,30 @@ export const QuadRuleSlide = () => (
   </div>
 );
 
-// Slide: Accountability Core
+// Slide: Accountability Core + Consequence Title Combined
 export const AccountabilityCoreSlide = () => (
   <div className="w-full h-full flex flex-col items-center justify-center px-8">
     <div className="text-center">
-      <h2 className="font-oswald font-bold text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight text-gray-300 mb-8 animate-fade-in">
+      <h2 className="font-oswald font-bold text-3xl md:text-4xl lg:text-5xl uppercase tracking-tight text-gray-300 mb-4 animate-fade-in">
         Accountability at its core is
       </h2>
       <h1 
-        className="font-oswald font-bold text-6xl md:text-7xl lg:text-8xl uppercase tracking-tight text-primary animate-scale-in"
-        style={{ animationDelay: '800ms', animationFillMode: 'both' }}
+        className="font-oswald font-bold text-5xl md:text-6xl lg:text-7xl uppercase tracking-tight text-primary animate-scale-in mb-12"
+        style={{ animationDelay: '600ms', animationFillMode: 'both' }}
       >
         Consequences
       </h1>
-    </div>
-  </div>
-);
-
-// Slide 18: Consequence Ladder Title
-export const ConsequenceTitleSlide = () => (
-  <div className="w-full h-full flex flex-col items-center justify-center px-8">
-    <div className="text-center animate-fade-in">
-      <h2 className="font-oswald font-bold text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight text-white mb-8">
-        Protecting Your Profit With<br />
-        <span className="text-primary">Clear Standards</span>
-      </h2>
-      <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto">
-        Fair. Transparent. Non-negotiable.
-      </p>
+      <div 
+        className="animate-fade-in"
+        style={{ animationDelay: '1200ms', animationFillMode: 'both' }}
+      >
+        <h2 className="font-oswald font-bold text-2xl md:text-3xl lg:text-4xl uppercase tracking-tight text-white mb-4">
+          Protecting Your Profit With <span className="text-primary">Clear Standards</span>
+        </h2>
+        <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">
+          Fair. Transparent. Non-negotiable.
+        </p>
+      </div>
     </div>
   </div>
 );
