@@ -28,12 +28,10 @@ import {
 import {
   Pillar3TitleSlide,
   WeeklyRhythmSlide,
-  RhythmMattersSlide,
-  CoachingResultSlide
+  RhythmMattersSlide
 } from '@/components/presentation/slides/CoachingSlides';
 import {
   TransformationSlide,
-  OutcomesSlide,
   PromiseSlide
 } from '@/components/presentation/slides/TransformationSlides';
 import {
@@ -81,18 +79,16 @@ const Presentation = () => {
       <ConsequenceLadderSlide />
       <WhyItWorksSlide />
       
-      {/* Pillar 3: Coaching Cadence (Slides 22-25) */}
+      {/* Pillar 3: Coaching Cadence */}
       <Pillar3TitleSlide />
       <WeeklyRhythmSlide />
       <RhythmMattersSlide />
-      <CoachingResultSlide />
       
-      {/* Transformation (Slides 26-28) */}
+      {/* Transformation */}
       <TransformationSlide />
-      <OutcomesSlide />
       <PromiseSlide />
       
-      {/* Close (Slides 29-30) */}
+      {/* Close */}
       <GuaranteeSlide />
       <CTASlide />
     </SlideContainer>

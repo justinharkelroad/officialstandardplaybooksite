@@ -1,6 +1,6 @@
-import { ArrowRight, TrendingUp, Settings, Rocket } from 'lucide-react';
+import { ArrowRight, TrendingUp, Settings, Rocket, Heart, Sparkles, Users } from 'lucide-react';
 
-// Slide 26: From Inefficiency to Profit
+// Slide: From Inefficiency to Profit
 export const TransformationSlide = () => (
   <div className="w-full h-full flex flex-col items-center justify-center px-8">
     <div className="text-center animate-fade-in max-w-5xl">
@@ -22,71 +22,45 @@ export const TransformationSlide = () => (
   </div>
 );
 
-// Slide 27: Three Outcomes Reframed
-export const OutcomesSlide = () => {
-  const outcomes = [
-    {
-      icon: TrendingUp,
-      title: "Certainty",
-      equals: "Predictable Profit",
-      description: "Know what your team will produce every month."
-    },
-    {
-      icon: Settings,
-      title: "Accountability",
-      equals: "Efficient Operations",
-      description: "No wasted payroll. Every hour produces value."
-    },
-    {
-      icon: Rocket,
-      title: "Scalability",
-      equals: "Profitable Growth",
-      description: "Add producers confidently. Multiply what works."
-    }
-  ];
-
-  return (
-    <div className="w-full h-full flex flex-col items-center justify-center px-8 py-12">
-      <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-4 text-center">
-        Three <span className="text-primary">Outcomes</span>
-      </h2>
-      <p className="text-lg text-gray-400 mb-12 text-center">What disciplined details deliver</p>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl w-full">
-        {outcomes.map((outcome, index) => (
-          <div 
-            key={index}
-            className="bg-dark-card border border-primary/30 rounded-lg p-8 text-center animate-fade-in"
-            style={{ animationDelay: `${index * 200}ms` }}
-          >
-            <div className="p-4 bg-primary/20 rounded-full w-fit mx-auto mb-6">
-              <outcome.icon className="w-10 h-10 text-primary" />
-            </div>
-            <h3 className="font-oswald font-bold text-2xl uppercase text-white mb-2">
-              {outcome.title}
-            </h3>
-            <p className="text-primary font-semibold text-lg mb-4">= {outcome.equals}</p>
-            <p className="text-gray-400">{outcome.description}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-// Slide 28: The Promise
+// Slide: The Promise with Core Four
 export const PromiseSlide = () => (
-  <div className="w-full h-full flex flex-col items-center justify-center px-8">
-    <div className="text-center animate-fade-in">
-      <h2 className="font-oswald font-bold text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight text-white mb-8">
+  <div className="w-full h-full flex flex-col items-center justify-center px-8 py-8">
+    <div className="text-center animate-fade-in max-w-5xl">
+      <h2 className="font-oswald font-bold text-3xl md:text-4xl lg:text-5xl uppercase tracking-tight text-white mb-6">
         The Promise
       </h2>
-      <p className="text-2xl md:text-3xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+      <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-8">
         <span className="text-primary font-semibold">Profit</span> is not luck.<br /><br />
-        It is the result of<br />
+        Your <span className="text-primary font-semibold">business</span> is a result of your<br />
         <span className="text-primary font-semibold">disciplined attention to detail</span>.
       </p>
-      <div className="mt-12 h-1 w-32 bg-primary/50 mx-auto"></div>
+      
+      {/* Core Focus Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-8">
+        <div className="bg-dark-card border border-primary/30 rounded-lg p-5 animate-fade-in" style={{ animationDelay: '200ms' }}>
+          <div className="p-2 bg-primary/20 rounded-full w-fit mx-auto mb-3">
+            <Heart className="w-6 h-6 text-primary" />
+          </div>
+          <h3 className="font-oswald font-bold text-sm uppercase text-primary mb-2">Body</h3>
+          <p className="text-gray-300 text-sm">Your body is a direct result of how you fuel it</p>
+        </div>
+        <div className="bg-dark-card border border-primary/30 rounded-lg p-5 animate-fade-in" style={{ animationDelay: '350ms' }}>
+          <div className="p-2 bg-primary/20 rounded-full w-fit mx-auto mb-3">
+            <Sparkles className="w-6 h-6 text-primary" />
+          </div>
+          <h3 className="font-oswald font-bold text-sm uppercase text-primary mb-2">Being</h3>
+          <p className="text-gray-300 text-sm">Your being is a direct result of your pursuit of your connection to God</p>
+        </div>
+        <div className="bg-dark-card border border-primary/30 rounded-lg p-5 animate-fade-in" style={{ animationDelay: '500ms' }}>
+          <div className="p-2 bg-primary/20 rounded-full w-fit mx-auto mb-3">
+            <Users className="w-6 h-6 text-primary" />
+          </div>
+          <h3 className="font-oswald font-bold text-sm uppercase text-primary mb-2">Balance</h3>
+          <p className="text-gray-300 text-sm">Your balance is a direct result of your attention to your spouse</p>
+        </div>
+      </div>
+      
+      <div className="h-1 w-32 bg-primary/50 mx-auto"></div>
     </div>
   </div>
 );
