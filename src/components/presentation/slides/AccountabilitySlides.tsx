@@ -53,15 +53,8 @@ export const InconsistencyCostSlide = () => (
 export const QuadIntroSlide = () => (
   <div className="w-full h-full flex flex-col items-center justify-center px-8">
     <div className="text-center animate-fade-in">
-      <h2 className="font-oswald font-bold text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight text-white mb-8">
-        The Quad
-      </h2>
       <p className="text-2xl md:text-3xl text-gray-300 max-w-3xl mx-auto">
-        Four metrics that define <span className="text-primary font-semibold">productive</span> versus <span className="text-red-400 font-semibold">wasteful</span> days.
-      </p>
-      <div className="mt-12 h-1 w-32 bg-primary/50 mx-auto"></div>
-      <p className="text-xl text-gray-400 mt-8">
-        When you measure what matters, you manage what matters.
+        You must find the metrics that your agency defines as <span className="text-primary font-semibold">productive</span> and <span className="text-primary font-semibold">required habits</span> instead of just <span className="text-red-400 font-semibold">"following the crowd"</span>.
       </p>
     </div>
   </div>
@@ -95,7 +88,7 @@ export const QuadMetricsSlide = () => {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center px-8 py-12">
       <h2 className="font-oswald font-bold text-4xl md:text-5xl uppercase tracking-tight text-white mb-4 text-center">
-        The <span className="text-primary">Four Metrics</span>
+        The Four (<span className="text-red-400">Possible</span>) <span className="text-primary">Metrics</span>
       </h2>
       <p className="text-lg text-gray-400 mb-12 text-center">Each one a detail that compounds into profit</p>
       
