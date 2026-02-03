@@ -35,7 +35,6 @@ import {
   PromiseSlide
 } from '@/components/presentation/slides/TransformationSlides';
 import {
-  GuaranteeSlide,
   CTASlide
 } from '@/components/presentation/slides/CTASlides';
 
@@ -89,7 +88,6 @@ const Presentation = () => {
       <PromiseSlide />
       
       {/* Close */}
-      <GuaranteeSlide />
       <CTASlide />
     </SlideContainer>
   );
