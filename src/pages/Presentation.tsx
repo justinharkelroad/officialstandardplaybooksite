@@ -23,7 +23,6 @@ import {
   QuadRuleSlide,
   AccountabilityCoreSlide,
   ConsequenceLadderSlide,
-  CallScoringSlide,
   WhyItWorksSlide
 } from '@/components/presentation/slides/AccountabilitySlides';
 import {
@@ -80,7 +79,6 @@ const Presentation = () => {
       <QuadRuleSlide />
       <AccountabilityCoreSlide />
       <ConsequenceLadderSlide />
-      <CallScoringSlide />
       <WhyItWorksSlide />
       
       {/* Pillar 3: Coaching Cadence (Slides 22-25) */}
