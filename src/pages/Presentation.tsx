@@ -22,7 +22,6 @@ import {
   QuadMetricsSlide,
   QuadRuleSlide,
   AccountabilityCoreSlide,
-  ConsequenceTitleSlide,
   ConsequenceLadderSlide,
   CallScoringSlide,
   WhyItWorksSlide
@@ -80,7 +79,6 @@ const Presentation = () => {
       <QuadMetricsSlide />
       <QuadRuleSlide />
       <AccountabilityCoreSlide />
-      <ConsequenceTitleSlide />
       <ConsequenceLadderSlide />
       <CallScoringSlide />
       <WhyItWorksSlide />
