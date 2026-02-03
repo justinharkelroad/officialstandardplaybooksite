@@ -161,75 +161,62 @@ export const AccountabilityCoreSlide = () => (
   </div>
 );
 
-// Slide 16: Consequence Ladder Visual - Diagonal Ladder
+// Slide 16: Consequence Ladder Visual - Clean Vertical Ladder
 export const ConsequenceLadderSlide = () => {
   const steps = [
-    { step: 1, action: "Verbal Warning", color: "border-green-500/40 text-green-400" },
-    { step: 2, action: "Second Verbal", color: "border-green-500/40 text-green-400" },
-    { step: 3, action: "Written Warning", color: "border-yellow-500/40 text-yellow-400" },
-    { step: 4, action: "Second Written", color: "border-yellow-500/40 text-yellow-400" },
-    { step: 5, action: "Financial", color: "border-orange-500/40 text-orange-400" },
-    { step: 6, action: "Second Financial", color: "border-orange-500/40 text-orange-400" },
-    { step: 7, action: "Job in Jeopardy", color: "border-red-500/40 text-red-400" },
-    { step: 8, action: "Termination", color: "border-red-600/50 text-red-500 bg-red-600/20" }
+    { step: 1, action: "Verbal Warning", textColor: "text-green-400", borderColor: "border-green-500", bgColor: "bg-green-500/10" },
+    { step: 2, action: "Second Verbal Warning", textColor: "text-green-400", borderColor: "border-green-500", bgColor: "bg-green-500/10" },
+    { step: 3, action: "Written Warning", textColor: "text-yellow-400", borderColor: "border-yellow-500", bgColor: "bg-yellow-500/10" },
+    { step: 4, action: "Second Written Warning", textColor: "text-yellow-400", borderColor: "border-yellow-500", bgColor: "bg-yellow-500/10" },
+    { step: 5, action: "Financial Consequence", textColor: "text-orange-400", borderColor: "border-orange-500", bgColor: "bg-orange-500/10" },
+    { step: 6, action: "Second Financial Consequence", textColor: "text-orange-400", borderColor: "border-orange-500", bgColor: "bg-orange-500/10" },
+    { step: 7, action: "Job in Jeopardy", textColor: "text-red-400", borderColor: "border-red-500", bgColor: "bg-red-500/10" },
+    { step: 8, action: "Termination", textColor: "text-red-500", borderColor: "border-red-600", bgColor: "bg-red-600/20" }
   ];
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center px-4 py-6 overflow-hidden">
-      <h2 className="font-oswald font-bold text-2xl md:text-3xl uppercase tracking-tight text-white mb-6 text-center">
+    <div className="w-full h-full flex flex-col items-center justify-center px-8 py-6">
+      <h2 className="font-oswald font-bold text-3xl md:text-4xl uppercase tracking-tight text-white mb-8 text-center">
         The (<span className="text-red-400">Example</span>) <span className="text-primary">Consequence</span> Ladder
       </h2>
       
-      <div className="relative w-full max-w-4xl h-[70vh] flex items-center justify-center">
-        {/* Happy Employee at Top */}
-        <div className="absolute top-0 left-8 md:left-16 animate-fade-in flex flex-col items-center">
-          <div className="p-3 bg-green-500/20 rounded-full border-2 border-green-500/50 mb-2">
-            <Smile className="w-8 h-8 md:w-10 md:h-10 text-green-400" />
-          </div>
-          <span className="text-green-400 font-oswald text-xs md:text-sm uppercase tracking-wider">Thriving</span>
-        </div>
+      <div className="relative flex items-stretch max-w-2xl w-full">
+        {/* Left Rail */}
+        <div className="w-1 bg-gradient-to-b from-green-500 via-yellow-500 via-orange-500 to-red-600 rounded-full mr-4"></div>
         
-        {/* Diagonal Ladder */}
-        <div className="relative w-full h-full">
-          {/* Ladder Rails */}
-          <div className="absolute top-8 left-20 md:left-32 bottom-8 right-20 md:right-32">
-            <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-green-500/50 via-yellow-500/50 via-orange-500/50 to-red-600/50 transform -rotate-12 origin-top"></div>
-            <div className="absolute top-0 right-0 w-1 h-full bg-gradient-to-b from-green-500/50 via-yellow-500/50 via-orange-500/50 to-red-600/50 transform rotate-12 origin-top"></div>
+        {/* Ladder Rungs */}
+        <div className="flex-1 flex flex-col gap-2">
+          {/* Happy Employee at Top */}
+          <div className="flex items-center gap-3 mb-2 animate-fade-in">
+            <div className="p-2 bg-green-500/20 rounded-full border border-green-500/50">
+              <Smile className="w-5 h-5 text-green-400" />
+            </div>
+            <span className="text-green-400 font-oswald text-sm uppercase tracking-wider">Thriving Employee</span>
           </div>
           
-          {/* Ladder Rungs - Diagonal Steps */}
-          <div className="absolute inset-0 flex flex-col justify-between py-12 px-8 md:px-20">
-            {steps.map((item, index) => {
-              const offsetPercent = (index / (steps.length - 1)) * 30;
-              return (
-                <div 
-                  key={index}
-                  className={`flex items-center gap-3 animate-fade-in border-l-4 ${item.color} pl-3 py-1 bg-dark-card/50 rounded-r-lg backdrop-blur-sm`}
-                  style={{ 
-                    animationDelay: `${index * 100}ms`,
-                    marginLeft: `${offsetPercent}%`,
-                    marginRight: `${30 - offsetPercent}%`
-                  }}
-                >
-                  <div className={`text-lg md:text-xl font-oswald font-bold ${item.color.split(' ').find(c => c.startsWith('text-'))}`}>
-                    {item.step}
-                  </div>
-                  <p className={`text-xs md:text-sm font-medium ${item.color.split(' ').find(c => c.startsWith('text-'))}`}>
-                    {item.action}
-                  </p>
-                </div>
-              );
-            })}
+          {/* Steps */}
+          {steps.map((item, index) => (
+            <div 
+              key={index}
+              className={`flex items-center gap-4 px-4 py-2 rounded-lg border-l-4 ${item.borderColor} ${item.bgColor} animate-fade-in`}
+              style={{ animationDelay: `${index * 80}ms` }}
+            >
+              <span className={`font-oswald font-bold text-xl ${item.textColor}`}>{item.step}</span>
+              <span className={`font-medium ${item.textColor}`}>{item.action}</span>
+            </div>
+          ))}
+          
+          {/* Exit at Bottom */}
+          <div className="flex items-center gap-3 mt-2 animate-fade-in justify-end" style={{ animationDelay: '700ms' }}>
+            <span className="text-red-500 font-oswald text-sm uppercase tracking-wider">Exit</span>
+            <div className="p-2 bg-red-600/20 rounded-full border border-red-600/50">
+              <XCircle className="w-5 h-5 text-red-500" />
+            </div>
           </div>
         </div>
         
-        {/* Termination Icon at Bottom */}
-        <div className="absolute bottom-0 right-8 md:right-16 animate-fade-in flex flex-col items-center" style={{ animationDelay: '900ms' }}>
-          <span className="text-red-500 font-oswald text-xs md:text-sm uppercase tracking-wider mb-2">Exit</span>
-          <div className="p-3 bg-red-600/20 rounded-full border-2 border-red-600/50">
-            <XCircle className="w-8 h-8 md:w-10 md:h-10 text-red-500" />
-          </div>
-        </div>
+        {/* Right Rail */}
+        <div className="w-1 bg-gradient-to-b from-green-500 via-yellow-500 via-orange-500 to-red-600 rounded-full ml-4"></div>
       </div>
     </div>
   );
