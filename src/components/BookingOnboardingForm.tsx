@@ -192,20 +192,20 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 text-white">
       {/* Progress Header */}
       <div className="space-y-3">
         <div className="flex justify-between items-center text-sm">
-          <span className="text-muted-foreground">Step {step} of 2</span>
+          <span className="text-gray-400">Step {step} of 2</span>
           {isSaving && (
-            <span className="text-muted-foreground flex items-center gap-1 text-xs">
+            <span className="text-gray-400 flex items-center gap-1 text-xs">
               <Loader2 className="h-3 w-3 animate-spin" />
               Saving...
             </span>
           )}
         </div>
         <Progress value={step * 50} className="h-2" />
-        <h2 className="text-xl font-semibold text-foreground">
+        <h2 className="text-xl font-semibold text-white">
           {step === 1 ? 'Contact Information' : 'Tell Us About Your Team'}
         </h2>
       </div>
@@ -213,40 +213,40 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
       {step === 1 ? (
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="full_name">Full Name *</Label>
+            <Label htmlFor="full_name" className="text-gray-300">Full Name *</Label>
             <Input
               id="full_name"
               type="text"
               placeholder="John Smith"
               value={formData.full_name}
               onChange={(e) => updateField('full_name', e.target.value)}
-              className="bg-dark-card border-border text-foreground placeholder:text-muted-foreground"
+              className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email">Email *</Label>
+            <Label htmlFor="email" className="text-gray-300">Email *</Label>
             <Input
               id="email"
               type="email"
               placeholder="john@agency.com"
               value={formData.email}
               onChange={(e) => updateField('email', e.target.value)}
-              className="bg-dark-card border-border text-foreground placeholder:text-muted-foreground"
+              className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="cell_phone">Cell Phone *</Label>
+            <Label htmlFor="cell_phone" className="text-gray-300">Cell Phone *</Label>
             <Input
               id="cell_phone"
               type="tel"
               placeholder="(555) 123-4567"
               value={formData.cell_phone}
               onChange={(e) => updateField('cell_phone', e.target.value)}
-              className="bg-dark-card border-border text-foreground placeholder:text-muted-foreground"
+              className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500"
             />
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-gray-400">
               Please enter your personal cell phone, NOT your agency phone number
             </p>
           </div>
@@ -314,14 +314,14 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="committed">
+            <Label htmlFor="committed" className="text-gray-300">
               Are you committed to showing up for the call? *
             </Label>
             <Select
               value={formData.committed === null ? '' : formData.committed ? 'yes' : 'no'}
               onValueChange={(value) => updateField('committed', value === 'yes')}
             >
-              <SelectTrigger className="bg-dark-card border-border text-foreground">
+              <SelectTrigger className="bg-slate-800 border-slate-600 text-white">
                 <SelectValue placeholder="Select an option" />
               </SelectTrigger>
               <SelectContent>
@@ -330,7 +330,7 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
               </SelectContent>
             </Select>
             {formData.committed === false && (
-              <p className="text-xs text-destructive">
+              <p className="text-xs text-red-400">
                 We only work with people who are 100% committed to showing up. If there's any hesitation, we may not be the right fit.
               </p>
             )}
