@@ -183,13 +183,25 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
   const handleComplete = async () => {
     if (!isStep2Valid()) return;
 
-    // Mark as completed and save
     try {
       await supabase
         .from('booking_leads')
         .update({ completed: true })
         .eq('session_id', sessionId);
-      
+
+      // Send email notification (fire and forget)
+      supabase.functions.invoke('send-booking-notification', {
+        body: {
+          full_name: formData.full_name,
+          email: formData.email,
+          cell_phone: formData.cell_phone,
+          primary_carrier: formData.primary_carrier,
+          whats_working: formData.whats_working,
+          whats_not_working: formData.whats_not_working,
+          desired_outcome: formData.desired_outcome,
+        },
+      }).catch(err => console.error('Email notification error:', err));
+
       onComplete();
     } catch (error) {
       console.error('Error completing form:', error);
