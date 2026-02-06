@@ -277,19 +277,19 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
       ) : (
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="primary_carrier">Primary Carrier *</Label>
+            <Label htmlFor="primary_carrier" className="text-gray-300">Primary Carrier *</Label>
             <Input
               id="primary_carrier"
               type="text"
               placeholder="e.g., State Farm, Allstate"
               value={formData.primary_carrier}
               onChange={(e) => updateField('primary_carrier', e.target.value)}
-              className="bg-dark-card border-border text-foreground placeholder:text-muted-foreground"
+              className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="whats_working">
+            <Label htmlFor="whats_working" className="text-gray-300">
               What do you feel like is WORKING right now inside of your sales team? *
             </Label>
             <Textarea
@@ -297,12 +297,12 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
               placeholder="Describe what's working well..."
               value={formData.whats_working}
               onChange={(e) => updateField('whats_working', e.target.value)}
-              className="bg-dark-card border-border text-foreground placeholder:text-muted-foreground min-h-[80px]"
+              className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500 min-h-[80px]"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="whats_not_working">
+            <Label htmlFor="whats_not_working" className="text-gray-300">
               What do you feel like is NOT WORKING right now inside of your sales team? *
             </Label>
             <Textarea
@@ -310,12 +310,12 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
               placeholder="Describe what's not working..."
               value={formData.whats_not_working}
               onChange={(e) => updateField('whats_not_working', e.target.value)}
-              className="bg-dark-card border-border text-foreground placeholder:text-muted-foreground min-h-[80px]"
+              className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500 min-h-[80px]"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="desired_outcome">
+            <Label htmlFor="desired_outcome" className="text-gray-300">
               What is the desired outcome in your mind for our call? *
             </Label>
             <Textarea
@@ -323,7 +323,7 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
               placeholder="What do you hope to achieve from this call?"
               value={formData.desired_outcome}
               onChange={(e) => updateField('desired_outcome', e.target.value)}
-              className="bg-dark-card border-border text-foreground placeholder:text-muted-foreground min-h-[80px]"
+              className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500 min-h-[80px]"
             />
           </div>
 
