@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import BookingOnboardingForm from './BookingOnboardingForm';
 
 interface BookingModalProps {
   trigger: React.ReactNode;
@@ -7,10 +8,18 @@ interface BookingModalProps {
 
 const BookingModal = ({ trigger }: BookingModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [step, setStep] = useState<'form' | 'schedule'>('form');
+
+  // Reset to form step when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setStep('form');
+    }
+  }, [isOpen]);
 
   useEffect(() => {
-    // Load Acuity script when modal opens
-    if (isOpen) {
+    // Load Acuity script when showing schedule step
+    if (isOpen && step === 'schedule') {
       const script = document.createElement('script');
       script.src = 'https://embed.acuityscheduling.com/js/embed.js';
       script.type = 'text/javascript';
@@ -58,7 +67,11 @@ const BookingModal = ({ trigger }: BookingModalProps) => {
         window.removeEventListener('message', handleMessage);
       };
     }
-  }, [isOpen]);
+  }, [isOpen, step]);
+
+  const handleFormComplete = () => {
+    setStep('schedule');
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -68,16 +81,22 @@ const BookingModal = ({ trigger }: BookingModalProps) => {
       <DialogContent className="max-w-4xl w-full bg-dark-card border-primary/20 max-h-[90vh] overflow-y-auto p-0">
         <DialogTitle className="sr-only">Book Your Consultation</DialogTitle>
         <DialogDescription className="sr-only">Schedule your consultation appointment</DialogDescription>
-        <div className="w-full h-[80vh]">
-          <iframe title="Schedule your consultation" 
-            src="https://app.acuityscheduling.com/schedule.php?owner=27963178&appointmentType=73884639&embed=1" 
-            width="100%" 
-            height="100%" 
-            frameBorder="0" 
-            allow="payment"
-            className="rounded-lg"
-          />
-        </div>
+        
+        {step === 'form' ? (
+          <BookingOnboardingForm onComplete={handleFormComplete} />
+        ) : (
+          <div className="w-full h-[80vh]">
+            <iframe 
+              title="Schedule your consultation" 
+              src="https://app.acuityscheduling.com/schedule.php?owner=27963178&appointmentType=73884639&embed=1" 
+              width="100%" 
+              height="100%" 
+              frameBorder="0" 
+              allow="payment"
+              className="rounded-lg"
+            />
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );
