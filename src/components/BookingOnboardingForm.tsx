@@ -137,6 +137,19 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const formatPhoneNumber = (value: string) => {
+    const digits = value.replace(/\D/g, '').slice(0, 10);
+    if (digits.length === 0) return '';
+    if (digits.length <= 3) return `(${digits}`;
+    if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    updateField('cell_phone', formatted);
+  };
+
   const isStep1Valid = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[\d\s\-\(\)\+]{10,}$/;
@@ -243,7 +256,8 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
               type="tel"
               placeholder="(555) 123-4567"
               value={formData.cell_phone}
-              onChange={(e) => updateField('cell_phone', e.target.value)}
+              onChange={handlePhoneChange}
+              maxLength={14}
               className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500"
             />
             <p className="text-xs text-gray-400">
