@@ -220,7 +220,7 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
               placeholder="John Smith"
               value={formData.full_name}
               onChange={(e) => updateField('full_name', e.target.value)}
-              className="bg-background border-input"
+              className="bg-dark-card border-border text-foreground placeholder:text-muted-foreground"
             />
           </div>
 
@@ -232,7 +232,7 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
               placeholder="john@agency.com"
               value={formData.email}
               onChange={(e) => updateField('email', e.target.value)}
-              className="bg-background border-input"
+              className="bg-dark-card border-border text-foreground placeholder:text-muted-foreground"
             />
           </div>
 
@@ -244,7 +244,7 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
               placeholder="(555) 123-4567"
               value={formData.cell_phone}
               onChange={(e) => updateField('cell_phone', e.target.value)}
-              className="bg-background border-input"
+              className="bg-dark-card border-border text-foreground placeholder:text-muted-foreground"
             />
             <p className="text-xs text-muted-foreground">
               Please enter your personal cell phone, NOT your agency phone number
@@ -270,7 +270,7 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
               placeholder="e.g., State Farm, Allstate"
               value={formData.primary_carrier}
               onChange={(e) => updateField('primary_carrier', e.target.value)}
-              className="bg-background border-input"
+              className="bg-dark-card border-border text-foreground placeholder:text-muted-foreground"
             />
           </div>
 
@@ -283,7 +283,7 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
               placeholder="Describe what's working well..."
               value={formData.whats_working}
               onChange={(e) => updateField('whats_working', e.target.value)}
-              className="bg-background border-input min-h-[80px]"
+              className="bg-dark-card border-border text-foreground placeholder:text-muted-foreground min-h-[80px]"
             />
           </div>
 
@@ -296,7 +296,7 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
               placeholder="Describe what's not working..."
               value={formData.whats_not_working}
               onChange={(e) => updateField('whats_not_working', e.target.value)}
-              className="bg-background border-input min-h-[80px]"
+              className="bg-dark-card border-border text-foreground placeholder:text-muted-foreground min-h-[80px]"
             />
           </div>
 
@@ -309,7 +309,7 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
               placeholder="What do you hope to achieve from this call?"
               value={formData.desired_outcome}
               onChange={(e) => updateField('desired_outcome', e.target.value)}
-              className="bg-background border-input min-h-[80px]"
+              className="bg-dark-card border-border text-foreground placeholder:text-muted-foreground min-h-[80px]"
             />
           </div>
 
@@ -321,7 +321,7 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
               value={formData.committed === null ? '' : formData.committed ? 'yes' : 'no'}
               onValueChange={(value) => updateField('committed', value === 'yes')}
             >
-              <SelectTrigger className="bg-background border-input">
+              <SelectTrigger className="bg-dark-card border-border text-foreground">
                 <SelectValue placeholder="Select an option" />
               </SelectTrigger>
               <SelectContent>
