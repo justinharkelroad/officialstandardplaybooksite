@@ -32,7 +32,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const emailResponse = await resend.emails.send({
-      from: "Standard Playbook <booking@send.standardplaybook.com>",
+      from: "Standard Playbook <booking@standardplaybook.com>",
       to: ["info@standardplaybook.com"],
       subject: `New Booking Lead: ${lead.full_name}`,
       html: `
