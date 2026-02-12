@@ -200,6 +200,9 @@ const ScrollytellingHero = () => {
                 </div>
               ))}
             </div>
+            <p className="font-oswald text-xl sm:text-2xl md:text-3xl text-blue-400 text-center max-w-4xl mx-auto mt-12 leading-relaxed">
+              Your inconsistency is directly connected to your lack of clarity in the process &amp; follow through, I promise you. You will be able to hold your current team accountable AND hire a new team member into complete and clear structure for maybe the 1st time ever.
+            </p>
           </div>
         </motion.div>
       </div>
