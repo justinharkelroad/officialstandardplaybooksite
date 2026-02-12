@@ -428,6 +428,7 @@ const OfferLadderSection = () => {
       <h2 className="font-oswald font-bold text-3xl md:text-6xl text-white">
         Three ways in.<br />One standard.
       </h2>
+      <p className="text-blue-400 text-sm md:text-base mt-4 tracking-wide">No Commitments or Contracts...Ever</p>
     </Reveal>
 
     <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
