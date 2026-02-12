@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, useEffect, createRef } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -136,9 +136,7 @@ const PivotSection = () => (
 /* ══════════════════════════════════════════════════════
    SECTION 3 — THE OPERATING SYSTEM (Agency Brain)
    ══════════════════════════════════════════════════════ */
-const STORAGE_BASE = 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public';
-
-const brainCards: { headline: string; sub: string; img: string; label: string; video?: string }[] = [
+const brainCards = [
   { headline: 'Stop Guessing.', sub: 'See every lead, every stage, every dollar — in real time.', img: lqsImg, label: 'Pipeline Intelligence' },
   { headline: 'Total Visibility.', sub: 'Know exactly where your team stands every single day.', img: salesDashImg, label: 'Sales Dashboard' },
   { headline: 'Stop the Bleed.', sub: 'Catch cancellations before they cost you.', img: winbackImg, label: 'Winback HQ' },
@@ -146,7 +144,7 @@ const brainCards: { headline: string; sub: string; img: string; label: string; v
   { headline: 'Track Your ROI.', sub: 'See exactly what your marketing spend is producing — leads, quotes, premium, commission.', img: marketingRoiImg, label: 'Marketing ROI' },
   { headline: 'Sales Breakdown.', sub: 'Drill into premium, items, policies, and points — by date, source, or bundle.', img: salesAnalyticsImg, label: 'Sales Analytics' },
   { headline: 'Score Every Call.', sub: 'AI-powered call audits with execution checklists and talk-to-listen ratios.', img: callScoringImg, label: 'Call Scoring' },
-  { headline: 'Train Your Team.', sub: 'A full training library with structured bootcamps — accessible right inside the app.', img: teamTrainingImg, label: 'Team Training', video: `${STORAGE_BASE}/The Standard This is the 8 week experience.mp4` },
+  { headline: 'Train Your Team.', sub: 'A full training library with structured bootcamps — accessible right inside the app.', img: teamTrainingImg, label: 'Team Training' },
   { headline: 'Practice Makes Perfect.', sub: 'AI roleplay bot lets your producers sharpen their pitch anytime, anywhere.', img: aiRoleplayImg, label: 'AI Roleplay Trainer' },
   { headline: 'Cancel Audit.', sub: 'Track cancellations, at-risk premium, and saved dollars — week by week.', img: cancelAuditImg, label: 'Cancel Audit' },
   { headline: 'Set Your Targets.', sub: 'Plan your 90-day action map — quarterly goals broken into daily habits.', img: targetSettingImg, label: 'Target Setting' },
@@ -158,40 +156,6 @@ const AgencyBrainSection = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [slideStyles, setSlideStyles] = useState<React.CSSProperties[]>([]);
-  const [mutedIndex, setMutedIndex] = useState<number | null>(null); // which card is unmuted (null = all muted)
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>(brainCards.map(() => null));
-
-  // Play/pause videos based on active slide
-  useEffect(() => {
-    videoRefs.current.forEach((video, i) => {
-      if (!video) return;
-      if (i === selectedIndex) {
-        video.play().catch(() => {});
-      } else {
-        video.pause();
-        video.muted = true; // mute non-active
-      }
-    });
-    // If unmuted card is no longer active, reset
-    if (mutedIndex !== null && mutedIndex !== selectedIndex) {
-      setMutedIndex(null);
-    }
-  }, [selectedIndex]);
-
-  const toggleSound = (index: number) => {
-    const video = videoRefs.current[index];
-    if (!video) return;
-    if (mutedIndex === index) {
-      // mute it
-      video.muted = true;
-      setMutedIndex(null);
-    } else {
-      // mute all others, unmute this one
-      videoRefs.current.forEach((v) => { if (v) v.muted = true; });
-      video.muted = false;
-      setMutedIndex(index);
-    }
-  };
 
   const computeStyles = useCallback(() => {
     if (!emblaApi) return;
@@ -268,48 +232,15 @@ const AgencyBrainSection = () => {
                   className="flex-[0_0_80%] sm:flex-[0_0_55%] md:flex-[0_0_45%] min-w-0 px-3"
                   style={slideStyles[index] || {}}
                 >
-                  {card.video ? (
-                    /* ── Video Card ── */
-                    <div className="relative group rounded-2xl overflow-hidden border border-white/10 aspect-[9/16] max-h-[520px]">
-                      <video
-                        ref={(el) => { videoRefs.current[index] = el; }}
-                        src={card.video}
-                        poster={card.img}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                      {/* Gradient overlay for text readability */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/50" />
-                      {/* Sound toggle */}
-                      <button
-                        onClick={() => toggleSound(index)}
-                        className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-black/70 transition-colors"
-                        aria-label={mutedIndex === index ? 'Mute' : 'Unmute'}
-                      >
-                        {mutedIndex === index ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
-                      </button>
-                      {/* Text overlay */}
-                      <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
-                        <p className="text-xs uppercase tracking-widest text-blue-400 mb-2">{card.label}</p>
-                        <h3 className="font-oswald font-bold text-2xl text-white mb-2">{card.headline}</h3>
-                        <p className="text-gray-300 text-sm">{card.sub}</p>
-                      </div>
+                  <div className="relative group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 hover:border-blue-500/40 transition-colors duration-500">
+                    <p className="text-xs uppercase tracking-widest text-blue-400 mb-2">{card.label}</p>
+                    <h3 className="font-oswald font-bold text-2xl text-white mb-2">{card.headline}</h3>
+                    <p className="text-gray-400 text-sm mb-6">{card.sub}</p>
+                    <div className="relative">
+                      <img src={card.img} alt={card.label} className="w-full rounded-xl shadow-2xl shadow-blue-500/10 group-hover:scale-[1.02] transition-transform duration-500" />
+                      <div className="absolute -inset-4 bg-blue-500/10 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
                     </div>
-                  ) : (
-                    /* ── Static Image Card ── */
-                    <div className="relative group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 hover:border-blue-500/40 transition-colors duration-500">
-                      <p className="text-xs uppercase tracking-widest text-blue-400 mb-2">{card.label}</p>
-                      <h3 className="font-oswald font-bold text-2xl text-white mb-2">{card.headline}</h3>
-                      <p className="text-gray-400 text-sm mb-6">{card.sub}</p>
-                      <div className="relative">
-                        <img src={card.img} alt={card.label} className="w-full rounded-xl shadow-2xl shadow-blue-500/10 group-hover:scale-[1.02] transition-transform duration-500" />
-                        <div className="absolute -inset-4 bg-blue-500/10 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
-                      </div>
-                    </div>
-                  )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -364,6 +295,7 @@ const offers = [
     cta: 'Join The Boardroom',
     href: '/boardroom',
     img: null,
+    video: null,
   },
   {
     tag: 'THE TRAINING',
@@ -373,6 +305,7 @@ const offers = [
     cta: 'Explore The Experience',
     href: '/sales-experience',
     img: trainingImg,
+    video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/The Standard This is the 8 week experience.mp4',
   },
   {
     tag: 'THE PARTNERSHIP',
@@ -383,10 +316,21 @@ const offers = [
     href: 'https://AGENCYCOACHING.as.me/standardfit',
     external: true,
     img: null,
+    video: null,
   },
 ];
 
-const OfferLadderSection = () => (
+const OfferLadderSection = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const toggleSound = () => {
+    if (!videoRef.current) return;
+    videoRef.current.muted = !videoRef.current.muted;
+    setIsMuted(videoRef.current.muted);
+  };
+
+  return (
   <section className="relative py-24 md:py-40 px-6 bg-black">
     <Reveal className="text-center mb-16 md:mb-24 max-w-3xl mx-auto">
       <p className="text-sm uppercase tracking-[0.3em] text-blue-400 mb-3">Choose Your Path</p>
@@ -398,48 +342,87 @@ const OfferLadderSection = () => (
     <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
       {offers.map((offer, i) => (
         <Reveal key={offer.tag} delay={i * 0.12}>
-          <div className="group relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 flex flex-col h-full hover:border-blue-500/40 transition-colors duration-500">
+          <div className="group relative rounded-2xl border border-white/10 overflow-hidden flex flex-col h-full hover:border-blue-500/40 transition-colors duration-500">
             {/* Hover glow */}
             <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-xl" />
 
-            <p className="text-xs uppercase tracking-widest text-blue-400 mb-4">{offer.tag}</p>
-            <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-3">{offer.title}</h3>
-            <p className="text-gray-400 mb-6 flex-grow">{offer.description}</p>
-
-            {offer.img && (
-              <img src={offer.img} alt={offer.title} className="w-full rounded-xl mb-6 shadow-lg shadow-blue-500/5" />
-            )}
-
-            {offer.price && (
-              <p className="font-oswald font-bold text-3xl text-white mb-6">{offer.price}</p>
-            )}
-
-            {/* Notification card for Partnership */}
-            {offer.tag === 'THE PARTNERSHIP' && (
-              <div className="rounded-xl border border-white/10 bg-white/[0.05] p-4 mb-6 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0">
-                  <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+            {offer.video ? (
+              /* ── Video Background Card ── */
+              <>
+                <video
+                  ref={videoRef}
+                  src={offer.video}
+                  poster={offer.img || undefined}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/60" />
+                {/* Sound toggle */}
+                <button
+                  onClick={toggleSound}
+                  className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+                  aria-label={isMuted ? 'Unmute' : 'Mute'}
+                >
+                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                </button>
+                <div className="relative z-10 p-8 flex flex-col h-full min-h-[400px] justify-end">
+                  <p className="text-xs uppercase tracking-widest text-blue-400 mb-4">{offer.tag}</p>
+                  <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-3">{offer.title}</h3>
+                  <p className="text-gray-300 mb-6 flex-grow">{offer.description}</p>
+                  <a
+                    href={offer.href}
+                    className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+                  >
+                    {offer.cta}
+                  </a>
                 </div>
-                <div>
-                  <p className="text-white text-sm font-semibold">New Video Message</p>
-                  <p className="text-gray-500 text-xs">Justin just sent a strategy breakdown</p>
-                </div>
+              </>
+            ) : (
+              /* ── Static Card ── */
+              <div className="bg-white/[0.03] backdrop-blur-xl p-8 flex flex-col h-full">
+                <p className="text-xs uppercase tracking-widest text-blue-400 mb-4">{offer.tag}</p>
+                <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-3">{offer.title}</h3>
+                <p className="text-gray-400 mb-6 flex-grow">{offer.description}</p>
+
+                {offer.img && (
+                  <img src={offer.img} alt={offer.title} className="w-full rounded-xl mb-6 shadow-lg shadow-blue-500/5" />
+                )}
+
+                {offer.price && (
+                  <p className="font-oswald font-bold text-3xl text-white mb-6">{offer.price}</p>
+                )}
+
+                {offer.tag === 'THE PARTNERSHIP' && (
+                  <div className="rounded-xl border border-white/10 bg-white/[0.05] p-4 mb-6 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0">
+                      <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                    </div>
+                    <div>
+                      <p className="text-white text-sm font-semibold">New Video Message</p>
+                      <p className="text-gray-500 text-xs">Justin just sent a strategy breakdown</p>
+                    </div>
+                  </div>
+                )}
+
+                <a
+                  href={offer.href}
+                  {...(offer.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+                >
+                  {offer.cta}
+                </a>
               </div>
             )}
-
-            <a
-              href={offer.href}
-              {...(offer.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
-            >
-              {offer.cta}
-            </a>
           </div>
         </Reveal>
       ))}
     </div>
   </section>
-);
+  );
+};
 
 /* ══════════════════════════════════════════════════════
    PAGE
