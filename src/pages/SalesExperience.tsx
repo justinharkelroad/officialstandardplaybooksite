@@ -163,9 +163,9 @@ const ScrollytellingHero = () => {
             <h2 className="font-oswald font-bold text-3xl sm:text-5xl md:text-6xl text-white leading-[1.1] mb-6 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
               If you don't have a clear path,<br />I'll give you your money back.
             </h2>
-            <p className="font-oswald text-xl sm:text-2xl md:text-3xl text-blue-400">
-              And work for free until you do.
-            </p>
+             <p className="font-oswald text-xl sm:text-2xl md:text-3xl text-blue-400">
+               But so far for over one year, God has blessed us enough to bat 1000%! 😉
+             </p>
           </div>
         </motion.div>
         {/* ── Fade 5: Deliverables ── */}
