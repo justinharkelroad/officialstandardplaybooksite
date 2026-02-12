@@ -62,6 +62,36 @@ export type Database = {
         }
         Relationships: []
       }
+      directive_applications: {
+        Row: {
+          agency_name: string | null
+          cell_phone: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          message: string | null
+        }
+        Insert: {
+          agency_name?: string | null
+          cell_phone?: string | null
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          message?: string | null
+        }
+        Update: {
+          agency_name?: string | null
+          cell_phone?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          message?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
