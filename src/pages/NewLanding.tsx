@@ -1,5 +1,6 @@
-import { useRef } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import useEmblaCarousel from 'embla-carousel-react';
 import standardLogo from '@/assets/standard-word-logo.png';
 import lqsImg from '@/assets/lqs.png';
 import salesDashImg from '@/assets/sales-dashboard.png';
@@ -7,6 +8,14 @@ import winbackImg from '@/assets/winback-hq.png';
 import trainingImg from '@/assets/training-videos.png';
 import renewalsImg from '@/assets/renewals.png';
 import agencyBrainLogo from '@/assets/agency-brain-logo.png';
+import marketingRoiImg from '@/assets/marketing-roi.png';
+import teamTrainingImg from '@/assets/team-training.png';
+import aiRoleplayImg from '@/assets/ai-roleplay-bot.png';
+import cancelAuditImg from '@/assets/cancel-audit.png';
+import callScoringImg from '@/assets/call-scoring.png';
+import salesAnalyticsImg from '@/assets/sales-analytics.png';
+import targetSettingImg from '@/assets/target-setting.png';
+import habitTrackingImg from '@/assets/habit-tracking.png';
 
 /* ── Fade-in wrapper ── */
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
@@ -131,54 +140,102 @@ const brainCards = [
   { headline: 'Total Visibility.', sub: 'Know exactly where your team stands every single day.', img: salesDashImg, label: 'Sales Dashboard' },
   { headline: 'Stop the Bleed.', sub: 'Catch cancellations before they cost you.', img: winbackImg, label: 'Winback HQ' },
   { headline: 'Stay Ahead.', sub: 'Proactively manage renewals so nothing slips.', img: renewalsImg, label: 'Renewal Tracking' },
+  { headline: 'Track Your ROI.', sub: 'See exactly what your marketing spend is producing — leads, quotes, premium, commission.', img: marketingRoiImg, label: 'Marketing ROI' },
+  { headline: 'Sales Breakdown.', sub: 'Drill into premium, items, policies, and points — by date, source, or bundle.', img: salesAnalyticsImg, label: 'Sales Analytics' },
+  { headline: 'Score Every Call.', sub: 'AI-powered call audits with execution checklists and talk-to-listen ratios.', img: callScoringImg, label: 'Call Scoring' },
+  { headline: 'Train Your Team.', sub: 'A full training library with structured bootcamps — accessible right inside the app.', img: teamTrainingImg, label: 'Team Training' },
+  { headline: 'Practice Makes Perfect.', sub: 'AI roleplay bot lets your producers sharpen their pitch anytime, anywhere.', img: aiRoleplayImg, label: 'AI Roleplay Trainer' },
+  { headline: 'Cancel Audit.', sub: 'Track cancellations, at-risk premium, and saved dollars — week by week.', img: cancelAuditImg, label: 'Cancel Audit' },
+  { headline: 'Set Your Targets.', sub: 'Plan your 90-day action map — quarterly goals broken into daily habits.', img: targetSettingImg, label: 'Target Setting' },
+  { headline: 'Build The Habits.', sub: 'Core 4 + Flow tracking: Body, Being, Balance, Business — with team leaderboards.', img: habitTrackingImg, label: 'Habit Tracking' },
 ];
 
-const AgencyBrainSection = () => (
-  <section className="relative py-24 md:py-40 bg-gradient-to-b from-[#020617] to-black overflow-hidden">
-    <div className="px-6">
-      <Reveal className="text-center mb-16 md:mb-24">
-        <p className="text-sm uppercase tracking-[0.3em] text-blue-400 mb-3">Inside Agency Brain</p>
-        <h2 className="font-oswald font-bold text-3xl md:text-6xl text-white">
-          Everything your agency needs.<br className="hidden md:block" /> Nothing it doesn't.
-        </h2>
-      </Reveal>
+const AgencyBrainSection = () => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center', skipSnaps: false });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
-      {/* Horizontal scroll on desktop, vertical stack on mobile */}
-      <div className="hidden md:block">
-        <div className="flex gap-8 overflow-x-auto snap-x snap-mandatory pb-8 px-[max(1.5rem,calc((100vw-1280px)/2))]" style={{ scrollbarWidth: 'none' }}>
-          {brainCards.map((card, i) => (
-            <Reveal key={card.label} delay={i * 0.1} className="snap-center shrink-0 w-[420px]">
-              <div className="relative group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 hover:border-blue-500/40 transition-colors duration-500">
-                <p className="text-xs uppercase tracking-widest text-blue-400 mb-2">{card.label}</p>
-                <h3 className="font-oswald font-bold text-2xl text-white mb-2">{card.headline}</h3>
-                <p className="text-gray-400 text-sm mb-6">{card.sub}</p>
-                <div className="relative">
-                  <img src={card.img} alt={card.label} className="w-full rounded-xl shadow-2xl shadow-blue-500/10 group-hover:scale-[1.02] transition-transform duration-500" />
-                  {/* Floating glow */}
-                  <div className="absolute -inset-4 bg-blue-500/10 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    setScrollSnaps(emblaApi.scrollSnapList());
+    emblaApi.on('select', onSelect);
+    onSelect();
+    return () => { emblaApi.off('select', onSelect); };
+  }, [emblaApi, onSelect]);
+
+  const scrollTo = useCallback((index: number) => emblaApi && emblaApi.scrollTo(index), [emblaApi]);
+
+  return (
+    <section className="relative py-24 md:py-40 bg-gradient-to-b from-[#020617] to-black overflow-hidden">
+      <div className="px-6">
+        <Reveal className="text-center mb-16 md:mb-24">
+          <p className="text-sm uppercase tracking-[0.3em] text-blue-400 mb-3">Inside Agency Brain</p>
+          <h2 className="font-oswald font-bold text-3xl md:text-6xl text-white">
+            Everything your agency needs.<br className="hidden md:block" /> Nothing it doesn't.
+          </h2>
+        </Reveal>
+
+        {/* Carousel */}
+        <div className="max-w-5xl mx-auto">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex">
+              {brainCards.map((card) => (
+                <div key={card.label} className="flex-[0_0_85%] sm:flex-[0_0_60%] md:flex-[0_0_45%] min-w-0 px-3">
+                  <div className="relative group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 hover:border-blue-500/40 transition-colors duration-500">
+                    <p className="text-xs uppercase tracking-widest text-blue-400 mb-2">{card.label}</p>
+                    <h3 className="font-oswald font-bold text-2xl text-white mb-2">{card.headline}</h3>
+                    <p className="text-gray-400 text-sm mb-6">{card.sub}</p>
+                    <div className="relative">
+                      <img src={card.img} alt={card.label} className="w-full rounded-xl shadow-2xl shadow-blue-500/10 group-hover:scale-[1.02] transition-transform duration-500" />
+                      <div className="absolute -inset-4 bg-blue-500/10 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </Reveal>
-          ))}
+              ))}
+            </div>
+          </div>
+
+          {/* Navigation arrows + dots */}
+          <div className="flex items-center justify-center gap-6 mt-8">
+            <button
+              onClick={() => emblaApi?.scrollPrev()}
+              className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-blue-500/60 hover:bg-blue-500/10 transition-colors"
+              aria-label="Previous slide"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+            </button>
+
+            <div className="flex gap-2">
+              {scrollSnaps.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => scrollTo(i)}
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                    i === selectedIndex ? 'bg-blue-500 scale-125' : 'bg-white/20 hover:bg-white/40'
+                  }`}
+                  aria-label={`Go to slide ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={() => emblaApi?.scrollNext()}
+              className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-blue-500/60 hover:bg-blue-500/10 transition-colors"
+              aria-label="Next slide"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+            </button>
+          </div>
         </div>
       </div>
-
-      {/* Mobile stack */}
-      <div className="md:hidden space-y-10">
-        {brainCards.map((card, i) => (
-          <Reveal key={card.label} delay={i * 0.1}>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-5">
-              <p className="text-xs uppercase tracking-widest text-blue-400 mb-2">{card.label}</p>
-              <h3 className="font-oswald font-bold text-xl text-white mb-1">{card.headline}</h3>
-              <p className="text-gray-400 text-sm mb-4">{card.sub}</p>
-              <img src={card.img} alt={card.label} className="w-full rounded-xl shadow-2xl shadow-blue-500/10" />
-            </div>
-          </Reveal>
-        ))}
-      </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 /* ══════════════════════════════════════════════════════
    SECTION 4 — THE OFFER LADDER (3 Ways In)
