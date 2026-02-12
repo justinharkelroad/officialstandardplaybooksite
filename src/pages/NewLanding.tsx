@@ -660,7 +660,7 @@ const ProducerChallengeBar = () => {
                 <div className="relative h-[280px] md:h-[360px]">
                   <video
                     ref={videoRef}
-                    src="/background.mp4"
+                    src="https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/The Challenge Card.mp4"
                     autoPlay muted loop playsInline
                     className="absolute inset-0 w-full h-full object-cover object-top"
                   />
