@@ -37,32 +37,26 @@ const Reveal = ({ children, className = '', delay = 0 }: { children: React.React
    ══════════════════════════════════════════════════════ */
 const ScrollytellingHero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const segARef = useRef<HTMLDivElement>(null);
-  const segBRef = useRef<HTMLDivElement>(null);
-  const segCRef = useRef<HTMLDivElement>(null);
-
-  // Overall container progress — drives video visibility
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] });
-  const videoOpacity = useTransform(scrollYProgress, [0, 0.05, 0.85, 1], [1, 1, 1, 0]);
 
-  // Segment A: visible at start, fades as you scroll away
-  const { scrollYProgress: aProgress } = useScroll({ target: segARef, offset: ['start start', 'end start'] });
-  const aOpacity = useTransform(aProgress, [0, 0.6, 1], [1, 1, 0]);
-  const aY = useTransform(aProgress, [0, 1], [0, -100]);
+  // Video fades out at the end
+  const videoOpacity = useTransform(scrollYProgress, [0, 0.05, 0.82, 0.95], [1, 1, 1, 0]);
 
-  // Segment B: independent scroll tracking
-  const { scrollYProgress: bProgress } = useScroll({ target: segBRef, offset: ['start center', 'end center'] });
-  const bOpacity = useTransform(bProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
-  const bY = useTransform(bProgress, [0, 0.5, 1], [60, 0, -60]);
+  // Segment A: Logo + headline — visible at start, fully gone by 20%
+  const aOpacity = useTransform(scrollYProgress, [0, 0.02, 0.12, 0.20], [1, 1, 1, 0]);
+  const aY = useTransform(scrollYProgress, [0, 0.20], ['0px', '-80px']);
 
-  // Segment C: independent scroll tracking
-  const { scrollYProgress: cProgress } = useScroll({ target: segCRef, offset: ['start center', 'end center'] });
-  const cOpacity = useTransform(cProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
-  const cY = useTransform(cProgress, [0, 0.5, 1], [60, 0, -60]);
+  // Segment B: Core 4 pillars — appears at 25%, gone by 45%
+  const bOpacity = useTransform(scrollYProgress, [0.25, 0.30, 0.38, 0.45], [0, 1, 1, 0]);
+  const bY = useTransform(scrollYProgress, [0.25, 0.45], ['60px', '-60px']);
+
+  // Segment C: Problem / Agency Brain — appears at 50%, gone by 82%
+  const cOpacity = useTransform(scrollYProgress, [0.50, 0.55, 0.72, 0.82], [0, 1, 1, 0]);
+  const cY = useTransform(scrollYProgress, [0.50, 0.82], ['60px', '-40px']);
 
   return (
     <section ref={containerRef} className="relative" style={{ height: '400vh' }}>
-      {/* Fixed video background — immune to overflow-x-hidden */}
+      {/* Fixed video background */}
       <motion.div
         style={{ opacity: videoOpacity }}
         className="fixed inset-0 w-screen h-screen overflow-hidden"
@@ -73,43 +67,52 @@ const ScrollytellingHero = () => {
           className="absolute inset-0 w-full h-full object-cover"
           src="/background.mp4"
         />
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/50" />
       </motion.div>
 
-      {/* ── Segment A: Logo + Hook ── */}
-      <div ref={segARef} className="relative z-10 h-screen flex items-center justify-center">
-        <motion.div style={{ y: aY, opacity: aOpacity }} className="text-center px-6 max-w-5xl mx-auto">
-          <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-64 md:w-96 mb-12" />
-          <h1 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] tracking-tight">
+      {/* ── Segment A: Logo + Hook (FIXED, centered) ── */}
+      <motion.div
+        style={{ y: aY, opacity: aOpacity }}
+        className="fixed inset-0 flex items-center justify-center z-10 pointer-events-none"
+      >
+        <div className="text-center px-6 max-w-5xl mx-auto">
+          <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-64 md:w-96 mb-12 drop-shadow-2xl" />
+          <h1 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
             You built the agency.<br />
-            <span className="text-gray-400">But somewhere along the way,</span><br />
-            <span className="text-gray-400">it started building you.</span>
+            <span className="text-gray-300">But somewhere along the way,</span><br />
+            <span className="text-gray-300">it started building you.</span>
           </h1>
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
 
-      {/* ── Segment B: Core 4 Pillars ── */}
-      <div ref={segBRef} className="relative z-10 h-screen flex items-center justify-center">
-        <motion.div style={{ y: bY, opacity: bOpacity }} className="text-center px-6">
-          <p className="text-sm uppercase tracking-[0.4em] text-blue-400 mb-6 font-medium">The Standard is built on four pillars</p>
+      {/* ── Segment B: Core 4 Pillars (FIXED, centered) ── */}
+      <motion.div
+        style={{ y: bY, opacity: bOpacity }}
+        className="fixed inset-0 flex items-center justify-center z-10 pointer-events-none"
+      >
+        <div className="text-center px-6">
+          <p className="text-sm uppercase tracking-[0.4em] text-blue-400 mb-6 font-medium drop-shadow-lg">The Standard is built on four pillars</p>
           <div className="flex flex-wrap justify-center gap-6 md:gap-12">
             {['BUSINESS', 'BEING', 'BODY', 'BALANCE'].map((word) => (
-              <span key={word} className="font-oswald font-bold text-3xl md:text-5xl text-white">
+              <span key={word} className="font-oswald font-bold text-3xl md:text-5xl text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
                 {word}<span className="text-blue-500">.</span>
               </span>
             ))}
           </div>
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
 
-      {/* ── Segment C: The Problem / Agency Brain ── */}
-      <div ref={segCRef} className="relative z-10 h-screen flex items-center justify-center">
-        <motion.div style={{ y: cY, opacity: cOpacity }} className="max-w-4xl mx-auto text-center px-6">
-          <p className="text-lg md:text-xl text-gray-500 mb-4 uppercase tracking-widest font-medium">The Problem</p>
-          <h2 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] mb-8">
+      {/* ── Segment C: The Problem / Agency Brain (FIXED, centered) ── */}
+      <motion.div
+        style={{ y: cY, opacity: cOpacity }}
+        className="fixed inset-0 flex items-center justify-center z-10 pointer-events-none"
+      >
+        <div className="max-w-4xl mx-auto text-center px-6">
+          <p className="text-lg md:text-xl text-gray-400 mb-4 uppercase tracking-widest font-medium">The Problem</p>
+          <h2 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] mb-8 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
             Most agencies run on<br />duct tape and gut feelings.
           </h2>
-          <p className="font-oswald font-bold text-4xl sm:text-6xl md:text-8xl text-blue-500 mb-16">
+          <p className="font-oswald font-bold text-4xl sm:text-6xl md:text-8xl text-blue-500 mb-16 drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
             Yours won't.
           </p>
           <div className="relative mx-auto w-full max-w-xl h-px mb-16">
@@ -121,11 +124,8 @@ const ScrollytellingHero = () => {
           <p className="text-gray-400 text-lg mt-4 max-w-2xl mx-auto">
             The operating system that turns chaos into clarity. Your pipeline, your team, your retention — all in one place.
           </p>
-        </motion.div>
-      </div>
-
-      {/* Extra scroll room for the exit fade */}
-      <div className="h-screen" />
+        </div>
+      </motion.div>
     </section>
   );
 };
