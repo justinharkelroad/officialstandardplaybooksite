@@ -1,52 +1,42 @@
 
+## Full-Width Producer Challenge Banner with Flip Card
 
-## Flip Cards for Offer Ladder Benefits
+### What You'll Get
 
-Add a flip-card interaction to each of the three offer cards (Boardroom, 8 Week Experience, The Directive) so users can reveal a second card behind each one showing the membership benefits.
+A new full-width banner section placed below the three offer cards and above the footer on the `/new` page. Here's the layout:
 
-### How It Works
+**Front Face (Banner):**
+- Full-width dark card/bar spanning the page
+- Background video playing (same style as the offer cards -- autoplaying, muted, looping)
+- Video container is cropped to roughly 60% of normal video height using `object-cover` with `object-position: top` so the top/center of the video is visible, not letterboxed
+- Overlaid with a dark gradient so text is readable
+- Content overlaid: tag line ("THE CHALLENGE"), title ("6 Week Producer Challenge"), a short subtitle ("Transform your producer from reactive chaos to systematic execution -- in 42 days."), price ("$299 / per producer"), and a "Buy a Seat" button linking to the existing checkout URL (`https://createthestandard.com/credit-card-page`)
+- A "See What's Included" flip trigger (same blue text link style as the offer cards)
+- Sound toggle button in the corner
 
-- Each card gets a "See What's Included" button/link
-- Clicking it flips the card 180 degrees (3D Y-axis rotation) to reveal a back face listing the benefits
-- The back face has a "Flip Back" button to return to the front
-- Smooth CSS 3D transform animation (~0.6s)
-
-### Benefits Data Per Card
-
-**The Boardroom ($299/mo)**
-- 2 Hour Group Boardroom Call
-- Boardroom Level Access To Standard App
-- AgencyBrain Access
-- The Standard Playbook Hardcover
-- I AM THE STANDARD T-Shirt
-- I AM THE STANDARD Wristband
-- Standard Playbook Pen
-- 1v1 Video Coaching 24/7 w/ Justin
-- 20 AI Calls Scored Per Month
-
-**8 Week Experience**
-- 8-Week Sales Management System
-- Weekly Live Coaching Calls
-- Full Standard App Access
-- Call Scoring Integration
-- Accountability Framework
-- Consequence Ladder System
-- Sales Process Playbook
-
-**The Directive**
-- Everything in Boardroom
-- 100 Calls Scored/Month
-- 1 Team Call Per Month
-- Full App Access
-- 80% Off Producer Challenges
-- Direct 1:1 Access to Justin
+**Back Face (Flip Card):**
+- Same dimensions as the front, dark bg with blue accent border
+- Title + "What's Included" header
+- Benefits list with check icons:
+  - 30 Daily Action Reports Sent to You
+  - 6 Weekly Discovery Stack Reflections
+  - Core 4 Framework (Body, Being, Balance, Business)
+  - Full App Access During Challenge
+  - Daily Accountability System
+  - Sales Process Training Modules
+  - Direct Visibility into Producer Growth
+  - Rolling Enrollment (Sign Up Friday, Start Monday)
+- "Buy a Seat" button repeated at the bottom
+- Flip-back button (rotate icon) in the corner
 
 ### Technical Details
 
-1. **State**: Add a `flippedStates` boolean array (one per offer) in `OfferLadderSection`
-2. **CSS**: Use `transform-style: preserve-3d` on the card wrapper, with `rotateY(180deg)` on flip. Front and back faces use `backface-visibility: hidden`, back face pre-rotated 180deg
-3. **Back Face Design**: Dark card matching the existing aesthetic (dark bg, blue-400 accents, check marks for each benefit, the CTA button repeated at the bottom)
-4. **Trigger**: A small "See What's Included" text link below the description on the front face
-5. **Video cards**: The video keeps playing behind the front face; the back face is a solid dark panel so video doesn't show through
-6. **File changed**: `src/pages/NewLanding.tsx` only -- add benefits array to each offer object, add flip state + toggle, restructure card markup with front/back faces
+**File modified:** `src/pages/NewLanding.tsx` only
 
+1. Add a new `ProducerChallengeBar` component inside `NewLanding.tsx` (below `OfferLadderSection`)
+2. Uses the same flip-card pattern already established (perspective, `transform-style: preserve-3d`, `rotateY(180deg)`, `backface-visibility: hidden`)
+3. Video container uses `h-[280px] md:h-[360px]` (roughly 60% of a 16:9 video height) with `object-cover` and `object-position: top` to crop and show the upper portion
+4. Reuses the existing video from the challenge page or a placeholder -- will use the same Wistia/YouTube embed approach or an mp4 if one exists in storage
+5. Renders between `<OfferLadderSection />` and the footer in the `NewLanding` component
+6. State: single boolean `flipped` for the flip toggle
+7. "Buy a Seat" opens the existing checkout link in a new tab
