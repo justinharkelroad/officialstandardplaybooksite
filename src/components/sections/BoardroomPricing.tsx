@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const BoardroomPricing = () => {
   const handleJoinNow = () => {
-    window.open('https://link.fastpaydirect.com/payment-link/68371b280a5741f8835218c8', '_blank');
+    window.open('https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l', '_blank');
   };
 
   return (
