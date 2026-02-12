@@ -165,6 +165,55 @@ const ScrollytellingHero = () => {
 };
 
 /* ══════════════════════════════════════════════════════
+   DELIVERABLES — 3 cards with animated arrows
+   ══════════════════════════════════════════════════════ */
+const AnimatedArrow = () => (
+  <div className="flex items-center justify-center py-4 md:py-0">
+    <motion.div
+      animate={{ x: [0, 10, 0] }}
+      transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+    >
+      <svg className="w-8 h-8 md:w-10 md:h-10 text-blue-500 rotate-90 md:rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      </svg>
+    </motion.div>
+  </div>
+);
+
+const deliverables = [
+  { title: 'Sales Process', sub: 'A documented, repeatable call framework your entire team follows — no more winging it.' },
+  { title: 'Accountability Framework', sub: 'Daily tracking, weekly scorecards, and graded calls that keep every producer on pace.' },
+  { title: 'Consequence Ladder', sub: 'A clear escalation path so underperformance is addressed — not ignored.' },
+];
+
+const DeliverablesSection = () => (
+  <section className="relative z-20 py-24 md:py-32 px-6 bg-gradient-to-b from-[#020617] to-[#020617]">
+    <div className="max-w-6xl mx-auto">
+      <Reveal className="text-center mb-16">
+        <p className="text-sm uppercase tracking-[0.3em] text-blue-400 mb-3">What You'll Walk Away With</p>
+        <h2 className="font-oswald font-bold text-3xl md:text-5xl text-white">
+          Three Systems. Zero Guesswork.
+        </h2>
+      </Reveal>
+
+      <div className="flex flex-col md:flex-row items-center justify-center">
+        {deliverables.map((item, i) => (
+          <div key={item.title} className="flex flex-col md:flex-row items-center">
+            <Reveal delay={i * 0.15} className="w-full md:w-auto">
+              <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 md:p-10 text-center max-w-xs mx-auto hover:border-blue-500/40 transition-colors duration-500">
+                <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-3">{item.title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{item.sub}</p>
+              </div>
+            </Reveal>
+            {i < deliverables.length - 1 && <AnimatedArrow />}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
    AGENCY BRAIN SHOWCASE — Curated 8-week tools
    ══════════════════════════════════════════════════════ */
 const brainCards = [
@@ -384,6 +433,7 @@ const FinalCTA = () => (
 const SalesExperience = () => (
   <div className="bg-black min-h-screen text-white" style={{ overflowX: 'clip' }}>
     <ScrollytellingHero />
+    <DeliverablesSection />
     <AgencyBrainShowcase />
     <SuccessStory />
     <IncludedSection />
