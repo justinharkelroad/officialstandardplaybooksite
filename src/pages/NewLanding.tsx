@@ -122,6 +122,14 @@ const ScrollytellingHero = () => {
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
         >
           <div className="text-center px-6 max-w-5xl mx-auto">
+            <a
+              href="https://AGENCYCOACHING.as.me/standardfit"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mb-6 px-5 py-2 border-2 border-primary bg-transparent font-oswald font-bold text-sm md:text-base uppercase tracking-[0.15em] text-primary hover:bg-primary hover:text-white transition-all duration-300 pointer-events-auto"
+            >
+              Book a Discovery Call
+            </a>
             <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-64 md:w-96 mb-12 drop-shadow-2xl" />
             <h1 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
               You built the agency.<br />
