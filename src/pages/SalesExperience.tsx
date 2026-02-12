@@ -87,7 +87,7 @@ const ScrollytellingHero = () => {
       <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
         {/* Video background */}
         <motion.div style={{ opacity: videoOpacity }} className="absolute inset-0" aria-hidden="true">
-          <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" src="/background.mp4" />
+          <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" src="https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/8%20week%20background.mp4" />
           <div className="absolute inset-0 bg-black/50" />
         </motion.div>
 
