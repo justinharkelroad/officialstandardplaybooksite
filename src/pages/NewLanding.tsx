@@ -154,6 +154,40 @@ const AgencyBrainSection = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center', skipSnaps: false });
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+  const [slideStyles, setSlideStyles] = useState<React.CSSProperties[]>([]);
+
+  const computeStyles = useCallback(() => {
+    if (!emblaApi) return;
+    const engine = emblaApi.internalEngine();
+    const scrollProgress = emblaApi.scrollProgress();
+    const slides = emblaApi.slideNodes();
+    const styles: React.CSSProperties[] = slides.map((_, index) => {
+      let diff = emblaApi.scrollSnapList()[index] - scrollProgress;
+
+      // Handle loop wrapping
+      if (engine.options.loop) {
+        const snapCount = emblaApi.scrollSnapList().length;
+        // Find the shortest distance considering loop
+        if (diff > 0.5) diff -= 1;
+        if (diff < -0.5) diff += 1;
+      }
+
+      const absDiff = Math.abs(diff);
+      const scale = Math.max(0.65, 1 - absDiff * 0.35);
+      const opacity = Math.max(0.3, 1 - absDiff * 0.7);
+      const translateZ = -absDiff * 250;
+      const translateX = diff * 15; // slight pull toward center
+      const zIndex = 100 - Math.round(absDiff * 100);
+
+      return {
+        transform: `perspective(1200px) translateX(${translateX}%) scale(${scale}) translateZ(${translateZ}px)`,
+        opacity,
+        zIndex,
+        transition: 'transform 0.4s ease-out, opacity 0.4s ease-out',
+      };
+    });
+    setSlideStyles(styles);
+  }, [emblaApi]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -164,9 +198,16 @@ const AgencyBrainSection = () => {
     if (!emblaApi) return;
     setScrollSnaps(emblaApi.scrollSnapList());
     emblaApi.on('select', onSelect);
+    emblaApi.on('scroll', computeStyles);
+    emblaApi.on('reInit', computeStyles);
     onSelect();
-    return () => { emblaApi.off('select', onSelect); };
-  }, [emblaApi, onSelect]);
+    computeStyles();
+    return () => {
+      emblaApi.off('select', onSelect);
+      emblaApi.off('scroll', computeStyles);
+      emblaApi.off('reInit', computeStyles);
+    };
+  }, [emblaApi, onSelect, computeStyles]);
 
   const scrollTo = useCallback((index: number) => emblaApi && emblaApi.scrollTo(index), [emblaApi]);
 
@@ -180,12 +221,16 @@ const AgencyBrainSection = () => {
           </h2>
         </Reveal>
 
-        {/* Carousel */}
-        <div className="max-w-5xl mx-auto">
-          <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex">
-              {brainCards.map((card) => (
-                <div key={card.label} className="flex-[0_0_85%] sm:flex-[0_0_60%] md:flex-[0_0_45%] min-w-0 px-3">
+        {/* Coverflow Carousel */}
+        <div className="max-w-6xl mx-auto">
+          <div className="overflow-visible" ref={emblaRef} style={{ perspective: '1200px' }}>
+            <div className="flex" style={{ transformStyle: 'preserve-3d' }}>
+              {brainCards.map((card, index) => (
+                <div
+                  key={card.label}
+                  className="flex-[0_0_80%] sm:flex-[0_0_55%] md:flex-[0_0_45%] min-w-0 px-3"
+                  style={slideStyles[index] || {}}
+                >
                   <div className="relative group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 hover:border-blue-500/40 transition-colors duration-500">
                     <p className="text-xs uppercase tracking-widest text-blue-400 mb-2">{card.label}</p>
                     <h3 className="font-oswald font-bold text-2xl text-white mb-2">{card.headline}</h3>
