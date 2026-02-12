@@ -40,92 +40,91 @@ const ScrollytellingHero = () => {
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] });
 
   // Video fades out at the end
-  const videoOpacity = useTransform(scrollYProgress, [0, 0.05, 0.82, 0.95], [1, 1, 1, 0]);
+  const videoOpacity = useTransform(scrollYProgress, [0, 0.05, 0.85, 1.0], [1, 1, 1, 0]);
 
-  // Segment A: Logo + headline — visible at start, fully gone by 20%
-  const aOpacity = useTransform(scrollYProgress, [0, 0.02, 0.12, 0.20], [1, 1, 1, 0]);
-  const aY = useTransform(scrollYProgress, [0, 0.20], ['0px', '-80px']);
+  // Segment A: visible immediately, crossfades out
+  const aOpacity = useTransform(scrollYProgress, [0, 0.14, 0.22], [1, 1, 0]);
 
-  // Segment B: Core 4 pillars — appears at 25%, gone by 45%
-  const bOpacity = useTransform(scrollYProgress, [0.25, 0.30, 0.38, 0.45], [0, 1, 1, 0]);
-  const bY = useTransform(scrollYProgress, [0.25, 0.45], ['60px', '-60px']);
+  // Segment B: crossfades in, holds, crossfades out
+  const bOpacity = useTransform(scrollYProgress, [0.18, 0.26, 0.42, 0.50], [0, 1, 1, 0]);
 
-  // Segment C: Problem / Agency Brain — appears at 50%, gone by 82%
-  const cOpacity = useTransform(scrollYProgress, [0.50, 0.55, 0.72, 0.82], [0, 1, 1, 0]);
-  const cY = useTransform(scrollYProgress, [0.50, 0.82], ['60px', '-40px']);
+  // Segment C: crossfades in, holds, crossfades out
+  const cOpacity = useTransform(scrollYProgress, [0.46, 0.54, 0.80, 0.90], [0, 1, 1, 0]);
 
   return (
     <section ref={containerRef} className="relative" style={{ height: '400vh' }}>
-      {/* Fixed video background */}
-      <motion.div
-        style={{ opacity: videoOpacity }}
-        className="fixed inset-0 w-screen h-screen overflow-hidden"
-        aria-hidden="true"
-      >
-        <video
-          autoPlay muted loop playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-          src="/background.mp4"
-        />
-        <div className="absolute inset-0 bg-black/50" />
-      </motion.div>
+      <div className="sticky top-0 h-screen overflow-hidden">
+        {/* Video background */}
+        <motion.div
+          style={{ opacity: videoOpacity }}
+          className="absolute inset-0"
+          aria-hidden="true"
+        >
+          <video
+            autoPlay muted loop playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+            src="/background.mp4"
+          />
+          <div className="absolute inset-0 bg-black/50" />
+        </motion.div>
 
-      {/* ── Segment A: Logo + Hook (FIXED, centered) ── */}
-      <motion.div
-        style={{ y: aY, opacity: aOpacity }}
-        className="fixed inset-0 flex items-center justify-center z-10 pointer-events-none"
-      >
-        <div className="text-center px-6 max-w-5xl mx-auto">
-          <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-64 md:w-96 mb-12 drop-shadow-2xl" />
-          <h1 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
-            You built the agency.<br />
-            <span className="text-gray-300">But somewhere along the way,</span><br />
-            <span className="text-gray-300">it started building you.</span>
-          </h1>
-        </div>
-      </motion.div>
-
-      {/* ── Segment B: Core 4 Pillars (FIXED, centered) ── */}
-      <motion.div
-        style={{ y: bY, opacity: bOpacity }}
-        className="fixed inset-0 flex items-center justify-center z-10 pointer-events-none"
-      >
-        <div className="text-center px-6">
-          <p className="text-sm uppercase tracking-[0.4em] text-blue-400 mb-6 font-medium drop-shadow-lg">The Standard is built on four pillars</p>
-          <div className="flex flex-wrap justify-center gap-6 md:gap-12">
-            {['BUSINESS', 'BEING', 'BODY', 'BALANCE'].map((word) => (
-              <span key={word} className="font-oswald font-bold text-3xl md:text-5xl text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
-                {word}<span className="text-blue-500">.</span>
-              </span>
-            ))}
+        {/* ── Segment A: Logo + Hook ── */}
+        <motion.div
+          style={{ opacity: aOpacity }}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        >
+          <div className="text-center px-6 max-w-5xl mx-auto">
+            <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-64 md:w-96 mb-12 drop-shadow-2xl" />
+            <h1 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
+              You built the agency.<br />
+              <span className="text-gray-300">But somewhere along the way,</span><br />
+              <span className="text-gray-300">it started building you.</span>
+            </h1>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
 
-      {/* ── Segment C: The Problem / Agency Brain (FIXED, centered) ── */}
-      <motion.div
-        style={{ y: cY, opacity: cOpacity }}
-        className="fixed inset-0 flex items-center justify-center z-10 pointer-events-none"
-      >
-        <div className="max-w-4xl mx-auto text-center px-6">
-          <p className="text-lg md:text-xl text-gray-400 mb-4 uppercase tracking-widest font-medium">The Problem</p>
-          <h2 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] mb-8 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
-            Most agencies run on<br />duct tape and gut feelings.
-          </h2>
-          <p className="font-oswald font-bold text-4xl sm:text-6xl md:text-8xl text-blue-500 mb-16 drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
-            Yours won't.
-          </p>
-          <div className="relative mx-auto w-full max-w-xl h-px mb-16">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500 to-transparent blur-md" />
+        {/* ── Segment B: Core 4 Pillars ── */}
+        <motion.div
+          style={{ opacity: bOpacity }}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        >
+          <div className="text-center px-6">
+            <p className="text-sm uppercase tracking-[0.4em] text-blue-400 mb-6 font-medium drop-shadow-lg">The Standard is built on four pillars</p>
+            <div className="flex flex-wrap justify-center gap-6 md:gap-12">
+              {['BUSINESS', 'BEING', 'BODY', 'BALANCE'].map((word) => (
+                <span key={word} className="font-oswald font-bold text-3xl md:text-5xl text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
+                  {word}<span className="text-blue-500">.</span>
+                </span>
+              ))}
+            </div>
           </div>
-          <p className="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">Introducing</p>
-          <img src={agencyBrainLogo} alt="Agency Brain" className="mx-auto w-[80%] md:w-[600px] lg:w-[720px] mb-6" />
-          <p className="text-gray-400 text-lg mt-4 max-w-2xl mx-auto">
-            The operating system that turns chaos into clarity. Your pipeline, your team, your retention — all in one place.
-          </p>
-        </div>
-      </motion.div>
+        </motion.div>
+
+        {/* ── Segment C: The Problem / Agency Brain ── */}
+        <motion.div
+          style={{ opacity: cOpacity }}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        >
+          <div className="max-w-4xl mx-auto text-center px-6">
+            <p className="text-lg md:text-xl text-gray-400 mb-4 uppercase tracking-widest font-medium">The Problem</p>
+            <h2 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] mb-8 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
+              Most agencies run on<br />duct tape and gut feelings.
+            </h2>
+            <p className="font-oswald font-bold text-4xl sm:text-6xl md:text-8xl text-blue-500 mb-16 drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
+              Yours won't.
+            </p>
+            <div className="relative mx-auto w-full max-w-xl h-px mb-16">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500 to-transparent blur-md" />
+            </div>
+            <p className="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">Introducing</p>
+            <img src={agencyBrainLogo} alt="Agency Brain" className="mx-auto w-[80%] md:w-[600px] lg:w-[720px] mb-6" />
+            <p className="text-gray-400 text-lg mt-4 max-w-2xl mx-auto">
+              The operating system that turns chaos into clarity. Your pipeline, your team, your retention — all in one place.
+            </p>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 };
@@ -426,7 +425,7 @@ const OfferLadderSection = () => {
    PAGE
    ══════════════════════════════════════════════════════ */
 const NewLanding = () => (
-  <div className="bg-black min-h-screen text-white overflow-x-hidden">
+  <div className="bg-black min-h-screen text-white" style={{ overflowX: 'clip' }}>
     <ScrollytellingHero />
     <AgencyBrainSection />
     <OfferLadderSection />
