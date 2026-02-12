@@ -295,7 +295,7 @@ const offers = [
     cta: 'Join The Boardroom',
     href: '/boardroom',
     img: null,
-    video: null,
+    video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/The Standard Boardroom Community (Mobile Video).mp4',
   },
   {
     tag: 'THE TRAINING',
