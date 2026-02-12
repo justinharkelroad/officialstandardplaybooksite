@@ -36,54 +36,63 @@ const ScrollytellingHero = () => {
 
   // Video fades out before Fade 4
   const videoOpacity = useTransform(scrollYProgress, (p) => {
-    if (p < 0.55) return 1;
-    if (p >= 0.68) return 0;
-    return 1 - lerp(p, 0.55, 0.68);
+    if (p < 0.45) return 1;
+    if (p >= 0.56) return 0;
+    return 1 - lerp(p, 0.45, 0.56);
   });
 
   // Blue bg fades in bridging into Fade 4
   const blueBgOpacity = useTransform(scrollYProgress, (p) => {
-    if (p < 0.62) return 0;
-    if (p >= 0.70) return 1;
-    return lerp(p, 0.62, 0.70);
+    if (p < 0.50) return 0;
+    if (p >= 0.58) return 1;
+    return lerp(p, 0.50, 0.58);
   });
 
-  // Fade 1: Hook + CTA — visible 0–10%, fades out by 18%
+  // Fade 1: Hook + CTA — visible 0–8%, fades out by 14%
   const fade1 = useTransform(scrollYProgress, (p) => {
-    if (p <= 0.10) return 1;
-    if (p >= 0.18) return 0;
-    return 1 - lerp(p, 0.10, 0.18);
+    if (p <= 0.08) return 1;
+    if (p >= 0.14) return 0;
+    return 1 - lerp(p, 0.08, 0.14);
   });
 
-  // Fade 2: The Problem — in 22–28%, holds, out 42–50%
+  // Fade 2: The Problem — in 16–22%, holds, out 32–38%
   const fade2 = useTransform(scrollYProgress, (p) => {
-    if (p < 0.22) return 0;
-    if (p < 0.28) return lerp(p, 0.22, 0.28);
-    if (p <= 0.42) return 1;
-    if (p >= 0.50) return 0;
-    return 1 - lerp(p, 0.42, 0.50);
+    if (p < 0.16) return 0;
+    if (p < 0.22) return lerp(p, 0.16, 0.22);
+    if (p <= 0.32) return 1;
+    if (p >= 0.38) return 0;
+    return 1 - lerp(p, 0.32, 0.38);
   });
 
-  // Fade 3: The Promise — in 48–54%, holds, out 62–68%
+  // Fade 3: The Promise — in 40–46%, holds, out 50–56%
   const fade3 = useTransform(scrollYProgress, (p) => {
-    if (p < 0.48) return 0;
-    if (p < 0.54) return lerp(p, 0.48, 0.54);
-    if (p <= 0.62) return 1;
-    if (p >= 0.68) return 0;
-    return 1 - lerp(p, 0.62, 0.68);
+    if (p < 0.40) return 0;
+    if (p < 0.46) return lerp(p, 0.40, 0.46);
+    if (p <= 0.50) return 1;
+    if (p >= 0.56) return 0;
+    return 1 - lerp(p, 0.50, 0.56);
   });
 
-  // Fade 4: The Guarantee — in 70–76%, holds, out 88–94%
+  // Fade 4: The Guarantee — in 58–64%, holds, out 72–78%
   const fade4 = useTransform(scrollYProgress, (p) => {
-    if (p < 0.70) return 0;
-    if (p < 0.76) return lerp(p, 0.70, 0.76);
-    if (p <= 0.88) return 1;
-    if (p >= 0.94) return 0;
-    return 1 - lerp(p, 0.88, 0.94);
+    if (p < 0.58) return 0;
+    if (p < 0.64) return lerp(p, 0.58, 0.64);
+    if (p <= 0.72) return 1;
+    if (p >= 0.78) return 0;
+    return 1 - lerp(p, 0.72, 0.78);
+  });
+
+  // Fade 5: Deliverables — in 80–86%, holds, out 92–97%
+  const fade5 = useTransform(scrollYProgress, (p) => {
+    if (p < 0.80) return 0;
+    if (p < 0.86) return lerp(p, 0.80, 0.86);
+    if (p <= 0.92) return 1;
+    if (p >= 0.97) return 0;
+    return 1 - lerp(p, 0.92, 0.97);
   });
 
   return (
-    <section ref={containerRef} className="relative" style={{ height: '500vh' }}>
+    <section ref={containerRef} className="relative" style={{ height: '600vh' }}>
       <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
         {/* Video background */}
         <motion.div style={{ opacity: videoOpacity }} className="absolute inset-0" aria-hidden="true">
@@ -159,59 +168,44 @@ const ScrollytellingHero = () => {
             </p>
           </div>
         </motion.div>
+        {/* ── Fade 5: Deliverables ── */}
+        <motion.div style={{ opacity: fade5 }} className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="text-center mb-10">
+              <p className="text-sm uppercase tracking-[0.3em] text-blue-400 mb-3">What You'll Walk Away With</p>
+              <h2 className="font-oswald font-bold text-3xl md:text-5xl text-white">
+                Three Systems. Zero Guesswork.
+              </h2>
+            </div>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+              {[
+                { title: 'Sales Process', sub: 'A documented, repeatable call framework your entire team follows — no more winging it.' },
+                { title: 'Accountability Framework', sub: 'Daily tracking, weekly scorecards, and graded calls that keep every producer on pace.' },
+                { title: 'Consequence Ladder', sub: 'A clear escalation path so underperformance is addressed — not ignored.' },
+              ].map((item, i, arr) => (
+                <div key={item.title} className="flex flex-col md:flex-row items-center">
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 md:p-10 text-center max-w-xs mx-auto">
+                    <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-3">{item.title}</h3>
+                    <p className="text-gray-400 text-sm leading-relaxed">{item.sub}</p>
+                  </div>
+                  {i < arr.length - 1 && (
+                    <div className="flex items-center justify-center py-4 md:py-0 md:px-2">
+                      <motion.div animate={{ x: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}>
+                        <svg className="w-8 h-8 md:w-10 md:h-10 text-blue-500 rotate-90 md:rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </motion.div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
 };
-
-/* ══════════════════════════════════════════════════════
-   DELIVERABLES — 3 cards with animated arrows
-   ══════════════════════════════════════════════════════ */
-const AnimatedArrow = () => (
-  <div className="flex items-center justify-center py-4 md:py-0">
-    <motion.div
-      animate={{ x: [0, 10, 0] }}
-      transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-    >
-      <svg className="w-8 h-8 md:w-10 md:h-10 text-blue-500 rotate-90 md:rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-      </svg>
-    </motion.div>
-  </div>
-);
-
-const deliverables = [
-  { title: 'Sales Process', sub: 'A documented, repeatable call framework your entire team follows — no more winging it.' },
-  { title: 'Accountability Framework', sub: 'Daily tracking, weekly scorecards, and graded calls that keep every producer on pace.' },
-  { title: 'Consequence Ladder', sub: 'A clear escalation path so underperformance is addressed — not ignored.' },
-];
-
-const DeliverablesSection = () => (
-  <section className="relative z-20 py-24 md:py-32 px-6 bg-gradient-to-b from-[#020617] to-[#020617]">
-    <div className="max-w-6xl mx-auto">
-      <Reveal className="text-center mb-16">
-        <p className="text-sm uppercase tracking-[0.3em] text-blue-400 mb-3">What You'll Walk Away With</p>
-        <h2 className="font-oswald font-bold text-3xl md:text-5xl text-white">
-          Three Systems. Zero Guesswork.
-        </h2>
-      </Reveal>
-
-      <div className="flex flex-col md:flex-row items-center justify-center">
-        {deliverables.map((item, i) => (
-          <div key={item.title} className="flex flex-col md:flex-row items-center">
-            <Reveal delay={i * 0.15} className="w-full md:w-auto">
-              <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 md:p-10 text-center max-w-xs mx-auto hover:border-blue-500/40 transition-colors duration-500">
-                <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-3">{item.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{item.sub}</p>
-              </div>
-            </Reveal>
-            {i < deliverables.length - 1 && <AnimatedArrow />}
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
 
 /* ══════════════════════════════════════════════════════
    AGENCY BRAIN SHOWCASE — Curated 8-week tools
@@ -433,7 +427,6 @@ const FinalCTA = () => (
 const SalesExperience = () => (
   <div className="bg-black min-h-screen text-white" style={{ overflowX: 'clip' }}>
     <ScrollytellingHero />
-    <DeliverablesSection />
     <AgencyBrainShowcase />
     <SuccessStory />
     <IncludedSection />
