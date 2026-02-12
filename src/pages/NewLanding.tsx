@@ -373,7 +373,7 @@ const offers = [
     title: '8 Week Experience.',
     description: "If you struggle with accountability and have months that are great and months that aren't, it's a reflection of your reality. Change it in 8 weeks. I literally guarantee it.",
     price: null,
-    cta: 'Secure The Experience',
+    cta: 'Get More Info',
     href: '/sales-experience',
     img: trainingImg,
     video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/The Standard This is the 8 week experience.mp4',

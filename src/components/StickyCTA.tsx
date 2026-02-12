@@ -13,7 +13,7 @@ const StickyCTA = () => {
       case '/boardroom':
         return {
           text: 'JOIN THE BOARDROOM',
-          link: 'https://link.fastpaydirect.com/payment-link/68371b280a5741f8835218c8',
+          link: 'https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l',
         };
       case '/directive':
       case '/sales-experience':
