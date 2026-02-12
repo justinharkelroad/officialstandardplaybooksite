@@ -42,14 +42,14 @@ const ScrollytellingHero = () => {
   // Video fades out at the end
   const videoOpacity = useTransform(scrollYProgress, [0, 0.05, 0.85, 1.0], [1, 1, 1, 0]);
 
-  // Segment A: visible immediately, crossfades out
-  const aOpacity = useTransform(scrollYProgress, [0, 0.14, 0.22], [1, 1, 0]);
+  // Segment A: visible immediately, fully gone by 18%
+  const aOpacity = useTransform(scrollYProgress, [0, 0.10, 0.18], [1, 1, 0]);
 
-  // Segment B: crossfades in, holds, crossfades out
-  const bOpacity = useTransform(scrollYProgress, [0.18, 0.26, 0.42, 0.50], [0, 1, 1, 0]);
+  // Segment B: appears after A is gone, crossfades in at 22%, out by 50%
+  const bOpacity = useTransform(scrollYProgress, [0.22, 0.28, 0.42, 0.50], [0, 1, 1, 0]);
 
-  // Segment C: crossfades in, holds, crossfades out
-  const cOpacity = useTransform(scrollYProgress, [0.46, 0.54, 0.80, 0.90], [0, 1, 1, 0]);
+  // Segment C: appears after B is gone, crossfades in at 54%, out by 90%
+  const cOpacity = useTransform(scrollYProgress, [0.54, 0.60, 0.80, 0.90], [0, 1, 1, 0]);
 
   return (
     <section ref={containerRef} className="relative" style={{ height: '400vh' }}>
