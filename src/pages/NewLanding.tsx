@@ -66,17 +66,26 @@ const ScrollytellingHero = () => {
     return 1 - lerp(p, 0.42, 0.50);
   });
 
-  // Segment C: fades in 54–60%, holds, fades out 80–90%
+  // Segment C: "The Problem" — fades in 48–54%, holds, fades out 62–68%
   const cOpacity = useTransform(scrollYProgress, (p) => {
-    if (p < 0.54) return 0;
-    if (p < 0.60) return lerp(p, 0.54, 0.60);
-    if (p <= 0.80) return 1;
-    if (p >= 0.90) return 0;
-    return 1 - lerp(p, 0.80, 0.90);
+    if (p < 0.48) return 0;
+    if (p < 0.54) return lerp(p, 0.48, 0.54);
+    if (p <= 0.62) return 1;
+    if (p >= 0.68) return 0;
+    return 1 - lerp(p, 0.62, 0.68);
+  });
+
+  // Segment D: "Agency Brain intro" — fades in 70–76%, holds, fades out 88–94%
+  const dOpacity = useTransform(scrollYProgress, (p) => {
+    if (p < 0.70) return 0;
+    if (p < 0.76) return lerp(p, 0.70, 0.76);
+    if (p <= 0.88) return 1;
+    if (p >= 0.94) return 0;
+    return 1 - lerp(p, 0.88, 0.94);
   });
 
   return (
-    <section ref={containerRef} className="relative" style={{ height: '400vh' }}>
+    <section ref={containerRef} className="relative" style={{ height: '500vh' }}>
       <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
         {/* Video background */}
         <motion.div
@@ -124,7 +133,7 @@ const ScrollytellingHero = () => {
           </div>
         </motion.div>
 
-        {/* ── Segment C: The Problem / Agency Brain ── */}
+        {/* ── Segment C: The Problem ── */}
         <motion.div
           style={{ opacity: cOpacity }}
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -134,10 +143,19 @@ const ScrollytellingHero = () => {
             <h2 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] mb-8 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
               Most agencies run on<br />duct tape and gut feelings.
             </h2>
-            <p className="font-oswald font-bold text-4xl sm:text-6xl md:text-8xl text-blue-500 mb-16 drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
+            <p className="font-oswald font-bold text-4xl sm:text-6xl md:text-8xl text-blue-500 drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
               Yours won't.
             </p>
-            <div className="relative mx-auto w-full max-w-xl h-px mb-16">
+          </div>
+        </motion.div>
+
+        {/* ── Segment D: Agency Brain Intro ── */}
+        <motion.div
+          style={{ opacity: dOpacity }}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        >
+          <div className="max-w-4xl mx-auto text-center px-6">
+            <div className="relative mx-auto w-full max-w-xl h-px mb-12">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500 to-transparent blur-md" />
             </div>
