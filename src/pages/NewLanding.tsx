@@ -1,4 +1,5 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
+import DirectiveApplicationModal from '@/components/DirectiveApplicationModal';
 import { Volume2, VolumeX, Check, RotateCcw } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -385,9 +386,9 @@ const offers = [
     title: 'Proximity is Power.',
     description: 'Direct 1:1 Access to Justin. Strategy. Speed. The highest level.',
     price: null,
-    cta: 'Apply for Partnership',
-    href: 'https://AGENCYCOACHING.as.me/standardfit',
-    external: true,
+    cta: 'Apply for Directive',
+    href: '#directive-apply',
+    isDirective: true,
     img: null,
     video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/1v1.mp4',
     benefits: [
@@ -407,6 +408,7 @@ const OfferLadderSection = () => {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [mutedStates, setMutedStates] = useState<boolean[]>(offers.map(() => true));
   const [flippedStates, setFlippedStates] = useState<boolean[]>(offers.map(() => false));
+  const [directiveModalOpen, setDirectiveModalOpen] = useState(false);
 
   const toggleSound = (index: number) => {
     const video = videoRefs.current[index];
@@ -434,32 +436,30 @@ const OfferLadderSection = () => {
           {/* 3D flip wrapper */}
           <div style={{ perspective: '1200px' }} className="h-full">
             <div
-              className="relative w-full h-full transition-transform duration-[600ms]"
+              className="relative w-full transition-transform duration-[600ms]"
               style={{
                 transformStyle: 'preserve-3d',
                 transform: flippedStates[i] ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                minHeight: '480px',
               }}
             >
               {/* ══ FRONT FACE ══ */}
               <div
-                className="absolute inset-0 w-full h-full"
-                style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+                style={{
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                  pointerEvents: flippedStates[i] ? 'none' : 'auto',
+                }}
               >
-                <div className="group relative rounded-2xl border border-white/10 overflow-hidden flex flex-col h-full hover:border-blue-500/40 transition-colors duration-500">
-                  {/* Hover glow */}
+                <div className="group relative rounded-2xl border border-white/10 overflow-hidden flex flex-col hover:border-blue-500/40 transition-colors duration-500">
                   <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-xl" />
 
                   {offer.video ? (
-                    <>
+                    <div className="relative min-h-[480px]">
                       <video
                         ref={el => { videoRefs.current[i] = el; }}
                         src={offer.video}
                         poster={offer.img || undefined}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
+                        autoPlay muted loop playsInline
                         className="absolute inset-0 w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/60" />
@@ -470,7 +470,7 @@ const OfferLadderSection = () => {
                       >
                         {mutedStates[i] ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                       </button>
-                      <div className="relative z-10 p-8 flex flex-col h-full min-h-[400px] justify-end">
+                      <div className="relative z-10 p-8 flex flex-col min-h-[480px] justify-end">
                         <p className="text-xs uppercase tracking-widest text-blue-400 mb-4">{offer.tag}</p>
                         <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-3">{offer.title}</h3>
                         <p className="text-gray-300 mb-4 flex-grow">{offer.description}</p>
@@ -480,28 +480,34 @@ const OfferLadderSection = () => {
                         >
                           See What's Included →
                         </button>
-                        <a
-                          href={offer.href}
-                          className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
-                        >
-                          {offer.cta}
-                        </a>
+                        {offer.isDirective ? (
+                          <button
+                            onClick={() => setDirectiveModalOpen(true)}
+                            className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+                          >
+                            {offer.cta}
+                          </button>
+                        ) : (
+                          <a
+                            href={offer.href}
+                            className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+                          >
+                            {offer.cta}
+                          </a>
+                        )}
                       </div>
-                    </>
+                    </div>
                   ) : (
-                    <div className="bg-white/[0.03] backdrop-blur-xl p-8 flex flex-col h-full">
+                    <div className="bg-white/[0.03] backdrop-blur-xl p-8 flex flex-col">
                       <p className="text-xs uppercase tracking-widest text-blue-400 mb-4">{offer.tag}</p>
                       <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-3">{offer.title}</h3>
                       <p className="text-gray-400 mb-4 flex-grow">{offer.description}</p>
-
                       {offer.img && (
                         <img src={offer.img} alt={offer.title} className="w-full rounded-xl mb-6 shadow-lg shadow-blue-500/5" />
                       )}
-
                       {offer.price && (
                         <p className="font-oswald font-bold text-3xl text-white mb-6">{offer.price}</p>
                       )}
-
                       {offer.tag === 'THE DIRECTIVE' && (
                         <div className="rounded-xl border border-white/10 bg-white/[0.05] p-4 mb-6 flex items-center gap-3">
                           <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0">
@@ -513,21 +519,27 @@ const OfferLadderSection = () => {
                           </div>
                         </div>
                       )}
-
                       <button
                         onClick={() => toggleFlip(i)}
                         className="text-blue-400 text-sm font-medium mb-4 hover:text-blue-300 transition-colors text-left cursor-pointer"
                       >
                         See What's Included →
                       </button>
-
-                      <a
-                        href={offer.href}
-                        {...(offer.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                        className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
-                      >
-                        {offer.cta}
-                      </a>
+                      {offer.isDirective ? (
+                        <button
+                          onClick={() => setDirectiveModalOpen(true)}
+                          className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+                        >
+                          {offer.cta}
+                        </button>
+                      ) : (
+                        <a
+                          href={offer.href}
+                          className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+                        >
+                          {offer.cta}
+                        </a>
+                      )}
                     </div>
                   )}
                 </div>
@@ -535,14 +547,15 @@ const OfferLadderSection = () => {
 
               {/* ══ BACK FACE ══ */}
               <div
-                className="absolute inset-0 w-full h-full"
+                className="absolute inset-0 w-full h-full overflow-y-auto"
                 style={{
                   backfaceVisibility: 'hidden',
                   WebkitBackfaceVisibility: 'hidden',
                   transform: 'rotateY(180deg)',
+                  pointerEvents: flippedStates[i] ? 'auto' : 'none',
                 }}
               >
-                <div className="rounded-2xl border border-blue-500/30 bg-[#0a0f1e] p-6 md:p-8 flex flex-col h-full overflow-y-auto">
+                <div className="rounded-2xl border border-blue-500/30 bg-[#0a0f1e] p-6 md:p-8 flex flex-col min-h-full">
                   <div className="flex items-center justify-between mb-6">
                     <p className="text-xs uppercase tracking-widest text-blue-400">{offer.tag}</p>
                     <button
@@ -556,7 +569,7 @@ const OfferLadderSection = () => {
                   <h3 className="font-oswald font-bold text-xl md:text-2xl text-white mb-2">{offer.title}</h3>
                   <p className="text-blue-400 font-semibold text-sm uppercase tracking-wider mb-6">What's Included</p>
 
-                  <ul className="space-y-3 flex-grow">
+                  <ul className="space-y-3 flex-grow mb-6">
                     {offer.benefits.map((benefit) => (
                       <li key={benefit} className="flex items-start gap-3">
                         <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center mt-0.5">
@@ -567,13 +580,21 @@ const OfferLadderSection = () => {
                     ))}
                   </ul>
 
-                  <a
-                    href={offer.href}
-                    {...(offer.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98] mt-6"
-                  >
-                    {offer.cta}
-                  </a>
+                  {offer.isDirective ? (
+                    <button
+                      onClick={() => setDirectiveModalOpen(true)}
+                      className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+                    >
+                      {offer.cta}
+                    </button>
+                  ) : (
+                    <a
+                      href={offer.href}
+                      className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+                    >
+                      {offer.cta}
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -581,6 +602,8 @@ const OfferLadderSection = () => {
         </Reveal>
       ))}
     </div>
+
+    <DirectiveApplicationModal open={directiveModalOpen} onOpenChange={setDirectiveModalOpen} />
   </section>
   );
 };
