@@ -6,6 +6,7 @@ import salesDashImg from '@/assets/sales-dashboard.png';
 import winbackImg from '@/assets/winback-hq.png';
 import trainingImg from '@/assets/training-videos.png';
 import renewalsImg from '@/assets/renewals.png';
+import agencyBrainLogo from '@/assets/agency-brain-logo.png';
 
 /* ── Fade-in wrapper ── */
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
@@ -112,10 +113,8 @@ const PivotSection = () => (
       </Reveal>
 
       <Reveal delay={0.4}>
-        <p className="text-sm uppercase tracking-[0.3em] text-gray-500 mb-3">Introducing</p>
-        <h3 className="font-oswald font-bold text-4xl md:text-6xl text-white">
-          AGENCY <span className="text-blue-500">BRAIN</span>
-        </h3>
+        <p className="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">Introducing</p>
+        <img src={agencyBrainLogo} alt="Agency Brain" className="mx-auto w-[80%] md:w-[600px] lg:w-[720px] mb-6" />
         <p className="text-gray-400 text-lg mt-4 max-w-2xl mx-auto">
           The operating system that turns chaos into clarity. Your pipeline, your team, your retention — all in one place.
         </p>
