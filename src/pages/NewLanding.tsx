@@ -1,4 +1,5 @@
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback, useEffect, createRef } from 'react';
+import { Volume2, VolumeX } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import useEmblaCarousel from 'embla-carousel-react';
 import standardLogo from '@/assets/standard-word-logo.png';
@@ -135,7 +136,9 @@ const PivotSection = () => (
 /* ══════════════════════════════════════════════════════
    SECTION 3 — THE OPERATING SYSTEM (Agency Brain)
    ══════════════════════════════════════════════════════ */
-const brainCards = [
+const STORAGE_BASE = 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public';
+
+const brainCards: { headline: string; sub: string; img: string; label: string; video?: string }[] = [
   { headline: 'Stop Guessing.', sub: 'See every lead, every stage, every dollar — in real time.', img: lqsImg, label: 'Pipeline Intelligence' },
   { headline: 'Total Visibility.', sub: 'Know exactly where your team stands every single day.', img: salesDashImg, label: 'Sales Dashboard' },
   { headline: 'Stop the Bleed.', sub: 'Catch cancellations before they cost you.', img: winbackImg, label: 'Winback HQ' },
@@ -143,7 +146,7 @@ const brainCards = [
   { headline: 'Track Your ROI.', sub: 'See exactly what your marketing spend is producing — leads, quotes, premium, commission.', img: marketingRoiImg, label: 'Marketing ROI' },
   { headline: 'Sales Breakdown.', sub: 'Drill into premium, items, policies, and points — by date, source, or bundle.', img: salesAnalyticsImg, label: 'Sales Analytics' },
   { headline: 'Score Every Call.', sub: 'AI-powered call audits with execution checklists and talk-to-listen ratios.', img: callScoringImg, label: 'Call Scoring' },
-  { headline: 'Train Your Team.', sub: 'A full training library with structured bootcamps — accessible right inside the app.', img: teamTrainingImg, label: 'Team Training' },
+  { headline: 'Train Your Team.', sub: 'A full training library with structured bootcamps — accessible right inside the app.', img: teamTrainingImg, label: 'Team Training', video: `${STORAGE_BASE}/The Standard This is the 8 week experience.mp4` },
   { headline: 'Practice Makes Perfect.', sub: 'AI roleplay bot lets your producers sharpen their pitch anytime, anywhere.', img: aiRoleplayImg, label: 'AI Roleplay Trainer' },
   { headline: 'Cancel Audit.', sub: 'Track cancellations, at-risk premium, and saved dollars — week by week.', img: cancelAuditImg, label: 'Cancel Audit' },
   { headline: 'Set Your Targets.', sub: 'Plan your 90-day action map — quarterly goals broken into daily habits.', img: targetSettingImg, label: 'Target Setting' },
@@ -155,6 +158,40 @@ const AgencyBrainSection = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [slideStyles, setSlideStyles] = useState<React.CSSProperties[]>([]);
+  const [mutedIndex, setMutedIndex] = useState<number | null>(null); // which card is unmuted (null = all muted)
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>(brainCards.map(() => null));
+
+  // Play/pause videos based on active slide
+  useEffect(() => {
+    videoRefs.current.forEach((video, i) => {
+      if (!video) return;
+      if (i === selectedIndex) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+        video.muted = true; // mute non-active
+      }
+    });
+    // If unmuted card is no longer active, reset
+    if (mutedIndex !== null && mutedIndex !== selectedIndex) {
+      setMutedIndex(null);
+    }
+  }, [selectedIndex]);
+
+  const toggleSound = (index: number) => {
+    const video = videoRefs.current[index];
+    if (!video) return;
+    if (mutedIndex === index) {
+      // mute it
+      video.muted = true;
+      setMutedIndex(null);
+    } else {
+      // mute all others, unmute this one
+      videoRefs.current.forEach((v) => { if (v) v.muted = true; });
+      video.muted = false;
+      setMutedIndex(index);
+    }
+  };
 
   const computeStyles = useCallback(() => {
     if (!emblaApi) return;
@@ -231,15 +268,48 @@ const AgencyBrainSection = () => {
                   className="flex-[0_0_80%] sm:flex-[0_0_55%] md:flex-[0_0_45%] min-w-0 px-3"
                   style={slideStyles[index] || {}}
                 >
-                  <div className="relative group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 hover:border-blue-500/40 transition-colors duration-500">
-                    <p className="text-xs uppercase tracking-widest text-blue-400 mb-2">{card.label}</p>
-                    <h3 className="font-oswald font-bold text-2xl text-white mb-2">{card.headline}</h3>
-                    <p className="text-gray-400 text-sm mb-6">{card.sub}</p>
-                    <div className="relative">
-                      <img src={card.img} alt={card.label} className="w-full rounded-xl shadow-2xl shadow-blue-500/10 group-hover:scale-[1.02] transition-transform duration-500" />
-                      <div className="absolute -inset-4 bg-blue-500/10 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+                  {card.video ? (
+                    /* ── Video Card ── */
+                    <div className="relative group rounded-2xl overflow-hidden border border-white/10 aspect-[9/16] max-h-[520px]">
+                      <video
+                        ref={(el) => { videoRefs.current[index] = el; }}
+                        src={card.video}
+                        poster={card.img}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                      {/* Gradient overlay for text readability */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/50" />
+                      {/* Sound toggle */}
+                      <button
+                        onClick={() => toggleSound(index)}
+                        className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+                        aria-label={mutedIndex === index ? 'Mute' : 'Unmute'}
+                      >
+                        {mutedIndex === index ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+                      </button>
+                      {/* Text overlay */}
+                      <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
+                        <p className="text-xs uppercase tracking-widest text-blue-400 mb-2">{card.label}</p>
+                        <h3 className="font-oswald font-bold text-2xl text-white mb-2">{card.headline}</h3>
+                        <p className="text-gray-300 text-sm">{card.sub}</p>
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    /* ── Static Image Card ── */
+                    <div className="relative group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 hover:border-blue-500/40 transition-colors duration-500">
+                      <p className="text-xs uppercase tracking-widest text-blue-400 mb-2">{card.label}</p>
+                      <h3 className="font-oswald font-bold text-2xl text-white mb-2">{card.headline}</h3>
+                      <p className="text-gray-400 text-sm mb-6">{card.sub}</p>
+                      <div className="relative">
+                        <img src={card.img} alt={card.label} className="w-full rounded-xl shadow-2xl shadow-blue-500/10 group-hover:scale-[1.02] transition-transform duration-500" />
+                        <div className="absolute -inset-4 bg-blue-500/10 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
