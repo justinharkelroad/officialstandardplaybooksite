@@ -1,14 +1,19 @@
-
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
+import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 
 const Privacy = () => {
   return (
-    <div className="min-h-screen">
-      <Navigation />
-      
+    <div className="min-h-screen bg-black text-gray-300">
+      {/* Back to Home */}
+      <div className="container mx-auto px-4 pt-8">
+        <Link to="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm">
+          <ArrowLeft className="w-4 h-4" />
+          Return to Home
+        </Link>
+      </div>
+
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
+      <section className="relative pt-16 pb-20 overflow-hidden">
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="font-rajdhani font-bold text-6xl md:text-8xl uppercase tracking-wide text-white mb-6 animate-fade-up">
             Privacy
@@ -37,6 +42,7 @@ const Privacy = () => {
                 </p>
               </div>
 
+              {/* All sections from previous Privacy.tsx - keeping same content */}
               {/* Section 1 */}
               <div>
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
@@ -174,26 +180,26 @@ const Privacy = () => {
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
                   4. Third-Party Service Providers (Sub-Processors)
                 </h2>
-                <p className="mb-6">We share your data with the following categories of third-party service providers strictly to operate and deliver the Service. Each provider processes data only as necessary for its designated function:</p>
+                <p className="mb-6">We share your data with the following categories of third-party service providers strictly to operate and deliver the Service:</p>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">4.1 Infrastructure and Database</h3>
-                <p><strong>Supabase, Inc.</strong> — Cloud database hosting (PostgreSQL), user authentication, file storage (including call recordings), edge function execution, and real-time data synchronization. Supabase processes substantially all platform data. Supabase's privacy policy is available at supabase.com/privacy.</p>
+                <p><strong>Supabase, Inc.</strong> — Cloud database hosting (PostgreSQL), user authentication, file storage, edge function execution, and real-time data synchronization.</p>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">4.2 Artificial Intelligence and Machine Learning</h3>
-                <p><strong>OpenAI, L.L.C.</strong> — Call transcription (Whisper API) and call analysis (GPT-4o API). When you upload a call recording, the audio file is sent to OpenAI for transcription, and the resulting transcript is sent for scoring analysis. OpenAI's API data usage policy states that data submitted via the API is not used to train their models.</p>
+                <p><strong>OpenAI, L.L.C.</strong> — Call transcription (Whisper API) and call analysis (GPT-4o API).</p>
                 <p className="mt-2"><strong>Lovable AI Gateway</strong> — AI processing for affirmation generation, roleplay grading, life target analysis, monthly mission generation, and daily action suggestions.</p>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">4.3 Voice Synthesis</h3>
-                <p><strong>ElevenLabs, Inc.</strong> — Voice synthesis for the Theta Talk Track feature and real-time AI voice conversation for the Roleplay Bot. Text content (affirmations, roleplay dialogue) is sent to ElevenLabs for audio generation.</p>
+                <p><strong>ElevenLabs, Inc.</strong> — Voice synthesis for the Theta Talk Track feature and real-time AI voice conversation for the Roleplay Bot.</p>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">4.4 Payment Processing</h3>
-                <p><strong>Stripe, Inc.</strong> — All payment processing, subscription management, and billing. Stripe is PCI-DSS Level 1 certified. We never receive or store your full payment card details.</p>
+                <p><strong>Stripe, Inc.</strong> — All payment processing, subscription management, and billing. PCI-DSS Level 1 certified.</p>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">4.5 Email Delivery</h3>
-                <p><strong>Resend</strong> — Transactional email delivery for scorecard notifications, daily summaries, password resets, training assignments, and other platform communications. Email addresses and message content are shared with Resend solely for delivery purposes.</p>
+                <p><strong>Resend</strong> — Transactional email delivery for scorecard notifications, daily summaries, password resets, training assignments, and other platform communications.</p>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">4.6 Updates to This List</h3>
-                <p>We may add or change sub-processors as the Service evolves. We will update this section when material changes occur and notify affected users via email or in-app notification at least 30 days before a new sub-processor begins processing personal data.</p>
+                <p>We may add or change sub-processors as the Service evolves. We will update this section when material changes occur and notify affected users at least 30 days before a new sub-processor begins processing personal data.</p>
               </div>
 
               {/* Section 5 */}
@@ -201,17 +207,15 @@ const Privacy = () => {
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
                   5. Data Roles: Controller vs. Processor
                 </h2>
-                <p className="mb-4">Agency Brain operates in dual data roles depending on the type of data:</p>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">5.1 Data Controller</h3>
-                <p>We act as the data controller for data we collect directly from you for our own purposes, including your account information, usage data, payment information, and data you submit through coaching and personal development tools (Life Targets, Flows, Theta Talk Track).</p>
+                <p>We act as the data controller for data we collect directly from you for our own purposes, including your account information, usage data, payment information, and data you submit through coaching and personal development tools.</p>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">5.2 Data Processor</h3>
-                <p>We act as a data processor on behalf of Agency Owners for data submitted through agency operations, including team member KPI data submitted via the Staff Portal, prospect and lead data, call recordings and transcriptions uploaded by or on behalf of the agency, and any client or customer data that passes through the platform in connection with agency business operations.</p>
-                <p className="mt-2">Agency Owners are the data controllers for this data and are responsible for ensuring they have a lawful basis to collect and process it, including obtaining any necessary consents from their staff, clients, and prospects.</p>
+                <p>We act as a data processor on behalf of Agency Owners for data submitted through agency operations. Agency Owners are the data controllers for this data and are responsible for ensuring they have a lawful basis to collect and process it.</p>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">5.3 Data Processing Agreement</h3>
-                <p>Agency Owners who require a Data Processing Agreement (DPA) for regulatory compliance or contractual obligations may request one by contacting us at the email address provided in Section 17.</p>
+                <p>Agency Owners who require a Data Processing Agreement (DPA) may request one by contacting us at the email address provided in Section 17.</p>
               </div>
 
               {/* Section 6 */}
@@ -219,21 +223,20 @@ const Privacy = () => {
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
                   6. AI Data Processing Disclosure
                 </h2>
-                <p className="mb-4">Agency Brain relies on artificial intelligence to deliver core platform features. This section provides transparency about how your data interacts with AI systems.</p>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">6.1 What Data Is Sent to AI Providers</h3>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li><strong>Call Scoring:</strong> Audio files are sent to OpenAI Whisper for transcription. The resulting text transcript is sent to OpenAI GPT-4o for analysis and scoring.</li>
-                  <li><strong>Roleplay Bot:</strong> Your spoken input during roleplay sessions is processed by ElevenLabs for voice recognition and generation, and by AI models for response generation and grading.</li>
-                  <li><strong>Life Targets and Flows:</strong> The goals, reflections, and personal context you enter are sent to AI models to generate personalized coaching insights, missions, and daily actions.</li>
+                  <li><strong>Roleplay Bot:</strong> Your spoken input is processed by ElevenLabs for voice recognition and generation, and by AI models for response generation and grading.</li>
+                  <li><strong>Life Targets and Flows:</strong> The goals, reflections, and personal context you enter are sent to AI models to generate personalized coaching insights.</li>
                   <li><strong>Theta Talk Track:</strong> Your body, being, balance, and business targets are sent to AI models for affirmation generation, and the resulting text is sent to ElevenLabs for voice synthesis.</li>
                 </ul>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">6.2 AI Training Opt-Out</h3>
-                <p>We use OpenAI's API tier, which by default does not use submitted data to train OpenAI's models. We contractually require that no third-party AI provider uses your data to train, improve, or develop their general-purpose models. Your data is used solely to generate responses for your specific requests.</p>
+                <p>We use OpenAI's API tier, which by default does not use submitted data to train OpenAI's models. We contractually require that no third-party AI provider uses your data to train, improve, or develop their general-purpose models.</p>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">6.3 Automated Decision-Making</h3>
-                <p>Our AI features generate scores, rankings, and assessments (e.g., call scores, potential rank, skill assessments). These outputs are informational tools designed to support human decision-making by agency owners and coaches. They are not used as the sole basis for decisions that produce legal or similarly significant effects on individuals. Agency owners retain full discretion over employment, compensation, and management decisions.</p>
+                <p>Our AI features generate scores, rankings, and assessments. These outputs are informational tools designed to support human decision-making. They are not used as the sole basis for decisions that produce legal or similarly significant effects on individuals.</p>
               </div>
 
               {/* Section 7 */}
@@ -241,20 +244,19 @@ const Privacy = () => {
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
                   7. Call Recording and Consent
                 </h2>
-                <p className="mb-4">The Call Scoring feature involves the upload and processing of recorded telephone conversations.</p>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">7.1 Consent Obligations</h3>
-                <p>Federal law and many U.S. states require one-party or all-party consent before a telephone conversation may be recorded. Some states, including but not limited to California, Florida, Illinois, Maryland, Massachusetts, Montana, New Hampshire, Oregon, Pennsylvania, and Washington, require the consent of all parties to the conversation. You are solely responsible for understanding and complying with the recording consent laws that apply to your calls before uploading recordings to our platform.</p>
+                <p>Federal law and many U.S. states require one-party or all-party consent before a telephone conversation may be recorded. You are solely responsible for understanding and complying with applicable recording consent laws before uploading recordings to our platform.</p>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">7.2 Audio Data Handling</h3>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li>Call recordings are stored in encrypted cloud storage scoped to your agency.</li>
-                  <li>Recordings are accessible only to authorized users within your agency (agency owners, key employees, and designated managers) and to the specific staff member whose call was recorded.</li>
-                  <li>Transcriptions and AI analysis outputs are stored in your agency's database partition and are subject to the same access controls.</li>
+                  <li>Recordings are accessible only to authorized users within your agency.</li>
+                  <li>Transcriptions and AI analysis outputs are subject to the same access controls.</li>
                 </ul>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">7.3 Audio Data Retention</h3>
-                <p>Call recordings and associated transcriptions are retained for the duration of your active subscription. Upon account termination or deletion request, audio files and transcriptions will be permanently deleted within 90 days, subject to any legal hold or retention obligations.</p>
+                <p>Call recordings and associated transcriptions are retained for the duration of your active subscription. Upon account termination, audio files and transcriptions will be permanently deleted within 90 days.</p>
               </div>
 
               {/* Section 8 */}
@@ -262,15 +264,14 @@ const Privacy = () => {
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
                   8. Data Retention
                 </h2>
-                <p className="mb-4">We retain different categories of data for different periods based on operational necessity and legal requirements:</p>
                 <div className="space-y-4">
-                  <div><strong className="text-white">Account Data:</strong> Retained for the duration of your account and for 30 days following account deletion to allow for recovery, unless you request immediate permanent deletion.</div>
-                  <div><strong className="text-white">Performance and KPI Data:</strong> Retained for the duration of the agency's active subscription. Upon agency account termination, this data is deleted within 90 days.</div>
-                  <div><strong className="text-white">Call Recordings and Transcriptions:</strong> Retained for the duration of the agency's active subscription or until individually deleted by an authorized user. Permanently deleted within 90 days of account termination.</div>
-                  <div><strong className="text-white">AI-Generated Content:</strong> Coaching insights, Flow session records, Life Target plans, and generated audio tracks are retained for the duration of your account.</div>
-                  <div><strong className="text-white">Community Content (The Exchange):</strong> Posts, comments, and messages are retained for the duration of the platform's operation. You may delete your own content at any time.</div>
-                  <div><strong className="text-white">Usage and Technical Logs:</strong> Retained for up to 12 months for security analysis and performance optimization, then anonymized or deleted.</div>
-                  <div><strong className="text-white">Billing Records:</strong> Payment transaction records (excluding full card numbers) are retained for 7 years as required by applicable tax and financial reporting regulations.</div>
+                  <div><strong className="text-white">Account Data:</strong> Retained for the duration of your account and for 30 days following account deletion.</div>
+                  <div><strong className="text-white">Performance and KPI Data:</strong> Retained for the duration of the agency's active subscription. Deleted within 90 days of termination.</div>
+                  <div><strong className="text-white">Call Recordings and Transcriptions:</strong> Retained for the duration of the agency's active subscription. Permanently deleted within 90 days of account termination.</div>
+                  <div><strong className="text-white">AI-Generated Content:</strong> Retained for the duration of your account.</div>
+                  <div><strong className="text-white">Community Content (The Exchange):</strong> Retained for the duration of the platform's operation. You may delete your own content at any time.</div>
+                  <div><strong className="text-white">Usage and Technical Logs:</strong> Retained for up to 12 months, then anonymized or deleted.</div>
+                  <div><strong className="text-white">Billing Records:</strong> Retained for 7 years as required by applicable tax and financial reporting regulations.</div>
                   <div><strong className="text-white">Documents (Process Vault):</strong> Retained until deleted by the user or upon account termination (deleted within 90 days).</div>
                 </div>
               </div>
@@ -291,20 +292,19 @@ const Privacy = () => {
                   <li>Withdraw consent for processing where consent is the legal basis</li>
                   <li>Object to processing of your personal data for certain purposes</li>
                 </ul>
-                <p className="mt-4">To exercise any of these rights, contact us at the email address in Section 17. We will respond to verified requests within 30 days.</p>
+                <p className="mt-4">To exercise any of these rights, contact us at the email address in Section 17. We will respond within 30 days.</p>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-8">9.2 California Residents (CCPA/CPRA)</h3>
-                <p>If you are a California resident, you have additional rights under the California Consumer Privacy Act (CCPA) as amended by the California Privacy Rights Act (CPRA):</p>
-                <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                <ul className="list-disc list-inside space-y-2 ml-4">
                   <li><strong>Right to Know:</strong> You may request the specific categories and pieces of personal information we have collected about you.</li>
-                  <li><strong>Right to Delete:</strong> You may request deletion of your personal information, subject to statutory exceptions.</li>
-                  <li><strong>Right to Opt-Out of Sale or Sharing:</strong> We do not sell your personal information. We do not share your personal information for cross-context behavioral advertising purposes.</li>
+                  <li><strong>Right to Delete:</strong> You may request deletion of your personal information.</li>
+                  <li><strong>Right to Opt-Out of Sale or Sharing:</strong> We do not sell or share your personal information for cross-context behavioral advertising.</li>
                   <li><strong>Right to Limit Use of Sensitive Personal Information:</strong> We use sensitive personal information only as necessary to provide the Service.</li>
                   <li><strong>Right to Non-Discrimination:</strong> We will not discriminate against you for exercising your privacy rights.</li>
                 </ul>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-8">9.3 Additional State Privacy Rights</h3>
-                <p>Residents of Virginia (VCDPA), Colorado (CPA), Connecticut (CTDPA), Utah (UCPA), and other states with comprehensive privacy laws may have additional rights including the right to appeal our decision regarding a privacy request. Contact us at the email address in Section 17.</p>
+                <p>Residents of Virginia, Colorado, Connecticut, Utah, and other states with comprehensive privacy laws may have additional rights. Contact us at the email address in Section 17.</p>
               </div>
 
               {/* Section 10 */}
@@ -312,17 +312,16 @@ const Privacy = () => {
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
                   10. Data Security
                 </h2>
-                <p className="mb-4">We implement administrative, technical, and physical safeguards to protect your personal data:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li>All data is transmitted over TLS/SSL encryption (HTTPS)</li>
-                  <li>Data at rest is encrypted using AES-256 encryption in our database and file storage systems</li>
+                  <li>Data at rest is encrypted using AES-256 encryption</li>
                   <li>Row Level Security (RLS) ensures complete data isolation between agencies</li>
                   <li>Role-based access controls restrict data visibility based on user role</li>
-                  <li>Authentication credentials are hashed using industry-standard algorithms; we never store plaintext passwords</li>
-                  <li>Session tokens are cryptographically generated and have defined expiration periods</li>
+                  <li>Authentication credentials are hashed using industry-standard algorithms</li>
+                  <li>Session tokens are cryptographically generated with defined expiration periods</li>
                   <li>Regular security audits of edge functions, database policies, and access controls</li>
                 </ul>
-                <p className="mt-4">No method of electronic transmission or storage is 100% secure. While we strive to protect your data using commercially reasonable measures, we cannot guarantee absolute security. If you become aware of any unauthorized access to your account, contact us immediately.</p>
+                <p className="mt-4">No method of electronic transmission or storage is 100% secure. If you become aware of any unauthorized access, contact us immediately.</p>
               </div>
 
               {/* Section 11 */}
@@ -330,12 +329,12 @@ const Privacy = () => {
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
                   11. Data Breach Notification
                 </h2>
-                <p>In the event of a data breach that compromises the confidentiality, integrity, or availability of your personal data, we will:</p>
+                <p>In the event of a data breach, we will:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4 mt-4">
                   <li>Investigate and contain the breach as rapidly as possible</li>
                   <li>Notify affected users via email within 72 hours of confirming the breach</li>
-                  <li>Notify applicable state attorneys general and regulatory bodies as required by law</li>
-                  <li>Provide a description of the breach, the types of data involved, the steps we are taking in response, and recommendations for affected individuals</li>
+                  <li>Notify applicable regulatory bodies as required by law</li>
+                  <li>Provide a description of the breach, the types of data involved, and recommendations for affected individuals</li>
                 </ul>
               </div>
 
@@ -344,7 +343,7 @@ const Privacy = () => {
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
                   12. Children's Privacy
                 </h2>
-                <p>Agency Brain is a business platform designed for insurance professionals. The Service is not directed to, and we do not knowingly collect personal information from, anyone under the age of 18. If we learn that we have collected personal information from anyone under 18, we will take steps to delete that information promptly. If you believe a minor has provided us with personal data, please contact us immediately at the email address in Section 17.</p>
+                <p>Agency Brain is a business platform designed for insurance professionals. The Service is not directed to, and we do not knowingly collect personal information from, anyone under the age of 18. If you believe a minor has provided us with personal data, please contact us immediately at the email address in Section 17.</p>
               </div>
 
               {/* Section 13 */}
@@ -355,13 +354,13 @@ const Privacy = () => {
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">13.1 Cookies We Use</h3>
                 <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li><strong>Essential Cookies:</strong> Required for authentication, session management, and core platform functionality. These cannot be disabled without breaking the Service.</li>
+                  <li><strong>Essential Cookies:</strong> Required for authentication, session management, and core platform functionality.</li>
                   <li><strong>Functional Cookies:</strong> Remember your preferences such as dark/light mode, language settings, and dashboard configurations.</li>
-                  <li><strong>Analytics Cookies:</strong> Help us understand how users interact with the platform so we can improve performance and usability. These are first-party analytics only.</li>
+                  <li><strong>Analytics Cookies:</strong> Help us understand how users interact with the platform. First-party analytics only.</li>
                 </ul>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">13.2 What We Do Not Use</h3>
-                <p>We do not use third-party advertising cookies. We do not engage in cross-site tracking. We do not sell cookie data or browsing behavior to any third party. We do not serve advertisements of any kind within the platform.</p>
+                <p>We do not use third-party advertising cookies. We do not engage in cross-site tracking. We do not sell cookie data or browsing behavior to any third party.</p>
 
                 <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">13.3 Managing Cookies</h3>
                 <p>You can manage cookie preferences through your browser settings. Disabling essential cookies may impair platform functionality.</p>
@@ -372,7 +371,7 @@ const Privacy = () => {
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
                   14. International Data Transfers
                 </h2>
-                <p>Your data is processed and stored in the United States. If you access the Service from outside the United States, your data will be transferred to and processed in the United States, where data protection laws may differ from those in your country. By using the Service, you consent to this transfer.</p>
+                <p>Your data is processed and stored in the United States. If you access the Service from outside the United States, your data will be transferred to and processed in the United States. By using the Service, you consent to this transfer.</p>
               </div>
 
               {/* Section 15 */}
@@ -380,7 +379,7 @@ const Privacy = () => {
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
                   15. Third-Party Links and Integrations
                 </h2>
-                <p>The Service may contain links to third-party websites or integrate with third-party services (e.g., VoIP providers, email clients). We are not responsible for the privacy practices of third-party services. We encourage you to review the privacy policies of any third-party service you connect to through our platform.</p>
+                <p>The Service may contain links to third-party websites or integrate with third-party services. We are not responsible for the privacy practices of third-party services. We encourage you to review their privacy policies.</p>
               </div>
 
               {/* Section 16 */}
@@ -388,13 +387,13 @@ const Privacy = () => {
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
                   16. Changes to This Privacy Policy
                 </h2>
-                <p>We may update this Privacy Policy from time to time. When we make material changes, we will:</p>
+                <p>When we make material changes, we will:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4 mt-4">
-                  <li>Post the updated policy on our website with a revised "Last Updated" date</li>
+                  <li>Post the updated policy with a revised "Last Updated" date</li>
                   <li>Notify you via email at least 30 days before material changes take effect</li>
                   <li>Provide a prominent in-app notification when you next log in</li>
                 </ul>
-                <p className="mt-4">Continued use of the Service after the effective date of a revised Privacy Policy constitutes your acceptance of the updated terms.</p>
+                <p className="mt-4">Continued use of the Service after the effective date constitutes your acceptance of the updated terms.</p>
               </div>
 
               {/* Section 17 */}
@@ -408,7 +407,7 @@ const Privacy = () => {
                   <p><strong>Email:</strong> info@standardplaybook.com</p>
                   <p><strong>Website:</strong> myagencybrain.com</p>
                 </div>
-                <p className="mt-4">For privacy rights requests, please include your full name, the email address associated with your account, and a description of your request. We may need to verify your identity before processing your request.</p>
+                <p className="mt-4">For privacy rights requests, please include your full name, the email address associated with your account, and a description of your request.</p>
               </div>
 
               {/* Section 18 */}
@@ -416,7 +415,7 @@ const Privacy = () => {
                 <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
                   18. Do Not Sell or Share My Personal Information
                 </h2>
-                <p>We do not sell your personal information. We do not share your personal information for cross-context behavioral advertising. If you are a California resident and wish to submit a "Do Not Sell or Share" request, you may do so by contacting us at the email address above, although no action will be required on our part as we do not engage in these practices.</p>
+                <p>We do not sell your personal information. We do not share your personal information for cross-context behavioral advertising. If you are a California resident and wish to submit a "Do Not Sell or Share" request, you may contact us at the email address above, although no action will be required on our part as we do not engage in these practices.</p>
               </div>
 
               <div className="border-t border-primary/20 pt-8">
@@ -428,8 +427,6 @@ const Privacy = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

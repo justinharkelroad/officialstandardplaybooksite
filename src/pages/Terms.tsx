@@ -1,24 +1,30 @@
 
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
+import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 
 const Terms = () => {
   return (
-    <div className="min-h-screen">
-      <Navigation />
-      
+    <div className="min-h-screen bg-black text-gray-300">
+      {/* Back to Home */}
+      <div className="container mx-auto px-4 pt-8">
+        <Link to="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm">
+          <ArrowLeft className="w-4 h-4" />
+          Return to Home
+        </Link>
+      </div>
+
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
+      <section className="relative pt-16 pb-20 overflow-hidden">
         <div className="container mx-auto px-4 text-center relative z-10">
+          <p className="text-sm uppercase tracking-widest text-gray-500 mb-2">Standard Playbook INC</p>
+          <p className="text-sm uppercase tracking-widest text-gray-500 mb-6">d/b/a Agency Brain</p>
           <h1 className="font-rajdhani font-bold text-6xl md:text-8xl uppercase tracking-wide text-white mb-6 animate-fade-up">
             Terms of
             <br />
             <span className="text-gradient">Service</span>
           </h1>
-          
           <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto animate-fade-up" style={{ animationDelay: '0.2s' }}>
-            Please read these terms carefully before using our services. 
-            By engaging our services, you agree to be bound by these Terms of Service.
+            Please read these terms carefully before using our services. By creating an account, accessing the platform, or engaging our coaching services, you agree to be bound by these Terms of Service.
           </p>
         </div>
       </section>
@@ -28,171 +34,414 @@ const Terms = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto prose prose-invert prose-lg">
             <div className="space-y-12 text-gray-300">
-              
+
               <div className="text-center mb-12">
                 <p className="text-lg leading-relaxed">
-                  <strong>The Standard Playbook, LLC</strong> ("Company," "we," "us," or "our") provides coaching and consulting 
-                  services to insurance agencies ("Client," "you," or "your") under the following terms. By engaging our services, 
-                  you agree to be bound by these Terms of Service ("TOS").
+                  <strong>Standard Playbook INC</strong> ("Company," "we," "us," or "our"), doing business as Agency Brain, provides insurance agency management software, coaching, and consulting services under the following terms. These Terms of Service ("TOS") govern your access to and use of the Agency Brain platform (the "Platform"), all associated coaching and consulting services (the "Coaching Services"), and any related websites, applications, and tools (collectively, the "Service").
+                </p>
+                <p className="text-lg leading-relaxed mt-4">
+                  By creating an account, accessing the Platform, subscribing to any plan, or engaging our Coaching Services, you ("Client," "you," or "your") agree to be bound by these TOS. If you are accepting these terms on behalf of a company or other legal entity, you represent and warrant that you have the authority to bind that entity to these TOS.
                 </p>
               </div>
 
+              {/* Section 1 */}
               <div>
-                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  1. Services Provided
-                </h2>
-                <div className="space-y-4">
-                  <p>
-                    The Standard Playbook offers business coaching, consulting, and resources designed to help insurance 
-                    agencies grow and improve operations. Services include, but are not limited to:
-                  </p>
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>One-on-one coaching</li>
-                    <li>Group consulting sessions</li>
-                    <li>Access to educational materials, courses, and tools</li>
-                  </ul>
-                  <p>The specific scope of services will be outlined in a separate proposal or agreement.</p>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">1. Definitions</h2>
+                <ul className="list-disc list-inside space-y-2 ml-4">
+                  <li><strong>"Agency Owner"</strong> means the individual or entity that creates and manages an agency account on the Platform.</li>
+                  <li><strong>"Authorized Users"</strong> means Agency Owners, Key Employees, Staff Portal Users, and any other individuals granted access to the Platform under an agency account.</li>
+                  <li><strong>"Key Employee"</strong> means an individual invited by an Agency Owner to access owner-level dashboard features.</li>
+                  <li><strong>"Staff Portal User"</strong> means a team member granted access to the Staff Portal for submitting performance data, accessing training, and using assigned platform features.</li>
+                  <li><strong>"Membership Tier"</strong> means the subscription level selected by the Client, which determines feature access and usage limits. Current tiers include Call Scoring, Boardroom, and 1:1 Coaching.</li>
+                  <li><strong>"Client Data"</strong> means all data, content, and information uploaded, submitted, or generated by you or your Authorized Users through the Service.</li>
+                  <li><strong>"Platform"</strong> means the Agency Brain web application, including all features, tools, dashboards, APIs, and associated infrastructure.</li>
+                </ul>
+              </div>
+
+              {/* Section 2 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">2. Services Provided</h2>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">2.1 Platform Services</h3>
+                <p>The Agency Brain Platform provides insurance agency management and business intelligence tools including, but not limited to:</p>
+                <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                  <li>Daily KPI tracking and performance analytics dashboards</li>
+                  <li>Staff Portal for team member scorecard submissions and training access</li>
+                  <li>Call Scoring module with AI-powered transcription and analysis</li>
+                  <li>AI Roleplay Bot for sales practice and skill development</li>
+                  <li>Life Targets goal-setting and quarterly planning system</li>
+                  <li>Theta Talk Track personalized affirmation audio generation</li>
+                  <li>Flows guided reflection and journaling sessions</li>
+                  <li>The Exchange community platform for knowledge sharing</li>
+                  <li>Process Vault secure document storage</li>
+                  <li>Training system with Standard Playbook curriculum and custom agency training</li>
+                  <li>Prospect management and lead tracking (Explorer)</li>
+                  <li>Team performance visualization (Team Rings) and contest boards</li>
+                </ul>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-8">2.2 Coaching Services</h3>
+                <p>Depending on your Membership Tier, Coaching Services may include:</p>
+                <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                  <li>One-on-one coaching sessions with assigned coaches</li>
+                  <li>Group consulting sessions (Boardroom)</li>
+                  <li>Access to educational materials, courses, and the Standard Playbook curriculum</li>
+                  <li>Personalized focus targets and coaching insights delivered through the Platform</li>
+                </ul>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-8">2.3 Feature Access by Membership Tier</h3>
+                <p>Feature availability is determined by your active Membership Tier. We reserve the right to modify tier structures, feature availability, and usage limits with 30 days' advance written notice. Current usage limits include:</p>
+                <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                  <li><strong>Call Scoring Tier:</strong> Access to Call Scoring module only.</li>
+                  <li><strong>Boardroom Tier:</strong> Dashboard, metrics, training, community access, and up to 20 call scoring analyses per month.</li>
+                  <li><strong>1:1 Coaching Tier:</strong> Full platform access including Roleplay Bot, qualitative submissions, Bonus Grid, and up to 100 call scoring analyses per month.</li>
+                </ul>
+              </div>
+
+              {/* Section 3 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">3. Account Registration and Security</h2>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">3.1 Account Creation</h3>
+                <p>To access the Platform, you must create an account and provide accurate, current, and complete information. You agree to update your information promptly if it changes. We reserve the right to suspend or terminate accounts that contain materially inaccurate information.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">3.2 Account Types and Authentication</h3>
+                <p>The Platform uses dual authentication systems:</p>
+                <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                  <li>Agency Owner and Key Employee accounts are authenticated through Supabase Auth with email and password credentials.</li>
+                  <li>Staff Portal accounts are authenticated through a separate session-token-based system with username and password credentials, managed by the Agency Owner.</li>
+                </ul>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">3.3 Account Security</h3>
+                <p>You are responsible for maintaining the confidentiality of your account credentials and for all activity that occurs under your account. You must notify us immediately at info@standardplaybook.com if you become aware of any unauthorized use of your account or any other breach of security.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">3.4 Agency Owner Responsibilities</h3>
+                <p>Agency Owners are responsible for:</p>
+                <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                  <li>Managing all Authorized Users within their agency</li>
+                  <li>Ensuring that all Authorized Users comply with these TOS</li>
+                  <li>Determining appropriate access levels and permissions for their team members</li>
+                  <li>All activity conducted by their Authorized Users on the Platform</li>
+                </ul>
+              </div>
+
+              {/* Section 4 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">4. Payment Terms</h2>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">4.1 Fees and Billing</h3>
+                <ul className="list-disc list-inside space-y-2 ml-4">
+                  <li>All fees are due upfront or on a recurring basis, as specified in your selected plan or subscription agreement.</li>
+                  <li>By subscribing to any recurring service, you authorize us to automatically charge the payment method on file at the agreed-upon intervals.</li>
+                  <li>All payments are processed through Stripe. We do not store your full payment card information.</li>
+                  <li>Fees are exclusive of applicable taxes, which will be added where required by law.</li>
+                </ul>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">4.2 Late Payment and Non-Payment</h3>
+                <p>Failure to make timely payments may result in:</p>
+                <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                  <li>Suspension of access to the Platform and Coaching Services</li>
+                  <li>Downgrade or restriction of features available under your Membership Tier</li>
+                  <li>Termination of your account after 30 days of non-payment</li>
+                  <li>Assessment of late fees at the rate of 1.5% per month on outstanding balances, or the maximum rate permitted by applicable law, whichever is lower</li>
+                </ul>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">4.3 Price Changes</h3>
+                <p>We reserve the right to change our pricing at any time. Price changes for existing subscribers will take effect at the start of the next billing cycle following at least 30 days' advance written notice. If you do not agree to a price change, you may cancel your subscription before the new price takes effect.</p>
+              </div>
+
+              {/* Section 5 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">5. Termination and Cancellation</h2>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">5.1 Cancellation by Client</h3>
+                <ul className="list-disc list-inside space-y-2 ml-4">
+                  <li>To cancel any recurring service or subscription, you must submit a written cancellation request via email to info@standardplaybook.com.</li>
+                  <li>Cancellations must be received at least three (3) business days before the next billing cycle to avoid being charged for the subsequent period.</li>
+                  <li>Upon cancellation, your access to paid features will continue through the end of your current billing period.</li>
+                </ul>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">5.2 Termination by Company</h3>
+                <p>We may suspend or terminate your access to the Service immediately, without prior notice or liability, if:</p>
+                <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                  <li>You breach any provision of these TOS</li>
+                  <li>You fail to make payment for 30 or more days past the due date</li>
+                  <li>Your use of the Service poses a security risk to the Platform or other users</li>
+                  <li>We are required to do so by law</li>
+                  <li>We reasonably believe your account is being used for fraudulent or illegal purposes</li>
+                </ul>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">5.3 Effect of Termination</h3>
+                <p>Upon termination or expiration of your subscription:</p>
+                <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                  <li>Your access to the Platform and Coaching Services will cease immediately (or at the end of the current billing period for voluntary cancellations).</li>
+                  <li>We will retain your Client Data for 90 days following termination to allow you to request data export. After 90 days, Client Data will be permanently deleted unless we are required by law to retain it.</li>
+                  <li>You may request an export of your Client Data in machine-readable format at any time prior to the 90-day deletion deadline by emailing info@standardplaybook.com.</li>
+                  <li>Any outstanding payment obligations survive termination.</li>
+                </ul>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">5.4 Refund Policy</h3>
+                <ul className="list-disc list-inside space-y-2 ml-4">
+                  <li>No refunds are offered once Coaching Services have been delivered or accessed.</li>
+                  <li>No refunds are issued for partial billing cycles or unused portions of subscription periods.</li>
+                  <li>Physical products, including the Standard Playbook, will be shipped within 30 days of order. No refunds will be provided once a physical product order has been placed.</li>
+                </ul>
+              </div>
+
+              {/* Section 6 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">6. Data Ownership and Licensing</h2>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">6.1 Your Data</h3>
+                <p>You retain all ownership rights in your Client Data. We do not claim ownership of any data, content, or information you or your Authorized Users upload, submit, or create on the Platform.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">6.2 License to Us</h3>
+                <p>By uploading or submitting Client Data to the Platform, you grant us a limited, non-exclusive, worldwide, royalty-free license to use, process, store, transmit, and display your Client Data solely to the extent necessary to provide, maintain, and improve the Service. This license terminates when you delete your Client Data or when your account is terminated.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">6.3 Our Intellectual Property</h3>
+                <p>The Platform, including all software code, user interface designs, documentation, the Standard Playbook curriculum, training materials we create, AI models and prompts, scoring templates, and all related intellectual property, is and remains the exclusive property of Standard Playbook INC.</p>
+                <p className="mt-2">Your subscription grants you a limited, non-exclusive, non-transferable, revocable license to access and use the Platform features available under your Membership Tier for the duration of your active subscription.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">6.4 Aggregate and Anonymized Data</h3>
+                <p>We may create aggregate, anonymized, or de-identified data derived from your use of the Service ("Aggregate Data"). Aggregate Data does not identify you or any individual and is not considered Client Data. We may use Aggregate Data for any lawful purpose without restriction or obligation to you.</p>
+              </div>
+
+              {/* Section 7 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">7. Acceptable Use Policy</h2>
+                <p>You agree that you and your Authorized Users will not use the Service to:</p>
+                <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                  <li>Violate any applicable federal, state, local, or international law or regulation</li>
+                  <li>Upload, post, or transmit any content that is unlawful, defamatory, obscene, threatening, harassing, discriminatory, or that infringes on the intellectual property rights of any third party</li>
+                  <li>Upload call recordings without having obtained all consents required by applicable laws</li>
+                  <li>Upload or process data belonging to individuals under the age of 18</li>
+                  <li>Attempt to gain unauthorized access to the Platform, other users' accounts, or any systems or networks connected to the Service</li>
+                  <li>Reverse engineer, decompile, disassemble, or otherwise attempt to discover the source code of the Platform</li>
+                  <li>Use the Platform to develop a competing product or service</li>
+                  <li>Share, resell, or sublicense your account access or any Platform features to any third party not authorized under your agency account</li>
+                  <li>Circumvent or attempt to circumvent usage limits, access controls, or security measures</li>
+                  <li>Use automated scripts, bots, or crawlers to access or interact with the Platform except through our documented APIs</li>
+                  <li>Upload malicious software, viruses, or any code designed to disrupt or damage the Service</li>
+                  <li>Impersonate any person or entity or misrepresent your affiliation with any person or entity</li>
+                  <li>Use The Exchange community features to solicit, advertise, or promote services competitive with Agency Brain or Standard Playbook</li>
+                </ul>
+                <p className="mt-4 text-primary font-semibold">Violation of this Acceptable Use Policy may result in immediate suspension or termination of your account without refund.</p>
+              </div>
+
+              {/* Section 8 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">8. Call Recording and AI Processing</h2>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">8.1 Call Recording Consent and Compliance</h3>
+                <p>You are solely responsible for ensuring legal compliance before uploading any call recording to the Platform. This includes:</p>
+                <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                  <li>Obtaining all consents required under applicable federal and state wiretapping, eavesdropping, and recording laws</li>
+                  <li>Understanding and complying with the consent requirements of all jurisdictions applicable to the call</li>
+                  <li>Ensuring that any third-party personal information contained in call recordings has been collected in compliance with applicable privacy laws</li>
+                </ul>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">8.2 AI Processing Disclaimer</h3>
+                <p>You acknowledge and agree that:</p>
+                <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                  <li>AI-generated outputs are informational tools and are not a substitute for human judgment, professional advice, or independent evaluation</li>
+                  <li>Call scores, skill assessments, potential rank classifications, and other AI evaluations are probabilistic and may contain errors or inaccuracies</li>
+                  <li>AI transcriptions may not be 100% accurate, and you should verify any critical information against the original audio recording</li>
+                  <li>We do not guarantee the accuracy, completeness, or reliability of any AI-generated output</li>
+                  <li>You will not use AI-generated scores or assessments as the sole basis for any employment, compensation, disciplinary, or termination decision without independent human review</li>
+                </ul>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">8.3 Indemnification for Call Recordings</h3>
+                <p>You agree to indemnify, defend, and hold harmless Standard Playbook INC from and against any and all claims, damages, losses, liabilities, costs, and expenses arising out of or related to:</p>
+                <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                  <li>Your upload of call recordings without proper consent</li>
+                  <li>Any third-party claims resulting from the recording, transcription, storage, or analysis of telephone conversations you upload</li>
+                  <li>Your use of AI-generated call analyses in employment or business decisions</li>
+                  <li>Any violation of applicable wiretapping, eavesdropping, or recording laws by you or your Authorized Users</li>
+                </ul>
+              </div>
+
+              {/* Section 9 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">9. User-Generated Content</h2>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">9.1 The Exchange and Community Features</h3>
+                <p>By posting content to The Exchange or other community features, you:</p>
+                <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                  <li>Represent that you own or have the necessary rights to the content you post</li>
+                  <li>Grant us a non-exclusive, worldwide, royalty-free license to display, distribute, and make your content available to other platform members</li>
+                  <li>Acknowledge that other authorized members can view your posts and that content shared in community spaces is not private</li>
+                  <li>Agree not to post content that violates the Acceptable Use Policy in Section 7</li>
+                </ul>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">9.2 Content Moderation</h3>
+                <p>We reserve the right, but are not obligated, to monitor, review, and remove any user-generated content at our sole discretion.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">9.3 DMCA and Copyright Complaints</h3>
+                <p>If you believe that content posted on the Platform infringes your copyright, you may submit a notice under the Digital Millennium Copyright Act (DMCA) to:</p>
+                <div className="bg-dark-card border border-primary/20 rounded-lg p-6 mt-4">
+                  <p><strong>Standard Playbook INC</strong></p>
+                  <p>Attn: DMCA Agent</p>
+                  <p><strong>Email:</strong> info@standardplaybook.com</p>
                 </div>
               </div>
 
+              {/* Section 10 */}
               <div>
-                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  2. Payment Terms
-                </h2>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">10. Platform Availability and Service Levels</h2>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">10.1 Availability</h3>
+                <p>We strive to maintain high availability of the Platform but do not guarantee uninterrupted access.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">10.2 Modifications to the Platform</h3>
+                <p>We reserve the right to modify, update, or discontinue any feature or functionality of the Platform at any time. For material changes that reduce functionality, we will provide at least 30 days' advance notice.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">10.3 Third-Party Service Dependencies</h3>
+                <p>The Platform relies on third-party services including Supabase, OpenAI, ElevenLabs, Stripe, and Resend. We are not liable for service interruptions caused by third-party service providers.</p>
+              </div>
+
+              {/* Section 11 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">11. Confidentiality</h2>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">11.1 Mutual Obligations</h3>
+                <p>Both parties agree to maintain the confidentiality of any proprietary or sensitive information shared during the course of services.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">11.2 Exceptions</h3>
+                <p>Confidentiality obligations do not apply to information that: (a) is or becomes publicly available through no fault of the receiving party; (b) was known to the receiving party prior to disclosure; (c) is independently developed without use of confidential information; or (d) is required to be disclosed by law.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">11.3 Survival</h3>
+                <p>Confidentiality obligations survive the termination of these TOS for a period of three (3) years.</p>
+              </div>
+
+              {/* Section 12 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">12. Data Security and Multi-Tenant Isolation</h2>
+                <p className="mb-4">We implement enterprise-grade security measures to protect your Client Data:</p>
+                <ul className="list-disc list-inside space-y-2 ml-4">
+                  <li><strong>Agency Data Isolation:</strong> Row Level Security (RLS) ensures complete data isolation between agencies.</li>
+                  <li><strong>Encryption:</strong> All data is encrypted in transit (TLS/SSL) and at rest (AES-256).</li>
+                  <li><strong>Access Controls:</strong> Role-based access controls restrict data visibility based on user role.</li>
+                  <li><strong>Authentication Security:</strong> Passwords are hashed using industry-standard algorithms. Session tokens are cryptographically generated with defined expiration periods.</li>
+                </ul>
+              </div>
+
+              {/* Section 13 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">13. Disclaimers</h2>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">13.1 No Guaranteed Outcomes</h3>
+                <p>Results from coaching, consulting, and platform services vary based on client participation, market conditions, and factors outside our control. We do not guarantee specific outcomes, revenue increases, performance improvements, or any particular business results.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">13.2 Not Professional Advice</h3>
+                <p>The information provided through Coaching Services, the Platform, and AI-generated content is for educational and advisory purposes only. It does not constitute legal, financial, tax, insurance, regulatory, or other professional advice.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">13.3 "As Is" Disclaimer</h3>
+                <p className="uppercase font-semibold text-sm">THE PLATFORM AND ALL SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, OR STATUTORY, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT.</p>
+              </div>
+
+              {/* Section 14 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">14. Limitation of Liability</h2>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">14.1 Exclusion of Consequential Damages</h3>
+                <p className="uppercase text-sm">TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL STANDARD PLAYBOOK INC BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, LOSS OF DATA, LOSS OF BUSINESS OPPORTUNITY, OR LOSS OF GOODWILL, ARISING OUT OF OR RELATED TO YOUR USE OF THE SERVICE.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">14.2 Cap on Liability</h3>
+                <p className="uppercase text-sm">OUR TOTAL AGGREGATE LIABILITY TO YOU FOR ALL CLAIMS ARISING OUT OF OR RELATED TO THESE TOS OR THE SERVICE SHALL NOT EXCEED THE TOTAL AMOUNT YOU HAVE PAID TO US IN THE TWELVE (12) MONTHS IMMEDIATELY PRECEDING THE EVENT GIVING RISE TO THE CLAIM.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">14.3 Essential Purpose</h3>
+                <p className="uppercase text-sm">THE LIMITATIONS IN THIS SECTION APPLY EVEN IF ANY LIMITED REMEDY FAILS OF ITS ESSENTIAL PURPOSE. SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF CERTAIN DAMAGES, SO SOME OF THE ABOVE LIMITATIONS MAY NOT APPLY TO YOU.</p>
+              </div>
+
+              {/* Section 15 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">15. Indemnification</h2>
+                <p>You agree to indemnify, defend, and hold harmless Standard Playbook INC from and against any and all third-party claims, damages, losses, liabilities, costs, and expenses arising out of or related to:</p>
+                <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                  <li>Your use of the Service in violation of these TOS</li>
+                  <li>Your violation of any applicable law or regulation</li>
+                  <li>Your Client Data or any content you upload, post, or submit to the Platform</li>
+                  <li>Your upload of call recordings without proper consent</li>
+                  <li>Any dispute between you and your employees, staff, clients, or prospects related to data processed through the Platform</li>
+                  <li>Your negligent or willful misconduct</li>
+                </ul>
+              </div>
+
+              {/* Section 16 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">16. Dispute Resolution</h2>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3">16.1 Informal Resolution</h3>
+                <p>Before initiating any formal dispute resolution proceeding, both parties agree to attempt to resolve any dispute informally by negotiating in good faith for at least thirty (30) days.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">16.2 Binding Arbitration</h3>
+                <p>If informal resolution is unsuccessful, any dispute shall be resolved by binding arbitration administered by the American Arbitration Association ("AAA") under its Commercial Arbitration Rules. The arbitration shall be conducted by a single arbitrator in Fort Wayne, Indiana, or remotely via videoconference.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">16.3 Class Action Waiver</h3>
+                <p className="uppercase font-semibold text-sm">YOU AGREE THAT ANY DISPUTE RESOLUTION PROCEEDINGS WILL BE CONDUCTED ONLY ON AN INDIVIDUAL BASIS AND NOT IN A CLASS, CONSOLIDATED, OR REPRESENTATIVE ACTION.</p>
+
+                <h3 className="font-rajdhani font-semibold text-xl text-white mb-3 mt-6">16.4 Exceptions</h3>
+                <p>Either party may seek injunctive or other equitable relief in any court of competent jurisdiction to prevent infringement of intellectual property rights or confidential information.</p>
+              </div>
+
+              {/* Section 17 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">17. Force Majeure</h2>
+                <p>We are not responsible for delays or failures to perform our obligations under these TOS due to causes beyond our reasonable control, including natural disasters, epidemics, government actions, war, terrorism, civil unrest, utility or telecommunications failures, cyberattacks, third-party service provider outages, or labor disputes.</p>
+              </div>
+
+              {/* Section 18 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">18. Governing Law and Jurisdiction</h2>
+                <p>These Terms of Service are governed by and construed in accordance with the laws of the State of Indiana, without regard to its conflict of law principles. Subject to Section 16 (Dispute Resolution), any legal action or proceeding not subject to arbitration shall be brought exclusively in the state or federal courts located in Allen County, Indiana.</p>
+              </div>
+
+              {/* Section 19 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">19. Amendments</h2>
+                <p>We reserve the right to update or modify these TOS at any time. When we make material changes, we will:</p>
+                <ul className="list-disc list-inside space-y-2 ml-4 mt-4">
+                  <li>Post the updated TOS on our website with a revised "Last Updated" date</li>
+                  <li>Notify you via email at least 30 days before material changes take effect</li>
+                  <li>Provide a prominent in-app notification when you next log in to the Platform</li>
+                </ul>
+                <p className="mt-4">Continued use of the Service after the effective date of updated TOS constitutes your acceptance of the changes.</p>
+              </div>
+
+              {/* Section 20 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">20. Miscellaneous</h2>
                 <div className="space-y-4">
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>All fees are due upfront or on a recurring basis, as specified in your plan</li>
-                    <li>By signing up for any recurring service, you authorize us to automatically charge the payment method on file at the agreed-upon intervals</li>
-                    <li>Any failure to make timely payments may result in suspension or termination of services</li>
-                  </ul>
+                  <div><strong className="text-white">20.1 Entire Agreement:</strong> These TOS, together with our Privacy Policy and any applicable subscription agreement, constitute the entire agreement between you and Standard Playbook INC regarding the Service.</div>
+                  <div><strong className="text-white">20.2 Severability:</strong> If any provision is held to be invalid, illegal, or unenforceable, the remaining provisions shall continue in full force and effect.</div>
+                  <div><strong className="text-white">20.3 Waiver:</strong> Our failure to enforce any provision shall not constitute a waiver of that provision or any other provision.</div>
+                  <div><strong className="text-white">20.4 Assignment:</strong> You may not assign or transfer your rights without our prior written consent. We may assign our rights without your consent in connection with a merger, acquisition, or sale of assets.</div>
+                  <div><strong className="text-white">20.5 Notices:</strong> All notices shall be in writing and deemed delivered when sent via email to the email address associated with your account or to info@standardplaybook.com.</div>
+                  <div><strong className="text-white">20.6 Independent Contractors:</strong> The relationship between you and Standard Playbook INC is that of independent contractors.</div>
                 </div>
               </div>
 
+              {/* Section 21 */}
               <div>
-                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  3. Termination of Services & Recurring Charges
-                </h2>
-                <div className="space-y-4">
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>To terminate any recurring service or subscription, you must submit a written cancellation request via email</li>
-                    <li>Cancellations must be received at least three (3) business days before the next billing cycle to avoid being charged</li>
-                    <li>No refunds will be issued for partial billing cycles or unused portions of services</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div>
-                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  4. Refund Policy
-                </h2>
-                <div className="space-y-4">
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>No refunds are offered once services have been delivered or accessed</li>
-                    <li>Physical products such as the Playbook will be shipped within 30 days. No refunds will be provided once the order is placed</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div>
-                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  5. Confidentiality
-                </h2>
-                <div className="space-y-4">
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Both parties agree to maintain confidentiality of any proprietary or sensitive information shared during the course of services</li>
-                    <li>This obligation will survive the termination of services</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div>
-                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  6. Disclaimer
-                </h2>
-                <div className="space-y-4">
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Results from coaching and consulting services vary based on client participation and market conditions. We do not guarantee specific outcomes or performance</li>
-                    <li>The information provided during sessions is for educational and advisory purposes only and does not constitute legal, financial, or professional advice</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div>
-                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  7. Liability Limitation
-                </h2>
-                <div className="space-y-4">
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>In no event shall The Standard Playbook be held liable for any direct, indirect, incidental, or consequential damages arising from the use of our services</li>
-                    <li>Our maximum liability to any client shall not exceed the total amount paid for services within the past 12 months</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div>
-                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  8. Force Majeure
-                </h2>
-                <div className="space-y-4">
-                  <p>
-                    We are not responsible for delays or failures to perform due to causes beyond our reasonable control, 
-                    including natural disasters, government actions, or technological failures.
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  9. Governing Law
-                </h2>
-                <div className="space-y-4">
-                  <p>
-                    These Terms of Service are governed by and construed in accordance with the laws of the State of Indiana, 
-                    without regard to its conflict of law principles.
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  10. Amendments
-                </h2>
-                <div className="space-y-4">
-                  <p>
-                    We reserve the right to update or modify these TOS at any time without prior notice. Continued use of 
-                    services constitutes acceptance of the latest version of the TOS.
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">
-                  Contact Information
-                </h2>
-                <div className="space-y-4">
-                  <p>
-                    If you have questions about these terms, please contact us:
-                  </p>
-                  <div className="bg-dark-card border border-primary/20 rounded-lg p-6">
-                    <p><strong>The Standard Playbook, LLC</strong></p>
-                    <p><strong>Email:</strong> info@standardplaybook.com</p>
-                    <p><strong>Phone:</strong> +1 (260) 515-1349</p>
-                    <p><strong>Address:</strong> Fort Wayne, IN, USA</p>
-                  </div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">21. Contact Information</h2>
+                <p>If you have questions about these Terms of Service, please contact us:</p>
+                <div className="bg-dark-card border border-primary/20 rounded-lg p-6 mt-4">
+                  <p><strong>Standard Playbook INC</strong></p>
+                  <p>d/b/a Agency Brain</p>
+                  <p><strong>Email:</strong> info@standardplaybook.com</p>
+                  <p><strong>Phone:</strong> +1 (260) 515-1349</p>
+                  <p>Fort Wayne, Indiana, USA</p>
                 </div>
               </div>
 
               <div className="border-t border-primary/20 pt-8">
                 <p className="text-gray-400 text-center">
-                  Last updated: December 2024
+                  Last updated: February 12, 2025
                 </p>
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };
