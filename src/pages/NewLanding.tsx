@@ -43,11 +43,18 @@ const ScrollytellingHero = () => {
   const lerp = (p: number, start: number, end: number) =>
     Math.max(0, Math.min(1, (p - start) / (end - start)));
 
-  // Video fades out at the very end
+  // Video fades out before Segment D (55–68%)
   const videoOpacity = useTransform(scrollYProgress, (p) => {
-    if (p < 0.85) return 1;
-    if (p > 1.0) return 0;
-    return 1 - lerp(p, 0.85, 1.0);
+    if (p < 0.55) return 1;
+    if (p >= 0.68) return 0;
+    return 1 - lerp(p, 0.55, 0.68);
+  });
+
+  // Blue background fades in bridging C→D (62–70%)
+  const blueBgOpacity = useTransform(scrollYProgress, (p) => {
+    if (p < 0.62) return 0;
+    if (p >= 0.70) return 1;
+    return lerp(p, 0.62, 0.70);
   });
 
   // Segment A: fully visible 0–10%, fades to 0 by 18%, stays 0 forever after
@@ -100,6 +107,13 @@ const ScrollytellingHero = () => {
           />
           <div className="absolute inset-0 bg-black/50" />
         </motion.div>
+
+        {/* Blue background layer — fades in before Segment D */}
+        <motion.div
+          style={{ opacity: blueBgOpacity }}
+          className="absolute inset-0 bg-gradient-to-b from-[#020617] to-black"
+          aria-hidden="true"
+        />
 
         {/* ── Segment A: Logo + Hook ── */}
         <motion.div
