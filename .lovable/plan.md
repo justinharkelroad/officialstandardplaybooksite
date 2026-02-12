@@ -1,42 +1,34 @@
 
-## Full-Width Producer Challenge Banner with Flip Card
 
-### What You'll Get
+## Make NewLanding the Official Home Page + Disable Producer Challenge CTA
 
-A new full-width banner section placed below the three offer cards and above the footer on the `/new` page. Here's the layout:
+### 1. Swap the landing page route
 
-**Front Face (Banner):**
-- Full-width dark card/bar spanning the page
-- Background video playing (same style as the offer cards -- autoplaying, muted, looping)
-- Video container is cropped to roughly 60% of normal video height using `object-cover` with `object-position: top` so the top/center of the video is visible, not letterboxed
-- Overlaid with a dark gradient so text is readable
-- Content overlaid: tag line ("THE CHALLENGE"), title ("6 Week Producer Challenge"), a short subtitle ("Transform your producer from reactive chaos to systematic execution -- in 42 days."), price ("$299 / per producer"), and a "Buy a Seat" button linking to the existing checkout URL (`https://createthestandard.com/credit-card-page`)
-- A "See What's Included" flip trigger (same blue text link style as the offer cards)
-- Sound toggle button in the corner
+In `src/App.tsx`, the `/` route currently renders `<Index />` (the old landing page). We will:
 
-**Back Face (Flip Card):**
-- Same dimensions as the front, dark bg with blue accent border
-- Title + "What's Included" header
-- Benefits list with check icons:
-  - 30 Daily Action Reports Sent to You
-  - 6 Weekly Discovery Stack Reflections
-  - Core 4 Framework (Body, Being, Balance, Business)
-  - Full App Access During Challenge
-  - Daily Accountability System
-  - Sales Process Training Modules
-  - Direct Visibility into Producer Growth
-  - Rolling Enrollment (Sign Up Friday, Start Monday)
-- "Buy a Seat" button repeated at the bottom
-- Flip-back button (rotate icon) in the corner
+- Change the `/` route to render `<NewLanding />` instead
+- Move the old `<Index />` to a backup route like `/legacy` (so it's still accessible if needed)
+- Keep the `/new` route pointing to `<NewLanding />` as well for backwards compatibility
+
+### 2. Disable "Buy a Seat" buttons on Producer Challenge banner
+
+In `src/pages/NewLanding.tsx`, both "Buy a Seat" buttons (front face and back face of the flip card) will be changed to:
+
+- **Text**: "v2.0 Launching 2/20/26"
+- **Element**: Changed from `<a>` links to `<span>` or `<button disabled>` elements so they are non-clickable
+- **Styling**: Muted/disabled appearance (e.g., `opacity-60 cursor-not-allowed`) to signal they're inactive
+
+---
 
 ### Technical Details
 
-**File modified:** `src/pages/NewLanding.tsx` only
+**Files changed:**
 
-1. Add a new `ProducerChallengeBar` component inside `NewLanding.tsx` (below `OfferLadderSection`)
-2. Uses the same flip-card pattern already established (perspective, `transform-style: preserve-3d`, `rotateY(180deg)`, `backface-visibility: hidden`)
-3. Video container uses `h-[280px] md:h-[360px]` (roughly 60% of a 16:9 video height) with `object-cover` and `object-position: top` to crop and show the upper portion
-4. Reuses the existing video from the challenge page or a placeholder -- will use the same Wistia/YouTube embed approach or an mp4 if one exists in storage
-5. Renders between `<OfferLadderSection />` and the footer in the `NewLanding` component
-6. State: single boolean `flipped` for the flip toggle
-7. "Buy a Seat" opens the existing checkout link in a new tab
+1. **`src/App.tsx`** (2 lines)
+   - Change `<Route path="/" element={<Index />} />` to `<Route path="/" element={<NewLanding />} />`
+   - Add `<Route path="/legacy" element={<Index />} />` as a fallback
+   - Add `import NewLanding` at the top
+
+2. **`src/pages/NewLanding.tsx`** (4 spots)
+   - **Line ~695-702** (front face): Replace `<a href="...">Buy a Seat</a>` with a disabled button reading "v2.0 Launching 2/20/26"
+   - **Line ~750-757** (back face): Same replacement -- disabled button with "v2.0 Launching 2/20/26"
