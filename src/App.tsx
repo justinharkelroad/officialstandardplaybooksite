@@ -26,6 +26,7 @@ import WelcomeToCoaching from "./pages/WelcomeToCoaching";
 import WelcomeBoardroom from "./pages/WelcomeBoardroom";
 import ProducerChallengeLanding from "./pages/ProducerChallengeLanding";
 import Presentation from "./pages/Presentation";
+import NewLanding from "./pages/NewLanding";
 import Particles from "./components/Particles";
 import ScrollToTop from "./components/ScrollToTop";
 import SEOHead from "./components/SEOHead";
@@ -64,6 +65,7 @@ const App = () => (
           <Route path="/welcomeboardroom" element={<WelcomeBoardroom />} />
           <Route path="/PPUC" element={<ProducerChallengeLanding />} />
           <Route path="/presentation" element={<Presentation />} />
+          <Route path="/new" element={<NewLanding />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
