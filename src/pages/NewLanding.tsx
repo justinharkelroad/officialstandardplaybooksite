@@ -778,6 +778,11 @@ const NewLanding = () => (
     <footer className="relative z-20 py-12 px-6 text-center border-t border-white/5 bg-black">
       <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-32 mb-4 opacity-50" />
       <p className="text-gray-600 text-sm">© {new Date().getFullYear()} Standard Playbook. All rights reserved.</p>
+      <div className="flex items-center justify-center gap-4 mt-4">
+        <a href="/privacy" className="text-gray-600 hover:text-gray-400 transition-colors text-xs">Privacy</a>
+        <span className="text-gray-700 text-xs">·</span>
+        <a href="/terms" className="text-gray-600 hover:text-gray-400 transition-colors text-xs">Terms</a>
+      </div>
     </footer>
   </div>
 );
