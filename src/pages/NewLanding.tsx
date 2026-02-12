@@ -1,5 +1,5 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
-import { Volume2, VolumeX } from 'lucide-react';
+import { Volume2, VolumeX, Check, RotateCcw } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import useEmblaCarousel from 'embla-carousel-react';
 import standardLogo from '@/assets/standard-word-logo.png';
@@ -348,6 +348,17 @@ const offers = [
     href: '/boardroom',
     img: null,
     video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/The Standard Boardroom Community (Mobile Video).mp4',
+    benefits: [
+      '2 Hour Group Boardroom Call',
+      'Boardroom Level Access To Standard App',
+      'AgencyBrain Access',
+      'The Standard Playbook Hardcover',
+      'I AM THE STANDARD T-Shirt',
+      'I AM THE STANDARD Wristband',
+      'Standard Playbook Pen',
+      '1v1 Video Coaching 24/7 w/ Justin',
+      '20 AI Calls Scored Per Month',
+    ],
   },
   {
     tag: 'THE PROGRAM',
@@ -358,6 +369,15 @@ const offers = [
     href: '/sales-experience',
     img: trainingImg,
     video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/The Standard This is the 8 week experience.mp4',
+    benefits: [
+      '8-Week Sales Management System',
+      'Weekly Live Coaching Calls',
+      'Full Standard App Access',
+      'Call Scoring Integration',
+      'Accountability Framework',
+      'Consequence Ladder System',
+      'Sales Process Playbook',
+    ],
   },
   {
     tag: 'THE DIRECTIVE',
@@ -369,18 +389,31 @@ const offers = [
     external: true,
     img: null,
     video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/1v1.mp4',
+    benefits: [
+      'Everything in Boardroom',
+      '100 Calls Scored/Month',
+      '1 Team Call Per Month',
+      'Full App Access',
+      '80% Off Producer Challenges',
+      'Direct 1:1 Access to Justin',
+    ],
   },
 ];
 
 const OfferLadderSection = () => {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [mutedStates, setMutedStates] = useState<boolean[]>(offers.map(() => true));
+  const [flippedStates, setFlippedStates] = useState<boolean[]>(offers.map(() => false));
 
   const toggleSound = (index: number) => {
     const video = videoRefs.current[index];
     if (!video) return;
     video.muted = !video.muted;
     setMutedStates(prev => prev.map((m, i) => i === index ? video.muted : m));
+  };
+
+  const toggleFlip = (index: number) => {
+    setFlippedStates(prev => prev.map((f, i) => i === index ? !f : f));
   };
 
   return (
@@ -395,80 +428,152 @@ const OfferLadderSection = () => {
     <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
       {offers.map((offer, i) => (
         <Reveal key={offer.tag} delay={i * 0.12}>
-          <div className="group relative rounded-2xl border border-white/10 overflow-hidden flex flex-col h-full hover:border-blue-500/40 transition-colors duration-500">
-            {/* Hover glow */}
-            <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-xl" />
+          {/* 3D flip wrapper */}
+          <div style={{ perspective: '1200px' }} className="h-full">
+            <div
+              className="relative w-full h-full transition-transform duration-[600ms]"
+              style={{
+                transformStyle: 'preserve-3d',
+                transform: flippedStates[i] ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                minHeight: '480px',
+              }}
+            >
+              {/* ══ FRONT FACE ══ */}
+              <div
+                className="absolute inset-0 w-full h-full"
+                style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+              >
+                <div className="group relative rounded-2xl border border-white/10 overflow-hidden flex flex-col h-full hover:border-blue-500/40 transition-colors duration-500">
+                  {/* Hover glow */}
+                  <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-xl" />
 
-            {offer.video ? (
-              /* ── Video Background Card ── */
-              <>
-                <video
-                  ref={el => { videoRefs.current[i] = el; }}
-                  src={offer.video}
-                  poster={offer.img || undefined}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/60" />
-                {/* Sound toggle */}
-                <button
-                  onClick={() => toggleSound(i)}
-                  className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-black/70 transition-colors"
-                  aria-label={mutedStates[i] ? 'Unmute' : 'Mute'}
-                >
-                  {mutedStates[i] ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                </button>
-                <div className="relative z-10 p-8 flex flex-col h-full min-h-[400px] justify-end">
-                  <p className="text-xs uppercase tracking-widest text-blue-400 mb-4">{offer.tag}</p>
-                  <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-3">{offer.title}</h3>
-                  <p className="text-gray-300 mb-6 flex-grow">{offer.description}</p>
+                  {offer.video ? (
+                    <>
+                      <video
+                        ref={el => { videoRefs.current[i] = el; }}
+                        src={offer.video}
+                        poster={offer.img || undefined}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/60" />
+                      <button
+                        onClick={() => toggleSound(i)}
+                        className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+                        aria-label={mutedStates[i] ? 'Unmute' : 'Mute'}
+                      >
+                        {mutedStates[i] ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                      </button>
+                      <div className="relative z-10 p-8 flex flex-col h-full min-h-[400px] justify-end">
+                        <p className="text-xs uppercase tracking-widest text-blue-400 mb-4">{offer.tag}</p>
+                        <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-3">{offer.title}</h3>
+                        <p className="text-gray-300 mb-4 flex-grow">{offer.description}</p>
+                        <button
+                          onClick={() => toggleFlip(i)}
+                          className="text-blue-400 text-sm font-medium mb-4 hover:text-blue-300 transition-colors text-left cursor-pointer"
+                        >
+                          See What's Included →
+                        </button>
+                        <a
+                          href={offer.href}
+                          className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+                        >
+                          {offer.cta}
+                        </a>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="bg-white/[0.03] backdrop-blur-xl p-8 flex flex-col h-full">
+                      <p className="text-xs uppercase tracking-widest text-blue-400 mb-4">{offer.tag}</p>
+                      <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-3">{offer.title}</h3>
+                      <p className="text-gray-400 mb-4 flex-grow">{offer.description}</p>
+
+                      {offer.img && (
+                        <img src={offer.img} alt={offer.title} className="w-full rounded-xl mb-6 shadow-lg shadow-blue-500/5" />
+                      )}
+
+                      {offer.price && (
+                        <p className="font-oswald font-bold text-3xl text-white mb-6">{offer.price}</p>
+                      )}
+
+                      {offer.tag === 'THE DIRECTIVE' && (
+                        <div className="rounded-xl border border-white/10 bg-white/[0.05] p-4 mb-6 flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0">
+                            <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                          </div>
+                          <div>
+                            <p className="text-white text-sm font-semibold">New Video Message</p>
+                            <p className="text-gray-500 text-xs">Justin just sent a strategy breakdown</p>
+                          </div>
+                        </div>
+                      )}
+
+                      <button
+                        onClick={() => toggleFlip(i)}
+                        className="text-blue-400 text-sm font-medium mb-4 hover:text-blue-300 transition-colors text-left cursor-pointer"
+                      >
+                        See What's Included →
+                      </button>
+
+                      <a
+                        href={offer.href}
+                        {...(offer.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                        className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+                      >
+                        {offer.cta}
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* ══ BACK FACE ══ */}
+              <div
+                className="absolute inset-0 w-full h-full"
+                style={{
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                  transform: 'rotateY(180deg)',
+                }}
+              >
+                <div className="rounded-2xl border border-blue-500/30 bg-[#0a0f1e] p-8 flex flex-col h-full">
+                  <div className="flex items-center justify-between mb-6">
+                    <p className="text-xs uppercase tracking-widest text-blue-400">{offer.tag}</p>
+                    <button
+                      onClick={() => toggleFlip(i)}
+                      className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-blue-500/60 hover:bg-blue-500/10 transition-colors cursor-pointer"
+                      aria-label="Flip back"
+                    >
+                      <RotateCcw className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <h3 className="font-oswald font-bold text-xl md:text-2xl text-white mb-2">{offer.title}</h3>
+                  <p className="text-blue-400 font-semibold text-sm uppercase tracking-wider mb-6">What's Included</p>
+
+                  <ul className="space-y-3 flex-grow">
+                    {offer.benefits.map((benefit) => (
+                      <li key={benefit} className="flex items-start gap-3">
+                        <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center mt-0.5">
+                          <Check className="w-3 h-3 text-blue-400" />
+                        </span>
+                        <span className="text-gray-300 text-sm">{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+
                   <a
                     href={offer.href}
-                    className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+                    {...(offer.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98] mt-6"
                   >
                     {offer.cta}
                   </a>
                 </div>
-              </>
-            ) : (
-              /* ── Static Card ── */
-              <div className="bg-white/[0.03] backdrop-blur-xl p-8 flex flex-col h-full">
-                <p className="text-xs uppercase tracking-widest text-blue-400 mb-4">{offer.tag}</p>
-                <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-3">{offer.title}</h3>
-                <p className="text-gray-400 mb-6 flex-grow">{offer.description}</p>
-
-                {offer.img && (
-                  <img src={offer.img} alt={offer.title} className="w-full rounded-xl mb-6 shadow-lg shadow-blue-500/5" />
-                )}
-
-                {offer.price && (
-                  <p className="font-oswald font-bold text-3xl text-white mb-6">{offer.price}</p>
-                )}
-
-                {offer.tag === 'THE DIRECTIVE' && (
-                  <div className="rounded-xl border border-white/10 bg-white/[0.05] p-4 mb-6 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0">
-                      <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
-                    </div>
-                    <div>
-                      <p className="text-white text-sm font-semibold">New Video Message</p>
-                      <p className="text-gray-500 text-xs">Justin just sent a strategy breakdown</p>
-                    </div>
-                  </div>
-                )}
-
-                <a
-                  href={offer.href}
-                  {...(offer.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                  className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
-                >
-                  {offer.cta}
-                </a>
               </div>
-            )}
+            </div>
           </div>
         </Reveal>
       ))}
