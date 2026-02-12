@@ -690,16 +690,16 @@ const ProducerChallengeBar = () => {
                   </button>
 
                   {/* Content overlay */}
-                  <div className="relative z-10 h-full flex flex-col items-center justify-end text-center px-6 pb-8 md:pb-10">
-                    <p className="text-xs uppercase tracking-widest text-blue-400 mb-2">The Challenge</p>
-                    <h3 className="font-oswald font-bold text-2xl md:text-4xl text-white mb-2">6 Week Producer Challenge</h3>
-                    <p className="text-gray-300 text-sm md:text-base max-w-2xl mb-3">
+                  <div className="relative z-10 h-full flex flex-col items-center justify-end text-center px-4 sm:px-6 pb-5 sm:pb-8 md:pb-10">
+                    <p className="text-xs uppercase tracking-widest text-blue-400 mb-1 sm:mb-2">The Challenge</p>
+                    <h3 className="font-oswald font-bold text-xl sm:text-2xl md:text-4xl text-white mb-1 sm:mb-2">6 Week Producer Challenge</h3>
+                    <p className="text-gray-300 text-xs sm:text-sm md:text-base max-w-2xl mb-2 sm:mb-3">
                       Transform your producer from reactive chaos to systematic execution — in 42 days.
                     </p>
-                    <p className="font-oswald font-bold text-xl md:text-2xl text-white mb-4">$299 <span className="text-gray-400 text-sm font-normal">/ per producer</span></p>
-                    <div className="flex flex-col items-center gap-3">
+                    <p className="font-oswald font-bold text-lg sm:text-xl md:text-2xl text-white mb-2 sm:mb-4">$299 <span className="text-gray-400 text-xs sm:text-sm font-normal">/ per producer</span></p>
+                    <div className="flex flex-col items-center gap-2 sm:gap-3">
                       <span
-                        className="inline-block bg-white/40 text-black/60 font-bold text-base px-10 py-3 rounded-full cursor-not-allowed select-none"
+                        className="inline-block bg-white/40 text-black/60 font-bold text-sm sm:text-base px-6 sm:px-10 py-2 sm:py-3 rounded-full cursor-not-allowed select-none"
                       >
                         v2.0 Launching 2/20/26
                       </span>
