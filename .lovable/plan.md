@@ -1,49 +1,68 @@
 
 
-## Fix: Hero Video Parallax Scrollytelling
+## Root Cause: Why Fixed Positioning Fails Here
 
-### Root Cause
+The current approach uses `position: fixed` for the video and all three text segments. While this avoids the `overflow-x-hidden` breaking `sticky`, it creates a different problem: **fixed elements live outside the normal document flow entirely**. They're always visible in the viewport, and the only thing controlling their appearance is the `scrollYProgress` value from Framer Motion.
 
-The parent wrapper `<div className="bg-black min-h-screen text-white overflow-x-hidden">` uses `overflow-x-hidden`, which breaks `position: sticky` in browsers. The video was scrolling away with normal flow instead of staying pinned, resulting in a blank black screen in the middle of the scroll range.
+The issues you're seeing:
+- **"Barely scrolling"**: The 400vh container means you have to scroll through 300vh of distance, but the fixed text barely moves (only 60-80px of Y offset). It feels unresponsive.
+- **"It's back" / reappearing content**: The scroll progress ranges have gaps (e.g., Segment A ends at 20%, Segment B starts at 25%), creating moments where nothing is visible, then content snaps in. The transforms may also extrapolate outside their defined ranges.
+- **Content not transitioning properly to the blue section**: The fixed layer sits on top of everything, and while `z-20` on later sections should cover it, the transition is harsh.
 
-### The Fix
+## The Actual Fix: Use `overflow-x: clip` Instead of `overflow-x: hidden`
 
-Replace the `sticky` approach with a `fixed` video background, controlled by scroll progress. This is immune to parent `overflow` settings.
+The reason we abandoned `sticky` in the first place is that `overflow-x: hidden` on the page wrapper breaks it. But there's a CSS property that clips overflow WITHOUT creating a scroll container: **`overflow-x: clip`**.
 
-### Technical Changes (all in `src/pages/NewLanding.tsx`)
+With `clip`, `position: sticky` works perfectly, and the implementation becomes dramatically simpler and more reliable.
 
-**1. Replace `ScrollytellingHero` component structure:**
+## Technical Changes
 
-- The `<video>` moves into a **`position: fixed`** container (instead of `sticky`), pinned to the full viewport. Its visibility is driven by `scrollYProgress` of the outer section ref, so it only shows while the user is within the hero scroll range.
-- The three text segments (A: logo/headline, B: Core 4 pillars, C: problem/Agency Brain) become **normal flow `div`s**, each `h-screen` tall, stacked vertically inside the `400vh` container. Each is wrapped in a `motion.div` using `useScroll({ target: segmentRef, offset: ['start end', 'end start'] })` to independently track when that specific segment enters/exits the viewport.
-- Each text segment animates its own opacity and Y-offset based on its individual scroll progress -- no shared progress calculation, no gap in visibility.
+**File: `src/pages/NewLanding.tsx`**
 
-**2. Video visibility control:**
+### 1. Page wrapper: swap `overflow-x-hidden` for `overflow-x: clip`
 
-- A `useMotionValueEvent` on the container's `scrollYProgress` toggles a state `isInHero`. When `scrollYProgress` is between 0 and 0.95, the fixed video is visible (opacity 1). Above 0.95, it fades out.
-- Alternatively, use `useTransform` on the container progress to drive the video container's opacity directly via `motion.div style`.
+Change the outer div's class from `overflow-x-hidden` to use inline style `overflowX: 'clip'`. Tailwind doesn't have a `clip` utility, so this goes as an inline style.
 
-**3. Z-index layering:**
+### 2. Rewrite `ScrollytellingHero` to use sticky positioning
 
-- Fixed video container: `z-index: 0`
-- Text segments: `z-index: 10` (so text appears above video)
-- Sections after the hero (AgencyBrainSection, etc.): `z-index: 20` with solid `bg-*` backgrounds so they naturally cover the fixed video as the user scrolls past the hero
+The new structure:
 
-**4. Page wrapper:**
-
-- Keep `overflow-x-hidden` (it's needed elsewhere) -- the `fixed` approach doesn't depend on it
-
-### Visual Behavior (unchanged from plan)
-
-```text
-Scroll 0-30%:   Video pinned, Logo + "You built the agency" visible, fading out
-Scroll 25-55%:  Video pinned, Core 4 pillars fade in and out
-Scroll 50-85%:  Video pinned, "Most agencies run on duct tape" + Agency Brain
-Scroll 85-100%: Video fades out, transitions to Agency Brain carousel
+```
+<section style={{ height: '400vh' }}>       <!-- tall scroll container -->
+  <div class="sticky top-0 h-screen">       <!-- sticks to viewport -->
+    <video ... />                            <!-- background video -->
+    <div class="dark overlay" />             
+    
+    <!-- All three text segments, absolutely positioned, centered -->
+    <!-- Each segment's opacity driven by container scrollYProgress -->
+    <motion.div style={{ opacity: aOpacity }}> Segment A </motion.div>
+    <motion.div style={{ opacity: bOpacity }}> Segment B </motion.div>
+    <motion.div style={{ opacity: cOpacity }}> Segment C </motion.div>
+  </div>
+</section>
 ```
 
-### Why This Works
+- The `sticky` div stays pinned for the full 300vh scroll range
+- Text segments are `absolute inset-0` inside the sticky container, stacked on top of each other
+- Only opacity changes (no Y movement) -- this prevents the "barely scrolling" feel. The text simply crossfades as you scroll, which feels intentional rather than sluggish
+- Tighter, overlapping scroll ranges so there's never a blank moment:
+  - Segment A: visible 0-18%, fading out 14-22%
+  - Segment B: fading in 18-26%, visible 26-42%, fading out 42-50%
+  - Segment C: fading in 46-54%, visible 54-80%, fading out 80-90%
 
-- `position: fixed` is not affected by ancestor `overflow` properties
-- Each text segment tracks its own scroll independently, eliminating the gap/blank issue
-- The sections after the hero use solid backgrounds with higher z-index, naturally covering the fixed video layer
+### 3. Video fade-out at the end
+
+- Video opacity goes from 1 to 0 between 85% and 100% progress, same as before but now driven through the sticky container
+
+### 4. Subsequent sections
+
+- `AgencyBrainSection` keeps its `bg-gradient-to-b from-[#020617] to-black` -- as the sticky container unsticks, this section naturally scrolls up and covers it
+- No z-index hacks needed since sticky elements naturally get covered by subsequent content
+
+## Why This Will Work
+
+- `overflow-x: clip` prevents horizontal scroll without breaking `sticky`
+- `sticky` is the browser-native way to pin content during scroll -- no JavaScript position management needed
+- Crossfading text (opacity only, no Y movement) eliminates the "barely moving" problem
+- Overlapping fade ranges ensure there's never a blank screen between segments
+- No `position: fixed` means no layering conflicts with the rest of the page
