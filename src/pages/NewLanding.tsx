@@ -613,10 +613,11 @@ const OfferLadderSection = () => {
    SECTION 5 — PRODUCER CHALLENGE BANNER (Flip Card)
    ══════════════════════════════════════════════════════ */
 const challengeBenefits = [
+  '30 Training Modules',
   '30 Daily Action Reports Sent to You',
-  '6 Weekly Discovery Stack Reflections',
+  '6 Weekly Discovery Flow Reflections',
   'Core 4 Framework (Body, Being, Balance, Business)',
-  'Full App Access During Challenge',
+  'Agency Brain Access',
   'Daily Accountability System',
   'Sales Process Training Modules',
   'Direct Visibility into Producer Growth',
