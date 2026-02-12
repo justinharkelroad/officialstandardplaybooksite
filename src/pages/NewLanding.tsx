@@ -348,7 +348,7 @@ const offers = [
     cta: 'Join The Boardroom',
     href: '/boardroom',
     img: null,
-    video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/The Standard Boardroom Community (Mobile Video).mp4',
+    video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/Boardroom card video.mp4',
     benefits: [
       '2 Hour Group Boardroom Call',
       'Boardroom Level AgencyBrain Access',
