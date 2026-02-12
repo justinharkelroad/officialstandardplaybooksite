@@ -145,12 +145,15 @@ const ScrollytellingHero = () => {
         {/* ── Fade 3: The Promise ── */}
         <motion.div style={{ opacity: fade3 }} className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="max-w-4xl mx-auto text-center px-6">
-            <p className="text-lg md:text-xl text-gray-400 mb-4 uppercase tracking-widest font-medium">The Promise</p>
-            <h2 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] mb-8 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
+            <p className="text-lg md:text-xl text-blue-500 mb-4 uppercase tracking-widest font-medium" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(255,255,255,0.15)' }}>The Promise</p>
+            <h2 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] mb-6 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
               In 8 weeks, you'll have certainty.
             </h2>
-            <p className="font-oswald text-xl sm:text-2xl md:text-3xl text-gray-300 leading-relaxed">
-              A process. A scorecard.<br />A rhythm. A guarantee.
+            <p className="font-oswald font-bold text-xl sm:text-2xl md:text-3xl text-blue-500 uppercase mb-6" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(255,255,255,0.15)' }}>
+              A process. A scorecard. A rhythm.
+            </p>
+            <p className="font-oswald font-bold text-3xl sm:text-5xl md:text-6xl text-blue-500 uppercase" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(255,255,255,0.15)' }}>
+              A Guarantee.
             </p>
           </div>
         </motion.div>
