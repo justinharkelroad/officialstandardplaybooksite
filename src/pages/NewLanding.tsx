@@ -350,14 +350,13 @@ const offers = [
     video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/The Standard Boardroom Community (Mobile Video).mp4',
     benefits: [
       '2 Hour Group Boardroom Call',
-      'Boardroom Level Access To Standard App',
-      'AgencyBrain Access',
-      'The Standard Playbook Hardcover',
+      'Boardroom Level AgencyBrain Access',
+      'Team Training Access',
       'I AM THE STANDARD T-Shirt',
       'I AM THE STANDARD Wristband',
       'Standard Playbook Pen',
-      '1v1 Video Coaching 24/7 w/ Justin',
       '20 AI Calls Scored Per Month',
+      '24/7 Video Messaging for Coaching from Justin',
     ],
   },
   {
@@ -370,13 +369,15 @@ const offers = [
     img: trainingImg,
     video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/The Standard This is the 8 week experience.mp4',
     benefits: [
-      '8-Week Sales Management System',
-      'Weekly Live Coaching Calls',
-      'Full Standard App Access',
+      '8-Week Sales Manager Training System',
+      '8x 45-Minute Coaching Calls',
+      'Full AgencyBrain Access for 8 Weeks',
       'Call Scoring Integration',
-      'Accountability Framework',
-      'Consequence Ladder System',
-      'Sales Process Playbook',
+      'Delivered Accountability Framework',
+      'Delivered Consequence Letter Framework',
+      'Sales Process System',
+      'Team Training Modules During Program',
+      'Boardroom Call Access for Owner & Key Employee',
     ],
   },
   {
@@ -391,11 +392,13 @@ const offers = [
     video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/1v1.mp4',
     benefits: [
       'Everything in Boardroom',
-      '100 Calls Scored/Month',
-      '1 Team Call Per Month',
-      'Full App Access',
-      '80% Off Producer Challenges',
-      'Direct 1:1 Access to Justin',
+      '100 AI Call Scores Per Month',
+      'Full AgencyBrain Access',
+      '80% Off 6-Week Challenge',
+      '1 Two-Hour 1-on-1 Coaching Call',
+      '24/7 Access to Justin',
+      'Support for New Hire Interviews',
+      'AgencyBrain Customization',
     ],
   },
 ];
@@ -539,7 +542,7 @@ const OfferLadderSection = () => {
                   transform: 'rotateY(180deg)',
                 }}
               >
-                <div className="rounded-2xl border border-blue-500/30 bg-[#0a0f1e] p-8 flex flex-col h-full">
+                <div className="rounded-2xl border border-blue-500/30 bg-[#0a0f1e] p-6 md:p-8 flex flex-col h-full overflow-y-auto">
                   <div className="flex items-center justify-between mb-6">
                     <p className="text-xs uppercase tracking-widest text-blue-400">{offer.tag}</p>
                     <button
