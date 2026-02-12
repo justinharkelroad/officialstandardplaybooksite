@@ -221,7 +221,7 @@ const ScrollytellingHero = () => {
 const brainCards = [
   { headline: 'Total Visibility.', sub: 'Know exactly where your team stands every single day.', img: salesExpDashImg, label: 'Sales Experience Dashboard' },
   { headline: 'Team & Meeting Hub.', sub: 'Centralized meeting management, team collaboration, and communication all in one place.', img: teamMeetingImg, label: 'Team & Meeting Hub' },
-  { headline: 'Training & Feedback.', sub: 'Structured training modules with real-time feedback loops to develop your producers.', img: trainingModulesImg, label: 'Training Modules & Feedback' },
+  { headline: 'Training & Feedback.', sub: 'Structured Training Modules unlocked every Monday and Wednesday with the feedback discovery flow fed back to the manager on Friday.', img: trainingModulesImg, label: 'Training Modules & Feedback' },
 ];
 
 const AgencyBrainShowcase = () => {
