@@ -32,106 +32,102 @@ const Reveal = ({ children, className = '', delay = 0 }: { children: React.React
 );
 
 /* ══════════════════════════════════════════════════════
-   SECTION 1 — THE HOOK (Video Background)
+   SECTIONS 1+2 — MERGED SCROLLYTELLING HERO
+   Video stays sticky while three text segments scroll over it
    ══════════════════════════════════════════════════════ */
-const HookSection = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const textY = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+const ScrollytellingHero = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] });
+
+  // Segment A: Logo + headline (0% – 30%)
+  const aOpacity = useTransform(scrollYProgress, [0, 0.15, 0.25, 0.33], [1, 1, 0.3, 0]);
+  const aY = useTransform(scrollYProgress, [0, 0.33], [0, -150]);
+
+  // Segment B: Core 4 pillars (25% – 55%)
+  const bOpacity = useTransform(scrollYProgress, [0.2, 0.3, 0.45, 0.55], [0, 1, 1, 0]);
+  const bY = useTransform(scrollYProgress, [0.2, 0.55], [80, -80]);
+
+  // Segment C: Problem / Agency Brain (50% – 85%)
+  const cOpacity = useTransform(scrollYProgress, [0.5, 0.6, 0.78, 0.88], [0, 1, 1, 0]);
+  const cY = useTransform(scrollYProgress, [0.5, 0.88], [80, -60]);
+
+  // Video fade-out at end (85% – 100%)
+  const videoOpacity = useTransform(scrollYProgress, [0.85, 1], [1, 0]);
 
   return (
-    <section ref={ref} className="relative h-[200vh]">
-      {/* Sticky video container */}
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
-        {/* Video BG */}
+    <section ref={containerRef} className="relative" style={{ height: '400vh' }}>
+      {/* Sticky video container — stays pinned throughout */}
+      <motion.div style={{ opacity: videoOpacity }} className="sticky top-0 h-screen overflow-hidden">
         <video
           autoPlay muted loop playsInline
           className="absolute inset-0 w-full h-full object-cover"
           src="/background.mp4"
         />
-        {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/60" />
 
-        {/* Content */}
-        <motion.div style={{ y: textY, opacity }} className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-          <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-64 md:w-96 mb-12" />
-          <h1 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] tracking-tight">
-            You built the agency.<br />
-            <span className="text-gray-400">But somewhere along the way,</span><br />
-            <span className="text-gray-400">it started building you.</span>
-          </h1>
-        </motion.div>
-      </div>
-
-      {/* Core 4 parallax reveal at bottom of scroll range */}
-      <div className="absolute bottom-0 left-0 right-0 h-screen flex items-center justify-center pointer-events-none">
+        {/* ── Segment A: Logo + Hook ── */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2 }}
-          className="text-center px-6"
+          style={{ y: aY, opacity: aOpacity }}
+          className="absolute inset-0 flex items-center justify-center z-10"
         >
-          <p className="text-sm uppercase tracking-[0.4em] text-blue-400 mb-6 font-medium">The Standard is built on four pillars</p>
-          <div className="flex flex-wrap justify-center gap-6 md:gap-12">
-            {['BUSINESS', 'BEING', 'BODY', 'BALANCE'].map((word, i) => (
-              <motion.span
-                key={word}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 + i * 0.15, duration: 0.6 }}
-                className="font-oswald font-bold text-3xl md:text-5xl text-white"
-              >
-                {word}<span className="text-blue-500">.</span>
-              </motion.span>
-            ))}
+          <div className="text-center px-6 max-w-5xl mx-auto">
+            <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-64 md:w-96 mb-12" />
+            <h1 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] tracking-tight">
+              You built the agency.<br />
+              <span className="text-gray-400">But somewhere along the way,</span><br />
+              <span className="text-gray-400">it started building you.</span>
+            </h1>
           </div>
         </motion.div>
-      </div>
+
+        {/* ── Segment B: Core 4 Pillars ── */}
+        <motion.div
+          style={{ y: bY, opacity: bOpacity }}
+          className="absolute inset-0 flex items-center justify-center z-10"
+        >
+          <div className="text-center px-6">
+            <p className="text-sm uppercase tracking-[0.4em] text-blue-400 mb-6 font-medium">The Standard is built on four pillars</p>
+            <div className="flex flex-wrap justify-center gap-6 md:gap-12">
+              {['BUSINESS', 'BEING', 'BODY', 'BALANCE'].map((word) => (
+                <span
+                  key={word}
+                  className="font-oswald font-bold text-3xl md:text-5xl text-white"
+                >
+                  {word}<span className="text-blue-500">.</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* ── Segment C: The Problem / Agency Brain ── */}
+        <motion.div
+          style={{ y: cY, opacity: cOpacity }}
+          className="absolute inset-0 flex items-center justify-center z-10"
+        >
+          <div className="max-w-4xl mx-auto text-center px-6">
+            <p className="text-lg md:text-xl text-gray-500 mb-4 uppercase tracking-widest font-medium">The Problem</p>
+            <h2 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] mb-8">
+              Most agencies run on<br />duct tape and gut feelings.
+            </h2>
+            <p className="font-oswald font-bold text-4xl sm:text-6xl md:text-8xl text-blue-500 mb-16">
+              Yours won't.
+            </p>
+            <div className="relative mx-auto w-full max-w-xl h-px mb-16">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500 to-transparent blur-md" />
+            </div>
+            <p className="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">Introducing</p>
+            <img src={agencyBrainLogo} alt="Agency Brain" className="mx-auto w-[80%] md:w-[600px] lg:w-[720px] mb-6" />
+            <p className="text-gray-400 text-lg mt-4 max-w-2xl mx-auto">
+              The operating system that turns chaos into clarity. Your pipeline, your team, your retention — all in one place.
+            </p>
+          </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
-
-/* ══════════════════════════════════════════════════════
-   SECTION 2 — THE PIVOT (Problem vs Solution)
-   ══════════════════════════════════════════════════════ */
-const PivotSection = () => (
-  <section className="relative py-32 md:py-48 px-6 bg-[#020617]">
-    <div className="max-w-4xl mx-auto text-center">
-      <Reveal>
-        <p className="text-lg md:text-xl text-gray-500 mb-4 uppercase tracking-widest font-medium">The Problem</p>
-      </Reveal>
-      <Reveal delay={0.1}>
-        <h2 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] mb-8">
-          Most agencies run on<br />duct tape and gut feelings.
-        </h2>
-      </Reveal>
-      <Reveal delay={0.2}>
-        <p className="font-oswald font-bold text-4xl sm:text-6xl md:text-8xl text-blue-500 mb-16">
-          Yours won't.
-        </p>
-      </Reveal>
-
-      {/* Glowing divider */}
-      <Reveal delay={0.3}>
-        <div className="relative mx-auto w-full max-w-xl h-px mb-16">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500 to-transparent blur-md" />
-        </div>
-      </Reveal>
-
-      <Reveal delay={0.4}>
-        <p className="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">Introducing</p>
-        <img src={agencyBrainLogo} alt="Agency Brain" className="mx-auto w-[80%] md:w-[600px] lg:w-[720px] mb-6" />
-        <p className="text-gray-400 text-lg mt-4 max-w-2xl mx-auto">
-          The operating system that turns chaos into clarity. Your pipeline, your team, your retention — all in one place.
-        </p>
-      </Reveal>
-    </div>
-  </section>
-);
 
 /* ══════════════════════════════════════════════════════
    SECTION 3 — THE OPERATING SYSTEM (Agency Brain)
@@ -430,8 +426,7 @@ const OfferLadderSection = () => {
    ══════════════════════════════════════════════════════ */
 const NewLanding = () => (
   <div className="bg-black min-h-screen text-white overflow-x-hidden">
-    <HookSection />
-    <PivotSection />
+    <ScrollytellingHero />
     <AgencyBrainSection />
     <OfferLadderSection />
 
