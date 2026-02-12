@@ -354,7 +354,7 @@ const offers = [
     description: 'The Standard Membership. Monthly group Zoom calls. Private Network. Core AgencyBrain Access for you and your team.',
     price: '$299/mo',
     cta: 'Join The Boardroom',
-    href: '/boardroom',
+    href: 'https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l',
     img: null,
     video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/Boardroom card video.mp4',
     benefits: [
@@ -499,6 +499,8 @@ const OfferLadderSection = () => {
                         ) : (
                           <a
                             href={offer.href}
+                            target={offer.href.startsWith('http') ? '_blank' : undefined}
+                            rel={offer.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                             className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
                           >
                             {offer.cta}
@@ -544,6 +546,8 @@ const OfferLadderSection = () => {
                       ) : (
                         <a
                           href={offer.href}
+                          target={offer.href.startsWith('http') ? '_blank' : undefined}
+                          rel={offer.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                           className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
                         >
                           {offer.cta}
@@ -599,6 +603,8 @@ const OfferLadderSection = () => {
                   ) : (
                     <a
                       href={offer.href}
+                      target={offer.href.startsWith('http') ? '_blank' : undefined}
+                      rel={offer.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                       className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
                     >
                       {offer.cta}
