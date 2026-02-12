@@ -692,14 +692,11 @@ const ProducerChallengeBar = () => {
                     </p>
                     <p className="font-oswald font-bold text-xl md:text-2xl text-white mb-4">$299 <span className="text-gray-400 text-sm font-normal">/ per producer</span></p>
                     <div className="flex flex-col items-center gap-3">
-                      <a
-                        href="https://createthestandard.com/credit-card-page"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block bg-white text-black font-bold text-base px-10 py-3 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+                      <span
+                        className="inline-block bg-white/40 text-black/60 font-bold text-base px-10 py-3 rounded-full cursor-not-allowed select-none"
                       >
-                        Buy a Seat
-                      </a>
+                        v2.0 Launching 2/20/26
+                      </span>
                       <button
                         onClick={() => setFlipped(true)}
                         className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors cursor-pointer"
@@ -747,14 +744,11 @@ const ProducerChallengeBar = () => {
                   ))}
                 </ul>
 
-                <a
-                  href="https://createthestandard.com/credit-card-page"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block w-full md:w-auto text-center bg-white text-black font-bold text-base px-10 py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+                <span
+                  className="inline-block w-full md:w-auto text-center bg-white/40 text-black/60 font-bold text-base px-10 py-4 rounded-full cursor-not-allowed select-none"
                 >
-                  Buy a Seat
-                </a>
+                  v2.0 Launching 2/20/26
+                </span>
               </div>
             </div>
           </div>
