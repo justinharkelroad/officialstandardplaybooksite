@@ -177,39 +177,42 @@ const ScrollytellingHero = () => {
         </motion.div>
         {/* ── Fade 5: Deliverables ── */}
         <motion.div style={{ opacity: fade5 }} className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="text-center mb-10">
-              <p className="text-sm uppercase tracking-[0.3em] text-blue-400 mb-3">What You'll Walk Away With</p>
-              <h2 className="font-oswald font-bold text-3xl md:text-5xl text-white">
+          <div className="max-w-6xl mx-auto px-6 w-full">
+            <div className="text-center mb-4 md:mb-10">
+              <p className="text-xs md:text-sm uppercase tracking-[0.3em] text-blue-400 mb-2 md:mb-3">What You'll Walk Away With</p>
+              <h2 className="font-oswald font-bold text-2xl md:text-5xl text-white">
                 Three Systems. Zero Guesswork.
               </h2>
             </div>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-              {[
-                { title: 'Sales Process', sub: 'A documented, repeatable call framework your entire team follows — no more winging it.', img: salesProcessCardImg },
-                { title: 'Accountability Framework', sub: 'Daily tracking, weekly scorecards, and graded calls that keep every producer on pace.', img: accountabilityCardImg },
-                { title: 'Consequence Ladder', sub: 'A clear escalation path so underperformance is addressed — not ignored.', img: consequenceLadderCardImg },
-              ].map((item, i, arr) => (
-                <div key={item.title} className="flex flex-col md:flex-row items-center">
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 md:p-8 text-center max-w-xs mx-auto">
-                    <h3 className="font-oswald font-bold text-xl md:text-2xl text-white mb-3">{item.title}</h3>
-                    <img src={item.img} alt={item.title} className="w-full rounded-xl shadow-2xl shadow-blue-500/10 mb-3" />
-                    <p className="text-gray-400 text-sm leading-relaxed">{item.sub}</p>
-                  </div>
-                  {i < arr.length - 1 && (
-                    <div className="flex items-center justify-center py-4 md:py-0 md:px-2">
-                      <motion.div animate={{ x: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}>
-                        <svg className="w-8 h-8 md:w-10 md:h-10 text-blue-500 rotate-90 md:rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                        </svg>
-                      </motion.div>
+            {/* Horizontal scroll on mobile, row on desktop */}
+            <div className="pointer-events-auto overflow-x-auto md:overflow-visible scrollbar-hide">
+              <div className="flex flex-row items-stretch gap-3 md:gap-4 md:justify-center w-max md:w-auto mx-auto">
+                {[
+                  { title: 'Sales Process', sub: 'A documented, repeatable call framework your entire team follows — no more winging it.', img: salesProcessCardImg },
+                  { title: 'Accountability Framework', sub: 'Daily tracking, weekly scorecards, and graded calls that keep every producer on pace.', img: accountabilityCardImg },
+                  { title: 'Consequence Ladder', sub: 'A clear escalation path so underperformance is addressed — not ignored.', img: consequenceLadderCardImg },
+                ].map((item, i, arr) => (
+                  <div key={item.title} className="flex flex-row items-center">
+                    <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-4 md:p-8 text-center w-[260px] md:w-auto md:max-w-xs flex-shrink-0">
+                      <h3 className="font-oswald font-bold text-lg md:text-2xl text-white mb-2 md:mb-3">{item.title}</h3>
+                      <img src={item.img} alt={item.title} className="w-full rounded-xl shadow-2xl shadow-blue-500/10 mb-2 md:mb-3" />
+                      <p className="text-gray-400 text-xs md:text-sm leading-relaxed">{item.sub}</p>
                     </div>
-                  )}
-                </div>
-              ))}
+                    {i < arr.length - 1 && (
+                      <div className="flex items-center justify-center px-1 md:px-2">
+                        <motion.div animate={{ x: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}>
+                          <svg className="w-6 h-6 md:w-10 md:h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          </svg>
+                        </motion.div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
-            <p className="font-oswald text-xl sm:text-2xl md:text-3xl text-blue-400 text-center max-w-4xl mx-auto mt-12 leading-relaxed">
-              Your inconsistency is directly connected to your lack of clarity in the process &amp; follow through, I promise you. You will be able to hold your current team accountable AND hire a new team member into complete and clear structure for maybe the 1st time ever.
+            <p className="font-oswald text-base sm:text-2xl md:text-3xl text-blue-400 text-center max-w-4xl mx-auto mt-4 md:mt-12 leading-relaxed">
+              Your inconsistency is directly connected to your lack of clarity in the process &amp; follow through, I promise you.
             </p>
           </div>
         </motion.div>
