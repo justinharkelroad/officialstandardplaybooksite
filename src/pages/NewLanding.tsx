@@ -308,7 +308,7 @@ const offers = [
     video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/The Standard This is the 8 week experience.mp4',
   },
   {
-    tag: 'THE PARTNERSHIP',
+    tag: 'THE DIRECTIVE',
     title: 'Proximity is Power.',
     description: 'Direct 1:1 Access to Justin. Strategy. Speed. The highest level.',
     price: null,
@@ -316,18 +316,19 @@ const offers = [
     href: 'https://AGENCYCOACHING.as.me/standardfit',
     external: true,
     img: null,
-    video: null,
+    video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/1v1.mp4',
   },
 ];
 
 const OfferLadderSection = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isMuted, setIsMuted] = useState(true);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const [mutedStates, setMutedStates] = useState<boolean[]>(offers.map(() => true));
 
-  const toggleSound = () => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = !videoRef.current.muted;
-    setIsMuted(videoRef.current.muted);
+  const toggleSound = (index: number) => {
+    const video = videoRefs.current[index];
+    if (!video) return;
+    video.muted = !video.muted;
+    setMutedStates(prev => prev.map((m, i) => i === index ? video.muted : m));
   };
 
   return (
@@ -350,7 +351,7 @@ const OfferLadderSection = () => {
               /* ── Video Background Card ── */
               <>
                 <video
-                  ref={videoRef}
+                  ref={el => { videoRefs.current[i] = el; }}
                   src={offer.video}
                   poster={offer.img || undefined}
                   autoPlay
@@ -362,11 +363,11 @@ const OfferLadderSection = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/60" />
                 {/* Sound toggle */}
                 <button
-                  onClick={toggleSound}
+                  onClick={() => toggleSound(i)}
                   className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-black/70 transition-colors"
-                  aria-label={isMuted ? 'Unmute' : 'Mute'}
+                  aria-label={mutedStates[i] ? 'Unmute' : 'Mute'}
                 >
-                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                  {mutedStates[i] ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                 </button>
                 <div className="relative z-10 p-8 flex flex-col h-full min-h-[400px] justify-end">
                   <p className="text-xs uppercase tracking-widest text-blue-400 mb-4">{offer.tag}</p>
@@ -395,7 +396,7 @@ const OfferLadderSection = () => {
                   <p className="font-oswald font-bold text-3xl text-white mb-6">{offer.price}</p>
                 )}
 
-                {offer.tag === 'THE PARTNERSHIP' && (
+                {offer.tag === 'THE DIRECTIVE' && (
                   <div className="rounded-xl border border-white/10 bg-white/[0.05] p-4 mb-6 flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0">
                       <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
