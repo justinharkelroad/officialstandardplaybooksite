@@ -369,7 +369,7 @@ const offers = [
     ],
   },
   {
-    tag: 'THE PROGRAM',
+    tag: 'MANAGER TRAINING',
     title: '8 Week Experience.',
     description: "If you struggle with accountability and have months that are great and months that aren't, it's a reflection of your reality. Change it in 8 weeks. I literally guarantee it.",
     price: null,
