@@ -43,7 +43,8 @@ const App = () => (
         <SEOHead />
         <ScrollToTop />
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<NewLanding />} />
+          <Route path="/legacy" element={<Index />} />
           <Route path="/app" element={<AppRedirect />} />
           <Route path="/appinfo" element={<AppAccess />} />
           <Route path="/boardroom" element={<Boardroom />} />
