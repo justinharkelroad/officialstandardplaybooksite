@@ -39,21 +39,45 @@ const ScrollytellingHero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] });
 
-  // Video fades out at the end
-  const videoOpacity = useTransform(scrollYProgress, [0, 0.05, 0.85, 1.0], [1, 1, 1, 0]);
+  // Helper: linearly interpolate and clamp between 0 and 1
+  const lerp = (p: number, start: number, end: number) =>
+    Math.max(0, Math.min(1, (p - start) / (end - start)));
 
-  // Segment A: visible immediately, fully gone by 18%
-  const aOpacity = useTransform(scrollYProgress, [0, 0.10, 0.18], [1, 1, 0]);
+  // Video fades out at the very end
+  const videoOpacity = useTransform(scrollYProgress, (p) => {
+    if (p < 0.85) return 1;
+    if (p > 1.0) return 0;
+    return 1 - lerp(p, 0.85, 1.0);
+  });
 
-  // Segment B: appears after A is gone, crossfades in at 22%, out by 50%
-  const bOpacity = useTransform(scrollYProgress, [0.22, 0.28, 0.42, 0.50], [0, 1, 1, 0]);
+  // Segment A: fully visible 0–10%, fades to 0 by 18%, stays 0 forever after
+  const aOpacity = useTransform(scrollYProgress, (p) => {
+    if (p <= 0.10) return 1;
+    if (p >= 0.18) return 0;
+    return 1 - lerp(p, 0.10, 0.18);
+  });
 
-  // Segment C: appears after B is gone, crossfades in at 54%, out by 90%
-  const cOpacity = useTransform(scrollYProgress, [0.54, 0.60, 0.80, 0.90], [0, 1, 1, 0]);
+  // Segment B: fades in 22–28%, holds, fades out 42–50%
+  const bOpacity = useTransform(scrollYProgress, (p) => {
+    if (p < 0.22) return 0;
+    if (p < 0.28) return lerp(p, 0.22, 0.28);
+    if (p <= 0.42) return 1;
+    if (p >= 0.50) return 0;
+    return 1 - lerp(p, 0.42, 0.50);
+  });
+
+  // Segment C: fades in 54–60%, holds, fades out 80–90%
+  const cOpacity = useTransform(scrollYProgress, (p) => {
+    if (p < 0.54) return 0;
+    if (p < 0.60) return lerp(p, 0.54, 0.60);
+    if (p <= 0.80) return 1;
+    if (p >= 0.90) return 0;
+    return 1 - lerp(p, 0.80, 0.90);
+  });
 
   return (
     <section ref={containerRef} className="relative" style={{ height: '400vh' }}>
-      <div className="sticky top-0 h-screen overflow-hidden">
+      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
         {/* Video background */}
         <motion.div
           style={{ opacity: videoOpacity }}
@@ -425,7 +449,7 @@ const OfferLadderSection = () => {
    PAGE
    ══════════════════════════════════════════════════════ */
 const NewLanding = () => (
-  <div className="bg-black min-h-screen text-white" style={{ overflowX: 'clip' }}>
+  <div className="bg-black min-h-screen text-white">
     <ScrollytellingHero />
     <AgencyBrainSection />
     <OfferLadderSection />
