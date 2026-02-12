@@ -5,11 +5,15 @@ import { useState, useCallback, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import BookingModal from '@/components/BookingModal';
 import standardLogo from '@/assets/standard-word-logo.png';
-import salesDashImg from '@/assets/sales-dashboard.png';
-import callScoringImg from '@/assets/call-scoring.png';
-import targetSettingImg from '@/assets/target-setting.png';
-import habitTrackingImg from '@/assets/habit-tracking.png';
 import agencyBrainLogo from '@/assets/agency-brain-logo.png';
+
+const STORAGE_BASE = 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public';
+const salesExpDashImg = `${STORAGE_BASE}/Sales%20Experience%20Dashboard.png`;
+const teamMeetingImg = `${STORAGE_BASE}/Team%20%26%20Meeting%20Hub.png`;
+const trainingModulesImg = `${STORAGE_BASE}/Training%20Modules%20w%20Feedback.png`;
+const salesProcessCardImg = `${STORAGE_BASE}/Sales%20Process%20Card.png`;
+const accountabilityCardImg = `${STORAGE_BASE}/Accountability%20Metrics%20Card.png`;
+const consequenceLadderCardImg = `${STORAGE_BASE}/Consequence%20Ladder%20Card.png`;
 
 /* ── Fade-in wrapper ── */
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
@@ -179,13 +183,14 @@ const ScrollytellingHero = () => {
             </div>
             <div className="flex flex-col md:flex-row items-center justify-center gap-4">
               {[
-                { title: 'Sales Process', sub: 'A documented, repeatable call framework your entire team follows — no more winging it.' },
-                { title: 'Accountability Framework', sub: 'Daily tracking, weekly scorecards, and graded calls that keep every producer on pace.' },
-                { title: 'Consequence Ladder', sub: 'A clear escalation path so underperformance is addressed — not ignored.' },
+                { title: 'Sales Process', sub: 'A documented, repeatable call framework your entire team follows — no more winging it.', img: salesProcessCardImg },
+                { title: 'Accountability Framework', sub: 'Daily tracking, weekly scorecards, and graded calls that keep every producer on pace.', img: accountabilityCardImg },
+                { title: 'Consequence Ladder', sub: 'A clear escalation path so underperformance is addressed — not ignored.', img: consequenceLadderCardImg },
               ].map((item, i, arr) => (
                 <div key={item.title} className="flex flex-col md:flex-row items-center">
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 md:p-10 text-center max-w-xs mx-auto">
-                    <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-3">{item.title}</h3>
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 md:p-8 text-center max-w-xs mx-auto">
+                    <h3 className="font-oswald font-bold text-xl md:text-2xl text-white mb-3">{item.title}</h3>
+                    <img src={item.img} alt={item.title} className="w-full rounded-xl shadow-2xl shadow-blue-500/10 mb-3" />
                     <p className="text-gray-400 text-sm leading-relaxed">{item.sub}</p>
                   </div>
                   {i < arr.length - 1 && (
@@ -214,10 +219,9 @@ const ScrollytellingHero = () => {
    AGENCY BRAIN SHOWCASE — Curated 8-week tools
    ══════════════════════════════════════════════════════ */
 const brainCards = [
-  { headline: 'Total Visibility.', sub: 'Know exactly where your team stands every single day.', img: salesDashImg, label: 'Sales Dashboard' },
-  { headline: 'Score Every Call.', sub: 'AI-powered call audits with execution checklists and talk-to-listen ratios.', img: callScoringImg, label: 'Call Scoring' },
-  { headline: 'Set Your Targets.', sub: 'Plan your 90-day action map — quarterly goals broken into daily habits.', img: targetSettingImg, label: 'Target Setting' },
-  { headline: 'Build The Habits.', sub: 'Core 4 + Flow tracking: Body, Being, Balance, Business — with team leaderboards.', img: habitTrackingImg, label: 'Habit Tracking' },
+  { headline: 'Total Visibility.', sub: 'Know exactly where your team stands every single day.', img: salesExpDashImg, label: 'Sales Experience Dashboard' },
+  { headline: 'Team & Meeting Hub.', sub: 'Centralized meeting management, team collaboration, and communication all in one place.', img: teamMeetingImg, label: 'Team & Meeting Hub' },
+  { headline: 'Training & Feedback.', sub: 'Structured training modules with real-time feedback loops to develop your producers.', img: trainingModulesImg, label: 'Training Modules & Feedback' },
 ];
 
 const AgencyBrainShowcase = () => {
