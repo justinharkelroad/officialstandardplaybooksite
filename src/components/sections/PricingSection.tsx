@@ -34,7 +34,7 @@ const PricingSection = () => {
                 <span className="text-gray-400">/month</span>
               </div>
               <CardDescription className="text-gray-400">
-                Elite community access and strategic resources
+                The Standard Membership. Monthly group Zoom calls. Private Network. Core AgencyBrain Access for you and your team.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -84,7 +84,7 @@ const PricingSection = () => {
                 <span className="text-gray-400">/month</span>
               </div>
               <CardDescription className="text-gray-400">
-                Intensive coaching with direct implementation support
+                1 on 1 Coaching every single month. AI Training. Custom AgencyBrain buildouts. The highest level for the Agency Owners who are ready for their own accountability in their lives.
               </CardDescription>
             </CardHeader>
             <CardContent>
