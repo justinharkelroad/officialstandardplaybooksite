@@ -351,7 +351,7 @@ const offers = [
   {
     tag: 'THE MEMBERSHIP',
     title: 'The Boardroom.',
-    description: 'The Standard Membership. Weekly calls. Private network. Core Brain Access.',
+    description: 'The Standard Membership. Monthly group Zoom calls. Private Network. Core AgencyBrain Access for you and your team.',
     price: '$299/mo',
     cta: 'Join The Boardroom',
     href: '/boardroom',
@@ -392,7 +392,7 @@ const offers = [
   {
     tag: 'THE DIRECTIVE',
     title: 'Proximity is Power.',
-    description: 'Direct 1:1 Access to Justin. Strategy. Speed. The highest level.',
+    description: '1 on 1 Coaching every single month. AI Training. Custom AgencyBrain buildouts. The highest level for the Agency Owners who are ready for their own accountability in their lives.',
     price: null,
     cta: 'Apply for Directive',
     href: '#directive-apply',
