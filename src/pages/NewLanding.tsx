@@ -392,7 +392,7 @@ const offerCards = [
     cta: 'Start the 6 Week Challenge',
     href: 'https://myagencybrain.com/six-week-challenge',
     action: 'link' as const,
-    supportText: 'Strong first step before Boardroom, 8 Week Experience, or Directive.',
+    
   },
   {
     label: 'MANAGER TRAINING',
@@ -507,9 +507,6 @@ const FlipCard = ({ card, onDirectiveClick }: { card: typeof offerCards[0]; onDi
 
           <div onClick={(e) => e.stopPropagation()}>{ctaButton}</div>
 
-          {card.supportText && (
-            <p className="text-gray-500 text-xs text-center mt-3">{card.supportText}</p>
-          )}
 
           <p className="text-gray-500 text-[11px] text-center mt-4 uppercase tracking-wider">Tap to see what's included →</p>
         </div>
