@@ -399,6 +399,7 @@ const offerCards = [
     title: '8 Week Experience',
     description: 'For teams stuck in "great month / bad month" cycles.',
     bullets: [
+      'Access to Boardroom Calls During The Experience',
       '8 coaching calls across 8 weeks',
       'Sales process + accountability + consequence ladder',
       'Full Agency Brain access during the program',
@@ -498,7 +499,7 @@ const FlipCard = ({ card, onDirectiveClick }: { card: typeof offerCards[0]; onDi
                 <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center mt-0.5">
                   <Check className="w-3 h-3 text-blue-400" />
                 </span>
-                <span className="text-gray-300 text-sm">{bullet}</span>
+                <span className={`text-sm ${bullet === 'Access to Boardroom Calls During The Experience' || bullet === 'Everything included in Boardroom +' ? 'text-blue-400 font-semibold' : 'text-gray-300'}`}>{bullet}</span>
               </li>
             ))}
           </ul>
