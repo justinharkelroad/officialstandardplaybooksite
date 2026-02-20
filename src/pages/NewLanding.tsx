@@ -358,6 +358,14 @@ const offerCards = [
       'Boardroom-level Agency Brain access',
       'Team training + ongoing coaching',
     ],
+    backBullets: [
+      'Live monthly group coaching with Justin',
+      'Hot-seat problem solving with other owners',
+      'Full Agency Brain platform access',
+      'Team training library + scripts',
+      'Ongoing accountability between calls',
+      'Private Boardroom community access',
+    ],
     price: '$299/mo',
     cta: 'Join The Boardroom',
     href: 'https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l',
@@ -371,6 +379,14 @@ const offerCards = [
       '42-day producer execution system',
       'Daily reports + weekly reflections',
       'Sales process + accountability installed',
+    ],
+    backBullets: [
+      'Daily accountability check-ins for each producer',
+      'Weekly reflection + adjustment calls',
+      'Full sales process framework installed',
+      'Producer-level Agency Brain access',
+      'Manager coaching on how to hold the line',
+      'Scorecards + KPI tracking from day 1',
     ],
     price: '$299 per producer',
     cta: 'Start the 6 Week Challenge',
@@ -387,6 +403,14 @@ const offerCards = [
       'Sales process + accountability + consequence ladder',
       'Full Agency Brain access during the program',
     ],
+    backBullets: [
+      '8 live coaching calls over 8 weeks',
+      'Complete sales management system install',
+      'Accountability + consequence ladder framework',
+      'Full Agency Brain access for your team',
+      'Manager playbook + scripts',
+      'Post-program strategy session',
+    ],
     price: null,
     cta: 'Book a Strategy Call',
     action: 'booking' as const,
@@ -400,11 +424,127 @@ const offerCards = [
       'Custom Agency Brain buildouts',
       'Highest level access and support',
     ],
+    backBullets: [
+      'Monthly 2-hour private sessions with Justin',
+      'Custom Agency Brain buildout for your agency',
+      'Direct access between sessions',
+      'Custom strategy + accountability plan',
+      'Priority support for your entire team',
+      'Highest tier of access available',
+    ],
     price: 'Application Only',
     cta: 'Apply for Directive',
     action: 'directive' as const,
   },
 ];
+
+const FlipCard = ({ card, onDirectiveClick }: { card: typeof offerCards[0]; onDirectiveClick: () => void }) => {
+  const [flipped, setFlipped] = useState(false);
+
+  const ctaButton = card.action === 'booking' ? (
+    <BookingModal
+      trigger={
+        <button className="w-full text-center bg-white text-black font-bold text-sm sm:text-base py-3.5 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]">
+          {card.cta}
+        </button>
+      }
+    />
+  ) : card.action === 'directive' ? (
+    <button
+      onClick={(e) => { e.stopPropagation(); onDirectiveClick(); }}
+      className="w-full text-center bg-white text-black font-bold text-sm sm:text-base py-3.5 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+    >
+      {card.cta}
+    </button>
+  ) : (
+    <a
+      href={card.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => e.stopPropagation()}
+      className="block w-full text-center bg-white text-black font-bold text-sm sm:text-base py-3.5 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+    >
+      {card.cta}
+    </a>
+  );
+
+  return (
+    <div
+      className="cursor-pointer"
+      style={{ perspective: '1200px' }}
+      onClick={() => setFlipped(!flipped)}
+    >
+      <div
+        className="relative w-full transition-transform duration-500"
+        style={{
+          transformStyle: 'preserve-3d',
+          transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+        }}
+      >
+        {/* FRONT */}
+        <div
+          className="group rounded-2xl border border-white/10 bg-[#0A0A0A] p-6 sm:p-8 flex flex-col hover:border-blue-500/40 transition-colors duration-300"
+          style={{ backfaceVisibility: 'hidden' }}
+        >
+          <p className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-3">{card.label}</p>
+          <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-2">{card.title}</h3>
+          <p className="text-gray-400 text-sm mb-6">{card.description}</p>
+
+          <ul className="space-y-3 mb-6 flex-grow">
+            {card.bullets.map((bullet) => (
+              <li key={bullet} className="flex items-start gap-3">
+                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center mt-0.5">
+                  <Check className="w-3 h-3 text-blue-400" />
+                </span>
+                <span className="text-gray-300 text-sm">{bullet}</span>
+              </li>
+            ))}
+          </ul>
+
+          {card.price && (
+            <p className="font-oswald font-bold text-2xl text-white mb-4">{card.price}</p>
+          )}
+
+          <div onClick={(e) => e.stopPropagation()}>{ctaButton}</div>
+
+          {card.supportText && (
+            <p className="text-gray-500 text-xs text-center mt-3">{card.supportText}</p>
+          )}
+
+          <p className="text-gray-500 text-[11px] text-center mt-4 uppercase tracking-wider">Tap to see what's included →</p>
+        </div>
+
+        {/* BACK */}
+        <div
+          className="absolute inset-0 rounded-2xl border border-blue-500/30 bg-[#0A0A0A] p-6 sm:p-8 flex flex-col"
+          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+        >
+          <p className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-3">WHAT'S INCLUDED</p>
+          <h3 className="font-oswald font-bold text-xl md:text-2xl text-white mb-4">{card.title}</h3>
+
+          <ul className="space-y-3 mb-6 flex-grow">
+            {card.backBullets.map((bullet) => (
+              <li key={bullet} className="flex items-start gap-3">
+                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center mt-0.5">
+                  <Check className="w-3 h-3 text-blue-400" />
+                </span>
+                <span className="text-gray-300 text-sm">{bullet}</span>
+              </li>
+            ))}
+          </ul>
+
+          {card.price && (
+            <p className="font-oswald font-bold text-2xl text-white mb-4">{card.price}</p>
+          )}
+
+          <div onClick={(e) => e.stopPropagation()}>{ctaButton}</div>
+
+          <p className="text-gray-500 text-[11px] text-center mt-4 uppercase tracking-wider">← Tap to go back</p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const OfferGridSection = () => {
   const [directiveModalOpen, setDirectiveModalOpen] = useState(false);
@@ -423,56 +563,7 @@ const OfferGridSection = () => {
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         {offerCards.map((card, i) => (
           <Reveal key={card.label} delay={i * 0.1}>
-            <div className="group rounded-2xl border border-white/10 bg-[#0A0A0A] p-6 sm:p-8 flex flex-col h-full hover:border-blue-500/40 transition-colors duration-300">
-              <p className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-3">{card.label}</p>
-              <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-2">{card.title}</h3>
-              <p className="text-gray-400 text-sm mb-6">{card.description}</p>
-
-              <ul className="space-y-3 mb-6 flex-grow">
-                {card.bullets.map((bullet) => (
-                  <li key={bullet} className="flex items-start gap-3">
-                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center mt-0.5">
-                      <Check className="w-3 h-3 text-blue-400" />
-                    </span>
-                    <span className="text-gray-300 text-sm">{bullet}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {card.price && (
-                <p className="font-oswald font-bold text-2xl text-white mb-4">{card.price}</p>
-              )}
-
-              {card.action === 'booking' ? (
-                <BookingModal
-                  trigger={
-                    <button className="w-full text-center bg-white text-black font-bold text-sm sm:text-base py-3.5 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]">
-                      {card.cta}
-                    </button>
-                  }
-                />
-              ) : card.action === 'directive' ? (
-                <button
-                  onClick={() => setDirectiveModalOpen(true)}
-                  className="w-full text-center bg-white text-black font-bold text-sm sm:text-base py-3.5 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
-                >
-                  {card.cta}
-                </button>
-              ) : (
-                <a
-                  href={card.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full text-center bg-white text-black font-bold text-sm sm:text-base py-3.5 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
-                >
-                  {card.cta}
-                </a>
-              )}
-
-              {card.supportText && (
-                <p className="text-gray-500 text-xs text-center mt-3">{card.supportText}</p>
-              )}
-            </div>
+            <FlipCard card={card} onDirectiveClick={() => setDirectiveModalOpen(true)} />
           </Reveal>
         ))}
       </div>
