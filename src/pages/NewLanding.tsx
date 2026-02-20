@@ -408,6 +408,7 @@ const offerCards = [
       'Complete sales management system install',
       'Accountability + consequence ladder framework',
       'Full Agency Brain access for your team',
+      'Standard Agency Training Platform Access',
       'Manager playbook + scripts',
       'Post-program strategy session',
     ],
