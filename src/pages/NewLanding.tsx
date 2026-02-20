@@ -361,7 +361,7 @@ const offerCards = [
     backBullets: [
       'Live monthly group coaching with Justin',
       'Hot-seat problem solving with other owners',
-      'Full Agency Brain platform access',
+      'Lvl 1 Agency Brain platform access',
       'Team training library + scripts',
       'Ongoing accountability between calls',
       'Private Boardroom community access',
@@ -408,7 +408,7 @@ const offerCards = [
       'Complete sales management system install',
       'Accountability + consequence ladder framework',
       'Full Agency Brain access for your team',
-      'Standard Agency Training Platform Access',
+      'Team training library + scripts',
       'Manager playbook + scripts',
       'Post-program strategy session',
     ],
@@ -426,6 +426,7 @@ const offerCards = [
       'Highest level access and support',
     ],
     backBullets: [
+      'Everything included in Boardroom +',
       'Monthly 2-hour private sessions with Justin',
       'Custom Agency Brain buildout for your agency',
       'Direct access between sessions',
@@ -526,7 +527,7 @@ const FlipCard = ({ card, onDirectiveClick }: { card: typeof offerCards[0]; onDi
                 <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center mt-0.5">
                   <Check className="w-3 h-3 text-blue-400" />
                 </span>
-                <span className="text-gray-300 text-sm">{bullet}</span>
+                <span className={`text-sm ${bullet === 'Everything included in Boardroom +' ? 'text-blue-400 font-semibold' : 'text-gray-300'}`}>{bullet}</span>
               </li>
             ))}
           </ul>
