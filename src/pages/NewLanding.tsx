@@ -1,13 +1,14 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
 import DirectiveApplicationModal from '@/components/DirectiveApplicationModal';
-import { Volume2, VolumeX, Check, RotateCcw } from 'lucide-react';
+import BookingModal from '@/components/BookingModal';
+import { Check } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import useEmblaCarousel from 'embla-carousel-react';
 import standardLogo from '@/assets/standard-word-logo.png';
 import lqsImg from '@/assets/lqs.png';
 import salesDashImg from '@/assets/sales-dashboard.png';
 import winbackImg from '@/assets/winback-hq.png';
-import trainingImg from '@/assets/training-videos.png';
+
 import renewalsImg from '@/assets/renewals.png';
 import agencyBrainLogo from '@/assets/agency-brain-logo.png';
 import marketingRoiImg from '@/assets/marketing-roi.png';
@@ -345,421 +346,151 @@ const AgencyBrainSection = () => {
 };
 
 /* ══════════════════════════════════════════════════════
-   SECTION 4 — THE OFFER LADDER (3 Ways In)
+   SECTION 4 — OFFER GRID (4 Cards)
    ══════════════════════════════════════════════════════ */
-const offers = [
+const offerCards = [
   {
-    tag: 'THE MEMBERSHIP',
-    title: 'The Boardroom.',
-    description: 'The Standard Membership. Monthly group Zoom calls. Private Network. Core AgencyBrain Access for you and your team.',
+    label: 'MEMBERSHIP',
+    title: 'The Boardroom',
+    description: 'Monthly coaching + accountability for owners who want steady momentum.',
+    bullets: [
+      '2-hour monthly Boardroom call',
+      'Boardroom-level Agency Brain access',
+      'Team training + ongoing coaching',
+    ],
     price: '$299/mo',
     cta: 'Join The Boardroom',
     href: 'https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l',
-    img: null,
-    video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/Boardroom card video.mp4',
-    benefits: [
-      '2 Hour Group Boardroom Call',
-      'Boardroom Level AgencyBrain Access',
-      'Team Training Access',
-      'I AM THE STANDARD T-Shirt',
-      'I AM THE STANDARD Wristband',
-      'Standard Playbook Pen',
-      '20 AI Calls Scored Per Month',
-      '24/7 Video Messaging for Coaching from Justin',
-    ],
+    action: 'link' as const,
   },
   {
-    tag: 'MANAGER TRAINING',
-    title: '8 Week Experience.',
-    description: "If you struggle with accountability and have months that are great and months that aren't, it's a reflection of your reality. Change it in 8 weeks. I literally guarantee it.",
-    price: null,
-    cta: 'Get More Info',
-    href: '/sales-experience',
-    img: trainingImg,
-    video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/The Standard This is the 8 week experience.mp4',
-    benefits: [
-      '8-Week Sales Manager Training System',
-      '8x 45-Minute Coaching Calls',
-      'Full AgencyBrain Access for 8 Weeks',
-      'Call Scoring Integration',
-      'Delivered Accountability Framework',
-      'Delivered Consequence Letter Framework',
-      'Sales Process System',
-      'Team Training Modules During Program',
-      'Boardroom Call Access for Owner & Key Employee',
+    label: 'TEAM EXECUTION SPRINT',
+    title: '6 Week Producer Challenge',
+    description: 'For owners who need producers executing now, not "eventually."',
+    bullets: [
+      '42-day producer execution system',
+      'Daily reports + weekly reflections',
+      'Sales process + accountability installed',
     ],
+    price: '$299 per producer',
+    cta: 'Start the 6 Week Challenge',
+    href: 'https://myagencybrain.com/six-week-challenge',
+    action: 'link' as const,
+    supportText: 'Strong first step before Boardroom, 8 Week Experience, or Directive.',
   },
   {
-    tag: 'THE DIRECTIVE',
-    title: 'Proximity is Power.',
-    description: '1 on 1 Coaching every single month. AI Training. Custom AgencyBrain buildouts. The highest level for the Agency Owners who are ready for their own accountability in their lives.',
+    label: 'MANAGER TRAINING',
+    title: '8 Week Experience',
+    description: 'For teams stuck in "great month / bad month" cycles.',
+    bullets: [
+      '8 coaching calls across 8 weeks',
+      'Sales process + accountability + consequence ladder',
+      'Full Agency Brain access during the program',
+    ],
     price: null,
+    cta: 'Book a Strategy Call',
+    action: 'booking' as const,
+  },
+  {
+    label: 'PRIVATE COACHING',
+    title: 'The Directive',
+    description: 'For owners who want high-touch 1:1 implementation and pressure-tested accountability.',
+    bullets: [
+      'Monthly 2-hour 1:1 coaching',
+      'Custom Agency Brain buildouts',
+      'Highest level access and support',
+    ],
+    price: 'Application Only',
     cta: 'Apply for Directive',
-    href: '#directive-apply',
-    isDirective: true,
-    img: null,
-    video: 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/1v1.mp4',
-    benefits: [
-      'Everything in Boardroom',
-      '100 AI Call Scores Per Month',
-      'Full AgencyBrain Access',
-      '80% Off 6-Week Challenge',
-      '1 Two-Hour 1-on-1 Coaching Call',
-      '24/7 Access to Justin',
-      'Support for New Hire Interviews',
-      'AgencyBrain Customization',
-    ],
+    action: 'directive' as const,
   },
 ];
 
-const OfferLadderSection = () => {
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const [mutedStates, setMutedStates] = useState<boolean[]>(offers.map(() => true));
-  const [flippedStates, setFlippedStates] = useState<boolean[]>(offers.map(() => false));
+const OfferGridSection = () => {
   const [directiveModalOpen, setDirectiveModalOpen] = useState(false);
 
-  const toggleSound = (index: number) => {
-    const video = videoRefs.current[index];
-    if (!video) return;
-    video.muted = !video.muted;
-    setMutedStates(prev => prev.map((m, i) => i === index ? video.muted : m));
-  };
-
-  const toggleFlip = (index: number) => {
-    setFlippedStates(prev => prev.map((f, i) => i === index ? !f : f));
-  };
-
   return (
-  <section className="relative z-20 py-24 md:py-40 px-6 bg-black">
-    <Reveal className="text-center mb-16 md:mb-24 max-w-3xl mx-auto">
-      <p className="text-sm uppercase tracking-[0.3em] text-blue-400 mb-3">Choose Your Path</p>
-      <h2 className="font-oswald font-bold text-3xl md:text-6xl text-white">
-        Three ways in.<br />One standard.
-      </h2>
-      <p className="text-blue-400 text-sm md:text-base mt-4 tracking-wide">No Commitments or Contracts...Ever</p>
-    </Reveal>
+    <section className="relative z-20 py-24 md:py-40 px-6 bg-black">
+      <Reveal className="text-center mb-12 md:mb-20 max-w-3xl mx-auto">
+        <h2 className="font-oswald font-bold text-3xl md:text-6xl text-white">
+          Pick your entry point. Raise the standard.
+        </h2>
+        <p className="text-gray-400 text-sm md:text-base mt-4">
+          No contracts. Just the right move for where your agency is right now.
+        </p>
+      </Reveal>
 
-    <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-      {offers.map((offer, i) => (
-        <Reveal key={offer.tag} delay={i * 0.12}>
-          {/* 3D flip wrapper */}
-          <div style={{ perspective: '1200px' }} className="h-full">
-            <div
-              className="relative w-full transition-transform duration-[600ms]"
-              style={{
-                transformStyle: 'preserve-3d',
-                transform: flippedStates[i] ? 'rotateY(180deg)' : 'rotateY(0deg)',
-              }}
-            >
-              {/* ══ FRONT FACE ══ */}
-              <div
-                style={{
-                  backfaceVisibility: 'hidden',
-                  WebkitBackfaceVisibility: 'hidden',
-                  pointerEvents: flippedStates[i] ? 'none' : 'auto',
-                }}
-              >
-                <div className="group relative rounded-2xl border border-white/10 overflow-hidden flex flex-col hover:border-blue-500/40 transition-colors duration-500">
-                  <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-xl" />
+      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        {offerCards.map((card, i) => (
+          <Reveal key={card.label} delay={i * 0.1}>
+            <div className="group rounded-2xl border border-white/10 bg-[#0A0A0A] p-6 sm:p-8 flex flex-col h-full hover:border-blue-500/40 transition-colors duration-300">
+              <p className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-3">{card.label}</p>
+              <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-2">{card.title}</h3>
+              <p className="text-gray-400 text-sm mb-6">{card.description}</p>
 
-                  {offer.video ? (
-                    <div className="relative min-h-[480px]">
-                      <video
-                        ref={el => { videoRefs.current[i] = el; }}
-                        src={offer.video}
-                        poster={offer.img || undefined}
-                        autoPlay muted loop playsInline
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/60" />
-                      <button
-                        onClick={() => toggleSound(i)}
-                        className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-black/70 transition-colors"
-                        aria-label={mutedStates[i] ? 'Unmute' : 'Mute'}
-                      >
-                        {mutedStates[i] ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                      </button>
-                      <div className="relative z-10 p-8 flex flex-col min-h-[480px] justify-end">
-                        <p className="text-xs uppercase tracking-widest text-blue-400 mb-4">{offer.tag}</p>
-                        <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-3">{offer.title}</h3>
-                        <p className="text-gray-300 mb-4 flex-grow">{offer.description}</p>
-                        <button
-                          onClick={() => toggleFlip(i)}
-                          className="text-blue-400 text-sm font-medium mb-4 hover:text-blue-300 transition-colors text-left cursor-pointer"
-                        >
-                          See What's Included →
-                        </button>
-                        {offer.isDirective ? (
-                          <button
-                            onClick={() => setDirectiveModalOpen(true)}
-                            className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
-                          >
-                            {offer.cta}
-                          </button>
-                        ) : (
-                          <a
-                            href={offer.href}
-                            target={offer.href.startsWith('http') ? '_blank' : undefined}
-                            rel={offer.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                            className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
-                          >
-                            {offer.cta}
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="bg-white/[0.03] backdrop-blur-xl p-8 flex flex-col">
-                      <p className="text-xs uppercase tracking-widest text-blue-400 mb-4">{offer.tag}</p>
-                      <h3 className="font-oswald font-bold text-2xl md:text-3xl text-white mb-3">{offer.title}</h3>
-                      <p className="text-gray-400 mb-4 flex-grow">{offer.description}</p>
-                      {offer.img && (
-                        <img src={offer.img} alt={offer.title} className="w-full rounded-xl mb-6 shadow-lg shadow-blue-500/5" />
-                      )}
-                      {offer.price && (
-                        <p className="font-oswald font-bold text-3xl text-white mb-6">{offer.price}</p>
-                      )}
-                      {offer.tag === 'THE DIRECTIVE' && (
-                        <div className="rounded-xl border border-white/10 bg-white/[0.05] p-4 mb-6 flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0">
-                            <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
-                          </div>
-                          <div>
-                            <p className="text-white text-sm font-semibold">New Video Message</p>
-                            <p className="text-gray-500 text-xs">Justin just sent a strategy breakdown</p>
-                          </div>
-                        </div>
-                      )}
-                      <button
-                        onClick={() => toggleFlip(i)}
-                        className="text-blue-400 text-sm font-medium mb-4 hover:text-blue-300 transition-colors text-left cursor-pointer"
-                      >
-                        See What's Included →
-                      </button>
-                      {offer.isDirective ? (
-                        <button
-                          onClick={() => setDirectiveModalOpen(true)}
-                          className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
-                        >
-                          {offer.cta}
-                        </button>
-                      ) : (
-                        <a
-                          href={offer.href}
-                          target={offer.href.startsWith('http') ? '_blank' : undefined}
-                          rel={offer.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                          className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
-                        >
-                          {offer.cta}
-                        </a>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
+              <ul className="space-y-3 mb-6 flex-grow">
+                {card.bullets.map((bullet) => (
+                  <li key={bullet} className="flex items-start gap-3">
+                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center mt-0.5">
+                      <Check className="w-3 h-3 text-blue-400" />
+                    </span>
+                    <span className="text-gray-300 text-sm">{bullet}</span>
+                  </li>
+                ))}
+              </ul>
 
-              {/* ══ BACK FACE ══ */}
-              <div
-                className="absolute inset-0 w-full h-full overflow-y-auto"
-                style={{
-                  backfaceVisibility: 'hidden',
-                  WebkitBackfaceVisibility: 'hidden',
-                  transform: 'rotateY(180deg)',
-                  pointerEvents: flippedStates[i] ? 'auto' : 'none',
-                }}
-              >
-                <div className="rounded-2xl border border-blue-500/30 bg-[#0a0f1e] p-6 md:p-8 flex flex-col min-h-full">
-                  <div className="flex items-center justify-between mb-6">
-                    <p className="text-xs uppercase tracking-widest text-blue-400">{offer.tag}</p>
-                    <button
-                      onClick={() => toggleFlip(i)}
-                      className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-blue-500/60 hover:bg-blue-500/10 transition-colors cursor-pointer"
-                      aria-label="Flip back"
-                    >
-                      <RotateCcw className="w-4 h-4" />
+              {card.price && (
+                <p className="font-oswald font-bold text-2xl text-white mb-4">{card.price}</p>
+              )}
+
+              {card.action === 'booking' ? (
+                <BookingModal
+                  trigger={
+                    <button className="w-full text-center bg-white text-black font-bold text-sm sm:text-base py-3.5 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]">
+                      {card.cta}
                     </button>
-                  </div>
-                  <h3 className="font-oswald font-bold text-xl md:text-2xl text-white mb-2">{offer.title}</h3>
-                  <p className="text-blue-400 font-semibold text-sm uppercase tracking-wider mb-6">What's Included</p>
-
-                  <ul className="space-y-3 flex-grow mb-6">
-                    {offer.benefits.map((benefit) => (
-                      <li key={benefit} className="flex items-start gap-3">
-                        <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center mt-0.5">
-                          <Check className="w-3 h-3 text-blue-400" />
-                        </span>
-                        <span className="text-gray-300 text-sm">{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {offer.isDirective ? (
-                    <button
-                      onClick={() => setDirectiveModalOpen(true)}
-                      className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
-                    >
-                      {offer.cta}
-                    </button>
-                  ) : (
-                    <a
-                      href={offer.href}
-                      target={offer.href.startsWith('http') ? '_blank' : undefined}
-                      rel={offer.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="block w-full text-center bg-white text-black font-bold text-base py-4 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
-                    >
-                      {offer.cta}
-                    </a>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </Reveal>
-      ))}
-    </div>
-
-    <DirectiveApplicationModal open={directiveModalOpen} onOpenChange={setDirectiveModalOpen} />
-  </section>
-  );
-};
-
-/* ══════════════════════════════════════════════════════
-   SECTION 5 — PRODUCER CHALLENGE BANNER (Flip Card)
-   ══════════════════════════════════════════════════════ */
-const challengeBenefits = [
-  '30 Training Modules',
-  '30 Daily Action Reports Sent to You',
-  '6 Weekly Discovery Flow Reflections',
-  'Core 4 Framework (Body, Being, Balance, Business)',
-  'Agency Brain Access',
-  'Daily Accountability System',
-  'Sales Process Training Modules',
-  'Direct Visibility into Producer Growth',
-  'Rolling Enrollment (Sign Up Friday, Start Monday)',
-];
-
-const ProducerChallengeBar = () => {
-  const [flipped, setFlipped] = useState(false);
-  const [muted, setMuted] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const toggleSound = () => {
-    const v = videoRef.current;
-    if (!v) return;
-    v.muted = !v.muted;
-    setMuted(v.muted);
-  };
-
-  return (
-    <section className="relative z-20 px-6 pb-24 md:pb-40 bg-black">
-      <div className="max-w-6xl mx-auto">
-        <div style={{ perspective: '1200px' }}>
-          <div
-            className="relative w-full transition-transform duration-[600ms]"
-            style={{
-              transformStyle: 'preserve-3d',
-              transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
-            }}
-          >
-            {/* ══ FRONT FACE ══ */}
-            <div
-              style={{
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                pointerEvents: flipped ? 'none' : 'auto',
-              }}
-            >
-              <div className="group relative rounded-2xl border border-white/10 overflow-hidden hover:border-blue-500/40 transition-colors duration-500">
-                {/* Cropped video background */}
-                <div className="relative h-[280px] md:h-[360px]">
-                  <video
-                    ref={videoRef}
-                    src="https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/The Challenge Card.mp4"
-                    autoPlay muted loop playsInline
-                    className="absolute inset-0 w-full h-full object-cover object-top"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/60" />
-
-                  {/* Sound toggle */}
-                  <button
-                    onClick={toggleSound}
-                    className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-black/70 transition-colors"
-                    aria-label={muted ? 'Unmute' : 'Mute'}
-                  >
-                    {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                  </button>
-
-                  {/* Content overlay */}
-                  <div className="relative z-10 h-full flex flex-col items-center justify-end text-center px-4 sm:px-6 pb-5 sm:pb-8 md:pb-10">
-                    <p className="text-xs uppercase tracking-widest text-blue-400 mb-1 sm:mb-2">The Challenge</p>
-                    <h3 className="font-oswald font-bold text-xl sm:text-2xl md:text-4xl text-white mb-1 sm:mb-2">6 Week Producer Challenge</h3>
-                    <p className="text-gray-300 text-xs sm:text-sm md:text-base max-w-2xl mb-2 sm:mb-3">
-                      Transform your producer from reactive chaos to systematic execution — in 42 days.
-                    </p>
-                    <p className="font-oswald font-bold text-lg sm:text-xl md:text-2xl text-white mb-2 sm:mb-4">$299 <span className="text-gray-400 text-xs sm:text-sm font-normal">/ per producer</span></p>
-                    <div className="flex flex-col items-center gap-2 sm:gap-3">
-                      <span
-                        className="inline-block bg-white/40 text-black/60 font-bold text-sm sm:text-base px-6 sm:px-10 py-2 sm:py-3 rounded-full cursor-not-allowed select-none"
-                      >
-                        v2.0 Launching 2/20/26
-                      </span>
-                      <button
-                        onClick={() => setFlipped(true)}
-                        className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors cursor-pointer"
-                      >
-                        See What's Included →
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* ══ BACK FACE ══ */}
-            <div
-              className="absolute inset-0 w-full h-full overflow-y-auto"
-              style={{
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                transform: 'rotateY(180deg)',
-                pointerEvents: flipped ? 'auto' : 'none',
-              }}
-            >
-              <div className="rounded-2xl border border-blue-500/30 bg-[#0a0f1e] p-6 md:p-10 flex flex-col min-h-full">
-                <div className="flex items-center justify-between mb-6">
-                  <p className="text-xs uppercase tracking-widest text-blue-400">The Challenge</p>
-                  <button
-                    onClick={() => setFlipped(false)}
-                    className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-blue-500/60 hover:bg-blue-500/10 transition-colors cursor-pointer"
-                    aria-label="Flip back"
-                  >
-                    <RotateCcw className="w-4 h-4" />
-                  </button>
-                </div>
-                <h3 className="font-oswald font-bold text-xl md:text-2xl text-white mb-2">6 Week Producer Challenge</h3>
-                <p className="text-blue-400 font-semibold text-sm uppercase tracking-wider mb-6">What's Included</p>
-
-                <ul className="space-y-3 flex-grow mb-6 max-w-xl">
-                  {challengeBenefits.map((b) => (
-                    <li key={b} className="flex items-start gap-3">
-                      <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center mt-0.5">
-                        <Check className="w-3 h-3 text-blue-400" />
-                      </span>
-                      <span className="text-gray-300 text-sm">{b}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <span
-                  className="inline-block w-full md:w-auto text-center bg-white/40 text-black/60 font-bold text-base px-10 py-4 rounded-full cursor-not-allowed select-none"
+                  }
+                />
+              ) : card.action === 'directive' ? (
+                <button
+                  onClick={() => setDirectiveModalOpen(true)}
+                  className="w-full text-center bg-white text-black font-bold text-sm sm:text-base py-3.5 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
                 >
-                  v2.0 Launching 2/20/26
-                </span>
-              </div>
+                  {card.cta}
+                </button>
+              ) : (
+                <a
+                  href={card.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full text-center bg-white text-black font-bold text-sm sm:text-base py-3.5 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+                >
+                  {card.cta}
+                </a>
+              )}
+
+              {card.supportText && (
+                <p className="text-gray-500 text-xs text-center mt-3">{card.supportText}</p>
+              )}
             </div>
-          </div>
-        </div>
+          </Reveal>
+        ))}
       </div>
+
+      {/* Bottom Strip */}
+      <Reveal className="max-w-3xl mx-auto mt-16 md:mt-20 text-center">
+        <h3 className="font-oswald font-bold text-xl md:text-2xl text-white mb-2">Not sure where to start?</h3>
+        <p className="text-gray-400 text-sm mb-6">Book a quick strategy call. We'll map your best first move.</p>
+        <BookingModal
+          trigger={
+            <button className="bg-white text-black font-bold text-sm sm:text-base px-8 py-3.5 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]">
+              Book Your Strategy Call
+            </button>
+          }
+        />
+      </Reveal>
+
+      <DirectiveApplicationModal open={directiveModalOpen} onOpenChange={setDirectiveModalOpen} />
     </section>
   );
 };
@@ -771,8 +502,7 @@ const NewLanding = () => (
   <div className="bg-black min-h-screen text-white">
     <ScrollytellingHero />
     <AgencyBrainSection />
-    <OfferLadderSection />
-    <ProducerChallengeBar />
+    <OfferGridSection />
 
     {/* Minimal footer */}
     <footer className="relative z-20 py-12 px-6 text-center border-t border-white/5 bg-black">
