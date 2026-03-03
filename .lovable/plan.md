@@ -1,53 +1,40 @@
 
 
-## Plan: New Landing Page with Auto-Opening Intake Modal
+## Problem Diagnosis
 
-### What You'll Get
+I verified in the browser that clicking the hero "Book Your Strategy Call" button on `/sales-experience` does NOT open the Standard Fit modal, even though the browser reports the click as "successful." The same pattern works perfectly on the homepage.
 
-A new route (e.g., `/fit` or `/start`) that loads the existing homepage (NewLanding) but **immediately opens a modal form** on top of it. The form collects the same info as the current 8-Week booking flow (name, email, phone, carrier, what's working/not working, desired outcome, commitment check). On submit, it:
+**Root cause**: The scrollytelling architecture on `/sales-experience` stacks 5 `absolute inset-0` fade layers inside a `position: sticky` container. Even with `pointer-events: none` on some layers, the overlapping layers swallow real browser clicks before they reach the button. The `useTransform`-based dynamic pointer-events approach is unreliable because:
+1. Framer Motion's `useTransform` for `pointerEvents` applies as an inline style on a `motion.div`, but the timing of style application during scroll can lag behind actual pointer hit-testing
+2. Other fade layers (Fade 2, 3, 4) that have `pointer-events-none` via className are still present as `absolute inset-0` DOM elements — browsers can still intercept events on these in certain scroll states
 
-1. Saves the lead to the database (same `booking_leads` table, with a `source` field so you can distinguish these from 8-week leads)
-2. Fires an email notification to `info@standardplaybook.com` (reuses existing `send-booking-notification` edge function)
-3. Redirects them to `https://AGENCYCOACHING.as.me/standardfit` to book their call (instead of embedding Acuity inline)
+**Why the homepage works**: On the homepage, the "Book a Discovery Call" button is a native `<button>` with `pointer-events-auto` inside a layer that uses `pointer-events-none` via **className** (not dynamic motion style). The modal is rendered inline. But more importantly, the homepage layers are simpler and don't have 5 competing absolute overlays.
 
-### Technical Steps
+## Plan: Complete Architecture Change for CTA Buttons
 
-**1. Database migration** -- Add a `source` column to `booking_leads`
-- `ALTER TABLE booking_leads ADD COLUMN source text DEFAULT 'eight-week';`
-- This lets you filter leads by origin (`eight-week` vs `standard-fit`) without a new table
+**Strategy**: Remove the CTA button from inside the scrollytelling sticky container entirely. Instead, place a **fixed-position CTA** that sits above the scrollytelling section with a proper `z-index`, completely independent of the fade layer stack.
 
-**2. New page component: `src/pages/StandardFit.tsx`**
-- Renders `<NewLanding />` as the background
-- Immediately opens a Dialog modal containing a version of the `BookingOnboardingForm`
-- On form completion: calls `send-booking-notification`, then redirects to `https://AGENCYCOACHING.as.me/standardfit` (external link, not embedded)
-- If user closes the modal, they just see the normal landing page and can re-trigger it via a CTA
+### Changes to `src/pages/SalesExperience.tsx`:
 
-**3. New reusable modal: `src/components/StandardFitModal.tsx`**
-- Wraps `BookingOnboardingForm` in a Dialog that auto-opens
-- Passes `source="standard-fit"` so the DB record is tagged
-- On complete: redirects to the Acuity link instead of showing embedded scheduler
+1. **Remove the button from Fade 1** (lines 125-129) — delete the `pointer-events-auto` div and Button from inside the fade layer. Keep the text content.
 
-**4. Update `BookingOnboardingForm`**
-- Accept optional `source` prop (defaults to `'eight-week'`)
-- Accept optional `onCompleteRedirectUrl` prop
-- Save `source` to the database on insert/update
-- When `onCompleteRedirectUrl` is provided, open that URL on completion instead of calling the parent's `onComplete`
+2. **Add a fixed/absolute CTA outside the sticky container** — Place the "Book Your Strategy Call" button and `StandardFitModal` as a sibling of the sticky `<div>`, positioned with CSS `position: absolute` at the bottom-center of the visible area, with `z-index: 50` so it sits above all fade layers. Use scroll-driven opacity to show/hide it in sync with Fade 1's visibility.
 
-**5. Route registration in `App.tsx`**
-- Add `/fit` route pointing to `StandardFit` page
+3. **Replace the FinalCTA BookingModal with StandardFitModal** (lines 427-433) — The bottom-of-page "Book Your Strategy Call" currently uses the old `BookingModal`. Replace it with a state-controlled `StandardFitModal`, same as the homepage pattern.
 
-**6. No changes to the email edge function** -- it already sends the same fields. The notification will work identically.
+4. **Replace the mobile sticky CTA BookingModal with StandardFitModal** (lines 458-464) — Same treatment for the fixed mobile CTA at the bottom of the page.
 
-### User Flow
+### Specifically:
 
-1. User visits `/fit`
-2. Landing page loads, modal immediately appears on top
-3. Step 1: Name, email, phone
-4. Step 2: Carrier, what's working, what's not, desired outcome, commitment check
-5. Submit → data saved, email sent to you, user redirected to `https://AGENCYCOACHING.as.me/standardfit`
+**Hero CTA** — Move button out of the sticky container entirely. Render it as a `position: fixed` element with `z-index: 50`, centered, that fades out when scrollYProgress exceeds 0.08 (matching Fade 1 timing). This guarantees no overlay can block it.
 
-### What Stays the Same
-- Existing `/` homepage and all booking flows remain untouched
-- The 8-week booking modal continues to work exactly as before
-- All auto-save and session recovery behavior is preserved
+**Final CTA** — Replace `<BookingModal trigger={...} />` with `<Button onClick={() => setFinalModalOpen(true)}>` + `<StandardFitModal open={finalModalOpen} onOpenChange={setFinalModalOpen} />`. This is the exact pattern that works on the homepage.
+
+**Mobile sticky CTA** — Same replacement as Final CTA.
+
+### Why this will work:
+- The button lives in a completely separate DOM layer from the scrollytelling overlays
+- No `absolute inset-0` elements sit between the button and the user's click
+- The `z-index: 50` on the fixed button ensures it's above the sticky container (no z-index) and all its children
+- This mirrors the homepage's proven architecture where the button and modal are outside overlay stacks
 
