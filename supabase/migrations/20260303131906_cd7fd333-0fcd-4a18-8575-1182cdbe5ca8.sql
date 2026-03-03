@@ -1,0 +1,1 @@
+ALTER TABLE public.booking_leads ADD COLUMN source text DEFAULT 'eight-week';
