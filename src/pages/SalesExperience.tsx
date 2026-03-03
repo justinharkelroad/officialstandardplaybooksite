@@ -4,6 +4,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { useState, useCallback, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import BookingModal from '@/components/BookingModal';
+import StandardFitModal from '@/components/StandardFitModal';
 import standardLogo from '@/assets/standard-word-logo.png';
 import agencyBrainLogo from '@/assets/agency-brain-logo.png';
 
@@ -32,6 +33,7 @@ const Reveal = ({ children, className = '', delay = 0 }: { children: React.React
    SCROLLYTELLING HERO — 4 Fades over sticky video
    ══════════════════════════════════════════════════════ */
 const ScrollytellingHero = () => {
+  const [heroModalOpen, setHeroModalOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] });
 
@@ -95,9 +97,12 @@ const ScrollytellingHero = () => {
     return 1 - lerp(p, 0.92, 0.97);
   });
 
+  const fade1PointerEvents = useTransform(fade1, (value) => (value > 0.2 ? 'auto' : 'none'));
+  const fade5PointerEvents = useTransform(fade5, (value) => (value > 0.2 ? 'auto' : 'none'));
+
   return (
     <section ref={containerRef} className="relative" style={{ height: '600vh' }}>
-      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', pointerEvents: 'none' }}>
+      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
         {/* Video background */}
         <motion.div style={{ opacity: videoOpacity }} className="absolute inset-0" aria-hidden="true">
           <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" src="https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/8%20week%20background.mp4" />
@@ -108,8 +113,8 @@ const ScrollytellingHero = () => {
         <motion.div style={{ opacity: blueBgOpacity }} className="absolute inset-0 bg-gradient-to-b from-[#020617] to-black" aria-hidden="true" />
 
         {/* ── Fade 1: Hook + CTA ── */}
-        <motion.div style={{ opacity: fade1 }} className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="text-center px-6 max-w-5xl mx-auto pointer-events-none">
+        <motion.div style={{ opacity: fade1, pointerEvents: fade1PointerEvents }} className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center px-6 max-w-5xl mx-auto">
             <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-48 md:w-72 mb-10 drop-shadow-2xl" />
             <h1 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] tracking-tight mb-4 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)] uppercase">
               Stop managing chaos.
@@ -118,13 +123,9 @@ const ScrollytellingHero = () => {
               Start running a system.
             </p>
             <div className="pointer-events-auto">
-              <BookingModal
-                trigger={
-                  <Button className="btn-primary text-lg px-10 py-6">
-                    Book Your Strategy Call
-                  </Button>
-                }
-              />
+              <Button className="btn-primary text-lg px-10 py-6" onClick={() => setHeroModalOpen(true)}>
+                Book Your Strategy Call
+              </Button>
             </div>
           </div>
         </motion.div>
@@ -176,7 +177,7 @@ const ScrollytellingHero = () => {
           </div>
         </motion.div>
         {/* ── Fade 5: Deliverables ── */}
-        <motion.div style={{ opacity: fade5 }} className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <motion.div style={{ opacity: fade5, pointerEvents: fade5PointerEvents }} className="absolute inset-0 flex items-center justify-center">
           <div className="max-w-6xl mx-auto px-6 w-full">
             <div className="text-center mb-4 md:mb-10">
               <p className="text-xs md:text-sm uppercase tracking-[0.3em] text-blue-400 mb-2 md:mb-3">What You'll Walk Away With</p>
@@ -217,6 +218,7 @@ const ScrollytellingHero = () => {
           </div>
         </motion.div>
       </div>
+      <StandardFitModal open={heroModalOpen} onOpenChange={setHeroModalOpen} />
     </section>
   );
 };
