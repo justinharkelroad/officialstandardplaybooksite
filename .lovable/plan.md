@@ -1,70 +1,53 @@
 
 
-## Offer Section Overhaul for Conversion Clarity
+## Plan: New Landing Page with Auto-Opening Intake Modal
 
-### What Changes
+### What You'll Get
 
-Replace the current "Choose Your Path" section (3 flip-cards + separate Producer Challenge banner) with a clean, scannable 4-card grid. No flip animations, no video backgrounds in cards — just clear offer hierarchy.
+A new route (e.g., `/fit` or `/start`) that loads the existing homepage (NewLanding) but **immediately opens a modal form** on top of it. The form collects the same info as the current 8-Week booking flow (name, email, phone, carrier, what's working/not working, desired outcome, commitment check). On submit, it:
 
-### New Section Structure
+1. Saves the lead to the database (same `booking_leads` table, with a `source` field so you can distinguish these from 8-week leads)
+2. Fires an email notification to `info@standardplaybook.com` (reuses existing `send-booking-notification` edge function)
+3. Redirects them to `https://AGENCYCOACHING.as.me/standardfit` to book their call (instead of embedding Acuity inline)
 
-**Header**
-- Headline: "Pick your entry point. Raise the standard."
-- Subhead: "No contracts. Just the right move for where your agency is right now."
+### Technical Steps
 
-**4 Cards in a 2x2 grid (stacking to 1-column on mobile)**
+**1. Database migration** -- Add a `source` column to `booking_leads`
+- `ALTER TABLE booking_leads ADD COLUMN source text DEFAULT 'eight-week';`
+- This lets you filter leads by origin (`eight-week` vs `standard-fit`) without a new table
 
-| Card | Label | Price | CTA | Action |
-|------|-------|-------|-----|--------|
-| The Boardroom | MEMBERSHIP | $299/mo | Join The Boardroom | Opens Stripe link in new tab |
-| 6 Week Producer Challenge | TEAM EXECUTION SPRINT | $299 per producer | Start the 6 Week Challenge | Links to myagencybrain.com/six-week-challenge |
-| 8 Week Experience | MANAGER TRAINING | (no price shown) | Book a Strategy Call | Opens existing BookingModal |
-| The Directive | PRIVATE COACHING | Application Only | Apply for Directive | Opens existing DirectiveApplicationModal |
+**2. New page component: `src/pages/StandardFit.tsx`**
+- Renders `<NewLanding />` as the background
+- Immediately opens a Dialog modal containing a version of the `BookingOnboardingForm`
+- On form completion: calls `send-booking-notification`, then redirects to `https://AGENCYCOACHING.as.me/standardfit` (external link, not embedded)
+- If user closes the modal, they just see the normal landing page and can re-trigger it via a CTA
 
-The 6 Week Challenge card gets small support text below CTA: "Strong first step before Boardroom, 8 Week Experience, or Directive."
+**3. New reusable modal: `src/components/StandardFitModal.tsx`**
+- Wraps `BookingOnboardingForm` in a Dialog that auto-opens
+- Passes `source="standard-fit"` so the DB record is tagged
+- On complete: redirects to the Acuity link instead of showing embedded scheduler
 
-**Bottom Strip**
-- "Not sure where to start?"
-- "Book a quick strategy call. We'll map your best first move."
-- CTA: "Book Your Strategy Call" (opens BookingModal)
+**4. Update `BookingOnboardingForm`**
+- Accept optional `source` prop (defaults to `'eight-week'`)
+- Accept optional `onCompleteRedirectUrl` prop
+- Save `source` to the database on insert/update
+- When `onCompleteRedirectUrl` is provided, open that URL on completion instead of calling the parent's `onComplete`
 
-### What Gets Removed
-- Flip-card behavior (front/back faces, 3D perspective)
-- Video backgrounds on offer cards
-- Sound toggle buttons
-- "See What's Included" flip triggers
-- Separate ProducerChallengeBar section (challenge is now integrated as Card 2)
-- The old OffersGrid component (already not used on this page, but stays in codebase for other pages)
+**5. Route registration in `App.tsx`**
+- Add `/fit` route pointing to `StandardFit` page
 
-### Card Design
-- Dark card with subtle border (`border-white/10`, hover `border-blue-500/40`)
-- Label tag at top (small uppercase, blue-400)
-- Title in Oswald bold
-- One-liner description
-- 3 bullet points with blue checkmark icons
-- Price line (or "Application Only")
-- Full-width rounded CTA button (white bg, black text)
-- Consistent padding and spacing across all cards
+**6. No changes to the email edge function** -- it already sends the same fields. The notification will work identically.
 
-### Technical Details
+### User Flow
 
-**File: `src/pages/NewLanding.tsx`**
-1. Replace the `offers` array and `OfferLadderSection` component with a new clean card-based section
-2. Remove the `ProducerChallengeBar` component entirely
-3. Import `BookingModal` for the 8 Week and bottom strip CTAs
-4. Keep `DirectiveApplicationModal` for the Directive card
-5. Remove video refs, muted/flipped state management, and flip logic
-6. Update the page composition: remove `<ProducerChallengeBar />` from the render
+1. User visits `/fit`
+2. Landing page loads, modal immediately appears on top
+3. Step 1: Name, email, phone
+4. Step 2: Carrier, what's working, what's not, desired outcome, commitment check
+5. Submit → data saved, email sent to you, user redirected to `https://AGENCYCOACHING.as.me/standardfit`
 
-**Placeholders resolved:**
-- Challenge URL: `https://myagencybrain.com/six-week-challenge` (external link, new tab)
-- 8 Week Price: Not shown
-- Directive Price: "Application Only"
-- Strategy Call: Uses existing `BookingModal` component
-
-### Mobile Behavior
-- Cards stack single-column
-- Tight padding (p-6 on mobile, p-8 on desktop)
-- Text sizes scale down appropriately
-- No horizontal overflow
+### What Stays the Same
+- Existing `/` homepage and all booking flows remain untouched
+- The 8-week booking modal continues to work exactly as before
+- All auto-save and session recovery behavior is preserved
 
