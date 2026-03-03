@@ -381,7 +381,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
             <Button
               variant="outline"
               onClick={handleBack}
-              className="flex-1 border-slate-600 text-white hover:bg-slate-700 hover:text-white"
+              className="flex-1 border-slate-600 text-white bg-slate-700"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
