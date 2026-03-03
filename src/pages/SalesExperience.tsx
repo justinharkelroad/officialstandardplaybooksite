@@ -108,8 +108,8 @@ const ScrollytellingHero = () => {
         <motion.div style={{ opacity: blueBgOpacity }} className="absolute inset-0 bg-gradient-to-b from-[#020617] to-black" aria-hidden="true" />
 
         {/* ── Fade 1: Hook + CTA ── */}
-        <motion.div style={{ opacity: fade1 }} className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center px-6 max-w-5xl mx-auto">
+        <motion.div style={{ opacity: fade1 }} className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="text-center px-6 max-w-5xl mx-auto pointer-events-none">
             <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-48 md:w-72 mb-10 drop-shadow-2xl" />
             <h1 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] tracking-tight mb-4 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)] uppercase">
               Stop managing chaos.
