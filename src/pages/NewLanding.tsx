@@ -127,7 +127,7 @@ const ScrollytellingHero = () => {
           <div className="text-center px-6 max-w-5xl mx-auto">
             <button
               onClick={() => setFitModalOpen(true)}
-              className="inline-block mb-6 px-5 py-2 border-2 border-primary bg-transparent font-oswald font-bold text-sm md:text-base uppercase tracking-[0.15em] text-primary hover:bg-primary hover:text-white transition-all duration-300 pointer-events-auto cursor-pointer"
+              className="inline-block mb-6 px-5 py-2 border-2 border-white bg-transparent font-oswald font-bold text-sm md:text-base uppercase tracking-[0.15em] text-white hover:bg-primary hover:border-primary hover:text-white transition-all duration-300 pointer-events-auto cursor-pointer"
             >
               Book a Discovery Call
             </button>
