@@ -1,6 +1,7 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
 import DirectiveApplicationModal from '@/components/DirectiveApplicationModal';
 import BookingModal from '@/components/BookingModal';
+import StandardFitModal from '@/components/StandardFitModal';
 import { Check } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -38,6 +39,7 @@ const Reveal = ({ children, className = '', delay = 0 }: { children: React.React
    Video stays sticky while three text segments scroll over it
    ══════════════════════════════════════════════════════ */
 const ScrollytellingHero = () => {
+  const [fitModalOpen, setFitModalOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] });
 
@@ -123,14 +125,13 @@ const ScrollytellingHero = () => {
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
         >
           <div className="text-center px-6 max-w-5xl mx-auto">
-            <a
-              href="https://AGENCYCOACHING.as.me/standardfit"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block mb-6 px-5 py-2 border-2 border-primary bg-transparent font-oswald font-bold text-sm md:text-base uppercase tracking-[0.15em] text-primary hover:bg-primary hover:text-white transition-all duration-300 pointer-events-auto"
+            <button
+              onClick={() => setFitModalOpen(true)}
+              className="inline-block mb-6 px-5 py-2 border-2 border-primary bg-transparent font-oswald font-bold text-sm md:text-base uppercase tracking-[0.15em] text-primary hover:bg-primary hover:text-white transition-all duration-300 pointer-events-auto cursor-pointer"
             >
               Book a Discovery Call
-            </a>
+            </button>
+            <StandardFitModal open={fitModalOpen} onOpenChange={setFitModalOpen} />
             <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-64 md:w-96 mb-12 drop-shadow-2xl" />
             <h1 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
               You built the agency.<br />
@@ -548,6 +549,7 @@ const FlipCard = ({ card, onDirectiveClick }: { card: typeof offerCards[0]; onDi
 
 const OfferGridSection = () => {
   const [directiveModalOpen, setDirectiveModalOpen] = useState(false);
+  const [fitModalOpen, setFitModalOpen] = useState(false);
 
   return (
     <section className="relative z-20 py-24 md:py-40 px-6 bg-black">
@@ -572,13 +574,13 @@ const OfferGridSection = () => {
       <Reveal className="max-w-3xl mx-auto mt-16 md:mt-20 text-center">
         <h3 className="font-oswald font-bold text-xl md:text-2xl text-white mb-2">Not sure where to start?</h3>
         <p className="text-gray-400 text-sm mb-6">Book a quick strategy call. We'll map your best first move.</p>
-        <BookingModal
-          trigger={
-            <button className="bg-white text-black font-bold text-sm sm:text-base px-8 py-3.5 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]">
-              Book Your Strategy Call
-            </button>
-          }
-        />
+        <button
+          onClick={() => setFitModalOpen(true)}
+          className="bg-white text-black font-bold text-sm sm:text-base px-8 py-3.5 rounded-full hover:bg-gray-200 transition-colors duration-200 active:scale-[0.98]"
+        >
+          Book Your Strategy Call
+        </button>
+        <StandardFitModal open={fitModalOpen} onOpenChange={setFitModalOpen} />
       </Reveal>
 
       <DirectiveApplicationModal open={directiveModalOpen} onOpenChange={setDirectiveModalOpen} />
