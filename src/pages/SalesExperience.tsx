@@ -97,12 +97,23 @@ const ScrollytellingHero = () => {
     return 1 - lerp(p, 0.92, 0.97);
   });
 
-  const fade1PointerEvents = useTransform(fade1, (value) => (value > 0.2 ? 'auto' : 'none'));
-  const fade5PointerEvents = useTransform(fade5, (value) => (value > 0.2 ? 'auto' : 'none'));
+  // Hero CTA opacity synced to fade1 — for the FIXED button outside sticky container
+  const heroCTAOpacity = useTransform(fade1, (value) => (value > 0.1 ? 1 : 0));
+  const heroCTAPointerEvents = useTransform(fade1, (value) => (value > 0.1 ? 'auto' as const : 'none' as const));
 
   return (
     <section ref={containerRef} className="relative" style={{ height: '600vh' }}>
-      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
+      {/* ── FIXED Hero CTA — lives OUTSIDE the sticky container, z-50, unblockable ── */}
+      <motion.div
+        style={{ opacity: heroCTAOpacity, pointerEvents: heroCTAPointerEvents }}
+        className="fixed bottom-[15vh] left-0 right-0 z-50 hidden md:flex justify-center"
+      >
+        <Button className="btn-primary text-lg px-10 py-6 shadow-2xl" onClick={() => setHeroModalOpen(true)}>
+          Book Your Strategy Call
+        </Button>
+      </motion.div>
+
+      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', pointerEvents: 'none' }}>
         {/* Video background */}
         <motion.div style={{ opacity: videoOpacity }} className="absolute inset-0" aria-hidden="true">
           <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" src="https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/8%20week%20background.mp4" />
@@ -112,8 +123,8 @@ const ScrollytellingHero = () => {
         {/* Blue background layer */}
         <motion.div style={{ opacity: blueBgOpacity }} className="absolute inset-0 bg-gradient-to-b from-[#020617] to-black" aria-hidden="true" />
 
-        {/* ── Fade 1: Hook + CTA ── */}
-        <motion.div style={{ opacity: fade1, pointerEvents: fade1PointerEvents }} className="absolute inset-0 flex items-center justify-center">
+        {/* ── Fade 1: Hook text only (CTA is the fixed button above) ── */}
+        <motion.div style={{ opacity: fade1 }} className="absolute inset-0 flex items-center justify-center">
           <div className="text-center px-6 max-w-5xl mx-auto">
             <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-48 md:w-72 mb-10 drop-shadow-2xl" />
             <h1 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] tracking-tight mb-4 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)] uppercase">
@@ -122,11 +133,6 @@ const ScrollytellingHero = () => {
             <p className="font-oswald font-bold text-2xl sm:text-4xl md:text-5xl text-gray-300 mb-10 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)] uppercase">
               Start running a system.
             </p>
-            <div className="pointer-events-auto">
-              <Button className="btn-primary text-lg px-10 py-6" onClick={() => setHeroModalOpen(true)}>
-                Book Your Strategy Call
-              </Button>
-            </div>
           </div>
         </motion.div>
 
@@ -177,7 +183,7 @@ const ScrollytellingHero = () => {
           </div>
         </motion.div>
         {/* ── Fade 5: Deliverables ── */}
-        <motion.div style={{ opacity: fade5, pointerEvents: fade5PointerEvents }} className="absolute inset-0 flex items-center justify-center">
+        <motion.div style={{ opacity: fade5 }} className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="max-w-6xl mx-auto px-6 w-full">
             <div className="text-center mb-4 md:mb-10">
               <p className="text-xs md:text-sm uppercase tracking-[0.3em] text-blue-400 mb-2 md:mb-3">What You'll Walk Away With</p>
@@ -404,37 +410,37 @@ const IncludedSection = () => (
 /* ══════════════════════════════════════════════════════
    FINAL CTA
    ══════════════════════════════════════════════════════ */
-const FinalCTA = () => (
-  <section className="relative z-20 py-24 md:py-40 px-6 bg-[#020617]">
-    <div className="max-w-3xl mx-auto text-center">
-      <Reveal>
-        <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full border-4 border-yellow-300 shadow-2xl mb-8">
-          <div className="text-center">
-            <div className="text-lg font-bold text-black">100%</div>
-            <div className="text-[10px] font-semibold text-black uppercase">Guarantee</div>
+const FinalCTA = () => {
+  const [finalModalOpen, setFinalModalOpen] = useState(false);
+  return (
+    <section className="relative z-20 py-24 md:py-40 px-6 bg-[#020617]">
+      <div className="max-w-3xl mx-auto text-center">
+        <Reveal>
+          <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full border-4 border-yellow-300 shadow-2xl mb-8">
+            <div className="text-center">
+              <div className="text-lg font-bold text-black">100%</div>
+              <div className="text-[10px] font-semibold text-black uppercase">Guarantee</div>
+            </div>
           </div>
-        </div>
-      </Reveal>
-      <Reveal delay={0.1}>
-        <h2 className="font-oswald font-bold text-3xl sm:text-5xl md:text-6xl text-white leading-[1.1] mb-6">
-          If you don't see the value after 8 weeks,<br />I'll give you your money back.
-        </h2>
-        <p className="text-xl text-gray-400 mb-10">
-          All I ask is you <span className="text-blue-400 font-semibold">commit to the work.</span>
-        </p>
-      </Reveal>
-      <Reveal delay={0.2}>
-        <BookingModal
-          trigger={
-            <Button className="btn-primary text-lg px-10 py-6">
-              Book Your Strategy Call
-            </Button>
-          }
-        />
-      </Reveal>
-    </div>
-  </section>
-);
+        </Reveal>
+        <Reveal delay={0.1}>
+          <h2 className="font-oswald font-bold text-3xl sm:text-5xl md:text-6xl text-white leading-[1.1] mb-6">
+            If you don't see the value after 8 weeks,<br />I'll give you your money back.
+          </h2>
+          <p className="text-xl text-gray-400 mb-10">
+            All I ask is you <span className="text-blue-400 font-semibold">commit to the work.</span>
+          </p>
+        </Reveal>
+        <Reveal delay={0.2}>
+          <Button className="btn-primary text-lg px-10 py-6" onClick={() => setFinalModalOpen(true)}>
+            Book Your Strategy Call
+          </Button>
+        </Reveal>
+      </div>
+      <StandardFitModal open={finalModalOpen} onOpenChange={setFinalModalOpen} />
+    </section>
+  );
+};
 
 /* ══════════════════════════════════════════════════════
    PAGE
@@ -453,17 +459,24 @@ const SalesExperience = () => (
       <p className="text-gray-600 text-sm">© {new Date().getFullYear()} Standard Playbook. All rights reserved.</p>
     </footer>
 
-    {/* Sticky CTA for Mobile */}
-    <div className="fixed bottom-0 left-0 right-0 bg-black/95 backdrop-blur-lg border-t border-white/10 p-4 md:hidden z-40">
-      <BookingModal
-        trigger={
-          <Button className="btn-primary w-full">
-            Book A Call
-          </Button>
-        }
-      />
-    </div>
+    {/* Mobile sticky CTA */}
+    <MobileStickyBookCTA />
   </div>
 );
+
+/* ── Mobile sticky CTA component ── */
+const MobileStickyBookCTA = () => {
+  const [mobileModalOpen, setMobileModalOpen] = useState(false);
+  return (
+    <>
+      <div className="fixed bottom-0 left-0 right-0 bg-black/95 backdrop-blur-lg border-t border-white/10 p-4 md:hidden z-40">
+        <Button className="btn-primary w-full" onClick={() => setMobileModalOpen(true)}>
+          Book A Call
+        </Button>
+      </div>
+      <StandardFitModal open={mobileModalOpen} onOpenChange={setMobileModalOpen} />
+    </>
+  );
+};
 
 export default SalesExperience;
