@@ -7,6 +7,7 @@ import { Progress } from '@/components/ui/progress';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
 import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
+import standardLogo from '@/assets/standard-word-logo.png';
 
 interface BookingOnboardingFormProps {
   onComplete: () => void;
@@ -237,9 +238,16 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
           )}
         </div>
         <Progress value={step * 50} className="h-2" />
-        <h2 className="text-xl font-semibold text-white">
-          {step === 1 ? 'Contact Information' : 'Tell Us About Your Team'}
-        </h2>
+        {step === 1 && source === 'standard-fit' ? (
+          <div className="flex flex-col items-center gap-1 pt-2">
+            <img src={standardLogo} alt="Standard" className="h-10 object-contain" />
+            <span className="font-oswald text-3xl font-bold tracking-tight text-white uppercase">FIT</span>
+          </div>
+        ) : (
+          <h2 className="text-xl font-semibold text-white">
+            {step === 1 ? 'Contact Information' : 'Tell Us About You'}
+          </h2>
+        )}
       </div>
 
       {step === 1 ? (
@@ -309,7 +317,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
 
           <div className="space-y-2">
             <Label htmlFor="whats_working" className="text-gray-300">
-              What do you feel like is WORKING right now inside of your sales team? *
+              What do you feel is WORKING right now inside of your agency? *
             </Label>
             <Textarea
               id="whats_working"
@@ -322,7 +330,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
 
           <div className="space-y-2">
             <Label htmlFor="whats_not_working" className="text-gray-300">
-              What do you feel like is NOT WORKING right now inside of your sales team? *
+              What is NOT WORKING inside of your agency? *
             </Label>
             <Textarea
               id="whats_not_working"
@@ -335,7 +343,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
 
           <div className="space-y-2">
             <Label htmlFor="desired_outcome" className="text-gray-300">
-              What is the desired outcome in your mind for our call? *
+              Why do you feel like you're wanting to book this 30-minute call? *
             </Label>
             <Textarea
               id="desired_outcome"
@@ -373,7 +381,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
             <Button
               variant="outline"
               onClick={handleBack}
-              className="flex-1"
+              className="flex-1 border-slate-600 text-white hover:bg-slate-700 hover:text-white"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
