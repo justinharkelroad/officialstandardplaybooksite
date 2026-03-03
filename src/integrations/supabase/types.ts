@@ -26,6 +26,7 @@ export type Database = {
           id: string
           primary_carrier: string | null
           session_id: string
+          source: string | null
           updated_at: string
           whats_not_working: string | null
           whats_working: string | null
@@ -41,6 +42,7 @@ export type Database = {
           id?: string
           primary_carrier?: string | null
           session_id: string
+          source?: string | null
           updated_at?: string
           whats_not_working?: string | null
           whats_working?: string | null
@@ -56,6 +58,7 @@ export type Database = {
           id?: string
           primary_carrier?: string | null
           session_id?: string
+          source?: string | null
           updated_at?: string
           whats_not_working?: string | null
           whats_working?: string | null

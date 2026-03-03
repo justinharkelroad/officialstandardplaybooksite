@@ -10,6 +10,8 @@ import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 
 interface BookingOnboardingFormProps {
   onComplete: () => void;
+  source?: string;
+  onCompleteRedirectUrl?: string;
 }
 
 interface FormData {
@@ -23,26 +25,27 @@ interface FormData {
   committed: boolean | null;
 }
 
-const SESSION_KEY = 'booking-session-id';
+const SESSION_KEY_PREFIX = 'booking-session-id';
 
 const generateSessionId = () => {
   return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 };
 
-const getOrCreateSessionId = () => {
-  let sessionId = localStorage.getItem(SESSION_KEY);
+const getOrCreateSessionId = (source: string) => {
+  const key = `${SESSION_KEY_PREFIX}-${source}`;
+  let sessionId = localStorage.getItem(key);
   if (!sessionId) {
     sessionId = generateSessionId();
-    localStorage.setItem(SESSION_KEY, sessionId);
+    localStorage.setItem(key, sessionId);
   }
   return sessionId;
 };
 
-const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
+const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRedirectUrl }: BookingOnboardingFormProps) => {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [sessionId] = useState(getOrCreateSessionId);
+  const [sessionId] = useState(() => getOrCreateSessionId(source));
   const [formData, setFormData] = useState<FormData>({
     full_name: '',
     email: '',
@@ -99,19 +102,19 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
         .maybeSingle();
 
       if (existing) {
-        // Update existing row
         await supabase
           .from('booking_leads')
           .update({
             ...data,
+            source,
           })
           .eq('session_id', sessionId);
       } else {
-        // Insert new row
         await supabase
           .from('booking_leads')
           .insert({
             session_id: sessionId,
+            source,
             ...data,
           });
       }
@@ -120,7 +123,7 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
     } finally {
       setIsSaving(false);
     }
-  }, [sessionId]);
+  }, [sessionId, source]);
 
   // Debounce timer
   useEffect(() => {
@@ -186,7 +189,7 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
     try {
       await supabase
         .from('booking_leads')
-        .update({ completed: true })
+        .update({ completed: true, source })
         .eq('session_id', sessionId);
 
       // Send email notification (fire and forget)
@@ -202,7 +205,11 @@ const BookingOnboardingForm = ({ onComplete }: BookingOnboardingFormProps) => {
         },
       }).catch(err => console.error('Email notification error:', err));
 
-      onComplete();
+      if (onCompleteRedirectUrl) {
+        window.location.href = onCompleteRedirectUrl;
+      } else {
+        onComplete();
+      }
     } catch (error) {
       console.error('Error completing form:', error);
     }
