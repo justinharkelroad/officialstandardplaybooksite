@@ -97,7 +97,7 @@ const ScrollytellingHero = () => {
 
   return (
     <section ref={containerRef} className="relative" style={{ height: '600vh' }}>
-      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
+      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', pointerEvents: 'none' }}>
         {/* Video background */}
         <motion.div style={{ opacity: videoOpacity }} className="absolute inset-0" aria-hidden="true">
           <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" src="https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/8%20week%20background.mp4" />
