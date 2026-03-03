@@ -241,7 +241,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
         {step === 1 && source === 'standard-fit' ? (
           <div className="flex flex-col items-center gap-1 pt-2">
             <img src={standardLogo} alt="Standard" className="h-10 object-contain" />
-            <span className="font-oswald text-3xl font-bold tracking-tight text-white uppercase">FIT</span>
+            <span className="font-oswald text-3xl font-bold tracking-tight text-white uppercase">BACKGROUND INFO FOR CALL</span>
           </div>
         ) : (
           <h2 className="text-xl font-semibold text-white">
