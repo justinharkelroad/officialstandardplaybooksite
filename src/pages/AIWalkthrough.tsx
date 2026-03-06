@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 import { Download, CheckCircle } from 'lucide-react';
 import standardLogo from '@/assets/standard-word-logo.png';
 
-const PDF_DOWNLOAD_URL = 'https://drive.google.com/uc?export=download&id=189jb2-R6jfqSHJBpRQHrnvaI3an3l39m';
+const PDF_DOWNLOAD_URL = '/AI_Brain_Walkthrough.pdf';
 
 const AIWalkthrough = () => {
   const [open, setOpen] = useState(true);
