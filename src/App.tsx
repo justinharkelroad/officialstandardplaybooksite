@@ -28,6 +28,7 @@ import ProducerChallengeLanding from "./pages/ProducerChallengeLanding";
 import Presentation from "./pages/Presentation";
 import NewLanding from "./pages/NewLanding";
 import StandardFit from "./pages/StandardFit";
+import AIWalkthrough from "./pages/AIWalkthrough";
 import Particles from "./components/Particles";
 import ScrollToTop from "./components/ScrollToTop";
 import SEOHead from "./components/SEOHead";
@@ -69,6 +70,7 @@ const App = () => (
           <Route path="/presentation" element={<Presentation />} />
           <Route path="/new" element={<NewLanding />} />
           <Route path="/fit" element={<StandardFit />} />
+          <Route path="/ai-walk-through" element={<AIWalkthrough />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
