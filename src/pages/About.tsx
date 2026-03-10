@@ -1,14 +1,16 @@
 
+import { Link } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Target, Users, Award, TrendingUp } from 'lucide-react';
+import ContentMeta from '@/components/ContentMeta';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Target, Users, Award, TrendingUp, Building2 } from 'lucide-react';
 
 const About = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
         <div className="absolute inset-0 opacity-20">
@@ -22,11 +24,57 @@ const About = () => {
             <br />
             <span className="text-gradient">The Standard</span>
           </h1>
-          
+
           <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-            We're not just another coaching company. We're the catalyst for elite entrepreneurs 
+            We're not just another coaching company. We're the catalyst for elite entrepreneurs
             who refuse to settle for ordinary results.
           </p>
+        </div>
+      </section>
+
+      {/* Founder Section */}
+      <section className="py-20 relative">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-6">
+                Meet the Founder
+              </h2>
+            </div>
+
+            <div className="bg-dark-card border border-primary/20 rounded-lg p-8 md:p-12">
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
+                <div className="w-32 h-32 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                  {/* TODO: Replace with actual headshot */}
+                  <span className="text-white font-bold text-4xl">J</span>
+                </div>
+                <div>
+                  {/* TODO: Update with Justin's full name when provided */}
+                  <h3 className="text-white font-rajdhani text-2xl uppercase tracking-wide mb-1">Justin</h3>
+                  <p className="text-primary font-semibold mb-4">Founder & Head Coach</p>
+                  <div className="space-y-4 text-gray-300 leading-relaxed">
+                    <p>
+                      Justin founded The Standard Playbook with a clear mission: to give insurance agency
+                      owners and producers the coaching, systems, and accountability they need to build
+                      high-performing agencies — not just survive, but lead.
+                    </p>
+                    <p>
+                      With deep experience in the insurance industry, Justin works directly with
+                      agency owners through 1:1 coaching (The Directive), group masterminds
+                      (The Boardroom), and technology-powered training platforms. His hands-on
+                      approach combines strategic business coaching with AI and technology
+                      implementation — including custom AI agent buildouts and call scoring systems.
+                    </p>
+                    <p>
+                      Based in Fort Wayne, Indiana, Justin and the Standard Playbook team serve
+                      insurance agencies nationwide, helping owners and their teams build systematic
+                      approaches to sales, leadership, and growth.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -38,14 +86,15 @@ const About = () => {
               Our Mission
             </h2>
             <p className="text-xl text-gray-300 leading-relaxed mb-8">
-              To elevate the standard of entrepreneurship by providing world-class coaching, 
-              proven systems, and an elite community for ambitious business leaders who are 
+              To elevate the standard of entrepreneurship by providing world-class coaching,
+              proven systems, and an elite community for ambitious business leaders who are
               committed to excellence.
             </p>
             <p className="text-lg text-gray-400">
-              We believe that ordinary advice produces ordinary results. That's why we've built 
-              The Standard Playbook—a comprehensive system designed for extraordinary entrepreneurs 
-              who demand extraordinary outcomes.
+              We believe that ordinary advice produces ordinary results. That's why we've built
+              The Standard Playbook — a comprehensive system designed for extraordinary entrepreneurs
+              who demand extraordinary outcomes. Our coaching integrates the latest in AI and technology
+              to give agencies a measurable competitive advantage.
             </p>
           </div>
         </div>
@@ -135,34 +184,46 @@ const About = () => {
             <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-8 text-center">
               Our Story
             </h2>
-            
+
             <div className="space-y-8 text-lg text-gray-300 leading-relaxed">
               <p>
-                The Standard Playbook was born from a simple observation: most business coaching 
-                focuses on tactics without addressing the foundational elements that truly drive success. 
-                We saw entrepreneurs struggling not because they lacked knowledge, but because they 
+                The Standard Playbook was born from a simple observation: most business coaching
+                focuses on tactics without addressing the foundational elements that truly drive success.
+                We saw entrepreneurs struggling not because they lacked knowledge, but because they
                 lacked the right framework, community, and accountability to execute consistently.
               </p>
-              
+
               <p>
-                Our founders spent years in the trenches—building, scaling, and selling multiple 
-                businesses. They experienced firsthand the isolation, challenges, and breakthrough 
-                moments that define the entrepreneurial journey. This real-world experience became 
-                the foundation for a different kind of coaching company.
+                Justin spent years in the trenches — building, coaching, and scaling insurance agencies.
+                He experienced firsthand the isolation, challenges, and breakthrough moments that define
+                the entrepreneurial journey. This real-world experience became the foundation for a
+                different kind of coaching company — one built specifically for the insurance industry.
               </p>
-              
+
               <p>
-                We don't just teach theory; we share battle-tested strategies that have been proven 
-                in the marketplace. Our approach combines high-level strategic thinking with 
-                practical implementation support, all delivered within a community of peers who 
+                We don't just teach theory; we share battle-tested strategies that have been proven
+                in the marketplace. Our approach combines high-level strategic thinking with
+                practical implementation support — including AI-powered tools like{' '}
+                <Link to="/callscoring" className="text-primary hover:text-primary/80 underline">
+                  call scoring
+                </Link>{' '}
+                and custom agent buildouts — all delivered within a community of peers who
                 share your ambition and commitment to excellence.
               </p>
-              
+
               <p>
-                Today, The Standard Playbook serves hundreds of entrepreneurs across multiple 
-                industries and continents. Our members have collectively generated over $500 million 
-                in additional revenue since implementing our systems. But more importantly, they've 
-                raised their personal and professional standards in ways that extend far beyond business.
+                Today, The Standard Playbook serves hundreds of entrepreneurs across multiple
+                industries. Our members have collectively generated over $500 million
+                in additional revenue since implementing our systems. The{' '}
+                <a
+                  href="https://www.independentagent.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:text-primary/80 underline"
+                >
+                  independent insurance agency
+                </a>{' '}
+                model is built for growth — and we help owners realize that potential.
               </p>
             </div>
           </div>
@@ -214,63 +275,47 @@ const About = () => {
         </div>
       </section>
 
-      {/* Team Section */}
+      {/* Brand Clarification Section */}
       <section className="py-20 relative">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-6">
-              Leadership Team
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Meet the experienced entrepreneurs and coaches behind The Standard Playbook.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <Card className="bg-dark-card border-primary/20 card-hover text-center">
-              <CardContent className="pt-8">
-                <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-bold text-2xl">JD</span>
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-dark-card border border-primary/20 rounded-lg p-8 md:p-12">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-12 h-12 bg-primary/20 rounded-square flex items-center justify-center flex-shrink-0">
+                  <Building2 className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-white font-rajdhani text-xl uppercase tracking-wide mb-2">John Davis</h3>
-                <p className="text-primary font-semibold mb-3">Founder & CEO</p>
-                <p className="text-gray-300 text-sm">
-                  Serial entrepreneur with 3 exits totaling $150M. Former Fortune 500 executive 
-                  turned business coach and strategic advisor.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-dark-card border-primary/20 card-hover text-center">
-              <CardContent className="pt-8">
-                <div className="w-24 h-24 bg-primary-accent rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-bold text-2xl">SM</span>
+                <div>
+                  <h2 className="font-rajdhani font-bold text-2xl md:text-3xl uppercase tracking-wide text-white mb-2">
+                    Our Brands
+                  </h2>
+                  <p className="text-gray-400">Standard Playbook INC &amp; Agency Brain</p>
                 </div>
-                <h3 className="text-white font-rajdhani text-xl uppercase tracking-wide mb-2">Sarah Martinez</h3>
-                <p className="text-primary-accent font-semibold mb-3">Head of Strategy</p>
-                <p className="text-gray-300 text-sm">
-                  McKinsey alum and growth strategist who's helped 200+ companies scale from 
-                  startup to market leaders.
+              </div>
+              <div className="space-y-4 text-gray-300 leading-relaxed">
+                <p>
+                  The Standard Playbook operates under <strong className="text-white">Standard Playbook INC</strong>,
+                  which also does business as <strong className="text-white">Agency Brain</strong>. Both brands are
+                  part of the same company and serve the same mission.
                 </p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-dark-card border-primary/20 card-hover text-center">
-              <CardContent className="pt-8">
-                <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-bold text-2xl">MK</span>
-                </div>
-                <h3 className="text-white font-rajdhani text-xl uppercase tracking-wide mb-2">Michael Kim</h3>
-                <p className="text-primary font-semibold mb-3">Lead Coach</p>
-                <p className="text-gray-300 text-sm">
-                  Executive coach and performance specialist with 15+ years helping 
-                  C-suite leaders optimize their personal and professional effectiveness.
+                <p>
+                  <strong className="text-white">The Standard Playbook</strong> is our coaching and training brand —
+                  encompassing all our coaching programs (Boardroom, Directive, Partnership),
+                  challenges (Producer Power-Up, Owner Challenge), and the Sales Experience training.
                 </p>
-              </CardContent>
-            </Card>
+                <p>
+                  <strong className="text-white">Agency Brain</strong> is our technology platform brand —
+                  powering the training app, AI call scoring, and digital tools that support our coaching programs.
+                </p>
+                <p className="text-gray-400 text-sm">
+                  Both brands are fully owned and operated by Standard Playbook INC, based in Fort Wayne, Indiana.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
+      <ContentMeta lastUpdated="March 2026" />
 
       <Footer />
     </div>

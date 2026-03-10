@@ -5,6 +5,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import BookingModal from '@/components/BookingModal';
 import StandardFitModal from '@/components/StandardFitModal';
+import ContentMeta from '@/components/ContentMeta';
 import standardLogo from '@/assets/standard-word-logo.png';
 import agencyBrainLogo from '@/assets/agency-brain-logo.png';
 
@@ -458,6 +459,8 @@ const SalesExperience = () => (
       <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-32 mb-4 opacity-50" />
       <p className="text-gray-600 text-sm">© {new Date().getFullYear()} Standard Playbook. All rights reserved.</p>
     </footer>
+
+    <ContentMeta lastUpdated="March 2026" />
 
     {/* Mobile sticky CTA */}
     <MobileStickyBookCTA />

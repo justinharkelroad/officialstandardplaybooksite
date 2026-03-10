@@ -1,4 +1,6 @@
 
+import { structuredDataByRoute } from './structuredData';
+
 export interface SEOConfig {
   title: string;
   description: string;
@@ -6,128 +8,145 @@ export interface SEOConfig {
   ogImage?: string;
   canonical?: string;
   type?: 'website' | 'article';
-  structuredData?: any;
+  noindex?: boolean;
+  structuredData?: object[];
 }
+
+const OG_IMAGE = 'https://standardplaybook.com/og-image.png';
 
 export const seoConfig: Record<string, SEOConfig> = {
   '/': {
-    title: 'The Standard Playbook - Raise Your Standard | High-Performance Coaching for Elite Entrepreneurs',
-    description: 'Transform your business with The Standard Playbook. High-performance coaching, masterminds, and proven systems for elite entrepreneurs ready to break through mediocrity.',
-    keywords: ['high-performance coaching', 'elite entrepreneurs', 'business coaching', 'entrepreneurship', 'standard playbook', 'business transformation'],
-    ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
+    title: 'The Standard Playbook — High-Performance Coaching for Elite Entrepreneurs',
+    description: 'High-performance coaching for insurance agency owners and elite entrepreneurs. Masterminds, 1:1 coaching, producer training, and AI-powered sales tools. Fort Wayne, IN.',
+    keywords: ['insurance agency coaching', 'business coaching', 'elite entrepreneurs', 'agency mastermind', 'sales training', 'producer development', 'standard playbook', 'Fort Wayne coaching'],
+    ogImage: OG_IMAGE,
     type: 'website',
-    structuredData: {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "The Standard Playbook",
-      "description": "High-performance coaching for elite entrepreneurs",
-      "url": "https://standardplaybook.com",
-      "logo": "https://standardplaybook.com/lovable-uploads/9947cba1-df06-4c18-b17c-819bede8d4c0.png",
-      "founder": {
-        "@type": "Person",
-        "name": "The Standard Playbook Team"
-      },
-      "sameAs": [
-        "@standardplaybook"
-      ]
-    }
+    structuredData: structuredDataByRoute['/'],
   },
   '/boardroom': {
-    title: 'The Boardroom - Elite Agency Owner Mastermind | The Standard Playbook',
-    description: 'Join The Boardroom: An exclusive mastermind for agency owners ready to scale. Monthly calls, accountability, and proven systems from $1M+ agencies.',
-    keywords: ['agency mastermind', 'business coaching group', 'agency owners', 'scaling agencies', 'business mastermind'],
-    ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
-    type: 'article'
-  },
-  '/app': {
-    title: 'App Access - Business Coaching Tools & Resources | The Standard Playbook',
-    description: 'Access exclusive business coaching tools, resources, and training materials. Transform your entrepreneurial journey with The Standard Playbook app.',
-    keywords: ['business coaching app', 'entrepreneurship tools', 'business resources', 'coaching platform'],
-    ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
-    type: 'article'
+    title: 'The Boardroom — Elite Mastermind for Insurance Agency Owners | The Standard Playbook',
+    description: 'Join The Boardroom: an exclusive mastermind for insurance agency owners. $299/month for peer accountability, strategy sessions, and proven growth systems from $1M+ agency operators.',
+    keywords: ['agency mastermind', 'insurance agency owners', 'business coaching group', 'scaling agencies', 'agency growth', 'mastermind group'],
+    ogImage: OG_IMAGE,
+    type: 'article',
+    structuredData: structuredDataByRoute['/boardroom'],
   },
   '/directive': {
-    title: 'Directive Program - Strategic Business Guidance | The Standard Playbook',
-    description: 'Get clear direction for your business with our Directive program. Strategic guidance and actionable plans for ambitious entrepreneurs.',
-    keywords: ['business strategy', 'strategic guidance', 'business direction', 'entrepreneur coaching'],
-    ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
-    type: 'article'
+    title: 'The Directive — Intensive 1:1 Implementation Coaching | The Standard Playbook',
+    description: 'Get intensive 1:1 coaching with direct access to Justin. Monthly private sessions, weekly check-ins, 100 AI-graded calls/month, and custom tech/AI strategy buildouts for your agency.',
+    keywords: ['1:1 business coaching', 'intensive coaching', 'implementation coaching', 'agency consulting', 'AI call scoring', 'sales coaching'],
+    ogImage: OG_IMAGE,
+    type: 'article',
+    structuredData: structuredDataByRoute['/directive'],
   },
   '/partnership': {
-    title: 'Partnership Opportunities - Collaborate with The Standard Playbook',
-    description: 'Explore partnership opportunities with The Standard Playbook. Join our network of high-performance coaches and business leaders.',
-    keywords: ['business partnership', 'coaching partnership', 'collaboration', 'business network'],
-    ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
-    type: 'article'
+    title: 'Partnership Program — White-Glove Service for Elite Entrepreneurs | The Standard Playbook',
+    description: 'The ultimate white-glove partnership for elite entrepreneurs generating $1M+. Direct phone access, revenue-sharing, joint ventures, and dedicated account management. Limited to 12 clients.',
+    keywords: ['business partnership', 'executive coaching', 'white-glove service', 'revenue sharing', 'elite coaching'],
+    ogImage: OG_IMAGE,
+    type: 'article',
+    structuredData: structuredDataByRoute['/partnership'],
   },
   '/sales-experience': {
-    title: '8-Week Sales Management Training - Master Revenue Generation | The Standard Playbook',
-    description: 'Master sales management with our 8-week intensive training. Proven systems to optimize revenue, build sales teams, and scale your business.',
-    keywords: ['sales training', 'revenue optimization', 'sales management', 'sales systems', 'revenue growth'],
-    ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
-    type: 'article'
+    title: '8-Week Sales Management Training — Master Revenue Generation | The Standard Playbook',
+    description: 'Transform your agency sales management in 8 weeks. Dashboard analytics, training modules, sales process frameworks, accountability metrics, and consequence ladder systems.',
+    keywords: ['sales management training', 'insurance sales training', 'revenue optimization', 'sales systems', 'sales team development', 'sales accountability'],
+    ogImage: OG_IMAGE,
+    type: 'article',
+    structuredData: structuredDataByRoute['/sales-experience'],
   },
   '/producer-power-up': {
-    title: 'Producer Power Up - Sales Team Development | The Standard Playbook',
-    description: 'Power up your sales producers with proven training systems. Develop high-performing sales teams that consistently hit targets.',
-    keywords: ['sales team development', 'producer training', 'sales performance', 'team building'],
-    ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
-    type: 'article'
+    title: 'Producer Power-Up — 6-Week Sales Transformation | The Standard Playbook',
+    description: 'Transform your insurance producer from reactive chaos to systematic execution in 42 days. Daily modules, Core 4 tracking, weekly Discovery Stacks, and daily owner reports. $299/producer.',
+    keywords: ['producer training', 'insurance producer development', 'sales transformation', 'Core 4 system', 'producer challenge', 'sales team training'],
+    ogImage: OG_IMAGE,
+    type: 'article',
+    structuredData: structuredDataByRoute['/producer-power-up'],
   },
   '/owner-challenge': {
-    title: 'Owner Challenge - 30-Day Business Transformation | The Standard Playbook',
-    description: 'Take the 30-day Owner Challenge. Transform your business mindset and operations with daily challenges designed for ambitious entrepreneurs.',
-    keywords: ['business owner challenge', 'growth program', '30-day challenge', 'business transformation'],
-    ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
-    type: 'article'
+    title: 'Owner Challenge — 6-Week Core 4 & Leadership Transformation | The Standard Playbook',
+    description: '6-week identity-driven leadership challenge for insurance agency owners. Core 4 habit system, micro-lessons, executive templates, and weekly reinforcement. $299.',
+    keywords: ['agency owner challenge', 'leadership development', 'Core 4 system', 'identity transformation', 'agency leadership', 'owner coaching'],
+    ogImage: OG_IMAGE,
+    type: 'article',
+    structuredData: structuredDataByRoute['/owner-challenge'],
+  },
+  '/callscoring': {
+    title: 'Standard Call Scoring — AI-Powered Call Evaluation for Sales Teams | The Standard Playbook',
+    description: 'AI-powered call scoring that transforms sales coaching in minutes. Instant insights, consistent feedback, and accelerated team performance for insurance agencies. $299-499/month.',
+    keywords: ['call scoring', 'AI call analysis', 'sales coaching', 'call evaluation', 'sales training', 'call grading', 'insurance call scoring'],
+    ogImage: OG_IMAGE,
+    type: 'article',
+    structuredData: structuredDataByRoute['/callscoring'],
+  },
+  '/app': {
+    title: 'The Standard Playbook App — Sales Training & Accountability Platform',
+    description: 'Access The Standard Playbook training platform: The Armory (30 modules), Core 4 Tracker, 19 Stacking frameworks, call scoring, role-play practice, and performance analytics.',
+    keywords: ['coaching app', 'sales training app', 'accountability platform', 'Core 4 tracker', 'business coaching tools'],
+    ogImage: OG_IMAGE,
+    type: 'article',
+    structuredData: structuredDataByRoute['/app'],
+  },
+  '/appinfo': {
+    title: 'App Access — Standard Playbook Training Platform',
+    description: 'Access the Standard Playbook training and coaching app. Sales training modules, habit tracking, and performance tools for insurance producers and agency owners.',
+    keywords: ['app access', 'coaching platform', 'training modules'],
+    ogImage: OG_IMAGE,
+    type: 'article',
   },
   '/about': {
-    title: 'About The Standard Playbook - Our Mission & Team',
-    description: 'Learn about The Standard Playbook mission to help entrepreneurs raise their standard. Meet our team of high-performance coaches and business experts.',
-    keywords: ['about us', 'company mission', 'coaching team', 'business experts'],
-    ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
-    type: 'article'
+    title: 'About The Standard Playbook — Coaching for Insurance Agency Growth | Fort Wayne, IN',
+    description: 'Learn about The Standard Playbook: our mission to elevate entrepreneurship through world-class coaching, proven systems, and elite community. 500+ entrepreneurs coached, $500M+ revenue generated.',
+    keywords: ['about standard playbook', 'coaching philosophy', 'insurance coaching team', 'Fort Wayne business coaching', 'agency growth coaching'],
+    ogImage: OG_IMAGE,
+    type: 'article',
+    structuredData: structuredDataByRoute['/about'],
   },
   '/contact': {
-    title: 'Contact The Standard Playbook - Get Started Today',
-    description: 'Ready to raise your standard? Contact The Standard Playbook to discuss how our coaching programs can transform your business.',
-    keywords: ['contact us', 'business coaching contact', 'get started', 'coaching consultation'],
-    ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
-    type: 'article'
+    title: 'Contact The Standard Playbook — Fort Wayne, IN | Get Started Today',
+    description: 'Contact The Standard Playbook. Phone: (260) 515-1349, Email: info@standardplaybook.com. Fort Wayne, IN — serving insurance agencies nationwide. Response within 24 hours.',
+    keywords: ['contact standard playbook', 'business coaching Fort Wayne', 'coaching consultation', 'insurance coaching contact'],
+    ogImage: OG_IMAGE,
+    type: 'article',
+    structuredData: structuredDataByRoute['/contact'],
+  },
+  '/decision': {
+    title: 'Find Your Program — Personalized Coaching Recommendation | The Standard Playbook',
+    description: 'Tell us your situation and goals. Get a personalized recommendation for the right Standard Playbook coaching program, from masterminds to 1:1 coaching to producer training.',
+    keywords: ['coaching assessment', 'find coaching program', 'personalized recommendation', 'insurance coaching quiz'],
+    ogImage: OG_IMAGE,
+    type: 'article',
+    structuredData: structuredDataByRoute['/decision'],
+  },
+  '/privacy': {
+    title: 'Privacy Policy | The Standard Playbook',
+    description: 'Privacy policy for The Standard Playbook (Standard Playbook INC DBA Agency Brain). Learn how we protect and use your personal information.',
+    keywords: ['privacy policy', 'data protection', 'user privacy'],
+    ogImage: OG_IMAGE,
+    type: 'article',
+    structuredData: structuredDataByRoute['/privacy'],
+  },
+  '/terms': {
+    title: 'Terms of Service | The Standard Playbook',
+    description: 'Terms of service for The Standard Playbook coaching services and platform. Review our service agreement, policies, and usage terms.',
+    keywords: ['terms of service', 'legal terms', 'service agreement'],
+    ogImage: OG_IMAGE,
+    type: 'article',
+    structuredData: structuredDataByRoute['/terms'],
   },
   '/thechallenge': {
-    title: 'The Challenge - Private Landing Page',
+    title: 'The Challenge — Private Landing Page',
     description: 'Private challenge page',
     keywords: [],
     type: 'website' as const,
+    noindex: true,
     canonical: 'https://standardplaybook.com/thechallenge',
   },
-  '/callscoring': {
-    title: 'Standard Call Scoring - AI-Powered Call Evaluation | The Standard Playbook',
-    description: 'Transform your sales coaching in minutes. AI-powered call scoring that gives instant insights, consistent feedback, and accelerates team performance.',
-    keywords: ['call scoring', 'sales coaching', 'AI call analysis', 'sales training', 'call evaluation', 'team coaching', 'call grading'],
-    ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
-    type: 'article'
+  '/formulaai': {
+    title: 'Formula AI — Insurance Agency AI Tools | The Standard Playbook',
+    description: 'AI-powered tools and prompts for insurance agencies. Leverage artificial intelligence to streamline operations and boost productivity.',
+    keywords: ['insurance AI', 'agency AI tools', 'insurance automation'],
+    ogImage: OG_IMAGE,
+    type: 'article',
   },
-  '/privacy': {
-    title: 'Privacy Policy - The Standard Playbook',
-    description: 'Read our privacy policy to understand how The Standard Playbook protects and uses your personal information.',
-    keywords: ['privacy policy', 'data protection', 'user privacy'],
-    ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
-    type: 'article'
-  },
-  '/terms': {
-    title: 'Terms of Service - The Standard Playbook',
-    description: 'Review our terms of service for using The Standard Playbook coaching services and platform.',
-    keywords: ['terms of service', 'legal terms', 'service agreement'],
-    ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
-    type: 'article'
-  },
-  '/decision': {
-    title: 'The Decision | Find Your Path | The Standard Playbook',
-    description: 'Tell us your situation and goals. Get personalized recommendations for the right coaching and tools.',
-    keywords: ['insurance coaching', 'agency consulting', 'find my program', 'personalized coaching', 'business assessment'],
-    ogImage: 'https://lovable.dev/opengraph-image-p98pqg.png',
-    type: 'article'
-  }
 };

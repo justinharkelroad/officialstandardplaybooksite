@@ -1,6 +1,7 @@
 
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import ContentMeta from '@/components/ContentMeta';
 import VideoModal from '@/components/VideoModal';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -301,6 +302,8 @@ const Partnership = () => {
           </div>
         </div>
       </section>
+
+      <ContentMeta lastUpdated="March 2026" />
 
       {/* Sticky CTA for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 bg-dark-card border-t border-primary/20 p-4 md:hidden z-40">

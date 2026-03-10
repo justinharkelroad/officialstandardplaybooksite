@@ -1,6 +1,7 @@
 
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import ContentMeta from '@/components/ContentMeta';
 import { Button } from '@/components/ui/button';
 import DirectiveHero from '@/components/sections/DirectiveHero';
 import DirectiveProblem from '@/components/sections/DirectiveProblem';
@@ -27,6 +28,8 @@ const Directive = () => {
       </div>
       
       <DirectiveBusiness />
+
+      <ContentMeta lastUpdated="March 2026" />
 
       {/* Sticky CTA for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 bg-dark-card border-t border-primary-accent/20 p-4 md:hidden z-40">

@@ -1,5 +1,6 @@
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import ContentMeta from '@/components/ContentMeta';
 import ChallengeHero from '@/components/sections/ChallengeHero';
 import ProducerCorePromise from '@/components/sections/ProducerCorePromise';
 import ProducerSystemNotCourse from '@/components/sections/ProducerSystemNotCourse';
@@ -65,6 +66,7 @@ const ProducerPowerUp = () => {
       <ProducerLogistics />
       <ProducerFinalCTA />
       <ChallengeFAQ faqs={faqs} />
+      <ContentMeta lastUpdated="March 2026" />
       <ChallengeNavigation
         otherChallenge={{
           title: "Agency Owner Core 4 & Leadership Challenge",

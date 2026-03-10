@@ -1,6 +1,7 @@
 
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import ContentMeta from '@/components/ContentMeta';
 import ChallengeHero from '@/components/sections/ChallengeHero';
 import ChallengePainSolution from '@/components/sections/ChallengePainSolution';
 import ChallengeFeatures from '@/components/sections/ChallengeFeatures';
@@ -210,6 +211,7 @@ const OwnerChallenge = () => {
         steps={timelineSteps}
       />
       <ChallengeFAQ faqs={faqs} />
+      <ContentMeta lastUpdated="March 2026" />
       <Footer />
     </div>
   );

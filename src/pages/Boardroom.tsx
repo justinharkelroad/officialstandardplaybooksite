@@ -1,6 +1,7 @@
 
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import ContentMeta from '@/components/ContentMeta';
 import { Button } from '@/components/ui/button';
 import BoardroomHero from '@/components/sections/BoardroomHero';
 import BoardroomFeatures from '@/components/sections/BoardroomFeatures';
@@ -24,6 +25,8 @@ const Boardroom = () => {
       <BoardroomPricing />
       <BoardroomBusiness />
       <BoardroomFAQ />
+
+      <ContentMeta lastUpdated="March 2026" />
 
       {/* Sticky CTA for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 bg-dark-card border-t border-primary/20 p-4 md:hidden z-40">

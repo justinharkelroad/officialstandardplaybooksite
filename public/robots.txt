@@ -1,20 +1,44 @@
-
 User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /private/
+Disallow: /thechallenge
+Disallow: /welcometocoaching
+Disallow: /welcomeboardroom
+Disallow: /PPUC
+Disallow: /legacy
+Disallow: /presentation
+Disallow: /thank-you
+Disallow: /challenge-thank-you
 
-# Crawl-delay for respectful crawling
-Crawl-delay: 1
-
-# Sitemap location
-Sitemap: https://standardplaybook.com/sitemap.xml
-
-# Additional directives for common bots
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
 Allow: /
 
 User-agent: facebookexternalhit
@@ -22,3 +46,5 @@ Allow: /
 
 User-agent: Twitterbot
 Allow: /
+
+Sitemap: https://standardplaybook.com/sitemap.xml

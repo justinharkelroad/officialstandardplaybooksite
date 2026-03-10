@@ -21,6 +21,8 @@ import Terms from "./pages/Terms";
 import ThankYou from "./pages/ThankYou";
 import ChallengeThankYou from "./pages/ChallengeThankYou";
 import Links from "./pages/Links";
+import About from "./pages/About";
+import Partnership from "./pages/Partnership";
 import NotFound from "./pages/NotFound";
 import WelcomeToCoaching from "./pages/WelcomeToCoaching";
 import WelcomeBoardroom from "./pages/WelcomeBoardroom";
@@ -58,6 +60,8 @@ const App = () => (
           <Route path="/formulaai" element={<FormulaAI />} />
           <Route path="/callscoring" element={<CallScoring />} />
           <Route path="/decision" element={<Decision />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/partnership" element={<Partnership />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
