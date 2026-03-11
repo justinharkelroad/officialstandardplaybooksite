@@ -4,7 +4,11 @@ https://www.standardplaybook.com/* https://standardplaybook.com/:splat 301
 # URL redirects
 /thechallenge /the-challenge 301
 
-# SPA fallback — serves index.html for routes without a static file.
-# On Netlify/Cloudflare Pages, existing static files (e.g., /boardroom/index.html
-# from prerendering) take precedence over this rule automatically.
+# Static files — must come before the SPA catch-all
+/sitemap.xml   /sitemap.xml   200
+/robots.txt    /robots.txt    200
+/llms.txt      /llms.txt      200
+/llms-full.txt /llms-full.txt 200
+
+# SPA fallback — serves index.html for all other routes
 /*    /index.html   200
