@@ -132,7 +132,7 @@ const ScrollytellingHero = () => {
               Book a Discovery Call
             </button>
             <StandardFitModal open={fitModalOpen} onOpenChange={setFitModalOpen} />
-            <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-64 md:w-96 mb-12 drop-shadow-2xl" />
+            <img src={standardLogo} alt="The Standard Playbook - Insurance Agency Coaching" className="mx-auto w-64 md:w-96 mb-12 drop-shadow-2xl" />
             <h1 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
               You built the agency.<br />
               <span className="text-gray-300">But somewhere along the way,</span><br />
@@ -185,7 +185,7 @@ const ScrollytellingHero = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500 to-transparent blur-md" />
             </div>
             <p className="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">Introducing</p>
-            <img src={agencyBrainLogo} alt="Agency Brain" className="mx-auto w-[80%] md:w-[600px] lg:w-[720px] mb-6" />
+            <img src={agencyBrainLogo} alt="Agency Brain - Insurance Agency Management Platform" className="mx-auto w-[80%] md:w-[600px] lg:w-[720px] mb-6" />
             <p className="text-gray-400 text-lg mt-4 max-w-2xl mx-auto">
               The operating system that turns chaos into clarity. Your pipeline, your team, your retention — all in one place.
             </p>
@@ -599,7 +599,7 @@ const NewLanding = () => (
 
     {/* Minimal footer */}
     <footer className="relative z-20 py-12 px-6 text-center border-t border-white/5 bg-black">
-      <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-32 mb-4 opacity-50" />
+      <img src={standardLogo} alt="The Standard Playbook - Insurance Agency Coaching" className="mx-auto w-32 mb-4 opacity-50" />
       <p className="text-gray-600 text-sm">© {new Date().getFullYear()} Standard Playbook. All rights reserved.</p>
       <div className="flex items-center justify-center gap-4 mt-4">
         <a href="/privacy" className="text-gray-600 hover:text-gray-400 transition-colors text-xs">Privacy</a>

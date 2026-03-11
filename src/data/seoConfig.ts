@@ -16,8 +16,8 @@ const OG_IMAGE = 'https://standardplaybook.com/og-image.png';
 
 export const seoConfig: Record<string, SEOConfig> = {
   '/': {
-    title: 'The Standard Playbook — High-Performance Coaching for Elite Entrepreneurs',
-    description: 'High-performance coaching for insurance agency owners and elite entrepreneurs. Masterminds, 1:1 coaching, producer training, and AI-powered sales tools. Fort Wayne, IN.',
+    title: 'Insurance Agency Coaching for Owners Who Want More | The Standard Playbook',
+    description: 'High-performance coaching for insurance agency owners. Boardroom, Directive, and Partnership programs built by a 20-year Allstate operator.',
     keywords: ['insurance agency coaching', 'business coaching', 'elite entrepreneurs', 'agency mastermind', 'sales training', 'producer development', 'standard playbook', 'Fort Wayne coaching'],
     ogImage: OG_IMAGE,
     type: 'website',
@@ -40,8 +40,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     structuredData: structuredDataByRoute['/directive'],
   },
   '/partnership': {
-    title: 'Partnership Program — White-Glove Service for Elite Entrepreneurs | The Standard Playbook',
-    description: 'The ultimate white-glove partnership for elite entrepreneurs generating $1M+. Direct phone access, revenue-sharing, joint ventures, and dedicated account management. Limited to 12 clients.',
+    title: 'Partnership Coaching for Insurance Agency Owners | Standard Playbook',
+    description: '1:1 coaching plus team training for insurance agency owners ready to scale. Limited enrollment. Built by an operator, not a consultant.',
     keywords: ['business partnership', 'executive coaching', 'white-glove service', 'revenue sharing', 'elite coaching'],
     ogImage: OG_IMAGE,
     type: 'article',
@@ -103,8 +103,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     structuredData: structuredDataByRoute['/about'],
   },
   '/contact': {
-    title: 'Contact The Standard Playbook — Fort Wayne, IN | Get Started Today',
-    description: 'Contact The Standard Playbook. Phone: (260) 515-1349, Email: info@standardplaybook.com. Fort Wayne, IN — serving insurance agencies nationwide. Response within 24 hours.',
+    title: 'Contact The Standard Playbook | Insurance Agency Coaching',
+    description: 'Book a call with The Standard Playbook. Coaching programs for insurance agency owners who are done with average.',
     keywords: ['contact standard playbook', 'business coaching Fort Wayne', 'coaching consultation', 'insurance coaching contact'],
     ogImage: OG_IMAGE,
     type: 'article',
@@ -134,13 +134,13 @@ export const seoConfig: Record<string, SEOConfig> = {
     type: 'article',
     structuredData: structuredDataByRoute['/terms'],
   },
-  '/thechallenge': {
-    title: 'The Challenge — Private Landing Page',
-    description: 'Private challenge page',
-    keywords: [],
-    type: 'website' as const,
-    noindex: true,
-    canonical: 'https://standardplaybook.com/thechallenge',
+  '/the-challenge': {
+    title: 'The Owner Challenge | 6-Week Insurance Agency Intensive | Standard Playbook',
+    description: '6-week intensive for insurance agency owners. Daily accountability, real systems, measurable results. Limited spots.',
+    keywords: ['owner challenge', 'insurance agency intensive', '6-week challenge', 'agency accountability', 'agency coaching'],
+    ogImage: OG_IMAGE,
+    type: 'article',
+    structuredData: structuredDataByRoute['/the-challenge'],
   },
   '/formulaai': {
     title: 'Formula AI — Insurance Agency AI Tools | The Standard Playbook',
@@ -148,5 +148,13 @@ export const seoConfig: Record<string, SEOConfig> = {
     keywords: ['insurance AI', 'agency AI tools', 'insurance automation'],
     ogImage: OG_IMAGE,
     type: 'article',
+  },
+  '/blog': {
+    title: 'Blog | The Standard Playbook - Insurance Agency Insights',
+    description: 'Insights, strategies, and coaching wisdom for insurance agency owners. From The Standard Playbook team.',
+    keywords: ['insurance agency blog', 'agency coaching insights', 'insurance business tips', 'agency growth strategies'],
+    ogImage: OG_IMAGE,
+    type: 'website',
+    structuredData: structuredDataByRoute['/blog'],
   },
 };

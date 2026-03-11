@@ -27,6 +27,7 @@ const ROUTES = [
   '/producer-power-up',
   '/owner-challenge',
   '/callscoring',
+  '/the-challenge',
   // '/app' excluded — AppRedirect immediately navigates to external URL
   '/appinfo',
   '/about',
@@ -35,6 +36,8 @@ const ROUTES = [
   '/privacy',
   '/terms',
   '/formulaai',
+  '/blog',
+  '/blog/why-insurance-agency-owners-need-coaching',
 ];
 
 // MIME types for the static file server

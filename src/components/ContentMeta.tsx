@@ -15,8 +15,7 @@ const ContentMeta = ({ lastUpdated = 'March 2026', showAuthor = true }: ContentM
             <p>
               By{' '}
               <Link to="/about" className="text-primary hover:text-primary/80 transition-colors">
-                {/* TODO: Update with full name when provided */}
-                Justin, Founder &amp; Head Coach
+                Justin Harkelroad, Founder &amp; Head Coach
               </Link>{' '}
               at The Standard Playbook
             </p>

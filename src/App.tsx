@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import AppAccess from "./pages/AppAccess";
 import AppRedirect from "./pages/AppRedirect";
@@ -23,6 +23,8 @@ import ChallengeThankYou from "./pages/ChallengeThankYou";
 import Links from "./pages/Links";
 import About from "./pages/About";
 import Partnership from "./pages/Partnership";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 import WelcomeToCoaching from "./pages/WelcomeToCoaching";
 import WelcomeBoardroom from "./pages/WelcomeBoardroom";
@@ -56,7 +58,8 @@ const App = () => (
           <Route path="/sales-experience" element={<SalesExperience />} />
           <Route path="/producer-power-up" element={<ProducerPowerUp />} />
           <Route path="/owner-challenge" element={<OwnerChallenge />} />
-          <Route path="/thechallenge" element={<TheChallenge />} />
+          <Route path="/the-challenge" element={<TheChallenge />} />
+          <Route path="/thechallenge" element={<Navigate to="/the-challenge" replace />} />
           <Route path="/formulaai" element={<FormulaAI />} />
           <Route path="/callscoring" element={<CallScoring />} />
           <Route path="/decision" element={<Decision />} />
@@ -75,6 +78,8 @@ const App = () => (
           <Route path="/new" element={<NewLanding />} />
           <Route path="/fit" element={<StandardFit />} />
           <Route path="/ai-walk-through" element={<AIWalkthrough />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

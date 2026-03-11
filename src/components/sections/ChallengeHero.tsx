@@ -34,7 +34,7 @@ const ChallengeHero = ({
           <div className="mb-6 animate-fade-up">
             <img 
               src={title} 
-              alt="Challenge Title" 
+              alt="The Owner Challenge - 6-Week Insurance Agency Intensive" 
               className="mx-auto max-w-full h-auto max-h-48 object-contain"
             />
           </div>

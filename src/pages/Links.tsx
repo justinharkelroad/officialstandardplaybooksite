@@ -33,7 +33,7 @@ const Links = () => {
         <div className="flex justify-center mb-12">
           <img 
             src={profileImage} 
-            alt="Profile" 
+            alt="Justin Harkelroad - Insurance Agency Coach" 
             className="w-48 h-48 rounded-full object-cover object-center border-4 border-primary/40 shadow-xl shadow-primary/20"
           />
         </div>

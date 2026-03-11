@@ -42,7 +42,7 @@ const Navigation = () => {
           <Link to="/" className="flex items-center">
             <img 
               src="/lovable-uploads/24e794d7-4e09-4244-9d1e-df95f10e3f3f.png" 
-              alt="The Standard Logo" 
+              alt="The Standard Playbook - Insurance Agency Coaching" 
               className="h-12 w-auto object-contain"
               onError={(e) => {
                 console.log('Logo failed to load:', e);

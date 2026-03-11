@@ -127,7 +127,7 @@ const ScrollytellingHero = () => {
         {/* ── Fade 1: Hook text only (CTA is the fixed button above) ── */}
         <motion.div style={{ opacity: fade1 }} className="absolute inset-0 flex items-center justify-center">
           <div className="text-center px-6 max-w-5xl mx-auto">
-            <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-48 md:w-72 mb-10 drop-shadow-2xl" />
+            <img src={standardLogo} alt="The Standard Playbook - Insurance Agency Coaching" className="mx-auto w-48 md:w-72 mb-10 drop-shadow-2xl" />
             <h1 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] tracking-tight mb-4 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)] uppercase">
               Stop managing chaos.
             </h1>
@@ -298,7 +298,7 @@ const AgencyBrainShowcase = () => {
     <section className="relative z-20 py-24 md:py-40 bg-gradient-to-b from-[#020617] to-black overflow-hidden">
       <div className="px-6">
         <Reveal className="text-center mb-6">
-          <img src={agencyBrainLogo} alt="Agency Brain" className="mx-auto w-48 md:w-72 mb-4" />
+          <img src={agencyBrainLogo} alt="Agency Brain - Insurance Agency Management Platform" className="mx-auto w-48 md:w-72 mb-4" />
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
             These are the tools you'll use every day inside the 8-week program.
           </p>
@@ -456,7 +456,7 @@ const SalesExperience = () => (
 
     {/* Minimal footer */}
     <footer className="relative z-20 py-12 px-6 text-center border-t border-white/5 bg-[#020617]">
-      <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-32 mb-4 opacity-50" />
+      <img src={standardLogo} alt="The Standard Playbook - Insurance Agency Coaching" className="mx-auto w-32 mb-4 opacity-50" />
       <p className="text-gray-600 text-sm">© {new Date().getFullYear()} Standard Playbook. All rights reserved.</p>
     </footer>
 

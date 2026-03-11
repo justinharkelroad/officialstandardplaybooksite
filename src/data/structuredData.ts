@@ -78,6 +78,23 @@ function serviceSchema(opts: {
   return schema;
 }
 
+// --- Course Schema Helper ---
+
+function courseSchema(opts: {
+  name: string;
+  url: string;
+  description: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": opts.name,
+    "url": `${BASE_URL}${opts.url}`,
+    "description": opts.description,
+    "provider": providerOrg,
+  };
+}
+
 // --- FAQ Schema Helper ---
 
 function faqSchema(items: { question: string; answer: string }[]) {
@@ -111,6 +128,11 @@ export const structuredDataByRoute: Record<string, object[]> = {
       serviceType: "Business Coaching Mastermind",
       audience: "Insurance Agency Owners and Principal Agents",
       price: "299",
+    }),
+    courseSchema({
+      name: "The Boardroom",
+      url: "/boardroom",
+      description: "Monthly group coaching for insurance agency owners",
     }),
     breadcrumb("The Boardroom", "/boardroom"),
     faqSchema([
@@ -231,6 +253,11 @@ export const structuredDataByRoute: Record<string, object[]> = {
       audience: "Insurance Agency Owners",
       price: "299",
     }),
+    courseSchema({
+      name: "Owner Challenge",
+      url: "/owner-challenge",
+      description: "6-week leadership challenge for insurance agency owners",
+    }),
     breadcrumb("Owner Challenge", "/owner-challenge"),
     faqSchema([
       {
@@ -272,7 +299,7 @@ export const structuredDataByRoute: Record<string, object[]> = {
     {
       "@context": "https://schema.org",
       "@type": "Person",
-      "name": "Justin", // TODO: Update with full name
+      "name": "Justin Harkelroad",
       "jobTitle": "Founder & Head Coach",
       "worksFor": providerOrg,
       "knowsAbout": [
@@ -301,5 +328,26 @@ export const structuredDataByRoute: Record<string, object[]> = {
 
   '/terms': [
     breadcrumb("Terms of Service", "/terms"),
+  ],
+
+  '/the-challenge': [
+    serviceSchema({
+      name: "The Owner Challenge",
+      url: "/the-challenge",
+      description: "6-week intensive for insurance agency owners. Daily accountability, real systems, and measurable results.",
+      serviceType: "Insurance Agency Intensive Program",
+      audience: "Insurance Agency Owners",
+      price: "299",
+    }),
+    courseSchema({
+      name: "The Owner Challenge",
+      url: "/the-challenge",
+      description: "6-week intensive for insurance agency owners with daily accountability and real systems",
+    }),
+    breadcrumb("The Owner Challenge", "/the-challenge"),
+  ],
+
+  '/blog': [
+    breadcrumb("Blog", "/blog"),
   ],
 };

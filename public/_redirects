@@ -1,6 +1,9 @@
 # www to non-www redirect
 https://www.standardplaybook.com/* https://standardplaybook.com/:splat 301
 
+# URL redirects
+/thechallenge /the-challenge 301
+
 # SPA fallback — serves index.html for routes without a static file.
 # On Netlify/Cloudflare Pages, existing static files (e.g., /boardroom/index.html
 # from prerendering) take precedence over this rule automatically.

@@ -68,7 +68,7 @@ const AIWalkthrough = () => {
           {!submitted ? (
             <form onSubmit={handleSubmit} className="p-8 space-y-6">
               <div className="text-center space-y-3">
-                <img src={standardLogo} alt="Standard" className="h-8 mx-auto mb-2" />
+                <img src={standardLogo} alt="The Standard Playbook Logo" className="h-8 mx-auto mb-2" />
                 <h2 className="font-oswald font-bold text-2xl md:text-3xl uppercase tracking-tight text-white">
                   Get Your AI Brain Walkthrough
                 </h2>

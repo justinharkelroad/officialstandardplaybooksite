@@ -240,7 +240,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
         <Progress value={step * 50} className="h-2" />
         {step === 1 && source === 'standard-fit' ? (
           <div className="flex flex-col items-center gap-1 pt-2">
-            <img src={standardLogo} alt="Standard" className="h-10 object-contain" />
+            <img src={standardLogo} alt="The Standard Playbook Logo" className="h-10 object-contain" />
             <span className="font-oswald text-3xl font-bold tracking-tight text-white uppercase">BACKGROUND INFO FOR CALL</span>
           </div>
         ) : (
