@@ -36,7 +36,7 @@ const Nav = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const links = [
-    { label: 'Agency Brain', to: '/appinfo' },
+    { label: 'Agency Brain', to: '/#agency-brain' },
     { label: 'Programs', to: '/#programs' },
     { label: 'Training', to: '/sales-experience' },
     { label: 'Contact', to: '/contact' },
