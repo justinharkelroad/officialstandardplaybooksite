@@ -116,7 +116,14 @@ const Hero = () => {
   return (
     <section
       className="relative flex items-center justify-center text-center"
-      style={{ background: '#000', minHeight: '100vh', paddingTop: 48 }}
+      style={{
+        background: '#000',
+        minHeight: '100vh',
+        paddingTop: 48,
+        backgroundImage: 'linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.7)), url(/8-week-hero.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
     >
       <div className="px-6 max-w-[980px] mx-auto">
         <Reveal>
