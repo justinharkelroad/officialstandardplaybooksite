@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import BookingModal from '@/components/BookingModal';
 import StandardFitModal from '@/components/StandardFitModal';
 import ContentMeta from '@/components/ContentMeta';
+import Navigation from '@/components/Navigation';
 import standardLogo from '@/assets/standard-word-logo.png';
 import agencyBrainLogo from '@/assets/agency-brain-logo.png';
 
@@ -119,8 +120,8 @@ const Hero = () => {
       style={{
         background: '#000',
         minHeight: '100vh',
-        paddingTop: 48,
-        backgroundImage: 'linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.7)), url(/8-week-hero.jpg)',
+        paddingTop: 80,
+        backgroundImage: 'linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url(/8-week-hero.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
@@ -1093,7 +1094,7 @@ const MobileStickyBookCTA = () => {
    ══════════════════════════════════════════════════════ */
 const SalesExperience = () => (
   <div style={{ fontFamily: sf, background: '#000' }}>
-    <Nav />
+    <Navigation />
     <Hero />
     <GuaranteeBanner />
     <Problem />
