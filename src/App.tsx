@@ -50,8 +50,8 @@ const App = () => (
         <SEOHead />
         <ScrollToTop />
         <Routes>
-          <Route path="/" element={<NewLanding />} />
-          <Route path="/legacy" element={<Index />} />
+          <Route path="/" element={<AppleMockup />} />
+          <Route path="/legacy" element={<NewLanding />} />
           <Route path="/app" element={<AppRedirect />} />
           <Route path="/appinfo" element={<AppAccess />} />
           <Route path="/boardroom" element={<Boardroom />} />
@@ -79,7 +79,7 @@ const App = () => (
           <Route path="/new" element={<NewLanding />} />
           <Route path="/fit" element={<StandardFit />} />
           <Route path="/ai-walk-through" element={<AIWalkthrough />} />
-          <Route path="/apple-mockup" element={<AppleMockup />} />
+          <Route path="/apple-mockup" element={<Navigate to="/" replace />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="*" element={<NotFound />} />
