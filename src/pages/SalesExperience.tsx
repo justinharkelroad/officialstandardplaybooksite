@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import BookingModal from '@/components/BookingModal';
 import StandardFitModal from '@/components/StandardFitModal';
 import ContentMeta from '@/components/ContentMeta';
-import Navigation from '@/components/Navigation';
 import standardLogo from '@/assets/standard-word-logo.png';
 import agencyBrainLogo from '@/assets/agency-brain-logo.png';
 
@@ -37,8 +36,9 @@ const Nav = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const links = [
-    { label: 'Home', to: '/' },
+    { label: 'Agency Brain', to: '/appinfo' },
     { label: 'Programs', to: '/#programs' },
+    { label: 'Training', to: '/sales-experience' },
     { label: 'Contact', to: '/contact' },
   ];
 
@@ -53,11 +53,7 @@ const Nav = () => {
         fontFamily: sf,
       }}
     >
-      <div className="max-w-[980px] mx-auto h-full px-6 flex items-center justify-between">
-        <Link to="/" className="flex items-center">
-          <img src={standardLogo} alt="Standard Playbook" className="h-5 w-auto brightness-0 invert opacity-90" />
-        </Link>
-
+      <div className="max-w-[980px] mx-auto h-full px-6 flex items-center justify-center">
         <div className="hidden md:flex items-center gap-8">
           {links.map((link) => (
             <Link
@@ -120,7 +116,7 @@ const Hero = () => {
       style={{
         background: '#000',
         minHeight: '100vh',
-        paddingTop: 80,
+        paddingTop: 48,
         backgroundImage: 'linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url(/8-week-hero.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -1094,7 +1090,7 @@ const MobileStickyBookCTA = () => {
    ══════════════════════════════════════════════════════ */
 const SalesExperience = () => (
   <div style={{ fontFamily: sf, background: '#000' }}>
-    <Navigation />
+    <Nav />
     <Hero />
     <GuaranteeBanner />
     <Problem />
