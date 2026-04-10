@@ -78,7 +78,7 @@ const BookingModal = ({ trigger }: BookingModalProps) => {
       <DialogTrigger asChild>
         {trigger}
       </DialogTrigger>
-      <DialogContent className="max-w-4xl w-full bg-dark-card border-primary/20 max-h-[90vh] overflow-y-auto p-0">
+      <DialogContent className="max-w-4xl w-full max-h-[90vh] overflow-y-auto p-0">
         <DialogTitle className="sr-only">Book Your Consultation</DialogTitle>
         <DialogDescription className="sr-only">Schedule your consultation appointment</DialogDescription>
         

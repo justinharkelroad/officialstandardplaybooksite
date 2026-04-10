@@ -1,13 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { Progress } from '@/components/ui/progress';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
-import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 import standardLogo from '@/assets/standard-word-logo.png';
+
+const sf = '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif';
 
 interface BookingOnboardingFormProps {
   onComplete: () => void;
@@ -42,6 +37,54 @@ const getOrCreateSessionId = (source: string) => {
   return sessionId;
 };
 
+const inputStyle: React.CSSProperties = {
+  fontFamily: sf,
+  fontSize: 17,
+  fontWeight: 400,
+  lineHeight: 1.47,
+  letterSpacing: '-0.374px',
+  color: '#1d1d1f',
+  background: '#f5f5f7',
+  border: '1px solid rgba(0,0,0,0.1)',
+  borderColor: 'rgba(0,0,0,0.1)',
+  borderRadius: 8,
+  padding: '10px 14px',
+  width: '100%',
+  outline: 'none',
+  transition: 'border-color 0.2s',
+  boxSizing: 'border-box' as const,
+  WebkitAppearance: 'none' as const,
+};
+
+const labelStyle: React.CSSProperties = {
+  fontFamily: sf,
+  fontSize: 14,
+  fontWeight: 600,
+  lineHeight: 1.29,
+  letterSpacing: '-0.224px',
+  color: '#1d1d1f',
+  display: 'block',
+  marginBottom: 6,
+};
+
+const captionStyle: React.CSSProperties = {
+  fontFamily: sf,
+  fontSize: 12,
+  fontWeight: 400,
+  lineHeight: 1.33,
+  letterSpacing: '-0.12px',
+  color: 'rgba(0,0,0,0.36)',
+  marginTop: 4,
+};
+
+const handleFocus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  e.currentTarget.style.borderColor = '#0071e3';
+};
+
+const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  e.currentTarget.style.borderColor = 'rgba(0,0,0,0.08)';
+};
+
 const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRedirectUrl }: BookingOnboardingFormProps) => {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -58,7 +101,6 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
     committed: null,
   });
 
-  // Load existing session data on mount
   useEffect(() => {
     const loadExistingSession = async () => {
       setIsLoading(true);
@@ -91,11 +133,9 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
     loadExistingSession();
   }, [sessionId]);
 
-  // Debounced auto-save
   const saveToDatabase = useCallback(async (data: FormData) => {
     setIsSaving(true);
     try {
-      // Check if row exists
       const { data: existing } = await supabase
         .from('booking_leads')
         .select('id')
@@ -105,19 +145,12 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
       if (existing) {
         await supabase
           .from('booking_leads')
-          .update({
-            ...data,
-            source,
-          })
+          .update({ ...data, source })
           .eq('session_id', sessionId);
       } else {
         await supabase
           .from('booking_leads')
-          .insert({
-            session_id: sessionId,
-            source,
-            ...data,
-          });
+          .insert({ session_id: sessionId, source, ...data });
       }
     } catch (error) {
       console.error('Error saving to database:', error);
@@ -126,14 +159,12 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
     }
   }, [sessionId, source]);
 
-  // Debounce timer
   useEffect(() => {
     const timer = setTimeout(() => {
       if (formData.full_name || formData.email || formData.cell_phone) {
         saveToDatabase(formData);
       }
     }, 1000);
-
     return () => clearTimeout(timer);
   }, [formData, saveToDatabase]);
 
@@ -175,25 +206,19 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
   };
 
   const handleNext = () => {
-    if (isStep1Valid()) {
-      setStep(2);
-    }
+    if (isStep1Valid()) setStep(2);
   };
 
-  const handleBack = () => {
-    setStep(1);
-  };
+  const handleBack = () => setStep(1);
 
   const handleComplete = async () => {
     if (!isStep2Valid()) return;
-
     try {
       await supabase
         .from('booking_leads')
         .update({ completed: true, source })
         .eq('session_id', sessionId);
 
-      // Send email notification (fire and forget)
       supabase.functions.invoke('send-booking-notification', {
         body: {
           full_name: formData.full_name,
@@ -218,182 +243,221 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-[60vh]">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '40vh' }}>
+        <div style={{ width: 24, height: 24, border: '2px solid rgba(0,0,0,0.08)', borderTopColor: '#0071e3', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
   }
 
+  const primaryButtonStyle: React.CSSProperties = {
+    fontFamily: sf,
+    fontSize: 17,
+    fontWeight: 400,
+    color: '#fff',
+    background: '#0071e3',
+    border: '1px solid transparent',
+    borderRadius: 980,
+    padding: '12px 0',
+    width: '100%',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+  };
+
+  const secondaryButtonStyle: React.CSSProperties = {
+    fontFamily: sf,
+    fontSize: 17,
+    fontWeight: 400,
+    color: '#0071e3',
+    background: 'transparent',
+    border: '1px solid #0071e3',
+    borderRadius: 980,
+    padding: '12px 0',
+    width: '100%',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+  };
+
   return (
-    <div className="p-6 space-y-6 text-white">
-      {/* Progress Header */}
-      <div className="space-y-3">
-        <div className="flex justify-between items-center text-sm">
-          <span className="text-gray-400">Step {step} of 2</span>
+    <div style={{ padding: 24, fontFamily: sf, color: '#1d1d1f' }}>
+      <style>{`
+        .apple-form input, .apple-form textarea, .apple-form select {
+          color: #1d1d1f !important;
+          background: #f5f5f7 !important;
+          border-color: rgba(0,0,0,0.1) !important;
+        }
+        .apple-form input::placeholder, .apple-form textarea::placeholder {
+          color: rgba(0,0,0,0.3) !important;
+        }
+        .apple-form input:focus, .apple-form textarea:focus, .apple-form select:focus {
+          border-color: #0071e3 !important;
+          box-shadow: none !important;
+          outline: none !important;
+          ring: none !important;
+        }
+      `}</style>
+      {/* Progress */}
+      <div style={{ marginBottom: 24 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+          <span style={{ ...captionStyle, color: 'rgba(0,0,0,0.36)' }}>Step {step} of 2</span>
           {isSaving && (
-            <span className="text-gray-400 flex items-center gap-1 text-xs">
-              <Loader2 className="h-3 w-3 animate-spin" />
-              Saving...
-            </span>
+            <span style={{ ...captionStyle, color: 'rgba(0,0,0,0.36)' }}>Saving...</span>
           )}
         </div>
-        <Progress value={step * 50} className="h-2" />
-        {step === 1 && source === 'standard-fit' ? (
-          <div className="flex flex-col items-center gap-1 pt-2">
-            <img src={standardLogo} alt="The Standard Playbook Logo" className="h-10 object-contain" />
-            <span className="font-oswald text-3xl font-bold tracking-tight text-white uppercase">BACKGROUND INFO FOR CALL</span>
-          </div>
-        ) : (
-          <h2 className="text-xl font-semibold text-white">
-            {step === 1 ? 'Contact Information' : 'Tell Us About You'}
-          </h2>
-        )}
+        <div style={{ height: 4, background: '#f5f5f7', borderRadius: 2, overflow: 'hidden' }}>
+          <div style={{ height: '100%', width: `${step * 50}%`, background: '#0071e3', borderRadius: 2, transition: 'width 0.3s' }} />
+        </div>
+
+        <div style={{ textAlign: 'center', marginTop: 16 }}>
+          {step === 1 && source === 'standard-fit' ? (
+            <>
+              <img src={standardLogo} alt="Standard Playbook" style={{ height: 32, margin: '0 auto 8px', display: 'block', filter: 'brightness(0)' }} />
+              <h2 style={{ fontSize: 28, fontWeight: 600, lineHeight: 1.14, letterSpacing: '0.196px', color: '#1d1d1f' }}>
+                Background Info for Call
+              </h2>
+            </>
+          ) : (
+            <h2 style={{ fontSize: 28, fontWeight: 600, lineHeight: 1.14, letterSpacing: '0.196px', color: '#1d1d1f' }}>
+              {step === 1 ? 'Contact Information' : 'Tell Us About You'}
+            </h2>
+          )}
+        </div>
       </div>
 
       {step === 1 ? (
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="full_name" className="text-gray-300">Full Name *</Label>
-            <Input
-              id="full_name"
+        <div className="apple-form" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div>
+            <label style={labelStyle}>Full Name *</label>
+            <input
               type="text"
               placeholder="John Smith"
               value={formData.full_name}
               onChange={(e) => updateField('full_name', e.target.value)}
-              className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500"
+              style={inputStyle}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             />
           </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="email" className="text-gray-300">Email *</Label>
-            <Input
-              id="email"
+          <div>
+            <label style={labelStyle}>Email *</label>
+            <input
               type="email"
               placeholder="john@agency.com"
               value={formData.email}
               onChange={(e) => updateField('email', e.target.value)}
-              className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500"
+              style={inputStyle}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             />
           </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="cell_phone" className="text-gray-300">Cell Phone *</Label>
-            <Input
-              id="cell_phone"
+          <div>
+            <label style={labelStyle}>Cell Phone *</label>
+            <input
               type="tel"
               placeholder="(555) 123-4567"
               value={formData.cell_phone}
               onChange={handlePhoneChange}
               maxLength={14}
-              className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500"
+              style={inputStyle}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             />
-            <p className="text-xs text-gray-400">
-              Please enter your personal cell phone, NOT your agency phone number
-            </p>
+            <p style={captionStyle}>Please enter your personal cell phone, NOT your agency phone number</p>
           </div>
-
-          <Button
+          <button
             onClick={handleNext}
             disabled={!isStep1Valid()}
-            className="w-full mt-6"
+            style={{
+              ...primaryButtonStyle,
+              opacity: isStep1Valid() ? 1 : 0.36,
+              cursor: isStep1Valid() ? 'pointer' : 'default',
+              marginTop: 8,
+            }}
           >
             Next
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
+          </button>
         </div>
       ) : (
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="primary_carrier" className="text-gray-300">Primary Carrier *</Label>
-            <Input
-              id="primary_carrier"
+        <div className="apple-form" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div>
+            <label style={labelStyle}>Primary Carrier *</label>
+            <input
               type="text"
               placeholder="e.g., State Farm, Allstate"
               value={formData.primary_carrier}
               onChange={(e) => updateField('primary_carrier', e.target.value)}
-              className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500"
+              style={inputStyle}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             />
           </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="whats_working" className="text-gray-300">
-              What do you feel is WORKING right now inside of your agency? *
-            </Label>
-            <Textarea
-              id="whats_working"
+          <div>
+            <label style={labelStyle}>What is WORKING right now inside of your agency? *</label>
+            <textarea
               placeholder="Describe what's working well..."
               value={formData.whats_working}
               onChange={(e) => updateField('whats_working', e.target.value)}
-              className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500 min-h-[80px]"
+              style={{ ...inputStyle, minHeight: 80, resize: 'none' }}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             />
           </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="whats_not_working" className="text-gray-300">
-              What is NOT WORKING inside of your agency? *
-            </Label>
-            <Textarea
-              id="whats_not_working"
+          <div>
+            <label style={labelStyle}>What is NOT WORKING inside of your agency? *</label>
+            <textarea
               placeholder="Describe what's not working..."
               value={formData.whats_not_working}
               onChange={(e) => updateField('whats_not_working', e.target.value)}
-              className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500 min-h-[80px]"
+              style={{ ...inputStyle, minHeight: 80, resize: 'none' }}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             />
           </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="desired_outcome" className="text-gray-300">
-              Why do you feel like you're wanting to book this 30-minute call? *
-            </Label>
-            <Textarea
-              id="desired_outcome"
-              placeholder="What do you hope to achieve from this call?"
+          <div>
+            <label style={labelStyle}>Why do you want to book this 30-minute call? *</label>
+            <textarea
+              placeholder="What do you hope to achieve?"
               value={formData.desired_outcome}
               onChange={(e) => updateField('desired_outcome', e.target.value)}
-              className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500 min-h-[80px]"
+              style={{ ...inputStyle, minHeight: 80, resize: 'none' }}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             />
           </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="committed" className="text-gray-300">
-              Are you committed to showing up for the call? *
-            </Label>
-            <Select
+          <div>
+            <label style={labelStyle}>Are you committed to showing up for the call? *</label>
+            <select
               value={formData.committed === null ? '' : formData.committed ? 'yes' : 'no'}
-              onValueChange={(value) => updateField('committed', value === 'yes')}
+              onChange={(e) => updateField('committed', e.target.value === 'yes')}
+              style={{ ...inputStyle, appearance: 'none', backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 12 12\'%3E%3Cpath fill=\'%231d1d1f\' d=\'M6 8L1 3h10z\'/%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 14px center', paddingRight: 40 }}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             >
-              <SelectTrigger className="bg-slate-800 border-slate-600 text-white">
-                <SelectValue placeholder="Select an option" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="yes">Yes</SelectItem>
-                <SelectItem value="no">No</SelectItem>
-              </SelectContent>
-            </Select>
+              <option value="" disabled>Select an option</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
             {formData.committed === false && (
-              <p className="text-xs text-red-400">
-                We only work with people who are 100% committed to showing up. If there's any hesitation, we may not be the right fit.
+              <p style={{ ...captionStyle, color: '#ff3b30', marginTop: 6 }}>
+                We only work with people who are 100% committed to showing up.
               </p>
             )}
           </div>
-
-          <div className="flex gap-3 mt-6">
-            <Button
-              variant="outline"
-              onClick={handleBack}
-              className="flex-1 border-slate-600 text-white bg-slate-700"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
+          <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
+            <button onClick={handleBack} style={secondaryButtonStyle}>
               Back
-            </Button>
-            <Button
+            </button>
+            <button
               onClick={handleComplete}
               disabled={!isStep2Valid()}
-              className="flex-1"
+              style={{
+                ...primaryButtonStyle,
+                opacity: isStep2Valid() ? 1 : 0.36,
+                cursor: isStep2Valid() ? 'pointer' : 'default',
+              }}
             >
               Continue to Booking
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+            </button>
           </div>
         </div>
       )}

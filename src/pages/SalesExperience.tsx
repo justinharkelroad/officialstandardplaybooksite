@@ -1,8 +1,6 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import useEmblaCarousel from 'embla-carousel-react';
-import { useState, useCallback, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import BookingModal from '@/components/BookingModal';
 import StandardFitModal from '@/components/StandardFitModal';
 import ContentMeta from '@/components/ContentMeta';
@@ -17,13 +15,14 @@ const salesProcessCardImg = `${STORAGE_BASE}/Sales%20Process%20Card.png`;
 const accountabilityCardImg = `${STORAGE_BASE}/Accountability%20Metrics%20Card.png`;
 const consequenceLadderCardImg = `${STORAGE_BASE}/Consequence%20Ladder%20Card.png`;
 
-/* ── Fade-in wrapper ── */
+const sf = '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif';
+
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
   <motion.div
-    initial={{ opacity: 0, y: 40 }}
+    initial={{ opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: '-80px' }}
-    transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+    viewport={{ once: true, margin: '-60px' }}
+    transition={{ duration: 0.6, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
     className={className}
   >
     {children}
@@ -31,415 +30,1054 @@ const Reveal = ({ children, className = '', delay = 0 }: { children: React.React
 );
 
 /* ══════════════════════════════════════════════════════
-   SCROLLYTELLING HERO — 4 Fades over sticky video
+   NAVIGATION
    ══════════════════════════════════════════════════════ */
-const ScrollytellingHero = () => {
-  const [heroModalOpen, setHeroModalOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] });
+const Nav = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const lerp = (p: number, start: number, end: number) =>
-    Math.max(0, Math.min(1, (p - start) / (end - start)));
-
-  // Video fades out before Fade 4
-  const videoOpacity = useTransform(scrollYProgress, (p) => {
-    if (p < 0.45) return 1;
-    if (p >= 0.56) return 0;
-    return 1 - lerp(p, 0.45, 0.56);
-  });
-
-  // Blue bg fades in bridging into Fade 4
-  const blueBgOpacity = useTransform(scrollYProgress, (p) => {
-    if (p < 0.50) return 0;
-    if (p >= 0.58) return 1;
-    return lerp(p, 0.50, 0.58);
-  });
-
-  // Fade 1: Hook + CTA — visible 0–8%, fades out by 14%
-  const fade1 = useTransform(scrollYProgress, (p) => {
-    if (p <= 0.08) return 1;
-    if (p >= 0.14) return 0;
-    return 1 - lerp(p, 0.08, 0.14);
-  });
-
-  // Fade 2: The Problem — in 16–22%, holds, out 32–38%
-  const fade2 = useTransform(scrollYProgress, (p) => {
-    if (p < 0.16) return 0;
-    if (p < 0.22) return lerp(p, 0.16, 0.22);
-    if (p <= 0.32) return 1;
-    if (p >= 0.38) return 0;
-    return 1 - lerp(p, 0.32, 0.38);
-  });
-
-  // Fade 3: The Promise — in 40–46%, holds, out 50–56%
-  const fade3 = useTransform(scrollYProgress, (p) => {
-    if (p < 0.40) return 0;
-    if (p < 0.46) return lerp(p, 0.40, 0.46);
-    if (p <= 0.50) return 1;
-    if (p >= 0.56) return 0;
-    return 1 - lerp(p, 0.50, 0.56);
-  });
-
-  // Fade 4: The Guarantee — in 58–64%, holds, out 72–78%
-  const fade4 = useTransform(scrollYProgress, (p) => {
-    if (p < 0.58) return 0;
-    if (p < 0.64) return lerp(p, 0.58, 0.64);
-    if (p <= 0.72) return 1;
-    if (p >= 0.78) return 0;
-    return 1 - lerp(p, 0.72, 0.78);
-  });
-
-  // Fade 5: Deliverables — in 80–86%, holds, out 92–97%
-  const fade5 = useTransform(scrollYProgress, (p) => {
-    if (p < 0.80) return 0;
-    if (p < 0.86) return lerp(p, 0.80, 0.86);
-    if (p <= 0.92) return 1;
-    if (p >= 0.97) return 0;
-    return 1 - lerp(p, 0.92, 0.97);
-  });
-
-  // Hero CTA opacity synced to fade1 — for the FIXED button outside sticky container
-  const heroCTAOpacity = useTransform(fade1, (value) => (value > 0.1 ? 1 : 0));
-  const heroCTAPointerEvents = useTransform(fade1, (value) => (value > 0.1 ? 'auto' as const : 'none' as const));
+  const links = [
+    { label: 'Home', to: '/' },
+    { label: 'Programs', to: '/#programs' },
+    { label: 'Contact', to: '/contact' },
+  ];
 
   return (
-    <section ref={containerRef} className="relative" style={{ height: '600vh' }}>
-      {/* ── FIXED Hero CTA — lives OUTSIDE the sticky container, z-50, unblockable ── */}
-      <motion.div
-        style={{ opacity: heroCTAOpacity, pointerEvents: heroCTAPointerEvents }}
-        className="fixed bottom-[15vh] left-0 right-0 z-50 hidden md:flex justify-center"
-      >
-        <Button className="btn-primary text-lg px-10 py-6 shadow-2xl" onClick={() => setHeroModalOpen(true)}>
-          Book Your Strategy Call
-        </Button>
-      </motion.div>
+    <nav
+      className="fixed top-0 left-0 right-0 z-50"
+      style={{
+        height: 48,
+        background: 'rgba(0, 0, 0, 0.8)',
+        backdropFilter: 'saturate(180%) blur(20px)',
+        WebkitBackdropFilter: 'saturate(180%) blur(20px)',
+        fontFamily: sf,
+      }}
+    >
+      <div className="max-w-[980px] mx-auto h-full px-6 flex items-center justify-between">
+        <Link to="/" className="flex items-center">
+          <img src={standardLogo} alt="Standard Playbook" className="h-5 w-auto brightness-0 invert opacity-90" />
+        </Link>
 
-      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', pointerEvents: 'none' }}>
-        {/* Video background */}
-        <motion.div style={{ opacity: videoOpacity }} className="absolute inset-0" aria-hidden="true">
-          <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" src="https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/8%20week%20background.mp4" />
-          <div className="absolute inset-0 bg-black/50" />
-        </motion.div>
+        <div className="hidden md:flex items-center gap-8">
+          {links.map((link) => (
+            <Link
+              key={link.label}
+              to={link.to}
+              className="text-white/80 hover:text-white transition-colors"
+              style={{ fontSize: 12, fontWeight: 400, letterSpacing: '-0.01em' }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
 
-        {/* Blue background layer */}
-        <motion.div style={{ opacity: blueBgOpacity }} className="absolute inset-0 bg-gradient-to-b from-[#020617] to-black" aria-hidden="true" />
-
-        {/* ── Fade 1: Hook text only (CTA is the fixed button above) ── */}
-        <motion.div style={{ opacity: fade1 }} className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center px-6 max-w-5xl mx-auto">
-            <img src={standardLogo} alt="The Standard Playbook - Insurance Agency Coaching" className="mx-auto w-48 md:w-72 mb-10 drop-shadow-2xl" />
-            <h1 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] tracking-tight mb-4 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)] uppercase">
-              Stop managing chaos.
-            </h1>
-            <p className="font-oswald font-bold text-2xl sm:text-4xl md:text-5xl text-gray-300 mb-10 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)] uppercase">
-              Start running a system.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* ── Fade 2: The Problem ── */}
-        <motion.div style={{ opacity: fade2 }} className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="max-w-4xl mx-auto text-center px-6">
-            <p className="text-lg md:text-xl text-blue-500 mb-4 uppercase tracking-widest font-medium">The Problem</p>
-            <h2 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] mb-8 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
-              Great month. Bad month.<br />Great month. Bad month.
-            </h2>
-            <p className="font-oswald font-bold text-2xl sm:text-4xl md:text-5xl text-blue-500 uppercase drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)]" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(255,255,255,0.15)' }}>
-              That's not a sales team.<br />That's a coin flip.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* ── Fade 3: The Promise ── */}
-        <motion.div style={{ opacity: fade3 }} className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="max-w-4xl mx-auto text-center px-6">
-            <p className="text-lg md:text-xl text-blue-500 mb-4 uppercase tracking-widest font-medium" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(255,255,255,0.15)' }}>The Promise</p>
-            <h2 className="font-oswald font-bold text-3xl sm:text-5xl md:text-7xl text-white leading-[1.1] mb-6 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
-              In 8 weeks, you'll have certainty.
-            </h2>
-            <p className="font-oswald font-bold text-xl sm:text-2xl md:text-3xl text-blue-500 uppercase mb-6" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(255,255,255,0.15)' }}>
-              A process. A scorecard. A rhythm.
-            </p>
-            <p className="font-oswald font-bold text-3xl sm:text-5xl md:text-6xl text-blue-500 uppercase" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(255,255,255,0.15)' }}>
-              A Guarantee.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* ── Fade 4: The Guarantee ── */}
-        <motion.div style={{ opacity: fade4 }} className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="max-w-4xl mx-auto text-center px-6">
-            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full border-4 border-yellow-300 shadow-2xl mb-8">
-              <div className="text-center">
-                <div className="text-lg font-bold text-black">100%</div>
-                <div className="text-[10px] font-semibold text-black uppercase">Guarantee</div>
-              </div>
-            </div>
-            <h2 className="font-oswald font-bold text-3xl sm:text-5xl md:text-6xl text-white leading-[1.1] mb-6 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
-              If you don't have a clear path,<br />I'll give you your money back.
-            </h2>
-             <p className="font-oswald text-xl sm:text-2xl md:text-3xl text-blue-400">
-               But so far for over one year, God has blessed us enough to bat 1000%! 😉
-             </p>
-          </div>
-        </motion.div>
-        {/* ── Fade 5: Deliverables ── */}
-        <motion.div style={{ opacity: fade5 }} className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="max-w-6xl mx-auto px-6 w-full">
-            <div className="text-center mb-4 md:mb-10">
-              <p className="text-xs md:text-sm uppercase tracking-[0.3em] text-blue-400 mb-2 md:mb-3">What You'll Walk Away With</p>
-              <h2 className="font-oswald font-bold text-2xl md:text-5xl text-white">
-                Three Systems. Zero Guesswork.
-              </h2>
-            </div>
-            {/* Horizontal scroll on mobile, row on desktop */}
-            <div className="pointer-events-auto overflow-x-auto md:overflow-visible scrollbar-hide">
-              <div className="flex flex-row items-stretch gap-3 md:gap-4 md:justify-center w-max md:w-auto mx-auto">
-                {[
-                  { title: 'Sales Process', sub: 'A documented, repeatable call framework your entire team follows — no more winging it.', img: salesProcessCardImg },
-                  { title: 'Accountability Framework', sub: 'Daily tracking, weekly scorecards, and graded calls that keep every producer on pace.', img: accountabilityCardImg },
-                  { title: 'Consequence Ladder', sub: 'A clear escalation path so underperformance is addressed — not ignored.', img: consequenceLadderCardImg },
-                ].map((item, i, arr) => (
-                  <div key={item.title} className="flex flex-row items-center">
-                    <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-4 md:p-8 text-center w-[260px] md:w-auto md:max-w-xs flex-shrink-0">
-                      <h3 className="font-oswald font-bold text-lg md:text-2xl text-white mb-2 md:mb-3">{item.title}</h3>
-                      <img src={item.img} alt={item.title} className="w-full rounded-xl shadow-2xl shadow-blue-500/10 mb-2 md:mb-3" />
-                      <p className="text-gray-400 text-xs md:text-sm leading-relaxed">{item.sub}</p>
-                    </div>
-                    {i < arr.length - 1 && (
-                      <div className="flex items-center justify-center px-1 md:px-2">
-                        <motion.div animate={{ x: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}>
-                          <svg className="w-6 h-6 md:w-10 md:h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                          </svg>
-                        </motion.div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <p className="font-oswald text-base sm:text-2xl md:text-3xl text-blue-400 text-center max-w-4xl mx-auto mt-4 md:mt-12 leading-relaxed">
-              Your inconsistency is directly connected to your lack of clarity in the process &amp; follow through, I promise you.
-            </p>
-          </div>
-        </motion.div>
+        <button className="md:hidden text-white/80" onClick={() => setMobileOpen(!mobileOpen)}>
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {mobileOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
       </div>
-      <StandardFitModal open={heroModalOpen} onOpenChange={setHeroModalOpen} />
-    </section>
+
+      {mobileOpen && (
+        <div
+          className="md:hidden"
+          style={{
+            background: 'rgba(0, 0, 0, 0.95)',
+            backdropFilter: 'saturate(180%) blur(20px)',
+            padding: '20px 24px',
+          }}
+        >
+          {links.map((link) => (
+            <Link
+              key={link.label}
+              to={link.to}
+              className="block py-3 text-white/80 hover:text-white transition-colors border-b border-white/5"
+              style={{ fontSize: 17, fontWeight: 400, letterSpacing: '-0.374px' }}
+              onClick={() => setMobileOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </nav>
   );
 };
 
 /* ══════════════════════════════════════════════════════
-   AGENCY BRAIN SHOWCASE — Curated 8-week tools
+   HERO — BLACK, CINEMATIC
    ══════════════════════════════════════════════════════ */
-const brainCards = [
-  { headline: 'Total Visibility.', sub: 'Know exactly where your team stands every single day.', img: salesExpDashImg, label: 'Sales Experience Dashboard' },
-  { headline: 'Team & Meeting Hub.', sub: 'Centralized meeting management, team collaboration, and communication all in one place.', img: teamMeetingImg, label: 'Team & Meeting Hub' },
-  { headline: 'Training & Feedback.', sub: 'Structured Training Modules unlocked every Monday and Wednesday with the feedback discovery flow fed back to the manager on Friday.', img: trainingModulesImg, label: 'Training Modules & Feedback' },
-];
-
-const AgencyBrainShowcase = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center', skipSnaps: false });
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
-  const [slideStyles, setSlideStyles] = useState<React.CSSProperties[]>([]);
-
-  const computeStyles = useCallback(() => {
-    if (!emblaApi) return;
-    const engine = emblaApi.internalEngine();
-    const scrollProgress = emblaApi.scrollProgress();
-    const slides = emblaApi.slideNodes();
-    const styles: React.CSSProperties[] = slides.map((_, index) => {
-      let diff = emblaApi.scrollSnapList()[index] - scrollProgress;
-      if (engine.options.loop) {
-        if (diff > 0.5) diff -= 1;
-        if (diff < -0.5) diff += 1;
-      }
-      const absDiff = Math.abs(diff);
-      const scale = Math.max(0.65, 1 - absDiff * 0.35);
-      const opacity = Math.max(0.3, 1 - absDiff * 0.7);
-      const translateZ = -absDiff * 250;
-      const translateX = diff * 15;
-      const zIndex = 100 - Math.round(absDiff * 100);
-      return {
-        transform: `perspective(1200px) translateX(${translateX}%) scale(${scale}) translateZ(${translateZ}px)`,
-        opacity,
-        zIndex,
-        transition: 'transform 0.4s ease-out, opacity 0.4s ease-out',
-      };
-    });
-    setSlideStyles(styles);
-  }, [emblaApi]);
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    setScrollSnaps(emblaApi.scrollSnapList());
-    emblaApi.on('select', onSelect);
-    emblaApi.on('scroll', computeStyles);
-    emblaApi.on('reInit', computeStyles);
-    onSelect();
-    computeStyles();
-    return () => {
-      emblaApi.off('select', onSelect);
-      emblaApi.off('scroll', computeStyles);
-      emblaApi.off('reInit', computeStyles);
-    };
-  }, [emblaApi, onSelect, computeStyles]);
-
-  const scrollTo = useCallback((index: number) => emblaApi && emblaApi.scrollTo(index), [emblaApi]);
+const Hero = () => {
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <section className="relative z-20 py-24 md:py-40 bg-gradient-to-b from-[#020617] to-black overflow-hidden">
-      <div className="px-6">
-        <Reveal className="text-center mb-6">
-          <img src={agencyBrainLogo} alt="Agency Brain - Insurance Agency Management Platform" className="mx-auto w-48 md:w-72 mb-4" />
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            These are the tools you'll use every day inside the 8-week program.
-          </p>
-        </Reveal>
-
-        <div className="max-w-6xl mx-auto">
-          <div className="overflow-visible" ref={emblaRef} style={{ perspective: '1200px' }}>
-            <div className="flex" style={{ transformStyle: 'preserve-3d' }}>
-              {brainCards.map((card, index) => (
-                <div
-                  key={card.label}
-                  className="flex-[0_0_80%] sm:flex-[0_0_60%] md:flex-[0_0_50%] min-w-0 px-3"
-                  style={slideStyles[index] || {}}
-                >
-                  <div className="relative group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 hover:border-blue-500/40 transition-colors duration-500">
-                    <p className="text-xs uppercase tracking-widest text-blue-400 mb-2">{card.label}</p>
-                    <h3 className="font-oswald font-bold text-2xl text-white mb-2">{card.headline}</h3>
-                    <p className="text-gray-400 text-sm mb-6">{card.sub}</p>
-                    <div className="relative">
-                      <img src={card.img} alt={card.label} className="w-full rounded-xl shadow-2xl shadow-blue-500/10 group-hover:scale-[1.02] transition-transform duration-500" />
-                      <div className="absolute -inset-4 bg-blue-500/10 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Nav */}
-          <div className="flex items-center justify-center gap-6 mt-8">
-            <button onClick={() => emblaApi?.scrollPrev()} className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-blue-500/60 hover:bg-blue-500/10 transition-colors" aria-label="Previous">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-            </button>
-            <div className="flex gap-2">
-              {scrollSnaps.map((_, i) => (
-                <button key={i} onClick={() => scrollTo(i)} className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === selectedIndex ? 'bg-blue-500 scale-125' : 'bg-white/20 hover:bg-white/40'}`} aria-label={`Slide ${i + 1}`} />
-              ))}
-            </div>
-            <button onClick={() => emblaApi?.scrollNext()} className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-blue-500/60 hover:bg-blue-500/10 transition-colors" aria-label="Next">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-/* ══════════════════════════════════════════════════════
-   SUCCESS STORY
-   ══════════════════════════════════════════════════════ */
-const SuccessStory = () => (
-  <section className="relative z-20 py-24 md:py-40 px-6 bg-black">
-    <div className="max-w-4xl mx-auto">
-      <Reveal className="text-center mb-12">
-        <p className="text-sm uppercase tracking-[0.3em] text-blue-400 mb-3">Success Story</p>
-        <h2 className="font-oswald font-bold text-3xl md:text-5xl text-white mb-4">
-          "He paid attention to my culture first."
-        </h2>
-        <p className="text-gray-400 text-lg">Dan Westrick — Allstate Agency Owner</p>
-      </Reveal>
-      <Reveal delay={0.15}>
-        <div className="relative max-w-sm mx-auto">
-          <div className="video-glow absolute -inset-4" />
-          <div className="relative rounded-2xl overflow-hidden border border-white/10" style={{ aspectRatio: '9/16' }}>
-            <iframe
-              src="https://fast.wistia.net/embed/iframe/p5r3aelfj0?autoPlay=false&fullscreenButton=true&playButton=true&smallPlayButton=true&volumeControl=true&controlsVisibleOnLoad=true"
-              title="Dan Westrick Success Story"
-              allow="autoplay; fullscreen"
-              allowFullScreen
-              frameBorder="0"
-              scrolling="no"
-              className="w-full h-full"
-              style={{ aspectRatio: '9/16' }}
-            />
-          </div>
-        </div>
-      </Reveal>
-    </div>
-  </section>
-);
-
-/* ══════════════════════════════════════════════════════
-   WHAT'S INCLUDED — 4 bold lines
-   ══════════════════════════════════════════════════════ */
-const lines = [
-  '8 weekly coaching calls.',
-  'Graded calls every week.',
-  'Your sales process, documented.',
-  'Your accountability system, deployed.',
-];
-
-const IncludedSection = () => (
-  <section className="relative z-20 py-24 md:py-40 px-6 bg-gradient-to-b from-black to-[#020617]">
-    <div className="max-w-3xl mx-auto text-center">
-      <Reveal>
-        <p className="text-sm uppercase tracking-[0.3em] text-blue-400 mb-6">What's Included</p>
-      </Reveal>
-      {lines.map((line, i) => (
-        <Reveal key={i} delay={i * 0.1}>
-          <p className="font-oswald font-bold text-2xl sm:text-3xl md:text-4xl text-white mb-4 leading-tight">
-            {line}
-          </p>
-        </Reveal>
-      ))}
-    </div>
-  </section>
-);
-
-/* ══════════════════════════════════════════════════════
-   FINAL CTA
-   ══════════════════════════════════════════════════════ */
-const FinalCTA = () => {
-  const [finalModalOpen, setFinalModalOpen] = useState(false);
-  return (
-    <section className="relative z-20 py-24 md:py-40 px-6 bg-[#020617]">
-      <div className="max-w-3xl mx-auto text-center">
+    <section
+      className="relative flex items-center justify-center text-center"
+      style={{ background: '#000', minHeight: '100vh', paddingTop: 48 }}
+    >
+      <div className="px-6 max-w-[980px] mx-auto">
         <Reveal>
-          <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full border-4 border-yellow-300 shadow-2xl mb-8">
-            <div className="text-center">
-              <div className="text-lg font-bold text-black">100%</div>
-              <div className="text-[10px] font-semibold text-black uppercase">Guarantee</div>
-            </div>
-          </div>
+          <img src={standardLogo} alt="Standard Playbook" className="mx-auto w-40 md:w-56 mb-10 brightness-0 invert opacity-80" />
         </Reveal>
         <Reveal delay={0.1}>
-          <h2 className="font-oswald font-bold text-3xl sm:text-5xl md:text-6xl text-white leading-[1.1] mb-6">
-            If you don't see the value after 8 weeks,<br />I'll give you your money back.
-          </h2>
-          <p className="text-xl text-gray-400 mb-10">
-            All I ask is you <span className="text-blue-400 font-semibold">commit to the work.</span>
-          </p>
+          <h1
+            style={{
+              fontFamily: sf,
+              fontSize: 'clamp(40px, 7vw, 56px)',
+              fontWeight: 600,
+              lineHeight: 1.07,
+              letterSpacing: '-0.28px',
+              color: '#fff',
+              margin: 0,
+            }}
+          >
+            Stop managing chaos.
+            <br />
+            Start running a system.
+          </h1>
         </Reveal>
         <Reveal delay={0.2}>
-          <Button className="btn-primary text-lg px-10 py-6" onClick={() => setFinalModalOpen(true)}>
-            Book Your Strategy Call
-          </Button>
+          <p
+            style={{
+              fontFamily: sf,
+              fontSize: 'clamp(18px, 3vw, 21px)',
+              fontWeight: 400,
+              lineHeight: 1.19,
+              letterSpacing: '0.231px',
+              color: 'rgba(255,255,255,0.7)',
+              marginTop: 16,
+              maxWidth: 600,
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            }}
+          >
+            8 weeks. A documented sales process, an accountability framework, and a consequence ladder — installed in your agency.
+          </p>
+        </Reveal>
+        <Reveal delay={0.3}>
+          <div className="flex items-center justify-center gap-4 mt-10">
+            <a
+              href="#whats-included"
+              style={{
+                fontFamily: sf,
+                fontSize: 17,
+                fontWeight: 400,
+                color: '#2997ff',
+                border: '1px solid #2997ff',
+                borderRadius: 980,
+                padding: '8px 20px',
+                textDecoration: 'none',
+                transition: 'all 0.3s',
+              }}
+              className="hover:bg-[#2997ff]/10"
+            >
+              Learn more
+            </a>
+            <button
+              onClick={() => setModalOpen(true)}
+              style={{
+                fontFamily: sf,
+                fontSize: 17,
+                fontWeight: 400,
+                color: '#fff',
+                background: '#0071e3',
+                border: '1px solid transparent',
+                borderRadius: 8,
+                padding: '8px 20px',
+                cursor: 'pointer',
+                transition: 'all 0.3s',
+              }}
+              className="hover:brightness-110"
+            >
+              Book a Strategy Call
+            </button>
+          </div>
+        </Reveal>
+        <StandardFitModal open={modalOpen} onOpenChange={setModalOpen} />
+      </div>
+    </section>
+  );
+};
+
+/* ══════════════════════════════════════════════════════
+   GUARANTEE BANNER — BLACK WITH GOLD SEAL
+   ══════════════════════════════════════════════════════ */
+const GuaranteeBanner = () => (
+  <section style={{ background: '#000', padding: '80px 24px' }}>
+    <div className="max-w-[780px] mx-auto">
+      <Reveal>
+        <div style={{
+          display: 'flex', flexDirection: 'column', alignItems: 'center',
+          textAlign: 'center', gap: 24,
+        }}>
+          {/* Gold seal */}
+          <div style={{
+            width: 120, height: 120, borderRadius: '50%', position: 'relative',
+            background: 'linear-gradient(145deg, #d4a843, #f5d673, #c4952a)',
+            boxShadow: '0 0 0 4px #000, 0 0 0 6px #c4952a, 0 0 40px rgba(212,168,67,0.25)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+          }}>
+            <div style={{
+              width: 100, height: 100, borderRadius: '50%',
+              border: '2px solid rgba(0,0,0,0.15)',
+              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <span style={{
+                fontFamily: sf, fontSize: 11, fontWeight: 700, letterSpacing: '1px',
+                color: 'rgba(0,0,0,0.6)', textTransform: 'uppercase', lineHeight: 1,
+              }}>Money Back</span>
+              <span style={{
+                fontFamily: sf, fontSize: 28, fontWeight: 700, color: '#1d1d1f', lineHeight: 1, marginTop: 2,
+              }}>100%</span>
+              <span style={{
+                fontFamily: sf, fontSize: 10, fontWeight: 700, letterSpacing: '1.5px',
+                color: 'rgba(0,0,0,0.6)', textTransform: 'uppercase', lineHeight: 1, marginTop: 2,
+              }}>Guarantee</span>
+            </div>
+          </div>
+
+          {/* Copy */}
+          <div>
+            <h2 style={{
+              fontFamily: sf, fontSize: 'clamp(28px, 5vw, 40px)', fontWeight: 600,
+              lineHeight: 1.1, color: '#fff', marginBottom: 12,
+            }}>
+              We guarantee results — or you don't pay.
+            </h2>
+            <p style={{
+              fontFamily: sf, fontSize: 17, fontWeight: 400, lineHeight: 1.47,
+              letterSpacing: '-0.374px', color: 'rgba(255,255,255,0.6)', maxWidth: 560, margin: '0 auto',
+            }}>
+              After 8 weeks you'll walk away with a documented sales process, an accountability framework, and a consequence ladder installed in your agency. If you don't have a clear path forward, you get every dollar back. No questions, no hoops.
+            </p>
+          </div>
+
+          {/* Three deliverables */}
+          <div style={{
+            display: 'flex', gap: 16, marginTop: 8, flexWrap: 'wrap', justifyContent: 'center',
+          }}>
+            {['Sales Process', 'Accountability Framework', 'Consequence Ladder'].map((item) => (
+              <div key={item} style={{
+                fontFamily: sf, fontSize: 12, fontWeight: 600, letterSpacing: '-0.12px',
+                color: '#fff', textTransform: 'uppercase',
+                background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: 980, padding: '8px 20px',
+              }}>
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
+   THE PROBLEM — LIGHT GRAY
+   ══════════════════════════════════════════════════════ */
+const Problem = () => (
+  <section style={{ background: '#f5f5f7', padding: '120px 24px' }}>
+    <div className="max-w-[980px] mx-auto text-center">
+      <Reveal>
+        <p
+          style={{
+            fontFamily: sf,
+            fontSize: 14,
+            fontWeight: 600,
+            letterSpacing: '-0.224px',
+            color: 'rgba(0,0,0,0.48)',
+            textTransform: 'uppercase',
+            marginBottom: 16,
+          }}
+        >
+          The Problem
+        </p>
+      </Reveal>
+      <Reveal delay={0.1}>
+        <h2
+          style={{
+            fontFamily: sf,
+            fontSize: 'clamp(32px, 6vw, 56px)',
+            fontWeight: 600,
+            lineHeight: 1.07,
+            letterSpacing: '-0.28px',
+            color: '#1d1d1f',
+          }}
+        >
+          Great month. Bad month.
+          <br />
+          Great month. Bad month.
+        </h2>
+      </Reveal>
+      <Reveal delay={0.2}>
+        <p
+          style={{
+            fontFamily: sf,
+            fontSize: 'clamp(24px, 4vw, 40px)',
+            fontWeight: 600,
+            lineHeight: 1.1,
+            color: '#0071e3',
+            marginTop: 20,
+          }}
+        >
+          That's not a sales team. That's a coin flip.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
+   THE PROMISE — BLACK
+   ══════════════════════════════════════════════════════ */
+const Promise = () => (
+  <section style={{ background: '#000', padding: '120px 24px' }}>
+    <div className="max-w-[980px] mx-auto text-center">
+      <Reveal>
+        <p
+          style={{
+            fontFamily: sf,
+            fontSize: 14,
+            fontWeight: 600,
+            letterSpacing: '-0.224px',
+            color: 'rgba(255,255,255,0.48)',
+            textTransform: 'uppercase',
+            marginBottom: 16,
+          }}
+        >
+          The Promise
+        </p>
+      </Reveal>
+      <Reveal delay={0.1}>
+        <h2
+          style={{
+            fontFamily: sf,
+            fontSize: 'clamp(32px, 6vw, 56px)',
+            fontWeight: 600,
+            lineHeight: 1.07,
+            letterSpacing: '-0.28px',
+            color: '#fff',
+          }}
+        >
+          In 8 weeks, you'll have certainty.
+        </h2>
+      </Reveal>
+      <Reveal delay={0.2}>
+        <p
+          style={{
+            fontFamily: sf,
+            fontSize: 'clamp(21px, 3vw, 28px)',
+            fontWeight: 400,
+            lineHeight: 1.14,
+            letterSpacing: '0.196px',
+            color: 'rgba(255,255,255,0.6)',
+            marginTop: 16,
+          }}
+        >
+          A process. A scorecard. A rhythm. A guarantee.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
+   THREE SYSTEMS — TABBED SHOWCASE ON LIGHT GRAY
+   ══════════════════════════════════════════════════════ */
+const systems = [
+  {
+    label: 'Sales Process',
+    headline: 'A documented, repeatable call framework.',
+    sub: 'Your entire team follows the same playbook — no more winging it. Every call has a structure, every objection has a response.',
+    img: salesProcessCardImg,
+  },
+  {
+    label: 'Accountability',
+    headline: 'Daily tracking. Weekly scorecards. Graded calls.',
+    sub: 'Every producer knows exactly where they stand. Managers have the data to coach, not guess.',
+    img: accountabilityCardImg,
+  },
+  {
+    label: 'Consequence Ladder',
+    headline: 'A clear path when standards aren\'t met.',
+    sub: 'Underperformance is addressed — not ignored. A fair, transparent escalation system your team respects.',
+    img: consequenceLadderCardImg,
+  },
+];
+
+const ThreeSystems = () => {
+  const [active, setActive] = useState(0);
+  const system = systems[active];
+
+  return (
+    <section id="whats-included" style={{ background: '#f5f5f7', padding: '120px 24px' }}>
+      <div className="max-w-[980px] mx-auto">
+        <Reveal>
+          <div className="text-center mb-12">
+            <p
+              style={{
+                fontFamily: sf,
+                fontSize: 14,
+                fontWeight: 600,
+                letterSpacing: '-0.224px',
+                color: 'rgba(0,0,0,0.48)',
+                textTransform: 'uppercase',
+                marginBottom: 12,
+              }}
+            >
+              What You Walk Away With
+            </p>
+            <h2
+              style={{
+                fontFamily: sf,
+                fontSize: 'clamp(32px, 5vw, 40px)',
+                fontWeight: 600,
+                lineHeight: 1.1,
+                color: '#1d1d1f',
+              }}
+            >
+              Three systems. Zero guesswork.
+            </h2>
+          </div>
+        </Reveal>
+
+        {/* System selector tabs */}
+        <Reveal delay={0.1}>
+          <div className="flex items-center justify-center gap-2 flex-wrap mb-10" role="tablist">
+            {systems.map((s, i) => (
+              <button
+                key={s.label}
+                role="tab"
+                aria-selected={i === active}
+                onClick={() => setActive(i)}
+                style={{
+                  fontFamily: sf,
+                  fontSize: 14,
+                  fontWeight: i === active ? 600 : 400,
+                  letterSpacing: '-0.224px',
+                  color: i === active ? '#1d1d1f' : 'rgba(0,0,0,0.48)',
+                  background: i === active ? '#fff' : 'transparent',
+                  border: 'none',
+                  borderRadius: 980,
+                  padding: '8px 20px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s',
+                  boxShadow: i === active ? 'rgba(0,0,0,0.08) 0 2px 8px' : 'none',
+                }}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+        </Reveal>
+
+        {/* Showcase card */}
+        <motion.div
+          key={active}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
+          <div
+            style={{
+              background: '#fff',
+              borderRadius: 12,
+              overflow: 'hidden',
+            }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 items-center">
+              <div style={{ padding: '48px 40px' }}>
+                <p
+                  style={{
+                    fontFamily: sf,
+                    fontSize: 12,
+                    fontWeight: 600,
+                    lineHeight: 1.33,
+                    letterSpacing: '-0.12px',
+                    color: '#0071e3',
+                    textTransform: 'uppercase',
+                    marginBottom: 12,
+                  }}
+                >
+                  System {active + 1} of 3
+                </p>
+                <h3
+                  style={{
+                    fontFamily: sf,
+                    fontSize: 'clamp(24px, 3.5vw, 28px)',
+                    fontWeight: 600,
+                    lineHeight: 1.14,
+                    letterSpacing: '0.196px',
+                    color: '#1d1d1f',
+                    marginBottom: 12,
+                  }}
+                >
+                  {system.headline}
+                </h3>
+                <p
+                  style={{
+                    fontFamily: sf,
+                    fontSize: 17,
+                    fontWeight: 400,
+                    lineHeight: 1.47,
+                    letterSpacing: '-0.374px',
+                    color: 'rgba(0,0,0,0.48)',
+                  }}
+                >
+                  {system.sub}
+                </p>
+              </div>
+              <div style={{ padding: '24px 24px 0', display: 'flex', justifyContent: 'center', alignItems: 'flex-end' }}>
+                <img
+                  src={system.img}
+                  alt={system.label}
+                  style={{
+                    width: '100%',
+                    maxWidth: 400,
+                    borderRadius: '8px 8px 0 0',
+                    boxShadow: 'rgba(0,0,0,0.22) 3px 5px 30px 0px',
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+/* ══════════════════════════════════════════════════════
+   AGENCY BRAIN TOOLS — TABBED SHOWCASE ON BLACK
+   ══════════════════════════════════════════════════════ */
+const brainFeatures = [
+  { label: 'Dashboard', headline: 'Total Visibility.', sub: 'Know exactly where your team stands every single day. Premium, policies, activity — one view.', img: salesExpDashImg },
+  { label: 'Team Hub', headline: 'Team & Meeting Hub.', sub: 'Centralized meeting management, team collaboration, and communication all in one place.', img: teamMeetingImg },
+  { label: 'Training', headline: 'Training & Feedback.', sub: 'Structured modules unlocked every Monday and Wednesday. Feedback discovery flow fed back to the manager on Friday.', img: trainingModulesImg },
+];
+
+const AgencyBrainTools = () => {
+  const [active, setActive] = useState(0);
+  const feature = brainFeatures[active];
+
+  return (
+    <section style={{ background: '#000', padding: '120px 24px' }}>
+      <div className="max-w-[980px] mx-auto">
+        <Reveal>
+          <div className="text-center mb-12">
+            <img src={agencyBrainLogo} alt="Agency Brain" className="mx-auto w-48 md:w-64 mb-4" style={{ filter: 'brightness(1.1)' }} />
+            <p
+              style={{
+                fontFamily: sf,
+                fontSize: 17,
+                fontWeight: 400,
+                lineHeight: 1.47,
+                letterSpacing: '-0.374px',
+                color: 'rgba(255,255,255,0.48)',
+              }}
+            >
+              The tools you'll use every day inside the 8-week program.
+            </p>
+          </div>
+        </Reveal>
+
+        {/* Feature selector */}
+        <Reveal delay={0.1}>
+          <div className="flex items-center justify-center gap-2 flex-wrap mb-10" role="tablist">
+            {brainFeatures.map((f, i) => (
+              <button
+                key={f.label}
+                role="tab"
+                aria-selected={i === active}
+                onClick={() => setActive(i)}
+                style={{
+                  fontFamily: sf,
+                  fontSize: 14,
+                  fontWeight: i === active ? 600 : 400,
+                  letterSpacing: '-0.224px',
+                  color: i === active ? '#fff' : 'rgba(255,255,255,0.48)',
+                  background: i === active ? '#1d1d1f' : 'transparent',
+                  border: i === active ? '1px solid rgba(255,255,255,0.12)' : '1px solid transparent',
+                  borderRadius: 980,
+                  padding: '8px 20px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s',
+                }}
+                className="hover:text-white"
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+        </Reveal>
+
+        {/* Showcase */}
+        <motion.div
+          key={active}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
+          <div style={{ background: '#1d1d1f', borderRadius: 12, overflow: 'hidden' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 items-center">
+              <div style={{ padding: '48px 40px' }}>
+                <p
+                  style={{
+                    fontFamily: sf,
+                    fontSize: 12,
+                    fontWeight: 600,
+                    lineHeight: 1.33,
+                    letterSpacing: '-0.12px',
+                    color: '#0071e3',
+                    textTransform: 'uppercase',
+                    marginBottom: 12,
+                  }}
+                >
+                  {feature.label}
+                </p>
+                <h3
+                  style={{
+                    fontFamily: sf,
+                    fontSize: 'clamp(28px, 4vw, 40px)',
+                    fontWeight: 600,
+                    lineHeight: 1.1,
+                    color: '#fff',
+                    marginBottom: 12,
+                  }}
+                >
+                  {feature.headline}
+                </h3>
+                <p
+                  style={{
+                    fontFamily: sf,
+                    fontSize: 17,
+                    fontWeight: 400,
+                    lineHeight: 1.47,
+                    letterSpacing: '-0.374px',
+                    color: 'rgba(255,255,255,0.6)',
+                  }}
+                >
+                  {feature.sub}
+                </p>
+              </div>
+              <div style={{ padding: '24px 24px 0', display: 'flex', justifyContent: 'center', alignItems: 'flex-end' }}>
+                <img
+                  src={feature.img}
+                  alt={feature.label}
+                  style={{
+                    width: '100%',
+                    maxWidth: 420,
+                    borderRadius: '8px 8px 0 0',
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+/* ══════════════════════════════════════════════════════
+   WHAT'S INCLUDED — LIGHT GRAY
+   ══════════════════════════════════════════════════════ */
+const Included = () => (
+  <section style={{ background: '#f5f5f7', padding: '100px 24px' }}>
+    <div className="max-w-[980px] mx-auto">
+      <Reveal>
+        <div className="text-center mb-12">
+          <p
+            style={{
+              fontFamily: sf,
+              fontSize: 14,
+              fontWeight: 600,
+              letterSpacing: '-0.224px',
+              color: 'rgba(0,0,0,0.48)',
+              textTransform: 'uppercase',
+              marginBottom: 12,
+            }}
+          >
+            What's Included
+          </p>
+        </div>
+      </Reveal>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {[
+          { num: '8', unit: 'weekly', detail: 'coaching calls' },
+          { num: '8', unit: 'weeks of', detail: 'graded calls' },
+          { num: '1', unit: 'documented', detail: 'sales process' },
+          { num: '1', unit: 'deployed', detail: 'accountability system' },
+        ].map((item, i) => (
+          <Reveal key={i} delay={i * 0.08}>
+            <div
+              style={{
+                background: '#fff',
+                borderRadius: 12,
+                padding: '32px 28px',
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: sf,
+                  fontSize: 48,
+                  fontWeight: 600,
+                  lineHeight: 1,
+                  letterSpacing: '-0.28px',
+                  color: '#0071e3',
+                }}
+              >
+                {item.num}
+              </span>
+              <p
+                style={{
+                  fontFamily: sf,
+                  fontSize: 21,
+                  fontWeight: 600,
+                  lineHeight: 1.19,
+                  letterSpacing: '0.231px',
+                  color: '#1d1d1f',
+                  marginTop: 4,
+                }}
+              >
+                {item.unit} {item.detail}
+              </p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
+   SUCCESS STORY — BLACK
+   ══════════════════════════════════════════════════════ */
+const SuccessStory = () => (
+  <section style={{ background: '#000', padding: '120px 24px' }}>
+    <div className="max-w-[980px] mx-auto text-center">
+      <Reveal>
+        <p
+          style={{
+            fontFamily: sf,
+            fontSize: 14,
+            fontWeight: 600,
+            letterSpacing: '-0.224px',
+            color: 'rgba(255,255,255,0.48)',
+            textTransform: 'uppercase',
+            marginBottom: 16,
+          }}
+        >
+          Success Story
+        </p>
+      </Reveal>
+      <Reveal delay={0.1}>
+        <h2
+          style={{
+            fontFamily: sf,
+            fontSize: 'clamp(28px, 5vw, 40px)',
+            fontWeight: 600,
+            lineHeight: 1.1,
+            color: '#fff',
+            marginBottom: 8,
+          }}
+        >
+          "He paid attention to my culture first."
+        </h2>
+        <p
+          style={{
+            fontFamily: sf,
+            fontSize: 17,
+            fontWeight: 400,
+            lineHeight: 1.47,
+            letterSpacing: '-0.374px',
+            color: 'rgba(255,255,255,0.48)',
+            marginBottom: 40,
+          }}
+        >
+          Dan Westrick — Allstate Agency Owner
+        </p>
+      </Reveal>
+      <Reveal delay={0.2}>
+        <div className="max-w-sm mx-auto" style={{ borderRadius: 12, overflow: 'hidden' }}>
+          <iframe
+            src="https://fast.wistia.net/embed/iframe/p5r3aelfj0?autoPlay=false&fullscreenButton=true&playButton=true&smallPlayButton=true&volumeControl=true&controlsVisibleOnLoad=true"
+            title="Dan Westrick Success Story"
+            allow="autoplay; fullscreen"
+            allowFullScreen
+            frameBorder="0"
+            scrolling="no"
+            className="w-full"
+            style={{ aspectRatio: '9/16', border: 'none' }}
+          />
+        </div>
+      </Reveal>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
+   PURCHASE + GUARANTEE — LIGHT GRAY
+   ══════════════════════════════════════════════════════ */
+const PurchaseSection = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const programIncludes = [
+    'How to Build a Sales Experience E-Book',
+    '8 Monday video trainings',
+    '8 Wednesday training documents',
+    'Sales team call scoring (4 calls/rep/week, unlimited reps)',
+    'Fully deployed Sales Process',
+    'Accountability Process document',
+    'Consequence Process document',
+    '8 1:1 Zoom Calls w/ Agency Owner or Manager',
+    'Stack Access',
+  ];
+
+  return (
+    <section style={{ background: '#f5f5f7', padding: '120px 24px' }}>
+      <div className="max-w-[600px] mx-auto">
+        {/* Purchase card */}
+        <Reveal>
+          <div style={{ background: '#fff', borderRadius: 12, overflow: 'hidden' }}>
+            {/* Header */}
+            <div style={{ padding: '32px 32px 24px', textAlign: 'center' }}>
+              <p style={{
+                fontFamily: sf, fontSize: 12, fontWeight: 600, letterSpacing: '-0.12px',
+                color: '#0071e3', textTransform: 'uppercase', marginBottom: 8,
+              }}>
+                8 Week Sales Mgmt Training
+              </p>
+
+              {/* Pricing */}
+              <div style={{ marginTop: 16, marginBottom: 8 }}>
+                <p style={{
+                  fontFamily: sf, fontSize: 14, fontWeight: 400, letterSpacing: '-0.224px',
+                  color: 'rgba(0,0,0,0.48)', marginBottom: 4,
+                }}>
+                  Pay in full:
+                </p>
+                <p style={{
+                  fontFamily: sf, fontSize: 48, fontWeight: 600, lineHeight: 1.07,
+                  letterSpacing: '-0.28px', color: '#1d1d1f',
+                }}>
+                  $4,500
+                </p>
+              </div>
+              <div style={{
+                width: 48, height: 1, background: 'rgba(0,0,0,0.08)',
+                margin: '16px auto',
+              }} />
+              <div>
+                <p style={{
+                  fontFamily: sf, fontSize: 14, fontWeight: 400, letterSpacing: '-0.224px',
+                  color: 'rgba(0,0,0,0.48)', marginBottom: 4,
+                }}>
+                  Weekly:
+                </p>
+                <p style={{
+                  fontFamily: sf, fontSize: 28, fontWeight: 600, lineHeight: 1.14,
+                  letterSpacing: '0.196px', color: '#1d1d1f',
+                }}>
+                  $625<span style={{ fontSize: 14, fontWeight: 400, color: 'rgba(0,0,0,0.48)' }}>/week</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Program includes */}
+            <div style={{ padding: '0 32px 32px' }}>
+              <p style={{
+                fontFamily: sf, fontSize: 12, fontWeight: 600, letterSpacing: '-0.12px',
+                color: 'rgba(0,0,0,0.48)', textTransform: 'uppercase', marginBottom: 12,
+              }}>
+                Program Includes:
+              </p>
+              <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+                {programIncludes.map((item) => (
+                  <li key={item} style={{
+                    fontFamily: sf, fontSize: 14, fontWeight: 400, lineHeight: 1.43,
+                    letterSpacing: '-0.224px', color: '#1d1d1f', padding: '6px 0',
+                    borderBottom: '1px solid rgba(0,0,0,0.06)',
+                    display: 'flex', alignItems: 'center', gap: 8,
+                  }}>
+                    <span style={{ color: '#0071e3', fontSize: 14, flexShrink: 0 }}>&#10003;</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Guarantee box */}
+            <div style={{
+              margin: '0 32px 32px', padding: 24, borderRadius: 8,
+              border: '1px solid rgba(0,113,227,0.2)', background: 'rgba(0,113,227,0.03)',
+            }}>
+              <p style={{
+                fontFamily: sf, fontSize: 12, fontWeight: 700, letterSpacing: '0.5px',
+                color: '#0071e3', textTransform: 'uppercase', marginBottom: 8,
+              }}>
+                The Only Guarantee That Matters
+              </p>
+              <p style={{
+                fontFamily: sf, fontSize: 14, fontWeight: 400, lineHeight: 1.43,
+                letterSpacing: '-0.224px', color: '#1d1d1f',
+              }}>
+                If you don't see value after 8 weeks, I'll give you your money back... STRAIGHT UP. Not because the system doesn't work. Because if it doesn't work for you, you weren't working. And I only want money from people who implement. Fact?
+              </p>
+            </div>
+
+            {/* CTA buttons */}
+            <div style={{ padding: '0 32px 32px', display: 'flex', gap: 12 }}>
+              <a
+                href="https://link.fastpaydirect.com/payment-link/67b9e4c1020837472ed0b709"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontFamily: sf, fontSize: 17, fontWeight: 400, color: '#fff',
+                  background: '#0071e3', border: '1px solid transparent', borderRadius: 8,
+                  padding: '12px 0', flex: 1, textAlign: 'center', textDecoration: 'none',
+                  transition: 'all 0.2s',
+                }}
+                className="hover:brightness-110"
+              >
+                Secure PIF
+              </a>
+              <a
+                href="https://link.fastpaydirect.com/payment-link/67b9e53c156a771b286e2ca6"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontFamily: sf, fontSize: 17, fontWeight: 400, color: '#0071e3',
+                  background: 'transparent', border: '1px solid #0071e3', borderRadius: 8,
+                  padding: '12px 0', flex: 1, textAlign: 'center', textDecoration: 'none',
+                  transition: 'all 0.2s',
+                }}
+                className="hover:bg-[#0071e3]/5"
+              >
+                Secure Weekly
+              </a>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Bottom strategy call CTA */}
+        <Reveal>
+          <div className="text-center" style={{ marginTop: 32 }}>
+            <p style={{
+              fontFamily: sf, fontSize: 17, fontWeight: 400, lineHeight: 1.47,
+              letterSpacing: '-0.374px', color: 'rgba(0,0,0,0.48)', marginBottom: 16,
+            }}>
+              Have questions first?
+            </p>
+            <button
+              onClick={() => setModalOpen(true)}
+              style={{
+                fontFamily: sf, fontSize: 14, fontWeight: 400, color: '#0066cc',
+                background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+              }}
+              className="hover:underline"
+            >
+              Book a Strategy Call &gt;
+            </button>
+            <StandardFitModal open={modalOpen} onOpenChange={setModalOpen} />
+          </div>
         </Reveal>
       </div>
-      <StandardFitModal open={finalModalOpen} onOpenChange={setFinalModalOpen} />
     </section>
+  );
+};
+
+/* ══════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════ */
+const Footer = () => (
+  <footer style={{ background: '#f5f5f7', borderTop: '1px solid rgba(0,0,0,0.08)', padding: '20px 24px' }}>
+    <div className="max-w-[980px] mx-auto">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <p
+          style={{
+            fontFamily: sf,
+            fontSize: 12,
+            fontWeight: 400,
+            lineHeight: 1.33,
+            letterSpacing: '-0.12px',
+            color: 'rgba(0,0,0,0.48)',
+          }}
+        >
+          Copyright &copy; {new Date().getFullYear()} Standard Playbook Inc. All rights reserved.
+        </p>
+        <div className="flex items-center gap-6">
+          {[
+            { label: 'Privacy', to: '/privacy' },
+            { label: 'Terms', to: '/terms' },
+            { label: 'Contact', to: '/contact' },
+          ].map((link, i) => (
+            <span key={link.label} className="flex items-center gap-6">
+              {i > 0 && <span style={{ color: 'rgba(0,0,0,0.12)', fontSize: 10 }}>|</span>}
+              <Link
+                to={link.to}
+                style={{
+                  fontFamily: sf,
+                  fontSize: 12,
+                  fontWeight: 400,
+                  letterSpacing: '-0.12px',
+                  color: 'rgba(0,0,0,0.48)',
+                  textDecoration: 'none',
+                }}
+                className="hover:text-[#1d1d1f] transition-colors"
+              >
+                {link.label}
+              </Link>
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </footer>
+);
+
+/* ══════════════════════════════════════════════════════
+   MOBILE STICKY CTA
+   ══════════════════════════════════════════════════════ */
+const MobileStickyBookCTA = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  return (
+    <>
+      <div
+        className="fixed bottom-0 left-0 right-0 md:hidden z-40"
+        style={{
+          background: 'rgba(0,0,0,0.85)',
+          backdropFilter: 'saturate(180%) blur(20px)',
+          WebkitBackdropFilter: 'saturate(180%) blur(20px)',
+          padding: '12px 16px',
+          borderTop: '1px solid rgba(255,255,255,0.08)',
+        }}
+      >
+        <button
+          onClick={() => setModalOpen(true)}
+          style={{
+            fontFamily: sf,
+            fontSize: 17,
+            fontWeight: 400,
+            color: '#fff',
+            background: '#0071e3',
+            border: 'none',
+            borderRadius: 8,
+            padding: '12px 0',
+            width: '100%',
+            cursor: 'pointer',
+          }}
+          className="hover:brightness-110 transition-all"
+        >
+          Book a Strategy Call
+        </button>
+      </div>
+      <StandardFitModal open={modalOpen} onOpenChange={setModalOpen} />
+    </>
   );
 };
 
@@ -447,39 +1085,21 @@ const FinalCTA = () => {
    PAGE
    ══════════════════════════════════════════════════════ */
 const SalesExperience = () => (
-  <div className="bg-black min-h-screen text-white" style={{ overflowX: 'clip' }}>
-    <ScrollytellingHero />
-    <AgencyBrainShowcase />
+  <div style={{ fontFamily: sf, background: '#000' }}>
+    <Nav />
+    <Hero />
+    <GuaranteeBanner />
+    <Problem />
+    <Promise />
+    <ThreeSystems />
+    <AgencyBrainTools />
+    <Included />
     <SuccessStory />
-    <IncludedSection />
-    <FinalCTA />
-
-    {/* Minimal footer */}
-    <footer className="relative z-20 py-12 px-6 text-center border-t border-white/5 bg-[#020617]">
-      <img src={standardLogo} alt="The Standard Playbook - Insurance Agency Coaching" className="mx-auto w-32 mb-4 opacity-50" />
-      <p className="text-gray-600 text-sm">© {new Date().getFullYear()} Standard Playbook. All rights reserved.</p>
-    </footer>
-
+    <PurchaseSection />
+    <Footer />
     <ContentMeta lastUpdated="March 2026" />
-
-    {/* Mobile sticky CTA */}
     <MobileStickyBookCTA />
   </div>
 );
-
-/* ── Mobile sticky CTA component ── */
-const MobileStickyBookCTA = () => {
-  const [mobileModalOpen, setMobileModalOpen] = useState(false);
-  return (
-    <>
-      <div className="fixed bottom-0 left-0 right-0 bg-black/95 backdrop-blur-lg border-t border-white/10 p-4 md:hidden z-40">
-        <Button className="btn-primary w-full" onClick={() => setMobileModalOpen(true)}>
-          Book A Call
-        </Button>
-      </div>
-      <StandardFitModal open={mobileModalOpen} onOpenChange={setMobileModalOpen} />
-    </>
-  );
-};
 
 export default SalesExperience;

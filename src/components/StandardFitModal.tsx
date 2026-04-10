@@ -19,7 +19,7 @@ const StandardFitModal = ({ defaultOpen = false, open, onOpenChange }: StandardF
       open={isControlled ? open : defaultOpen}
       onOpenChange={isControlled ? onOpenChange : undefined}
     >
-      <DialogContent className="sm:max-w-[500px] bg-[#0a1628] border-slate-700 max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
         <DialogTitle className="sr-only">Standard Fit Application</DialogTitle>
         <BookingOnboardingForm
           onComplete={() => onOpenChange?.(false)}
