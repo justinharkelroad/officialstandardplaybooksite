@@ -34,6 +34,7 @@ import NewLanding from "./pages/NewLanding";
 import StandardFit from "./pages/StandardFit";
 import AIWalkthrough from "./pages/AIWalkthrough";
 import AppleMockup from "./pages/AppleMockup";
+import Websites from "./pages/Websites";
 import Particles from "./components/Particles";
 import ScrollToTop from "./components/ScrollToTop";
 import SEOHead from "./components/SEOHead";
@@ -80,6 +81,7 @@ const App = () => (
           <Route path="/fit" element={<StandardFit />} />
           <Route path="/ai-walk-through" element={<AIWalkthrough />} />
           <Route path="/apple-mockup" element={<Navigate to="/" replace />} />
+          <Route path="/websites" element={<Websites />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="*" element={<NotFound />} />
