@@ -40,6 +40,7 @@ const Nav = () => {
     { label: 'Programs', to: '/#programs' },
     { label: 'Training', to: '/sales-experience' },
     { label: 'Contact', to: '/contact' },
+    { label: 'Nutrition', href: 'https://standardnutrition.app' },
   ];
 
   return (
@@ -55,16 +56,29 @@ const Nav = () => {
     >
       <div className="max-w-[980px] mx-auto h-full px-6 flex items-center justify-center">
         <div className="hidden md:flex items-center gap-8">
-          {links.map((link) => (
-            <Link
-              key={link.label}
-              to={link.to}
-              className="text-white/80 hover:text-white transition-colors"
-              style={{ fontSize: 12, fontWeight: 400, letterSpacing: '-0.01em' }}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {links.map((link) =>
+            link.to ? (
+              <Link
+                key={link.label}
+                to={link.to}
+                className="text-white/80 hover:text-white transition-colors"
+                style={{ fontSize: 12, fontWeight: 400, letterSpacing: '-0.01em' }}
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/80 hover:text-white transition-colors"
+                style={{ fontSize: 12, fontWeight: 400, letterSpacing: '-0.01em' }}
+              >
+                {link.label}
+              </a>
+            )
+          )}
         </div>
 
         <button className="md:hidden text-white/80" onClick={() => setMobileOpen(!mobileOpen)}>
@@ -87,17 +101,31 @@ const Nav = () => {
             padding: '20px 24px',
           }}
         >
-          {links.map((link) => (
-            <Link
-              key={link.label}
-              to={link.to}
-              className="block py-3 text-white/80 hover:text-white transition-colors border-b border-white/5"
-              style={{ fontSize: 17, fontWeight: 400, letterSpacing: '-0.374px' }}
-              onClick={() => setMobileOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {links.map((link) =>
+            link.to ? (
+              <Link
+                key={link.label}
+                to={link.to}
+                className="block py-3 text-white/80 hover:text-white transition-colors border-b border-white/5"
+                style={{ fontSize: 17, fontWeight: 400, letterSpacing: '-0.374px' }}
+                onClick={() => setMobileOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block py-3 text-white/80 hover:text-white transition-colors border-b border-white/5"
+                style={{ fontSize: 17, fontWeight: 400, letterSpacing: '-0.374px' }}
+                onClick={() => setMobileOpen(false)}
+              >
+                {link.label}
+              </a>
+            )
+          )}
         </div>
       )}
     </nav>

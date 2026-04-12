@@ -46,6 +46,7 @@ const AppleNav = () => {
     { label: 'Programs', href: '#programs' },
     { label: 'Training', to: '/sales-experience' },
     { label: 'Contact', to: '/contact' },
+    { label: 'Nutrition', href: 'https://standardnutrition.app', external: true },
   ];
 
   return (
@@ -76,6 +77,7 @@ const AppleNav = () => {
               <a
                 key={link.label}
                 href={link.href}
+                {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 className="text-white/80 hover:text-white transition-colors"
                 style={{ fontSize: 12, fontWeight: 400, letterSpacing: '-0.01em' }}
               >
@@ -122,6 +124,7 @@ const AppleNav = () => {
               <a
                 key={link.label}
                 href={link.href}
+                {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 className="block py-3 text-white/80 hover:text-white transition-colors border-b border-white/5"
                 style={{ fontSize: 17, fontWeight: 400, letterSpacing: '-0.374px' }}
                 onClick={() => setMobileOpen(false)}
