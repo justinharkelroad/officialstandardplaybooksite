@@ -1,150 +1,107 @@
-
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useScrollDirection } from '@/hooks/useScrollDirection';
+
+const sf = '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif';
 
 const Navigation = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const scrollDirection = useScrollDirection();
+  const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToSection = (sectionId: string) => {
-    if (isHomePage) {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      window.location.href = `/#${sectionId}`;
-    }
-    setIsMobileMenuOpen(false);
-  };
+  const navLinks = [
+    { label: 'Agency Brain', href: isHomePage ? '#agency-brain' : '/#agency-brain' },
+    { label: 'Programs', href: isHomePage ? '#programs' : '/#programs' },
+    { label: 'Training', to: '/sales-experience' },
+    { label: 'Contact', to: '/contact' },
+    { label: 'Nutrition', href: 'https://standardnutrition.app', external: true },
+  ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'glass-nav py-2' : 'bg-dark-surface/95 backdrop-blur-lg py-4'
-    } ${
-      scrollDirection === 'down' && isScrolled ? '-translate-y-full' : 'translate-y-0'
-    }`}>
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center">
-            <img 
-              src="/lovable-uploads/24e794d7-4e09-4244-9d1e-df95f10e3f3f.png" 
-              alt="The Standard Playbook - Insurance Agency Coaching" 
-              className="h-12 w-auto object-contain"
-              onError={(e) => {
-                console.log('Logo failed to load:', e);
-                e.currentTarget.style.display = 'none';
-              }}
-            />
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {!isHomePage && (
-            <Link to="/" className="text-white hover:text-primary transition-colors">
-                Home
+    <nav
+      className="fixed top-0 left-0 right-0 z-50"
+      style={{
+        height: 48,
+        background: 'rgba(0, 0, 0, 0.8)',
+        backdropFilter: 'saturate(180%) blur(20px)',
+        WebkitBackdropFilter: 'saturate(180%) blur(20px)',
+        fontFamily: sf,
+      }}
+    >
+      <div className="max-w-[980px] mx-auto h-full px-6 flex items-center justify-center">
+        {/* Desktop — centered links */}
+        <div className="hidden md:flex items-center gap-10">
+          {navLinks.map((link) =>
+            link.to ? (
+              <Link
+                key={link.label}
+                to={link.to}
+                className="text-white/80 hover:text-white transition-colors"
+                style={{ fontSize: 12, fontWeight: 400, letterSpacing: '-0.01em' }}
+              >
+                {link.label}
               </Link>
-            )}
-            <Link to="/appinfo" className="text-white hover:text-primary transition-colors link-underline">
-              The App
-            </Link>
-            <Link to="/sales-experience" className="text-white hover:text-primary transition-colors link-underline">
-              8 Week Training
-            </Link>
-            <Link to="/callscoring" className="text-white hover:text-primary transition-colors link-underline">
-              Call Scoring
-            </Link>
-            <Link to="/contact" className="text-white hover:text-primary transition-colors link-underline">
-              Contact
-            </Link>
-            <a href="https://standardnutrition.app" target="_blank" rel="noopener noreferrer" className="text-white hover:text-primary transition-colors link-underline">
-              Nutrition
-            </a>
-          </div>
-
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-white"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {isMobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
+            ) : (
+              <a
+                key={link.label}
+                href={link.href}
+                {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                className="text-white/80 hover:text-white transition-colors"
+                style={{ fontSize: 12, fontWeight: 400, letterSpacing: '-0.01em' }}
+              >
+                {link.label}
+              </a>
+            )
+          )}
         </div>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 animate-fade-in">
-            <div className="flex flex-col space-y-4">
-              {!isHomePage && (
-                <Link 
-                  to="/" 
-                  className="text-white text-lg font-medium hover:text-primary transition-colors py-2" 
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Home
-                </Link>
-              )}
-              <Link 
-                to="/appinfo" 
-                className="text-white text-lg font-medium hover:text-primary transition-colors py-2" 
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                The App
-              </Link>
-              <Link 
-                to="/sales-experience" 
-                className="text-white text-lg font-medium hover:text-primary transition-colors py-2" 
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                8 Week Training
-              </Link>
-              <Link 
-                to="/callscoring" 
-                className="text-white text-lg font-medium hover:text-primary transition-colors py-2" 
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Call Scoring
-              </Link>
-              <Link
-                to="/contact"
-                className="text-white text-lg font-medium hover:text-primary transition-colors py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Contact
-              </Link>
-              <a
-                href="https://standardnutrition.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white text-lg font-medium hover:text-primary transition-colors py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Nutrition
-              </a>
-            </div>
-          </div>
-        )}
+        {/* Mobile hamburger */}
+        <button className="md:hidden text-white/80 ml-auto" onClick={() => setMobileOpen(!mobileOpen)}>
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {mobileOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
       </div>
+
+      {/* Mobile menu overlay */}
+      {mobileOpen && (
+        <div
+          className="md:hidden"
+          style={{
+            background: 'rgba(0, 0, 0, 0.95)',
+            backdropFilter: 'saturate(180%) blur(20px)',
+            padding: '20px 24px',
+          }}
+        >
+          {navLinks.map((link) =>
+            link.to ? (
+              <Link
+                key={link.label}
+                to={link.to}
+                className="block py-3 text-white/80 hover:text-white transition-colors border-b border-white/5"
+                style={{ fontSize: 17, fontWeight: 400, letterSpacing: '-0.374px' }}
+                onClick={() => setMobileOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.label}
+                href={link.href}
+                {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                className="block py-3 text-white/80 hover:text-white transition-colors border-b border-white/5"
+                style={{ fontSize: 17, fontWeight: 400, letterSpacing: '-0.374px' }}
+                onClick={() => setMobileOpen(false)}
+              >
+                {link.label}
+              </a>
+            )
+          )}
+        </div>
+      )}
     </nav>
   );
 };
