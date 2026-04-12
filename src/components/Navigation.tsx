@@ -70,6 +70,9 @@ const Navigation = () => {
             <Link to="/contact" className="text-white hover:text-primary transition-colors link-underline">
               Contact
             </Link>
+            <a href="https://standardnutrition.app" target="_blank" rel="noopener noreferrer" className="text-white hover:text-primary transition-colors link-underline">
+              Nutrition
+            </a>
           </div>
 
 
@@ -122,13 +125,22 @@ const Navigation = () => {
               >
                 Call Scoring
               </Link>
-              <Link 
-                to="/contact" 
-                className="text-white text-lg font-medium hover:text-primary transition-colors py-2" 
+              <Link
+                to="/contact"
+                className="text-white text-lg font-medium hover:text-primary transition-colors py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Contact
               </Link>
+              <a
+                href="https://standardnutrition.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white text-lg font-medium hover:text-primary transition-colors py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Nutrition
+              </a>
             </div>
           </div>
         )}
