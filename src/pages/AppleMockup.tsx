@@ -857,17 +857,6 @@ const CoachingCard = ({ program, onDirectiveClick }: { program: typeof coachingP
           }}>
             Currently Unavailable
           </span>
-        ) : program.action === 'booking' ? (
-          <BookingModal
-            trigger={
-              <button style={{
-                fontFamily: sf, fontSize: 17, fontWeight: 400, color: '#fff', background: '#0071e3',
-                border: '1px solid transparent', borderRadius: 8, padding: '8px 20px', cursor: 'pointer',
-              }} className="hover:brightness-110 transition-all">
-                {program.cta}
-              </button>
-            }
-          />
         ) : program.action === 'directive' ? (
           <button onClick={onDirectiveClick} style={{
             fontFamily: sf, fontSize: 17, fontWeight: 400, color: '#fff', background: '#0071e3',
