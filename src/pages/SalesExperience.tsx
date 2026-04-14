@@ -135,8 +135,8 @@ const Nav = () => {
 /* ══════════════════════════════════════════════════════
    HERO — BLACK, CINEMATIC
    ══════════════════════════════════════════════════════ */
-const Hero = () => {
-  const [modalOpen, setModalOpen] = useState(false);
+const Hero = ({ autoOpenBooking = false }: { autoOpenBooking?: boolean }) => {
+  const [modalOpen, setModalOpen] = useState(autoOpenBooking);
 
   return (
     <section
@@ -1116,10 +1116,10 @@ const MobileStickyBookCTA = () => {
 /* ══════════════════════════════════════════════════════
    PAGE
    ══════════════════════════════════════════════════════ */
-const SalesExperience = () => (
+const SalesExperience = ({ autoOpenBooking = false }: { autoOpenBooking?: boolean }) => (
   <div style={{ fontFamily: sf, background: '#000' }}>
     <Nav />
-    <Hero />
+    <Hero autoOpenBooking={autoOpenBooking} />
     <GuaranteeBanner />
     <Problem />
     <Promise />
