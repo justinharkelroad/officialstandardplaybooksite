@@ -58,6 +58,7 @@ const App = () => (
           <Route path="/boardroom" element={<Boardroom />} />
           <Route path="/directive" element={<Directive />} />
           <Route path="/sales-experience" element={<SalesExperience />} />
+          <Route path="/8-week" element={<SalesExperience autoOpenBooking />} />
           <Route path="/producer-power-up" element={<ProducerPowerUp />} />
           <Route path="/owner-challenge" element={<OwnerChallenge />} />
           <Route path="/the-challenge" element={<TheChallenge />} />
