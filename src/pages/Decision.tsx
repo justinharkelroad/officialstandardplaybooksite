@@ -596,6 +596,37 @@ const CallScoringSection = () => {
                 </div>
               </motion.div>
 
+              {/* Promo code */}
+              <div
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 10,
+                  background: 'rgba(41,151,255,0.08)',
+                  border: '1px solid rgba(41,151,255,0.3)',
+                  borderRadius: 980,
+                  padding: '8px 16px',
+                  marginBottom: 20,
+                }}
+              >
+                <span style={{
+                  fontFamily: sf, fontSize: 12, fontWeight: 400,
+                  letterSpacing: '-0.12px', color: 'rgba(255,255,255,0.7)',
+                }}>
+                  Use code
+                </span>
+                <span style={{
+                  fontFamily: sf, fontSize: 13, fontWeight: 600,
+                  letterSpacing: '0.4px', color: '#2997ff',
+                }}>
+                  STANDARD2026
+                </span>
+                <span style={{
+                  fontFamily: sf, fontSize: 12, fontWeight: 400,
+                  letterSpacing: '-0.12px', color: 'rgba(255,255,255,0.7)',
+                }}>
+                  for 50% off first month
+                </span>
+              </div>
+
               <a
                 href={active.link}
                 target="_blank"
@@ -605,7 +636,9 @@ const CallScoringSection = () => {
                   color: '#fff', background: '#0071e3',
                   border: '1px solid transparent', borderRadius: 980,
                   padding: '12px 28px', textDecoration: 'none',
-                  display: 'inline-block',
+                  display: 'block',
+                  width: 'fit-content',
+                  margin: '0 auto',
                 }}
                 className="hover:brightness-110 transition-all"
               >
