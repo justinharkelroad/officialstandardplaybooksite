@@ -30,7 +30,7 @@ const HeroSection = () => (
       background: '#000',
       minHeight: '70vh',
       paddingTop: 48,
-      backgroundImage: 'linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.7)), url(/hero%20decision.jpg)',
+      backgroundImage: 'linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.7)), url(/hero-decision.jpg)',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }}
