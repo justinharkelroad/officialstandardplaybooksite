@@ -380,9 +380,9 @@ const SystemsSection = ({ onBookCall }: { onBookCall: () => void }) => (
 const weekly = [
   { when: 'Every Monday', body: 'A training video drops. Short, tactical, watchable in 20 minutes.' },
   { when: 'Every Wednesday', body: 'A training document lands. Scripts, frameworks, and the exact words to use.' },
+  { when: 'Every Friday', body: "Your sales team runs a discovery flow and declares the week's takeaways." },
   { when: 'Every week', body: 'A 1:1 Zoom call with Justin — for you, or for your sales manager.' },
   { when: 'Every week', body: "We grade 4 of your team's calls. Each rep. Every week. Unlimited reps." },
-  { when: 'Every Friday', body: "Your sales team runs a discovery flow and declares the week's takeaways." },
   { when: 'By week 8', body: 'Your sales process is documented. Your consequence ladder is installed. Your team is on the system.' },
 ];
 
