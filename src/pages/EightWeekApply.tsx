@@ -169,7 +169,7 @@ const HeroSection = ({ onBookCall }: { onBookCall: () => void }) => (
           }}
         >
           <span className="flex items-center gap-2">
-            <Check size={16} color="#2997ff" /> 30-minute Zoom with Justin
+            <Check size={16} color="#2997ff" /> 45-minute call with Justin
           </span>
           <span className="flex items-center gap-2">
             <Check size={16} color="#2997ff" /> No pitch deck
@@ -299,7 +299,7 @@ const systems = [
   },
   {
     title: 'Consequence Ladder',
-    body: 'What happens when someone misses. Verbal → Written → 1st Action → Fired.',
+    body: "A clear progression for when someone misses the standard — built by you, for your culture. No templates forced on your team.",
   },
 ];
 
@@ -380,8 +380,9 @@ const SystemsSection = ({ onBookCall }: { onBookCall: () => void }) => (
 const weekly = [
   { when: 'Every Monday', body: 'A training video drops. Short, tactical, watchable in 20 minutes.' },
   { when: 'Every Wednesday', body: 'A training document lands. Scripts, frameworks, and the exact words to use.' },
-  { when: 'Every week', body: 'A 1:1 Zoom call with Justin or a Standard coach — for you, or for your sales manager.' },
+  { when: 'Every week', body: 'A 1:1 Zoom call with Justin — for you, or for your sales manager.' },
   { when: 'Every week', body: "We grade 4 of your team's calls. Each rep. Every week. Unlimited reps." },
+  { when: 'Every Friday', body: "Your sales team runs a discovery flow and declares the week's takeaways." },
   { when: 'By week 8', body: 'Your sales process is documented. Your consequence ladder is installed. Your team is on the system.' },
 ];
 
@@ -406,7 +407,7 @@ const HowItWorksSection = () => (
         </div>
       </Reveal>
 
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {weekly.map((w, i) => (
           <Reveal key={i} delay={i * 0.06}>
             <div
@@ -526,115 +527,49 @@ const ToolsSection = () => (
 );
 
 /* ══════════════════════════════════════════════════════
-   8. TESTIMONIALS — WHITE
+   8. TESTIMONIAL — BLACK, VIDEO
    ══════════════════════════════════════════════════════ */
-type Testimonial = {
-  quote: string;
-  name: string;
-  agency: string;
-  location?: string;
-  placeholder?: boolean;
-};
-
-const testimonials: Testimonial[] = [
-  {
-    quote:
-      "Justin built the system I wish I'd had for the last ten years. Our sales team finally runs on a process, not a mood.",
-    name: 'Dan Westrick',
-    agency: 'Westrick Agency',
-    location: 'Allstate',
-  },
-  {
-    quote: '[Placeholder testimonial — swap in a specific outcome: quoted households, EC hit, premium growth, hours reclaimed.]',
-    name: '[Name]',
-    agency: '[Agency Name]',
-    location: '[State]',
-    placeholder: true,
-  },
-  {
-    quote: '[Placeholder testimonial — ideally with a metric like "we added $X in premium in Y weeks" or "our closing ratio went from X to Y".]',
-    name: '[Name]',
-    agency: '[Agency Name]',
-    location: '[State]',
-    placeholder: true,
-  },
-  {
-    quote: '[Placeholder testimonial — speak to the sales-manager pain point: owner got their time back, manager runs the system.]',
-    name: '[Name]',
-    agency: '[Agency Name]',
-    location: '[State]',
-    placeholder: true,
-  },
-  {
-    quote: '[Placeholder testimonial — cross-carrier proof: Farmers, State Farm, or independent agency owner.]',
-    name: '[Name]',
-    agency: '[Agency Name]',
-    location: '[State]',
-    placeholder: true,
-  },
-];
-
 const TestimonialsSection = () => (
-  <section style={{ background: '#fff', padding: '120px 24px' }}>
-    <div className="max-w-[1100px] mx-auto">
+  <section style={{ background: '#000', padding: '120px 24px' }}>
+    <div className="max-w-[980px] mx-auto text-center">
       <Reveal>
-        <div className="text-center mb-16">
-          <p style={{
-            fontFamily: sf, fontSize: 14, fontWeight: 600,
-            letterSpacing: '-0.224px', color: 'rgba(0,0,0,0.48)',
-            textTransform: 'uppercase', marginBottom: 12,
-          }}>
-            Proof
-          </p>
-          <h2 style={{
-            fontFamily: sf, fontSize: 'clamp(32px, 5vw, 44px)', fontWeight: 600,
-            lineHeight: 1.1, letterSpacing: '-0.02em', color: '#1d1d1f', margin: 0,
-          }}>
-            Agencies running on the system.
-          </h2>
+        <p style={{
+          fontFamily: sf, fontSize: 14, fontWeight: 600,
+          letterSpacing: '-0.224px', color: 'rgba(255,255,255,0.48)',
+          textTransform: 'uppercase', marginBottom: 16,
+        }}>
+          Success Story
+        </p>
+      </Reveal>
+      <Reveal delay={0.1}>
+        <h2 style={{
+          fontFamily: sf, fontSize: 'clamp(28px, 5vw, 40px)', fontWeight: 600,
+          lineHeight: 1.1, letterSpacing: '-0.02em', color: '#fff', margin: 0,
+        }}>
+          "He paid attention to my culture first."
+        </h2>
+        <p style={{
+          fontFamily: sf, fontSize: 17, fontWeight: 400,
+          lineHeight: 1.47, letterSpacing: '-0.374px',
+          color: 'rgba(255,255,255,0.48)', marginTop: 12, marginBottom: 40,
+        }}>
+          Dan Westrick &mdash; Allstate Agency Owner
+        </p>
+      </Reveal>
+      <Reveal delay={0.2}>
+        <div className="max-w-sm mx-auto" style={{ borderRadius: 12, overflow: 'hidden' }}>
+          <iframe
+            src="https://fast.wistia.net/embed/iframe/p5r3aelfj0?autoPlay=false&fullscreenButton=true&playButton=true&smallPlayButton=true&volumeControl=true&controlsVisibleOnLoad=true"
+            title="Dan Westrick Success Story"
+            allow="autoplay; fullscreen"
+            allowFullScreen
+            frameBorder="0"
+            scrolling="no"
+            className="w-full"
+            style={{ aspectRatio: '9/16', border: 'none' }}
+          />
         </div>
       </Reveal>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {testimonials.map((t, i) => (
-          <Reveal key={i} delay={(i % 3) * 0.08}>
-            <div
-              style={{
-                background: t.placeholder ? 'rgba(0,113,227,0.04)' : '#f5f5f7',
-                border: t.placeholder ? '1px dashed rgba(0,113,227,0.3)' : 'none',
-                borderRadius: 18,
-                padding: 32,
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                gap: 20,
-              }}
-            >
-              <p style={{
-                fontFamily: sf, fontSize: 17, fontWeight: 400,
-                lineHeight: 1.5, color: t.placeholder ? 'rgba(0,0,0,0.5)' : '#1d1d1f', margin: 0,
-              }}>
-                "{t.quote}"
-              </p>
-              <div>
-                <p style={{
-                  fontFamily: sf, fontSize: 15, fontWeight: 600,
-                  color: '#1d1d1f', margin: 0,
-                }}>
-                  {t.name}
-                </p>
-                <p style={{
-                  fontFamily: sf, fontSize: 13, fontWeight: 400,
-                  color: 'rgba(0,0,0,0.55)', margin: 0, marginTop: 2,
-                }}>
-                  {t.agency}{t.location ? ` · ${t.location}` : ''}
-                </p>
-              </div>
-            </div>
-          </Reveal>
-        ))}
-      </div>
     </div>
   </section>
 );
@@ -657,7 +592,7 @@ const forYou = [
 ];
 
 const FitSection = ({ onBookCall }: { onBookCall: () => void }) => (
-  <section style={{ background: '#000', padding: '120px 24px' }}>
+  <section style={{ background: '#000', padding: '120px 24px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
     <div className="max-w-[1100px] mx-auto">
       <Reveal>
         <div className="text-center mb-16">
@@ -826,7 +761,7 @@ const GuaranteeSection = () => (
 const faqs = [
   {
     q: 'How much time per week does this take?',
-    a: 'The owner commits about 2 hours per week — one 30-minute coaching call and one hour reviewing your team\'s graded calls. Your sales manager commits about 4 hours — training content plus implementing the weekly system.',
+    a: "The owner or sales manager commits about 2 hours per week — one 45-minute coaching call, plus time reviewing your team's graded calls, walking through the week's processes, and making sure the training content is being adhered to.",
   },
   {
     q: 'Do I run the 1:1 calls or does my sales manager?',
@@ -962,7 +897,7 @@ const FinalCTASection = ({ onBookCall }: { onBookCall: () => void }) => (
           fontFamily: sf, fontSize: 'clamp(18px, 2.6vw, 22px)', fontWeight: 400,
           lineHeight: 1.4, color: 'rgba(255,255,255,0.7)', marginTop: 20,
         }}>
-          Book a 30-minute strategy call with Justin.
+          Book a 45-minute strategy call with Justin.
         </p>
       </Reveal>
       <Reveal delay={0.2}>

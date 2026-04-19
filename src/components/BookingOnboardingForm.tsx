@@ -414,7 +414,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
             />
           </div>
           <div>
-            <label style={labelStyle}>Why do you want to book this 30-minute call? *</label>
+            <label style={labelStyle}>Why do you want to book this 45-minute call? *</label>
             <textarea
               placeholder="What do you hope to achieve?"
               value={formData.desired_outcome}
