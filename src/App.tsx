@@ -34,6 +34,7 @@ import NewLanding from "./pages/NewLanding";
 import StandardFit from "./pages/StandardFit";
 import AIWalkthrough from "./pages/AIWalkthrough";
 import AppleMockup from "./pages/AppleMockup";
+import EightWeekApply from "./pages/EightWeekApply";
 import Websites from "./pages/Websites";
 import Particles from "./components/Particles";
 import ScrollToTop from "./components/ScrollToTop";
@@ -59,6 +60,7 @@ const App = () => (
           <Route path="/directive" element={<Directive />} />
           <Route path="/sales-experience" element={<SalesExperience />} />
           <Route path="/8-week" element={<SalesExperience autoOpenBooking />} />
+          <Route path="/8-week-apply" element={<EightWeekApply />} />
           <Route path="/producer-power-up" element={<ProducerPowerUp />} />
           <Route path="/owner-challenge" element={<OwnerChallenge />} />
           <Route path="/the-challenge" element={<TheChallenge />} />
