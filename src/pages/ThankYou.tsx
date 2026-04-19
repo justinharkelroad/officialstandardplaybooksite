@@ -1,6 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const ThankYou = () => {
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const fbq = (window as any).fbq;
+    if (typeof fbq !== 'function') return;
+
+    const params = new URLSearchParams(window.location.search);
+    const eventId =
+      params.get('event_id') ||
+      `schedule_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+    const source = params.get('source') || 'unknown';
+
+    fbq(
+      'track',
+      'Schedule',
+      { content_name: 'Strategy Call Booked', source },
+      { eventID: eventId }
+    );
+  }, []);
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="max-w-2xl mx-auto text-center space-y-8">

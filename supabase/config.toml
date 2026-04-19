@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.send-walkthrough-notification]
 verify_jwt = false
+
+[functions.meta-capi-schedule]
+verify_jwt = false
