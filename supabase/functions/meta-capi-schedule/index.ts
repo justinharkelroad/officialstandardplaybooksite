@@ -18,11 +18,13 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
  * Generate a CAPI access token in Meta Events Manager:
  *   Pixel → Settings → Conversions API → Generate access token
  *
- * Deduplication:
- *   The client-side fbq('track', 'Schedule', ..., { eventID }) on
- *   /thank-you uses the same {event_name, event_id, event_time}
- *   shape so Meta merges the two pings into one conversion.
- *   We set event_id from the Acuity appointment id (stable + unique).
+ * Deduplication (optional):
+ *   Acuity's confirmation page fires fbq('track', 'Schedule')
+ *   client-side via Acuity's HTML Tracking Code box. To dedupe with
+ *   this server-side fire, paste an eventID into that snippet that
+ *   matches `acuity_<id>` (e.g. fbq('track','Schedule', {...},
+ *   { eventID: 'acuity_%appointmentId%' })). Meta merges matching
+ *   {event_name, event_id} pairs into one conversion.
  */
 
 const corsHeaders = {
@@ -118,7 +120,7 @@ const handler = async (req: Request): Promise<Response> => {
           event_time: eventTime,
           event_id: eventId,
           action_source: "website",
-          event_source_url: "https://standardplaybook.com/thank-you",
+          event_source_url: "https://standardplaybook.com/8-week-apply",
           user_data: userData,
           custom_data: {
             content_name: "Strategy Call Booked",
