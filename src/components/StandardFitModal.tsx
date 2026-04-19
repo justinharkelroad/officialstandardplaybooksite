@@ -9,10 +9,19 @@ interface StandardFitModalProps {
   defaultOpen?: boolean;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  source?: string;
 }
 
-const StandardFitModal = ({ defaultOpen = false, open, onOpenChange }: StandardFitModalProps) => {
+const ACUITY_BASE_URL = 'https://AGENCYCOACHING.as.me/standardfit';
+
+const StandardFitModal = ({
+  defaultOpen = false,
+  open,
+  onOpenChange,
+  source = 'standard-fit',
+}: StandardFitModalProps) => {
   const isControlled = open !== undefined;
+  const redirectUrl = `${ACUITY_BASE_URL}?utm_source=${encodeURIComponent(source)}`;
 
   return (
     <Dialog
@@ -23,8 +32,8 @@ const StandardFitModal = ({ defaultOpen = false, open, onOpenChange }: StandardF
         <DialogTitle className="sr-only">Standard Fit Application</DialogTitle>
         <BookingOnboardingForm
           onComplete={() => onOpenChange?.(false)}
-          source="standard-fit"
-          onCompleteRedirectUrl="https://AGENCYCOACHING.as.me/standardfit"
+          source={source}
+          onCompleteRedirectUrl={redirectUrl}
         />
       </DialogContent>
     </Dialog>

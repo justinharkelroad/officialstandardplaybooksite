@@ -1101,7 +1101,7 @@ const EightWeekApply = () => {
       <FAQSection />
       <FinalCTASection onBookCall={openBooking} />
       <MinimalFooter />
-      <StandardFitModal open={bookingOpen} onOpenChange={setBookingOpen} />
+      <StandardFitModal open={bookingOpen} onOpenChange={setBookingOpen} source="8-week-apply" />
     </div>
   );
 };
