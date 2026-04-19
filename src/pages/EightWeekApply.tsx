@@ -452,7 +452,7 @@ const deliverables = [
   { qty: '8', label: 'Friday team discovery flows', sub: "Run by your team to declare the week's takeaways." },
   { qty: '8', label: '1:1 coaching calls with Justin', sub: 'For you, or for your sales manager. 45 minutes.' },
   { qty: '32+', label: 'Graded calls per rep', sub: '4 per rep, every week. Unlimited reps.' },
-  { qty: '∞', label: 'Access to the Standard platform', sub: 'Dashboard, team hub, and training tools.' },
+  { qty: '40+', label: 'Full access to Agency Brain', sub: 'Sequencing, weekly debriefs, Core Four tracking, and unlimited trainings.' },
 ];
 
 const WhatsIncludedSection = ({ onBookCall }: { onBookCall: () => void }) => (
