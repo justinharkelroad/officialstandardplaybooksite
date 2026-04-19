@@ -444,6 +444,114 @@ const HowItWorksSection = () => (
 );
 
 /* ══════════════════════════════════════════════════════
+   6b. WHAT'S INCLUDED — WHITE
+   ══════════════════════════════════════════════════════ */
+const deliverables = [
+  { qty: '8', label: 'Monday training videos', sub: 'Short, tactical, watchable in 20 minutes.' },
+  { qty: '8', label: 'Wednesday playbook documents', sub: 'Scripts, frameworks, and the exact words to use.' },
+  { qty: '8', label: 'Friday team discovery flows', sub: "Run by your team to declare the week's takeaways." },
+  { qty: '8', label: '1:1 coaching calls with Justin', sub: 'For you, or for your sales manager. 45 minutes.' },
+  { qty: '32+', label: 'Graded calls per rep', sub: '4 per rep, every week. Unlimited reps.' },
+  { qty: '∞', label: 'Access to the Standard platform', sub: 'Dashboard, team hub, and training tools.' },
+];
+
+const WhatsIncludedSection = ({ onBookCall }: { onBookCall: () => void }) => (
+  <section style={{ background: '#fff', padding: '120px 24px' }}>
+    <div className="max-w-[1100px] mx-auto">
+      <Reveal>
+        <div className="text-center mb-16">
+          <p style={{
+            fontFamily: sf, fontSize: 14, fontWeight: 600,
+            letterSpacing: '-0.224px', color: 'rgba(0,0,0,0.48)',
+            textTransform: 'uppercase', marginBottom: 12,
+          }}>
+            What's Included
+          </p>
+          <h2 style={{
+            fontFamily: sf, fontSize: 'clamp(32px, 5vw, 44px)', fontWeight: 600,
+            lineHeight: 1.1, letterSpacing: '-0.02em', color: '#1d1d1f', margin: 0,
+          }}>
+            Every deliverable. In writing.
+          </h2>
+        </div>
+      </Reveal>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {deliverables.map((d, i) => (
+          <Reveal key={i} delay={(i % 3) * 0.06}>
+            <div
+              style={{
+                background: '#f5f5f7',
+                borderRadius: 18,
+                padding: 28,
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 10,
+              }}
+            >
+              <span style={{
+                fontFamily: sf, fontSize: 44, fontWeight: 600,
+                lineHeight: 1, letterSpacing: '-0.03em',
+                color: '#0071e3',
+              }}>
+                {d.qty}
+              </span>
+              <p style={{
+                fontFamily: sf, fontSize: 18, fontWeight: 600,
+                color: '#1d1d1f', margin: 0, letterSpacing: '-0.01em',
+              }}>
+                {d.label}
+              </p>
+              <p style={{
+                fontFamily: sf, fontSize: 14, fontWeight: 400,
+                lineHeight: 1.5, color: 'rgba(0,0,0,0.6)', margin: 0,
+              }}>
+                {d.sub}
+              </p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal delay={0.3}>
+        <div
+          style={{
+            marginTop: 40,
+            padding: '28px 32px',
+            borderRadius: 18,
+            background: '#000',
+            color: '#fff',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 14,
+          }}
+          className="md:flex-row md:items-center md:justify-between"
+        >
+          <div style={{ flex: 1 }}>
+            <p style={{
+              fontFamily: sf, fontSize: 13, fontWeight: 600,
+              letterSpacing: '0.08em', textTransform: 'uppercase',
+              color: '#2997ff', margin: 0, marginBottom: 6,
+            }}>
+              By Week 8
+            </p>
+            <p style={{
+              fontFamily: sf, fontSize: 17, fontWeight: 500,
+              lineHeight: 1.4, color: '#fff', margin: 0,
+            }}>
+              Your sales process, accountability framework, and consequence
+              ladder &mdash; documented, installed, and running.
+            </p>
+          </div>
+          <BookCallButton onClick={onBookCall} />
+        </div>
+      </Reveal>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
    7. TOOLS PREVIEW — LIGHT GRAY
    ══════════════════════════════════════════════════════ */
 const tools = [
@@ -985,6 +1093,7 @@ const EightWeekApply = () => {
       <PromiseSection />
       <SystemsSection onBookCall={openBooking} />
       <HowItWorksSection />
+      <WhatsIncludedSection onBookCall={openBooking} />
       <ToolsSection />
       <TestimonialsSection />
       <FitSection onBookCall={openBooking} />

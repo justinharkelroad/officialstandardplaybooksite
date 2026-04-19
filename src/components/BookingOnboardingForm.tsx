@@ -231,6 +231,13 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
         },
       }).catch(err => console.error('Email notification error:', err));
 
+      if (typeof window !== 'undefined' && typeof (window as any).fbq === 'function') {
+        (window as any).fbq('track', 'Lead', {
+          content_name: 'Strategy Call Pre-Form',
+          source,
+        });
+      }
+
       if (onCompleteRedirectUrl) {
         window.location.href = onCompleteRedirectUrl;
       } else {
