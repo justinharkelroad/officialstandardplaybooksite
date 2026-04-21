@@ -264,7 +264,7 @@ const PromiseSection = () => (
             margin: 0,
           }}
         >
-          In 8 weeks, you'll have certainty.
+          In 8 weeks, the framework is installed. The rhythm is running. Your team is operating from it.
         </h2>
       </Reveal>
       <Reveal delay={0.2}>
@@ -847,11 +847,13 @@ const GuaranteeSection = () => (
             lineHeight: 1.55, color: 'rgba(0,0,0,0.7)', maxWidth: 640,
           }}>
             <p style={{ margin: 0 }}>
-              If you don't see value after 8 weeks, I'll give you your money back. Straight up.
+              The program is backed by a full money-back guarantee. Stay in the 8 weeks,
+              do the work, and if you want your money back &mdash; ask. You'll get it.
             </p>
             <p style={{ marginTop: 14 }}>
-              Not because the system doesn't work. Because if it doesn't work for you,
-              you weren't working.
+              The guarantee isn't there because this is a silver bullet. It's there because
+              what you do inside the 8 weeks determines what you get out of it. The refund
+              is yours either way.
             </p>
             <p style={{ marginTop: 14, color: '#1d1d1f', fontWeight: 500 }}>
               I only want money from people who implement.
@@ -881,7 +883,7 @@ const faqs = [
   },
   {
     q: 'What size agency does this work for?',
-    a: 'Anywhere from 2-person agencies up to 20+ person operations. The system scales. The bigger the team, the faster you see ROI.',
+    a: 'Anywhere from 2-person agencies to 20+ person operations. Bigger teams tend to get more leverage from the weekly accountability rhythm — more producers to grade, more pressure points to work on.',
   },
   {
     q: 'What if my sales manager quits halfway through?',
