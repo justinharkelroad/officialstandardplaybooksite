@@ -1050,7 +1050,7 @@ const MinimalFooter = () => (
         fontFamily: sf, fontSize: 12, fontWeight: 400, lineHeight: 1.33,
         letterSpacing: '-0.12px', color: 'rgba(0,0,0,0.48)', margin: 0,
       }}>
-        Copyright &copy; {new Date().getFullYear()} Standard Playbook Inc. All rights reserved.
+        A Standard Playbook program. Copyright &copy; {new Date().getFullYear()} Standard Playbook Inc. All rights reserved.
       </p>
       <div className="flex items-center gap-6">
         <Link
