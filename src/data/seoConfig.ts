@@ -151,7 +151,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
   '/8-week-apply': {
     title: '8-Week Sales Management Experience | Apply Now | The Standard Playbook',
-    description: 'Stop managing chaos. Start running a system. Book a 30-minute strategy call with Justin. Built for Allstate, Farmers, and State Farm agency owners.',
+    description: 'Stop managing chaos. Start running a system. Book a 45-minute strategy call with Justin. Built for Allstate, Farmers, and State Farm agency owners.',
     keywords: ['sales management experience', 'agency coaching apply', 'strategy call', '8 week sales program'],
     ogImage: OG_IMAGE,
     type: 'article',
