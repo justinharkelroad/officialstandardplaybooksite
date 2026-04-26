@@ -635,49 +635,120 @@ const ToolsSection = () => (
 );
 
 /* ══════════════════════════════════════════════════════
-   8. TESTIMONIAL — BLACK, VIDEO
+   8. TESTIMONIALS — BLACK, VIDEO + TEXT GRID
    ══════════════════════════════════════════════════════ */
+const textTestimonials = [
+  {
+    quote: "Creating and enforcing a standard is something every leader needs help with. Working with Justin was a game changer — you don't realize what you're missing until you have someone who truly understands your challenges and helps deliver results that matter. Accountability was something I struggled to implement, but once we established and enforced our own standards, it forced everyone to level up.",
+    name: 'Luis S.',
+    location: 'Arkansas',
+  },
+  {
+    quote: "Working with Justin over the 8-week training was eye-opening and transformative — he showed me how to become a stronger, more accountable leader for my team and can truly bulletproof your agency, as long as you're able to hold yourself accountable as well.",
+    name: 'Jonas B.',
+    location: 'Florida',
+  },
+  {
+    quote: "The point in the 8 weeks that shifted for my manager was when I realized that the structure we were so focused on wasn't even the issue. It was the confidence to have the conversations she lacked. Justin installed that into the coaching and it was night and day by the time it was over.",
+    name: 'Stacey C.',
+    location: 'Utah',
+  },
+];
+
 const TestimonialsSection = () => (
   <section style={{ background: '#000', padding: '120px 24px' }}>
-    <div className="max-w-[980px] mx-auto text-center">
-      <Reveal>
-        <p style={{
-          fontFamily: sf, fontSize: 14, fontWeight: 600,
-          letterSpacing: '-0.224px', color: 'rgba(255,255,255,0.48)',
-          textTransform: 'uppercase', marginBottom: 16,
-        }}>
-          Success Story
-        </p>
-      </Reveal>
-      <Reveal delay={0.1}>
-        <h2 style={{
-          fontFamily: sf, fontSize: 'clamp(28px, 5vw, 40px)', fontWeight: 600,
-          lineHeight: 1.1, letterSpacing: '-0.02em', color: '#fff', margin: 0,
-        }}>
-          "He paid attention to my culture first."
-        </h2>
-        <p style={{
-          fontFamily: sf, fontSize: 17, fontWeight: 400,
-          lineHeight: 1.47, letterSpacing: '-0.374px',
-          color: 'rgba(255,255,255,0.48)', marginTop: 12, marginBottom: 40,
-        }}>
-          Dan Westrick &mdash; Allstate Agency Owner
-        </p>
-      </Reveal>
-      <Reveal delay={0.2}>
-        <div className="max-w-sm mx-auto" style={{ borderRadius: 12, overflow: 'hidden' }}>
-          <iframe
-            src="https://fast.wistia.net/embed/iframe/p5r3aelfj0?autoPlay=false&fullscreenButton=true&playButton=true&smallPlayButton=true&volumeControl=true&controlsVisibleOnLoad=true"
-            title="Dan Westrick Success Story"
-            allow="autoplay; fullscreen"
-            allowFullScreen
-            frameBorder="0"
-            scrolling="no"
-            className="w-full"
-            style={{ aspectRatio: '9/16', border: 'none' }}
-          />
-        </div>
-      </Reveal>
+    <div className="max-w-[1100px] mx-auto">
+      <div className="max-w-[980px] mx-auto text-center">
+        <Reveal>
+          <p style={{
+            fontFamily: sf, fontSize: 14, fontWeight: 600,
+            letterSpacing: '-0.224px', color: 'rgba(255,255,255,0.48)',
+            textTransform: 'uppercase', marginBottom: 16,
+          }}>
+            Testimonials
+          </p>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <h2 style={{
+            fontFamily: sf, fontSize: 'clamp(28px, 5vw, 40px)', fontWeight: 600,
+            lineHeight: 1.1, letterSpacing: '-0.02em', color: '#fff', margin: 0,
+          }}>
+            What owners are saying.
+          </h2>
+        </Reveal>
+        <Reveal delay={0.2}>
+          <div className="max-w-sm mx-auto" style={{ borderRadius: 12, overflow: 'hidden', marginTop: 48 }}>
+            <iframe
+              src="https://fast.wistia.net/embed/iframe/p5r3aelfj0?autoPlay=false&fullscreenButton=true&playButton=true&smallPlayButton=true&volumeControl=true&controlsVisibleOnLoad=true"
+              title="Dan Westrick Success Story"
+              allow="autoplay; fullscreen"
+              allowFullScreen
+              frameBorder="0"
+              scrolling="no"
+              className="w-full"
+              style={{ aspectRatio: '9/16', border: 'none' }}
+            />
+          </div>
+        </Reveal>
+        <Reveal delay={0.3}>
+          <p style={{
+            fontFamily: sf, fontSize: 19, fontWeight: 600,
+            lineHeight: 1.3, letterSpacing: '-0.022em',
+            color: '#fff', marginTop: 24, marginBottom: 4,
+          }}>
+            "He paid attention to my culture first."
+          </p>
+          <p style={{
+            fontFamily: sf, fontSize: 15, fontWeight: 400,
+            lineHeight: 1.47, letterSpacing: '-0.224px',
+            color: 'rgba(255,255,255,0.48)', margin: 0,
+          }}>
+            Dan Westrick &mdash; Allstate Agency Owner
+          </p>
+        </Reveal>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch" style={{ marginTop: 80 }}>
+        {textTestimonials.map((t, i) => (
+          <Reveal key={t.name} delay={i * 0.1}>
+            <div
+              style={{
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                borderRadius: 18,
+                padding: 32,
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <p style={{
+                fontFamily: sf, fontSize: 16, fontWeight: 400,
+                lineHeight: 1.55, letterSpacing: '-0.022em',
+                color: 'rgba(255,255,255,0.85)',
+                margin: 0, flex: 1,
+              }}>
+                "{t.quote}"
+              </p>
+              <div style={{ marginTop: 24 }}>
+                <p style={{
+                  fontFamily: sf, fontSize: 15, fontWeight: 600,
+                  letterSpacing: '-0.022em', color: '#fff', margin: 0,
+                }}>
+                  {t.name}
+                </p>
+                <p style={{
+                  fontFamily: sf, fontSize: 14, fontWeight: 400,
+                  letterSpacing: '-0.022em', color: 'rgba(255,255,255,0.48)',
+                  margin: 0, marginTop: 2,
+                }}>
+                  {t.location}
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
     </div>
   </section>
 );
