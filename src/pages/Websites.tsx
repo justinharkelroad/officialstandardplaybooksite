@@ -298,8 +298,10 @@ const Pricing = ({ onOpenInquiry }: { onOpenInquiry: () => void }) => (
               </p>
             </Disclosure>
 
-            <button
-              onClick={onOpenInquiry}
+            <a
+              href="https://buy.stripe.com/3cI6oH3GK0Ye6FW7lO4Vy0p"
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 fontFamily: sf,
                 fontSize: 15,
@@ -313,12 +315,14 @@ const Pricing = ({ onOpenInquiry }: { onOpenInquiry: () => void }) => (
                 cursor: 'pointer',
                 alignSelf: 'flex-start',
                 transition: 'background 0.2s',
+                textDecoration: 'none',
+                display: 'inline-block',
               }}
               onMouseEnter={e => (e.currentTarget.style.background = '#0077ed')}
               onMouseLeave={e => (e.currentTarget.style.background = '#0071e3')}
             >
-              Get started
-            </button>
+              Buy now
+            </a>
           </div>
         </Reveal>
 
