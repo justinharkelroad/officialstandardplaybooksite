@@ -7,6 +7,10 @@ import DirectiveApplicationModal from '@/components/DirectiveApplicationModal';
 import StandardFitModal from '@/components/StandardFitModal';
 
 const sf = '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif';
+const AGENCYBRAIN_CHECKOUT_URL = 'https://wjqyccbytctqwceuhzhk.supabase.co/functions/v1/create-agencybrain-checkout';
+const AGENCYBRAIN_SUCCESS_URL = 'https://myagencybrain.com/agencybrain-checkout-success?session_id={CHECKOUT_SESSION_ID}';
+
+type AgencyBrainPlanId = 'agencybrain_core' | 'agencybrain_pro';
 
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
   <motion.div
@@ -157,7 +161,7 @@ const coachingPrograms: Program[] = [
     details: [
       'Live monthly group coaching with Justin',
       'Hot-seat problem solving with other owners',
-      'Lvl 1 Agency Brain platform access',
+      'AgencyBrain Core Access',
       'Team training library + scripts',
       'Ongoing accountability between calls',
       'Private Boardroom community access',
@@ -338,6 +342,230 @@ const CoachingCard = ({ program, onDirectiveClick }: { program: Program; onDirec
     </div>
   );
 };
+
+/* ══════════════════════════════════════════════════════
+   SOFTWARE PLANS
+   ══════════════════════════════════════════════════════ */
+interface SoftwarePlan {
+  planId: AgencyBrainPlanId;
+  label: string;
+  title: string;
+  description: string;
+  details: string[];
+  price: string;
+  cta: string;
+  featured?: boolean;
+}
+
+const softwarePlans: SoftwarePlan[] = [
+  {
+    planId: 'agencybrain_core',
+    label: 'Limited AI Features',
+    title: 'Agency Brain Core',
+    description: 'Software-only access to the operating system for your agency: dashboards, training, accountability, and team management.',
+    details: [
+      'Sales dashboard + analytics',
+      'Pipeline intelligence',
+      'Team training library',
+      'Renewal tracking',
+      'Cancel audit + winback',
+      'Habit tracking + target setting',
+      'Phone report analytics',
+      '20 AI call scoring credits per month',
+      'Unlimited users',
+    ],
+    price: '$299/mo',
+    cta: 'Start Core',
+  },
+  {
+    planId: 'agencybrain_pro',
+    label: 'Full AI Feature Access',
+    title: 'Agency Brain Pro',
+    description: 'Full software access with expanded call scoring, AI roleplay, and the complete Agency Brain toolkit.',
+    details: [
+      'Everything in Core +',
+      '100 AI call scoring credits per month',
+      'AI roleplay trainer',
+      'Business metrics analyzation tool',
+      'Marketing ROI tracking',
+      'Phone report analytics',
+      'Advanced sales analytics',
+      'Priority support',
+      'Full 1:1 client-level platform access',
+      'Unlimited users',
+    ],
+    price: '$599/mo',
+    cta: 'Start Pro',
+    featured: true,
+  },
+];
+
+const SoftwareCard = ({ plan }: { plan: SoftwarePlan }) => {
+  const [expanded, setExpanded] = useState(false);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
+  const startCheckout = async () => {
+    setIsCheckingOut(true);
+    setCheckoutError(null);
+
+    try {
+      const response = await fetch(AGENCYBRAIN_CHECKOUT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          plan_id: plan.planId,
+          success_url: AGENCYBRAIN_SUCCESS_URL,
+          cancel_url: window.location.href,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data?.url) {
+        throw new Error(data?.error || 'Unable to start checkout.');
+      }
+
+      window.location.href = data.url;
+    } catch (error) {
+      setCheckoutError(error instanceof Error ? error.message : 'Unable to start checkout.');
+      setIsCheckingOut(false);
+    }
+  };
+
+  return (
+    <div
+      style={{
+        background: '#fff',
+        borderRadius: 12,
+        padding: 32,
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        border: plan.featured ? '2px solid #0071e3' : 'none',
+      }}
+    >
+      {plan.featured && (
+        <p style={{
+          fontFamily: sf, fontSize: 11, fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase',
+          color: '#fff', background: '#0071e3', borderRadius: 980, padding: '4px 12px',
+          display: 'inline-block', width: 'fit-content', marginBottom: 12,
+        }}>
+          Most Popular
+        </p>
+      )}
+      <p style={{
+        fontFamily: sf, fontSize: 12, fontWeight: 600, lineHeight: 1.33, letterSpacing: '-0.12px',
+        color: '#0071e3', textTransform: 'uppercase', marginBottom: 8,
+      }}>
+        {plan.label}
+      </p>
+      <h3 style={{
+        fontFamily: sf, fontSize: 28, fontWeight: 600, lineHeight: 1.14,
+        letterSpacing: '0.196px', color: '#1d1d1f', marginBottom: 8,
+      }}>
+        {plan.title}
+      </h3>
+      <p style={{
+        fontFamily: sf, fontSize: 17, fontWeight: 400, lineHeight: 1.47, letterSpacing: '-0.374px',
+        color: 'rgba(0,0,0,0.48)', marginBottom: expanded ? 16 : 24, flex: expanded ? undefined : 1,
+      }}>
+        {plan.description}
+      </p>
+
+      <DetailList details={plan.details} expanded={expanded} />
+
+      <p style={{
+        fontFamily: sf, fontSize: 40, fontWeight: 600, lineHeight: 1.07, letterSpacing: '-0.28px',
+        color: '#1d1d1f', marginBottom: 4,
+      }}>
+        {plan.price}
+      </p>
+      <p style={{
+        fontFamily: sf, fontSize: 12, fontWeight: 400, letterSpacing: '-0.12px',
+        color: 'rgba(0,0,0,0.36)', marginBottom: 20,
+      }}>
+        per month
+      </p>
+
+      <div className="flex items-center gap-4 flex-wrap">
+        <button
+          type="button"
+          onClick={startCheckout}
+          disabled={isCheckingOut}
+          style={{
+            fontFamily: sf, fontSize: 17, fontWeight: 400,
+            color: plan.featured ? '#fff' : '#0071e3',
+            background: plan.featured ? '#0071e3' : 'transparent',
+            border: plan.featured ? '1px solid transparent' : '1px solid #0071e3',
+            borderRadius: 8, padding: '8px 20px',
+            cursor: isCheckingOut ? 'not-allowed' : 'pointer',
+            opacity: isCheckingOut ? 0.7 : 1,
+          }}
+          className="hover:brightness-110 transition-all"
+        >
+          {isCheckingOut ? 'Opening checkout...' : plan.cta}
+        </button>
+
+        <button
+          onClick={() => setExpanded(!expanded)}
+          style={{
+            fontFamily: sf, fontSize: 14, fontWeight: 400, lineHeight: 1.43, letterSpacing: '-0.224px',
+            color: '#0066cc', background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+          }}
+          className="hover:underline"
+        >
+          {expanded ? 'Less' : 'Learn more'} {expanded ? '\u2303' : '>'}
+        </button>
+      </div>
+
+      {checkoutError && (
+        <p style={{
+          fontFamily: sf, fontSize: 13, fontWeight: 400, lineHeight: 1.38,
+          color: '#b42318', marginTop: 12,
+        }}>
+          {checkoutError}
+        </p>
+      )}
+    </div>
+  );
+};
+
+const SoftwarePlansSection = () => (
+  <section id="software" style={{ background: '#f5f5f7', padding: '0 24px 120px' }}>
+    <div className="max-w-[980px] mx-auto">
+      <Reveal>
+        <div className="text-center mb-12">
+          <p style={{
+            fontFamily: sf, fontSize: 14, fontWeight: 600, lineHeight: 1.29,
+            letterSpacing: '-0.224px', color: 'rgba(0,0,0,0.48)',
+            textTransform: 'uppercase', marginBottom: 12,
+          }}>
+            Software Only
+          </p>
+          <h2 style={{
+            fontFamily: sf, fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 600,
+            lineHeight: 1.07, letterSpacing: '-0.28px', color: '#1d1d1f',
+          }}>
+            Just Agency Brain.
+          </h2>
+          <p style={{
+            fontFamily: sf, fontSize: 17, fontWeight: 400, lineHeight: 1.47,
+            letterSpacing: '-0.374px', color: 'rgba(0,0,0,0.48)', marginTop: 8,
+          }}>
+            Get the platform without coaching. Core and Pro both create instant checkout access.
+          </p>
+        </div>
+      </Reveal>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[720px] mx-auto">
+        {softwarePlans.map((plan) => (
+          <SoftwareCard key={plan.title} plan={plan} />
+        ))}
+      </div>
+    </div>
+  </section>
+);
 
 /* ══════════════════════════════════════════════════════
    PROGRAMS SECTION — LIGHT GRAY
@@ -752,6 +980,7 @@ const Decision = () => (
     <Navigation />
     <HeroSection />
     <ProgramsSection />
+    <SoftwarePlansSection />
     <CallScoringSection />
     <NotSureSection />
     <AppleFooter />

@@ -22,6 +22,10 @@ import targetSettingImg from '@/assets/target-setting.png';
 
 /* ── Apple typography helpers ── */
 const sf = '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif';
+const AGENCYBRAIN_CHECKOUT_URL = 'https://wjqyccbytctqwceuhzhk.supabase.co/functions/v1/create-agencybrain-checkout';
+const AGENCYBRAIN_SUCCESS_URL = 'https://myagencybrain.com/agencybrain-checkout-success?session_id={CHECKOUT_SESSION_ID}';
+
+type AgencyBrainPlanId = 'agencybrain_core' | 'agencybrain_pro';
 
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
   <motion.div
@@ -693,7 +697,7 @@ const coachingPrograms = [
     details: [
       'Live monthly group coaching with Justin',
       'Hot-seat problem solving with other owners',
-      'Lvl 1 Agency Brain platform access',
+      'AgencyBrain Core Access',
       'Team training library + scripts',
       'Ongoing accountability between calls',
       'Private Boardroom community access',
@@ -746,9 +750,10 @@ const coachingPrograms = [
 /* --- Software plans --- */
 const softwarePlans = [
   {
-    label: 'Essentials',
-    title: 'Agency Brain Essentials',
-    description: 'The core operating system for your agency — pipeline, dashboards, training, and team management.',
+    planId: 'agencybrain_core' as AgencyBrainPlanId,
+    label: 'Limited AI Features',
+    title: 'Agency Brain Core',
+    description: 'Software-only access to the operating system for your agency — dashboards, training, accountability, and team management.',
     details: [
       'Sales dashboard + analytics',
       'Pipeline intelligence',
@@ -757,20 +762,20 @@ const softwarePlans = [
       'Cancel audit + winback',
       'Habit tracking + target setting',
       'Phone report analytics',
-      '20 call scoring calls per month',
+      '20 AI call scoring credits per month',
       'Unlimited users',
     ],
     price: '$299/mo',
-    href: '#', // TODO: Stripe link
-    cta: 'Get Started',
+    cta: 'Start Core',
   },
   {
-    label: 'Pro',
+    planId: 'agencybrain_pro' as AgencyBrainPlanId,
+    label: 'Full AI Feature Access',
     title: 'Agency Brain Pro',
-    description: 'Everything in Essentials plus expanded call scoring, AI roleplay, and the full toolkit that 1:1 coaching clients use.',
+    description: 'Full software access with Hunter Calls, expanded call scoring, AI roleplay, and the complete Agency Brain toolkit.',
     details: [
-      'Everything in Essentials +',
-      '100 call scoring calls per month',
+      'Everything in Core +',
+      '100 AI call scoring credits per month',
       'AI roleplay trainer',
       'Business metrics analyzation tool',
       'Marketing ROI tracking',
@@ -781,8 +786,7 @@ const softwarePlans = [
       'Unlimited users',
     ],
     price: '$599/mo',
-    href: '#', // TODO: Stripe link
-    cta: 'Get Started',
+    cta: 'Start Pro',
     featured: true,
   },
 ];
@@ -894,6 +898,36 @@ const CoachingCard = ({ program, onDirectiveClick }: { program: typeof coachingP
 /* --- Software card --- */
 const SoftwareCard = ({ plan }: { plan: typeof softwarePlans[0] }) => {
   const [expanded, setExpanded] = useState(false);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
+  const startCheckout = async () => {
+    setIsCheckingOut(true);
+    setCheckoutError(null);
+
+    try {
+      const response = await fetch(AGENCYBRAIN_CHECKOUT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          plan_id: plan.planId,
+          success_url: AGENCYBRAIN_SUCCESS_URL,
+          cancel_url: window.location.href,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data?.url) {
+        throw new Error(data?.error || 'Unable to start checkout.');
+      }
+
+      window.location.href = data.url;
+    } catch (error) {
+      setCheckoutError(error instanceof Error ? error.message : 'Unable to start checkout.');
+      setIsCheckingOut(false);
+    }
+  };
 
   return (
     <div
@@ -951,21 +985,23 @@ const SoftwareCard = ({ plan }: { plan: typeof softwarePlans[0] }) => {
       </p>
 
       <div className="flex items-center gap-4 flex-wrap">
-        <a
-          href={plan.href}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
+          onClick={startCheckout}
+          disabled={isCheckingOut}
           style={{
             fontFamily: sf, fontSize: 17, fontWeight: 400,
             color: plan.featured ? '#fff' : '#0071e3',
             background: plan.featured ? '#0071e3' : 'transparent',
             border: plan.featured ? '1px solid transparent' : '1px solid #0071e3',
             borderRadius: 8, padding: '8px 20px', textDecoration: 'none',
+            cursor: isCheckingOut ? 'not-allowed' : 'pointer',
+            opacity: isCheckingOut ? 0.7 : 1,
           }}
           className="hover:brightness-110 transition-all"
         >
-          {plan.cta}
-        </a>
+          {isCheckingOut ? 'Opening checkout...' : plan.cta}
+        </button>
 
         <button
           onClick={() => setExpanded(!expanded)}
@@ -978,6 +1014,15 @@ const SoftwareCard = ({ plan }: { plan: typeof softwarePlans[0] }) => {
           {expanded ? 'Less' : 'Learn more'} {expanded ? '\u2303' : '>'}
         </button>
       </div>
+
+      {checkoutError && (
+        <p style={{
+          fontFamily: sf, fontSize: 13, fontWeight: 400, lineHeight: 1.38,
+          color: '#b42318', marginTop: 12,
+        }}>
+          {checkoutError}
+        </p>
+      )}
     </div>
   );
 };
@@ -988,7 +1033,7 @@ const ProgramsSection = () => {
   const [directiveModalOpen, setDirectiveModalOpen] = useState(false);
   const [fitModalOpen, setFitModalOpen] = useState(false);
 
-  const SHOW_SOFTWARE_TAB = false; // flip to true to re-enable software tab
+  const SHOW_SOFTWARE_TAB = true;
   const tabs = [
     { key: 'coaching' as const, label: 'Coaching Programs' },
     ...(SHOW_SOFTWARE_TAB ? [{ key: 'software' as const, label: 'Software Only' }] : []),
