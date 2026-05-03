@@ -48,7 +48,8 @@ const AppleNav = () => {
   const navLinks = [
     { label: 'Agency Brain', href: '#agency-brain' },
     { label: 'Programs', href: '#programs' },
-    { label: 'Training', to: '/sales-experience' },
+    { label: '8-Week', to: '/sales-experience' },
+    { label: 'Training', to: '/training' },
     { label: 'Contact', to: '/contact' },
     { label: 'Nutrition', href: 'https://standardnutrition.app', external: true },
   ];
