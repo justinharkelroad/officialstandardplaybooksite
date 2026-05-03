@@ -11,7 +11,8 @@ const Navigation = () => {
   const navLinks = [
     { label: 'Agency Brain', href: isHomePage ? '#agency-brain' : '/#agency-brain' },
     { label: 'Programs', href: isHomePage ? '#programs' : '/#programs' },
-    { label: 'Training', to: '/sales-experience' },
+    { label: '8-Week', to: '/sales-experience' },
+    { label: 'Training', to: '/training' },
     { label: 'Contact', to: '/contact' },
     { label: 'Nutrition', href: 'https://standardnutrition.app', external: true },
   ];
