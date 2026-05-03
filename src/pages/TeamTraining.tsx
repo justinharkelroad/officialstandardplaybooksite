@@ -377,6 +377,140 @@ const TeamTraining = () => {
         </div>
       </section>
 
+      {/* SECTION 3.6 — AI COMPREHENSION CHECKING (dark) */}
+      <section className="bg-[#0B0B0C] text-white">
+        <div className="max-w-6xl mx-auto px-6 py-28 md:py-48">
+          <div className="max-w-3xl">
+            <Kicker tone="dark">Comprehension, not completion</Kicker>
+            <h2
+              className="mt-6 font-semibold"
+              style={{ fontSize: 'clamp(32px, 5vw, 48px)', letterSpacing: '-0.025em', lineHeight: 1.1 }}
+            >
+              Your team can't fake their way through it.
+            </h2>
+            <p className="mt-6 text-white/75" style={{ fontSize: '21px', lineHeight: 1.55 }}>
+              Every quiz includes mandatory reflection questions. Producers and service reps answer in their own words. The AI grades the answer on a four-part rubric — specificity, comprehension, actionability, alignment — and tells you who actually engaged with the lesson and who coasted.
+            </p>
+          </div>
+
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                step: '01',
+                title: 'Open-ended answers, AI-graded',
+                body: 'No multiple-choice loopholes. Producers explain in their own words. The AI scores the answer 0 to 10 and flags vague or off-topic responses against the actual lesson content.',
+              },
+              {
+                step: '02',
+                title: 'Specific feedback, not just a score',
+                body: 'The manager dashboard shows the score plus what was missed — "didn\'t reference the lesson," "too generic," "skipped the framework" — with the specific lesson highlights they should have hit.',
+              },
+              {
+                step: '03',
+                title: 'Trained on agency context',
+                body: 'The evaluator knows what a coverage conversation sounds like, what a real discovery answer looks like, what a producer should say to a price objection. Generic LMS bots can\'t grade this. Ours does.',
+              },
+            ].map((step) => (
+              <div
+                key={step.step}
+                className="rounded-xl p-8"
+                style={{ backgroundColor: 'rgba(255,255,255,0.04)' }}
+              >
+                <span className="font-semibold text-[#2997FF]" style={{ fontSize: '15px', letterSpacing: '0.02em' }}>
+                  {step.step}
+                </span>
+                <h4
+                  className="mt-3 font-semibold text-white"
+                  style={{ fontSize: '22px', letterSpacing: '-0.015em', lineHeight: 1.2 }}
+                >
+                  {step.title}
+                </h4>
+                <p className="mt-3 text-white/75" style={{ fontSize: '17px', lineHeight: 1.55 }}>
+                  {step.body}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <p
+            className="mx-auto text-center mt-16 font-medium text-white"
+            style={{ fontSize: '20px', lineHeight: 1.45, maxWidth: '720px', letterSpacing: '-0.01em' }}
+          >
+            Most platforms track completion. This one tracks understanding.
+          </p>
+        </div>
+      </section>
+
+      {/* SECTION 3.7 — AI CONTENT GENERATOR (light) */}
+      <section className="bg-[#F5F5F7]">
+        <div className="max-w-6xl mx-auto px-6 py-28 md:py-48">
+          <div className="max-w-3xl">
+            <Kicker tone="light">Plus &amp; Pro</Kicker>
+            <h2
+              className="mt-6 font-semibold text-[#1D1D1F]"
+              style={{ fontSize: 'clamp(32px, 5vw, 48px)', letterSpacing: '-0.025em', lineHeight: 1.1 }}
+            >
+              Skip the blank page.
+            </h2>
+            <p
+              className="mt-6 text-[#020817]"
+              style={{ fontSize: '21px', lineHeight: 1.55, maxWidth: '720px' }}
+            >
+              Every Agency Brain plan includes the training builder — you can write your own lessons, build your own quizzes, structure your own tracks. Plus and Pro add the AI Content Generator <em>inside</em> the builder. Type a topic and get a full lesson. Upload a lesson and get a quiz. Paste any content and rewrite it clearer, more concise, more actionable, or beginner-friendly in one click.
+            </p>
+          </div>
+
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                step: '01',
+                title: 'Full lessons from a topic',
+                body: 'Type what you want to teach. The AI returns a structured lesson — clear, practical, under 600 words, ready to assign.',
+              },
+              {
+                step: '02',
+                title: 'Quizzes generated from the lesson',
+                body: 'Five to twelve multiple-choice questions, four options each, one right answer. Generated against the lesson you just wrote so the questions actually test the material.',
+              },
+              {
+                step: '03',
+                title: 'Rewrites in four modes',
+                body: 'Take any draft and rewrite it Clearer, Concise, Actionable, or Beginner-Friendly. Hand a rough idea to the AI, get back something your team can read on Monday morning.',
+              },
+            ].map((step) => (
+              <div
+                key={step.step}
+                className="bg-white rounded-xl p-8"
+                style={{ border: '1px solid #E2E8F0' }}
+              >
+                <span
+                  className="font-semibold text-[#0071E3]"
+                  style={{ fontSize: '15px', letterSpacing: '0.02em' }}
+                >
+                  {step.step}
+                </span>
+                <h4
+                  className="mt-3 font-semibold text-[#1D1D1F]"
+                  style={{ fontSize: '22px', letterSpacing: '-0.015em', lineHeight: 1.2 }}
+                >
+                  {step.title}
+                </h4>
+                <p className="mt-3 text-[#020817]" style={{ fontSize: '17px', lineHeight: 1.55 }}>
+                  {step.body}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <p
+            className="mx-auto text-center mt-16 font-medium text-[#1D1D1F]"
+            style={{ fontSize: '20px', lineHeight: 1.45, maxWidth: '720px', letterSpacing: '-0.01em' }}
+          >
+            Every plan lets you build your own. Plus and Pro let the AI do the first draft.
+          </p>
+        </div>
+      </section>
+
       {/* SECTION 4 — HOW IT WORKS (light) */}
       <section className="bg-[#F5F5F7]" style={{ borderTop: '1px solid #E2E8F0' }}>
         <div className="max-w-6xl mx-auto px-6 py-28 md:py-48">
@@ -506,6 +640,120 @@ const TeamTraining = () => {
         </div>
       </section>
 
+      {/* SECTION 6.5 — WHAT'S IN EACH PLAN (dark) */}
+      <section className="bg-[#0B0B0C] text-white">
+        <div className="max-w-6xl mx-auto px-6 py-28 md:py-48">
+          <div className="max-w-3xl">
+            <Kicker tone="dark">What's in each plan</Kicker>
+            <h2
+              className="mt-6 font-semibold"
+              style={{ fontSize: 'clamp(32px, 5vw, 48px)', letterSpacing: '-0.025em', lineHeight: 1.1 }}
+            >
+              Same library. More tools the higher you go.
+            </h2>
+          </div>
+
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+            {[
+              {
+                name: 'Core',
+                bullets: [
+                  'Full training library — all 10 tracks',
+                  'Training builder — write your own lessons, quizzes, and tracks',
+                  'AI comprehension grading on every quiz',
+                  'Video Training Architect',
+                  'Role-based access for your team',
+                  '20 AI calls / month',
+                ],
+                highlighted: false,
+              },
+              {
+                name: 'Plus',
+                bullets: [
+                  'Everything in Core',
+                  '__AI Content Generator inside the builder__ — generate lessons, quizzes, and rewrites with AI instead of starting from a blank page',
+                  '50 AI calls / month',
+                ],
+                highlighted: true,
+              },
+              {
+                name: 'Pro',
+                bullets: [
+                  'Everything in Plus',
+                  'AI Sales Roleplay Bot',
+                  'HR Suite',
+                  '2-hour 1:1 onboarding (recorded for your team)',
+                  'Priority support',
+                  '100 AI calls / month',
+                ],
+                highlighted: false,
+              },
+            ].map((plan) => (
+              <div
+                key={plan.name}
+                className="rounded-xl p-8 flex flex-col gap-5"
+                style={{
+                  backgroundColor: plan.highlighted
+                    ? 'rgba(0,113,227,0.08)'
+                    : 'rgba(255,255,255,0.04)',
+                  border: plan.highlighted
+                    ? '1px solid rgba(41,151,255,0.45)'
+                    : '1px solid rgba(255,255,255,0.08)',
+                  boxShadow: plan.highlighted
+                    ? '0 24px 60px -28px rgba(0,113,227,0.45)'
+                    : 'none',
+                  transform: plan.highlighted ? 'translateY(-8px)' : 'none',
+                }}
+              >
+                <h3
+                  className="font-semibold"
+                  style={{
+                    fontSize: '22px',
+                    letterSpacing: '-0.015em',
+                    lineHeight: 1.2,
+                    color: plan.highlighted ? '#2997FF' : '#FFFFFF',
+                  }}
+                >
+                  {plan.name}
+                </h3>
+                <ul className="flex flex-col gap-3 pt-5" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+                  {plan.bullets.map((bullet, idx) => {
+                    const parts = bullet.split('__');
+                    return (
+                      <li
+                        key={idx}
+                        className="flex items-start gap-3 text-white/85"
+                        style={{ fontSize: '14px', lineHeight: 1.55 }}
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="mt-[7px] inline-block flex-shrink-0"
+                          style={{
+                            width: '6px',
+                            height: '6px',
+                            backgroundColor: plan.highlighted ? '#2997FF' : '#0071E3',
+                            borderRadius: '1px',
+                          }}
+                        />
+                        <span>
+                          {parts.map((part, i) =>
+                            i % 2 === 1 ? (
+                              <strong key={i} className="text-white font-semibold">{part}</strong>
+                            ) : (
+                              <span key={i}>{part}</span>
+                            )
+                          )}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* SECTION 7 — CLOSING STRIP (black) */}
       <section className="bg-black text-white">
         <div className="max-w-3xl mx-auto px-6 py-28 md:py-48 text-center">
@@ -516,7 +764,7 @@ const TeamTraining = () => {
             Training that ships with the product.
           </h2>
           <p className="mt-6 text-white/75" style={{ fontSize: '21px', lineHeight: 1.55 }}>
-            Every Agency Brain account includes the full training library. No add-on fee. No separate platform. Train the team where they already work.
+            Every Agency Brain account includes the full training library, AI comprehension grading, and the training builder. No add-on fee, no separate platform. Plus and Pro unlock the AI Content Generator to skip the blank page.
           </p>
           <div className="mt-12">
             <Link
