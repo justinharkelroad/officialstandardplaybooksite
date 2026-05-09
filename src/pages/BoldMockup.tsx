@@ -256,8 +256,7 @@ const HeroSection = () => {
 /* ══════════════════════════════════════════════════════
    MARQUEE — dual rotated brand bands
    ══════════════════════════════════════════════════════ */
-const Marquee = ({ rotate = -3, bg = ink, color = paper, dot = blue }: { rotate?: number; bg?: string; color?: string; dot?: string }) => {
-  const phrase = 'STANDARD PLAYBOOK';
+const Marquee = ({ rotate = -3, bg = ink, color = paper, dot = blue, phrase = 'STANDARD PLAYBOOK' }: { rotate?: number; bg?: string; color?: string; dot?: string; phrase?: string }) => {
   const items = Array.from({ length: 20 });
   return (
     <div
@@ -303,7 +302,7 @@ const Marquee = ({ rotate = -3, bg = ink, color = paper, dot = blue }: { rotate?
 
 const MarqueeBands = () => (
   <div style={{ background: paper, padding: '40px 0', position: 'relative', overflow: 'hidden' }}>
-    <Marquee rotate={-3} bg={ink} color={paper} dot={blue} />
+    <Marquee rotate={-3} bg={ink} color={paper} dot={blue} phrase="BODY · BEING · BALANCE · BUSINESS" />
     <div style={{ marginTop: -24 }}>
       <Marquee rotate={2.5} bg={paper} color={ink} dot={ink} />
     </div>
