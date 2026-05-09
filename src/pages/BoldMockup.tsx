@@ -366,7 +366,7 @@ const FoundationSection = () => (
       <div className="grid grid-cols-12 gap-6 items-end">
         <Reveal className="col-span-12 md:col-span-7">
           <img
-            src="/bottom%20home.png"
+            src="/bottom-home.png"
             alt="Justin Harkelroad"
             style={{
               width: '100%',
@@ -423,7 +423,7 @@ const AgencyBrainBand = () => (
 
       <Reveal delay={0.1}>
         <img
-          src="/AB%20WHIte.png"
+          src="/ab-white.png"
           alt="Agency Brain"
           style={{ height: 'clamp(40px, 6vw, 72px)', width: 'auto', marginBottom: 32 }}
         />
