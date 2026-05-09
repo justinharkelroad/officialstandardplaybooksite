@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.send-websites-inquiry]
 verify_jwt = false
+
+[functions.send-mirror-notification]
+verify_jwt = false

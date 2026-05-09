@@ -43,6 +43,9 @@ import BoldProducerChallenge from "./pages/BoldProducerChallenge";
 import BoldTraining from "./pages/BoldTraining";
 import BoldEightWeekApply from "./pages/BoldEightWeekApply";
 import BoldContact from "./pages/BoldContact";
+import BoldMirror from "./pages/BoldMirror";
+import BoldMirrorScore from "./pages/BoldMirrorScore";
+import BoldMirrorResults from "./pages/BoldMirrorResults";
 import EightWeekApply from "./pages/EightWeekApply";
 import Websites from "./pages/Websites";
 import TeamTraining from "./pages/TeamTraining";
@@ -108,6 +111,9 @@ const App = () => (
           <Route path="/legacy-training" element={<TeamTraining />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/mirror" element={<BoldMirror />} />
+          <Route path="/mirror/score" element={<BoldMirrorScore />} />
+          <Route path="/mirror/results" element={<BoldMirrorResults />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
