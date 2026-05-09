@@ -1,11 +1,23 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
+import { sequenceForTier } from "./templates/index.ts";
+import { getDiagnosticParagraph } from "./data/mirrorDiagnostics.ts";
+import type {
+  MirrorEmail,
+  MirrorEmailContext,
+  MirrorPillar,
+  MirrorTier,
+} from "./templates/_shared.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 const BREVO_API_KEY = Deno.env.get("BREVO_API_KEY");
 // Optional: Brevo automation list ID for the Mirror sequence. Configured in Brevo;
 // passed through here so Justin can wire the actual list when ready.
 const BREVO_MIRROR_LIST_ID = Deno.env.get("BREVO_MIRROR_LIST_ID");
+
+const FROM_ADDRESS = "Standard Playbook <booking@standardplaybook.com>";
+const INTERNAL_NOTIFICATION_TO = "justin@hfiagencies.com";
+const MIRROR_PDF_URL = "https://standardplaybook.com/mirror-workbook.pdf";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -26,13 +38,8 @@ interface MirrorSubmission {
     | "independent"
     | "other";
   total_score: number;
-  tier: "foundation" | "developing" | "established" | "advanced" | "elite";
-  weakest_pillar:
-    | "culture_team"
-    | "systems_rhythm"
-    | "training_scripts"
-    | "marketing_lead_flow"
-    | "owner_command";
+  tier: MirrorTier;
+  weakest_pillar: MirrorPillar;
   pillar_scores: Record<string, number>;
   question_scores: Record<string, number>;
   utm_source?: string | null;
@@ -60,7 +67,7 @@ function splitName(full: string): { first: string; last: string } {
   return { first: trimmed.slice(0, idx), last: trimmed.slice(idx + 1).trim() };
 }
 
-const PILLAR_LABELS: Record<MirrorSubmission["weakest_pillar"], string> = {
+const PILLAR_LABELS: Record<MirrorPillar, string> = {
   culture_team: "Culture & Team",
   systems_rhythm: "Systems & Rhythm",
   training_scripts: "Training & Scripts",
@@ -68,13 +75,75 @@ const PILLAR_LABELS: Record<MirrorSubmission["weakest_pillar"], string> = {
   owner_command: "Owner Command",
 };
 
-const TIER_LABELS: Record<MirrorSubmission["tier"], string> = {
+const TIER_LABELS: Record<MirrorTier, string> = {
   foundation: "Foundation",
   developing: "Developing",
   established: "Established",
   advanced: "Advanced",
   elite: "Elite",
 };
+
+/* ── Body → HTML rendering ──────────────────────────────── */
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+/** Render inline markdown: **bold**, *italics*, [text](url). */
+function renderInline(s: string): string {
+  let t = escapeHtml(s);
+  t = t.replace(
+    /\[([^\]]+)\]\(([^)]+)\)/g,
+    '<a href="$2" style="color:#2080FF;text-decoration:underline;">$1</a>',
+  );
+  t = t.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  t = t.replace(/(^|[\s(])\*([^*]+)\*(?=[\s).,;!?]|$)/g, "$1<em>$2</em>");
+  return t;
+}
+
+function renderBodyToHtml(body: string): string {
+  const paragraphs = body.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+  return paragraphs
+    .map((p) => {
+      const inner = p
+        .split("\n")
+        .map((line) => renderInline(line.trim()))
+        .join("<br>");
+      return `<p style="margin:0 0 18px;line-height:1.6;font-size:16px;color:#0A0A0B;">${inner}</p>`;
+    })
+    .join("\n");
+}
+
+function wrapEmail(preheader: string, bodyHtml: string): string {
+  return `<!doctype html>
+<html>
+  <body style="margin:0;padding:0;background:#F4F2EE;">
+    <span style="display:none!important;visibility:hidden;opacity:0;color:transparent;height:0;width:0;font-size:1px;line-height:1px;mso-hide:all;">${escapeHtml(preheader)}</span>
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#F4F2EE;">
+      <tr>
+        <td align="center" style="padding:32px 16px;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#FFFFFF;">
+            <tr>
+              <td style="padding:32px 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#0A0A0B;">
+                ${bodyHtml}
+                <p style="margin:24px 0 0;font-size:11px;line-height:1.5;color:#0A0A0B;opacity:0.55;">
+                  Standard Playbook · Fort Wayne, IN<br/>
+                  You're receiving this because you took The Mirror at standardplaybook.com/mirror.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`;
+}
+
+/* ── Brevo (optional) ──────────────────────────────────── */
 
 async function pushToBrevo(s: MirrorSubmission) {
   if (!BREVO_API_KEY) {
@@ -137,6 +206,115 @@ async function pushToBrevo(s: MirrorSubmission) {
   }
 }
 
+/* ── User-facing drip via Resend scheduled_at ──────────── */
+
+interface ScheduledSendResult {
+  daysOffset: number;
+  subject: string;
+  scheduledAt: string | null;
+  ok: boolean;
+  id?: string;
+  error?: string;
+}
+
+function buildContext(s: MirrorSubmission): MirrorEmailContext {
+  const { first } = splitName(s.full_name);
+  return {
+    firstName: first || s.full_name || "there",
+    fullName: s.full_name,
+    score: s.total_score,
+    tier: s.tier,
+    tierName: TIER_LABELS[s.tier] ?? s.tier,
+    weakestPillar: s.weakest_pillar,
+    weakestPillarName: PILLAR_LABELS[s.weakest_pillar] ?? s.weakest_pillar,
+    diagnosticParagraph: getDiagnosticParagraph(s.tier, s.weakest_pillar),
+    pdfDownloadUrl: MIRROR_PDF_URL,
+  };
+}
+
+async function sendDrip(s: MirrorSubmission): Promise<ScheduledSendResult[]> {
+  const ctx = buildContext(s);
+  const sequence = sequenceForTier(s.tier);
+  if (sequence.length === 0) {
+    console.warn(`No drip sequence configured for tier=${s.tier}`);
+    return [];
+  }
+
+  const now = Date.now();
+  const DAY_MS = 24 * 60 * 60 * 1000;
+
+  const sends = sequence.map(async (entry): Promise<ScheduledSendResult> => {
+    let email: MirrorEmail;
+    try {
+      email = entry.build(ctx);
+    } catch (err: any) {
+      return {
+        daysOffset: entry.daysOffset,
+        subject: "(template failed)",
+        scheduledAt: null,
+        ok: false,
+        error: `template build failed: ${err?.message ?? String(err)}`,
+      };
+    }
+
+    const html = wrapEmail(email.preheader, renderBodyToHtml(email.body));
+    const scheduledAt = entry.daysOffset > 0
+      ? new Date(now + entry.daysOffset * DAY_MS).toISOString()
+      : null;
+
+    const payload: Record<string, unknown> = {
+      from: FROM_ADDRESS,
+      to: [s.email],
+      subject: email.subject,
+      html,
+      headers: {
+        "X-Mirror-Tier": s.tier,
+        "X-Mirror-Pillar": s.weakest_pillar,
+        "X-Mirror-Score": String(s.total_score),
+        "X-Mirror-Day": String(entry.daysOffset),
+        "X-Mirror-Submission-Id": s.id ?? "",
+      },
+      tags: [
+        { name: "mirror_tier", value: s.tier },
+        { name: "mirror_pillar", value: s.weakest_pillar },
+        { name: "mirror_day", value: `day_${entry.daysOffset}` },
+        { name: "source", value: "mirror_drip" },
+      ],
+    };
+    if (scheduledAt) payload.scheduled_at = scheduledAt;
+
+    try {
+      // The SDK's send accepts scheduled_at on supported plans.
+      // deno-lint-ignore no-explicit-any
+      const res: any = await (resend.emails.send as any)(payload);
+      const id = res?.data?.id ?? res?.id;
+      if (res?.error) {
+        return {
+          daysOffset: entry.daysOffset,
+          subject: email.subject,
+          scheduledAt,
+          ok: false,
+          error: typeof res.error === "string" ? res.error : JSON.stringify(res.error),
+        };
+      }
+      return { daysOffset: entry.daysOffset, subject: email.subject, scheduledAt, ok: true, id };
+    } catch (err: any) {
+      return {
+        daysOffset: entry.daysOffset,
+        subject: email.subject,
+        scheduledAt,
+        ok: false,
+        error: err?.message ?? String(err),
+      };
+    }
+  });
+
+  const results = await Promise.all(sends);
+  return results;
+}
+
+/* ── HTTP handler ──────────────────────────────────────── */
+
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -160,7 +338,9 @@ const handler = async (req: Request): Promise<Response> => {
     const tierLabel = TIER_LABELS[s.tier] ?? s.tier;
     const pillarLabel = PILLAR_LABELS[s.weakest_pillar] ?? s.weakest_pillar;
     const pillarRows = Object.entries(s.pillar_scores)
-      .map(([k, v]) => `<li><strong>${PILLAR_LABELS[k as MirrorSubmission["weakest_pillar"]] ?? k}:</strong> ${v}</li>`)
+      .map(([k, v]) =>
+        `<li><strong>${PILLAR_LABELS[k as MirrorPillar] ?? k}:</strong> ${v}</li>`
+      )
       .join("");
 
     const utmBlock = (s.utm_source || s.utm_campaign || s.utm_medium || s.utm_content)
@@ -173,9 +353,10 @@ const handler = async (req: Request): Promise<Response> => {
       `
       : "";
 
-    const emailResponse = await resend.emails.send({
-      from: "Standard Playbook <booking@standardplaybook.com>",
-      to: ["justin@hfiagencies.com"],
+    /* 1) Internal notification — same as before. */
+    const internal = await resend.emails.send({
+      from: FROM_ADDRESS,
+      to: [INTERNAL_NOTIFICATION_TO],
       subject: `New Mirror Submission: ${s.full_name} — ${tierLabel} (${s.total_score}/160)`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -214,15 +395,24 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    // Push to Brevo (non-blocking — don't fail the user-facing response if Brevo is down).
+    /* 2) User-facing drip — fan out scheduled sends in parallel. */
+    const dripResults = await sendDrip(s);
+
+    /* 3) Optional Brevo upsert. No-op if BREVO_API_KEY isn't set. */
     await pushToBrevo(s);
 
-    console.log("Mirror notification sent:", emailResponse);
+    const dripSummary = {
+      total: dripResults.length,
+      ok: dripResults.filter((r) => r.ok).length,
+      failed: dripResults.filter((r) => !r.ok).length,
+      results: dripResults,
+    };
+    console.log("Mirror notification sent. Drip:", dripSummary);
 
-    return new Response(JSON.stringify({ ok: true, email: emailResponse }), {
-      status: 200,
-      headers: { "Content-Type": "application/json", ...corsHeaders },
-    });
+    return new Response(
+      JSON.stringify({ ok: true, internal, drip: dripSummary }),
+      { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } },
+    );
   } catch (error: any) {
     console.error("Error sending mirror notification:", error);
     return new Response(

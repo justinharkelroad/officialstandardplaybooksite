@@ -336,29 +336,37 @@ The results page CTA + the email sequence branch route based on tier × weakest 
 | Established (95-119) | Pillars 2 or 3 | "APPLY FOR 8-WEEK" | Established sequence → 8-Week primary |
 | Established (95-119) | Other pillars | "JOIN THE BOARDROOM" | Established sequence → Boardroom direct |
 | Advanced (120-144) | Any | "APPLY FOR THE DIRECTIVE" | Advanced sequence → Directive 1:1 |
-| Elite (145-160) | Any | "EXPLORE PARTNERSHIP" (or Directive if Partnership sold out) | Elite sequence → soft validation + Directive invitation |
+| Elite (145-160) | Any | "APPLY FOR THE DIRECTIVE" | Elite sequence → soft validation + Directive invitation |
 
 ---
 
 ## Backend: Supabase Edge Function
 
 **Function:** `send-mirror-notification`
-**Pattern:** Mirror existing `send-booking-notification` and `send-directive-notification` (already in codebase).
+**Pattern:** Mirror existing `send-booking-notification` and `send-directive-notification` (already in codebase, uses Resend via `npm:resend@2.0.0`).
 
 **Responsibilities:**
-1. Send Justin an internal notification email (new submission with full_name, email, phone, carrier, tier, score, weakest pillar)
-2. Push to Brevo with appropriate tags:
-   - `tier:[name]` (e.g., `tier:developing`)
-   - `weakest_pillar:[name]` (e.g., `weakest_pillar:training_scripts`)
-   - `carrier:[name]` (e.g., `carrier:allstate`)
-   - `source:mirror`
-   - `has_phone:true`
-   - Plus UTM tags from submission
-3. Split `full_name` for Brevo on the first space:
-   - Everything before first space → Brevo `first_name` field
-   - Everything after first space → Brevo `last_name` field
-   - If no space (single-word name), use entire string as first_name, leave last_name empty
-4. Trigger the appropriate Brevo automation sequence based on tier × weakest_pillar
+
+1. **Send internal notification to Justin** (`justin@hfiagencies.com` or wherever existing notifications land) — new submission summary with full_name, email, phone, carrier, tier, score, weakest pillar. Sent via Resend, immediately.
+
+2. **Send Email 1 (Day 0) to user immediately** via Resend. The `diagnosticParagraph` is looked up from the `mirrorDiagnostics.ts` data file using `tier × weakestPillar` as the key.
+
+3. **Schedule Emails 2-7 via Resend's `scheduled_at` parameter:**
+   - Email 2 → `scheduled_at: now + 1 day`
+   - Email 3 → `scheduled_at: now + 2 days`
+   - Email 4 → `scheduled_at: now + 3 days`
+   - Email 5 → `scheduled_at: now + 4 days`
+   - Email 6 → `scheduled_at: now + 6 days`
+   - Email 7 → `scheduled_at: now + 9 days`
+
+   All 7 emails are queued in this single Edge Function execution. Resend handles delivery on each scheduled date — no daily cron job, no separate scheduler needed.
+
+4. **Split `full_name` for personalization:**
+   - Everything before first space → `firstName` (used in greetings)
+   - Everything after first space → `lastName`
+   - If no space, use entire string as `firstName`, leave `lastName` empty
+
+5. **Optional Brevo upsert** (skip unless explicitly needed) — the `mirror_submissions` Supabase table IS the contact list with full segmentation data. Brevo upsert was previously specced for redundant list management; removed in favor of Resend-only architecture. Brevo remains in use for Formula campaigns separately.
 
 ---
 

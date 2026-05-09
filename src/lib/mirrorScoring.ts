@@ -79,7 +79,7 @@ export const routeForResult = (tier: Tier, weakest: PillarKey): TierRoute => {
 
   if (tier === 'foundation') {
     return {
-      ctaLabel: 'Book a 15-min conversation',
+      ctaLabel: 'Book a 45-min conversation',
       ctaHref: ACUITY,
       ctaKind: 'external',
       brevoTag: `tier:foundation+pillar:${weakest}`,
@@ -88,7 +88,7 @@ export const routeForResult = (tier: Tier, weakest: PillarKey): TierRoute => {
   if (tier === 'developing') {
     if (isP2or3) {
       return {
-        ctaLabel: 'Book a 15-min conversation',
+        ctaLabel: 'Book a 45-min conversation',
         ctaHref: ACUITY,
         ctaKind: 'external',
         brevoTag: `tier:developing+pillar:${weakest}`,
