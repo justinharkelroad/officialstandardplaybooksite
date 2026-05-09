@@ -95,6 +95,66 @@ export type Database = {
         }
         Relationships: []
       }
+      mirror_submissions: {
+        Row: {
+          carrier: string
+          created_at: string
+          device_type: string | null
+          email: string
+          full_name: string
+          id: string
+          phone: string
+          pillar_scores: Json
+          question_scores: Json
+          tier: string
+          total_score: number
+          user_agent: string | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          weakest_pillar: string
+        }
+        Insert: {
+          carrier: string
+          created_at?: string
+          device_type?: string | null
+          email: string
+          full_name: string
+          id?: string
+          phone: string
+          pillar_scores: Json
+          question_scores: Json
+          tier: string
+          total_score: number
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          weakest_pillar: string
+        }
+        Update: {
+          carrier?: string
+          created_at?: string
+          device_type?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          phone?: string
+          pillar_scores?: Json
+          question_scores?: Json
+          tier?: string
+          total_score?: number
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          weakest_pillar?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
