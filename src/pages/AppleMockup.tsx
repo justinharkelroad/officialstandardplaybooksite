@@ -25,7 +25,7 @@ const sf = '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", 
 const AGENCYBRAIN_CHECKOUT_URL = 'https://wjqyccbytctqwceuhzhk.supabase.co/functions/v1/create-agencybrain-checkout';
 const AGENCYBRAIN_SUCCESS_URL = 'https://myagencybrain.com/agencybrain-checkout-success?session_id={CHECKOUT_SESSION_ID}';
 
-type AgencyBrainPlanId = 'agencybrain_core' | 'agencybrain_pro';
+type AgencyBrainPlanId = 'agencybrain_core' | 'agencybrain_plus' | 'agencybrain_pro';
 
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
   <motion.div
@@ -752,43 +752,52 @@ const coachingPrograms = [
 const softwarePlans = [
   {
     planId: 'agencybrain_core' as AgencyBrainPlanId,
-    label: 'Limited AI Features',
+    label: 'Software-Only Foundation',
     title: 'Agency Brain Core',
-    description: 'Software-only access to the operating system for your agency — dashboards, training, accountability, and team management.',
+    description: 'Scorecards, training, team visibility, and the core operating loop.',
     details: [
-      'Sales dashboard + analytics',
-      'Pipeline intelligence',
-      'Team training library',
-      'Renewal tracking',
-      'Cancel audit + winback',
-      'Habit tracking + target setting',
-      'Phone report analytics',
-      '20 AI call scoring credits per month',
-      'Unlimited users',
+      '20 AI call scoring credits / month',
+      'Real-time scorecards and KPI rings',
+      'Team leaderboards and performance visibility',
+      'Standard Playbook Training Platform',
+      'Limited AI feature set',
     ],
     price: '$299/mo',
-    cta: 'Start Core',
+    cta: 'Choose Core',
+  },
+  {
+    planId: 'agencybrain_plus' as AgencyBrainPlanId,
+    label: 'Full Software Access',
+    title: 'Agency Brain Plus',
+    description: 'Everything in Core plus the full AI tool set. No Roleplay Bot or HR Suite.',
+    details: [
+      '50 AI call scoring credits / month',
+      'Full AI tool set',
+      'Growth Center and The Mirror analysis',
+      'Comp Plan Assistant',
+      'Training AI Builder and Theta Audio',
+      'Standard Playbook Training Platform',
+      'Standard support',
+    ],
+    price: '$449/mo',
+    cta: 'Choose Plus',
+    featured: true,
   },
   {
     planId: 'agencybrain_pro' as AgencyBrainPlanId,
-    label: 'Full AI Feature Access',
+    label: 'Top Tier',
     title: 'Agency Brain Pro',
-    description: 'Full software access with Hunter Calls, expanded call scoring, AI roleplay, and the complete Agency Brain toolkit.',
+    description: 'Plus, with AI Sales Roleplay, the HR Suite, and priority support.',
     details: [
-      'Everything in Core +',
-      '100 AI call scoring credits per month',
-      'AI roleplay trainer',
-      'Business metrics analyzation tool',
-      'Marketing ROI tracking',
-      'Phone report analytics',
-      'Advanced sales analytics',
+      '100 AI call scoring credits / month',
+      'AI Sales Roleplay Bot',
+      'HR Suite',
       'Priority support',
-      'Full 1:1 client-level platform access',
-      'Unlimited users',
+      'Standard Playbook Training Platform',
+      'Everything in Plus',
     ],
     price: '$599/mo',
-    cta: 'Start Pro',
-    featured: true,
+    cta: 'Choose Pro',
   },
 ];
 
@@ -1119,7 +1128,7 @@ const ProgramsSection = () => {
               </div>
             </>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[720px] mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {softwarePlans.map((plan) => (
                 <SoftwareCard key={plan.title} plan={plan} />
               ))}

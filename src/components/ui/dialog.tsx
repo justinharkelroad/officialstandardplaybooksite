@@ -45,12 +45,15 @@ const DialogContent = React.forwardRef<
     >
       {children}
       <DialogPrimitive.Close
-        className="absolute right-4 top-4 transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none"
-        style={{ opacity: 0.36, color: '#1d1d1f', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', background: 'rgba(0,0,0,0.06)' }}
+        className="sp-dialog-close absolute right-3 top-3 transition-colors focus:outline-none disabled:pointer-events-none"
+        style={{ color: '#0A0A0B', width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 0, background: 'transparent', border: '1.5px solid #0A0A0B' }}
       >
-        <X className="h-4 w-4" />
+        <X className="h-4 w-4" strokeWidth={2.2} />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
+      <style>{`
+        .sp-dialog-close:hover { background: #0A0A0B !important; color: #F4F2EE !important; }
+      `}</style>
     </DialogPrimitive.Content>
   </DialogPortal>
 ))

@@ -34,6 +34,15 @@ import NewLanding from "./pages/NewLanding";
 import StandardFit from "./pages/StandardFit";
 import AIWalkthrough from "./pages/AIWalkthrough";
 import AppleMockup from "./pages/AppleMockup";
+import BoldMockup from "./pages/BoldMockup";
+import BoldSalesExperience from "./pages/BoldSalesExperience";
+import BoldDirective from "./pages/BoldDirective";
+import BoldBoardroom from "./pages/BoldBoardroom";
+import BoldAbout from "./pages/BoldAbout";
+import BoldProducerChallenge from "./pages/BoldProducerChallenge";
+import BoldTraining from "./pages/BoldTraining";
+import BoldEightWeekApply from "./pages/BoldEightWeekApply";
+import BoldContact from "./pages/BoldContact";
 import EightWeekApply from "./pages/EightWeekApply";
 import Websites from "./pages/Websites";
 import TeamTraining from "./pages/TeamTraining";
@@ -53,25 +62,34 @@ const App = () => (
         <SEOHead />
         <ScrollToTop />
         <Routes>
-          <Route path="/" element={<AppleMockup />} />
+          <Route path="/" element={<BoldMockup />} />
+          <Route path="/bold" element={<BoldMockup />} />
+          <Route path="/apple" element={<AppleMockup />} />
           <Route path="/legacy" element={<NewLanding />} />
           <Route path="/app" element={<AppRedirect />} />
           <Route path="/appinfo" element={<AppAccess />} />
-          <Route path="/boardroom" element={<Boardroom />} />
-          <Route path="/directive" element={<Directive />} />
-          <Route path="/sales-experience" element={<SalesExperience />} />
-          <Route path="/8-week" element={<SalesExperience autoOpenBooking />} />
-          <Route path="/8-week-apply" element={<EightWeekApply />} />
+          <Route path="/boardroom" element={<BoldBoardroom />} />
+          <Route path="/legacy-boardroom" element={<Boardroom />} />
+          <Route path="/directive" element={<BoldDirective />} />
+          <Route path="/legacy-directive" element={<Directive />} />
+          <Route path="/sales-experience" element={<BoldSalesExperience />} />
+          <Route path="/8-week" element={<BoldSalesExperience autoOpenBooking />} />
+          <Route path="/apple-sales-experience" element={<SalesExperience />} />
+          <Route path="/8-week-apply" element={<BoldEightWeekApply />} />
+          <Route path="/legacy-8-week-apply" element={<EightWeekApply />} />
           <Route path="/producer-power-up" element={<ProducerPowerUp />} />
           <Route path="/owner-challenge" element={<OwnerChallenge />} />
-          <Route path="/the-challenge" element={<TheChallenge />} />
+          <Route path="/the-challenge" element={<BoldProducerChallenge />} />
           <Route path="/thechallenge" element={<Navigate to="/the-challenge" replace />} />
+          <Route path="/legacy-the-challenge" element={<TheChallenge />} />
           <Route path="/formulaai" element={<FormulaAI />} />
           <Route path="/callscoring" element={<CallScoring />} />
           <Route path="/decision" element={<Decision />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/about" element={<BoldAbout />} />
+          <Route path="/legacy-about" element={<About />} />
           <Route path="/partnership" element={<Partnership />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/contact" element={<BoldContact />} />
+          <Route path="/legacy-contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/thank-you" element={<ThankYou />} />
@@ -86,7 +104,8 @@ const App = () => (
           <Route path="/ai-walk-through" element={<AIWalkthrough />} />
           <Route path="/apple-mockup" element={<Navigate to="/" replace />} />
           <Route path="/websites" element={<Websites />} />
-          <Route path="/training" element={<TeamTraining />} />
+          <Route path="/training" element={<BoldTraining />} />
+          <Route path="/legacy-training" element={<TeamTraining />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="*" element={<NotFound />} />

@@ -1,8 +1,4 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import BookingOnboardingForm from './BookingOnboardingForm';
 
 interface StandardFitModalProps {
@@ -28,7 +24,18 @@ const StandardFitModal = ({
       open={isControlled ? open : defaultOpen}
       onOpenChange={isControlled ? onOpenChange : undefined}
     >
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+      <DialogContent
+        className="sm:max-w-[520px] max-h-[92vh] overflow-y-auto p-0"
+        style={{
+          background: '#F4F2EE',
+          color: '#0A0A0B',
+          borderRadius: 0,
+          border: '1.5px solid #0A0A0B',
+          boxShadow: '0 30px 80px -10px rgba(0,0,0,0.5)',
+          fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif',
+          gap: 0,
+        }}
+      >
         <DialogTitle className="sr-only">Standard Fit Application</DialogTitle>
         <BookingOnboardingForm
           onComplete={() => onOpenChange?.(false)}
