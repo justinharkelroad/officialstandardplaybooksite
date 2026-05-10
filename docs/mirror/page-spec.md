@@ -86,13 +86,13 @@ Add to `src/App.tsx`:
 │                                            │
 │  SDR/TELEMARKETER                          │ ← Anton, all-caps, ~64px
 │                                            │
-│  Your best closer shouldn't be             │ ← Inter italic, ~24px
+│  Your best closer shouldn't be             │ ← Inter italic, ~22px
 │  cold-calling.                             │   the declarative opener
 │                                            │   (Justin's voice — sets the standard)
 │                                            │
-│  Rate your agency on this standard:        │ ← Inter, ~14px, small
-│                                            │   STANDARDIZED PROMPT
-│                                            │   (identical on every question)
+│  How well do you separate                  │ ← Inter weight 500, ~20px
+│  prospecting from closing?                 │   subcategory-specific question
+│                                            │   (converts standard into rating action)
 │                                            │
 │  ☆  ☆  ☆  ☆  ☆                              │ ← 5 blue stars (tap to rate)
 │  We don't                          Dialed  │ ← anchor labels
@@ -106,12 +106,12 @@ Add to `src/App.tsx`:
 └────────────────────────────────────────────┘
 ```
 
-**Three text layers per question:**
-1. Subcategory name (Anton, all-caps, large) — categorical anchor
-2. Declarative opener (Inter italic, mid) — Justin's voice, sets what "good" looks like
-3. Standardized scoring prompt (Inter, small) — *"Rate your agency on this standard:"* — IDENTICAL ON EVERY QUESTION, removes ambiguity about what's being scored
+**Three text layers per question (all VARY per subcategory):**
+1. **Subcategory name** (Anton, all-caps, large, ~64px) — categorical anchor
+2. **Opener** (Inter italic, ~22px) — Justin's voice. Declarative statement that sets the standard ("here's what good looks like")
+3. **Question** (Inter weight 500, ~20px) — Subcategory-specific question that converts the opener into a measurable rating action ("here's where YOU rate yourself")
 
-The opener varies per subcategory (32 unique lines, see `the-mirror-ui-openers.md`). The scoring prompt is one string used 32 times.
+All three lines are pulled from `src/data/mirrorQuestions.ts` (sourced from `docs/mirror/ui-openers.md`). Each of the 32 subcategories has its own subcategory name, opener, AND question — no shared/standardized strings. The per-subcategory question frames the rating action specifically (e.g., *"How well do you separate prospecting from closing?"* for SDR/Telemarketer), removing "what am I rating exactly?" ambiguity for cold-traffic visitors.
 
 **Star widget:**
 - 5 stars, blue (`#2080FF`) when filled, hairline ink outline (`#0A0A0B`) when empty

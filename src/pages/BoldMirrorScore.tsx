@@ -18,7 +18,6 @@ import {
   ANCHOR_LOW,
   DISCIPLINE_REMINDER,
   MIRROR_QUESTIONS,
-  STANDARDIZED_PROMPT,
   TOTAL_QUESTIONS,
 } from '@/data/mirrorQuestions';
 import { scoreAssessment, type QuestionScores } from '@/lib/mirrorScoring';
@@ -192,18 +191,18 @@ const QuestionScreen = ({
       <p
         style={{
           fontFamily: body,
-          fontSize: 14,
+          fontSize: 'clamp(17px, 2.2vw, 21px)',
           fontWeight: 500,
-          letterSpacing: '0.02em',
+          lineHeight: 1.4,
           color: ink,
-          opacity: 0.7,
+          opacity: 0.95,
           margin: 0,
-          marginTop: 56,
-          marginBottom: 20,
-          textAlign: 'center',
+          marginTop: 24,
+          marginBottom: 44,
+          maxWidth: 640,
         }}
       >
-        {STANDARDIZED_PROMPT}
+        {q.question}
       </p>
 
       <MirrorStarRating
