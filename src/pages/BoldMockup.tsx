@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
+import BoldNav from '@/components/BoldNav';
 import StandardFitModal from '@/components/StandardFitModal';
 
 import standardLogo from '@/assets/standard-word-logo.png';
@@ -36,104 +37,6 @@ const Reveal = ({ children, className = '', delay = 0 }: { children: React.React
   </motion.div>
 );
 
-/* ══════════════════════════════════════════════════════
-   NAVIGATION — minimal newsprint header
-   ══════════════════════════════════════════════════════ */
-const BoldNav = () => {
-  const [open, setOpen] = useState(false);
-  const links = [
-    { label: 'Programs', href: '#programs' },
-    { label: 'Software', href: '#software' },
-    { label: '8-Week', to: '/sales-experience' },
-    { label: 'Training', to: '/training' },
-    { label: 'Nutrition', external: 'https://standardnutrition.app' },
-    { label: 'Contact', to: '/contact' },
-  ];
-
-  return (
-    <nav
-      className="fixed top-0 left-0 right-0 z-50"
-      style={{
-        background: paper,
-        borderBottom: `1px solid ${ink}`,
-        height: 56,
-        fontFamily: body,
-      }}
-    >
-      <div className="h-full px-6 md:px-10 flex items-center justify-between max-w-[1440px] mx-auto">
-        <Link to="/" className="flex items-center" aria-label="Standard Playbook">
-          <img
-            src={standardLogo}
-            alt="Standard Playbook"
-            style={{ height: 22, width: 'auto', filter: 'brightness(0)' }}
-          />
-        </Link>
-
-        <div className="hidden md:flex items-center gap-10">
-          {links.map((l) => {
-            const linkStyle = { fontSize: 13, fontWeight: 500, letterSpacing: '0.06em', color: ink, textTransform: 'uppercase' as const };
-            if (l.to) {
-              return (
-                <Link key={l.label} to={l.to} style={linkStyle} className="hover:opacity-60 transition-opacity">
-                  {l.label}
-                </Link>
-              );
-            }
-            if (l.external) {
-              return (
-                <a key={l.label} href={l.external} target="_blank" rel="noopener noreferrer" style={linkStyle} className="hover:opacity-60 transition-opacity">
-                  {l.label}
-                </a>
-              );
-            }
-            return (
-              <a key={l.label} href={l.href} style={linkStyle} className="hover:opacity-60 transition-opacity">
-                {l.label}
-              </a>
-            );
-          })}
-        </div>
-
-        <button className="md:hidden" onClick={() => setOpen(!open)} aria-label="Menu" style={{ color: ink }}>
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {open ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
-      </div>
-
-      {open && (
-        <div className="md:hidden" style={{ background: paper, borderTop: `1px solid ${ink}`, padding: '16px 24px' }}>
-          {links.map((l) => {
-            const mobileStyle = { display: 'block', padding: '12px 0', fontSize: 16, fontWeight: 500, letterSpacing: '0.06em', color: ink, textTransform: 'uppercase' as const, borderBottom: `1px solid ${ink}1a` };
-            if (l.to) {
-              return (
-                <Link key={l.label} to={l.to} onClick={() => setOpen(false)} style={mobileStyle}>
-                  {l.label}
-                </Link>
-              );
-            }
-            if (l.external) {
-              return (
-                <a key={l.label} href={l.external} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)} style={mobileStyle}>
-                  {l.label}
-                </a>
-              );
-            }
-            return (
-              <a key={l.label} href={l.href} onClick={() => setOpen(false)} style={mobileStyle}>
-                {l.label}
-              </a>
-            );
-          })}
-        </div>
-      )}
-    </nav>
-  );
-};
 
 /* ══════════════════════════════════════════════════════
    HERO — editorial display headline + tilted image
