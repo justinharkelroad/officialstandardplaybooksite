@@ -73,6 +73,25 @@ const BOARDROOM_HREF = '/boardroom';
 const EIGHTWEEK_HREF = '/8-week-apply';
 const DIRECTIVE_HREF = '/directive';
 
+/** The always-available "soft" CTA: book a 45-min Mirror call. */
+export const BOOKING_CTA: TierRoute = {
+  ctaLabel: 'Book a 45-min conversation',
+  ctaHref: ACUITY,
+  ctaKind: 'external',
+  brevoTag: 'cta:booking',
+};
+
+/**
+ * Returns the booking CTA whenever the primary route is *not* already the
+ * booking link, so the results page can offer it as a secondary option
+ * alongside the tier-specific primary CTA. Returns `null` when the primary
+ * already IS the booking link (avoid duplicate buttons).
+ */
+export const secondaryBookingFor = (primary: TierRoute): TierRoute | null => {
+  if (primary.ctaHref === ACUITY) return null;
+  return BOOKING_CTA;
+};
+
 export const routeForResult = (tier: Tier, weakest: PillarKey): TierRoute => {
   // Pillars 2 + 3 (systems_rhythm, training_scripts) are the "deeper coaching" pillars.
   const isP2or3 = weakest === 'systems_rhythm' || weakest === 'training_scripts';

@@ -19,7 +19,7 @@ import {
   tierFromScore,
   type Tier,
 } from '@/data/mirrorDiagnostics';
-import { closerWordFor, routeForResult } from '@/lib/mirrorScoring';
+import { closerWordFor, routeForResult, secondaryBookingFor } from '@/lib/mirrorScoring';
 import { supabase } from '@/integrations/supabase/client';
 
 const display = '"Anton", "Archivo Black", "Oswald", Impact, sans-serif';
@@ -279,6 +279,8 @@ const BoldMirrorResults = () => {
     return routeForResult(submission.tier, submission.weakest_pillar);
   }, [submission]);
 
+  const secondary = useMemo(() => (route ? secondaryBookingFor(route) : null), [route]);
+
   const closerWord = useMemo(() => {
     if (!submission) return 'JOIN.';
     return closerWordFor(submission.tier, submission.weakest_pillar);
@@ -436,7 +438,7 @@ const BoldMirrorResults = () => {
 
           {route && (
             <Reveal delay={0.15}>
-              <div style={{ marginTop: 36 }}>
+              <div style={{ marginTop: 36, display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 24 }}>
                 {route.ctaKind === 'external' ? (
                   <a
                     href={route.ctaHref}
@@ -467,6 +469,25 @@ const BoldMirrorResults = () => {
                   >
                     {route.ctaLabel} →
                   </Link>
+                )}
+
+                {secondary && (
+                  <a
+                    href={secondary.ctaHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      fontFamily: body, fontSize: 13, fontWeight: 600, letterSpacing: '0.14em',
+                      color: paper, opacity: 0.75, textTransform: 'uppercase',
+                      textDecoration: 'none',
+                      borderBottom: `1px solid ${paper}55`,
+                      paddingBottom: 4,
+                      transition: 'opacity .2s, border-color .2s, color .2s',
+                    }}
+                    className="hover:!opacity-100 hover:!text-[#2080FF]"
+                  >
+                    or {secondary.ctaLabel} →
+                  </a>
                 )}
               </div>
             </Reveal>
