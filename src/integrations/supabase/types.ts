@@ -95,6 +95,62 @@ export type Database = {
         }
         Relationships: []
       }
+      mirror_drip_sends: {
+        Row: {
+          cancel_reason: string | null
+          cancelled_at: string | null
+          created_at: string
+          day_offset: number
+          email: string
+          id: string
+          resend_id: string | null
+          scheduled_at: string | null
+          send_error: string | null
+          status: string
+          submission_id: string
+          tier: string
+          weakest_pillar: string
+        }
+        Insert: {
+          cancel_reason?: string | null
+          cancelled_at?: string | null
+          created_at?: string
+          day_offset: number
+          email: string
+          id?: string
+          resend_id?: string | null
+          scheduled_at?: string | null
+          send_error?: string | null
+          status?: string
+          submission_id: string
+          tier: string
+          weakest_pillar: string
+        }
+        Update: {
+          cancel_reason?: string | null
+          cancelled_at?: string | null
+          created_at?: string
+          day_offset?: number
+          email?: string
+          id?: string
+          resend_id?: string | null
+          scheduled_at?: string | null
+          send_error?: string | null
+          status?: string
+          submission_id?: string
+          tier?: string
+          weakest_pillar?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mirror_drip_sends_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "mirror_submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       mirror_submissions: {
         Row: {
           carrier: string
