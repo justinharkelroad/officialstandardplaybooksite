@@ -210,6 +210,11 @@ const BoldMirrorResults = () => {
   const [loading, setLoading] = useState<boolean>(Boolean(id));
   const [loadError, setLoadError] = useState<string | null>(null);
 
+  // Meta Pixel PageView
+  useEffect(() => {
+    try { (window as any).fbq?.('track', 'PageView'); } catch {}
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
     if (!id) {

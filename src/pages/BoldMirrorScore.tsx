@@ -652,6 +652,11 @@ const BoldMirrorScore = () => {
 
   const isCapture = step >= TOTAL_QUESTIONS;
 
+  // Meta Pixel PageView
+  useEffect(() => {
+    try { (window as any).fbq?.('track', 'PageView'); } catch {}
+  }, []);
+
   // Meta Pixel: InitiateCheckout when first question rendered.
   useEffect(() => {
     try { (window as any).fbq?.('track', 'InitiateCheckout'); } catch {}
@@ -777,7 +782,8 @@ const BoldMirrorScore = () => {
       }
 
       // Meta Pixel Lead event.
-      try { (window as any).fbq?.('track', 'Lead'); } catch {}
+      try { (window as any).fbq?.('track', 'Lead', { content_name: 'Mirror Assessment' }); } catch {}
+      try { (window as any).fbq?.('trackCustom', 'MirrorLead', { content_name: 'Mirror Assessment' }); } catch {}
 
       if (submissionId) {
         navigate(`/mirror/results?id=${submissionId}`);
