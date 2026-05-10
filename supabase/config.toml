@@ -14,3 +14,9 @@ verify_jwt = false
 
 [functions.send-mirror-notification]
 verify_jwt = false
+
+[functions.cancel-mirror-drip]
+verify_jwt = false
+
+[functions.acuity-mirror-webhook]
+verify_jwt = false

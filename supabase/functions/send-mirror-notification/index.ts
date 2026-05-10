@@ -4,8 +4,50 @@
 
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@4.0.0";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+
+const supa = createClient(
+  Deno.env.get("SUPABASE_URL")!,
+  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+  { auth: { persistSession: false } },
+);
+
+async function recordDripSend(row: {
+  submission_id: string;
+  email: string;
+  tier: MirrorTier;
+  weakest_pillar: MirrorPillar;
+  day_offset: number;
+  scheduled_at: string | null;
+  resend_id: string | null;
+  status: "queued" | "sent" | "failed";
+  send_error?: string | null;
+}): Promise<void> {
+  if (!row.submission_id) {
+    console.warn(`Skipping mirror_drip_sends insert for day=${row.day_offset} — no submission_id`);
+    return;
+  }
+  try {
+    const { error } = await supa.from("mirror_drip_sends").insert({
+      submission_id: row.submission_id,
+      email: row.email.trim().toLowerCase(),
+      tier: row.tier,
+      weakest_pillar: row.weakest_pillar,
+      day_offset: row.day_offset,
+      scheduled_at: row.scheduled_at,
+      resend_id: row.resend_id,
+      status: row.status,
+      send_error: row.send_error ?? null,
+    });
+    if (error) {
+      console.error(`mirror_drip_sends insert failed day=${row.day_offset}:`, error);
+    }
+  } catch (err: any) {
+    console.error(`mirror_drip_sends insert threw day=${row.day_offset}:`, err?.message ?? err);
+  }
+}
 
 const FROM_ADDRESS = "Standard Playbook <booking@standardplaybook.com>";
 const INTERNAL_NOTIFICATION_TO = "justin@hfiagencies.com";
@@ -1088,12 +1130,24 @@ async function sendOneDrip(
     email = entry.build(ctx);
   } catch (err: any) {
     console.error(`Template build failed for tier=${s.tier} day=${entry.daysOffset}:`, err);
+    const errMsg = `template build failed: ${err?.message ?? String(err)}`;
+    await recordDripSend({
+      submission_id: s.id ?? "",
+      email: s.email,
+      tier: s.tier,
+      weakest_pillar: s.weakest_pillar,
+      day_offset: entry.daysOffset,
+      scheduled_at: null,
+      resend_id: null,
+      status: "failed",
+      send_error: errMsg,
+    });
     return {
       daysOffset: entry.daysOffset,
       subject: "(template failed)",
       scheduledAt: null,
       ok: false,
-      error: `template build failed: ${err?.message ?? String(err)}`,
+      error: errMsg,
     };
   }
 
@@ -1142,9 +1196,32 @@ async function sendOneDrip(
           continue;
         }
         console.error(`Resend rejected drip day=${entry.daysOffset} attempt=${attempt}:`, errStr);
+        await recordDripSend({
+          submission_id: s.id ?? "",
+          email: s.email,
+          tier: s.tier,
+          weakest_pillar: s.weakest_pillar,
+          day_offset: entry.daysOffset,
+          scheduled_at: scheduledAt,
+          resend_id: null,
+          status: "failed",
+          send_error: errStr,
+        });
         return { daysOffset: entry.daysOffset, subject: email.subject, scheduledAt, ok: false, error: errStr };
       }
       console.log(`Drip queued day=${entry.daysOffset} scheduled_at=${scheduledAt ?? "now"} id=${id} attempt=${attempt}`);
+      // Day 0 sends immediately; later days are scheduled with Resend.
+      const persistStatus: "sent" | "queued" = scheduledAt ? "queued" : "sent";
+      await recordDripSend({
+        submission_id: s.id ?? "",
+        email: s.email,
+        tier: s.tier,
+        weakest_pillar: s.weakest_pillar,
+        day_offset: entry.daysOffset,
+        scheduled_at: scheduledAt,
+        resend_id: id ?? null,
+        status: persistStatus,
+      });
       return { daysOffset: entry.daysOffset, subject: email.subject, scheduledAt, ok: true, id };
     } catch (err: any) {
       const msg = err?.message ?? String(err);
@@ -1156,10 +1233,32 @@ async function sendOneDrip(
         continue;
       }
       console.error(`Drip throw day=${entry.daysOffset} attempt=${attempt}:`, msg, err);
+      await recordDripSend({
+        submission_id: s.id ?? "",
+        email: s.email,
+        tier: s.tier,
+        weakest_pillar: s.weakest_pillar,
+        day_offset: entry.daysOffset,
+        scheduled_at: scheduledAt,
+        resend_id: null,
+        status: "failed",
+        send_error: msg,
+      });
       return { daysOffset: entry.daysOffset, subject: email.subject, scheduledAt, ok: false, error: msg };
     }
   }
 
+  await recordDripSend({
+    submission_id: s.id ?? "",
+    email: s.email,
+    tier: s.tier,
+    weakest_pillar: s.weakest_pillar,
+    day_offset: entry.daysOffset,
+    scheduled_at: scheduledAt,
+    resend_id: null,
+    status: "failed",
+    send_error: "exhausted retries",
+  });
   return {
     daysOffset: entry.daysOffset,
     subject: email.subject,
