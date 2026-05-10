@@ -1070,6 +1070,107 @@ interface ScheduledSendResult {
   error?: string;
 }
 
+// Resend caps at 5 req/sec on most paid plans. We send sequentially with a
+// short pause between each call to stay under the cap (the internal
+// notification has already consumed one slot before sendDrip starts).
+const RESEND_PER_SEND_DELAY_MS = 250;
+
+const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+
+async function sendOneDrip(
+  s: MirrorSubmission,
+  ctx: MirrorEmailContext,
+  entry: MirrorTierSequenceEntry,
+  now: number,
+): Promise<ScheduledSendResult> {
+  const DAY_MS = 24 * 60 * 60 * 1000;
+
+  let email: MirrorEmail;
+  try {
+    email = entry.build(ctx);
+  } catch (err: any) {
+    console.error(`Template build failed for tier=${s.tier} day=${entry.daysOffset}:`, err);
+    return {
+      daysOffset: entry.daysOffset,
+      subject: "(template failed)",
+      scheduledAt: null,
+      ok: false,
+      error: `template build failed: ${err?.message ?? String(err)}`,
+    };
+  }
+
+  const html = wrapEmail(email.preheader, renderBodyToHtml(email.body));
+  const scheduledAt = entry.daysOffset > 0
+    ? new Date(now + entry.daysOffset * DAY_MS).toISOString()
+    : null;
+
+  const payload: Record<string, unknown> = {
+    from: FROM_ADDRESS,
+    to: [s.email],
+    subject: email.subject,
+    html,
+    headers: {
+      "X-Mirror-Tier": s.tier,
+      "X-Mirror-Pillar": s.weakest_pillar,
+      "X-Mirror-Score": String(s.total_score),
+      "X-Mirror-Day": String(entry.daysOffset),
+      "X-Mirror-Submission-Id": s.id ?? "",
+    },
+    tags: [
+      { name: "mirror_tier", value: s.tier },
+      { name: "mirror_pillar", value: s.weakest_pillar },
+      { name: "mirror_day", value: `day_${entry.daysOffset}` },
+      { name: "source", value: "mirror_drip" },
+    ],
+  };
+  if (scheduledAt) payload.scheduled_at = scheduledAt;
+
+  // Up to 2 retries on 429 with exponential backoff: 600ms, 1200ms.
+  const MAX_ATTEMPTS = 3;
+  const BACKOFF_MS = [600, 1200];
+
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    try {
+      // deno-lint-ignore no-explicit-any
+      const res: any = await (resend.emails.send as any)(payload);
+      const id = res?.data?.id ?? res?.id;
+      if (res?.error) {
+        const errStr = typeof res.error === "string" ? res.error : JSON.stringify(res.error);
+        const isRateLimit = /rate.?limit|429/i.test(errStr);
+        if (isRateLimit && attempt < MAX_ATTEMPTS) {
+          const wait = BACKOFF_MS[attempt - 1] ?? 1200;
+          console.warn(`429 on drip day=${entry.daysOffset} attempt=${attempt}, waiting ${wait}ms`);
+          await sleep(wait);
+          continue;
+        }
+        console.error(`Resend rejected drip day=${entry.daysOffset} attempt=${attempt}:`, errStr);
+        return { daysOffset: entry.daysOffset, subject: email.subject, scheduledAt, ok: false, error: errStr };
+      }
+      console.log(`Drip queued day=${entry.daysOffset} scheduled_at=${scheduledAt ?? "now"} id=${id} attempt=${attempt}`);
+      return { daysOffset: entry.daysOffset, subject: email.subject, scheduledAt, ok: true, id };
+    } catch (err: any) {
+      const msg = err?.message ?? String(err);
+      const isRateLimit = /rate.?limit|429/i.test(msg);
+      if (isRateLimit && attempt < MAX_ATTEMPTS) {
+        const wait = BACKOFF_MS[attempt - 1] ?? 1200;
+        console.warn(`429 throw on drip day=${entry.daysOffset} attempt=${attempt}, waiting ${wait}ms`);
+        await sleep(wait);
+        continue;
+      }
+      console.error(`Drip throw day=${entry.daysOffset} attempt=${attempt}:`, msg, err);
+      return { daysOffset: entry.daysOffset, subject: email.subject, scheduledAt, ok: false, error: msg };
+    }
+  }
+
+  return {
+    daysOffset: entry.daysOffset,
+    subject: email.subject,
+    scheduledAt,
+    ok: false,
+    error: "exhausted retries",
+  };
+}
+
 async function sendDrip(s: MirrorSubmission): Promise<ScheduledSendResult[]> {
   const ctx = buildContext(s);
   const sequence = sequenceForTier(s.tier);
@@ -1079,68 +1180,21 @@ async function sendDrip(s: MirrorSubmission): Promise<ScheduledSendResult[]> {
   }
 
   const now = Date.now();
-  const DAY_MS = 24 * 60 * 60 * 1000;
+  const results: ScheduledSendResult[] = [];
 
-  const sends = sequence.map(async (entry): Promise<ScheduledSendResult> => {
-    let email: MirrorEmail;
-    try {
-      email = entry.build(ctx);
-    } catch (err: any) {
-      console.error(`Template build failed for tier=${s.tier} day=${entry.daysOffset}:`, err);
-      return {
-        daysOffset: entry.daysOffset,
-        subject: "(template failed)",
-        scheduledAt: null,
-        ok: false,
-        error: `template build failed: ${err?.message ?? String(err)}`,
-      };
+  // Sequential — one Resend call at a time, with a 250ms pause between sends
+  // so we stay safely under the 5 req/sec rate cap. ~7 sends * 250ms = 1.75s,
+  // well under the EF timeout.
+  for (let i = 0; i < sequence.length; i++) {
+    const entry = sequence[i];
+    const result = await sendOneDrip(s, ctx, entry, now);
+    results.push(result);
+    if (i < sequence.length - 1) {
+      await sleep(RESEND_PER_SEND_DELAY_MS);
     }
+  }
 
-    const html = wrapEmail(email.preheader, renderBodyToHtml(email.body));
-    const scheduledAt = entry.daysOffset > 0
-      ? new Date(now + entry.daysOffset * DAY_MS).toISOString()
-      : null;
-
-    const payload: Record<string, unknown> = {
-      from: FROM_ADDRESS,
-      to: [s.email],
-      subject: email.subject,
-      html,
-      headers: {
-        "X-Mirror-Tier": s.tier,
-        "X-Mirror-Pillar": s.weakest_pillar,
-        "X-Mirror-Score": String(s.total_score),
-        "X-Mirror-Day": String(entry.daysOffset),
-        "X-Mirror-Submission-Id": s.id ?? "",
-      },
-      tags: [
-        { name: "mirror_tier", value: s.tier },
-        { name: "mirror_pillar", value: s.weakest_pillar },
-        { name: "mirror_day", value: `day_${entry.daysOffset}` },
-        { name: "source", value: "mirror_drip" },
-      ],
-    };
-    if (scheduledAt) payload.scheduled_at = scheduledAt;
-
-    try {
-      // deno-lint-ignore no-explicit-any
-      const res: any = await (resend.emails.send as any)(payload);
-      const id = res?.data?.id ?? res?.id;
-      if (res?.error) {
-        const errStr = typeof res.error === "string" ? res.error : JSON.stringify(res.error);
-        console.error(`Resend rejected drip day=${entry.daysOffset}:`, errStr);
-        return { daysOffset: entry.daysOffset, subject: email.subject, scheduledAt, ok: false, error: errStr };
-      }
-      console.log(`Drip queued day=${entry.daysOffset} scheduled_at=${scheduledAt ?? "now"} id=${id}`);
-      return { daysOffset: entry.daysOffset, subject: email.subject, scheduledAt, ok: true, id };
-    } catch (err: any) {
-      const msg = err?.message ?? String(err);
-      console.error(`Drip throw day=${entry.daysOffset}:`, msg, err);
-      return { daysOffset: entry.daysOffset, subject: email.subject, scheduledAt, ok: false, error: msg };
-    }
-  });
-
-  return await Promise.all(sends);
+  return results;
 }
 
 /* ══════════════════════════════════════════════════════
