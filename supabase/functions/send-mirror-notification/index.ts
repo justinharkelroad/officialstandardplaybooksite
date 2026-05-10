@@ -6,8 +6,6 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@4.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
-const BREVO_API_KEY = Deno.env.get("BREVO_API_KEY");
-const BREVO_MIRROR_LIST_ID = Deno.env.get("BREVO_MIRROR_LIST_ID");
 
 const FROM_ADDRESS = "Standard Playbook <booking@standardplaybook.com>";
 const INTERNAL_NOTIFICATION_TO = "justin@hfiagencies.com";
@@ -1198,71 +1196,6 @@ async function sendDrip(s: MirrorSubmission): Promise<ScheduledSendResult[]> {
 }
 
 /* ══════════════════════════════════════════════════════
-   BREVO (optional)
-   ══════════════════════════════════════════════════════ */
-
-async function pushToBrevo(s: MirrorSubmission) {
-  if (!BREVO_API_KEY) {
-    console.log("BREVO_API_KEY not set — skipping Brevo push");
-    return;
-  }
-  const { first, last } = splitName(s.full_name);
-  const hasPhone = Boolean(s.phone && s.phone.trim());
-
-  const tags = [
-    `tier:${s.tier}`,
-    `pillar:${s.weakest_pillar}`,
-    `carrier:${s.carrier}`,
-    `has_phone:${hasPhone}`,
-    "source:mirror",
-    s.utm_source ? `utm_source:${s.utm_source}` : null,
-    s.utm_campaign ? `utm_campaign:${s.utm_campaign}` : null,
-  ].filter(Boolean) as string[];
-
-  try {
-    const body: Record<string, unknown> = {
-      email: s.email,
-      attributes: {
-        FIRSTNAME: first,
-        LASTNAME: last,
-        FULLNAME: s.full_name,
-        SMS: s.phone ?? "",
-        PHONE: s.phone ?? "",
-        CARRIER: s.carrier,
-        MIRROR_SCORE: s.total_score,
-        MIRROR_TIER: s.tier,
-        MIRROR_WEAKEST: s.weakest_pillar,
-        MIRROR_TAGS: tags.join(","),
-        UTM_SOURCE: s.utm_source ?? "",
-        UTM_MEDIUM: s.utm_medium ?? "",
-        UTM_CAMPAIGN: s.utm_campaign ?? "",
-        UTM_CONTENT: s.utm_content ?? "",
-      },
-      updateEnabled: true,
-    };
-    if (BREVO_MIRROR_LIST_ID) {
-      body.listIds = [Number(BREVO_MIRROR_LIST_ID)];
-    }
-
-    const res = await fetch("https://api.brevo.com/v3/contacts", {
-      method: "POST",
-      headers: {
-        "api-key": BREVO_API_KEY,
-        "content-type": "application/json",
-        accept: "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-    if (!res.ok) {
-      const text = await res.text();
-      console.error("Brevo upsert failed", res.status, text);
-    }
-  } catch (err) {
-    console.error("Brevo push error", err);
-  }
-}
-
-/* ══════════════════════════════════════════════════════
    HTTP HANDLER
    ══════════════════════════════════════════════════════ */
 
@@ -1353,9 +1286,6 @@ const handler = async (req: Request): Promise<Response> => {
     } catch (dripErr: any) {
       console.error("sendDrip threw outside per-send catch:", dripErr);
     }
-
-    /* 3) Optional Brevo upsert. */
-    await pushToBrevo(s);
 
     const dripSummary = {
       total: dripResults.length,
