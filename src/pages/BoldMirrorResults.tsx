@@ -477,16 +477,15 @@ const BoldMirrorResults = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
-                      fontFamily: body, fontSize: 13, fontWeight: 600, letterSpacing: '0.14em',
-                      color: paper, opacity: 0.75, textTransform: 'uppercase',
-                      textDecoration: 'none',
-                      borderBottom: `1px solid ${paper}55`,
-                      paddingBottom: 4,
-                      transition: 'opacity .2s, border-color .2s, color .2s',
+                      display: 'inline-block',
+                      fontFamily: body, fontSize: 14, fontWeight: 700, letterSpacing: '0.14em',
+                      color: paper, background: 'transparent', textTransform: 'uppercase',
+                      padding: '18px 28px', border: `1.5px solid ${paper}88`, textDecoration: 'none',
+                      transition: 'all .25s',
                     }}
-                    className="hover:!opacity-100 hover:!text-[#2080FF]"
+                    className="hover:bg-[#2080FF] hover:border-[#2080FF] hover:!text-white"
                   >
-                    or {secondary.ctaLabel} →
+                    {secondary.ctaLabel} →
                   </a>
                 )}
               </div>
@@ -554,6 +553,28 @@ const BoldMirrorResults = () => {
               Click anywhere &nbsp;→&nbsp; {route?.ctaLabel ?? 'Take the next step'}
             </p>
           </Reveal>
+          {secondary && (
+            <Reveal delay={0.2}>
+              <div style={{ marginTop: 32 }}>
+                <a
+                  href={secondary.ctaHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    display: 'inline-block',
+                    fontFamily: body, fontSize: 13, fontWeight: 700, letterSpacing: '0.14em',
+                    color: paper, background: 'transparent', textTransform: 'uppercase',
+                    padding: '14px 24px', border: `1.5px solid ${paper}88`, textDecoration: 'none',
+                    transition: 'all .25s',
+                  }}
+                  className="hover:bg-[#2080FF] hover:border-[#2080FF] hover:!text-white"
+                >
+                  Or {secondary.ctaLabel} →
+                </a>
+              </div>
+            </Reveal>
+          )}
         </div>
       </section>
 

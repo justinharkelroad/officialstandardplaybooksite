@@ -430,10 +430,17 @@ const CarrierSelect = ({
   );
 };
 
+const formatPhone = (raw: string): string => {
+  const digits = raw.replace(/\D/g, '').slice(0, 10);
+  if (digits.length < 4) return digits;
+  if (digits.length < 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+  return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+};
+
 const validateCapture = (fullName: string, email: string, phone: string, carrier: string) => {
   const fullNameOk = fullName.trim().length >= 2;
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-  const phoneOk = phone.replace(/\D/g, '').length >= 10;
+  const phoneOk = phone.replace(/\D/g, '').length === 10;
   const carrierOk = CARRIER_VALUES.has(carrier as CarrierValue);
   return { fullNameOk, emailOk, phoneOk, carrierOk, allValid: fullNameOk && emailOk && phoneOk && carrierOk };
 };
@@ -560,8 +567,10 @@ const CaptureScreen = ({
             inputMode="tel"
             autoComplete="tel"
             required
+            maxLength={12}
+            placeholder="555-555-5555"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => setPhone(formatPhone(e.target.value))}
             onFocus={handleFocus}
             onBlur={handleBlur}
             style={lineFieldStyle}
@@ -703,7 +712,7 @@ const BoldMirrorScore = () => {
       return;
     }
     if (!v.phoneOk) {
-      setError('Please enter a valid phone number (10 digits or more).');
+      setError('Please enter a valid 10-digit US phone number.');
       return;
     }
     if (!v.carrierOk) {
