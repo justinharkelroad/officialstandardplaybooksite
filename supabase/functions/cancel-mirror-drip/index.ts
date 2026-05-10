@@ -20,12 +20,16 @@ const corsHeaders = {
 };
 
 interface CancelRequest {
-  email: string;
+  // Single-email call shape (original).
+  email?: string;
+  // Bulk call shape — pass an array of emails to cancel in one invocation.
+  emails?: string[];
   reason?: string;
 }
 
 interface DripRow {
   id: string;
+  email: string;
   resend_id: string | null;
   day_offset: number;
   scheduled_at: string | null;
@@ -33,6 +37,7 @@ interface DripRow {
 
 interface CancelResult {
   id: string;
+  email: string;
   resend_id: string | null;
   day_offset: number;
   ok: boolean;
@@ -78,23 +83,35 @@ const handler = async (req: Request): Promise<Response> => {
 
   try {
     const body: CancelRequest = await req.json();
-    const rawEmail = (body?.email ?? "").trim().toLowerCase();
     const reason = body?.reason ?? "manual";
 
-    if (!rawEmail) {
+    // Accept either `email: string` (original) or `emails: string[]` (bulk).
+    const rawInputs: string[] = [
+      ...(typeof body?.email === "string" ? [body.email] : []),
+      ...(Array.isArray(body?.emails) ? body!.emails! : []),
+    ];
+    const emails = Array.from(
+      new Set(
+        rawInputs
+          .map((e) => (typeof e === "string" ? e.trim().toLowerCase() : ""))
+          .filter((e) => e.length > 0),
+      ),
+    );
+
+    if (emails.length === 0) {
       return new Response(
-        JSON.stringify({ error: "email is required" }),
+        JSON.stringify({ error: "email or emails is required" }),
         { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } },
       );
     }
 
     const nowIso = new Date().toISOString();
 
-    // Pull all queued, future-scheduled rows for this email.
+    // Pull all queued, future-scheduled rows for these emails.
     const { data: rows, error: queryErr } = await supa
       .from("mirror_drip_sends")
-      .select("id, resend_id, day_offset, scheduled_at")
-      .eq("email", rawEmail)
+      .select("id, email, resend_id, day_offset, scheduled_at")
+      .in("email", emails)
       .eq("status", "queued")
       .gt("scheduled_at", nowIso);
 
@@ -109,9 +126,16 @@ const handler = async (req: Request): Promise<Response> => {
     const pending: DripRow[] = (rows ?? []) as DripRow[];
 
     if (pending.length === 0) {
-      console.log(`cancel-mirror-drip: nothing pending for ${rawEmail}`);
+      console.log(`cancel-mirror-drip: nothing pending for ${emails.join(",")}`);
       return new Response(
-        JSON.stringify({ ok: true, email: rawEmail, cancelled: 0, failed: 0, results: [] }),
+        JSON.stringify({
+          ok: true,
+          emails,
+          cancelled: 0,
+          failed: 0,
+          results: [],
+          by_email: Object.fromEntries(emails.map((e) => [e, { cancelled: 0, failed: 0 }])),
+        }),
         { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } },
       );
     }
@@ -135,6 +159,7 @@ const handler = async (req: Request): Promise<Response> => {
           console.error(`mirror_drip_sends update failed (no resend_id) id=${row.id}:`, updateErr);
           results.push({
             id: row.id,
+            email: row.email,
             resend_id: null,
             day_offset: row.day_offset,
             ok: false,
@@ -144,6 +169,7 @@ const handler = async (req: Request): Promise<Response> => {
         } else {
           results.push({
             id: row.id,
+            email: row.email,
             resend_id: null,
             day_offset: row.day_offset,
             ok: true,
@@ -175,6 +201,7 @@ const handler = async (req: Request): Promise<Response> => {
           console.error(`mirror_drip_sends update failed id=${row.id}:`, updateErr);
           results.push({
             id: row.id,
+            email: row.email,
             resend_id: row.resend_id,
             day_offset: row.day_offset,
             ok: false,
@@ -184,6 +211,7 @@ const handler = async (req: Request): Promise<Response> => {
         } else {
           results.push({
             id: row.id,
+            email: row.email,
             resend_id: row.resend_id,
             day_offset: row.day_offset,
             ok: true,
@@ -205,6 +233,7 @@ const handler = async (req: Request): Promise<Response> => {
         }
         results.push({
           id: row.id,
+          email: row.email,
           resend_id: row.resend_id,
           day_offset: row.day_offset,
           ok: false,
@@ -219,12 +248,20 @@ const handler = async (req: Request): Promise<Response> => {
     const cancelled = results.filter((r) => r.ok).length;
     const failed = results.filter((r) => !r.ok).length;
 
+    const byEmail: Record<string, { cancelled: number; failed: number }> = {};
+    for (const e of emails) byEmail[e] = { cancelled: 0, failed: 0 };
+    for (const r of results) {
+      if (!byEmail[r.email]) byEmail[r.email] = { cancelled: 0, failed: 0 };
+      if (r.ok) byEmail[r.email].cancelled++;
+      else byEmail[r.email].failed++;
+    }
+
     console.log(
-      `cancel-mirror-drip: ${rawEmail} cancelled=${cancelled} failed=${failed} reason=${reason}`,
+      `cancel-mirror-drip: emails=${emails.join(",")} cancelled=${cancelled} failed=${failed} reason=${reason}`,
     );
 
     return new Response(
-      JSON.stringify({ ok: true, email: rawEmail, cancelled, failed, results }),
+      JSON.stringify({ ok: true, emails, cancelled, failed, results, by_email: byEmail }),
       { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } },
     );
   } catch (error: any) {
