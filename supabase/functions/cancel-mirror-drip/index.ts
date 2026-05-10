@@ -49,8 +49,9 @@ async function cancelOneAtResend(resendId: string): Promise<{ ok: boolean; statu
     return { ok: false, status: 0, detail: "RESEND_API_KEY missing in env" };
   }
   try {
-    const res = await fetch(`https://api.resend.com/emails/${encodeURIComponent(resendId)}`, {
-      method: "DELETE",
+    // Resend's cancel endpoint is POST /emails/{id}/cancel — there is no DELETE.
+    const res = await fetch(`https://api.resend.com/emails/${encodeURIComponent(resendId)}/cancel`, {
+      method: "POST",
       headers: { Authorization: `Bearer ${RESEND_API_KEY}` },
     });
     if (res.ok) return { ok: true, status: res.status };
