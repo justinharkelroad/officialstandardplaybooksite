@@ -59,6 +59,12 @@ async function cancelOneAtResend(resendId: string): Promise<{ ok: boolean; statu
     if (res.status === 404) return { ok: true, status: 404, detail: "not_found_at_resend" };
     let body = "";
     try { body = await res.text(); } catch { /* ignore */ }
+    // 422 "Email is not scheduled" means the email already sent (or scheduling
+    // failed at send time). Either way there's nothing to cancel — treat as a
+    // no-op success so the ledger row gets cleaned up.
+    if (res.status === 422 && /not\s+scheduled/i.test(body)) {
+      return { ok: true, status: 422, detail: "already_sent_or_not_scheduled" };
+    }
     return { ok: false, status: res.status, detail: body || `HTTP ${res.status}` };
   } catch (err: any) {
     return { ok: false, status: 0, detail: err?.message ?? String(err) };
@@ -157,8 +163,11 @@ const handler = async (req: Request): Promise<Response> => {
           .update({
             status: "cancelled",
             cancelled_at: new Date().toISOString(),
-            cancel_reason: cancelRes.detail === "not_found_at_resend"
-              ? `${reason}:not_found_at_resend`
+            cancel_reason: cancelRes.detail
+              && cancelRes.detail !== ""
+              && (cancelRes.detail === "not_found_at_resend" ||
+                  cancelRes.detail === "already_sent_or_not_scheduled")
+              ? `${reason}:${cancelRes.detail}`
               : reason,
           })
           .eq("id", row.id);

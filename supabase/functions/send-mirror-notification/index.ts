@@ -1175,7 +1175,10 @@ async function sendOneDrip(
       { name: "source", value: "mirror_drip" },
     ],
   };
-  if (scheduledAt) payload.scheduled_at = scheduledAt;
+  // Resend SDK uses camelCase `scheduledAt` and converts to snake_case for the
+  // REST API internally. Passing snake_case `scheduled_at` causes the SDK to
+  // silently drop the field and send immediately — bug from the original build.
+  if (scheduledAt) payload.scheduledAt = scheduledAt;
 
   // Up to 2 retries on 429 with exponential backoff: 600ms, 1200ms.
   const MAX_ATTEMPTS = 3;
