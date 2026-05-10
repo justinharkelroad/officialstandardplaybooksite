@@ -94,7 +94,7 @@ If you want to work with me at this tier, there's one path: The Directive.
 
 This is the work I described in the last note — protecting the standard, working on identity, building toward the next 10 years instead of optimizing the current ones.
 
-If you'd rather start with a 45-min Standard Fit call before committing: [book here](https://AGENCYCOACHING.as.me/standardfit). I do them myself. No pitch on the call.
+If you'd rather start with a 45-min Standard Fit call before committing: [book here](https://AGENCYCOACHING.as.me/MIRROR). I do them myself. No pitch on the call.
 
 If you already know what you want: [apply for The Directive](https://standardplaybook.com/directive).
 
@@ -116,7 +116,7 @@ You scored Elite. You don't need much more from me right now.
 
 If you ever want to work together — Directive, or just a Standard Fit call to talk through what you're building — you know where to find me.
 
-[Book a 45-min Standard Fit call](https://AGENCYCOACHING.as.me/standardfit) | [Apply for The Directive](https://standardplaybook.com/directive)
+[Book a 45-min Standard Fit call](https://AGENCYCOACHING.as.me/MIRROR) | [Apply for The Directive](https://standardplaybook.com/directive)
 
 The mirror is the mirror.
 

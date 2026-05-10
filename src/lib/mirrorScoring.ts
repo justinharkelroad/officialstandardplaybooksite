@@ -68,7 +68,7 @@ export interface TierRoute {
   brevoTag: string;
 }
 
-const ACUITY = 'https://AGENCYCOACHING.as.me/standardfit';
+const ACUITY = 'https://AGENCYCOACHING.as.me/MIRROR';
 const BOARDROOM_HREF = '/boardroom';
 const EIGHTWEEK_HREF = '/8-week-apply';
 const DIRECTIVE_HREF = '/directive';

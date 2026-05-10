@@ -158,7 +158,7 @@ It's $299/month. No contract. Most members stay 12+ months because the rhythm of
 
 If you want in: [join here](https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l).
 
-If you want to talk to me first about whether Boardroom or something more 1:1 (Directive) is the right fit: [book a 45-min Standard Fit call](https://AGENCYCOACHING.as.me/standardfit).
+If you want to talk to me first about whether Boardroom or something more 1:1 (Directive) is the right fit: [book a 45-min Standard Fit call](https://AGENCYCOACHING.as.me/MIRROR).
 
 —Justin`,
     }),
@@ -186,7 +186,7 @@ Three reasonable next moves:
 
 **1. Join the Boardroom.** $299/mo. Monthly group call. The room I built for Developing-tier owners. [Join here](https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l).
 
-**2. Book a 45-min Standard Fit call** to talk through whether Boardroom or 1:1 Directive coaching makes more sense. [Book here](https://AGENCYCOACHING.as.me/standardfit).
+**2. Book a 45-min Standard Fit call** to talk through whether Boardroom or 1:1 Directive coaching makes more sense. [Book here](https://AGENCYCOACHING.as.me/MIRROR).
 
 **3. Do nothing.** Keep the workbook. Run one rhythm. Take the assessment again in 90 days.
 

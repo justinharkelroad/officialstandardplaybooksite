@@ -149,7 +149,7 @@ Person first, producer second. The same applies to owners. You first, business s
 
 The mirror is the mirror.
 
-If you want a 45-minute Standard Fit call about what the next 90 days could look like, [book it here](https://AGENCYCOACHING.as.me/standardfit). I do them myself. No assistant, no funnel, no upsell on the call. Just a conversation.
+If you want a 45-minute Standard Fit call about what the next 90 days could look like, [book it here](https://AGENCYCOACHING.as.me/MIRROR). I do them myself. No assistant, no funnel, no upsell on the call. Just a conversation.
 
 —Justin`,
     }),
@@ -173,7 +173,7 @@ It's not a magic pill. It's a room. The room makes the climb easier because you'
 
 If you want in: [join here](https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l).
 
-If you want to talk first to make sure it's the right move: [book a 45-min Standard Fit call](https://AGENCYCOACHING.as.me/standardfit).
+If you want to talk first to make sure it's the right move: [book a 45-min Standard Fit call](https://AGENCYCOACHING.as.me/MIRROR).
 
 If neither feels right today, that's also fine. Keep the workbook. Keep running the morning huddle. The first move is the move regardless of where you do the rest of the work.
 
@@ -197,7 +197,7 @@ You took The Mirror because something inside you knew the score was going to be 
 
 You have three reasonable next moves:
 
-**1. Book a 45-min Standard Fit call with me.** No pitch, no upsell on the call. We talk about what you actually saw and what the next 90 days could look like. [Book here](https://AGENCYCOACHING.as.me/standardfit).
+**1. Book a 45-min Standard Fit call with me.** No pitch, no upsell on the call. We talk about what you actually saw and what the next 90 days could look like. [Book here](https://AGENCYCOACHING.as.me/MIRROR).
 
 **2. Join The Boardroom.** $299/mo. Monthly group coaching call (2nd Tuesday). The room I built for this exact moment. [Join here](https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l).
 

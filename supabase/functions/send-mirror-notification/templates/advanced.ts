@@ -163,7 +163,7 @@ It's apply-only. We do a Standard Fit call first. Both of us decide if it's the 
 
 [Apply for The Directive](https://standardplaybook.com/directive)
 
-If you'd rather start with a 45-min Standard Fit call to talk through whether Directive or Boardroom makes more sense: [book here](https://AGENCYCOACHING.as.me/standardfit).
+If you'd rather start with a 45-min Standard Fit call to talk through whether Directive or Boardroom makes more sense: [book here](https://AGENCYCOACHING.as.me/MIRROR).
 
 —Justin`,
     }),
@@ -187,7 +187,7 @@ You have three reasonable next moves:
 
 **1. Apply for The Directive.** 1:1 monthly coaching with me. Application only. [Apply here](https://standardplaybook.com/directive).
 
-**2. Book a 45-min Standard Fit call.** If you want to talk through whether Directive or another path is the right fit. [Book here](https://AGENCYCOACHING.as.me/standardfit).
+**2. Book a 45-min Standard Fit call.** If you want to talk through whether Directive or another path is the right fit. [Book here](https://AGENCYCOACHING.as.me/MIRROR).
 
 **3. Do the work alone.** Keep the workbook. Run your rhythm. Take the assessment again in 90 days.
 

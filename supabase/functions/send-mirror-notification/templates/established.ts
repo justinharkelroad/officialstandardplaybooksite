@@ -152,7 +152,7 @@ It's apply-and-fit. Not everyone is right for the program, and not everyone who 
 
 [Apply for 8-Week](https://standardplaybook.com/8-week-apply)
 
-If you'd rather talk first about whether 8-Week or Boardroom or 1:1 Directive coaching is the right move: [book a 45-min Standard Fit call](https://AGENCYCOACHING.as.me/standardfit).
+If you'd rather talk first about whether 8-Week or Boardroom or 1:1 Directive coaching is the right move: [book a 45-min Standard Fit call](https://AGENCYCOACHING.as.me/MIRROR).
 
 —Justin`,
         };
@@ -171,7 +171,7 @@ $299/mo. No contract.
 
 [Join the Boardroom](https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l)
 
-If you want to talk first about whether Boardroom or something more 1:1 (Directive) is the right move: [book a 45-min Standard Fit call](https://AGENCYCOACHING.as.me/standardfit).
+If you want to talk first about whether Boardroom or something more 1:1 (Directive) is the right move: [book a 45-min Standard Fit call](https://AGENCYCOACHING.as.me/MIRROR).
 
 —Justin`,
       };
@@ -194,7 +194,7 @@ You have three reasonable next moves:
 
 **1. Apply for 8-Week or join the Boardroom** (whichever fits your gap — see Day 6's note).
 
-**2. Book a 45-min Standard Fit call** to talk through whether Boardroom, 8-Week, or 1:1 Directive coaching is the right move for where you are. [Book here](https://AGENCYCOACHING.as.me/standardfit).
+**2. Book a 45-min Standard Fit call** to talk through whether Boardroom, 8-Week, or 1:1 Directive coaching is the right move for where you are. [Book here](https://AGENCYCOACHING.as.me/MIRROR).
 
 **3. Do nothing.** Keep the workbook. Run the surgical fix. Take the assessment again in 90 days.
 
