@@ -254,7 +254,7 @@ Still love you.
 
 —Justin
 
-P.S. If you already know you want to talk through this, hit reply and tell me what you saw. I read every one.`,
+P.S. If you're already ready to chat about whether Standard could be the right fit to help you find your certainty, [book a 45-min conversation here](https://AGENCYCOACHING.as.me/MIRROR). No pitch on the call — I just want to hear what you saw.`,
   }) },
   { daysOffset: 1, build: (ctx) => ({
     subject: "What your score is actually costing you",
@@ -279,7 +279,9 @@ Your Mirror score is the cheaper version of that moment. You got to see it witho
 
 The next note is about what the climb out actually looks like.
 
-—Justin`,
+—Justin
+
+P.S. If reading this lit a fire and you're ready to talk about whether Standard could be the fit to help you climb out, [book a 45-min Standard Fit call here](https://AGENCYCOACHING.as.me/MIRROR). I do them myself.`,
   }) },
   { daysOffset: 2, build: (ctx) => ({
     subject: "How Foundation-tier agencies climb out",
@@ -306,7 +308,9 @@ I've watched owners run this exact play and move from Foundation to Established 
 
 The mirror is the mirror.
 
-—Justin`,
+—Justin
+
+P.S. If you'd rather work the climb-out with a second set of eyes from the start, [book a 45-min conversation here](https://AGENCYCOACHING.as.me/MIRROR). No pitch — just a real conversation about whether Standard is the right fit.`,
   }) },
   { daysOffset: 3, build: (ctx) => ({
     subject: "The first move (do this Monday)",
@@ -333,7 +337,9 @@ Most owners skip this because it feels too simple to matter. The owners who run 
 
 Try it for two weeks. If your team isn't tighter by week three, hit reply and tell me. I've never had it not work.
 
-—Justin`,
+—Justin
+
+P.S. If installing the huddle is the move and you're ready to chat about whether Standard could help you find your certainty on the rest, [book 45 minutes with me here](https://AGENCYCOACHING.as.me/MIRROR).`,
   }) },
   { daysOffset: 4, build: (ctx) => ({
     subject: "\"I should figure this out myself\"",
@@ -356,7 +362,9 @@ The mirror is the mirror.
 
 If you want a 45-minute Standard Fit call about what the next 90 days could look like, [book it here](https://AGENCYCOACHING.as.me/MIRROR). I do them myself. No assistant, no funnel, no upsell on the call. Just a conversation.
 
-—Justin`,
+—Justin
+
+P.S. If you're done with "I should figure this out myself" and ready to chat about whether Standard is the fit to help you find your certainty, [the 45-min call is here](https://AGENCYCOACHING.as.me/MIRROR).`,
   }) },
   { daysOffset: 6, build: (ctx) => ({
     subject: "There's a room for this",
@@ -377,7 +385,9 @@ If you want to talk first to make sure it's the right move: [book a 45-min Stand
 
 If neither feels right today, that's also fine. Keep the workbook. Keep running the morning huddle. The first move is the move regardless of where you do the rest of the work.
 
-—Justin`,
+—Justin
+
+P.S. If The Boardroom isn't your first move but a real conversation is, [the 45-min Standard Fit call is here](https://AGENCYCOACHING.as.me/MIRROR). No pressure to join anything after.`,
   }) },
   { daysOffset: 9, build: (ctx) => ({
     subject: "Last note from me",
@@ -402,7 +412,9 @@ All three are real. The only one I'd argue against is a fourth option — preten
 
 The mirror is the mirror.
 
-—Justin`,
+—Justin
+
+P.S. If you're ready to chat about whether Standard could be the fit to help you find your certainty, [book a 45-min call here](https://AGENCYCOACHING.as.me/MIRROR). No pitch on the call — I do them myself.`,
   }) },
 ];
 
@@ -428,7 +440,9 @@ Over the next 9 days I'll send you a few notes — what's actually keeping Devel
 
 The mirror is the mirror.
 
-—Justin`,
+—Justin
+
+P.S. If the Mirror told you what you already suspected and you're ready to chat about whether Standard is the right fit to break the plateau, [book a 45-min conversation here](https://AGENCYCOACHING.as.me/MIRROR). No pitch on the call.`,
   }) },
   { daysOffset: 1, build: (ctx) => ({
     subject: "Why Developing is the hardest place to be",
@@ -447,7 +461,9 @@ You either install the rhythm that pulls you upward, or you stay where you are. 
 
 The next note is about what that design actually looks like.
 
-—Justin`,
+—Justin
+
+P.S. If you don't want to spend another year in slow drift, [book a 45-min Standard Fit call here](https://AGENCYCOACHING.as.me/MIRROR). No pitch — just a real conversation about whether Standard is the right fit.`,
   }) },
   { daysOffset: 2, build: (ctx) => ({
     subject: "How Developing-tier agencies become Established",
@@ -470,7 +486,9 @@ That's the gap. Not new ideas. Tighter execution of ideas you already have.
 
 Tactics are infinite and mostly overrated. Rhythm is finite and underrated. The agencies that move from Developing to Established are the ones that pick rhythm over tactics for 12 straight months.
 
-—Justin`,
+—Justin
+
+P.S. If picking which rhythm to install first would be easier with another set of eyes, [book 45 minutes with me here](https://AGENCYCOACHING.as.me/MIRROR). No pitch on the call.`,
   }) },
   { daysOffset: 3, build: (ctx) => ({
     subject: "The next 30 days",
@@ -491,7 +509,9 @@ After 30 days, that rhythm becomes muscle memory. THEN you add the next one.
 
 The agencies that move tiers stack rhythms one at a time. The ones that stay stuck try to stack five at once.
 
-—Justin`,
+—Justin
+
+P.S. If you know which rhythm you'd run for 30 days but want to talk it through first, [the 45-min call is here](https://AGENCYCOACHING.as.me/MIRROR). No pitch — just a real conversation about whether Standard is the right fit.`,
   }) },
   { daysOffset: 4, build: (ctx) => ({
     subject: "The mistake most Developing-tier owners make",
@@ -517,7 +537,9 @@ The agencies that break through are the ones that say "no new tools for 90 days 
 
 That decision saves most owners six figures and 18 months.
 
-—Justin`,
+—Justin
+
+P.S. If you've already tried installing rhythm and it isn't sticking, [book a 45-min Standard Fit call here](https://AGENCYCOACHING.as.me/MIRROR). That's the conversation worth having.`,
   }) },
   { daysOffset: 6, build: (ctx) => ({
     subject: "Where Developing-tier owners actually fix this",
@@ -538,7 +560,9 @@ If you want in: [join here](https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l).
 
 If you want to talk to me first about whether Boardroom or something more 1:1 (Directive) is the right fit: [book a 45-min Standard Fit call](https://AGENCYCOACHING.as.me/MIRROR).
 
-—Justin`,
+—Justin
+
+P.S. If The Boardroom feels close but not quite, the [45-min Standard Fit call](https://AGENCYCOACHING.as.me/MIRROR) is how we figure out the right fit together.`,
   }) },
   { daysOffset: 9, build: (ctx) => ({
     subject: "Last note",
@@ -565,7 +589,9 @@ Three reasonable next moves:
 
 The mirror is the mirror.
 
-—Justin`,
+—Justin
+
+P.S. If you've been on the fence and want one direct conversation before deciding anything, [book a 45-min call here](https://AGENCYCOACHING.as.me/MIRROR). No pitch — I do them myself.`,
   }) },
 ];
 
@@ -591,7 +617,9 @@ Over the next 9 days I'll send you a few notes — what keeps Established-tier o
 
 The mirror is the mirror.
 
-—Justin`,
+—Justin
+
+P.S. If the surgical fix is clearer with a second set of eyes, [book a 45-min Standard Fit call here](https://AGENCYCOACHING.as.me/MIRROR). I do them myself. No pitch on the call.`,
   }) },
   { daysOffset: 1, build: (ctx) => ({
     subject: "The \"almost there\" trap",
@@ -608,7 +636,9 @@ The gap between Established and Advanced isn't bigger than the gap between Devel
 
 That's what the Mirror just did for you. It pointed at one specific gap that's quietly capping your growth. The question is whether you close it — or whether you let "almost there" become "still here" 18 months from now.
 
-—Justin`,
+—Justin
+
+P.S. If you don't want "almost there" to become "still here" and you're ready to chat about whether Standard is the right fit to find your certainty, [book 45 minutes with me here](https://AGENCYCOACHING.as.me/MIRROR).`,
   }) },
   { daysOffset: 2, build: (ctx) => ({
     subject: "How Established becomes Advanced",
@@ -631,7 +661,9 @@ Five surgical moves I see most often:
 
 Most Established-tier owners can do 3-4 of these in 12-18 months and shift into Advanced. The ones that don't usually skip the surgical work because it's less satisfying than building something new. Closing a gap doesn't feel like progress the way creating something does. But it is progress — usually more impactful than another launch.
 
-—Justin`,
+—Justin
+
+P.S. If picking the right surgical move is easier with someone who's seen the pattern before, [book a 45-min Standard Fit call here](https://AGENCYCOACHING.as.me/MIRROR). No pitch — just a real conversation.`,
   }) },
   { daysOffset: 3, build: (ctx) => ({
     subject: "What I'd do in your seat",
@@ -646,7 +678,9 @@ If I were sitting in your seat at Established tier, I'd do two specific things i
 
 The reason Established-tier owners stay Established is usually #2. They know how to fix the visible problems. They can't see the invisible ones. The right second set of eyes costs less than the time you'll waste figuring it out alone.
 
-—Justin`,
+—Justin
+
+P.S. The "second set of eyes" I mentioned — that's exactly what the [45-min Standard Fit call](https://AGENCYCOACHING.as.me/MIRROR) is. No pitch. Find out if Standard is the right fit before you commit to anything.`,
   }) },
   { daysOffset: 4, build: (ctx) => ({
     subject: "When coaching is the wrong answer",
@@ -671,7 +705,9 @@ Coaching is the RIGHT answer for an Established-tier owner when:
 
 If you're in the second list, the next email is about which room makes the most sense based on your specific gap. If you're in the first list, save your money and run the rhythm.
 
-—Justin`,
+—Justin
+
+P.S. If you're in the second list and want to confirm fit before committing to anything, [book a 45-min Standard Fit call here](https://AGENCYCOACHING.as.me/MIRROR). That IS the diagnostic.`,
   }) },
   { daysOffset: 6, build: (ctx) => {
     const is8WeekBranch = ctx.weakestPillar === "systems_rhythm" || ctx.weakestPillar === "training_scripts";
@@ -693,7 +729,9 @@ It's apply-and-fit. Not everyone is right for the program, and not everyone who 
 
 If you'd rather talk first about whether 8-Week or Boardroom or 1:1 Directive coaching is the right move: [book a 45-min Standard Fit call](https://AGENCYCOACHING.as.me/MIRROR).
 
-—Justin`,
+—Justin
+
+P.S. Whether the right room is 8-Week, Boardroom, or Directive, [the 45-min call](https://AGENCYCOACHING.as.me/MIRROR) is how we figure that out together. No pitch on the call.`,
       };
     }
     return {
@@ -711,7 +749,9 @@ $299/mo. No contract.
 
 If you want to talk first about whether Boardroom or something more 1:1 (Directive) is the right move: [book a 45-min Standard Fit call](https://AGENCYCOACHING.as.me/MIRROR).
 
-—Justin`,
+—Justin
+
+P.S. If you're ready to chat about whether Standard is the right fit to help you find your certainty before joining anything, [the 45-min call is here](https://AGENCYCOACHING.as.me/MIRROR).`,
     };
   } },
   { daysOffset: 9, build: (ctx) => ({
@@ -733,7 +773,9 @@ You have three reasonable next moves:
 
 The mirror is the mirror.
 
-—Justin`,
+—Justin
+
+P.S. If you want one direct conversation before deciding anything, [book a 45-min call here](https://AGENCYCOACHING.as.me/MIRROR). I do them myself.`,
   }) },
 ];
 
@@ -761,7 +803,9 @@ The work at this tier is different than the work at lower tiers. We'll get into 
 
 The mirror is the mirror.
 
-—Justin`,
+—Justin
+
+P.S. If you want a real conversation about whether Standard could be the fit at this tier, [book a 45-min Standard Fit call here](https://AGENCYCOACHING.as.me/MIRROR). I do them myself. No pitch.`,
   }) },
   { daysOffset: 1, build: (ctx) => ({
     subject: "At Advanced, the ceiling is you",
@@ -788,7 +832,9 @@ That sounds soft and it isn't. Owner-level growth at Advanced tier looks like:
 
 Person first, producer second. The same applies to owners. At Advanced tier, owner growth IS agency growth.
 
-—Justin`,
+—Justin
+
+P.S. If owner-level growth is the real work and you're ready to talk it through with someone who's at this tier too, [book 45 minutes with me here](https://AGENCYCOACHING.as.me/MIRROR). No pitch on the call.`,
   }) },
   { daysOffset: 2, build: (ctx) => ({
     subject: "Advanced → Elite is not what you think",
@@ -806,7 +852,9 @@ The Advanced-tier owner who lets go more on the way to Elite breaks through.
 
 Letting go is the hardest thing a high-performing operator ever does. It feels like decline. It feels like dropping the ball. It is neither — it's the only path. And almost no one figures it out alone.
 
-—Justin`,
+—Justin
+
+P.S. If you've been thinking about what "letting go" actually looks like in practice, [the 45-min Standard Fit call](https://AGENCYCOACHING.as.me/MIRROR) is that conversation. Find out if Standard is the right fit before committing to anything.`,
   }) },
   { daysOffset: 3, build: (ctx) => ({
     subject: "The work nobody talks about",
@@ -829,7 +877,9 @@ These aren't soft problems. At Advanced tier, they're the real work. Tactics are
 
 If you don't have someone who'll have those conversations with you honestly, you're going to outgrow most coaching long before you outgrow yourself.
 
-—Justin`,
+—Justin
+
+P.S. If you don't have someone who'll have the identity-level conversations honestly, [book 45 minutes with me here](https://AGENCYCOACHING.as.me/MIRROR). I will. No pitch on the call — just see if Standard is the right fit.`,
   }) },
   { daysOffset: 4, build: (ctx) => ({
     subject: "Why 1:1 (and not group) at this tier",
@@ -852,7 +902,9 @@ That's what The Directive is. 1:1 coaching with me. Application only. Not becaus
 
 If you're at Advanced tier and ready for that depth, the next note is about how it actually works.
 
-—Justin`,
+—Justin
+
+P.S. If group has hit its ceiling but you're not sure 1:1 is right yet, [the 45-min Standard Fit call](https://AGENCYCOACHING.as.me/MIRROR) is the way to find out. No pitch on the call.`,
   }) },
   { daysOffset: 6, build: (ctx) => ({
     subject: "The Directive",
@@ -874,7 +926,9 @@ It's apply-only. We do a Standard Fit call first. Both of us decide if it's the 
 
 If you'd rather start with a 45-min Standard Fit call to talk through whether Directive or Boardroom makes more sense: [book here](https://AGENCYCOACHING.as.me/MIRROR).
 
-—Justin`,
+—Justin
+
+P.S. If you'd rather chat before applying for The Directive, [book a 45-min conversation here](https://AGENCYCOACHING.as.me/MIRROR). No pressure either way — find out if Standard is the right fit first.`,
   }) },
   { daysOffset: 9, build: (ctx) => ({
     subject: "Last note",
@@ -897,7 +951,9 @@ You have three reasonable next moves:
 
 The mirror is the mirror.
 
-—Justin`,
+—Justin
+
+P.S. If you want one direct conversation before deciding anything, [book a 45-min call here](https://AGENCYCOACHING.as.me/MIRROR). I do them myself. No pitch.`,
   }) },
 ];
 
@@ -924,7 +980,9 @@ These notes will be shorter than what I send to lower tiers. You don't need the 
 
 The mirror is the mirror.
 
-—Justin`,
+—Justin
+
+P.S. If you ever want to chat about the work at this tier — protecting the standard, the next 10 years, finding your certainty about what's next — [book a 45-min Standard Fit call here](https://AGENCYCOACHING.as.me/MIRROR). I do them myself. No pitch.`,
   }) },
   { daysOffset: 2, build: (ctx) => ({
     subject: "At Elite, the agency isn't the work anymore",
@@ -945,7 +1003,9 @@ These aren't side quests. At your level, they ARE the main quest. The agency is 
 
 If you're not deliberately working on at least three of those, you're at risk of the most common Elite-tier failure mode: the agency keeps running, you start coasting, and 5 years go by where you optimized maintenance instead of building anything new.
 
-—Justin`,
+—Justin
+
+P.S. If the work I just described matches what's been on your mind, [book 45 minutes with me here](https://AGENCYCOACHING.as.me/MIRROR). No pitch on the call.`,
   }) },
   { daysOffset: 4, build: (ctx) => ({
     subject: "The Elite-tier blind spot",
@@ -964,7 +1024,9 @@ The owners who stay Elite are the ones who actively recruit truth. They build a 
 
 If you don't have that, your Mirror score is going to start drifting back down in 3-5 years and you won't see it until you take the test again.
 
-—Justin`,
+—Justin
+
+P.S. If you're actively recruiting truth and want a conversation that delivers it without an agenda, [book a 45-min call here](https://AGENCYCOACHING.as.me/MIRROR). That's literally the call.`,
   }) },
   { daysOffset: 6, build: (ctx) => ({
     subject: "What's available at this tier",
@@ -981,7 +1043,9 @@ If you'd rather start with a 45-min Standard Fit call before committing: [book h
 
 If you already know what you want: [apply for The Directive](https://standardplaybook.com/directive).
 
-—Justin`,
+—Justin
+
+P.S. The Standard Fit call is how Directive starts — [book it here](https://AGENCYCOACHING.as.me/MIRROR) if you want to talk before applying. No pitch on the call.`,
   }) },
   { daysOffset: 9, build: (ctx) => ({
     subject: "Last note",
@@ -1000,7 +1064,9 @@ The mirror is the mirror.
 
 Still love you.
 
-—Justin`,
+—Justin
+
+P.S. If you ever want to chat about whether Standard is a fit, [the 45-min call is here](https://AGENCYCOACHING.as.me/MIRROR). Door's open.`,
   }) },
 ];
 
