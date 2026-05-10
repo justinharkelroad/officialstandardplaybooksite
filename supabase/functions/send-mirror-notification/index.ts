@@ -11,7 +11,10 @@ const BREVO_MIRROR_LIST_ID = Deno.env.get("BREVO_MIRROR_LIST_ID");
 
 const FROM_ADDRESS = "Standard Playbook <booking@standardplaybook.com>";
 const INTERNAL_NOTIFICATION_TO = "justin@hfiagencies.com";
-const MIRROR_PDF_URL = "https://standardplaybook.com/mirror-workbook.pdf";
+// Public Supabase storage URL for the Mirror workbook PDF.
+// Bucket: "public" (Lovable Cloud's default). File: "THE MIRROR WORKBOOK.pdf".
+const MIRROR_PDF_URL =
+  "https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public/THE%20MIRROR%20WORKBOOK.pdf";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -188,7 +191,7 @@ function getDiagnosticParagraph(tier: MirrorTier, weakestPillar: MirrorPillar): 
 const FOUNDATION_SEQUENCE: MirrorTierSequenceEntry[] = [
   { daysOffset: 0, build: (ctx) => ({
     subject: `Your Mirror score: ${ctx.score} / 160`,
-    preheader: "Your full PDF is attached. Read this first.",
+    preheader: "Your full Mirror workbook is inside. Read this first.",
     body: `${ctx.firstName},
 
 You scored ${ctx.score} out of 160. That puts you in Foundation tier — the bottom of the five.
