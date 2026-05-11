@@ -788,6 +788,12 @@ const ProgramRowItem = ({ p, expanded, onToggle }: { p: ProgramRow; expanded: bo
           }}>
             {p.name}
           </h4>
+          <p style={{
+            fontFamily: body, fontSize: 13, fontWeight: 600, color: ink,
+            opacity: isSoldOut ? 0.4 : 1, marginTop: 6, marginBottom: 0,
+          }} className="sm:hidden">
+            {p.price}
+          </p>
         </div>
         <span style={{
           fontFamily: body, fontSize: 14, fontWeight: 600, color: ink,
