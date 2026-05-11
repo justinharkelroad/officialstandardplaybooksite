@@ -101,7 +101,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #2080FF;
+    background: #2997FF;
     border-radius: 4px;
   }
 
@@ -117,7 +117,7 @@
   }
 
   .btn-primary:hover {
-    box-shadow: 0 0 0 2px #2080FF inset, 0 0 18px #30A4FF;
+    box-shadow: 0 0 0 2px #2997FF inset, 0 0 18px #30A4FF;
   }
 
   .btn-primary:active {
@@ -170,7 +170,7 @@
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, #2080FF 0%, #30A4FF 100%);
+    background: linear-gradient(135deg, #2997FF 0%, #30A4FF 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -196,7 +196,7 @@
     position: absolute;
     width: 4px;
     height: 4px;
-    background: radial-gradient(circle, #2080FF, transparent);
+    background: radial-gradient(circle, #2997FF, transparent);
     border-radius: 50%;
     animation: particle-float 30s linear infinite;
   }

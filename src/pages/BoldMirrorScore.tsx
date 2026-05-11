@@ -28,7 +28,7 @@ const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial,
 
 const ink = '#0A0A0B';
 const paper = '#F4F2EE';
-const blue = '#2080FF';
+const blue = '#2997FF';
 
 /* ── Sticky header ─────────────────────────────────────── */
 const StickyHeader = ({
@@ -612,7 +612,7 @@ const CaptureScreen = ({
             opacity: disabled ? 0.4 : 1,
             transition: 'all .25s',
           }}
-          className={disabled ? '' : 'hover:bg-[#2080FF] hover:border-[#2080FF]'}
+          className={disabled ? '' : 'hover:bg-[#2997FF] hover:border-[#2997FF]'}
         >
           {submitting ? 'Calculating…' : 'See My Score →'}
         </button>

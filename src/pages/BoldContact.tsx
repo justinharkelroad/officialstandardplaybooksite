@@ -16,7 +16,7 @@ const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial,
 /* ── Brand colors ──────────────────────────────────────── */
 const ink = '#0A0A0B';
 const paper = '#F4F2EE';
-const blue = '#2080FF';
+const blue = '#2997FF';
 
 /* ── Reveal helper ─────────────────────────────────────── */
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
@@ -83,7 +83,7 @@ const Hero = ({ onBookCall }: { onBookCall: () => void }) => (
               color: '#fff', background: ink, textTransform: 'uppercase',
               padding: '15px 28px', border: `1.5px solid ${ink}`, cursor: 'pointer', transition: 'all .25s',
             }}
-            className="hover:bg-[#2080FF] hover:border-[#2080FF]">
+            className="hover:bg-[#2997FF] hover:border-[#2997FF]">
             Book a Call →
           </button>
         </Reveal>

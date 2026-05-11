@@ -21,7 +21,7 @@ const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial,
 /* ── Brand colors ──────────────────────────────────────── */
 const ink = '#0A0A0B';     // near-black
 const paper = '#F4F2EE';   // warm off-white (newsprint)
-const blue = '#2080FF';    // SP brand blue (already in tailwind)
+const blue = '#2997FF';    // SP brand blue (already in tailwind)
 const blueDark = '#0066CC';
 
 /* ── Reveal helper ─────────────────────────────────────── */
@@ -118,7 +118,7 @@ const HeroSection = () => {
                 maxWidth: 380,
               }}
             >
-              Coaching, systems, and software for insurance agency owners who refuse to settle for average.
+              Coaching, software, and <span style={{ color: blue }}>AI</span> — built by a 20-year operator for agency owners who refuse to settle.
             </p>
           </Reveal>
 
@@ -143,7 +143,7 @@ const HeroSection = () => {
                 padding: '15px 28px', border: `1.5px solid ${ink}`, cursor: 'pointer',
                 transition: 'all .25s',
               }}
-              className="hover:bg-[#2080FF] hover:border-[#2080FF]"
+              className="hover:bg-[#2997FF] hover:border-[#2997FF]"
             >
               Book a Call
             </button>
@@ -308,6 +308,63 @@ const FoundationSection = () => (
 );
 
 /* ══════════════════════════════════════════════════════
+   THE BUILDER — operator-as-developer positioning
+   ══════════════════════════════════════════════════════ */
+const BuilderSection = () => (
+  <section style={{ background: paper, padding: '120px 24px 100px', borderTop: `1px solid ${ink}1a` }}>
+    <div className="max-w-[1280px] mx-auto">
+      <Reveal>
+        <p style={{
+          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+          color: ink, textTransform: 'uppercase', marginBottom: 28,
+        }}>
+          / The Builder
+        </p>
+      </Reveal>
+      <Reveal delay={0.1}>
+        <h2 style={{
+          fontFamily: display,
+          fontSize: 'clamp(40px, 8vw, 120px)',
+          lineHeight: 0.95,
+          letterSpacing: '-0.01em',
+          color: ink,
+          textTransform: 'uppercase',
+          margin: 0,
+          fontWeight: 400,
+        }}>
+          I WRITE THE CODE.
+          <br />
+          <span style={{ color: blue }}>I COACH THE PLAYBOOK.</span>
+        </h2>
+      </Reveal>
+
+      <div className="grid grid-cols-12 gap-8 mt-16">
+        <Reveal delay={0.15} className="col-span-12 md:col-span-7">
+          <p style={{
+            fontFamily: body, fontSize: 'clamp(17px, 1.6vw, 22px)', fontWeight: 400, lineHeight: 1.55,
+            color: ink, opacity: 0.85, marginBottom: 24,
+          }}>
+            20 years inside Allstate. Three agencies still running. Agency Brain — the platform every program runs on — I build in code, week after week. Every <span style={{ color: blue }}>AI</span> feature inside it (Call Scoring, Voice Trainer, Sales Roleplay, Discovery Coach) is mine to ship.
+          </p>
+          <p style={{
+            fontFamily: display, fontSize: 'clamp(20px, 2vw, 28px)', fontWeight: 400, lineHeight: 1.2,
+            color: ink, textTransform: 'uppercase', letterSpacing: '-0.01em', marginBottom: 24,
+          }}>
+            Not bought. Not licensed. Built.
+          </p>
+          <p style={{
+            fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6,
+            color: ink, opacity: 0.75, maxWidth: 620,
+          }}>
+            That's not a marketing angle. It's why the system actually works in your office on Monday.
+          </p>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
    AGENCY BRAIN — black section with tilted screenshot
    (Dom Pérignon bottle moment)
    ══════════════════════════════════════════════════════ */
@@ -424,7 +481,7 @@ const AgencyBrainBand = () => (
               color: ink, background: paper, textTransform: 'uppercase', textDecoration: 'none',
               padding: '14px 26px', display: 'inline-block', transition: 'all .25s',
             }}
-            className="hover:bg-[#2080FF] hover:text-white"
+            className="hover:bg-[#2997FF] hover:text-white"
           >
             See the Plans →
           </a>
@@ -440,7 +497,7 @@ const AgencyBrainBand = () => (
    ══════════════════════════════════════════════════════ */
 const polaroids = [
   { img: salesAnalyticsImg, label: 'Sales Analytics', tilt: -6 },
-  { img: lqsImg, label: 'Pipeline Intelligence', tilt: 4 },
+  { img: lqsImg, label: 'AI Pipeline Intelligence', tilt: 4 },
   { img: callScoringImg, label: 'AI Call Scoring', tilt: -3 },
   { img: aiRoleplayImg, label: 'AI Roleplay Bot', tilt: 5 },
   { img: teamTrainingImg, label: 'Team Training', tilt: -4 },
@@ -469,11 +526,20 @@ const PolaroidGrid = () => (
             margin: 0,
             fontWeight: 400,
             textAlign: 'center',
-            marginBottom: 64,
+            marginBottom: 24,
           }}
         >
           SEE THE WORK.
         </h3>
+      </Reveal>
+      <Reveal delay={0.1}>
+        <p style={{
+          fontFamily: body, fontSize: 'clamp(14px, 1.2vw, 16px)', fontWeight: 500, letterSpacing: '0.06em',
+          color: ink, opacity: 0.7, textTransform: 'uppercase',
+          textAlign: 'center', maxWidth: 720, marginInline: 'auto', marginBottom: 56,
+        }}>
+          Five <span style={{ color: blue }}>AI</span>-powered tools. One platform. Built by the operator who coaches you.
+        </p>
       </Reveal>
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-4">
@@ -758,7 +824,7 @@ const ProgramRowItem = ({ p, expanded, onToggle }: { p: ProgramRow; expanded: bo
           style={{
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
             width: 36, height: 36, border: `1.5px solid ${ink}`,
-            fontFamily: body, fontSize: 18, fontWeight: 400, color: ink,
+            fontFamily: body, fontSize: 18, fontWeight: 400,
             transition: 'transform .35s ease, background .25s, color .25s',
             transform: expanded ? 'rotate(45deg)' : 'rotate(0deg)',
             background: expanded ? ink : 'transparent',
@@ -898,7 +964,7 @@ const ProgramsSection = () => {
               padding: '16px 32px', border: `1.5px solid ${ink}`, transition: 'all .25s',
               display: 'inline-block',
             }}
-            className="hover:bg-[#2080FF] hover:border-[#2080FF]"
+            className="hover:bg-[#2997FF] hover:border-[#2997FF]"
           >
             AgencyBrain Info →
           </a>
@@ -1081,6 +1147,7 @@ const BoldMockup = () => (
     <MarqueeBands />
     <MissionSection />
     <FoundationSection />
+    <BuilderSection />
     <AgencyBrainBand />
     <PolaroidGrid />
     <ProgramsSection />

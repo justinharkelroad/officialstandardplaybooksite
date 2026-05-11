@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif';
 const ink = '#0A0A0B';
-const blue = '#2080FF';
+const blue = '#2997FF';
 
 interface MirrorStarRatingProps {
   value: number | null;

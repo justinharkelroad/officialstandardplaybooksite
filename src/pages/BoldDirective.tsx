@@ -18,7 +18,7 @@ const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial,
 /* ── Brand colors ──────────────────────────────────────── */
 const ink = '#0A0A0B';
 const paper = '#F4F2EE';
-const blue = '#2080FF';
+const blue = '#2997FF';
 
 /* ── Reveal helper ─────────────────────────────────────── */
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
@@ -87,7 +87,7 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
               color: '#fff', background: ink, textTransform: 'uppercase',
               padding: '15px 28px', border: `1.5px solid ${ink}`, cursor: 'pointer', transition: 'all .25s',
             }}
-            className="hover:bg-[#2080FF] hover:border-[#2080FF]">
+            className="hover:bg-[#2997FF] hover:border-[#2997FF]">
             Apply Now
           </button>
         </Reveal>
@@ -238,10 +238,10 @@ const pillars = [
   {
     num: '03',
     label: 'Technology & AI Strategies',
-    headline: 'AI built for your agency.',
-    sub: 'Custom AI agent buildouts, custom reporting, and process optimization — implemented 1:1 with you, not handed off as a doc.',
+    headline: <><span style={{ color: blue }}>AI</span> built for your agency.</>,
+    sub: <>Custom agents. Custom reporting. Custom call scoring for the calls you choose to upload. Built 1:1 with the operator who codes the platform — not handed off as a doc.</>,
     bullets: [
-      '100 AI-graded calls per month included',
+      '100 AI-graded calls per month — for the calls you choose to upload',
       'Custom AI agent buildouts on calls',
       'Custom reporting buildouts for your agency',
       'Process optimization',
@@ -366,7 +366,7 @@ const NumbersSection = () => (
         {[
           { num: '1', unit: 'private', detail: '2-hour 1:1 with Justin' },
           { num: '1', unit: 'group', detail: 'Boardroom session' },
-          { num: '100', unit: 'AI-graded', detail: 'calls per month' },
+          { num: '100', unit: <><span style={{ color: blue }}>AI</span>-graded</>, detail: 'calls per month · calls you upload' },
         ].map((item, i) => (
           <Reveal key={i} delay={i * 0.07}>
             <div style={{
@@ -438,7 +438,7 @@ const ValuesSection = ({ onApply }: { onApply: () => void }) => (
             padding: '18px 36px', border: `1.5px solid ${ink}`, cursor: 'pointer',
             transition: 'all .25s', marginTop: 36,
           }}
-          className="hover:bg-[#2080FF] hover:border-[#2080FF]">
+          className="hover:bg-[#2997FF] hover:border-[#2997FF]">
           Apply for The Directive →
         </button>
       </Reveal>

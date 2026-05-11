@@ -2,7 +2,7 @@ const display = '"Anton", "Archivo Black", "Oswald", Impact, sans-serif';
 const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif';
 
 const paper = '#F4F2EE';
-const blue = '#2080FF';
+const blue = '#2997FF';
 
 interface MirrorTierCardProps {
   pillarName: string;

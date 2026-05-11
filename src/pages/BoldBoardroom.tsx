@@ -16,7 +16,7 @@ const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial,
 /* ── Brand colors ──────────────────────────────────────── */
 const ink = '#0A0A0B';
 const paper = '#F4F2EE';
-const blue = '#2080FF';
+const blue = '#2997FF';
 
 /* ── Stripe links ──────────────────────────────────────── */
 const STRIPE_JOIN = 'https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l';
@@ -68,7 +68,7 @@ const Hero = () => (
             fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.85, maxWidth: 680,
           }}>
-            The elite mastermind for insurance agency owners. Where owners stop guessing and start leading — direct access to proven operators who've built what you're trying to build.
+            The mastermind for insurance agency owners who want direct access to operators who've built what you're trying to build — including the software and <span style={{ color: blue }}>AI</span> running inside it.
           </p>
         </Reveal>
         <Reveal delay={0.3} className="col-span-12 md:col-span-5 flex md:justify-end items-start gap-3 flex-wrap">
@@ -87,7 +87,7 @@ const Hero = () => (
               color: '#fff', background: ink, textTransform: 'uppercase', textDecoration: 'none',
               padding: '15px 28px', border: `1.5px solid ${ink}`, transition: 'all .25s',
             }}
-            className="hover:bg-[#2080FF] hover:border-[#2080FF]">
+            className="hover:bg-[#2997FF] hover:border-[#2997FF]">
             Claim Your Seat →
           </a>
         </Reveal>
@@ -161,16 +161,15 @@ const MarqueeBands = () => (
 /* ══════════════════════════════════════════════════════
    INCLUDES
    ══════════════════════════════════════════════════════ */
-const includedItems = [
+const includedItems: React.ReactNode[] = [
   '2 Hour Group Boardroom Call',
-  'Boardroom Level Access To Standard App',
-  'AgencyBrain Access',
+  <>Agency Brain Access — <span style={{ color: blue }}>AI</span> Tools Included</>,
   'Access to The Mirror Self-Assessment',
   'I AM THE STANDARD T-Shirt',
   'I AM THE STANDARD Wristband',
   'Standard Playbook Pen',
   '1v1 Video Coaching 24/7 w/ Justin',
-  '20 AI Calls Scored Per Month In Standard Call Scoring',
+  <>20 <span style={{ color: blue }}>AI</span> Calls Scored Per Month In Standard Call Scoring</>,
 ];
 
 const IncludesSection = () => (
@@ -198,7 +197,7 @@ const IncludesSection = () => (
             fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.65,
             color: ink, opacity: 0.7,
           }}>
-            Nine deliverables. Built so the room stays high-signal and the work compounds month over month.
+            Eight deliverables. Built so the room stays high-signal and the work compounds month over month.
           </p>
         </Reveal>
       </div>
@@ -210,7 +209,7 @@ const IncludesSection = () => (
         gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
       }}>
         {includedItems.map((item, i) => (
-          <Reveal key={item} delay={i * 0.04}>
+          <Reveal key={i} delay={i * 0.04}>
             <li style={{
               borderBottom: `1px solid ${ink}`,
               padding: '24px 16px',
@@ -298,7 +297,7 @@ const PricingSection = () => (
                   color: '#fff', background: ink, textTransform: 'uppercase', textDecoration: 'none',
                   padding: '16px 30px', transition: 'all .25s',
                 }}
-                className="hover:bg-[#2080FF]">
+                className="hover:bg-[#2997FF]">
                 Claim Your Seat →
               </a>
               <a href={STRIPE_BURN} target="_blank" rel="noopener noreferrer"

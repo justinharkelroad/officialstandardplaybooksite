@@ -28,7 +28,7 @@ const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial,
 
 const ink = '#0A0A0B';
 const paper = '#F4F2EE';
-const blue = '#2080FF';
+const blue = '#2997FF';
 
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
   <motion.div
@@ -456,7 +456,7 @@ const BoldMirrorResults = () => {
                       padding: '18px 28px', border: `1.5px solid ${paper}`, textDecoration: 'none',
                       transition: 'all .25s',
                     }}
-                    className="hover:bg-[#2080FF] hover:border-[#2080FF]"
+                    className="hover:bg-[#2997FF] hover:border-[#2997FF]"
                   >
                     {route.ctaLabel} →
                   </a>
@@ -470,7 +470,7 @@ const BoldMirrorResults = () => {
                       padding: '18px 28px', border: `1.5px solid ${paper}`, textDecoration: 'none',
                       transition: 'all .25s',
                     }}
-                    className="hover:bg-[#2080FF] hover:border-[#2080FF]"
+                    className="hover:bg-[#2997FF] hover:border-[#2997FF]"
                   >
                     {route.ctaLabel} →
                   </Link>
@@ -488,7 +488,7 @@ const BoldMirrorResults = () => {
                       padding: '18px 28px', border: `1.5px solid ${paper}88`, textDecoration: 'none',
                       transition: 'all .25s',
                     }}
-                    className="hover:bg-[#2080FF] hover:border-[#2080FF] hover:!text-white"
+                    className="hover:bg-[#2997FF] hover:border-[#2997FF] hover:!text-white"
                   >
                     {secondary.ctaLabel} →
                   </a>
@@ -573,7 +573,7 @@ const BoldMirrorResults = () => {
                     padding: '14px 24px', border: `1.5px solid ${paper}88`, textDecoration: 'none',
                     transition: 'all .25s',
                   }}
-                  className="hover:bg-[#2080FF] hover:border-[#2080FF] hover:!text-white"
+                  className="hover:bg-[#2997FF] hover:border-[#2997FF] hover:!text-white"
                 >
                   Or {secondary.ctaLabel} →
                 </a>

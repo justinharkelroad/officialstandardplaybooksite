@@ -21,7 +21,7 @@ const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial,
 /* ── Brand colors ──────────────────────────────────────── */
 const ink = '#0A0A0B';
 const paper = '#F4F2EE';
-const blue = '#2080FF';
+const blue = '#2997FF';
 const red = '#C8102E';
 
 /* ── Reveal helper ─────────────────────────────────────── */
@@ -93,7 +93,7 @@ const BookCallButton = ({
     <button
       onClick={onClick}
       style={{ ...baseStyle, ...variantStyle }}
-      className={variant === 'filled' ? 'hover:bg-[#2080FF] hover:border-[#2080FF]' : 'hover:bg-black hover:text-white'}
+      className={variant === 'filled' ? 'hover:bg-[#2997FF] hover:border-[#2997FF]' : 'hover:bg-black hover:text-white'}
     >
       {label} →
     </button>

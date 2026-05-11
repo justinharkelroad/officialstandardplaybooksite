@@ -11,7 +11,7 @@ const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial,
 
 const ink = '#0A0A0B';
 const paper = '#F4F2EE';
-const blue = '#2080FF';
+const blue = '#2997FF';
 
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
   <motion.div
@@ -100,7 +100,7 @@ const Hero = ({ onStart }: { onStart: () => void }) => (
               color: '#fff', background: ink, textTransform: 'uppercase',
               padding: '15px 28px', border: `1.5px solid ${ink}`, cursor: 'pointer', transition: 'all .25s',
             }}
-            className="hover:bg-[#2080FF] hover:border-[#2080FF]">
+            className="hover:bg-[#2997FF] hover:border-[#2997FF]">
             Start Scoring →
           </button>
         </Reveal>
@@ -368,6 +368,42 @@ const AuthoritySection = () => (
 );
 
 /* ══════════════════════════════════════════════════════
+   AFTER THE SCORE — diagnosis → climb band
+   ══════════════════════════════════════════════════════ */
+const AfterTheScoreBand = () => (
+  <section style={{ background: ink, color: paper, padding: '120px 24px', borderTop: `1px solid ${paper}1a` }}>
+    <div className="max-w-[1280px] mx-auto">
+      <Reveal>
+        <p style={{
+          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+          color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
+        }}>
+          / After The Score
+        </p>
+      </Reveal>
+      <Reveal delay={0.1}>
+        <h2 style={{
+          fontFamily: display, fontSize: 'clamp(40px, 7vw, 100px)',
+          lineHeight: 0.95, letterSpacing: '-0.01em', color: paper,
+          textTransform: 'uppercase', margin: 0, fontWeight: 400,
+        }}>
+          YOUR NUMBER.<br />
+          <span style={{ color: blue }}>THEN THE WORK.</span>
+        </h2>
+      </Reveal>
+      <Reveal delay={0.2}>
+        <p style={{
+          fontFamily: body, fontSize: 'clamp(16px, 1.4vw, 18px)', fontWeight: 400, lineHeight: 1.6,
+          color: paper, opacity: 0.85, maxWidth: 720, marginTop: 40,
+        }}>
+          The Mirror tells you where you're at. Standard Playbook is how you climb. Every program (Boardroom, 8-Week, Directive) plugs you into Agency Brain — the <span style={{ color: blue }}>AI</span>-equipped platform I built to make the diagnosis fixable.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
    GIANT CTA — SCORE.
    ══════════════════════════════════════════════════════ */
 const GiantCTA = ({ onStart }: { onStart: () => void }) => (
@@ -535,6 +571,7 @@ const BoldMirror = () => {
       <AuthoritySection />
       <MarqueeBands phrase="MOST AGENCIES SCORE UNDER 100 · WHERE WILL YOU LAND" />
       <GiantCTA onStart={onStart} />
+      <AfterTheScoreBand />
       <BoldFooter />
       <MobileStickyCTA onStart={onStart} />
     </div>

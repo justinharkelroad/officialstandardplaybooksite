@@ -5,7 +5,7 @@ import { Sparkles } from 'lucide-react';
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const ink = '#0A0A0B';
 const paper = '#F4F2EE';
-const blue = '#2080FF';
+const blue = '#2997FF';
 const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif';
 
 const TOPIC_FULL = "How to handle the 'I'll think about it' objection";

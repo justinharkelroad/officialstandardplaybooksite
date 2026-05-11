@@ -17,7 +17,7 @@ const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial,
 /* ── Brand colors ──────────────────────────────────────── */
 const ink = '#0A0A0B';
 const paper = '#F4F2EE';
-const blue = '#2080FF';
+const blue = '#2997FF';
 const red = '#C8102E';
 
 /* ── External links ────────────────────────────────────── */
@@ -197,7 +197,7 @@ const Hero = () => (
                   color: '#fff', background: ink, textTransform: 'uppercase', textDecoration: 'none',
                   padding: '18px 0', textAlign: 'center', transition: 'all .25s',
                 }}
-                className="hover:bg-[#2080FF]">
+                className="hover:bg-[#2997FF]">
                 Enroll Now →
               </a>
               <VideoModal
@@ -1173,7 +1173,7 @@ const FinalCTA = () => (
                 color: '#fff', background: ink, textTransform: 'uppercase', textDecoration: 'none',
                 padding: '16px 30px', transition: 'all .25s',
               }}
-              className="hover:bg-[#2080FF]">
+              className="hover:bg-[#2997FF]">
               Enroll Now →
             </a>
             <a href={BOOK_CALL_URL} target="_blank" rel="noopener noreferrer"

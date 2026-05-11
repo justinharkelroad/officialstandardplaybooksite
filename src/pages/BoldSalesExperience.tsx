@@ -25,7 +25,7 @@ const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial,
 /* ── Brand colors ──────────────────────────────────────── */
 const ink = '#0A0A0B';
 const paper = '#F4F2EE';
-const blue = '#2080FF';
+const blue = '#2997FF';
 
 /* ── Reveal helper ─────────────────────────────────────── */
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
@@ -95,7 +95,7 @@ const Hero = ({ autoOpenBooking = false }: { autoOpenBooking?: boolean }) => {
               fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
               color: ink, textTransform: 'uppercase', lineHeight: 1.6, maxWidth: 460,
             }}>
-              8 weeks. A documented sales process, an accountability framework, and a consequence ladder — installed in your agency.
+              8 weeks. A documented sales process, an accountability framework, and a consequence ladder — installed in your agency. The framework, the software, and the <span style={{ color: blue }}>AI</span> that grades the calls you upload. Built by the operator who runs it.
             </p>
           </Reveal>
           <Reveal delay={0.35} className="col-span-12 md:col-span-6 flex md:justify-end items-center gap-3">
@@ -114,7 +114,7 @@ const Hero = ({ autoOpenBooking = false }: { autoOpenBooking?: boolean }) => {
                 color: '#fff', background: ink, textTransform: 'uppercase',
                 padding: '15px 28px', border: `1.5px solid ${ink}`, cursor: 'pointer', transition: 'all .25s',
               }}
-              className="hover:bg-[#2080FF] hover:border-[#2080FF]">
+              className="hover:bg-[#2997FF] hover:border-[#2997FF]">
               Book a Strategy Call
             </button>
           </Reveal>
@@ -322,7 +322,7 @@ const systems = [
   {
     num: '02',
     label: 'Accountability',
-    headline: 'Daily tracking. Weekly scorecards. Graded calls.',
+    headline: <>Daily tracking. Weekly scorecards. <span style={{ color: blue }}>AI</span>-graded calls.</>,
     sub: 'Every producer knows exactly where they stand. Managers have the data to coach, not guess.',
     img: accountabilityCardImg,
   },
@@ -463,9 +463,9 @@ const AgencyBrainBand = () => (
       <Reveal delay={0.15}>
         <p style={{
           fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.65,
-          color: paper, opacity: 0.75, maxWidth: 560,
+          color: paper, opacity: 0.75, maxWidth: 620,
         }}>
-          The platform you'll log into every day inside the 8-week program. Built so the work is visible, the standards are enforced, and the wins are tracked.
+          Agency Brain isn't a third-party tool we bolted on. I build it. Pick the calls that matter. Upload them. <span style={{ color: blue }}>AI</span> scores them against your team's standard. The gaps become impossible to ignore.
         </p>
       </Reveal>
     </div>
@@ -715,7 +715,7 @@ const PurchaseSection = () => {
                   color: '#fff', background: ink, textTransform: 'uppercase',
                   padding: '16px 30px', textDecoration: 'none', transition: 'all .25s',
                 }}
-                className="hover:bg-[#2080FF]"
+                className="hover:bg-[#2997FF]"
               >
                 Secure PIF →
               </a>

@@ -1,5 +1,5 @@
 const ink = '#0A0A0B';
-const blue = '#2080FF';
+const blue = '#2997FF';
 
 interface MirrorProgressBarProps {
   /** 0..1 progress fraction */

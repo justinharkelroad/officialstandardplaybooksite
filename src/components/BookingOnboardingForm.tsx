@@ -9,7 +9,7 @@ const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial,
 /* ── Brand colors ──────────────────────────────────────── */
 const ink = '#0A0A0B';
 const paper = '#F4F2EE';
-const blue = '#2080FF';
+const blue = '#2997FF';
 
 interface BookingOnboardingFormProps {
   onComplete: () => void;
@@ -376,7 +376,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
               cursor: isStep1Valid() ? 'pointer' : 'default',
               marginTop: 12,
             }}
-            className={isStep1Valid() ? 'hover:bg-[#2080FF] hover:border-[#2080FF]' : ''}
+            className={isStep1Valid() ? 'hover:bg-[#2997FF] hover:border-[#2997FF]' : ''}
           >
             Next →
           </button>
@@ -454,7 +454,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
                 opacity: isStep2Valid() ? 1 : 0.35,
                 cursor: isStep2Valid() ? 'pointer' : 'default',
               }}
-              className={isStep2Valid() ? 'hover:bg-[#2080FF] hover:border-[#2080FF]' : ''}
+              className={isStep2Valid() ? 'hover:bg-[#2997FF] hover:border-[#2997FF]' : ''}
             >
               Continue →
             </button>

@@ -19,7 +19,7 @@ const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial,
 /* ── Brand colors ──────────────────────────────────────── */
 const ink = '#0A0A0B';
 const paper = '#F4F2EE';
-const blue = '#2080FF';
+const blue = '#2997FF';
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -87,7 +87,7 @@ const Hero = () => (
               color: '#fff', background: ink, textTransform: 'uppercase', textDecoration: 'none',
               padding: '15px 28px', border: `1.5px solid ${ink}`, transition: 'all .25s',
             }}
-            className="hover:bg-[#2080FF] hover:border-[#2080FF]">
+            className="hover:bg-[#2997FF] hover:border-[#2997FF]">
             Get Agency Brain →
           </Link>
         </Reveal>
@@ -1088,7 +1088,7 @@ const PlansSection = () => {
                   padding: '14px 0', textAlign: 'center', marginTop: 'auto',
                   border: `1.5px solid ${paper}`, transition: 'all .25s',
                 }}
-                className="hover:bg-[#2080FF] hover:border-[#2080FF] hover:text-white">
+                className="hover:bg-[#2997FF] hover:border-[#2997FF] hover:text-white">
                 Choose {p.name} →
               </Link>
             </div>
