@@ -609,8 +609,8 @@ const coachingPrograms: ProgramRow[] = [
       'Ongoing accountability between calls',
       'Private Boardroom community access',
     ],
-    href: 'https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l',
-    cta: 'Join →',
+    href: '/boardroom',
+    cta: 'Learn More →',
   },
   {
     num: '02',
