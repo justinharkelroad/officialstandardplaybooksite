@@ -21,6 +21,7 @@ import {
   TOTAL_QUESTIONS,
 } from '@/data/mirrorQuestions';
 import { scoreAssessment, type QuestionScores } from '@/lib/mirrorScoring';
+import { captureMirrorAttribution, readMirrorAttribution } from '@/lib/mirrorAttribution';
 import { supabase } from '@/integrations/supabase/client';
 
 const display = '"Anton", "Archivo Black", "Oswald", Impact, sans-serif';
@@ -653,6 +654,9 @@ const BoldMirrorScore = () => {
 
   // Meta Pixel PageView
   useEffect(() => {
+    // Re-capture attribution here in case visitor deep-linked or the Meta in-app
+    // browser dropped sessionStorage between /mirror and /mirror/score.
+    captureMirrorAttribution();
     try { (window as any).fbq?.('track', 'PageView'); } catch {}
   }, []);
 
@@ -732,12 +736,10 @@ const BoldMirrorScore = () => {
 
     const result = scoreAssessment(answers);
 
-    // Pull UTMs persisted from /mirror landing.
-    let utms: Record<string, string> = {};
-    try {
-      const raw = sessionStorage.getItem('mirror_utms');
-      if (raw) utms = JSON.parse(raw);
-    } catch {}
+    // Re-capture right before submit (final chance to grab fbclid/gclid from URL)
+    // then read the merged attribution record.
+    captureMirrorAttribution();
+    const attribution = readMirrorAttribution();
 
     const ua = typeof navigator !== 'undefined' ? navigator.userAgent : '';
     const isMobile = /Mobile|Android|iPhone|iPad|iPod/.test(ua);
@@ -752,10 +754,14 @@ const BoldMirrorScore = () => {
       weakest_pillar: result.weakestPillar,
       pillar_scores: result.pillarScores,
       question_scores: answers,
-      utm_source: utms.utm_source ?? null,
-      utm_medium: utms.utm_medium ?? null,
-      utm_campaign: utms.utm_campaign ?? null,
-      utm_content: utms.utm_content ?? null,
+      utm_source: attribution.utm_source,
+      utm_medium: attribution.utm_medium,
+      utm_campaign: attribution.utm_campaign,
+      utm_content: attribution.utm_content,
+      fbclid: attribution.fbclid,
+      gclid: attribution.gclid,
+      referrer: attribution.referrer,
+      landing_path: attribution.landing_path,
       device_type: isMobile ? 'mobile' : 'desktop',
       user_agent: ua.slice(0, 500),
     };

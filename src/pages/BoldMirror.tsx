@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
 import standardLogo from '@/assets/standard-word-logo.png';
 import mirrorCoverImg from '@/assets/mirror-cover.png';
+import { captureMirrorAttribution } from '@/lib/mirrorAttribution';
 
 const display = '"Anton", "Archivo Black", "Oswald", Impact, sans-serif';
 const editorial = '"Archivo Black", "Anton", Impact, sans-serif';
@@ -541,20 +542,12 @@ const MobileStickyCTA = ({ onStart }: { onStart: () => void }) => (
 const BoldMirror = () => {
   const navigate = useNavigate();
 
-  // Persist UTMs from URL into sessionStorage so they survive the assessment flow.
+  // Persist attribution (UTM + fbclid/gclid + referrer) so it survives the flow.
+  // Meta in-app browser partitions sessionStorage between page nav and strips utm_*,
+  // so we use localStorage with merge semantics — see src/lib/mirrorAttribution.ts.
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const params = new URLSearchParams(window.location.search);
-    const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content'];
-    const utms: Record<string, string> = {};
-    let any = false;
-    utmKeys.forEach((k) => {
-      const v = params.get(k);
-      if (v) { utms[k] = v; any = true; }
-    });
-    if (any) {
-      try { sessionStorage.setItem('mirror_utms', JSON.stringify(utms)); } catch {}
-    }
+    captureMirrorAttribution();
     // Meta Pixel PageView
     try { (window as any).fbq?.('track', 'PageView'); } catch {}
   }, []);
