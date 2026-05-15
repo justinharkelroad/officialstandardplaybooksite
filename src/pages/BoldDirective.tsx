@@ -52,12 +52,11 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
         <Reveal className="col-span-12 md:col-span-12 relative z-20">
           <h1 style={{
             fontFamily: display,
-            fontSize: 'clamp(56px, 16vw, 280px)',
-            lineHeight: 0.86, letterSpacing: '-0.02em',
+            lineHeight: 1, letterSpacing: '-0.02em',
             color: ink, margin: 0, textTransform: 'uppercase', fontWeight: 400,
           }}>
-            THE<br />
-            <span className="md:pl-[6vw] inline-block" style={{ color: blue }}>DIRECTIVE.</span>
+            <span style={{ display: 'block', fontSize: 'clamp(46px, 9.5vw, 150px)', lineHeight: 0.86 }}>I Get You To</span>
+            <span className="md:pl-[6vw] block" style={{ color: blue, fontSize: 'clamp(90px, 22vw, 340px)', lineHeight: 0.78 }}>Move.</span>
           </h1>
         </Reveal>
       </div>
@@ -68,7 +67,7 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
             fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.85, maxWidth: 680,
           }}>
-            Intensive 1:1 coaching with direct implementation support. Custom strategy, hands-on accountability, and a private line to Justin between sessions.
+            Private 1:1 coaching for people who are done circling the problem. Strategy, accountability, and direct support that gets you moving fast.
           </p>
         </Reveal>
         <Reveal delay={0.3} className="col-span-12 md:col-span-5 flex md:justify-end items-start gap-3 flex-wrap">
