@@ -39,6 +39,7 @@ interface Call {
   registerUrl: string;
   logoUrl: string;
   dominant?: boolean;
+  requiresMembership?: boolean;
 }
 
 const CALLS: Call[] = [
