@@ -50,6 +50,7 @@ import EightWeekApply from "./pages/EightWeekApply";
 import Websites from "./pages/Websites";
 import TeamTraining from "./pages/TeamTraining";
 import SalesProcess from "./pages/SalesProcess";
+import Calls from "./pages/Calls";
 import Particles from "./components/Particles";
 import ScrollToTop from "./components/ScrollToTop";
 import SEOHead from "./components/SEOHead";
