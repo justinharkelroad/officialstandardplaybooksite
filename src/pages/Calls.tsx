@@ -274,6 +274,18 @@ const CallCard = ({ call }: { call: Call }) => {
             *Boardroom Membership Required
           </p>
         )}
+
+        {call.eligibility && (
+          <p style={{
+            fontFamily: body, fontSize: 11, fontWeight: 600,
+            letterSpacing: '0.08em', textTransform: 'uppercase',
+            textAlign: 'center', marginTop: 10, marginBottom: 0,
+            opacity: dominant ? 0.7 : 0.6,
+            color: dominant ? blue : ink,
+          }}>
+            {call.eligibility}
+          </p>
+        )}
       </div>
     </div>
   );
