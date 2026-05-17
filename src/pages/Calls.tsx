@@ -40,6 +40,7 @@ interface Call {
   logoUrl: string;
   dominant?: boolean;
   requiresMembership?: boolean;
+  eligibility?: string;
 }
 
 const CALLS: Call[] = [
