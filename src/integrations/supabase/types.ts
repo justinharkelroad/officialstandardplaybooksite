@@ -157,11 +157,15 @@ export type Database = {
           created_at: string
           device_type: string | null
           email: string
+          fbclid: string | null
           full_name: string
+          gclid: string | null
           id: string
+          landing_path: string | null
           phone: string
           pillar_scores: Json
           question_scores: Json
+          referrer: string | null
           tier: string
           total_score: number
           user_agent: string | null
@@ -169,6 +173,7 @@ export type Database = {
           utm_content: string | null
           utm_medium: string | null
           utm_source: string | null
+          utm_term: string | null
           weakest_pillar: string
         }
         Insert: {
@@ -176,11 +181,15 @@ export type Database = {
           created_at?: string
           device_type?: string | null
           email: string
+          fbclid?: string | null
           full_name: string
+          gclid?: string | null
           id?: string
+          landing_path?: string | null
           phone: string
           pillar_scores: Json
           question_scores: Json
+          referrer?: string | null
           tier: string
           total_score: number
           user_agent?: string | null
@@ -188,6 +197,7 @@ export type Database = {
           utm_content?: string | null
           utm_medium?: string | null
           utm_source?: string | null
+          utm_term?: string | null
           weakest_pillar: string
         }
         Update: {
@@ -195,11 +205,15 @@ export type Database = {
           created_at?: string
           device_type?: string | null
           email?: string
+          fbclid?: string | null
           full_name?: string
+          gclid?: string | null
           id?: string
+          landing_path?: string | null
           phone?: string
           pillar_scores?: Json
           question_scores?: Json
+          referrer?: string | null
           tier?: string
           total_score?: number
           user_agent?: string | null
@@ -207,6 +221,7 @@ export type Database = {
           utm_content?: string | null
           utm_medium?: string | null
           utm_source?: string | null
+          utm_term?: string | null
           weakest_pillar?: string
         }
         Relationships: []
