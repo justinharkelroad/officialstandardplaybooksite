@@ -332,13 +332,34 @@ const Calls = () => {
       <div style={{
         background: ink, color: paper, padding: '14px 0',
         borderTop: `1px solid ${ink}`, borderBottom: `1px solid ${ink}`,
-        overflow: 'hidden', whiteSpace: 'nowrap',
+        overflow: 'hidden',
       }}>
-        <div style={{
+        <style>{`
+          @keyframes calls-marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .calls-marquee-track {
+            display: inline-flex;
+            white-space: nowrap;
+            animation: calls-marquee 40s linear infinite;
+            will-change: transform;
+          }
+        `}</style>
+        <div className="calls-marquee-track" style={{
           fontFamily: editorial, fontSize: 16, letterSpacing: '0.05em',
-          textTransform: 'uppercase', textAlign: 'center',
+          textTransform: 'uppercase',
         }}>
-          BOARDROOM <span style={{ color: blue }}>●</span> AGENCYBRAIN <span style={{ color: blue }}>●</span> AI <span style={{ color: blue }}>●</span> EVERY MONTH <span style={{ color: blue }}>●</span> SHOW UP <span style={{ color: blue }}>●</span>
+          {Array.from({ length: 2 }).map((_, i) => (
+            <span key={i} style={{ paddingRight: 48 }}>
+              BOARDROOM <span style={{ color: blue, padding: '0 24px' }}>●</span>
+              AGENCYBRAIN <span style={{ color: blue, padding: '0 24px' }}>●</span>
+              AI <span style={{ color: blue, padding: '0 24px' }}>●</span>
+              EVERY MONTH <span style={{ color: blue, padding: '0 24px' }}>●</span>
+              SHOW UP <span style={{ color: blue, padding: '0 24px' }}>●</span>
+              CAMERAS ON <span style={{ color: blue, padding: '0 24px' }}>●</span>
+            </span>
+          ))}
         </div>
       </div>
 
