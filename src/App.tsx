@@ -114,6 +114,7 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/salesprocess" element={<SalesProcess />} />
+          <Route path="/calls" element={<Calls />} />
           <Route path="/mirror" element={<BoldMirror />} />
           <Route path="/mirror/score" element={<BoldMirrorScore />} />
           <Route path="/mirror/results" element={<BoldMirrorResults />} />
