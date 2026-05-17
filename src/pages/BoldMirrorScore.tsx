@@ -767,7 +767,7 @@ const BoldMirrorScore = () => {
     };
 
     try {
-      // @ts-expect-error mirror_submissions table is created via migration; types regen later.
+      
       const { data, error: insertErr } = await supabase
         .from('mirror_submissions')
         .insert(payload)

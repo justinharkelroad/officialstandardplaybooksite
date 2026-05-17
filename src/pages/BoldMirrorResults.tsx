@@ -244,7 +244,7 @@ const BoldMirrorResults = () => {
     (async () => {
       setLoading(true);
       try {
-        // @ts-expect-error mirror_submissions table types regenerate after migration.
+        
         const { data, error } = await supabase
           .from('mirror_submissions')
           .select('id, email, full_name, total_score, tier, weakest_pillar, pillar_scores')
