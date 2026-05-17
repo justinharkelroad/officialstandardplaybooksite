@@ -40,6 +40,7 @@ interface Call {
   logoUrl: string;
   dominant?: boolean;
   requiresMembership?: boolean;
+  eligibility?: string;
 }
 
 const CALLS: Call[] = [
@@ -54,6 +55,7 @@ const CALLS: Call[] = [
     meetingId: '856 9609 1645',
     registerUrl: 'https://us06web.zoom.us/meeting/register/Tw3bEqWhQ5OZWfulbi0JFw',
     logoUrl: `${STORAGE}/${encodeURIComponent('Standard Agencybrain Logo.png')}`,
+    eligibility: 'Open to all Team Members',
   },
   {
     id: 'boardroom',
@@ -68,6 +70,7 @@ const CALLS: Call[] = [
     logoUrl: `${STORAGE}/${encodeURIComponent('Standard Boardroom Logo.png')}`,
     dominant: true,
     requiresMembership: true,
+    eligibility: 'Agency Owners & Key Employees Only',
   },
   {
     id: 'ai',
@@ -81,6 +84,7 @@ const CALLS: Call[] = [
     registerUrl: 'https://us06web.zoom.us/meeting/register/wXNHPvTaTR6PcTImd_ZnNg',
     logoUrl: `${STORAGE}/${encodeURIComponent('Standard Ai Training Logo.png')}`,
     requiresMembership: true,
+    eligibility: 'Agency Owners, Key Employees & Managers Only',
   },
 ];
 
@@ -268,6 +272,18 @@ const CallCard = ({ call }: { call: Call }) => {
             color: dominant ? blue : ink,
           }}>
             *Boardroom Membership Required
+          </p>
+        )}
+
+        {call.eligibility && (
+          <p style={{
+            fontFamily: body, fontSize: 11, fontWeight: 600,
+            letterSpacing: '0.08em', textTransform: 'uppercase',
+            textAlign: 'center', marginTop: 10, marginBottom: 0,
+            opacity: dominant ? 0.7 : 0.6,
+            color: dominant ? blue : ink,
+          }}>
+            {call.eligibility}
           </p>
         )}
       </div>
