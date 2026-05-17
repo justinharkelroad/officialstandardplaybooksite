@@ -77,7 +77,7 @@ function cadenceOccurrenceForMonth(
   const key = `${callId}:${year}-${pad(month1)}`;
   const override = OVERRIDES[key];
   if (override) {
-    return { date: override.date, start: override.start, end: override.end, isOverride: true };
+    return { date: override.date, start: override.start, end: override.end, isOverride: !!override.special };
   }
   const day = nthWednesday(year, month1, cadenceWeek);
   const def = DEFAULT_TIMES[callId];
