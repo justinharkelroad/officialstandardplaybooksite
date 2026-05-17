@@ -13,12 +13,14 @@ interface Override {
   date: string;    // YYYY-MM-DD in America/New_York
   start: string;   // HH:mm 24h, America/New_York
   end: string;     // HH:mm 24h, America/New_York
+  /** When true, the UI shows a "· Special" badge. Defaults to false. */
+  special?: boolean;
 }
 
 // Key: `${callId}:${YYYY-MM}` — edit any month here.
 export const OVERRIDES: Record<string, Override> = {
-  'boardroom:2026-05':   { date: '2026-05-20', start: '13:00', end: '15:00' },
-  // First AgencyBrain + AI calls don't kick off until June.
+  'boardroom:2026-05':   { date: '2026-05-20', start: '13:00', end: '15:00', special: true },
+  // First AgencyBrain + AI calls don't kick off until June. Not "special" — just the start date.
   'agencybrain:2026-05': { date: '2026-06-17', start: '14:00', end: '14:45' },
   'ai:2026-05':          { date: '2026-06-24', start: '14:00', end: '14:45' },
 };
@@ -75,7 +77,7 @@ function cadenceOccurrenceForMonth(
   const key = `${callId}:${year}-${pad(month1)}`;
   const override = OVERRIDES[key];
   if (override) {
-    return { date: override.date, start: override.start, end: override.end, isOverride: true };
+    return { date: override.date, start: override.start, end: override.end, isOverride: !!override.special };
   }
   const day = nthWednesday(year, month1, cadenceWeek);
   const def = DEFAULT_TIMES[callId];
