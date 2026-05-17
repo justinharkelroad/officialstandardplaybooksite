@@ -84,6 +84,7 @@ const CALLS: Call[] = [
     registerUrl: 'https://us06web.zoom.us/meeting/register/wXNHPvTaTR6PcTImd_ZnNg',
     logoUrl: `${STORAGE}/${encodeURIComponent('Standard Ai Training Logo.png')}`,
     requiresMembership: true,
+    eligibility: 'Agency Owners, Key Employees & Managers Only',
   },
 ];
 
