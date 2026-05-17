@@ -80,6 +80,7 @@ const CALLS: Call[] = [
     meetingId: '852 6788 7373',
     registerUrl: 'https://us06web.zoom.us/meeting/register/wXNHPvTaTR6PcTImd_ZnNg',
     logoUrl: `${STORAGE}/${encodeURIComponent('Standard Ai Training Logo.png')}`,
+    requiresMembership: true,
   },
 ];
 
