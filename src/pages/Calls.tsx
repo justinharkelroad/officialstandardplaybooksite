@@ -258,6 +258,18 @@ const CallCard = ({ call }: { call: Call }) => {
           Register on Zoom
           <ArrowUpRight className="w-5 h-5" />
         </a>
+
+        {call.requiresMembership && (
+          <p style={{
+            fontFamily: body, fontSize: 11, fontWeight: 600,
+            letterSpacing: '0.08em', textTransform: 'uppercase',
+            textAlign: 'center', marginTop: 12, marginBottom: 0,
+            opacity: dominant ? 0.7 : 0.6,
+            color: dominant ? blue : ink,
+          }}>
+            *Boardroom Membership Required
+          </p>
+        )}
       </div>
     </div>
   );
