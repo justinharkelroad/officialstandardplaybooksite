@@ -39,6 +39,7 @@ interface Call {
   registerUrl: string;
   logoUrl: string;
   dominant?: boolean;
+  requiresMembership?: boolean;
 }
 
 const CALLS: Call[] = [
@@ -66,6 +67,7 @@ const CALLS: Call[] = [
     registerUrl: 'https://us06web.zoom.us/meeting/register/tZIvdOuurTkvGtB3DFPus_VohU6a22LFlb8t',
     logoUrl: `${STORAGE}/${encodeURIComponent('Standard Boardroom Logo.png')}`,
     dominant: true,
+    requiresMembership: true,
   },
   {
     id: 'ai',
@@ -78,6 +80,7 @@ const CALLS: Call[] = [
     meetingId: '852 6788 7373',
     registerUrl: 'https://us06web.zoom.us/meeting/register/wXNHPvTaTR6PcTImd_ZnNg',
     logoUrl: `${STORAGE}/${encodeURIComponent('Standard Ai Training Logo.png')}`,
+    requiresMembership: true,
   },
 ];
 
@@ -117,7 +120,6 @@ const CallCard = ({ call }: { call: Call }) => {
       {dominant && (
         <div
           style={{
-            position: 'absolute', top: 0, left: 0, right: 0,
             background: blue, color: ink, textAlign: 'center',
             fontFamily: body, fontSize: 10, fontWeight: 800,
             letterSpacing: '0.22em', textTransform: 'uppercase',
@@ -128,10 +130,24 @@ const CallCard = ({ call }: { call: Call }) => {
         </div>
       )}
 
+      {/* Cameras required bar */}
+      <div
+        style={{
+          background: dominant ? paper : ink,
+          color: dominant ? ink : paper,
+          textAlign: 'center',
+          fontFamily: body, fontSize: 11, fontWeight: 800,
+          letterSpacing: '0.22em', textTransform: 'uppercase',
+          padding: '10px 12px',
+        }}
+      >
+        ▶ Cameras Required For Entry
+      </div>
+
       {/* Header strip with index */}
       <div
         style={{
-          padding: dominant ? '40px 24px 16px' : '20px 24px 16px',
+          padding: '18px 24px 16px',
           borderBottom: `1px solid ${dominant ? `${paper}33` : ink}`,
           display: 'flex', alignItems: 'baseline', justifyContent: 'space-between',
         }}
@@ -242,6 +258,18 @@ const CallCard = ({ call }: { call: Call }) => {
           Register on Zoom
           <ArrowUpRight className="w-5 h-5" />
         </a>
+
+        {call.requiresMembership && (
+          <p style={{
+            fontFamily: body, fontSize: 11, fontWeight: 600,
+            letterSpacing: '0.08em', textTransform: 'uppercase',
+            textAlign: 'center', marginTop: 12, marginBottom: 0,
+            opacity: dominant ? 0.7 : 0.6,
+            color: dominant ? blue : ink,
+          }}>
+            *Boardroom Membership Required
+          </p>
+        )}
       </div>
     </div>
   );
