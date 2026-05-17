@@ -67,6 +67,7 @@ const CALLS: Call[] = [
     registerUrl: 'https://us06web.zoom.us/meeting/register/tZIvdOuurTkvGtB3DFPus_VohU6a22LFlb8t',
     logoUrl: `${STORAGE}/${encodeURIComponent('Standard Boardroom Logo.png')}`,
     dominant: true,
+    requiresMembership: true,
   },
   {
     id: 'ai',
