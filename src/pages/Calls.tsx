@@ -151,28 +151,6 @@ const CallCard = ({ call }: { call: Call }) => {
         </span>
       </div>
 
-      {/* Logo well */}
-      <div
-        style={{
-          background: dominant ? '#000' : '#fff',
-          borderBottom: `1px solid ${dominant ? `${paper}33` : ink}`,
-          padding: dominant ? '36px 24px' : '28px 24px',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          minHeight: dominant ? 200 : 160,
-        }}
-      >
-        <img
-          src={call.logoUrl}
-          alt={`${call.title} ${call.titleAccent ?? ''} logo`}
-          style={{
-            maxWidth: dominant ? 200 : 160,
-            maxHeight: dominant ? 140 : 110,
-            objectFit: 'contain',
-          }}
-          loading="lazy"
-        />
-      </div>
-
       {/* Body */}
       <div style={{ padding: dominant ? '28px 24px 24px' : '24px 24px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
         <h2 style={{
