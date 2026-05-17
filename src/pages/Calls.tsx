@@ -70,6 +70,7 @@ const CALLS: Call[] = [
     logoUrl: `${STORAGE}/${encodeURIComponent('Standard Boardroom Logo.png')}`,
     dominant: true,
     requiresMembership: true,
+    eligibility: 'Agency Owners & Key Employees Only',
   },
   {
     id: 'ai',
