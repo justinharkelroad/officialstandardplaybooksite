@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion';
-import { Calendar, Copy, ExternalLink, Video } from 'lucide-react';
+import { Copy, ArrowUpRight } from 'lucide-react';
 import { useState } from 'react';
 import BoldNav from '@/components/BoldNav';
 import { getNextOccurrence, formatOccurrence, type CallId } from '@/lib/callSchedule';
 
-/* ── Bold tokens (match BoldBoardroom) ─────────────────── */
+/* ── Bold editorial tokens ─────────────────────────────── */
 const display = '"Anton", "Archivo Black", "Oswald", Impact, sans-serif';
+const editorial = '"Archivo Black", "Anton", Impact, sans-serif';
 const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif';
 const ink = '#0A0A0B';
 const paper = '#F4F2EE';
@@ -13,9 +14,24 @@ const blue = '#2997FF';
 
 const STORAGE = 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public';
 
+/* ── Reveal helper ─────────────────────────────────────── */
+const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 24 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-80px' }}
+    transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+    className={className}
+  >
+    {children}
+  </motion.div>
+);
+
 interface Call {
   id: CallId;
+  index: string;
   title: string;
+  titleAccent?: string;
   tagline: string;
   cadenceLabel: string;
   cadenceWeek: number;
@@ -28,8 +44,10 @@ interface Call {
 const CALLS: Call[] = [
   {
     id: 'agencybrain',
-    title: 'Standard × AgencyBrain',
-    tagline: 'Workflow, automations, and operational lift.',
+    index: '01',
+    title: 'Standard ×',
+    titleAccent: 'AgencyBrain',
+    tagline: 'Workflow, automations, and operational lift for the agency stack.',
     cadenceLabel: '3rd Wednesday Monthly',
     cadenceWeek: 3,
     meetingId: '856 9609 1645',
@@ -38,7 +56,9 @@ const CALLS: Call[] = [
   },
   {
     id: 'boardroom',
-    title: 'The Standard Boardroom',
+    index: '02',
+    title: 'The Standard',
+    titleAccent: 'Boardroom',
     tagline: 'Monthly mastermind. Real numbers, real wins, real accountability.',
     cadenceLabel: '2nd Wednesday Monthly',
     cadenceWeek: 2,
@@ -49,7 +69,9 @@ const CALLS: Call[] = [
   },
   {
     id: 'ai',
-    title: 'Standard × AI',
+    index: '03',
+    title: 'Standard ×',
+    titleAccent: 'AI',
     tagline: 'AI tools, prompts, and the new playbook for sales + service.',
     cadenceLabel: '4th Wednesday Monthly',
     cadenceWeek: 4,
@@ -65,12 +87,11 @@ const PERSONAL_ROOM = {
   joinUrl: 'https://us06web.zoom.us/s/5716939535?pwd=S21iem9oT0xrTjk5TldMMHdRcks0QT09#success',
 };
 
-/* ── Card ──────────────────────────────────────────────── */
+/* ── Call Card (editorial sheet) ───────────────────────── */
 const CallCard = ({ call }: { call: Call }) => {
   const occ = getNextOccurrence(call.id, call.cadenceWeek);
   const dateLine = formatOccurrence(occ);
   const [copied, setCopied] = useState(false);
-
   const dominant = !!call.dominant;
 
   const copyId = async () => {
@@ -82,136 +103,145 @@ const CallCard = ({ call }: { call: Call }) => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`group relative flex flex-col rounded-2xl overflow-hidden border transition-all duration-300 ${
-        dominant
-          ? 'md:scale-[1.04] md:-my-2 z-10'
-          : 'md:my-4'
-      }`}
+    <div
+      className={dominant ? 'md:-my-6 md:scale-[1.04] z-10' : ''}
       style={{
-        background: dominant
-          ? `linear-gradient(180deg, #14171c 0%, #0d1014 100%)`
-          : '#101216',
-        borderColor: dominant ? `${blue}66` : '#22262d',
-        boxShadow: dominant
-          ? `0 30px 80px -30px ${blue}66, 0 0 0 1px ${blue}33 inset`
-          : '0 12px 30px -20px rgba(0,0,0,0.6)',
+        background: dominant ? ink : paper,
+        color: dominant ? paper : ink,
+        border: `1.5px solid ${ink}`,
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       {dominant && (
         <div
-          className="absolute top-0 left-0 right-0 text-center py-2"
           style={{
-            fontFamily: body, fontSize: 11, fontWeight: 700,
-            letterSpacing: '0.18em', textTransform: 'uppercase',
-            color: ink, background: blue,
+            position: 'absolute', top: 0, left: 0, right: 0,
+            background: blue, color: ink, textAlign: 'center',
+            fontFamily: body, fontSize: 10, fontWeight: 800,
+            letterSpacing: '0.22em', textTransform: 'uppercase',
+            padding: '8px 12px',
           }}
         >
           ★ Flagship Monthly Call
         </div>
       )}
 
-      <div className={`flex flex-col items-center text-center px-7 ${dominant ? 'pt-14 pb-9' : 'pt-9 pb-8'}`}>
-        {/* Logo */}
-        <div
-          className={`flex items-center justify-center rounded-xl overflow-hidden mb-6 ${
-            dominant ? 'w-36 h-36' : 'w-28 h-28'
-          }`}
-          style={{ background: '#0a0c10', border: `1px solid ${dominant ? `${blue}44` : '#22262d'}` }}
-        >
-          <img
-            src={call.logoUrl}
-            alt={`${call.title} logo`}
-            className="w-full h-full object-contain p-3"
-            loading="lazy"
-          />
-        </div>
-
-        {/* Cadence pill */}
-        <div
-          className="inline-block mb-3 px-3 py-1 rounded-full"
-          style={{
-            fontFamily: body, fontSize: 10, fontWeight: 700,
-            letterSpacing: '0.16em', textTransform: 'uppercase',
-            color: blue, background: `${blue}1f`, border: `1px solid ${blue}44`,
-          }}
-        >
+      {/* Header strip with index */}
+      <div
+        style={{
+          padding: dominant ? '40px 24px 16px' : '20px 24px 16px',
+          borderBottom: `1px solid ${dominant ? `${paper}33` : ink}`,
+          display: 'flex', alignItems: 'baseline', justifyContent: 'space-between',
+        }}
+      >
+        <span style={{
+          fontFamily: editorial, fontSize: 14,
+          opacity: dominant ? 0.5 : 0.4, letterSpacing: '-0.01em',
+        }}>
+          / {call.index}
+        </span>
+        <span style={{
+          fontFamily: body, fontSize: 10, fontWeight: 700,
+          letterSpacing: '0.18em', textTransform: 'uppercase',
+          color: dominant ? blue : ink, opacity: dominant ? 1 : 0.7,
+        }}>
           {call.cadenceLabel}
-        </div>
+        </span>
+      </div>
 
-        {/* Title */}
-        <h2
+      {/* Logo well */}
+      <div
+        style={{
+          background: dominant ? '#000' : '#fff',
+          borderBottom: `1px solid ${dominant ? `${paper}33` : ink}`,
+          padding: dominant ? '36px 24px' : '28px 24px',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          minHeight: dominant ? 200 : 160,
+        }}
+      >
+        <img
+          src={call.logoUrl}
+          alt={`${call.title} ${call.titleAccent ?? ''} logo`}
           style={{
-            fontFamily: display,
-            fontSize: dominant ? 30 : 24,
-            lineHeight: 1.05,
-            letterSpacing: '-0.01em',
-            color: paper,
-            textTransform: 'uppercase',
-            marginBottom: 10,
+            maxWidth: dominant ? 200 : 160,
+            maxHeight: dominant ? 140 : 110,
+            objectFit: 'contain',
           }}
-        >
-          {call.title}
+          loading="lazy"
+        />
+      </div>
+
+      {/* Body */}
+      <div style={{ padding: dominant ? '28px 24px 24px' : '24px 24px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <h2 style={{
+          fontFamily: display,
+          fontSize: dominant ? 'clamp(32px, 3.6vw, 44px)' : 'clamp(26px, 2.6vw, 32px)',
+          lineHeight: 0.92, letterSpacing: '-0.015em',
+          textTransform: 'uppercase', margin: 0, fontWeight: 400,
+        }}>
+          {call.title}<br />
+          <span style={{ color: blue }}>{call.titleAccent}</span>
         </h2>
 
         <p style={{
-          fontFamily: body, fontSize: 14, lineHeight: 1.5,
-          color: '#a8aeb8', maxWidth: 320, marginBottom: 24,
+          fontFamily: body, fontSize: 14, lineHeight: 1.55,
+          opacity: dominant ? 0.8 : 0.7,
+          margin: '14px 0 22px', flex: 1,
         }}>
           {call.tagline}
         </p>
 
-        {/* Next meeting */}
-        <div
-          className="w-full rounded-lg px-4 py-3 mb-4 flex items-start gap-2.5 text-left"
-          style={{ background: '#0a0c10', border: '1px solid #22262d' }}
-        >
-          <Calendar className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: blue }} />
-          <div>
-            <div style={{
-              fontFamily: body, fontSize: 10, fontWeight: 700,
-              letterSpacing: '0.14em', textTransform: 'uppercase',
-              color: '#7a8090', marginBottom: 2,
-            }}>
-              Next Meeting
-            </div>
-            <div style={{
-              fontFamily: body, fontSize: 13.5, fontWeight: 600, color: paper, lineHeight: 1.35,
-            }}>
-              {dateLine}
-              {occ.isOverride && (
-                <span style={{ color: blue, fontWeight: 700, marginLeft: 6 }}>· Special</span>
-              )}
-            </div>
+        {/* Next meeting strip */}
+        <div style={{
+          borderTop: `1px solid ${dominant ? `${paper}33` : ink}`,
+          borderBottom: `1px solid ${dominant ? `${paper}33` : ink}`,
+          padding: '14px 0', marginBottom: 14,
+        }}>
+          <div style={{
+            fontFamily: body, fontSize: 10, fontWeight: 700,
+            letterSpacing: '0.18em', textTransform: 'uppercase',
+            opacity: 0.5, marginBottom: 4,
+          }}>
+            Next Meeting
+          </div>
+          <div style={{
+            fontFamily: editorial, fontSize: 16, lineHeight: 1.2,
+            letterSpacing: '-0.005em', textTransform: 'uppercase',
+          }}>
+            {dateLine}
+            {occ.isOverride && (
+              <span style={{ color: blue, marginLeft: 8 }}>· Special</span>
+            )}
           </div>
         </div>
 
         {/* Meeting ID */}
         <button
           onClick={copyId}
-          className="w-full rounded-lg px-4 py-3 mb-5 flex items-center justify-between gap-2 transition-colors"
-          style={{ background: '#0a0c10', border: '1px solid #22262d', cursor: 'pointer' }}
+          style={{
+            background: 'transparent', border: 'none', padding: 0, cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            width: '100%', textAlign: 'left', marginBottom: 22,
+          }}
           aria-label="Copy meeting ID"
         >
-          <div className="text-left">
+          <div>
             <div style={{
               fontFamily: body, fontSize: 10, fontWeight: 700,
-              letterSpacing: '0.14em', textTransform: 'uppercase',
-              color: '#7a8090', marginBottom: 2,
+              letterSpacing: '0.18em', textTransform: 'uppercase',
+              opacity: 0.5, marginBottom: 4,
             }}>
               Meeting ID
             </div>
             <div className="select-all" style={{
-              fontFamily: body, fontSize: 14, fontWeight: 600, color: paper, letterSpacing: '0.02em',
+              fontFamily: body, fontSize: 15, fontWeight: 600, letterSpacing: '0.04em',
             }}>
               {call.meetingId}
             </div>
           </div>
-          <Copy className="w-4 h-4 flex-shrink-0" style={{ color: copied ? blue : '#7a8090' }} />
+          <Copy className="w-4 h-4" style={{ opacity: copied ? 1 : 0.5, color: copied ? blue : 'currentColor' }} />
         </button>
 
         {/* CTA */}
@@ -219,24 +249,23 @@ const CallCard = ({ call }: { call: Call }) => {
           href={call.registerUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full inline-flex items-center justify-center gap-2 rounded-full transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
           style={{
-            background: dominant ? blue : paper,
-            color: ink,
-            fontFamily: body,
-            fontSize: dominant ? 15 : 14,
-            fontWeight: 700,
-            letterSpacing: '0.04em',
-            textTransform: 'uppercase',
-            padding: dominant ? '16px 24px' : '14px 22px',
-            boxShadow: dominant ? `0 12px 30px -10px ${blue}99` : 'none',
+            fontFamily: body, fontSize: 13, fontWeight: 700,
+            letterSpacing: '0.14em', textTransform: 'uppercase',
+            textDecoration: 'none',
+            padding: dominant ? '18px 24px' : '16px 22px',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
+            background: dominant ? blue : ink,
+            color: dominant ? ink : paper,
+            transition: 'all .25s',
           }}
+          className="hover:opacity-90"
         >
           Register on Zoom
-          <ExternalLink className="w-4 h-4" />
+          <ArrowUpRight className="w-5 h-5" />
         </a>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -252,125 +281,164 @@ const Calls = () => {
   };
 
   return (
-    <div style={{ background: ink, minHeight: '100vh', color: paper }}>
+    <div style={{ background: paper, color: ink, fontFamily: body, minHeight: '100vh' }}>
       <BoldNav />
 
       {/* Hero */}
-      <section className="px-6 pt-32 pb-8 md:pt-40 md:pb-12 max-w-[1280px] mx-auto text-center">
-        <div
-          className="inline-block px-3 py-1 rounded-full mb-5"
-          style={{
-            fontFamily: body, fontSize: 10, fontWeight: 700,
-            letterSpacing: '0.18em', textTransform: 'uppercase',
-            color: blue, background: `${blue}1f`, border: `1px solid ${blue}44`,
-          }}
-        >
-          Monthly Recurring Calls
+      <section style={{ background: paper, paddingTop: 56 + 24, paddingBottom: 48, position: 'relative', overflow: 'hidden' }}>
+        <div className="px-6 md:px-10 max-w-[1440px] mx-auto">
+          <Reveal>
+            <p style={{
+              fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+              color: ink, textTransform: 'uppercase', marginBottom: 24,
+            }}>
+              / Monthly Recurring Calls
+            </p>
+          </Reveal>
+
+          <Reveal>
+            <h1 style={{
+              fontFamily: display,
+              fontSize: 'clamp(56px, 12vw, 200px)',
+              lineHeight: 0.86, letterSpacing: '-0.02em',
+              color: ink, margin: 0, textTransform: 'uppercase', fontWeight: 400,
+            }}>
+              THE<br />
+              <span className="md:pl-[6vw] inline-block">STANDARD</span><br />
+              <span style={{ color: blue }}>CADENCE.</span>
+            </h1>
+          </Reveal>
+
+          <div className="grid grid-cols-12 gap-6 mt-10">
+            <Reveal delay={0.2} className="col-span-12 md:col-span-7">
+              <p style={{
+                fontFamily: body, fontSize: 'clamp(15px, 1.5vw, 18px)',
+                lineHeight: 1.55, color: ink, opacity: 0.8, maxWidth: 640,
+              }}>
+                Register once per Zoom — you'll get a calendar invite and reminders for every future session. Bookmark this page so you can always find your way back.
+              </p>
+            </Reveal>
+          </div>
         </div>
-        <h1
-          style={{
-            fontFamily: display,
-            fontSize: 'clamp(40px, 7vw, 84px)',
-            lineHeight: 0.95,
-            letterSpacing: '-0.02em',
-            textTransform: 'uppercase',
-            marginBottom: 18,
-          }}
-        >
-          The <span style={{ color: blue }}>Standard</span> Cadence
-        </h1>
-        <p style={{
-          fontFamily: body, fontSize: 17, lineHeight: 1.55,
-          color: '#a8aeb8', maxWidth: 620, margin: '0 auto',
+      </section>
+
+      {/* Marquee strip */}
+      <div style={{
+        background: ink, color: paper, padding: '14px 0',
+        borderTop: `1px solid ${ink}`, borderBottom: `1px solid ${ink}`,
+        overflow: 'hidden', whiteSpace: 'nowrap',
+      }}>
+        <div style={{
+          fontFamily: editorial, fontSize: 16, letterSpacing: '0.05em',
+          textTransform: 'uppercase', textAlign: 'center',
         }}>
-          Register once for each Zoom — you'll get a calendar invite and reminders. Bookmark this page so you can always come back for the next meeting.
-        </p>
-      </section>
+          BOARDROOM <span style={{ color: blue }}>●</span> AGENCYBRAIN <span style={{ color: blue }}>●</span> AI <span style={{ color: blue }}>●</span> EVERY MONTH <span style={{ color: blue }}>●</span> SHOW UP <span style={{ color: blue }}>●</span>
+        </div>
+      </div>
 
-      {/* 3-up grid */}
-      <section className="px-6 pb-14 max-w-[1280px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-5 md:items-center">
-          {CALLS.map((c) => <CallCard key={c.id} call={c} />)}
+      {/* 3-up call grid */}
+      <section style={{ background: paper, padding: '80px 24px 60px' }}>
+        <div className="max-w-[1280px] mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-5 md:items-center">
+            {CALLS.map((c, i) => (
+              <Reveal key={c.id} delay={i * 0.08}>
+                <CallCard call={c} />
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Personal Room */}
-      <section className="px-6 pb-24 max-w-[1280px] mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="rounded-2xl border px-6 md:px-10 py-7 md:py-8 flex flex-col md:flex-row md:items-center gap-6"
-          style={{ background: '#101216', borderColor: '#22262d' }}
-        >
-          <div
-            className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0"
-            style={{ background: `${blue}1f`, border: `1px solid ${blue}44` }}
-          >
-            <Video className="w-7 h-7" style={{ color: blue }} />
-          </div>
+      {/* Personal room — editorial wide card */}
+      <section style={{ background: paper, padding: '40px 24px 120px', borderTop: `1px solid ${ink}` }}>
+        <div className="max-w-[1280px] mx-auto">
+          <Reveal>
+            <p style={{
+              fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+              color: ink, textTransform: 'uppercase', marginBottom: 24, marginTop: 24,
+            }}>
+              / Drop-in · 1-on-1
+            </p>
+          </Reveal>
 
-          <div className="flex-1 min-w-0">
-            <div style={{
-              fontFamily: body, fontSize: 10, fontWeight: 700,
-              letterSpacing: '0.16em', textTransform: 'uppercase',
-              color: '#7a8090', marginBottom: 4,
-            }}>
-              Drop-in / 1-on-1
-            </div>
-            <h3 style={{
-              fontFamily: display, fontSize: 24, lineHeight: 1.1,
-              textTransform: 'uppercase', letterSpacing: '-0.01em', marginBottom: 6,
-            }}>
-              {PERSONAL_ROOM.title}
-            </h3>
-            <button
-              onClick={copyPMI}
-              className="inline-flex items-center gap-2"
-              style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
-              aria-label="Copy PMI"
+          <Reveal delay={0.1}>
+            <div
+              style={{
+                background: ink, color: paper,
+                border: `1.5px solid ${ink}`,
+                padding: '36px 28px',
+              }}
+              className="grid grid-cols-12 gap-6 items-center"
             >
-              <span style={{
-                fontFamily: body, fontSize: 13, color: '#a8aeb8',
-              }}>
-                PMI:
-              </span>
-              <span className="select-all" style={{
-                fontFamily: body, fontSize: 14, fontWeight: 600, color: paper, letterSpacing: '0.02em',
-              }}>
-                {PERSONAL_ROOM.pmi}
-              </span>
-              <Copy className="w-3.5 h-3.5" style={{ color: copied ? blue : '#7a8090' }} />
-            </button>
-          </div>
+              <div className="col-span-12 md:col-span-8">
+                <p style={{
+                  fontFamily: body, fontSize: 11, fontWeight: 700,
+                  letterSpacing: '0.18em', textTransform: 'uppercase',
+                  color: blue, marginBottom: 12,
+                }}>
+                  04 / Personal Meeting Room
+                </p>
+                <h3 style={{
+                  fontFamily: display, fontSize: 'clamp(32px, 5vw, 60px)',
+                  lineHeight: 0.92, letterSpacing: '-0.015em',
+                  textTransform: 'uppercase', color: paper, margin: 0, fontWeight: 400,
+                }}>
+                  Justin's <span style={{ color: blue }}>standard</span><br />meeting room.
+                </h3>
 
-          <a
-            href={PERSONAL_ROOM.joinUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-full transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex-shrink-0"
-            style={{
-              background: blue, color: ink,
-              fontFamily: body, fontSize: 14, fontWeight: 700,
-              letterSpacing: '0.04em', textTransform: 'uppercase',
-              padding: '14px 26px',
-              boxShadow: `0 12px 30px -10px ${blue}99`,
-            }}
-          >
-            Join Justin's Room
-            <ExternalLink className="w-4 h-4" />
-          </a>
-        </motion.div>
+                <button
+                  onClick={copyPMI}
+                  className="inline-flex items-center gap-2 mt-5"
+                  style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0, color: paper }}
+                  aria-label="Copy PMI"
+                >
+                  <span style={{
+                    fontFamily: body, fontSize: 11, fontWeight: 700,
+                    letterSpacing: '0.18em', textTransform: 'uppercase', opacity: 0.6,
+                  }}>
+                    PMI
+                  </span>
+                  <span className="select-all" style={{
+                    fontFamily: editorial, fontSize: 22, letterSpacing: '0.02em',
+                  }}>
+                    {PERSONAL_ROOM.pmi}
+                  </span>
+                  <Copy className="w-4 h-4" style={{ color: copied ? blue : `${paper}99` }} />
+                </button>
+              </div>
+
+              <div className="col-span-12 md:col-span-4 flex md:justify-end">
+                <a
+                  href={PERSONAL_ROOM.joinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontFamily: body, fontSize: 13, fontWeight: 700,
+                    letterSpacing: '0.14em', textTransform: 'uppercase',
+                    textDecoration: 'none',
+                    padding: '18px 28px',
+                    background: blue, color: ink,
+                    display: 'inline-flex', alignItems: 'center', gap: 10,
+                    transition: 'all .25s',
+                  }}
+                  className="hover:opacity-90"
+                >
+                  Join Justin's Room
+                  <ArrowUpRight className="w-5 h-5" />
+                </a>
+              </div>
+            </div>
+          </Reveal>
+        </div>
       </section>
 
       {/* Footer */}
-      <footer style={{ borderTop: `1px solid ${paper}1a`, padding: '24px' }}>
+      <footer style={{ background: ink, color: paper, padding: '32px 24px' }}>
         <p style={{
           fontFamily: body, fontSize: 11, opacity: 0.5,
-          letterSpacing: '0.08em', textAlign: 'center',
+          letterSpacing: '0.14em', textAlign: 'center', textTransform: 'uppercase',
         }}>
-          © {new Date().getFullYear()} STANDARD PLAYBOOK INC. ALL RIGHTS RESERVED.
+          © {new Date().getFullYear()} Standard Playbook Inc. All Rights Reserved.
         </p>
       </footer>
     </div>
