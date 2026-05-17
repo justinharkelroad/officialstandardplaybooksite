@@ -23,8 +23,8 @@ export const OVERRIDES: Record<string, Override> = {
 // Default times for each call (America/New_York).
 const DEFAULT_TIMES: Record<CallId, { start: string; end: string }> = {
   boardroom:   { start: '13:00', end: '14:00' },
-  agencybrain: { start: '13:00', end: '14:00' },
-  ai:          { start: '13:00', end: '14:00' },
+  agencybrain: { start: '14:00', end: '14:45' },
+  ai:          { start: '14:00', end: '14:45' },
 };
 
 const TZ = 'America/New_York';
