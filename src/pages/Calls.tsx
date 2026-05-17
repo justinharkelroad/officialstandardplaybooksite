@@ -55,6 +55,7 @@ const CALLS: Call[] = [
     meetingId: '856 9609 1645',
     registerUrl: 'https://us06web.zoom.us/meeting/register/Tw3bEqWhQ5OZWfulbi0JFw',
     logoUrl: `${STORAGE}/${encodeURIComponent('Standard Agencybrain Logo.png')}`,
+    eligibility: 'Open to all Team Members',
   },
   {
     id: 'boardroom',
