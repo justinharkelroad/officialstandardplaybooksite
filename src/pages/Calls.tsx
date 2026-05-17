@@ -117,7 +117,6 @@ const CallCard = ({ call }: { call: Call }) => {
       {dominant && (
         <div
           style={{
-            position: 'absolute', top: 0, left: 0, right: 0,
             background: blue, color: ink, textAlign: 'center',
             fontFamily: body, fontSize: 10, fontWeight: 800,
             letterSpacing: '0.22em', textTransform: 'uppercase',
@@ -128,10 +127,24 @@ const CallCard = ({ call }: { call: Call }) => {
         </div>
       )}
 
+      {/* Cameras required bar */}
+      <div
+        style={{
+          background: dominant ? paper : ink,
+          color: dominant ? ink : paper,
+          textAlign: 'center',
+          fontFamily: body, fontSize: 11, fontWeight: 800,
+          letterSpacing: '0.22em', textTransform: 'uppercase',
+          padding: '10px 12px',
+        }}
+      >
+        ▶ Cameras Required For Entry
+      </div>
+
       {/* Header strip with index */}
       <div
         style={{
-          padding: dominant ? '40px 24px 16px' : '20px 24px 16px',
+          padding: '18px 24px 16px',
           borderBottom: `1px solid ${dominant ? `${paper}33` : ink}`,
           display: 'flex', alignItems: 'baseline', justifyContent: 'space-between',
         }}
