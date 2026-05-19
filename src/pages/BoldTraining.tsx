@@ -227,7 +227,6 @@ const TRAINING_NOTEBOOKS = [
   { number: '09', image: '/9.png', title: 'The Question Bank', description: 'Carrier-agnostic discovery questions for P&C producers.' },
   { number: '10', image: '/10.png', title: 'The Objection Playbook', description: 'Opening objections sequenced by how they surface on live calls.' },
   { number: '11', image: '/11.png', title: 'More Processes Coming Soon', description: 'The library keeps expanding as the insurance game changes.' },
-  { number: '12', image: '/12.png', title: 'More is coming.', description: 'New notebooks keep shipping as the work surfaces them.' },
 ];
 
 const NotebookCarousel = () => {
@@ -345,17 +344,6 @@ const NotebookCarousel = () => {
                         objectFit: 'contain', filter: 'drop-shadow(0 24px 34px rgba(0,0,0,0.42))',
                       }}
                     />
-                    {notebook.number === '12' && (
-                      <div style={{
-                        position: 'absolute', inset: 0, pointerEvents: 'none',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontFamily: display, color: paper, textTransform: 'uppercase',
-                        fontSize: 'clamp(26px, 4vw, 50px)', lineHeight: 0.95,
-                        textAlign: 'center', opacity: 0.12,
-                      }}>
-                        More<br />Coming
-                      </div>
-                    )}
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '44px 1fr', gap: 14, paddingTop: 18 }}>
                     <span style={{
