@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Facebook, Linkedin } from 'lucide-react';
+import useEmblaCarousel from 'embla-carousel-react';
+import { ChevronLeft, ChevronRight, Facebook, Linkedin } from 'lucide-react';
 import BoldNav from '@/components/BoldNav';
 import ContentMeta from '@/components/ContentMeta';
 
@@ -214,6 +215,198 @@ const CATEGORIES = [
   { name: '+ More on the way', description: "New tracks ship as the work surfaces them. Boardroom calls. New objections. New AI workflows. The library doesn't sit still." },
 ];
 
+const TRAINING_NOTEBOOKS = [
+  { number: '01', image: '/1.png', title: 'The Quoted Households Math', description: 'Reverse math that turns a monthly hope number into a daily non-negotiable.' },
+  { number: '02', image: '/2.png', title: 'Cancellation Requests', description: 'A service call frame for prepared, calm retention conversations.' },
+  { number: '03', image: '/3.png', title: 'The Three Buckets Method', description: 'A field-edition framework for organizing a producer sales day.' },
+  { number: '04', image: '/4.png', title: 'Leading With Liability', description: 'The three-question approach to closing coverage gaps.' },
+  { number: '05', image: '/5.png', title: 'Talk Like You Already Won', description: 'Tone, tempo, and timing for phone conversations that earn the close.' },
+  { number: '06', image: '/6.png', title: 'Customer Winback Process', description: 'A deployable process for reopening terminated customer relationships.' },
+  { number: '07', image: '/7.png', title: 'Renewals & Rate Increases', description: 'A service frame for making clients feel heard before making recommendations.' },
+  { number: '08', image: '/8.png', title: 'From Hello To Closed', description: 'The standard six-step call sequence and the mindset behind it.' },
+  { number: '09', image: '/9.png', title: 'The Question Bank', description: 'Carrier-agnostic discovery questions for P&C producers.' },
+  { number: '10', image: '/10.png', title: 'The Objection Playbook', description: 'Opening objections sequenced by how they surface on live calls.' },
+  { number: '11', image: '/11.png', title: 'More Processes Coming Soon', description: 'The library keeps expanding as the insurance game changes.' },
+  { number: '12', image: '/12.png', title: 'More is coming.', description: 'New notebooks keep shipping as the work surfaces them.' },
+];
+
+const NotebookCarousel = () => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'start', loop: false, containScroll: 'trimSnaps' });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    setScrollSnaps(emblaApi.scrollSnapList());
+    onSelect();
+    emblaApi.on('select', onSelect);
+    emblaApi.on('reInit', onSelect);
+    return () => {
+      emblaApi.off('select', onSelect);
+      emblaApi.off('reInit', onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+  const scrollTo = useCallback((index: number) => emblaApi?.scrollTo(index), [emblaApi]);
+
+  return (
+    <Reveal delay={0.14}>
+      <div style={{ marginTop: 54 }}>
+        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p style={{
+              fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.18em',
+              color: blue, textTransform: 'uppercase', marginBottom: 12,
+            }}>
+              Notebook Library
+            </p>
+            <h3 style={{
+              fontFamily: display, fontSize: 'clamp(30px, 4.2vw, 60px)',
+              lineHeight: 0.96, letterSpacing: '-0.01em', color: paper,
+              textTransform: 'uppercase', margin: 0, fontWeight: 400,
+            }}>
+              Built as tracks.<br />
+              <span style={{ color: `${paper}99` }}>Browsed like shelves.</span>
+            </h3>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={scrollPrev}
+              disabled={!canScrollPrev}
+              aria-label="Previous notebooks"
+              style={{
+                width: 44, height: 44, border: `1px solid ${paper}33`, borderRadius: 999,
+                color: paper, background: canScrollPrev ? `${paper}0d` : 'transparent',
+                opacity: canScrollPrev ? 1 : 0.35, display: 'inline-flex',
+                alignItems: 'center', justifyContent: 'center', transition: 'all .25s ease',
+              }}
+              className="hover:border-[#2997FF] hover:text-[#2997FF] active:scale-[0.97] disabled:hover:border-white/20 disabled:hover:text-white"
+            >
+              <ChevronLeft className="h-5 w-5" strokeWidth={1.8} />
+            </button>
+            <button
+              type="button"
+              onClick={scrollNext}
+              disabled={!canScrollNext}
+              aria-label="Next notebooks"
+              style={{
+                width: 44, height: 44, border: `1px solid ${paper}33`, borderRadius: 999,
+                color: paper, background: canScrollNext ? `${paper}0d` : 'transparent',
+                opacity: canScrollNext ? 1 : 0.35, display: 'inline-flex',
+                alignItems: 'center', justifyContent: 'center', transition: 'all .25s ease',
+              }}
+              className="hover:border-[#2997FF] hover:text-[#2997FF] active:scale-[0.97] disabled:hover:border-white/20 disabled:hover:text-white"
+            >
+              <ChevronRight className="h-5 w-5" strokeWidth={1.8} />
+            </button>
+          </div>
+        </div>
+
+        <div ref={emblaRef} style={{
+          overflow: 'hidden', marginTop: 34, marginInline: '-12px',
+          WebkitMaskImage: 'linear-gradient(90deg, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%)',
+          maskImage: 'linear-gradient(90deg, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%)',
+        }}>
+          <div className="flex">
+            {TRAINING_NOTEBOOKS.map((notebook) => (
+              <div key={notebook.number} className="min-w-0 flex-[0_0_86%] px-3 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%]">
+                <article style={{
+                  height: '100%', borderTop: `1px solid ${paper}26`,
+                  paddingTop: 18, display: 'flex', flexDirection: 'column',
+                }}>
+                  <div style={{
+                    minHeight: 'clamp(300px, 38vw, 510px)', display: 'flex',
+                    alignItems: 'center', justifyContent: 'center',
+                    background: `linear-gradient(180deg, ${paper}0d, ${paper}05)`,
+                    border: `1px solid ${paper}1a`, overflow: 'hidden', position: 'relative',
+                  }}>
+                    <img
+                      src={notebook.image}
+                      alt={`${notebook.title} notebook`}
+                      loading={notebook.number === '01' ? 'eager' : 'lazy'}
+                      onError={(event) => {
+                        event.currentTarget.style.display = 'none';
+                      }}
+                      style={{
+                        width: 'min(86%, 360px)', maxHeight: '470px',
+                        objectFit: 'contain', filter: 'drop-shadow(0 24px 34px rgba(0,0,0,0.42))',
+                      }}
+                    />
+                    {notebook.number === '12' && (
+                      <div style={{
+                        position: 'absolute', inset: 0, pointerEvents: 'none',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontFamily: display, color: paper, textTransform: 'uppercase',
+                        fontSize: 'clamp(26px, 4vw, 50px)', lineHeight: 0.95,
+                        textAlign: 'center', opacity: 0.12,
+                      }}>
+                        More<br />Coming
+                      </div>
+                    )}
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '44px 1fr', gap: 14, paddingTop: 18 }}>
+                    <span style={{
+                      fontFamily: editorial, fontSize: 17, color: blue,
+                      letterSpacing: '-0.01em', lineHeight: 1,
+                    }}>
+                      {notebook.number}
+                    </span>
+                    <div>
+                      <h4 style={{
+                        fontFamily: display, fontSize: 'clamp(21px, 2vw, 30px)',
+                        lineHeight: 1, letterSpacing: '-0.01em', color: paper,
+                        textTransform: 'uppercase', margin: 0, fontWeight: 400,
+                      }}>
+                        {notebook.title}
+                      </h4>
+                      <p style={{
+                        fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.55,
+                        color: paper, opacity: 0.68, marginTop: 9, marginBottom: 0,
+                      }}>
+                        {notebook.description}
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-7 flex flex-wrap items-center gap-2">
+          {scrollSnaps.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              onClick={() => scrollTo(index)}
+              aria-label={`Go to notebook group ${index + 1}`}
+              style={{
+                width: index === selectedIndex ? 28 : 8,
+                height: 8, borderRadius: 999, border: 0,
+                background: index === selectedIndex ? blue : `${paper}33`,
+                transition: 'all .25s ease',
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </Reveal>
+  );
+};
+
 const LibrarySection = () => (
   <section id="library" style={{ background: ink, color: paper, padding: '120px 24px' }}>
     <div className="max-w-[1280px] mx-auto">
@@ -243,6 +436,8 @@ const LibrarySection = () => (
           Each track is a structured path — not a video dump. Producers, service reps, and managers each find their lane on day one. New tracks land as the work surfaces them.
         </p>
       </Reveal>
+
+      <NotebookCarousel />
 
       {/* HERO TRACK CARD */}
       <Reveal delay={0.15}>
