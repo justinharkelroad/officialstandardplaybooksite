@@ -393,7 +393,7 @@ const Calls = () => {
       </section>
 
       {/* Personal room — editorial wide card */}
-      <section style={{ background: paper, padding: '40px 24px 120px', borderTop: `1px solid ${ink}` }}>
+      <section style={{ background: paper, padding: '40px 24px 60px', borderTop: `1px solid ${ink}` }}>
         <div className="max-w-[1280px] mx-auto">
           <Reveal>
             <p style={{
@@ -471,6 +471,86 @@ const Calls = () => {
                 </a>
               </div>
             </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Directive & Partnership — monthly 2-hour sit-down */}
+      <section style={{ background: paper, padding: '0 24px 120px' }}>
+        <div className="max-w-[1280px] mx-auto">
+          <Reveal>
+            <p style={{
+              fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+              color: ink, textTransform: 'uppercase', marginBottom: 24,
+            }}>
+              / Directive &amp; Partnership · Monthly 2-Hour
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <div
+              style={{
+                background: paper, color: ink,
+                border: `1.5px solid ${ink}`,
+                padding: '36px 28px',
+              }}
+              className="grid grid-cols-12 gap-6 items-center"
+            >
+              <div className="col-span-12 md:col-span-8">
+                <p style={{
+                  fontFamily: body, fontSize: 11, fontWeight: 700,
+                  letterSpacing: '0.18em', textTransform: 'uppercase',
+                  color: blue, marginBottom: 12,
+                }}>
+                  05 / Monthly Strategy Session
+                </p>
+                <h3 style={{
+                  fontFamily: display, fontSize: 'clamp(32px, 5vw, 60px)',
+                  lineHeight: 0.92, letterSpacing: '-0.015em',
+                  textTransform: 'uppercase', color: ink, margin: 0, fontWeight: 400,
+                }}>
+                  Your monthly <span style={{ color: blue }}>two-hour</span><br />sit-down.
+                </h3>
+                <p style={{
+                  fontFamily: body, fontSize: 14, lineHeight: 1.55,
+                  opacity: 0.7, margin: '16px 0 0', maxWidth: 540,
+                }}>
+                  Directive &amp; Partnership clients — book your monthly two-hour working session. One link, every month.
+                </p>
+              </div>
+
+              <div className="col-span-12 md:col-span-4 flex md:justify-end">
+                <a
+                  href="https://AGENCYCOACHING.as.me/2HR"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontFamily: body, fontSize: 13, fontWeight: 700,
+                    letterSpacing: '0.14em', textTransform: 'uppercase',
+                    textDecoration: 'none',
+                    padding: '18px 28px',
+                    background: ink, color: paper,
+                    display: 'inline-flex', alignItems: 'center', gap: 10,
+                    transition: 'all .25s',
+                  }}
+                  className="hover:opacity-90"
+                >
+                  Book Your 2-Hour Call
+                  <ArrowUpRight className="w-5 h-5" />
+                </a>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.15}>
+            <p style={{
+              fontFamily: body, fontSize: 11, fontWeight: 600,
+              letterSpacing: '0.08em', textTransform: 'uppercase',
+              textAlign: 'center', marginTop: 16, marginBottom: 0,
+              opacity: 0.6, color: ink,
+            }}>
+              Directive &amp; Partnership Clients Only
+            </p>
           </Reveal>
         </div>
       </section>
