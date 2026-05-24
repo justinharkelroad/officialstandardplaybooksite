@@ -71,8 +71,8 @@ const Hero = () => (
               background: ink, overflow: 'hidden',
               boxShadow: '0 36px 70px -18px rgba(0,0,0,0.55)',
             }}>
-            <img src={profileImg} alt="Justin Harkelroad"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%) contrast(1.1)' }} />
+            <img src="/aboutpagehero.jpg" alt="Justin Harkelroad"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'contrast(1.05)' }} />
           </motion.div>
         </Reveal>
       </div>

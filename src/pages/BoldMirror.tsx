@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
 import standardLogo from '@/assets/standard-word-logo.png';
-import mirrorCoverImg from '@/assets/mirror-cover.png';
 import { captureMirrorAttribution } from '@/lib/mirrorAttribution';
 
 const display = '"Anton", "Archivo Black", "Oswald", Impact, sans-serif';
@@ -330,7 +329,7 @@ const AuthoritySection = () => (
           }}
             className="hover:!rotate-0">
             <div style={{ aspectRatio: '4/5', background: '#0A0A0B', overflow: 'hidden' }}>
-              <img src={mirrorCoverImg} alt="The Mirror Workbook"
+              <img src="/mirrorpic.jpg" alt="The Mirror Workbook"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
             <p style={{
