@@ -389,7 +389,7 @@ const StorySection = () => (
               and custom agent buildouts — all delivered within a community of peers who share your ambition and commitment to excellence.
             </p>
             <p>
-              Today, The Standard Playbook serves hundreds of entrepreneurs across multiple industries. Our members have collectively generated over $500 million in additional revenue since implementing our systems. The{' '}
+              Today, The Standard Playbook works directly with insurance agency owners and their teams nationwide. The{' '}
               <a href="https://www.independentagent.com" target="_blank" rel="noopener noreferrer"
                 style={{ color: blue, textDecoration: 'underline', fontWeight: 600 }}>
                 independent insurance agency
@@ -432,73 +432,6 @@ const StorySection = () => (
 );
 
 /* ══════════════════════════════════════════════════════
-   STATS — bold display numerals
-   ══════════════════════════════════════════════════════ */
-const StatsSection = () => (
-  <section style={{ background: paper, padding: '120px 24px', borderTop: `1px solid ${ink}` }}>
-    <div className="max-w-[1280px] mx-auto">
-      <Reveal>
-        <p style={{
-          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-          color: ink, textTransform: 'uppercase', marginBottom: 24,
-        }}>
-          / By The Numbers
-        </p>
-      </Reveal>
-      <Reveal delay={0.05}>
-        <h2 style={{
-          fontFamily: display, fontSize: 'clamp(36px, 6vw, 84px)',
-          lineHeight: 0.95, letterSpacing: '-0.01em', color: ink,
-          textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 64,
-        }}>
-          THE WORK<br />ADDS UP.
-        </h2>
-      </Reveal>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-0" style={{ borderTop: `1px solid ${ink}` }}>
-        {[
-          { num: '500+', unit: 'Entrepreneurs', detail: 'Across 50+ industries' },
-          { num: '$500M+', unit: 'Revenue Generated', detail: 'By our community' },
-          { num: '95%', unit: 'Success Rate', detail: 'Members hitting goals' },
-          { num: '5', unit: 'Years Running', detail: 'Of proven results' },
-        ].map((item, i) => (
-          <Reveal key={i} delay={i * 0.06}>
-            <div style={{
-              padding: '40px 24px',
-              borderBottom: `1px solid ${ink}`,
-              borderRight: i % 2 === 0 ? `1px solid ${ink}` : 'none',
-              display: 'flex', alignItems: 'baseline', gap: 24, flexWrap: 'wrap',
-            }}>
-              <span style={{
-                fontFamily: display, fontSize: 'clamp(64px, 9vw, 140px)', fontWeight: 400,
-                lineHeight: 0.85, letterSpacing: '-0.04em', color: ink,
-              }}>
-                {item.num}
-              </span>
-              <div>
-                <p style={{
-                  fontFamily: editorial, fontSize: 'clamp(18px, 2.2vw, 26px)',
-                  lineHeight: 1.05, letterSpacing: '-0.01em', color: ink,
-                  textTransform: 'uppercase', margin: 0, fontWeight: 400,
-                }}>
-                  {item.unit}
-                </p>
-                <p style={{
-                  fontFamily: body, fontSize: 13, fontWeight: 500, letterSpacing: '0.04em',
-                  color: ink, opacity: 0.55, textTransform: 'uppercase', marginTop: 4,
-                }}>
-                  {item.detail}
-                </p>
-              </div>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-/* ══════════════════════════════════════════════════════
    BRANDS — Standard Playbook + Agency Brain
    ══════════════════════════════════════════════════════ */
 const BrandsSection = () => (
@@ -529,7 +462,7 @@ const BrandsSection = () => (
             padding: '36px 28px', height: '100%',
           }}>
             <img src={standardLogo} alt="Standard Playbook"
-              style={{ height: 24, filter: 'invert(1)', marginBottom: 28 }} />
+              style={{ height: 24, marginBottom: 28 }} />
             <h3 style={{
               fontFamily: display, fontSize: 'clamp(22px, 2.6vw, 30px)',
               lineHeight: 1.05, letterSpacing: '-0.01em', color: paper,
@@ -552,7 +485,7 @@ const BrandsSection = () => (
             padding: '36px 28px', height: '100%',
           }}>
             <img src={agencyBrainLogo} alt="Agency Brain"
-              style={{ height: 28, filter: 'invert(1)', marginBottom: 24 }} />
+              style={{ height: 28, marginBottom: 24 }} />
             <h3 style={{
               fontFamily: display, fontSize: 'clamp(22px, 2.6vw, 30px)',
               lineHeight: 1.05, letterSpacing: '-0.01em', color: paper,
@@ -634,7 +567,7 @@ const BoldFooter = () => (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pb-12" style={{ borderBottom: `1px solid ${paper}1a` }}>
         <div className="col-span-2">
           <img src={standardLogo} alt="Standard Playbook"
-            style={{ height: 22, filter: 'invert(1)', marginBottom: 18 }} />
+            style={{ height: 22, marginBottom: 18 }} />
           <p style={{
             fontFamily: body, fontSize: 16, lineHeight: 1.5, marginBottom: 22,
             maxWidth: 380, opacity: 0.85,
@@ -712,7 +645,6 @@ const BoldAbout = () => (
     <MissionSection />
     <ValuesSection />
     <StorySection />
-    <StatsSection />
     <BrandsSection />
     <GiantCTA />
     <BoldFooter />
