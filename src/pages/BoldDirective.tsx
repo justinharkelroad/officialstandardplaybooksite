@@ -5,7 +5,6 @@ import { Facebook, Linkedin } from 'lucide-react';
 import BoldNav from '@/components/BoldNav';
 import DirectiveApplicationModal from '@/components/DirectiveApplicationModal';
 import StandardFitModal from '@/components/StandardFitModal';
-import VideoPlayer from '@/components/VideoPlayer';
 import ContentMeta from '@/components/ContentMeta';
 
 import standardLogo from '@/assets/standard-word-logo.png';
@@ -111,8 +110,14 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
               transform: 'rotate(-1.5deg)',
             }}>
             <div style={{ aspectRatio: '16/9', background: '#000' }}>
-              <VideoPlayer videoId="GWA98sEVrVE" title="The Directive Overview"
-                className="w-full h-full" />
+              <iframe
+                src="https://player.vimeo.com/video/1195340863?title=0&byline=0&portrait=0"
+                title="The Directive Overview"
+                className="w-full h-full"
+                style={{ border: 0 }}
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+              />
             </div>
           </motion.div>
         </div>
