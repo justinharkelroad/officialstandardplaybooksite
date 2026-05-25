@@ -703,7 +703,7 @@ const softwarePlans: ProgramRow[] = [
       'Daily Flow library (all 7 Flows)',
       'Limited AI feature set',
     ],
-    href: 'https://myagencybrain.com',
+    href: 'https://myagencybrain.com/info#pricing',
     cta: 'Choose Core →',
   },
   {
@@ -721,7 +721,7 @@ const softwarePlans: ProgramRow[] = [
       'Standard Playbook Training Platform',
       'Standard support',
     ],
-    href: 'https://myagencybrain.com',
+    href: 'https://myagencybrain.com/info#pricing',
     cta: 'Choose Plus →',
     featured: true,
   },
@@ -739,7 +739,7 @@ const softwarePlans: ProgramRow[] = [
       'Standard Playbook Training Platform',
       'Everything in Plus',
     ],
-    href: 'https://myagencybrain.com',
+    href: 'https://myagencybrain.com/info#pricing',
     cta: 'Choose Pro →',
   },
 ];
