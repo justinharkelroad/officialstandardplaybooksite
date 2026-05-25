@@ -118,7 +118,7 @@ const HeroSection = () => {
                 maxWidth: 380,
               }}
             >
-              Coaching, software, and <span style={{ color: blue }}>AI</span> — built by a 20-year operator for agency owners who refuse to settle.
+              For insurance agency owners who know there's more to this game than the next big number. Coaching, software, and <span style={{ color: blue }}>AI</span> — built by a 20-year operator who built, scaled, and sold three Allstate agencies, and now coaches from outside the same fight.
             </p>
           </Reveal>
 
@@ -245,14 +245,20 @@ const MissionSection = () => (
             fontWeight: 400,
           }}
         >
-          STANDARD PLAYBOOK'S
+          WE BUILD
           <br />
-          <span style={{ paddingLeft: '8vw', display: 'inline-block' }}>OBSESSION IS BUILDING</span>
+          <span style={{ paddingLeft: '8vw', display: 'inline-block' }}>AGENCIES THAT REFUSE</span>
           <br />
-          <span style={{ paddingLeft: '14vw', display: 'inline-block' }}>AGENCIES THAT REFUSE</span>
-          <br />
-          <span style={{ display: 'inline-block' }}>TO SETTLE FOR AVERAGE</span>
+          <span style={{ paddingLeft: '14vw', display: 'inline-block' }}>TO SETTLE FOR AVERAGE</span>
         </h2>
+      </Reveal>
+      <Reveal delay={0.2}>
+        <p style={{
+          fontFamily: body, fontSize: 'clamp(17px, 1.8vw, 24px)', fontWeight: 400, lineHeight: 1.5,
+          color: ink, opacity: 0.8, marginTop: 40, maxWidth: 760,
+        }}>
+          Average is a choice. So is everything that comes after it — including how long you keep playing a game you've already won and still feel hollow inside of.
+        </p>
       </Reveal>
     </div>
   </section>
@@ -344,7 +350,7 @@ const BuilderSection = () => (
             fontFamily: body, fontSize: 'clamp(17px, 1.6vw, 22px)', fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.85, marginBottom: 24,
           }}>
-            20 years inside Allstate. Three agencies still running. Agency Brain — the platform every program runs on — I build in code, week after week. Every <span style={{ color: blue }}>AI</span> feature inside it (Call Scoring, Voice Trainer, Sales Roleplay, Discovery Coach) is mine to ship.
+            20 years inside Allstate. Three agencies built, scaled, and sold. Agency Brain — the platform every program runs on — I build in code, week after week. Every <span style={{ color: blue }}>AI</span> tool inside it (Call Scoring, the Roleplay Bot, the Voice Trainer, Discovery Coach) is mine to ship.
           </p>
           <p style={{
             fontFamily: display, fontSize: 'clamp(20px, 2vw, 28px)', fontWeight: 400, lineHeight: 1.2,
@@ -356,7 +362,7 @@ const BuilderSection = () => (
             fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6,
             color: ink, opacity: 0.75, maxWidth: 620,
           }}>
-            That's not a marketing angle. It's why the system actually works in your office on Monday.
+            That's not a marketing angle. It's the reason the system actually works in your office on Monday — and the reason I can change it the week your agency needs it to.
           </p>
         </Reveal>
       </div>
@@ -472,7 +478,7 @@ const AgencyBrainBand = () => (
             fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.65,
             color: paper, opacity: 0.85, marginBottom: 24, maxWidth: 520,
           }}>
-            Pipeline, training, retention, habits — all in one place. Built so the work happens whether you're in the office or not.
+            Pipeline, training, retention, daily habits — out of your head and into one place. Built so the work still happens whether you're in the office or not.
           </p>
           <a
             href="#programs"
@@ -600,14 +606,14 @@ const coachingPrograms: ProgramRow[] = [
     name: 'The Boardroom',
     tier: 'Membership',
     price: '$299/mo',
-    description: 'Monthly coaching + accountability for owners who want steady momentum.',
+    description: 'The room for owners who want steady momentum and real accountability between calls.',
     details: [
-      'Live monthly group coaching with Justin',
-      'Hot-seat problem solving with other owners',
-      'AgencyBrain Core Access',
+      'Live monthly group coaching with Justin & Corina',
+      'Hot-seat problem-solving with other owners',
+      'Agency Brain Core access',
       'Team training library + scripts',
-      'Ongoing accountability between calls',
-      'Private Boardroom community access',
+      'Daily Flow library + leaderboards',
+      'Private Boardroom community',
     ],
     href: '/boardroom',
     cta: 'Learn More →',
@@ -688,12 +694,13 @@ const softwarePlans: ProgramRow[] = [
     name: 'Agency Brain Core',
     tier: 'Software-Only Foundation',
     price: '$299/mo',
-    description: 'Scorecards, training, team visibility, and the core operating loop.',
+    description: 'Scorecards, training, team visibility, daily Flow library, and the core operating loop.',
     details: [
       '20 AI call scoring credits / month',
       'Real-time scorecards and KPI rings',
       'Team leaderboards and performance visibility',
       'Standard Playbook Training Platform',
+      'Daily Flow library (all 7 Flows)',
       'Limited AI feature set',
     ],
     href: 'https://myagencybrain.com',
@@ -1007,6 +1014,199 @@ const ProgramsSection = () => {
 };
 
 /* ══════════════════════════════════════════════════════
+   SOFTWARE DETAIL — what it is + the feature surface (§6)
+   ══════════════════════════════════════════════════════ */
+const featureGroups = [
+  {
+    group: 'Run the day',
+    items: [
+      { name: 'Sales Dashboard', line: 'Total visibility — know exactly where your team stands, every single day.' },
+      { name: 'Sales Analytics', line: 'The breakdown — premium, items, policies, points, by date, source, or bundle.' },
+      { name: 'Pipeline Intelligence', line: 'Stop guessing — every lead, every stage, every dollar, in real time.' },
+      { name: 'Marketing ROI', line: 'What each channel actually produces — leads, quotes, premium, commission.' },
+    ],
+  },
+  {
+    group: 'Protect the book',
+    items: [
+      { name: 'Call Scoring', line: 'AI call audits with execution checklists and talk-to-listen ratios. Also sold standalone as Standard Call Scoring.' },
+      { name: 'Renewal Tracking', line: 'Stay ahead — manage renewals proactively so nothing slips.' },
+      { name: 'Cancel Audit', line: 'Cancellations, at-risk premium, and saved dollars, week by week.' },
+      { name: 'Winback HQ', line: 'Catch cancellations before they cost you.' },
+    ],
+  },
+  {
+    group: 'Sharpen the team',
+    items: [
+      { name: 'Team Training', line: 'A full library with structured tracks, right inside the app.' },
+      { name: 'AI Roleplay Trainer', line: 'Producers sharpen the pitch anytime, against an AI that talks back.' },
+      { name: 'Habit Tracking', line: 'Core 4 + Flow — daily practice gamified, 56 points a week, team leaderboards.' },
+      { name: 'Target Setting', line: 'A 90-day action map — quarterly goals broken into daily habits.' },
+    ],
+  },
+];
+
+const SoftwareDetail = () => (
+  <section style={{ background: paper, padding: '120px 24px', borderTop: `1px solid ${ink}1a` }}>
+    <div className="max-w-[1280px] mx-auto">
+      <Reveal>
+        <p style={{
+          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+          color: ink, textTransform: 'uppercase', marginBottom: 24,
+        }}>
+          / Inside Agency Brain
+        </p>
+      </Reveal>
+      <Reveal delay={0.05}>
+        <h2 style={{
+          fontFamily: display, fontSize: 'clamp(34px, 5.6vw, 80px)', lineHeight: 0.95,
+          letterSpacing: '-0.01em', color: ink, textTransform: 'uppercase', margin: 0, fontWeight: 400,
+        }}>
+          EVERYTHING YOUR AGENCY NEEDS.<br /><span style={{ color: blue }}>NOTHING IT DOESN'T.</span>
+        </h2>
+      </Reveal>
+      <div className="grid grid-cols-12 gap-8 mt-10">
+        <Reveal delay={0.1} className="col-span-12 md:col-span-7">
+          <p style={{
+            fontFamily: body, fontSize: 'clamp(16px, 1.4vw, 19px)', fontWeight: 400, lineHeight: 1.6,
+            color: ink, opacity: 0.8, maxWidth: 680,
+          }}>
+            Most agencies run on duct tape and gut feelings. Pipeline in one tab, training in a folder nobody opens, retention tracked in somebody's head. Agency Brain pulls it into one place — pipeline, team, training, retention, daily habits — so the work happens on a system instead of on you.
+          </p>
+        </Reveal>
+        <Reveal delay={0.15} className="col-span-12 md:col-span-5">
+          <div style={{ background: ink, color: paper, padding: '28px 26px' }}>
+            <p style={{
+              fontFamily: display, fontSize: 'clamp(22px, 2.4vw, 30px)', lineHeight: 1.05,
+              letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 12,
+            }}>
+              Built, not bought.
+            </p>
+            <p style={{
+              fontFamily: body, fontSize: 15, fontWeight: 400, lineHeight: 1.6, color: paper, opacity: 0.82, margin: 0,
+            }}>
+              I write the code. Every <span style={{ color: blue }}>AI</span> feature inside it is mine to ship — which means it does what an agency actually needs, and it changes the week the work changes.
+            </p>
+          </div>
+        </Reveal>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-12" style={{ marginTop: 72 }}>
+        {featureGroups.map((g, gi) => (
+          <Reveal key={g.group} delay={0.05 + gi * 0.06}>
+            <p style={{
+              fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.18em',
+              color: blue, textTransform: 'uppercase', marginBottom: 20,
+              paddingBottom: 12, borderBottom: `1px solid ${ink}`,
+            }}>
+              {g.group}
+            </p>
+            <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+              {g.items.map((it) => (
+                <li key={it.name} style={{ marginBottom: 18 }}>
+                  <span style={{
+                    fontFamily: editorial, fontSize: 'clamp(15px, 1.3vw, 17px)', letterSpacing: '-0.01em',
+                    color: ink, textTransform: 'uppercase', display: 'block', marginBottom: 4,
+                  }}>
+                    {it.name}
+                  </span>
+                  <span style={{
+                    fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.5, color: ink, opacity: 0.7,
+                  }}>
+                    {it.line}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
+   THE DAILY PRACTICE — the seven Flows (daily practice in-app)
+   ══════════════════════════════════════════════════════ */
+const flows = [
+  { name: 'War Flow', desc: "When it's not just an idea, it's a fight. Name the enemy, define what winning looks like, map four fronts with their obstacle, the move to beat it, and who's in the foxhole with you. Walk out with a campaign." },
+  { name: 'Idea Flow', desc: 'When something lit up and you want to take it seriously before it fades. Force it specific. Four measurable facts. Weigh execute-vs-cost-of-not. Walk out with a real plan.' },
+  { name: 'Discovery Flow', desc: 'Right after you learn something worth keeping — a book, training, podcast, conversation. Capture what landed, pull the one lesson, choose where it applies before tomorrow forgets.' },
+  { name: 'Irritation Flow', desc: "When someone or something is getting to you. Surface the story you're telling yourself, test it against the facts, write a new story that actually serves you. Defuse the charge instead of stewing or reacting." },
+  { name: 'Gratitude Flow', desc: "Don't let a good moment just pass. Break it down — story vs. facts, the lesson underneath — and land on one move in the next 24 hours to honor it." },
+  { name: 'Prayer Flow', desc: "When you're carrying something — a person, a situation, a weight. Name it. Walk out with the lesson and one action that lives it out." },
+  { name: 'Bible Flow', desc: 'Anchored to scripture. Turn what you read into Start, Stop, and Keep commitments — each with a measurement and the belief that holds it.' },
+];
+
+const DailyPracticeSection = () => (
+  <section style={{ background: ink, padding: '120px 24px' }}>
+    <div className="max-w-[1280px] mx-auto">
+      <Reveal>
+        <p style={{
+          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+          color: paper, textTransform: 'uppercase', marginBottom: 24, opacity: 0.6,
+        }}>
+          / The Daily Practice
+        </p>
+      </Reveal>
+      <Reveal delay={0.05}>
+        <h2 style={{
+          fontFamily: display, fontSize: 'clamp(36px, 6vw, 84px)', lineHeight: 0.95,
+          letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400,
+        }}>
+          SEVEN FLOWS.<br /><span style={{ color: blue }}>EVERY REALITY THE DAY BRINGS.</span>
+        </h2>
+      </Reveal>
+      <Reveal delay={0.1}>
+        <p style={{
+          fontFamily: body, fontSize: 'clamp(16px, 1.4vw, 19px)', fontWeight: 400, lineHeight: 1.6,
+          color: paper, opacity: 0.8, marginTop: 28, maxWidth: 820,
+        }}>
+          The agency operator's day doesn't fit in one frame. A strategy you have to pressure-test before it fades. A win you want to honor before it slips. A team member you can't stop being irritated at. A customer insight you don't want to lose by Tuesday. Agency Brain ships with seven structured Flows — each one a defined daily practice for a specific reality of running the business. Every Flow ends with an action. That's the bridge.
+        </p>
+      </Reveal>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8" style={{ marginTop: 56 }}>
+        {flows.map((f, i) => (
+          <Reveal key={f.name} delay={0.05 + i * 0.04}>
+            <div style={{ borderTop: `1px solid ${paper}1a`, paddingTop: 18 }}>
+              <h3 style={{
+                fontFamily: display, fontSize: 'clamp(20px, 2.2vw, 28px)', lineHeight: 1,
+                letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400,
+                marginBottom: 10,
+              }}>
+                {f.name}
+              </h3>
+              <p style={{
+                fontFamily: body, fontSize: 15, fontWeight: 400, lineHeight: 1.6,
+                color: paper, opacity: 0.7, margin: 0,
+              }}>
+                {f.desc}
+              </p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal delay={0.15}>
+        <p style={{
+          fontFamily: display, fontSize: 'clamp(22px, 2.4vw, 34px)', fontWeight: 400, lineHeight: 1.2,
+          color: paper, textTransform: 'uppercase', letterSpacing: '-0.01em', marginTop: 64, marginBottom: 0,
+        }}>
+          <span style={{ color: blue }}>56 points a week</span> across Core 4 + Flow.
+        </p>
+        <p style={{
+          fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6,
+          color: paper, opacity: 0.75, marginTop: 12, maxWidth: 640,
+        }}>
+          Tracked. Leaderboard-visible. The system that turns daily practice into a number you can actually see.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
    GIANT CTA — "CELEBRATE" moment
    ══════════════════════════════════════════════════════ */
 const GiantCTA = () => {
@@ -1069,7 +1269,7 @@ const BoldFooter = () => (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pb-12" style={{ borderBottom: `1px solid ${paper}1a` }}>
         <div className="col-span-2">
           <img src={standardLogo} alt="Standard Playbook"
-            style={{ height: 22, filter: 'invert(1)', marginBottom: 18 }} />
+            style={{ height: 22, marginBottom: 18 }} />
           <p style={{
             fontFamily: body, fontSize: 16, lineHeight: 1.5, marginBottom: 22,
             maxWidth: 380, opacity: 0.85,
@@ -1155,7 +1355,9 @@ const BoldMockup = () => (
     <FoundationSection />
     <BuilderSection />
     <AgencyBrainBand />
+    <SoftwareDetail />
     <PolaroidGrid />
+    <DailyPracticeSection />
     <ProgramsSection />
     <GiantCTA />
     <BoldFooter />

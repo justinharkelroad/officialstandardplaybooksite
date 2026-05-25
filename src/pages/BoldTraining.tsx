@@ -58,9 +58,9 @@ const Hero = () => (
           lineHeight: 0.86, letterSpacing: '-0.02em',
           color: ink, margin: 0, textTransform: 'uppercase', fontWeight: 400,
         }}>
-          TRAIN YOUR<br />
-          <span className="md:pl-[6vw] inline-block">WHOLE TEAM.</span><br />
-          <span className="md:pl-[14vw] inline-block" style={{ color: blue }}>ONE PLATFORM.</span>
+          THE TRAINING<br />
+          <span className="md:pl-[6vw] inline-block">MY OWN TEAM RUNS</span><br />
+          <span className="md:pl-[14vw] inline-block" style={{ color: blue }}>ON MONDAY.</span>
         </h1>
       </Reveal>
       <div className="grid grid-cols-12 gap-6 mt-12">
@@ -69,7 +69,7 @@ const Hero = () => (
             fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 22px)', fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.85, maxWidth: 760,
           }}>
-            A complete on-demand training library — sales, service, management, AI, and the Agency Brain product itself. Plus the only platform that lets you build your own training from any video. Built into every Agency Brain account.
+            A complete on-demand library — sales, service, management, AI, and Agency Brain itself — plus the only platform that turns any video into a structured team training. Built into every Agency Brain account.
           </p>
         </Reveal>
         <Reveal delay={0.15} className="col-span-12 md:col-span-5 flex md:justify-end items-start gap-3 flex-wrap">
@@ -141,9 +141,9 @@ const DifferentiatorSection = () => (
     <div className="max-w-[1280px] mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-0" style={{ borderTop: `1px solid ${ink}` }}>
         {[
-          { num: '01', heading: 'A growing library + your own', body: 'A structured library out of the box, growing as the work surfaces it — plus the ability to build your own.' },
-          { num: '02', heading: 'Built by an operator', body: 'Justin Harkelroad — 20 years in the agency seat. Built and sold three.' },
-          { num: '03', heading: 'Real word tracks', body: 'Scripts, rebuttals, and full call sequences. Not theory.' },
+          { num: '01', heading: 'A growing library + your own', body: 'A structured library out of the box, expanding as the work surfaces it — plus the tools to build your own.' },
+          { num: '02', heading: 'Built by an operator', body: 'Justin Harkelroad. 20 years in the agency seat. Built, scaled, and sold three.' },
+          { num: '03', heading: 'Real word tracks', body: 'Scripts, rebuttals, full call sequences. Not theory — the words your producer says on a live call.' },
         ].map((c, i) => (
           <Reveal key={c.num} delay={i * 0.06}>
             <div style={{
@@ -181,7 +181,7 @@ const DifferentiatorSection = () => (
           fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 21px)', fontWeight: 400, lineHeight: 1.55,
           color: ink, opacity: 0.7, marginTop: 56, maxWidth: 760, textAlign: 'center', marginInline: 'auto',
         }}>
-          Most "training libraries" are recycled motivation. This one was built inside a working Allstate agency by the operator who runs it. Every lesson is something his own team uses on Monday morning.
+          Most "training libraries" are recycled motivation. This one was built inside a working Allstate agency by the operator who ran it. Every lesson is something his own team used on Monday morning.
         </p>
       </Reveal>
     </div>
@@ -192,9 +192,9 @@ const DifferentiatorSection = () => (
    THE LIBRARY — single hero track + categories
    ══════════════════════════════════════════════════════ */
 const HERO_TRACK = {
-  number: 'Track',
+  number: 'Featured track',
   title: 'Standard Sequence Sales',
-  description: 'The 6-step sales system that turns every quoted household into a written policy.',
+  description: 'The 6-step system that turns every quoted household into a written policy.',
   bullets: [
     'Producer hooks by lead type — auto, home, winback, x-date, cross-sell',
     'Rapport, trust, and the discovery questions that surface real need',
@@ -216,17 +216,17 @@ const CATEGORIES = [
 ];
 
 const TRAINING_NOTEBOOKS = [
-  { number: '01', image: '/1.png', title: 'The Quoted Households Math', description: 'Reverse math that turns a monthly hope number into a daily non-negotiable.' },
-  { number: '02', image: '/2.png', title: 'Cancellation Requests', description: 'A service call frame for prepared, calm retention conversations.' },
-  { number: '03', image: '/3.png', title: 'The Three Buckets Method', description: 'A field-edition framework for organizing a producer sales day.' },
+  { number: '01', image: '/1.png', title: 'The Quoted Households Math', description: 'Reverse-math that turns a monthly hope into a daily non-negotiable.' },
+  { number: '02', image: '/2.png', title: 'Cancellation Requests', description: 'A service frame for calm, prepared retention conversations.' },
+  { number: '03', image: '/3.png', title: 'The Three Buckets Method', description: "How to organize a producer's sales day in the field." },
   { number: '04', image: '/4.png', title: 'Leading With Liability', description: 'The three-question approach to closing coverage gaps.' },
-  { number: '05', image: '/5.png', title: 'Talk Like You Already Won', description: 'Tone, tempo, and timing for phone conversations that earn the close.' },
-  { number: '06', image: '/6.png', title: 'Customer Winback Process', description: 'A deployable process for reopening terminated customer relationships.' },
-  { number: '07', image: '/7.png', title: 'Renewals & Rate Increases', description: 'A service frame for making clients feel heard before making recommendations.' },
+  { number: '05', image: '/5.png', title: 'Talk Like You Already Won', description: 'Tone, tempo, and timing that earn the close.' },
+  { number: '06', image: '/6.png', title: 'Customer Winback Process', description: 'A deployable process for reopening terminated relationships.' },
+  { number: '07', image: '/7.png', title: 'Renewals & Rate Increases', description: 'Make clients feel heard before you make the recommendation.' },
   { number: '08', image: '/8.png', title: 'From Hello To Closed', description: 'The standard six-step call sequence and the mindset behind it.' },
   { number: '09', image: '/9.png', title: 'The Question Bank', description: 'Carrier-agnostic discovery questions for P&C producers.' },
-  { number: '10', image: '/10.png', title: 'The Objection Playbook', description: 'Opening objections sequenced by how they surface on live calls.' },
-  { number: '11', image: '/11.png', title: 'More Processes Coming Soon', description: 'The library keeps expanding as the insurance game changes.' },
+  { number: '10', image: '/10.png', title: 'The Objection Playbook', description: 'Objections sequenced by how they actually surface on live calls.' },
+  { number: '11', image: '/11.png', title: 'More coming', description: 'The library keeps expanding as the game changes.' },
 ];
 
 const NotebookCarousel = () => {
@@ -583,13 +583,13 @@ const TwoLibrariesSection = () => (
             color: ink, opacity: 0.85,
           }}>
             <p>
-              Agency Brain ships with the full Standard Playbook training — operator-built tracks for sales, service, agency management, AI, and more.
+              Agency Brain ships with the full Standard Playbook training — operator-built tracks for sales, service, management, AI, and more.
             </p>
             <p>
-              Plus the training builder, so you can write your own lessons, build your own quizzes, and structure your own tracks specific to your agency.
+              Plus the training builder — write your own lessons, build your own quizzes, structure your own tracks specific to your agency.
             </p>
             <p>
-              You're not picking between off-the-shelf or build-your-own. You get both, on every plan, no add-on.
+              You're not choosing between off-the-shelf and build-your-own. You get both, on every plan, no add-on.
             </p>
           </div>
         </Reveal>
@@ -653,7 +653,7 @@ const BuildYourOwnSection = () => (
           fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 21px)', fontWeight: 400, lineHeight: 1.55,
           color: ink, opacity: 0.85, maxWidth: 760, marginBottom: 56,
         }}>
-          The Video Training Architect lets you drop in any video — a sales trainer you found, a leadership clip, a 30-second social post, a screen recording — and instantly convert it into a structured, insurance-specific training session. Discussion prompts. Application exercises. Stand-and-deliver execution. All generated for you.
+          The Video Training Architect takes any video — a trainer you found, a leadership clip, a 30-second social post, a screen recording — and turns it into a structured, insurance-specific training. Discussion prompts. Application exercises. Stand-and-deliver execution. All generated for you.
         </p>
       </Reveal>
 
@@ -663,9 +663,9 @@ const BuildYourOwnSection = () => (
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-0 mt-16" style={{ borderTop: `1px solid ${ink}` }}>
         {[
-          { num: '01', title: 'Upload', body: 'Drop in any MP4, link, or screen recording. Sales content, leadership clip, social post — anything.' },
-          { num: '02', title: 'The system structures it', body: 'The Video Training Architect analyzes the content through an insurance-specific lens and extracts the teaching points, frameworks, and selling principles.' },
-          { num: '03', title: 'Deliver it', body: 'Your team gets a clean meeting structure: training focus, discussion prompts, application exercises, and stand-and-deliver execution. Use it on Zoom or in person.' },
+          { num: '01', title: 'Upload', body: 'Drop in any MP4, link, or screen recording. Anything.' },
+          { num: '02', title: 'The system structures it', body: 'It reads the content through an insurance lens and pulls the teaching points, frameworks, and selling principles.' },
+          { num: '03', title: 'Deliver it', body: 'Your team gets a clean meeting structure — focus, prompts, exercises, execution. Zoom or in-person.' },
         ].map((s, i) => (
           <Reveal key={s.num} delay={i * 0.07}>
             <div style={{
@@ -741,7 +741,7 @@ const AIComprehensionSection = () => (
           fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 21px)', fontWeight: 400, lineHeight: 1.55,
           color: paper, opacity: 0.8, maxWidth: 760, marginBottom: 56,
         }}>
-          Every quiz includes mandatory reflection questions. Producers and service reps answer in their own words. The AI grades the answer on a four-part rubric — specificity, comprehension, actionability, alignment — and tells you who actually engaged with the lesson and who coasted.
+          Every quiz includes a mandatory reflection question. Producers answer in their own words. The AI grades it on a four-part rubric — specificity, comprehension, actionability, alignment — and tells you who actually engaged and who coasted.
         </p>
       </Reveal>
 
@@ -751,9 +751,9 @@ const AIComprehensionSection = () => (
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-0 mt-16" style={{ borderTop: `1px solid ${paper}33` }}>
         {[
-          { num: '01', title: 'Open answers, AI-graded', body: "No multiple-choice loopholes. Producers explain in their own words. The AI scores the answer 0 to 10 and flags vague or off-topic responses against the actual lesson content." },
-          { num: '02', title: 'Specific feedback, not a score', body: "The manager dashboard shows the score plus what was missed — \"didn't reference the lesson,\" \"too generic,\" \"skipped the framework\" — with the specific lesson highlights they should have hit." },
-          { num: '03', title: 'Trained on agency context', body: "The evaluator knows what a coverage conversation sounds like, what a real discovery answer looks like, what a producer should say to a price objection. Generic LMS bots can't grade this. Ours does." },
+          { num: '01', title: 'Open answers, AI-graded', body: "No multiple-choice loopholes. The AI scores 0 to 10 and flags vague or off-topic answers against the real lesson." },
+          { num: '02', title: 'Specific feedback, not a number', body: "The manager dashboard shows the score and what was missed — \"didn't reference the lesson,\" \"too generic,\" \"skipped the framework.\"" },
+          { num: '03', title: 'Trained on agency context', body: "It knows what a coverage conversation sounds like and what a producer should say to a price objection. Generic LMS bots can't grade that. Ours does." },
         ].map((s, i) => (
           <Reveal key={s.num} delay={i * 0.07}>
             <div style={{
@@ -829,7 +829,7 @@ const AIContentSection = () => (
           fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 21px)', fontWeight: 400, lineHeight: 1.55,
           color: ink, opacity: 0.85, maxWidth: 760, marginBottom: 56,
         }}>
-          Every Agency Brain plan includes the training builder — write your own lessons, build your own quizzes, structure your own tracks. Plus and Pro add the AI Content Generator <em>inside</em> the builder. Type a topic and get a full lesson. Upload a lesson and get a quiz. Paste any content and rewrite it clearer, more concise, more actionable, or beginner-friendly in one click.
+          Every plan includes the training builder. Plus and Pro add the AI Content Generator <em>inside</em> it. Type a topic, get a full lesson. Upload a lesson, get a quiz. Paste any draft and rewrite it clearer, tighter, or more actionable in one click.
         </p>
       </Reveal>
 
@@ -839,9 +839,9 @@ const AIContentSection = () => (
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-0 mt-16" style={{ borderTop: `1px solid ${ink}` }}>
         {[
-          { num: '01', title: 'Full lessons from a topic', body: 'Type what you want to teach. The AI returns a structured lesson — clear, practical, under 600 words, ready to assign.' },
-          { num: '02', title: 'Quizzes from the lesson', body: 'Five to twelve multiple-choice questions, four options each, one right answer. Generated against the lesson you just wrote.' },
-          { num: '03', title: 'Rewrites in four modes', body: 'Take any draft and rewrite it Clearer, Concise, Actionable, or Beginner-Friendly. Hand a rough idea, get back something your team can read on Monday.' },
+          { num: '01', title: 'Full lessons from a topic', body: 'Structured, practical, under 600 words, ready to assign.' },
+          { num: '02', title: 'Quizzes from the lesson', body: '5–12 questions, generated against what you just wrote.' },
+          { num: '03', title: 'Rewrites in four modes', body: 'Clearer · Concise · Actionable · Beginner-Friendly.' },
         ].map((s, i) => (
           <Reveal key={s.num} delay={i * 0.07}>
             <div style={{
@@ -908,15 +908,15 @@ const HowItWorksSection = () => (
           lineHeight: 0.95, letterSpacing: '-0.01em', color: paper,
           textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 56,
         }}>
-          BUILT FOR HOW<br />AGENCIES TRAIN.
+          BUILT FOR HOW<br />AGENCIES ACTUALLY TRAIN.
         </h2>
       </Reveal>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-0" style={{ borderTop: `1px solid ${paper}33` }}>
         {[
-          { num: '01', title: 'Role-based access', body: "Producers see producer training. Service reps see service training. Owners and managers unlock the management layer. Nobody gets buried in content that isn't theirs." },
-          { num: '02', title: 'On demand. Every device.', body: 'Stream from the dashboard, on the desk, on a phone between calls. Nothing to install. No separate login.' },
-          { num: '03', title: 'Built into the platform', body: 'Training lives next to the workflows, the call scoring, the sequences, and the LQS Roadmap. Watch a lesson on Mini Reviews — then run one in the same window.' },
+          { num: '01', title: 'Role-based access', body: "Producers see producer training. Service reps see service. Owners and managers unlock the management layer. Nobody drowns in content that isn't theirs." },
+          { num: '02', title: 'On demand. Every device.', body: 'Stream from the desk or from a phone between calls. Nothing to install, no separate login.' },
+          { num: '03', title: 'Built into the platform', body: 'Training lives next to the workflows, the call scoring, and the LQS Roadmap. Watch a lesson on Mini Reviews — then run one in the same window.' },
         ].map((s, i) => (
           <Reveal key={s.num} delay={i * 0.07}>
             <div style={{
@@ -1096,6 +1096,7 @@ const PLANS: Plan[] = [
       { node: 'AI comprehension grading on every quiz', emphasis: false },
       { node: 'Video Training Architect', emphasis: false },
       { node: 'Role-based access for your team', emphasis: false },
+      { node: 'Daily Flow library', emphasis: false },
       { node: '20 AI calls / month', emphasis: false },
     ],
   },
@@ -1332,7 +1333,7 @@ const BoldFooter = () => (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pb-12" style={{ borderBottom: `1px solid ${paper}1a` }}>
         <div className="col-span-2">
           <img src={standardLogo} alt="Standard Playbook"
-            style={{ height: 22, filter: 'invert(1)', marginBottom: 18 }} />
+            style={{ height: 22, marginBottom: 18 }} />
           <p style={{
             fontFamily: body, fontSize: 16, lineHeight: 1.5, marginBottom: 22,
             maxWidth: 380, opacity: 0.85,

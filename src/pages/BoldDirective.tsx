@@ -55,8 +55,8 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
             lineHeight: 1, letterSpacing: '-0.02em',
             color: ink, margin: 0, textTransform: 'uppercase', fontWeight: 400,
           }}>
-            <span style={{ display: 'block', fontSize: 'clamp(46px, 9.5vw, 150px)', lineHeight: 0.86 }}>I Get You To</span>
-            <span className="md:pl-[6vw] block" style={{ color: blue, fontSize: 'clamp(90px, 22vw, 340px)', lineHeight: 0.78 }}>Move.</span>
+            <span style={{ display: 'block', fontSize: 'clamp(38px, 8vw, 120px)', lineHeight: 0.92 }}>You Know What To Do.</span>
+            <span className="block" style={{ color: blue, fontSize: 'clamp(38px, 8vw, 120px)', lineHeight: 0.92 }}>You're Just Not Doing It.</span>
           </h1>
         </Reveal>
       </div>
@@ -67,7 +67,7 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
             fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.85, maxWidth: 680,
           }}>
-            Private 1:1 coaching for people who are done circling the problem. Strategy, accountability, and direct support that gets you moving fast.
+            Private 1:1 coaching for owners who are done circling the same problem. Strategy, accountability, and a hand in the work — so it actually gets installed, not just discussed.
           </p>
         </Reveal>
         <Reveal delay={0.3} className="col-span-12 md:col-span-5 flex md:justify-end items-start gap-3 flex-wrap">
@@ -189,7 +189,7 @@ const ProblemSection = () => (
             fontFamily: body, fontSize: 'clamp(17px, 1.6vw, 22px)', fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.85,
           }}>
-            You know what to do, but struggle with execution. Between information overload, competing priorities, and the daily grind of running a business, critical strategies fall through the cracks. You need more than advice — you need implementation support.
+            You don't have a knowledge problem. You've read the books, watched the calls, bought the course. The strategy is sitting right there. What you have is a gap between knowing and doing — and it's filled with information overload, twelve competing priorities, and the daily grind of running the whole thing largely alone. That's where the good ideas go to die.
           </p>
         </Reveal>
         <Reveal delay={0.2} className="col-span-12 md:col-span-5">
@@ -197,7 +197,7 @@ const ProblemSection = () => (
             fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6,
             color: ink, opacity: 0.65, maxWidth: 440,
           }}>
-            Generic advice doesn't work for your unique situation. You need customized strategies, direct accountability, and someone who understands your specific challenges and opportunities.
+            You don't need more advice. You need someone in the trenches with you when it's time to execute.
           </p>
         </Reveal>
       </div>
@@ -213,37 +213,37 @@ const pillars = [
     num: '01',
     label: 'Private 1:1 Coaching',
     headline: "Direct line to Justin.",
-    sub: 'Personalized strategy and real-time problem solving — not a group call where your situation gets a quick mention.',
+    sub: 'Personalized strategy and real-time problem-solving — not a group call where your situation gets a 90-second mention.',
     bullets: [
-      'One 2-hour private session per month',
-      'Custom strategy development and deployment',
-      'Real-time problem solving',
-      'Performance optimization',
+      'One 2-hour private session every month',
+      'Custom strategy, built and deployed',
+      'Real-time problem-solving',
+      'Performance optimization against your actual numbers',
     ],
   },
   {
     num: '02',
     label: 'Authentic Accountability',
     headline: 'Systematic execution.',
-    sub: "Weekly rhythms and monthly course corrections that keep the work moving when life gets in the way.",
+    sub: "Weekly rhythms and monthly course-corrections that keep the work moving when life gets loud.",
     bullets: [
-      'Weekly check-in protocols',
-      'Monthly mission check-ins',
-      'Course-correction strategies',
+      'Weekly check-in protocol',
+      'Monthly mission check-in',
+      'Course-correction when you drift',
       'One 2-hour group Boardroom call',
-      'Custom strategy deployment',
+      'Strategy deployed, not filed away',
     ],
   },
   {
     num: '03',
-    label: 'Technology & AI Strategies',
+    label: 'Technology & AI',
     headline: <><span style={{ color: blue }}>AI</span> built for your agency.</>,
-    sub: <>Custom agents. Custom reporting. Custom call scoring for the calls you choose to upload. Built 1:1 with the operator who codes the platform — not handed off as a doc.</>,
+    sub: <>Custom agents. Custom reporting. Call scoring on the calls you choose to upload. Built 1:1 with the operator who codes the platform — not handed off as a doc and a "good luck."</>,
     bullets: [
-      '100 AI-graded calls per month — for the calls you choose to upload',
-      'Custom AI agent buildouts on calls',
+      '100 AI-graded calls a month — the calls you pick',
+      'Custom AI agent buildouts on your calls',
       'Custom reporting buildouts for your agency',
-      'Process optimization',
+      'Process optimization end to end',
     ],
   },
 ];
@@ -272,7 +272,7 @@ const PillarsSection = () => (
             fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.65,
             color: ink, opacity: 0.7,
           }}>
-            Three pillars. Built for owners who already know the strategy and need someone in the trenches to execute it with them.
+            Three pillars. Built for the owner who already knows the strategy and needs an operator in the room to run it with him.
           </p>
         </Reveal>
       </div>
@@ -365,7 +365,7 @@ const NumbersSection = () => (
         {[
           { num: '1', unit: 'private', detail: '2-hour 1:1 with Justin' },
           { num: '1', unit: 'group', detail: 'Boardroom session' },
-          { num: '100', unit: <><span style={{ color: blue }}>AI</span>-graded</>, detail: 'calls per month · calls you upload' },
+          { num: '100', unit: <><span style={{ color: blue }}>AI</span>-graded</>, detail: 'calls a month, the ones you upload' },
         ].map((item, i) => (
           <Reveal key={i} delay={i * 0.07}>
             <div style={{
@@ -426,7 +426,7 @@ const ValuesSection = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55,
           color: ink, opacity: 0.7, marginTop: 32, maxWidth: 640, marginInline: 'auto',
         }}>
-          The Directive isn't a coaching program. It's a partnership. Application required because the work only matters if we're both willing to show up for it.
+          The Directive isn't a coaching program. It's a partnership. The application exists because the work only matters if we're both willing to show up for it — and I don't take on owners who won't.
         </p>
       </Reveal>
       <Reveal delay={0.3}>
@@ -494,7 +494,7 @@ const BoldFooter = () => (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pb-12" style={{ borderBottom: `1px solid ${paper}1a` }}>
         <div className="col-span-2">
           <img src={standardLogo} alt="Standard Playbook"
-            style={{ height: 22, filter: 'invert(1)', marginBottom: 18 }} />
+            style={{ height: 22, marginBottom: 18 }} />
           <p style={{
             fontFamily: body, fontSize: 16, lineHeight: 1.5, marginBottom: 22,
             maxWidth: 380, opacity: 0.85,

@@ -53,12 +53,12 @@ const Hero = () => (
       <Reveal>
         <h1 style={{
           fontFamily: display,
-          fontSize: 'clamp(48px, 11vw, 200px)',
-          lineHeight: 0.86, letterSpacing: '-0.02em',
+          fontSize: 'clamp(40px, 8vw, 132px)',
+          lineHeight: 0.9, letterSpacing: '-0.02em',
           color: ink, margin: 0, textTransform: 'uppercase', fontWeight: 400,
         }}>
-          THE<br />
-          <span className="md:pl-[4vw] inline-block" style={{ color: blue }}>BOARDROOM.</span>
+          STOP BEING THE SMARTEST<br />
+          <span className="inline-block" style={{ color: blue }}>ONE IN YOUR OFFICE.</span>
         </h1>
       </Reveal>
 
@@ -68,7 +68,7 @@ const Hero = () => (
             fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.85, maxWidth: 680,
           }}>
-            The mastermind for insurance agency owners who want direct access to operators who've built what you're trying to build — including the software and <span style={{ color: blue }}>AI</span> running inside it.
+            The mastermind for insurance agency owners who want a direct line to operators who've already built what you're trying to build — including the software and the <span style={{ color: blue }}>AI</span> running inside it.
           </p>
         </Reveal>
         <Reveal delay={0.3} className="col-span-12 md:col-span-5 flex md:justify-end items-start gap-3 flex-wrap">
@@ -163,7 +163,7 @@ const MarqueeBands = () => (
    ══════════════════════════════════════════════════════ */
 const includedItems: React.ReactNode[] = [
   '2 Hour Group Boardroom Call',
-  <>Agency Brain Access — <span style={{ color: blue }}>AI</span> Tools Included</>,
+  <>Agency Brain access — <span style={{ color: blue }}>AI</span> tools and daily Flow library included</>,
   'Access to The Mirror Self-Assessment',
   'I AM THE STANDARD T-Shirt',
   'I AM THE STANDARD Wristband',
@@ -287,7 +287,7 @@ const PricingSection = () => (
               fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.55,
               color: ink, opacity: 0.75, marginTop: 28, maxWidth: 520,
             }}>
-              Join fellow agency owners. Make face-to-face contacts. Build a mastermind so extreme no one else can.
+              Sit in a room of agency owners who are building what you're building. Make the contacts. Build a mastermind so sharp nobody else can touch your numbers.
             </p>
 
             <div className="flex flex-wrap gap-3 mt-10">
@@ -335,7 +335,7 @@ const PricingSection = () => (
                 fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.6,
                 color: paper, opacity: 0.8,
               }}>
-                Direct access to proven operators. The hardcover, the apparel, the call scoring credits, and the room. Cancel anytime in Stripe.
+                Direct access to proven operators, the apparel, the scoring credits, and the room. Cancel anytime in Stripe.
               </p>
             </div>
           </Reveal>
@@ -352,21 +352,21 @@ const pillars = [
   {
     label: 'Being',
     headline: 'Sharpen mind & spirit.',
-    sub: "Lead with clarity alongside God and your purpose. Daily stacks, meditation, and scripture reflections inside the app lock in purpose before the workday starts.",
+    sub: "Lock in who you are before the workday locks in who you'll be. Daily Flows and morning grounding inside the app — the practice that decides whether you run the agency or the agency runs you.",
     videoId: 'jFDqWyLuwHI',
     tilt: -3,
   },
   {
     label: 'Body',
     headline: 'Weaponize your health.',
-    sub: 'Body fuels everything else. Simple workout templates, macro goals, and a habit tracker record every rep and meal — making high energy your new baseline.',
+    sub: 'Body fuels everything else. Workout templates, macro goals, and a habit tracker log every rep and meal — so high energy becomes your baseline, not your good day.',
     videoId: 'qUWOzQF1Xrg',
     tilt: 3,
   },
   {
     label: 'Balance',
     headline: 'Marriage. Kids. Mission.',
-    sub: 'Balance keeps marriage and kids at the center. We schedule date nights, one-on-one time with each child, and fast family check-ins so home life shows measurable progress too.',
+    sub: 'Date nights, one-on-one time with each kid, fast family check-ins — scheduled and tracked, so home life shows progress too.',
     videoId: 'RMsIHtsv2ak',
     tilt: -2,
   },
@@ -397,7 +397,7 @@ const PillarsSection = () => (
             fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.65,
             color: ink, opacity: 0.7,
           }}>
-            Running a thriving agency isn't just about numbers. The Boardroom helps owners stay spiritually grounded, physically strong, and relationally at rest.
+            A thriving agency isn't built on numbers alone. The Boardroom keeps owners internally grounded, physically strong, and at peace at home — because that's where the numbers actually come from.
           </p>
         </Reveal>
       </div>
@@ -466,10 +466,10 @@ const PillarsSection = () => (
    FAQ — bold accordion
    ══════════════════════════════════════════════════════ */
 const faq = [
-  { q: '"Is this right for someone at my level?"', a: "If you're asking, you already know. The question is: How much longer will you let \"your level\" be your ceiling?" },
-  { q: '"What if I\'m not ready?"', a: "Nobody's ready for chemotherapy either. But cancer doesn't care about your timeline." },
-  { q: '"How fast will I see results?"', a: 'Wrong question. Ask instead: "How much has playing small already cost me?"' },
-  { q: '"What if I join and realize I\'m the smallest one there?"', a: "Then you're finally in a room that can change your life. Being the smartest person in the room is expensive. Being the dumbest? That's profitable." },
+  { q: '"Is this right for someone at my level?"', a: "If you're asking, you already know. The real question: how much longer are you willing to let \"your level\" be your ceiling?" },
+  { q: '"What if I\'m not ready?"', a: "Nobody's ever ready. Ready is a feeling you get after you start, not before." },
+  { q: '"How fast will I see results?"', a: 'Wrong question. Ask instead: "How much has playing small already cost you?"' },
+  { q: '"What if I\'m the smallest one in the room?"', a: "Then you're finally in a room that can change your trajectory. Being the smartest guy in the room is expensive. Being the one with the most to learn? That pays." },
 ];
 
 const FAQSection = () => {
@@ -565,6 +565,87 @@ const FAQSection = () => {
 };
 
 /* ══════════════════════════════════════════════════════
+   THE PRACTICE — the seven daily Flows
+   ══════════════════════════════════════════════════════ */
+const boardroomFlows = [
+  { name: 'War Flow', desc: "When it's not just an idea, it's a fight. Name the enemy, define winning, map four fronts (obstacle, move, ally). Walk out with a campaign." },
+  { name: 'Idea Flow', desc: 'When something lit up. Force it specific. Four measurable facts. Execute-vs-cost-of-not. Walk out with a real plan.' },
+  { name: 'Discovery Flow', desc: 'Right after you learn something worth keeping. Capture what landed, pull the lesson, choose where it applies — before tomorrow forgets.' },
+  { name: 'Irritation Flow', desc: 'When someone or something is getting to you. Surface the story, test it against facts, write a new one that serves you. Defuse the charge.' },
+  { name: 'Gratitude Flow', desc: "Don't let a good moment just pass. Story vs. facts, the lesson underneath, one move in 24 hours to honor it." },
+  { name: 'Prayer Flow', desc: "When you're carrying something. Name it. Walk out with the lesson and one action that lives it out." },
+  { name: 'Bible Flow', desc: 'Anchored to scripture. Start, Stop, and Keep commitments — each measured, each anchored to a belief.' },
+];
+
+const PracticeSection = () => (
+  <section style={{ background: ink, padding: '120px 24px', borderTop: `1px solid ${ink}` }}>
+    <div className="max-w-[1280px] mx-auto">
+      <Reveal>
+        <p style={{
+          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+          color: paper, textTransform: 'uppercase', marginBottom: 24, opacity: 0.6,
+        }}>
+          / The Practice
+        </p>
+      </Reveal>
+      <Reveal delay={0.05}>
+        <h2 style={{
+          fontFamily: display, fontSize: 'clamp(34px, 5.6vw, 84px)', lineHeight: 0.95,
+          letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400,
+        }}>
+          SEVEN FLOWS.<br /><span style={{ color: blue }}>ONE OPERATING SYSTEM FOR THE OWNER.</span>
+        </h2>
+      </Reveal>
+      <Reveal delay={0.1}>
+        <p style={{
+          fontFamily: body, fontSize: 'clamp(16px, 1.4vw, 19px)', fontWeight: 400, lineHeight: 1.6,
+          color: paper, opacity: 0.8, marginTop: 28, maxWidth: 860,
+        }}>
+          Boardroom membership unlocks the full daily Flow library inside Agency Brain — seven structured practices, each tuned to a specific reality of running an agency. Strategy, conflict, learning capture, idea pressure-testing, gratitude depth, and the quieter practices that hold the rest. Every Flow ends with an action — so the work in the app becomes the work in the agency by Tuesday morning.
+        </p>
+      </Reveal>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8" style={{ marginTop: 56 }}>
+        {boardroomFlows.map((f, i) => (
+          <Reveal key={f.name} delay={0.05 + i * 0.04}>
+            <div style={{ borderTop: `1px solid ${paper}1a`, paddingTop: 18 }}>
+              <h3 style={{
+                fontFamily: display, fontSize: 'clamp(20px, 2.2vw, 28px)', lineHeight: 1,
+                letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400,
+                marginBottom: 10,
+              }}>
+                {f.name}
+              </h3>
+              <p style={{
+                fontFamily: body, fontSize: 15, fontWeight: 400, lineHeight: 1.6,
+                color: paper, opacity: 0.7, margin: 0,
+              }}>
+                {f.desc}
+              </p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal delay={0.15}>
+        <p style={{
+          fontFamily: display, fontSize: 'clamp(22px, 2.4vw, 34px)', fontWeight: 400, lineHeight: 1.2,
+          color: paper, textTransform: 'uppercase', letterSpacing: '-0.01em', marginTop: 64, marginBottom: 0,
+        }}>
+          One library. <span style={{ color: blue }}>56 points a week</span> across Core 4 + Flow.
+        </p>
+        <p style={{
+          fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6,
+          color: paper, opacity: 0.75, marginTop: 12, maxWidth: 680,
+        }}>
+          Tracked and leaderboard-visible. The system that proves daily practice produces better business decisions — measurable, repeatable, in your team's view if you want it.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
    GIANT CTA — JOIN.
    ══════════════════════════════════════════════════════ */
 const GiantCTA = () => (
@@ -614,7 +695,7 @@ const BoldFooter = () => (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pb-12" style={{ borderBottom: `1px solid ${paper}1a` }}>
         <div className="col-span-2">
           <img src={standardLogo} alt="Standard Playbook"
-            style={{ height: 22, filter: 'invert(1)', marginBottom: 18 }} />
+            style={{ height: 22, marginBottom: 18 }} />
           <p style={{
             fontFamily: body, fontSize: 16, lineHeight: 1.5, marginBottom: 22,
             maxWidth: 380, opacity: 0.85,
@@ -709,6 +790,7 @@ const BoldBoardroom = () => (
     <IncludesSection />
     <PricingSection />
     <PillarsSection />
+    <PracticeSection />
     <FAQSection />
     <GiantCTA />
     <BoldFooter />

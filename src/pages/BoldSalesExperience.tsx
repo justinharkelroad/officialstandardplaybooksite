@@ -55,7 +55,7 @@ const Hero = ({ autoOpenBooking = false }: { autoOpenBooking?: boolean }) => {
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, textTransform: 'uppercase', marginBottom: 24,
           }}>
-            / 8 Week Experience
+            / 8-Week Experience
           </p>
         </Reveal>
 
@@ -207,7 +207,7 @@ const GuaranteeBand = () => (
             fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6,
             color: paper, opacity: 0.75, marginTop: 24, maxWidth: 640,
           }}>
-            After 8 weeks you'll walk away with a documented sales process, an accountability framework, and a consequence ladder installed in your agency. If you don't have a clear path forward, you get every dollar back. No questions, no hoops.
+            After 8 weeks you walk away with a documented sales process, an accountability framework, and a consequence ladder installed in your agency. If you don't have a clear path forward, you get every dollar back. No questions, no hoops.
           </p>
 
           <div className="flex flex-wrap gap-3 mt-8">
@@ -316,21 +316,21 @@ const systems = [
     num: '01',
     label: 'Sales Process',
     headline: 'A documented, repeatable call framework.',
-    sub: 'Your entire team follows the same playbook — no more winging it. Every call has a structure, every objection has a response.',
+    sub: 'Your whole team runs the same playbook — no more winging it. Every call has a structure, every objection has a response.',
     img: salesProcessCardImg,
   },
   {
     num: '02',
     label: 'Accountability',
     headline: <>Daily tracking. Weekly scorecards. <span style={{ color: blue }}>AI</span>-graded calls.</>,
-    sub: 'Every producer knows exactly where they stand. Managers have the data to coach, not guess.',
+    sub: 'Every producer knows exactly where they stand. Managers coach off data, not a gut feeling.',
     img: accountabilityCardImg,
   },
   {
     num: '03',
     label: 'Consequence Ladder',
     headline: "A clear path when standards aren't met.",
-    sub: 'Underperformance is addressed — not ignored. A fair, transparent escalation system your team respects.',
+    sub: 'Underperformance gets addressed, not ignored — a fair, transparent escalation your team actually respects.',
     img: consequenceLadderCardImg,
   },
 ];
@@ -359,7 +359,7 @@ const SystemsSection = () => (
             fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.65,
             color: ink, opacity: 0.7,
           }}>
-            The three deliverables installed inside your agency by the end of week eight.
+            The three things installed inside your agency by the end of week eight.
           </p>
         </Reveal>
       </div>
@@ -441,8 +441,8 @@ const SystemsSection = () => (
    ══════════════════════════════════════════════════════ */
 const brainFeatures = [
   { label: 'Dashboard', headline: 'Total Visibility.', sub: 'Premium, policies, activity — one view.', img: salesExpDashImg, tilt: -8 },
-  { label: 'Team Hub', headline: 'Team & Meeting Hub.', sub: 'Centralized meetings, collaboration, and comms.', img: teamMeetingImg, tilt: 7 },
-  { label: 'Training', headline: 'Training & Feedback.', sub: 'Modules unlocked Mon/Wed. Friday discovery feedback to manager.', img: trainingModulesImg, tilt: -6 },
+  { label: 'Team Hub', headline: 'Team & Meeting Hub.', sub: 'Centralized meetings, collaboration, comms.', img: teamMeetingImg, tilt: 7 },
+  { label: 'Training', headline: 'Training & Feedback.', sub: 'Modules unlock Mon/Wed. Friday discovery feedback to the manager.', img: trainingModulesImg, tilt: -6 },
 ];
 
 const AgencyBrainBand = () => (
@@ -465,7 +465,7 @@ const AgencyBrainBand = () => (
           fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.65,
           color: paper, opacity: 0.75, maxWidth: 620,
         }}>
-          Agency Brain isn't a third-party tool we bolted on. I build it. Pick the calls that matter. Upload them. <span style={{ color: blue }}>AI</span> scores them against your team's standard. The gaps become impossible to ignore.
+          Agency Brain isn't a third-party tool I bolted on. I build it. Pick the calls that matter, upload them, and the <span style={{ color: blue }}>AI</span> scores them against your team's standard. The gaps become impossible to ignore.
         </p>
       </Reveal>
     </div>
@@ -621,7 +621,7 @@ const SuccessStory = () => (
             fontFamily: body, fontSize: 13, fontWeight: 600, letterSpacing: '0.16em',
             color: paper, opacity: 0.7, textTransform: 'uppercase', marginTop: 28,
           }}>
-            Dan Westrick — Allstate Agency Owner
+Dan Westrick, Allstate Agency Owner
           </p>
         </Reveal>
 
@@ -655,15 +655,15 @@ const PurchaseSection = () => {
   const [open, setOpen] = useState(false);
 
   const programIncludes = [
-    'How to Build a Sales Experience E-Book',
+    'How to Build a Sales Experience e-book',
     '8 Monday video trainings',
     '8 Wednesday training documents',
-    'Sales team call scoring (4 calls/rep/week, unlimited reps)',
+    'Sales-team call scoring (4 calls/rep/week, unlimited reps)',
     'Fully deployed Sales Process',
     'Accountability Process document',
     'Consequence Process document',
-    '8 1:1 Zoom Calls w/ Agency Owner or Manager',
-    'Stack Access',
+    '8 1:1 Zoom calls with agency owner or manager',
+    'Stack access',
   ];
 
   return (
@@ -685,7 +685,7 @@ const PurchaseSection = () => {
               fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
               color: ink, opacity: 0.6, textTransform: 'uppercase', marginBottom: 12,
             }}>
-              8 Week Sales Mgmt Training · Pay In Full
+              8-Week Sales Mgmt Training · Pay In Full
             </p>
             <div style={{ position: 'relative', display: 'inline-block', paddingBottom: 8 }}>
               <h2 style={{
@@ -790,7 +790,7 @@ const PurchaseSection = () => {
                   fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.6,
                   color: paper, opacity: 0.85,
                 }}>
-                  If you don't see value after 8 weeks, I'll give you your money back... STRAIGHT UP. Not because the system doesn't work. Because if it doesn't work for you, you weren't working. And I only want money from people who implement. Fact?
+                  If you don't see value after 8 weeks, I'll give you your money back. Straight up. Not because the system doesn't work — because if it didn't work for you, you weren't working. I only want money from people who implement. Fact?
                 </p>
               </div>
             </Reveal>
@@ -810,7 +810,7 @@ const BoldFooter = () => (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pb-12" style={{ borderBottom: `1px solid ${paper}1a` }}>
         <div className="col-span-2">
           <img src={standardLogo} alt="Standard Playbook"
-            style={{ height: 22, filter: 'invert(1)', marginBottom: 18 }} />
+            style={{ height: 22, marginBottom: 18 }} />
           <p style={{
             fontFamily: body, fontSize: 16, lineHeight: 1.5, marginBottom: 22,
             maxWidth: 380, opacity: 0.85,
