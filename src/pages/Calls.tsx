@@ -307,7 +307,7 @@ const Calls = () => {
       <BoldNav />
 
       {/* Hero */}
-      <section style={{ background: `linear-gradient(rgba(10,10,11,0.55), rgba(10,10,11,0.72)), url('/STANDARD%20CADENCE%20HERO.jpg') center/cover no-repeat`, color: paper, paddingTop: 56 + 56, paddingBottom: 110, position: 'relative', overflow: 'hidden' }}>
+      <section style={{ background: `linear-gradient(rgba(10,10,11,0.45), rgba(10,10,11,0.62)), url('/standard-cadence-hero.jpg') center/cover no-repeat`, color: paper, paddingTop: 56 + 56, paddingBottom: 110, position: 'relative', overflow: 'hidden' }}>
         <div className="px-6 md:px-10 max-w-[1440px] mx-auto">
           <Reveal>
             <p style={{
