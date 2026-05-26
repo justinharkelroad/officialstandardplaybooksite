@@ -307,12 +307,12 @@ const Calls = () => {
       <BoldNav />
 
       {/* Hero */}
-      <section style={{ background: paper, paddingTop: 56 + 24, paddingBottom: 48, position: 'relative', overflow: 'hidden' }}>
+      <section style={{ background: `linear-gradient(rgba(10,10,11,0.55), rgba(10,10,11,0.72)), url('/STANDARD%20CADENCE%20HERO.jpg') center/cover no-repeat`, color: paper, paddingTop: 56 + 56, paddingBottom: 110, position: 'relative', overflow: 'hidden' }}>
         <div className="px-6 md:px-10 max-w-[1440px] mx-auto">
           <Reveal>
             <p style={{
               fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-              color: ink, textTransform: 'uppercase', marginBottom: 24,
+              color: paper, textTransform: 'uppercase', marginBottom: 24, opacity: 0.85,
             }}>
               / Monthly Recurring Calls
             </p>
@@ -323,7 +323,7 @@ const Calls = () => {
               fontFamily: display,
               fontSize: 'clamp(56px, 12vw, 200px)',
               lineHeight: 0.86, letterSpacing: '-0.02em',
-              color: ink, margin: 0, textTransform: 'uppercase', fontWeight: 400,
+              color: paper, margin: 0, textTransform: 'uppercase', fontWeight: 400,
             }}>
               THE<br />
               <span className="md:pl-[6vw] inline-block">STANDARD</span><br />
@@ -335,7 +335,7 @@ const Calls = () => {
             <Reveal delay={0.2} className="col-span-12 md:col-span-7">
               <p style={{
                 fontFamily: body, fontSize: 'clamp(15px, 1.5vw, 18px)',
-                lineHeight: 1.55, color: ink, opacity: 0.8, maxWidth: 640,
+                lineHeight: 1.55, color: paper, opacity: 0.9, maxWidth: 640,
               }}>
                 Register once per Zoom — you'll get a calendar invite and reminders for every future session. Bookmark this page so you can always find your way back.
               </p>
