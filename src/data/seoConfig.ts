@@ -41,7 +41,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
   '/standard90': {
     title: 'The Standard 90 | The Standard Playbook',
-    description: 'A 90 day build for the agency owner who is done being the operating system. By application.',
+    description: 'A 90 day action map for the agency owner who is done being the operating system. Customized and personally coached one on one all the way through. By application.',
     keywords: ['insurance agency coaching', 'sales process framework', 'agency owner coaching', 'sales standard', 'personal sales coaching', 'standard playbook'],
     ogImage: OG_IMAGE,
     type: 'article',

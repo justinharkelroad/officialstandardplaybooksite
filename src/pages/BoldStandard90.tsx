@@ -121,7 +121,7 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
             fontFamily: body, fontSize: 'clamp(17px, 1.7vw, 22px)', fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.85, maxWidth: 680,
           }}>
-            The Standard 90 is a 90 day build for the agency owner who is done being the operating system.
+            The Standard 90 is a 90 day action map for the agency owner who is done being the operating system. Customized and personally coached one on one all the way through.
           </p>
         </Reveal>
         <Reveal delay={0.3} className="col-span-12 md:col-span-5 flex md:justify-end items-start">
