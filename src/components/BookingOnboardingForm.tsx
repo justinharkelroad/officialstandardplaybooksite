@@ -15,6 +15,9 @@ interface BookingOnboardingFormProps {
   onComplete: () => void;
   source?: string;
   onCompleteRedirectUrl?: string;
+  /** Call length shown in the form copy (e.g. "45-min", "60-min").
+   *  Defaults to "45-min" so existing booking flows are unchanged. */
+  callLengthLabel?: string;
 }
 
 interface FormData {
@@ -92,7 +95,7 @@ const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement |
   e.currentTarget.style.background = 'transparent';
 };
 
-const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRedirectUrl }: BookingOnboardingFormProps) => {
+const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRedirectUrl, callLengthLabel = '45-min' }: BookingOnboardingFormProps) => {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -407,7 +410,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
               onFocus={handleFocus} onBlur={handleBlur} />
           </div>
           <div>
-            <label style={labelStyle}>Why book this 45-min call? *</label>
+            <label style={labelStyle}>Why book this {callLengthLabel} call? *</label>
             <textarea placeholder="What do you hope to achieve?"
               value={formData.desired_outcome}
               onChange={(e) => updateField('desired_outcome', e.target.value)}

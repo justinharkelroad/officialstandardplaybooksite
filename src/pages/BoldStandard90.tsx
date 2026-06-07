@@ -1164,6 +1164,7 @@ const BoldStandard90 = () => {
         onOpenChange={setApplyOpen}
         source="standard-90"
         bookingBaseUrl={FIT_CALL_URL}
+        callLengthLabel="60-min"
       />
     </div>
   );

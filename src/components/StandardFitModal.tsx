@@ -10,6 +10,8 @@ interface StandardFitModalProps {
    *  Defaults to the shared standardfit link; pass a different one for
    *  program-specific booking flows (e.g. the /standard90 page). */
   bookingBaseUrl?: string;
+  /** Call length shown in the onboarding form copy. Defaults to "45-min". */
+  callLengthLabel?: string;
 }
 
 const ACUITY_BASE_URL = 'https://AGENCYCOACHING.as.me/standardfit';
@@ -20,6 +22,7 @@ const StandardFitModal = ({
   onOpenChange,
   source = 'standard-fit',
   bookingBaseUrl = ACUITY_BASE_URL,
+  callLengthLabel,
 }: StandardFitModalProps) => {
   const isControlled = open !== undefined;
   const redirectUrl = `${bookingBaseUrl}?utm_source=${encodeURIComponent(source)}`;
@@ -46,6 +49,7 @@ const StandardFitModal = ({
           onComplete={() => onOpenChange?.(false)}
           source={source}
           onCompleteRedirectUrl={redirectUrl}
+          callLengthLabel={callLengthLabel}
         />
       </DialogContent>
     </Dialog>
