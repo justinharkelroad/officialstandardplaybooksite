@@ -39,6 +39,13 @@ export const seoConfig: Record<string, SEOConfig> = {
     type: 'article',
     structuredData: structuredDataByRoute['/directive'],
   },
+  '/standard90': {
+    title: 'The Standard 90 | The Standard Playbook',
+    description: 'A 90 day build for the agency owner who is done being the operating system. By application.',
+    keywords: ['insurance agency coaching', 'sales process framework', 'agency owner coaching', 'sales standard', 'personal sales coaching', 'standard playbook'],
+    ogImage: OG_IMAGE,
+    type: 'article',
+  },
   '/partnership': {
     title: 'Partnership Coaching for Insurance Agency Owners | Standard Playbook',
     description: '1:1 coaching plus team training for insurance agency owners ready to scale. Limited enrollment. Built by an operator, not a consultant.',
