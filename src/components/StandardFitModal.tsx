@@ -6,6 +6,10 @@ interface StandardFitModalProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   source?: string;
+  /** Acuity scheduler to send the applicant to after onboarding.
+   *  Defaults to the shared standardfit link; pass a different one for
+   *  program-specific booking flows (e.g. the /standard90 page). */
+  bookingBaseUrl?: string;
 }
 
 const ACUITY_BASE_URL = 'https://AGENCYCOACHING.as.me/standardfit';
@@ -15,9 +19,10 @@ const StandardFitModal = ({
   open,
   onOpenChange,
   source = 'standard-fit',
+  bookingBaseUrl = ACUITY_BASE_URL,
 }: StandardFitModalProps) => {
   const isControlled = open !== undefined;
-  const redirectUrl = `${ACUITY_BASE_URL}?utm_source=${encodeURIComponent(source)}`;
+  const redirectUrl = `${bookingBaseUrl}?utm_source=${encodeURIComponent(source)}`;
 
   return (
     <Dialog

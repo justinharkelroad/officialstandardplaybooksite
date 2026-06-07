@@ -21,12 +21,12 @@ const blue = '#2997FF';
 /*
  * SINGLE CTA DESTINATION.
  * Every primary CTA on this page opens the site-native fit-call flow
- * (StandardFitModal -> BookingOnboardingForm -> Acuity "standardfit" scheduler).
+ * (StandardFitModal -> BookingOnboardingForm -> Acuity scheduler).
  * This is the one and only action on the page. There is no second goal.
- * To repoint the fit call to a different scheduler, change StandardFitModal's
- * ACUITY_BASE_URL — it is the single source of truth for the destination.
- * TODO: set FIT_CALL_URL only if a dedicated Standard 90 scheduler is created.
+ * This page books through its own scheduler, set via StandardFitModal's
+ * bookingBaseUrl prop below (FIT_CALL_URL). To repoint, change that one value.
  */
+const FIT_CALL_URL = 'https://AGENCYCOACHING.as.me/standard90';
 const CTA_LABEL = 'Apply for a Fit Call';
 const CTA_MICROCOPY = 'A short call to see if your agency is a fit. If it is not, I will tell you.';
 
@@ -1159,7 +1159,12 @@ const BoldStandard90 = () => {
       <BoldFooter />
       <ContentMeta lastUpdated="June 2026" />
       <MobileStickyCTA onApply={openApply} />
-      <StandardFitModal open={applyOpen} onOpenChange={setApplyOpen} source="standard-90" />
+      <StandardFitModal
+        open={applyOpen}
+        onOpenChange={setApplyOpen}
+        source="standard-90"
+        bookingBaseUrl={FIT_CALL_URL}
+      />
     </div>
   );
 };
