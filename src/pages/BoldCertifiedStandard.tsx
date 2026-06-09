@@ -435,7 +435,43 @@ const discovery = [
   { name: 'Walk the Block', body: 'Present coverage highest-to-lowest with a property-damage floor and daily-cost framing.' },
 ];
 
-const ScenarioGrid = ({ items }: { items: { name: string; body: string }[] }) => (
+// Closing-objection modules on the producer-launch-hello-to-bind path.
+// Rendered as expandable cards inside the What's Inside grid.
+// TODO: wire each `slug` to its real module route once module routing exists.
+const closingModules = [
+  {
+    name: 'Stalls and Maybes',
+    body: `Turn "let me think about it" into a clear yes or a real next step, never a maybe.`,
+    drill: `"I want to think about it," "just email it to me," and "I want to shop around."`,
+    skill: `The close ladder. Name the real fear, assume the sale twice, then ask the direct yes-or-no question and lock a specific time.`,
+    slug: 'stalls-and-maybes',
+  },
+  {
+    name: 'Payment and Start-Date Friction',
+    body: `Clear the money-mechanics hangups that stall a prospect who already said yes.`,
+    drill: `"I just paid my current insurance," "don't take my card, call me on the start date," and "I'm not comfortable paying over the phone."`,
+    skill: `Remove the friction with the right lever, a prorated refund, a future-dated start, or the secure-payment reassurance, then assume and ask.`,
+    slug: 'payment-start-date-friction',
+  },
+  {
+    name: 'Price, Savings, and Coverage Value',
+    body: `Beat the price objection without dropping your price.`,
+    drill: `"your price is too high," "you're not saving me enough," "you saved me on home but not auto," and "I have a lower deductible now."`,
+    skill: `Reframe to the gap, tell one short claim story, walk the block from high coverage down, and hold the property damage floor as your value.`,
+    slug: 'price-savings-coverage-value',
+  },
+  {
+    name: 'Decision-Maker and Loyalty Objections',
+    body: `Respect the relationship without surrendering the close.`,
+    drill: `"I need to talk to my spouse," "I'm loyal to my agent," and "I prefer a local agent."`,
+    skill: `Qualify who actually decides, lock the rate risk-free with a future-dated start, and reframe loyalty with better coverage and a better price.`,
+    slug: 'decision-maker-loyalty',
+  },
+];
+
+type ScenarioItem = { name: string; body: string; drill?: string; skill?: string; slug?: string };
+
+const ScenarioGrid = ({ items }: { items: ScenarioItem[] }) => (
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" style={{ borderTop: `1px solid ${ink}`, borderLeft: `1px solid ${ink}` }}>
     {items.map((s, i) => (
       <Reveal key={s.name} delay={(i % 3) * 0.05}>
@@ -448,9 +484,29 @@ const ScenarioGrid = ({ items }: { items: { name: string; body: string }[] }) =>
             {s.name}
             <span style={{ color: blue, flexShrink: 0, fontFamily: body, fontWeight: 700, fontSize: 22 }}>+</span>
           </summary>
-          <p style={{ fontFamily: body, fontSize: 15, fontWeight: 400, lineHeight: 1.55, color: ink, opacity: 0.8, marginTop: 16 }}>
+          <p style={{ fontFamily: body, fontSize: 15, fontWeight: s.drill ? 500 : 400, lineHeight: 1.55, color: ink, opacity: s.drill ? 1 : 0.8, marginTop: 16 }}>
             {s.body}
           </p>
+          {s.drill && (
+            <p style={{ fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.55, color: ink, opacity: 0.8, marginTop: 12 }}>
+              <span style={{ fontWeight: 700 }}>You will drill: </span>{s.drill}
+            </p>
+          )}
+          {s.skill && (
+            <p style={{ fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.55, color: ink, opacity: 0.8, marginTop: 12 }}>
+              <span style={{ fontWeight: 700 }}>The skill: </span>{s.skill}
+            </p>
+          )}
+          {s.slug && (
+            // TODO: route to the producer-launch-hello-to-bind module for this slug once module routing exists
+            <a
+              href={`#${s.slug}`}
+              style={{ display: 'inline-block', marginTop: 16, fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: blue, textDecoration: 'none' }}
+              className="hover:underline"
+            >
+              Open module →
+            </a>
+          )}
         </details>
       </Reveal>
     ))}
@@ -471,7 +527,7 @@ const InsideSection = () => (
       </Reveal>
       <Reveal delay={0.12}>
         <p style={{ fontFamily: body, fontSize: 'clamp(17px, 1.6vw, 22px)', fontWeight: 400, lineHeight: 1.55, color: ink, opacity: 0.85, marginTop: 32, maxWidth: 820 }}>
-          13 live voice-roleplay scenarios covering the moments that decide whether a prospect stays on the phone, or hangs up.
+          Live voice-roleplay scenarios covering every moment that decides whether a prospect stays on the phone, or hangs up.
         </p>
       </Reveal>
 
@@ -495,6 +551,13 @@ const InsideSection = () => (
         </p>
       </Reveal>
       <ScenarioGrid items={discovery} />
+
+      <Reveal delay={0.1}>
+        <p style={{ fontFamily: editorial, fontSize: 'clamp(16px, 1.6vw, 22px)', letterSpacing: '-0.01em', color: ink, textTransform: 'uppercase', marginTop: 56, marginBottom: 20, fontWeight: 400 }}>
+          Closing the Call
+        </p>
+      </Reveal>
+      <ScenarioGrid items={closingModules} />
 
       <Reveal delay={0.1}>
         <p style={{ fontFamily: editorial, fontSize: 'clamp(16px, 1.6vw, 22px)', letterSpacing: '-0.01em', color: ink, textTransform: 'uppercase', marginTop: 56, marginBottom: 20, fontWeight: 400 }}>
