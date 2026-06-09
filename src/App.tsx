@@ -53,6 +53,7 @@ import SalesProcess from "./pages/SalesProcess";
 import Calls from "./pages/Calls";
 import ZoomRedirect from "./pages/ZoomRedirect";
 import BoldStandard90 from "./pages/BoldStandard90";
+import BoldCertifiedStandard from "./pages/BoldCertifiedStandard";
 import Particles from "./components/Particles";
 import ScrollToTop from "./components/ScrollToTop";
 import SEOHead from "./components/SEOHead";
@@ -120,6 +121,8 @@ const App = () => (
           <Route path="/zoom" element={<ZoomRedirect />} />
           <Route path="/standard90" element={<BoldStandard90 />} />
           <Route path="/standard-90" element={<Navigate to="/standard90" replace />} />
+          <Route path="/certified-standard" element={<BoldCertifiedStandard />} />
+          <Route path="/certified" element={<Navigate to="/certified-standard" replace />} />
           <Route path="/mirror" element={<BoldMirror />} />
           <Route path="/mirror/score" element={<BoldMirrorScore />} />
           <Route path="/mirror/results" element={<BoldMirrorResults />} />
