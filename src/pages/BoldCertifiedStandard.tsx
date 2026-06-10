@@ -169,8 +169,8 @@ const MarqueeBands = () => (
    ══════════════════════════════════════════════════════ */
 const heroStats = [
   { n: '24', label: 'active modules' },
-  { n: '17', label: 'live AI voice-roleplay scenarios' },
-  { n: '85', label: 'AI quiz prompts across the voice modules' },
+  { n: '18', label: 'live AI voice-roleplay scenarios' },
+  { n: '85', label: 'AI quiz prompts across 17 scored quizzes' },
   { n: '80%', label: 'default certification threshold' },
 ];
 
@@ -268,7 +268,7 @@ const loop = [
   { name: 'Teach', tag: 'Step 1', body: 'Learn the standard and the frame for the call moment.', saved: false, gate: false },
   { name: 'Scripted Practice', tag: 'Step 2', body: 'Run a live AI customer roleplay with the full script visible. Build cadence, order, and confidence.', saved: true, gate: false },
   { name: 'Off-Script Practice', tag: 'Step 3', body: 'Run the same call again with the script hidden. Perform from memory, not by reading.', saved: true, gate: false },
-  { name: 'AI Quiz', tag: 'Step 4', body: 'Answer the scored module quiz. Pass it to advance.', saved: false, gate: true },
+  { name: 'AI Quiz', tag: 'Step 4', body: 'The scored gate, set to an 80% default. Pass it to advance.', saved: false, gate: true },
 ];
 
 const HowSection = () => (
@@ -280,12 +280,12 @@ const HowSection = () => (
           fontFamily: display, fontSize: 'clamp(32px, 4.6vw, 68px)', lineHeight: 0.98,
           letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 24, maxWidth: 1100,
         }}>
-          A repeatable loop that ends in a real certification. Not a <span style={{ color: blue }}>&ldquo;watched it&rdquo; checkbox.</span>
+          A repeatable loop that ends in a real certification, <span style={{ color: blue }}>earned through practice and a scored gate.</span>
         </h2>
       </Reveal>
       <Reveal delay={0.1}>
         <p style={{ fontFamily: body, fontSize: 'clamp(17px, 1.6vw, 22px)', fontWeight: 400, lineHeight: 1.55, color: paper, opacity: 0.8, marginBottom: 56, maxWidth: 720 }}>
-          For each skill, producers don&apos;t just watch. They run the loop:
+          For each skill, producers run the full loop:
         </p>
       </Reveal>
 
@@ -340,8 +340,8 @@ const HowSection = () => (
    ══════════════════════════════════════════════════════ */
 const benefits = [
   { label: 'Saved transcripts', body: 'Every scripted and off-script practice call is recorded as coaching evidence.' },
-  { label: 'Quiz scores & gates', body: 'See exactly which standards each producer has actually passed, not just attempted.' },
-  { label: 'Completion status', body: "Track who's certified, who's mid-path, and who's stalled." },
+  { label: 'Quiz scores per producer', body: 'See exactly which standards each producer has actually passed, not just attempted.' },
+  { label: 'Completion and stall tracking', body: "Track who's certified, who's mid-path, and who's stalled." },
   { label: 'One consistent standard', body: 'Every rep certifies on the same talk tracks and the same scenarios.' },
 ];
 
@@ -403,7 +403,7 @@ const PayoffSection = () => (
 );
 
 /* ══════════════════════════════════════════════════════
-   6 - WHAT'S INSIDE (the 13 real call scenarios)
+   6 - WHAT'S INSIDE (the real call modules)
    ══════════════════════════════════════════════════════ */
 const hooks = [
   { name: 'Auto Data Lead Hook', body: 'Keep the prospect on the phone, confirm details, build cascading yeses, don’t fold to "just email it."' },
@@ -533,7 +533,7 @@ const InsideSection = () => (
 
       <Reveal delay={0.1}>
         <p style={{ fontFamily: editorial, fontSize: 'clamp(16px, 1.6vw, 22px)', letterSpacing: '-0.01em', color: ink, textTransform: 'uppercase', marginTop: 64, marginBottom: 20, fontWeight: 400 }}>
-          The Hooks
+          Hooks (the first close)
         </p>
       </Reveal>
       <ScenarioGrid items={hooks} />
@@ -570,45 +570,54 @@ const InsideSection = () => (
 );
 
 /* ══════════════════════════════════════════════════════
-   6.5 - THE WORKBOOK (take-home deliverable)
+   6.5 - THE DOWNLOADS (in-course materials)
    ══════════════════════════════════════════════════════ */
+const downloadItems = [
+  'The Hello-to-Bind script',
+  'The playbook materials',
+  'The Closers Playbook and Objection Sheet',
+];
+
 const WorkbookSection = () => (
   <section style={{ background: ink, color: paper, padding: '120px 24px' }}>
     <div className="max-w-[1280px] mx-auto">
-      <div className="grid grid-cols-12 gap-10 md:gap-16 items-center">
-        <div className="col-span-12 md:col-span-6 md:order-1 order-2">
-          <Reveal><Eyebrow onDark>/ Take It Home</Eyebrow></Reveal>
+      <div className="grid grid-cols-12 gap-10 md:gap-16 items-start">
+        <div className="col-span-12 md:col-span-7">
+          <Reveal><Eyebrow onDark>/ The Downloads</Eyebrow></Reveal>
           <Reveal delay={0.05}>
             <h2 style={{
               fontFamily: display, fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.95,
               letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 32,
             }}>
-              Download the <span style={{ color: blue }}>whole playbook.</span>
+              Download the script. <span style={{ color: blue }}>Keep the playbook.</span>
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p style={{ fontFamily: body, fontSize: 'clamp(18px, 1.7vw, 22px)', fontWeight: 400, lineHeight: 1.6, color: paper, opacity: 0.9, marginBottom: 24, maxWidth: 560 }}>
-              Every talk track, script, and process from the training comes as a workbook your producers download and keep.
+            <p style={{ fontFamily: body, fontSize: 'clamp(18px, 1.7vw, 22px)', fontWeight: 400, lineHeight: 1.6, color: paper, opacity: 0.9, marginBottom: 24, maxWidth: 620 }}>
+              Inside the course, producers download the Hello-to-Bind script and the playbook materials, including the Closers Playbook and the Objection Sheet.
             </p>
           </Reveal>
           <Reveal delay={0.15}>
-            <p style={{ fontFamily: body, fontSize: 'clamp(18px, 1.7vw, 22px)', fontWeight: 400, lineHeight: 1.6, color: paper, opacity: 0.9, maxWidth: 560 }}>
-              The scripting does not stay locked inside a video. It goes home with them, in writing, ready to run on a live call.
+            <p style={{ fontFamily: body, fontSize: 'clamp(18px, 1.7vw, 22px)', fontWeight: 400, lineHeight: 1.6, color: paper, opacity: 0.9, maxWidth: 620 }}>
+              The required downloads are gated. A producer cannot advance past a module until they have grabbed the materials. Once they have them, the team keeps them.
             </p>
           </Reveal>
         </div>
 
-        <div className="col-span-12 md:col-span-6 md:order-2 order-1">
+        <div className="col-span-12 md:col-span-5">
           <Reveal delay={0.1}>
-            <img
-              src="/Workbook.png"
-              alt="The Certified Standard workbook: every script and process from the training, in writing"
-              loading="lazy"
-              style={{
-                display: 'block', width: '100%', height: 'auto', maxWidth: 520, marginInline: 'auto',
-                filter: 'drop-shadow(0 28px 48px rgba(0,0,0,0.45))',
-              }}
-            />
+            <div style={{ border: `1px solid ${paper}33` }}>
+              <p style={{ fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: paper, opacity: 0.55, padding: '20px 24px 0', margin: 0 }}>
+                What they download
+              </p>
+              <ul style={{ listStyle: 'none', margin: '12px 0 8px', padding: 0 }}>
+                {downloadItems.map((d) => (
+                  <li key={d} style={{ fontFamily: display, fontSize: 'clamp(18px, 1.8vw, 24px)', letterSpacing: '-0.01em', textTransform: 'uppercase', color: paper, fontWeight: 400, padding: '14px 24px', borderTop: `1px solid ${paper}1a`, display: 'flex', alignItems: 'baseline', gap: 14 }}>
+                    <span style={{ color: blue, fontFamily: body, fontWeight: 700, fontSize: 16, flexShrink: 0 }}>+</span>{d}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </Reveal>
         </div>
       </div>
@@ -622,8 +631,8 @@ const WorkbookSection = () => (
 const proofStats = [
   { n: '24', label: 'active modules' },
   { n: '75', label: 'active steps' },
-  { n: '17', label: 'live voice-roleplay skill modules' },
-  { n: '85', label: 'AI quiz prompts across the voice modules' },
+  { n: '18', label: 'live voice-roleplay skill modules' },
+  { n: '85', label: 'AI quiz prompts across 17 scored quizzes' },
   { n: '4', label: 'required knowledge attestations' },
   { n: '80%', label: 'default certification threshold' },
 ];
@@ -676,7 +685,7 @@ const GateSection = () => (
       </Reveal>
       <Reveal delay={0.1}>
         <p style={{ fontFamily: body, fontSize: 'clamp(18px, 1.7vw, 24px)', fontWeight: 400, lineHeight: 1.6, color: paper, opacity: 0.9, maxWidth: 880 }}>
-          Most training tells you a video was watched. Certified Standard scores each module with an AI quiz gate set to an 80% threshold by default. A producer doesn&apos;t advance by sitting through content. They advance by proving they remember the standard. When the path is done, you have a producer who has practiced the call, run it from memory, and passed every gate.
+          Completion here is earned, not assumed. Certified Standard scores each module with an AI quiz gate set to an 80% threshold by default. A producer doesn&apos;t advance by sitting through content. They advance by proving they remember the standard. When the path is done, you have a producer who has practiced the call, run it from memory, and passed every gate.
         </p>
       </Reveal>
     </div>
@@ -735,7 +744,8 @@ const seatFeatures = [
   'Scored AI quiz gates at the 80% default threshold',
   'Saved practice transcripts',
   'Quiz scores and completion status',
-  'The 13 voice-roleplay scenarios plus knowledge modules',
+  'The 18 voice-roleplay scenarios plus knowledge modules',
+  'Gated script and playbook downloads the team keeps',
 ];
 
 const PricingSection = () => (
@@ -762,7 +772,8 @@ const PricingSection = () => (
             </h3>
             <div style={{ marginBottom: 28 }}>
               <span style={{ fontFamily: display, fontSize: 'clamp(44px, 5vw, 64px)', lineHeight: 1, letterSpacing: '-0.02em', color: blue, fontWeight: 400 }}>$399</span>
-              <span style={{ fontFamily: body, fontSize: 15, fontWeight: 500, color: paper, opacity: 0.6, marginLeft: 10 }}>per person</span>
+              <span style={{ fontFamily: body, fontSize: 15, fontWeight: 500, color: paper, opacity: 0.6, marginLeft: 10 }}>per seat, one-time</span>
+              <p style={{ fontFamily: body, fontSize: 14, color: paper, opacity: 0.6, marginTop: 12, marginBottom: 0 }}>One seat certifies one producer, including the owner.</p>
             </div>
             <ul style={{ listStyle: 'none', margin: '0 0 36px', padding: 0, display: 'grid', gap: 13 }}>
               {seatFeatures.map((f) => (
@@ -771,7 +782,6 @@ const PricingSection = () => (
                 </li>
               ))}
             </ul>
-            {/* TODO: wire to checkout */}
             <a
               href={CHECKOUT_URL}
               style={{
@@ -788,7 +798,7 @@ const PricingSection = () => (
 
         <Reveal delay={0.12}>
           <p style={{ fontFamily: body, fontSize: 16, color: paper, opacity: 0.7, marginTop: 28, textAlign: 'center' }}>
-            Certifying a team? Purchase one seat per producer.
+            Certifying a team? Buy one seat for each producer.
           </p>
         </Reveal>
       </div>
@@ -800,11 +810,11 @@ const PricingSection = () => (
    11 - QUESTIONS (objection handling)
    ══════════════════════════════════════════════════════ */
 const faqs = [
-  { q: 'Is this just videos my team will click through?', a: 'No. The model is practice-first: teach, scripted AI roleplay, off-script roleplay from memory, then a scored AI quiz gate. Completion means the producer passed, not just watched.' },
+  { q: 'Is this just content my team will click through?', a: 'No. The model is practice-first: teach, scripted AI roleplay, off-script roleplay from memory, then a scored AI quiz gate. Completion means the producer passed, not just watched.' },
   { q: 'How do I know a producer actually learned it?', a: 'Each voice module ends with an AI quiz scored to an 80% default threshold. Practice calls are saved as transcripts so you can review and coach from real evidence.' },
   { q: 'Will this work for new hires with no experience?', a: "Yes. It's built for producers learning the Hello-to-Bind process. They rehearse live conversations with an AI customer before taking them with real prospects." },
   { q: 'Is this a generic sales course?', a: 'No. Every scenario is built around real insurance producer calls: auto and home lead hooks, win-backs, X-date requotes, cross-sell, objections, rapport, coverage gaps, umbrella, and the coverage presentation.' },
-  { q: 'What does a producer practice, exactly?', a: '13 live voice-roleplay scenarios covering hooks, objections, discovery, coverage gaps, umbrella positioning, and the close, plus required knowledge modules on post-sale follow-through and follow-up discipline.' },
+  { q: 'What does a producer practice, exactly?', a: '18 live voice-roleplay scenarios covering hooks, objections, discovery, coverage gaps, umbrella positioning, the close, and closing objections, plus required knowledge modules on post-sale follow-through and follow-up discipline.' },
   { q: 'What do I see as a manager?', a: 'Saved practice transcripts, quiz answers and scores, and completion status across your team.' },
 ];
 
