@@ -168,9 +168,9 @@ const MarqueeBands = () => (
    2 - BY THE NUMBERS (product facts only - no social proof)
    ══════════════════════════════════════════════════════ */
 const heroStats = [
-  { n: '20', label: 'active modules' },
-  { n: '13', label: 'live AI voice-roleplay scenarios' },
-  { n: '65', label: 'AI quiz prompts across the voice modules' },
+  { n: '24', label: 'active modules' },
+  { n: '17', label: 'live AI voice-roleplay scenarios' },
+  { n: '85', label: 'AI quiz prompts across the voice modules' },
   { n: '80%', label: 'default certification threshold' },
 ];
 
@@ -620,10 +620,10 @@ const WorkbookSection = () => (
    7 - PROOF POINTS (course structure)
    ══════════════════════════════════════════════════════ */
 const proofStats = [
-  { n: '20', label: 'active modules' },
-  { n: '59', label: 'active steps' },
-  { n: '13', label: 'live voice-roleplay skill modules' },
-  { n: '65', label: 'AI quiz prompts across the voice modules' },
+  { n: '24', label: 'active modules' },
+  { n: '75', label: 'active steps' },
+  { n: '17', label: 'live voice-roleplay skill modules' },
+  { n: '85', label: 'AI quiz prompts across the voice modules' },
   { n: '4', label: 'required knowledge attestations' },
   { n: '80%', label: 'default certification threshold' },
 ];
