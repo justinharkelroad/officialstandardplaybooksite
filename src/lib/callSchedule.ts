@@ -20,6 +20,8 @@ interface Override {
 // Key: `${callId}:${YYYY-MM}` — edit any month here.
 export const OVERRIDES: Record<string, Override> = {
   'boardroom:2026-05':   { date: '2026-05-20', start: '13:00', end: '15:00', special: true },
+  // Skip June 2026 boardroom — next session is July's 2nd Wednesday.
+  'boardroom:2026-06':   { date: '2026-07-08', start: '13:00', end: '15:00' },
   // First AgencyBrain + AI calls don't kick off until June. Not "special" — just the start date.
   'agencybrain:2026-05': { date: '2026-06-17', start: '14:00', end: '14:45' },
   'ai:2026-05':          { date: '2026-06-24', start: '14:00', end: '14:45' },
@@ -27,7 +29,7 @@ export const OVERRIDES: Record<string, Override> = {
 
 // Default times for each call (America/New_York).
 const DEFAULT_TIMES: Record<CallId, { start: string; end: string }> = {
-  boardroom:   { start: '13:00', end: '14:00' },
+  boardroom:   { start: '13:00', end: '15:00' },
   agencybrain: { start: '14:00', end: '14:45' },
   ai:          { start: '14:00', end: '14:45' },
 };
