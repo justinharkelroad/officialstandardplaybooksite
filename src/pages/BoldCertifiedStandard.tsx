@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
 import BoldNav from '@/components/BoldNav';
 import ContentMeta from '@/components/ContentMeta';
+import { CERTIFIED_STANDARD_CHECKOUT_URL } from '@/data/certifiedStandard';
 
 import standardLogo from '@/assets/standard-word-logo.png';
 
@@ -21,7 +22,7 @@ const blue = '#2997FF';
  * Certified Standard is a single $399 offer, sold one seat per person.
  * One action: purchase. Placeholder until checkout is wired.
  */
-const CHECKOUT_URL = 'https://myagencybrain.com/certifiedstandard';
+const CHECKOUT_URL = CERTIFIED_STANDARD_CHECKOUT_URL;
 const CHECKOUT_LABEL = 'Get Certified';
 
 /* ── Reveal helper ─────────────────────────────────────── */

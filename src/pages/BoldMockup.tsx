@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
 import BoldNav from '@/components/BoldNav';
+import CertifiedStandardBand from '@/components/CertifiedStandardBand';
 import StandardFitModal from '@/components/StandardFitModal';
 
 import standardLogo from '@/assets/standard-word-logo.png';
@@ -655,6 +656,23 @@ const coachingPrograms: ProgramRow[] = [
   },
   {
     num: '04',
+    name: 'Certified Standard',
+    tier: 'AI Training · One-Time',
+    price: '$399/seat',
+    description: 'Certify your producers on the full Hello-to-Bind sales call. One-off purchase — no coaching commitment.',
+    details: [
+      '24 training modules across the whole call',
+      '18 live AI voice-roleplay scenarios',
+      '85 AI quiz prompts · 17 scored quizzes',
+      '80% certification threshold per module',
+      'Saved transcripts + scores for every producer',
+      'Hello-to-Bind script + Closers Playbook included',
+    ],
+    href: '/certified-standard?src=home-programs',
+    cta: 'Get Certified →',
+  },
+  {
+    num: '05',
     name: 'The Directive',
     tier: '1:1 Coaching',
     price: 'Application Only',
@@ -671,7 +689,7 @@ const coachingPrograms: ProgramRow[] = [
     cta: 'Apply →',
   },
   {
-    num: '05',
+    num: '06',
     name: 'Partnership',
     tier: '1:1 Coaching',
     price: '—',
@@ -690,7 +708,7 @@ const coachingPrograms: ProgramRow[] = [
 
 const softwarePlans: ProgramRow[] = [
   {
-    num: '06',
+    num: '07',
     name: 'Agency Brain Core',
     tier: 'Software-Only Foundation',
     price: '$299/mo',
@@ -707,7 +725,7 @@ const softwarePlans: ProgramRow[] = [
     cta: 'Choose Core →',
   },
   {
-    num: '07',
+    num: '08',
     name: 'Agency Brain Plus',
     tier: 'Full Software Access',
     price: '$449/mo',
@@ -726,7 +744,7 @@ const softwarePlans: ProgramRow[] = [
     featured: true,
   },
   {
-    num: '08',
+    num: '09',
     name: 'Agency Brain Pro',
     tier: 'Top Tier',
     price: '$599/mo',
@@ -1353,6 +1371,7 @@ const BoldMockup = () => (
     <MarqueeBands />
     <MissionSection />
     <FoundationSection />
+    <CertifiedStandardBand />
     <BuilderSection />
     <AgencyBrainBand />
     <SoftwareDetail />
