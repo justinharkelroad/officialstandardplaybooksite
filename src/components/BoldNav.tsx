@@ -17,7 +17,6 @@ const links: NavLink[] = [
   { label: 'Software', anchor: 'software' },
   { label: 'Training', to: '/training' },
   { label: 'Certified', to: '/certified-standard' },
-  { label: 'Nutrition', external: 'https://standardnutrition.app' },
   { label: 'Contact', to: '/contact' },
 ];
 

@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="bg-dark-surface border-t border-primary/20 py-12">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center mb-4">
               <img 
@@ -40,6 +40,15 @@ const Footer = () => {
               <li><Link to="/privacy" className="text-dark-muted hover:text-primary transition-colors">Privacy Policy</Link></li>
               <li><Link to="/terms" className="text-dark-muted hover:text-primary transition-colors">Terms of Service</Link></li>
               <li><Link to="/contact" className="text-dark-muted hover:text-primary transition-colors">Contact</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-white font-oswald font-semibold text-lg mb-4 uppercase tracking-wide">
+              Resources
+            </h4>
+            <ul className="space-y-2">
+              <li><a href="https://standardnutrition.app" target="_blank" rel="noopener noreferrer" className="text-dark-muted hover:text-primary transition-colors">Nutrition</a></li>
             </ul>
           </div>
         </div>
