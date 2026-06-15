@@ -28,7 +28,7 @@ const blue = '#2997FF';
  */
 const FIT_CALL_URL = 'https://AGENCYCOACHING.as.me/standard90';
 const CTA_LABEL = 'Apply for a Fit Call';
-const CTA_MICROCOPY = 'A short call to see if your agency is a fit. If it is not, I will tell you.';
+const CTA_MICROCOPY = 'A 90-minute call to see if your agency is a fit. If it is not, I will tell you.';
 
 /* ── Reveal helper ─────────────────────────────────────── */
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
@@ -1164,7 +1164,7 @@ const BoldStandard90 = () => {
         onOpenChange={setApplyOpen}
         source="standard-90"
         bookingBaseUrl={FIT_CALL_URL}
-        callLengthLabel="60-min"
+        callLengthLabel="90-min"
       />
     </div>
   );
