@@ -872,7 +872,10 @@ const MobileStickyCTA = ({ onApply }: { onApply: () => void }) => (
 const ApplyModal = ({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) => {
   const [first, setFirst] = useState('');
   const [last, setLast] = useState('');
-  const ready = first.trim().length > 0 && last.trim().length > 0;
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const ready = first.trim().length > 0 && last.trim().length > 0 && emailOk && phone.trim().length >= 7;
 
   const go = (e: React.FormEvent) => {
     e.preventDefault();
@@ -880,6 +883,8 @@ const ApplyModal = ({ open, onOpenChange }: { open: boolean; onOpenChange: (o: b
     const url = new URL(BOOKING_URL);
     url.searchParams.set('firstName', first.trim());
     url.searchParams.set('lastName', last.trim());
+    url.searchParams.set('email', email.trim());
+    url.searchParams.set('phone', phone.trim());
     window.location.href = url.toString();
   };
 
@@ -914,14 +919,18 @@ const ApplyModal = ({ open, onOpenChange }: { open: boolean; onOpenChange: (o: b
             Apply for a Fit Call
           </h3>
           <p style={{ fontFamily: body, fontSize: 14, lineHeight: 1.5, color: ink, opacity: 0.7, margin: '0 0 26px' }}>
-            Your name, then I will take you straight to my calendar to book the call.
+            Your details, then I will take you straight to my calendar to book the call.
           </p>
 
           <div style={{ display: 'grid', gap: 14 }}>
             <input style={field} type="text" placeholder="First name" value={first}
-              onChange={(e) => setFirst(e.target.value)} autoFocus aria-label="First name" />
+              onChange={(e) => setFirst(e.target.value)} autoFocus required aria-label="First name" />
             <input style={field} type="text" placeholder="Last name" value={last}
-              onChange={(e) => setLast(e.target.value)} aria-label="Last name" />
+              onChange={(e) => setLast(e.target.value)} required aria-label="Last name" />
+            <input style={field} type="email" placeholder="Email" value={email}
+              onChange={(e) => setEmail(e.target.value)} required aria-label="Email" />
+            <input style={field} type="tel" placeholder="Phone" value={phone}
+              onChange={(e) => setPhone(e.target.value)} required aria-label="Phone" />
           </div>
 
           <button type="submit" disabled={!ready}

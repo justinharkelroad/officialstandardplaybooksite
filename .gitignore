@@ -22,3 +22,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Supabase CLI temp
+supabase/.temp/
+
+# Local working scratch (not part of the site)
+${HOME}/
+COPY_REWRITE.md
+COPY_REWRITE_MISSION_A.md
+Plans/
+ads/
