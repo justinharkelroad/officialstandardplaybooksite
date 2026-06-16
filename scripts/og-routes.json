@@ -25,6 +25,16 @@
       "title": "Certified Standard",
       "subhead": "The certification standard for insurance agency teams.",
       "image": "/og/certified-standard.jpg"
+    },
+    "/sales-experience": {
+      "title": "8-Week Sales Management",
+      "subhead": "Stop managing chaos. Start running a system.",
+      "image": "/og/sales-experience.jpg"
+    },
+    "/8-week": {
+      "title": "8-Week Sales Management",
+      "subhead": "Stop managing chaos. Start running a system.",
+      "image": "/og/sales-experience.jpg"
     }
   }
 }
