@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Facebook, Linkedin } from 'lucide-react';
+import { Facebook, Linkedin, Play } from 'lucide-react';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import BoldNav from '@/components/BoldNav';
 import StandardFitModal from '@/components/StandardFitModal';
 import ContentMeta from '@/components/ContentMeta';
@@ -263,21 +264,26 @@ const mirror = [
   {
     num: '01',
     label: 'The Owner',
+    vimeoId: '1201736974',
     body: 'You run the agency off willpower, carry the whole system in your head, and avoid the hard conversations because you do not want to be the bad guy. Revenue is up. Peace is gone.',
   },
   {
     num: '02',
     label: 'The Sales Manager',
+    vimeoId: '1201736971',
     body: 'Coaches on vibes, guesses at what you actually want, and delivers consequences late or never, because nothing is written down.',
   },
   {
     num: '03',
     label: 'The Team',
+    vimeoId: '1201736973',
     body: 'Leads with price, loses the hard calls, hides the bad weeks and the good ones both, and waits around for leads instead of making their own.',
   },
 ];
 
-const MirrorSection = () => (
+const MirrorSection = () => {
+  const [openVideo, setOpenVideo] = useState<string | null>(null);
+  return (
   <section style={{ background: paper, padding: '40px 24px 120px', borderTop: `1px solid ${ink}` }}>
     <div className="max-w-[1280px] mx-auto">
       <div className="grid grid-cols-12 gap-6 items-end mb-16 mt-16">
@@ -325,6 +331,18 @@ const MirrorSection = () => (
                   }}>
                     {m.label}
                   </h3>
+                  <button
+                    onClick={() => setOpenVideo(m.vimeoId)}
+                    style={{
+                      marginTop: 22, display: 'inline-flex', alignItems: 'center', gap: 10,
+                      fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.14em',
+                      color: ink, background: 'transparent', textTransform: 'uppercase',
+                      padding: '11px 18px', border: `1.5px solid ${ink}`, cursor: 'pointer', transition: 'all .25s',
+                    }}
+                    className="hover:bg-[#2997FF] hover:border-[#2997FF] hover:text-white"
+                  >
+                    <Play size={13} fill="currentColor" /> Watch
+                  </button>
                 </div>
                 <div className="col-span-12 md:col-span-7">
                   <p style={{
@@ -350,8 +368,31 @@ const MirrorSection = () => (
         </p>
       </Reveal>
     </div>
+
+    <Dialog open={openVideo !== null} onOpenChange={(o) => { if (!o) setOpenVideo(null); }}>
+      <DialogContent
+        className="p-0 border-0"
+        style={{ maxWidth: 'min(92vw, 560px)', background: ink, borderRadius: 0, border: `1.5px solid ${ink}`, gap: 0 }}
+      >
+        <DialogTitle className="sr-only">The Standard 90 video</DialogTitle>
+        <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', background: '#000' }}>
+          {openVideo && (
+            <iframe
+              key={openVideo}
+              src={`https://player.vimeo.com/video/${openVideo}?autoplay=1&title=0&byline=0&portrait=0`}
+              title="The Standard 90 video"
+              className="absolute inset-0 w-full h-full"
+              style={{ border: 0 }}
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+              allowFullScreen
+            />
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
   </section>
-);
+  );
+};
 
 /* ══════════════════════════════════════════════════════
    4 — THE COST OF STAYING
