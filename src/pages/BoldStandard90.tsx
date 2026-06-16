@@ -265,18 +265,21 @@ const mirror = [
     num: '01',
     label: 'The Owner',
     vimeoId: '1201736974',
+    poster: '/mirror-owner.jpg',
     body: 'You run the agency off willpower, carry the whole system in your head, and avoid the hard conversations because you do not want to be the bad guy. Revenue is up. Peace is gone.',
   },
   {
     num: '02',
     label: 'The Sales Manager',
     vimeoId: '1201736971',
+    poster: '/mirror-manager.jpg',
     body: 'Coaches on vibes, guesses at what you actually want, and delivers consequences late or never, because nothing is written down.',
   },
   {
     num: '03',
     label: 'The Team',
     vimeoId: '1201736973',
+    poster: '/mirror-team.jpg',
     body: 'Leads with price, loses the hard calls, hides the bad weeks and the good ones both, and waits around for leads instead of making their own.',
   },
 ];
@@ -316,8 +319,8 @@ const MirrorSection = () => {
         {mirror.map((m, i) => (
           <Reveal key={m.num} delay={i * 0.08}>
             <div style={{ borderBottom: `1px solid ${ink}`, padding: '52px 0' }}>
-              <div className="grid grid-cols-12 gap-8 items-start">
-                <div className="col-span-12 md:col-span-5">
+              <div className="grid grid-cols-12 gap-8 items-center">
+                <div className="col-span-12 md:col-span-4">
                   <span style={{
                     fontFamily: editorial, fontSize: 22, color: ink,
                     opacity: 0.35, letterSpacing: '-0.01em', display: 'inline-block', marginBottom: 14,
@@ -331,26 +334,44 @@ const MirrorSection = () => {
                   }}>
                     {m.label}
                   </h3>
-                  <button
-                    onClick={() => setOpenVideo(m.vimeoId)}
-                    style={{
-                      marginTop: 22, display: 'inline-flex', alignItems: 'center', gap: 10,
-                      fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.14em',
-                      color: ink, background: 'transparent', textTransform: 'uppercase',
-                      padding: '11px 18px', border: `1.5px solid ${ink}`, cursor: 'pointer', transition: 'all .25s',
-                    }}
-                    className="hover:bg-[#2997FF] hover:border-[#2997FF] hover:text-white"
-                  >
-                    <Play size={13} fill="currentColor" /> Watch
-                  </button>
                 </div>
-                <div className="col-span-12 md:col-span-7">
+                <div className="col-span-12 md:col-span-5">
                   <p style={{
                     fontFamily: body, fontSize: 'clamp(17px, 1.5vw, 20px)', fontWeight: 400, lineHeight: 1.6,
-                    color: ink, opacity: 0.85, maxWidth: 560,
+                    color: ink, opacity: 0.85, maxWidth: 520,
                   }}>
                     {m.body}
                   </p>
+                </div>
+                <div className="col-span-12 md:col-span-3 flex md:justify-end">
+                  <button
+                    onClick={() => setOpenVideo(m.vimeoId)}
+                    aria-label={`Watch ${m.label}`}
+                    className="group"
+                    style={{
+                      position: 'relative', display: 'block', width: '100%', maxWidth: 300,
+                      padding: 8, border: `1.5px solid ${ink}`, background: ink,
+                      cursor: 'pointer', lineHeight: 0, boxShadow: '0 22px 48px -20px rgba(0,0,0,0.55)',
+                    }}
+                  >
+                    <span style={{ position: 'relative', display: 'block', width: '100%', aspectRatio: '1 / 1', overflow: 'hidden', background: '#000' }}>
+                      <img
+                        src={m.poster}
+                        alt={m.label}
+                        loading="lazy"
+                        className="w-full h-full transition-transform duration-500 group-hover:scale-[1.04]"
+                        style={{ objectFit: 'cover', display: 'block' }}
+                      />
+                      <span
+                        className="transition-opacity group-hover:opacity-90"
+                        style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(10,10,11,0.18)' }}
+                      >
+                        <span style={{ width: 58, height: 58, borderRadius: 999, background: 'rgba(244,242,238,0.95)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <Play size={22} color={ink} fill={ink} style={{ marginLeft: 3 }} />
+                        </span>
+                      </span>
+                    </span>
+                  </button>
                 </div>
               </div>
             </div>
