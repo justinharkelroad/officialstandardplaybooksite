@@ -36,7 +36,7 @@ const CTA_MICROCOPY = 'A 90-minute call to see if your agency is a fit. If it is
     YouTube: https://www.youtube.com/embed/abcdEFGH?autoplay=1&mute=1&loop=1&playlist=abcdEFGH
   While it is empty the hero shows the static poster image instead of a broken frame.
 */
-const HERO_VIDEO_EMBED = 'https://player.vimeo.com/video/1201628490?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0';
+const HERO_VIDEO_EMBED = 'https://player.vimeo.com/video/1201628490?title=0&byline=0&portrait=0';
 const HERO_VIDEO_POSTER = '/standard90-video-poster.jpg';
 
 /* ── Reveal helper ─────────────────────────────────────── */
