@@ -1,0 +1,30 @@
+{
+  "_comment": "Source of truth for per-program social share cards (the image + caption shown in iMessage/MMS, Facebook, LinkedIn). 'image' is Justin's designed 1200x630 card under /og/. 'title' is the bold caption iMessage shows beneath the image; 'subhead' is the og:description other platforms show. Used by scripts/og-stamp.mjs to bake the tags into dist/<route>/index.html. Add a route here the moment its card image exists.",
+  "routes": {
+    "/team-standard": {
+      "title": "The Team Standard",
+      "subhead": "An accountability system for the people your agency runs on. I run it, inside their world, with you out of the room.",
+      "image": "/og/team-standard.jpg"
+    },
+    "/standard90": {
+      "title": "The Standard 90",
+      "subhead": "A 90-day action map for the owner who's done being the operating system. Personally coached, by application.",
+      "image": "/og/standard90.jpg"
+    },
+    "/directive": {
+      "title": "The Directive",
+      "subhead": "Intensive 1:1 implementation coaching with direct access to Justin.",
+      "image": "/og/directive.jpg"
+    },
+    "/boardroom": {
+      "title": "The Boardroom",
+      "subhead": "The $299/mo mastermind for insurance agency owners who want more.",
+      "image": "/og/boardroom.jpg"
+    },
+    "/certified-standard": {
+      "title": "Certified Standard",
+      "subhead": "The certification standard for insurance agency teams.",
+      "image": "/og/certified-standard.jpg"
+    }
+  }
+}
