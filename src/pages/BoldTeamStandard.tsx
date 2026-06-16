@@ -538,6 +538,11 @@ const TwoWaysIn = ({ onApply }: { onApply: () => void }) => (
           Both run the same daily engine inside the channel. Both are dedicated to your team alone, nothing shared, nothing recycled. By application, and I cap it to a handful of teams, because it is me in there, not a bench of junior coaches.
         </p>
       </Reveal>
+      <Reveal delay={0.12}>
+        <p style={{ fontFamily: body, fontSize: 'clamp(16px, 1.5vw, 19px)', fontWeight: 400, lineHeight: 1.6, color: ink, opacity: 0.8, maxWidth: 820, margin: '0 0 40px' }}>
+          No contract. Month to month. You can walk any time, and so can I. I do not trap a team into accountability, and I do not coach one that does not want to be there. The only thing holding this together is that it works.
+        </p>
+      </Reveal>
       <Reveal delay={0.14}>
         <PrimaryCTA onApply={onApply} />
       </Reveal>
@@ -697,6 +702,10 @@ const faq = [
   {
     q: 'Can you guarantee a number?',
     a: 'No, and I would not trust anyone who did. We drive the activity and surface the truth. The numbers follow. I will not sell you a promise I cannot keep.',
+  },
+  {
+    q: 'Is there a contract?',
+    a: 'No. Month to month, cancel any time. And I will end it too if the work is not getting done. Neither of us hides behind a contract. The only thing holding this together is that it works.',
   },
 ];
 
