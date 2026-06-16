@@ -30,6 +30,15 @@ const FIT_CALL_URL = 'https://AGENCYCOACHING.as.me/standard90';
 const CTA_LABEL = 'Apply for a Fit Call';
 const CTA_MICROCOPY = 'A 90-minute call to see if your agency is a fit. If it is not, I will tell you.';
 
+/*
+  Hero video (square / 1:1). Paste the Vimeo or YouTube EMBED url below, e.g.
+    Vimeo:   https://player.vimeo.com/video/123456789?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0
+    YouTube: https://www.youtube.com/embed/abcdEFGH?autoplay=1&mute=1&loop=1&playlist=abcdEFGH
+  While it is empty the hero shows the static poster image instead of a broken frame.
+*/
+const HERO_VIDEO_EMBED = 'https://player.vimeo.com/video/1201628490?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0';
+const HERO_VIDEO_POSTER = '/standard90-video-poster.jpg';
+
 /* ── Reveal helper ─────────────────────────────────────── */
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
   <motion.div
@@ -115,17 +124,46 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
         </h1>
       </Reveal>
 
-      <div className="grid grid-cols-12 gap-6 mt-12">
-        <Reveal delay={0.2} className="col-span-12 md:col-span-7">
+      <div className="grid grid-cols-12 gap-8 mt-12 items-center">
+        <Reveal delay={0.2} className="col-span-12 md:col-span-6">
           <p style={{
             fontFamily: body, fontSize: 'clamp(17px, 1.7vw, 22px)', fontWeight: 400, lineHeight: 1.55,
-            color: ink, opacity: 0.85, maxWidth: 680,
+            color: ink, opacity: 0.85, maxWidth: 620,
           }}>
             The Standard 90 is a 90 day action map for the agency owner who is done being the operating system. Customized and personally coached one on one all the way through.
           </p>
+          <div style={{ marginTop: 32 }}>
+            <PrimaryCTA onApply={onApply} align="left" />
+          </div>
         </Reveal>
-        <Reveal delay={0.3} className="col-span-12 md:col-span-5 flex md:justify-end items-start">
-          <PrimaryCTA onApply={onApply} align="left" />
+
+        {/* Square (1:1) hero video */}
+        <Reveal delay={0.3} className="col-span-12 md:col-span-6">
+          <div style={{
+            position: 'relative', background: ink, padding: 8,
+            width: '100%', maxWidth: 560, marginInline: 'auto',
+            boxShadow: '0 36px 70px -18px rgba(0,0,0,0.55)',
+          }}>
+            <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', background: '#000', overflow: 'hidden' }}>
+              {HERO_VIDEO_EMBED ? (
+                <iframe
+                  src={HERO_VIDEO_EMBED}
+                  title="The Standard 90"
+                  className="absolute inset-0 w-full h-full"
+                  style={{ border: 0 }}
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+                  allowFullScreen
+                />
+              ) : (
+                <img
+                  src={HERO_VIDEO_POSTER}
+                  alt="The Standard 90"
+                  className="absolute inset-0 w-full h-full"
+                  style={{ objectFit: 'cover' }}
+                />
+              )}
+            </div>
+          </div>
         </Reveal>
       </div>
     </div>
