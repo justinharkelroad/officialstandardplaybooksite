@@ -79,14 +79,13 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
             className="hover:bg-black hover:text-white">
             What's Inside
           </a>
-          <button onClick={onApply}
+          <button onClick={onApply} disabled aria-label="The Directive is sold out"
             style={{
               fontFamily: body, fontSize: 13, fontWeight: 700, letterSpacing: '0.12em',
               color: '#fff', background: ink, textTransform: 'uppercase',
-              padding: '15px 28px', border: `1.5px solid ${ink}`, cursor: 'pointer', transition: 'all .25s',
-            }}
-            className="hover:bg-[#2997FF] hover:border-[#2997FF]">
-            Apply Now
+              padding: '15px 28px', border: `1.5px solid ${ink}`, cursor: 'not-allowed', opacity: 0.45,
+            }}>
+            Sold Out
           </button>
         </Reveal>
       </div>
@@ -435,15 +434,14 @@ const ValuesSection = ({ onApply }: { onApply: () => void }) => (
         </p>
       </Reveal>
       <Reveal delay={0.3}>
-        <button onClick={onApply}
+        <button onClick={onApply} disabled aria-label="The Directive is sold out"
           style={{
             fontFamily: body, fontSize: 14, fontWeight: 700, letterSpacing: '0.14em',
             color: '#fff', background: ink, textTransform: 'uppercase',
-            padding: '18px 36px', border: `1.5px solid ${ink}`, cursor: 'pointer',
-            transition: 'all .25s', marginTop: 36,
-          }}
-          className="hover:bg-[#2997FF] hover:border-[#2997FF]">
-          Apply for The Directive →
+            padding: '18px 36px', border: `1.5px solid ${ink}`, cursor: 'not-allowed',
+            opacity: 0.45, marginTop: 36,
+          }}>
+          Sold Out
         </button>
       </Reveal>
     </div>
@@ -453,13 +451,12 @@ const ValuesSection = ({ onApply }: { onApply: () => void }) => (
 /* ══════════════════════════════════════════════════════
    GIANT CTA — DIRECT.
    ══════════════════════════════════════════════════════ */
-const GiantCTA = ({ onApply }: { onApply: () => void }) => (
-  <section onClick={onApply}
+const GiantCTA = ({ onApply: _onApply }: { onApply: () => void }) => (
+  <section
     style={{
       background: ink, padding: '100px 24px 70px',
-      cursor: 'pointer', borderTop: `1px solid ${ink}`,
-    }}
-    role="button" aria-label="Apply for The Directive">
+      borderTop: `1px solid ${ink}`,
+    }}>
     <div className="max-w-[1440px] mx-auto text-center">
       <Reveal>
         <p style={{
@@ -483,7 +480,7 @@ const GiantCTA = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 14, fontWeight: 500, letterSpacing: '0.06em',
           color: paper, opacity: 0.7, marginTop: 32, textTransform: 'uppercase',
         }}>
-          Click anywhere &nbsp;→&nbsp; Apply for The Directive
+          Applications Closed &nbsp;·&nbsp; Sold Out
         </p>
       </Reveal>
     </div>
@@ -571,13 +568,13 @@ const BoldFooter = () => (
 const MobileStickyCTA = ({ onApply }: { onApply: () => void }) => (
   <div className="fixed bottom-0 left-0 right-0 md:hidden z-40"
     style={{ background: ink, padding: '12px 16px', borderTop: `1px solid ${paper}33` }}>
-    <button onClick={onApply}
+    <button onClick={onApply} disabled aria-label="The Directive is sold out"
       style={{
         fontFamily: body, fontSize: 13, fontWeight: 700, letterSpacing: '0.14em',
         color: ink, background: paper, padding: '14px 0', width: '100%',
-        border: 'none', cursor: 'pointer', textTransform: 'uppercase',
+        border: 'none', cursor: 'not-allowed', opacity: 0.5, textTransform: 'uppercase',
       }}>
-      Apply for The Directive
+      Sold Out
     </button>
   </div>
 );
@@ -588,7 +585,9 @@ const MobileStickyCTA = ({ onApply }: { onApply: () => void }) => (
 const BoldDirective = () => {
   const [applyOpen, setApplyOpen] = useState(false);
 
-  const openApply = () => setApplyOpen(true);
+  // The Directive is currently sold out. CTAs are relabeled "Sold Out" and
+  // this handler is a no-op, so the application modal can never open.
+  const openApply = () => {};
 
   return (
     <div style={{ background: paper, fontFamily: body, color: ink }}>

@@ -37,9 +37,8 @@ const Partnership = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: '0.4s' }}>
-            <Button className="btn-primary text-lg px-8 py-4">
-              Apply for Partnership
-              <ArrowRight className="w-5 h-5 ml-2" />
+            <Button disabled className="btn-primary text-lg px-8 py-4 opacity-50 cursor-not-allowed">
+              Sold Out
             </Button>
             <VideoModal
               trigger={
@@ -245,8 +244,8 @@ const Partnership = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Button className="btn-primary text-lg px-8 py-4">
-              Start Application Process
+            <Button disabled className="btn-primary text-lg px-8 py-4 opacity-50 cursor-not-allowed">
+              Sold Out
             </Button>
           </div>
         </div>
@@ -307,8 +306,8 @@ const Partnership = () => {
 
       {/* Sticky CTA for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 bg-dark-card border-t border-primary/20 p-4 md:hidden z-40">
-        <Button className="btn-primary w-full">
-          Apply for Partnership
+        <Button disabled className="btn-primary w-full opacity-50 cursor-not-allowed">
+          Sold Out
         </Button>
       </div>
 

@@ -151,8 +151,8 @@ const coachingPrograms: Program[] = [
       'Priority support for your entire team',
     ],
     price: '$1,500/mo',
-    soldOut: false,
-    action: { kind: 'link', cta: 'Secure Now', href: 'https://buy.stripe.com/bJe6oHdhk6iy7K035y4Vy08', external: true },
+    soldOut: true,
+    action: { kind: 'sold-out' },
   },
   {
     label: 'Membership',
