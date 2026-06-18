@@ -104,7 +104,7 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
             fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.85, maxWidth: 680,
           }}>
-            The Team Standard is an accountability system for the people your agency runs on. I run it, inside their world, with you out of the room.
+            The Team Standard is an accountability system for the people your agency runs on. I become the teammate they did not know they were missing, and everything I see comes straight back to you.
           </p>
         </Reveal>
         <Reveal delay={0.3} className="col-span-12 md:col-span-5 flex md:justify-end items-start">
@@ -140,7 +140,7 @@ const MarqueeBands = () => (
   <div style={{ background: paper, padding: '40px 0', position: 'relative', overflow: 'hidden' }}>
     <Marquee rotate={-3} bg={ink} color={paper} dot={blue} phrase="ONE TEAM, ONE STANDARD" />
     <div style={{ marginTop: -24 }}>
-      <Marquee rotate={2.5} bg={paper} color={ink} dot={ink} phrase="YOU LIVE IN THE REPORT" />
+      <Marquee rotate={2.5} bg={paper} color={ink} dot={ink} phrase="A MAN ON THE INSIDE" />
     </div>
     <style>{`
       @keyframes sp-marquee {
@@ -182,7 +182,7 @@ const WhyNeverTruth = () => (
       </Reveal>
       <Reveal delay={0.14}>
         <p style={{ fontFamily: body, fontSize: 'clamp(17px, 1.6vw, 22px)', fontWeight: 400, lineHeight: 1.55, color: ink, opacity: 0.9, marginBottom: 48 }}>
-          Your sales manager coaches on vibes, because nothing is declared and nothing is on the board.
+          Your sales manager coaches on vibes, because nothing is on the board and nobody is holding the line.
         </p>
       </Reveal>
       <Reveal delay={0.18}>
@@ -321,15 +321,19 @@ const WhyDifferent = () => (
 const howBlocks = [
   {
     label: 'Where it lives',
-    body: 'A private channel for your team, just them and me. We run on voice notes, not text, because a voice note carries tone and conviction a typed message never will. Your sales manager may sit in that channel, and on the calls, if I decide it serves the team. That is my call to make.',
+    body: [
+      'A private channel for your team, just them and me. We run on voice notes, not text, because a voice note carries tone and conviction a typed message never will.',
+      'Your sales manager may sit in that channel, and on the calls, if I decide it serves the team. That is my call to make.',
+      'You step back from this room on purpose. A team that tells the truth without the boss watching is the strongest team you can build, and the day you are in the room is the day the truth leaves it. You are not shut out. I am your man on the inside, and everything I see comes straight back to you.',
+    ],
   },
   {
     label: 'The weekly rhythm',
-    body: 'Three drops a week. Monday, they declare where their head is and the one domino they are knocking down. Wednesday, where are you at. Friday, on track or off track. In between, they bring me questions whenever they need to, and I answer in the morning and at night, never in the noise of the business day.',
+    body: 'Three drops a week. Monday, they declare where their head is, the one domino they are chasing, and their own goals. Wednesday, where are you at. Friday, on track or off track. In between, they bring me questions whenever they need to, and I answer in the morning and at night, never in the noise of the business day.',
   },
   {
     label: 'The report',
-    body: 'The day before every call, your sales manager sends the team\'s snapshot. The four numbers. I never chase data. No snapshot, no call.',
+    body: 'The day before every call, your sales manager sends the team\'s snapshot. The numbers you set. I never chase data. No snapshot, no call.',
   },
   {
     label: 'The call',
@@ -357,18 +361,6 @@ const HowItWorks = () => (
         </Reveal>
       </div>
 
-      {/* Owner-out emphasis (prominent) */}
-      <Reveal>
-        <div style={{ background: ink, color: paper, padding: '40px 32px', marginBottom: 48 }}>
-          <p style={{
-            fontFamily: display, fontSize: 'clamp(22px, 3vw, 42px)', lineHeight: 1.05,
-            letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', fontWeight: 400, margin: 0,
-          }}>
-            You, the owner, are never in the channel and never on the calls. That is not a preference. It is the whole point. The day you are in the room is the day the truth leaves it.
-          </p>
-        </div>
-      </Reveal>
-
       <div style={{ borderTop: `1px solid ${ink}` }}>
         {howBlocks.map((b, i) => (
           <Reveal key={b.label} delay={i * 0.06}>
@@ -389,9 +381,11 @@ const HowItWorks = () => (
                   </h3>
                 </div>
                 <div className="col-span-12 md:col-span-8">
-                  <p style={{ fontFamily: body, fontSize: 'clamp(16px, 1.5vw, 19px)', fontWeight: 400, lineHeight: 1.6, color: ink, opacity: 0.85 }}>
-                    {b.body}
-                  </p>
+                  {(Array.isArray(b.body) ? b.body : [b.body]).map((para, j, arr) => (
+                    <p key={j} style={{ fontFamily: body, fontSize: 'clamp(16px, 1.5vw, 19px)', fontWeight: 400, lineHeight: 1.6, color: ink, opacity: 0.85, margin: 0, marginBottom: j < arr.length - 1 ? 18 : 0 }}>
+                      {para}
+                    </p>
+                  ))}
                 </div>
               </div>
             </div>
@@ -404,7 +398,7 @@ const HowItWorks = () => (
           fontFamily: display, fontSize: 'clamp(28px, 4.4vw, 60px)', lineHeight: 1.02,
           letterSpacing: '-0.01em', color: ink, textTransform: 'uppercase', fontWeight: 400, marginTop: 56,
         }}>
-          You are not in the room. You are in the <span style={{ color: blue }}>report</span>.
+          You put a man on the <span style={{ color: blue }}>inside</span>. Everything that happens in that room comes back to you.
         </p>
       </Reveal>
     </div>
@@ -419,8 +413,8 @@ const getCards = [
   { title: 'Me in their pocket', body: 'They send a voice note when they are stuck. I answer before the day starts and after it ends, so it never becomes noise in the middle of their day.' },
   { title: 'Three drops a week', body: 'Monday declare, Wednesday check, Friday verdict. A standing rhythm that keeps the standard in front of them.' },
   { title: 'The accountability call', body: 'A fifty minute owner-free call, built on the scoreboard, run the same way every time.' },
-  { title: 'The scoreboard', body: 'Every person\'s numbers, in front of each other, every cycle. Nowhere to hide.' },
-  { title: 'Your report, every cycle', body: 'Who moved, who slipped, who is pulling weight. The truth in your hands, without you in the room.' },
+  { title: 'The scoreboard', body: 'Every person\'s numbers, against the bar you set, in front of each other, every cycle. Nowhere to hide.' },
+  { title: 'Your report, every cycle', body: 'Who moved, who slipped, who is pulling weight. The truth in your hands, so you lead with better information than you have ever had.' },
   { title: 'A sales manager who holds the line', body: 'Week by week, your manager learns to run the rhythm and hold the standard.' },
 ];
 
@@ -681,15 +675,19 @@ const OfferAndFilter = ({ onApply }: { onApply: () => void }) => (
 const faq = [
   {
     q: 'Why am I not in the room?',
-    a: 'The room is owner-free so the truth shows up. The day you are in it is the day they go back to performing. You live in the report, and the report shows you more than the room ever did: who moved, who slipped, who is pulling weight.',
+    a: 'Because the day you are in it is the day they go back to performing. This is a leadership move, not a demotion. You put a man on the inside, and you see more than you ever did from inside the room: who moved, who slipped, who is pulling weight, all of it comes straight back to you.',
   },
   {
-    q: 'Who sets the numbers?',
-    a: 'You do, or your manager does. The four you care about, outbound calls, quoted households, talk time, items, or whatever you choose. The team does not get to set their own bar. They report against yours, and they bring their own weekly domino and personal goals on top of it.',
+    q: 'Will bringing in a third party undermine me with my team?',
+    a: 'No. This runs back to you, not around you. You set the targets, you hold the consequences, and I coach them toward your standard, not mine. You are the one who built the accountability, so you come out with more authority, not less. I am on your side of the table, always.',
   },
   {
     q: 'How is this different from coaching my team, or sales training?',
     a: 'Training fixes a skill gap. This fixes a truth and accountability gap. You set the numbers, I run the standard and hold them to it. I am not teaching them to sell.',
+  },
+  {
+    q: 'Who sets the numbers?',
+    a: 'You do, or your manager does. The four you care about, outbound calls, quoted households, talk time, items, or whatever you choose. The team does not get to set their own bar. They report against yours, and they bring their own weekly domino and personal goals on top of it.',
   },
   {
     q: 'Why is it more than other coaching I have seen?',
@@ -697,7 +695,7 @@ const faq = [
   },
   {
     q: 'My team will not be honest.',
-    a: 'That is the whole reason the call is owner-free, and the whole reason we start with what they declare, not what I impose. The board does the rest.',
+    a: 'That is the whole reason the call is owner-free. With you out of the room, the real story finally comes out. The board does the rest.',
   },
   {
     q: 'Can you guarantee a number?',
@@ -781,7 +779,7 @@ const FinalClose = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 'clamp(16px, 1.8vw, 22px)', fontWeight: 500, letterSpacing: '0.04em',
           color: paper, opacity: 0.8, textTransform: 'uppercase', margin: '36px 0 44px',
         }}>
-          You stay out of the room. You live in the report.
+          You build the team that tells it. I make sure the truth gets to you.
         </p>
       </Reveal>
       <Reveal delay={0.18}>
