@@ -702,6 +702,7 @@ const coachingPrograms: ProgramRow[] = [
     ],
     href: '/directive',
     cta: 'Apply →',
+    soldOut: true,
   },
   {
     num: '07',
@@ -812,6 +813,7 @@ const ProgramRowItem = ({ p, expanded, onToggle }: { p: ProgramRow; expanded: bo
           gridTemplateColumns: '60px 1fr auto auto auto',
           gap: 20,
           alignItems: 'center',
+          position: 'relative',
         }}
       >
         <span style={{
@@ -860,11 +862,11 @@ const ProgramRowItem = ({ p, expanded, onToggle }: { p: ProgramRow; expanded: bo
         </span>
         {isSoldOut ? (
           <span style={{
-            fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.14em',
-            color: '#fff', background: ink, padding: '8px 14px', textTransform: 'uppercase',
-            whiteSpace: 'nowrap',
+            fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.14em',
+            color: ink, textTransform: 'uppercase', padding: '10px 18px',
+            border: `1.5px solid ${ink}`, whiteSpace: 'nowrap', opacity: 0.3,
           }}>
-            Sold Out
+            {p.cta || 'Apply →'}
           </span>
         ) : (
           <a
@@ -897,6 +899,32 @@ const ProgramRowItem = ({ p, expanded, onToggle }: { p: ProgramRow; expanded: bo
         >
           +
         </span>
+
+        {isSoldOut && (
+          <motion.div
+            aria-hidden
+            initial={{ scale: 3.4, opacity: 0, rotate: -16 }}
+            whileInView={{ scale: 1, opacity: 1, rotate: -7 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ type: 'spring', stiffness: 300, damping: 13, mass: 0.9, delay: 0.1 }}
+            style={{
+              position: 'absolute', inset: 0, zIndex: 5,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              pointerEvents: 'none',
+            }}
+          >
+            <span style={{
+              fontFamily: display, fontSize: 'clamp(26px, 4.5vw, 46px)',
+              color: '#D4332A', letterSpacing: '0.04em', textTransform: 'uppercase',
+              padding: '4px 22px', lineHeight: 1, whiteSpace: 'nowrap',
+              border: '4px solid #D4332A', outline: '2px solid #D4332A', outlineOffset: '4px',
+              borderRadius: 6, background: 'rgba(212,51,42,0.06)',
+              boxShadow: '0 8px 22px rgba(0,0,0,0.22)', opacity: 0.95,
+            }}>
+              Sold Out
+            </span>
+          </motion.div>
+        )}
       </div>
 
       <motion.div

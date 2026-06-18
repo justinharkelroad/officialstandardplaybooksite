@@ -71,7 +71,8 @@ export interface TierRoute {
 const ACUITY = 'https://AGENCYCOACHING.as.me/MIRROR';
 const BOARDROOM_HREF = '/boardroom';
 const EIGHTWEEK_HREF = '/8-week-apply';
-const DIRECTIVE_HREF = '/directive';
+const STANDARD90_HREF = '/standard90';
+const TEAMSTANDARD_HREF = '/team-standard';
 
 /** The always-available "soft" CTA: book a 45-min Mirror call. */
 export const BOOKING_CTA: TierRoute = {
@@ -136,21 +137,27 @@ export const routeForResult = (tier: Tier, weakest: PillarKey): TierRoute => {
       brevoTag: `tier:established+pillar:${weakest}`,
     };
   }
-  if (tier === 'advanced') {
+  if (tier === 'advanced' || tier === 'elite') {
+    // Directive + Partnership are sold out, so the top tiers route to the
+    // by-application offers. A team-pillar weakness goes to The Team Standard
+    // (fix the team); anything else goes to Standard 90 (owner-level 1:1).
+    if (weakest === 'culture_team') {
+      return {
+        ctaLabel: 'Apply for The Team Standard',
+        ctaHref: TEAMSTANDARD_HREF,
+        ctaKind: 'internal',
+        brevoTag: `tier:${tier}+pillar:${weakest}`,
+      };
+    }
     return {
-      ctaLabel: 'Apply for The Directive',
-      ctaHref: DIRECTIVE_HREF,
+      ctaLabel: 'Apply for Standard 90',
+      ctaHref: STANDARD90_HREF,
       ctaKind: 'internal',
-      brevoTag: `tier:advanced+pillar:${weakest}`,
+      brevoTag: `tier:${tier}+pillar:${weakest}`,
     };
   }
-  // elite — Partnership currently sold out, route to Directive per the brief.
-  return {
-    ctaLabel: 'Apply for The Directive',
-    ctaHref: DIRECTIVE_HREF,
-    ctaKind: 'internal',
-    brevoTag: `tier:elite+pillar:${weakest}`,
-  };
+  // Fallback (all tiers handled above; keeps the return type total).
+  return BOOKING_CTA;
 };
 
 /** Single-word page-closer per tier route (matches Bold pattern). */
