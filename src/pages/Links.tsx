@@ -389,7 +389,7 @@ const Links = () => {
         {/* Eyebrow / logo */}
         <Reveal className="flex items-center justify-between">
           <Link to="/" style={{ display: 'inline-block' }}>
-            <img src={standardLogo} alt="Standard Playbook" style={{ height: 26, width: 'auto' }} />
+            <img src={standardLogo} alt="Standard Playbook" style={{ height: 26, width: 'auto', filter: 'brightness(0)' }} />
           </Link>
           <span style={{
             fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.2em',
