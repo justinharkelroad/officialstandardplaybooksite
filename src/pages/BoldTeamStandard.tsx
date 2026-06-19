@@ -24,7 +24,7 @@ const blue = '#2997FF';
   the booking calendar (see ApplyModal / BOOKING_URL below).
   To change the calendar, edit BOOKING_URL in one place.
 */
-const BOOKING_URL = 'https://AGENCYCOACHING.as.me/?appointmentType=94542884';
+const BOOKING_URL = 'https://AGENCYCOACHING.as.me/teamstandard';
 
 const CTA_MICROCOPY = 'A short call to see if your team is a fit. If it is not, I will tell you.';
 
