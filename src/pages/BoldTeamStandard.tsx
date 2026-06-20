@@ -98,17 +98,38 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
         </Reveal>
       </div>
 
-      <div className="grid grid-cols-12 gap-6 mt-12">
-        <Reveal delay={0.2} className="col-span-12 md:col-span-7">
+      <div className="grid grid-cols-12 gap-8 mt-12 items-center">
+        <Reveal delay={0.2} className="col-span-12 md:col-span-6">
           <p style={{
             fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55,
-            color: ink, opacity: 0.85, maxWidth: 680,
+            color: ink, opacity: 0.85, maxWidth: 620,
           }}>
             The Team Standard is an accountability system for the people your agency runs on. I become the teammate they did not know they were missing, and everything I see comes straight back to you.
           </p>
+          <div style={{ marginTop: 32 }}>
+            <PrimaryCTA onApply={onApply} />
+          </div>
         </Reveal>
-        <Reveal delay={0.3} className="col-span-12 md:col-span-5 flex md:justify-end items-start">
-          <PrimaryCTA onApply={onApply} />
+
+        {/* Square (1:1) hero video */}
+        <Reveal delay={0.3} className="col-span-12 md:col-span-6">
+          <div style={{
+            position: 'relative', background: ink, padding: 8,
+            width: '100%', maxWidth: 560, marginInline: 'auto',
+            boxShadow: '0 36px 70px -18px rgba(0,0,0,0.55)',
+          }}>
+            <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', background: '#000', overflow: 'hidden' }}>
+              <video
+                src="/team-standard-hero.mp4"
+                poster="/team-standard-poster.jpg"
+                controls
+                playsInline
+                preload="metadata"
+                className="absolute inset-0 w-full h-full"
+                style={{ objectFit: 'cover', display: 'block' }}
+              />
+            </div>
+          </div>
         </Reveal>
       </div>
     </div>
