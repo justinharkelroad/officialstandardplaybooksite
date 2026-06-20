@@ -26,6 +26,10 @@ const blue = '#2997FF';
 */
 const BOOKING_URL = 'https://AGENCYCOACHING.as.me/teamstandard';
 
+// Hero video (square / 1:1). Vimeo embed url; poster shows if it is ever emptied.
+const HERO_VIDEO_EMBED = 'https://player.vimeo.com/video/1203069018?title=0&byline=0&portrait=0';
+const HERO_VIDEO_POSTER = '/team-standard-poster.jpg';
+
 const CTA_MICROCOPY = 'A short call to see if your team is a fit. If it is not, I will tell you.';
 
 /* ── Reveal helper ─────────────────────────────────────── */
@@ -119,15 +123,23 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
             boxShadow: '0 36px 70px -18px rgba(0,0,0,0.55)',
           }}>
             <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', background: '#000', overflow: 'hidden' }}>
-              <video
-                src="/team-standard-hero.mp4"
-                poster="/team-standard-poster.jpg"
-                controls
-                playsInline
-                preload="metadata"
-                className="absolute inset-0 w-full h-full"
-                style={{ objectFit: 'cover', display: 'block' }}
-              />
+              {HERO_VIDEO_EMBED ? (
+                <iframe
+                  src={HERO_VIDEO_EMBED}
+                  title="The Team Standard"
+                  className="absolute inset-0 w-full h-full"
+                  style={{ border: 0 }}
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+                  allowFullScreen
+                />
+              ) : (
+                <img
+                  src={HERO_VIDEO_POSTER}
+                  alt="The Team Standard"
+                  className="absolute inset-0 w-full h-full"
+                  style={{ objectFit: 'cover' }}
+                />
+              )}
             </div>
           </div>
         </Reveal>
