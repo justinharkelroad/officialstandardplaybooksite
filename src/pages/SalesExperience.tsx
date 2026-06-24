@@ -848,6 +848,133 @@ const SuccessStory = () => (
           />
         </div>
       </Reveal>
+      <Reveal delay={0.3}>
+        <figure
+          className="max-w-[760px] mx-auto"
+          style={{
+            marginTop: 64,
+            padding: '40px 32px',
+            background: 'rgba(255,255,255,0.04)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: 16,
+          }}
+        >
+          <blockquote
+            style={{
+              fontFamily: sf,
+              fontSize: 'clamp(19px, 2.4vw, 24px)',
+              fontWeight: 500,
+              lineHeight: 1.4,
+              letterSpacing: '-0.4px',
+              color: '#fff',
+              margin: 0,
+            }}
+          >
+            "I've learned a lot from this process — a lot about myself as a manager and
+            leader as well. I feel that I can move forward a lot more confidently knowing
+            what questions to ask myself and being a bit more inquisitive rather than
+            jumping into action that may not be the most efficient or produce the best
+            outcome. You've really taught me not just <em>to think</em> but{' '}
+            <em>how</em> to think in just 7 hours which is wild."
+          </blockquote>
+          <figcaption
+            style={{
+              fontFamily: sf,
+              fontSize: 15,
+              fontWeight: 600,
+              letterSpacing: '-0.2px',
+              color: 'rgba(255,255,255,0.48)',
+              marginTop: 24,
+            }}
+          >
+            — Mike V.
+          </figcaption>
+        </figure>
+      </Reveal>
+      <Reveal delay={0.4}>
+        <figure
+          className="max-w-[760px] mx-auto"
+          style={{
+            marginTop: 24,
+            padding: '40px 32px',
+            background: 'rgba(255,255,255,0.04)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: 16,
+          }}
+        >
+          <blockquote
+            style={{
+              fontFamily: sf,
+              fontSize: 'clamp(19px, 2.4vw, 24px)',
+              fontWeight: 500,
+              lineHeight: 1.4,
+              letterSpacing: '-0.4px',
+              color: '#fff',
+              margin: 0,
+            }}
+          >
+            "Creating and enforcing a standard is something every leader needs help with.
+            Working with Justin was a game changer — you don't realize what you're missing
+            until you have someone who truly understands your challenges and helps deliver
+            results that matter. Accountability was something I struggled to implement, but
+            once we established and enforced our own standards, it forced everyone to level
+            up."
+          </blockquote>
+          <figcaption
+            style={{
+              fontFamily: sf,
+              fontSize: 15,
+              fontWeight: 600,
+              letterSpacing: '-0.2px',
+              color: 'rgba(255,255,255,0.48)',
+              marginTop: 24,
+            }}
+          >
+            — Luis S.
+          </figcaption>
+        </figure>
+      </Reveal>
+      <Reveal delay={0.5}>
+        <figure
+          className="max-w-[760px] mx-auto"
+          style={{
+            marginTop: 24,
+            padding: '40px 32px',
+            background: 'rgba(255,255,255,0.04)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: 16,
+          }}
+        >
+          <blockquote
+            style={{
+              fontFamily: sf,
+              fontSize: 'clamp(19px, 2.4vw, 24px)',
+              fontWeight: 500,
+              lineHeight: 1.4,
+              letterSpacing: '-0.4px',
+              color: '#fff',
+              margin: 0,
+            }}
+          >
+            "Working with Justin over the 8-week training was eye-opening and
+            transformative — he showed me how to become a stronger, more accountable leader
+            for my team and can truly bulletproof your agency, as long as you're able to
+            hold yourself accountable as well."
+          </blockquote>
+          <figcaption
+            style={{
+              fontFamily: sf,
+              fontSize: 15,
+              fontWeight: 600,
+              letterSpacing: '-0.2px',
+              color: 'rgba(255,255,255,0.48)',
+              marginTop: 24,
+            }}
+          >
+            — Jonas B.
+          </figcaption>
+        </figure>
+      </Reveal>
     </div>
   </section>
 );
