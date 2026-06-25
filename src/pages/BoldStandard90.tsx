@@ -37,8 +37,10 @@ const CTA_MICROCOPY = 'A 90-minute call to see if your agency is a fit. If it is
     YouTube: https://www.youtube.com/embed/abcdEFGH?autoplay=1&mute=1&loop=1&playlist=abcdEFGH
   While it is empty the hero shows the static poster image instead of a broken frame.
 */
-const HERO_VIDEO_EMBED = 'https://player.vimeo.com/video/1201628490?title=0&byline=0&portrait=0';
-const HERO_VIDEO_POSTER = '/standard90-video-poster.jpg';
+// Self-hosted first-party native video (was Vimeo 1201628490, which 401'd at Vimeo's edge
+// despite public settings). While src is empty the hero shows the static poster instead.
+const HERO_VIDEO_SRC = '/video/standard90-hero.mp4';
+const HERO_VIDEO_POSTER = '/video/standard90-hero-poster.jpg';
 
 /* ── Reveal helper ─────────────────────────────────────── */
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
@@ -146,14 +148,16 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
             boxShadow: '0 36px 70px -18px rgba(0,0,0,0.55)',
           }}>
             <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', background: '#000', overflow: 'hidden' }}>
-              {HERO_VIDEO_EMBED ? (
-                <iframe
-                  src={HERO_VIDEO_EMBED}
+              {HERO_VIDEO_SRC ? (
+                <video
+                  src={HERO_VIDEO_SRC}
+                  poster={HERO_VIDEO_POSTER}
+                  controls
+                  playsInline
+                  preload="metadata"
                   title="The Standard 90"
                   className="absolute inset-0 w-full h-full"
-                  style={{ border: 0 }}
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
-                  allowFullScreen
+                  style={{ border: 0, objectFit: 'cover' }}
                 />
               ) : (
                 <img
