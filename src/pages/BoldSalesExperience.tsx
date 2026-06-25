@@ -631,15 +631,15 @@ Dan Westrick, Allstate Agency Owner
             boxShadow: '0 36px 70px -18px rgba(0,0,0,0.65)',
             maxWidth: 360, marginLeft: 'auto',
           }}>
-            <iframe
-              src="https://fast.wistia.net/embed/iframe/p5r3aelfj0?autoPlay=false&fullscreenButton=true&playButton=true&smallPlayButton=true&volumeControl=true&controlsVisibleOnLoad=true"
+            <video
+              src="/video/westrick-testimonial.mp4"
+              poster="/video/westrick-testimonial-poster.jpg"
+              controls
+              playsInline
+              preload="metadata"
               title="Dan Westrick Success Story"
-              allow="autoplay; fullscreen"
-              allowFullScreen
-              frameBorder="0"
-              scrolling="no"
               className="w-full"
-              style={{ aspectRatio: '9/16', border: 'none', display: 'block' }}
+              style={{ aspectRatio: '9/16', border: 'none', display: 'block', background: '#000' }}
             />
           </div>
         </Reveal>
