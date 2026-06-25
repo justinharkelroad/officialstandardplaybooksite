@@ -644,6 +644,48 @@ Dan Westrick, Allstate Agency Owner
           </div>
         </Reveal>
       </div>
+
+      <div className="grid grid-cols-12 gap-8" style={{ marginTop: 96 }}>
+        {[
+          {
+            quote: "I've learned a lot from this process — a lot about myself as a manager and leader as well. I feel that I can move forward a lot more confidently knowing what questions to ask myself and being a bit more inquisitive rather than jumping into action that may not be the most efficient or produce the best outcome. You've really taught me not just to think but how to think in just 7 hours which is wild.",
+            name: 'Mike V.',
+          },
+          {
+            quote: "Creating and enforcing a standard is something every leader needs help with. Working with Justin was a game changer — you don't realize what you're missing until you have someone who truly understands your challenges and helps deliver results that matter. Accountability was something I struggled to implement, but once we established and enforced our own standards, it forced everyone to level up.",
+            name: 'Luis S.',
+          },
+          {
+            quote: "Working with Justin over the 8-week training was eye-opening and transformative — he showed me how to become a stronger, more accountable leader for my team and can truly bulletproof your agency, as long as you're able to hold yourself accountable as well.",
+            name: 'Jonas B.',
+          },
+        ].map((t, i) => (
+          <Reveal key={t.name} delay={0.1 + i * 0.1} className="col-span-12 md:col-span-4">
+            <figure style={{
+              height: '100%',
+              background: 'rgba(255,255,255,0.04)',
+              borderTop: `2px solid ${blue}`,
+              padding: '32px 28px',
+              margin: 0,
+              display: 'flex',
+              flexDirection: 'column',
+            }}>
+              <blockquote style={{
+                fontFamily: body, fontSize: 16, lineHeight: 1.6,
+                color: paper, opacity: 0.92, margin: 0, flex: 1,
+              }}>
+                "{t.quote}"
+              </blockquote>
+              <figcaption style={{
+                fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.16em',
+                color: paper, opacity: 0.7, textTransform: 'uppercase', marginTop: 24,
+              }}>
+                — {t.name}
+              </figcaption>
+            </figure>
+          </Reveal>
+        ))}
+      </div>
     </div>
   </section>
 );
