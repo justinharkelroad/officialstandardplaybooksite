@@ -18,6 +18,10 @@ interface BookingOnboardingFormProps {
   /** Call length shown in the form copy (e.g. "45-min", "60-min").
    *  Defaults to "45-min" so existing booking flows are unchanged. */
   callLengthLabel?: string;
+  /** Program this booking is for (e.g. "8-Week Sales Management Experience").
+   *  When set, the form names the program so it reads as a program-specific
+   *  booking, not a generic fit form. Defaults to undefined (unchanged). */
+  programName?: string;
 }
 
 interface FormData {
@@ -95,7 +99,7 @@ const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement |
   e.currentTarget.style.background = 'transparent';
 };
 
-const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRedirectUrl, callLengthLabel = '45-min' }: BookingOnboardingFormProps) => {
+const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRedirectUrl, callLengthLabel = '45-min', programName }: BookingOnboardingFormProps) => {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -224,7 +228,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
       }).catch(err => console.error('Email notification error:', err));
       if (typeof window !== 'undefined' && typeof (window as any).fbq === 'function') {
         (window as any).fbq('track', 'Lead', {
-          content_name: 'Strategy Call Pre-Form',
+          content_name: programName ? `${programName} Pre-Form` : 'Strategy Call Pre-Form',
           source,
         });
       }
@@ -335,13 +339,24 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
         fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.18em',
         color: blue, textTransform: 'uppercase', marginBottom: 10,
       }}>
-        / {step === 1 && source === 'standard-fit' ? 'Background Info' : (step === 1 ? 'Contact' : 'About You')}
+        / {programName
+          ? programName
+          : (step === 1 && source === 'standard-fit' ? 'Background Info' : (step === 1 ? 'Contact' : 'About You'))}
       </p>
       <h2 style={headlineStyle}>
         {step === 1
-          ? (source === 'standard-fit' ? 'Background\nInfo for Call' : 'Contact\nInformation.')
+          ? (programName ? 'Book Your\n8-Week Call.' : (source === 'standard-fit' ? 'Background\nInfo for Call' : 'Contact\nInformation.'))
           : 'Tell Us\nAbout You.'}
       </h2>
+
+      {programName && step === 1 && (
+        <p style={{
+          fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.55,
+          color: ink, opacity: 0.7, marginTop: 14,
+        }}>
+          Two quick steps, then you book your {programName} call. This is the 8-Week call, not a general fit call.
+        </p>
+      )}
 
       <div style={{ height: 1, background: ink, opacity: 0.15, margin: '24px 0 20px' }} />
 

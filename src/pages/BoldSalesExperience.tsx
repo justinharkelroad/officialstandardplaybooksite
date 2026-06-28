@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
@@ -27,6 +27,21 @@ const ink = '#0A0A0B';
 const paper = '#F4F2EE';
 const blue = '#2997FF';
 
+/*
+ * SINGLE CTA DESTINATION.
+ * This page has exactly one job: get the right agency owner to book their
+ * 8-Week call. Every primary CTA opens the site-native booking flow
+ * (StandardFitModal -> BookingOnboardingForm -> Acuity scheduler) and routes
+ * to the 8-WEEK scheduler below, NOT the general fit-call link. The modal is
+ * named to the program so captured leads are 8-Week leads you can market to.
+ * To repoint the scheduler, change BOOK_URL in this one place.
+ */
+const BOOK_URL = 'https://AGENCYCOACHING.as.me/8week';
+const CTA_LABEL = 'Book Your 8-Week Call';
+const CTA_MICROCOPY = 'Book a short call. We will make sure the 8-Week fits your agency, then get you started.';
+const CTA_SOURCE = '8-week-sales-experience';
+const PROGRAM_NAME = '8-Week Sales Management Experience';
+
 /* ── Reveal helper ─────────────────────────────────────── */
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
   <motion.div
@@ -40,91 +55,109 @@ const Reveal = ({ children, className = '', delay = 0 }: { children: React.React
   </motion.div>
 );
 
-
-/* ══════════════════════════════════════════════════════
-   HERO
-   ══════════════════════════════════════════════════════ */
-const Hero = ({ autoOpenBooking = false }: { autoOpenBooking?: boolean }) => {
-  const [open, setOpen] = useState(autoOpenBooking);
-
+/* ── Primary CTA (button + 8-Week booking microcopy) ───── */
+const PrimaryCTA = ({
+  onApply,
+  align = 'left',
+  onDark = false,
+  size = 'md',
+}: {
+  onApply: () => void;
+  align?: 'left' | 'center';
+  onDark?: boolean;
+  size?: 'md' | 'lg';
+}) => {
+  const btnFill = onDark ? paper : ink;
+  const btnText = onDark ? ink : '#fff';
+  const microColor = onDark ? paper : ink;
+  const pad = size === 'lg' ? '18px 38px' : '15px 30px';
+  const fontSize = size === 'lg' ? 15 : 13;
   return (
-    <section style={{ background: paper, paddingTop: 56 + 24, paddingBottom: 60, position: 'relative', overflow: 'hidden' }}>
-      <div className="px-6 md:px-10 max-w-[1440px] mx-auto relative">
-        <Reveal>
-          <p style={{
-            fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-            color: ink, textTransform: 'uppercase', marginBottom: 24,
-          }}>
-            / 8-Week Experience
-          </p>
-        </Reveal>
-
-        <div className="grid grid-cols-12 gap-6 md:gap-6 items-start relative">
-          <Reveal className="col-span-12 md:col-span-9 relative z-20">
-            <h1 style={{
-              fontFamily: display,
-              fontSize: 'clamp(40px, 10vw, 180px)',
-              lineHeight: 0.9, letterSpacing: '-0.02em',
-              color: ink, margin: 0, textTransform: 'uppercase', fontWeight: 400,
-            }}>
-              STOP MANAGING<br />
-              <span className="md:pl-[4vw] inline-block">CHAOS. START</span><br />
-              <span className="md:pl-[12vw] inline-block">RUNNING A SYSTEM.</span>
-            </h1>
-          </Reveal>
-
-          <Reveal delay={0.15} className="col-span-12 md:col-span-3 relative z-10 mt-12 md:mt-0 max-w-[70%] md:max-w-none mx-auto md:mx-0">
-            <motion.div
-              initial={{ rotate: 6, y: 20 }}
-              animate={{ rotate: 6 }}
-              className="md:[transform:rotate(11deg)]"
-              style={{
-                position: 'relative', aspectRatio: '3 / 4',
-                background: ink, overflow: 'hidden',
-                boxShadow: '0 36px 70px -18px rgba(0,0,0,0.55)',
-              }}>
-              <img src="/8-week-hero.jpg" alt="8 Week Experience"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%) contrast(1.05)' }} />
-            </motion.div>
-          </Reveal>
-        </div>
-
-        <div className="grid grid-cols-12 gap-6 mt-12">
-          <Reveal delay={0.25} className="col-span-12 md:col-span-6">
-            <p style={{
-              fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-              color: ink, textTransform: 'uppercase', lineHeight: 1.6, maxWidth: 460,
-            }}>
-              8 weeks. A documented sales process, an accountability framework, and a consequence ladder — installed in your agency. The framework, the software, and the <span style={{ color: blue }}>AI</span> that grades the calls you upload. Built by the operator who runs it.
-            </p>
-          </Reveal>
-          <Reveal delay={0.35} className="col-span-12 md:col-span-6 flex md:justify-end items-center gap-3">
-            <a href="#whats-included"
-              style={{
-                fontFamily: body, fontSize: 13, fontWeight: 600, letterSpacing: '0.12em',
-                color: ink, textTransform: 'uppercase', textDecoration: 'none',
-                padding: '14px 26px', border: `1.5px solid ${ink}`, transition: 'all .25s',
-              }}
-              className="hover:bg-black hover:text-white">
-              Learn More
-            </a>
-            <button onClick={() => setOpen(true)}
-              style={{
-                fontFamily: body, fontSize: 13, fontWeight: 700, letterSpacing: '0.12em',
-                color: '#fff', background: ink, textTransform: 'uppercase',
-                padding: '15px 28px', border: `1.5px solid ${ink}`, cursor: 'pointer', transition: 'all .25s',
-              }}
-              className="hover:bg-[#2997FF] hover:border-[#2997FF]">
-              Book a Strategy Call
-            </button>
-          </Reveal>
-        </div>
-
-        <StandardFitModal open={open} onOpenChange={setOpen} />
-      </div>
-    </section>
+    <div style={{ textAlign: align, marginTop: 8 }}>
+      <button
+        onClick={onApply}
+        style={{
+          fontFamily: body, fontSize, fontWeight: 700, letterSpacing: '0.12em',
+          color: btnText, background: btnFill, textTransform: 'uppercase',
+          padding: pad, border: `1.5px solid ${btnFill}`, cursor: 'pointer',
+          transition: 'all .25s',
+        }}
+        className="hover:bg-[#2997FF] hover:border-[#2997FF] hover:text-white"
+      >
+        {CTA_LABEL}
+      </button>
+      <p style={{
+        fontFamily: body, fontSize: 13, fontWeight: 400, lineHeight: 1.5,
+        color: microColor, opacity: 0.65, marginTop: 14, maxWidth: 420,
+        marginInline: align === 'center' ? 'auto' : undefined,
+      }}>
+        {CTA_MICROCOPY}
+      </p>
+    </div>
   );
 };
+
+/* ══════════════════════════════════════════════════════
+   1 - HERO
+   ══════════════════════════════════════════════════════ */
+const Hero = ({ onApply }: { onApply: () => void }) => (
+  <section style={{ background: paper, paddingTop: 56 + 24, paddingBottom: 60, position: 'relative', overflow: 'hidden' }}>
+    <div className="px-6 md:px-10 max-w-[1440px] mx-auto relative">
+      <Reveal>
+        <p style={{
+          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+          color: ink, textTransform: 'uppercase', marginBottom: 24,
+        }}>
+          / 8-Week Sales Management Experience
+        </p>
+      </Reveal>
+
+      <div className="grid grid-cols-12 gap-6 md:gap-6 items-start relative">
+        <Reveal className="col-span-12 md:col-span-9 relative z-20">
+          <h1 style={{
+            fontFamily: display,
+            fontSize: 'clamp(40px, 10vw, 180px)',
+            lineHeight: 0.9, letterSpacing: '-0.02em',
+            color: ink, margin: 0, textTransform: 'uppercase', fontWeight: 400,
+          }}>
+            STOP MANAGING<br />
+            <span className="md:pl-[4vw] inline-block">CHAOS. START</span><br />
+            <span className="md:pl-[12vw] inline-block">RUNNING A SYSTEM.</span>
+          </h1>
+        </Reveal>
+
+        <Reveal delay={0.15} className="col-span-12 md:col-span-3 relative z-10 mt-12 md:mt-0 max-w-[70%] md:max-w-none mx-auto md:mx-0">
+          <motion.div
+            initial={{ rotate: 6, y: 20 }}
+            animate={{ rotate: 6 }}
+            className="md:[transform:rotate(11deg)]"
+            style={{
+              position: 'relative', aspectRatio: '3 / 4',
+              background: ink, overflow: 'hidden',
+              boxShadow: '0 36px 70px -18px rgba(0,0,0,0.55)',
+            }}>
+            <img src="/8-week-hero.jpg" alt="8-Week Sales Management Experience" loading="eager" fetchPriority="high" decoding="async"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%) contrast(1.05)' }} />
+          </motion.div>
+        </Reveal>
+      </div>
+
+      <div className="grid grid-cols-12 gap-6 mt-12">
+        <Reveal delay={0.25} className="col-span-12 md:col-span-7">
+          <p style={{
+            fontFamily: body, fontSize: 17, fontWeight: 400, lineHeight: 1.6,
+            color: ink, opacity: 0.85, maxWidth: 620,
+          }}>
+            In eight weeks, your sales manager authors the sales process, the numbers, and the consequences your agency runs on. Written. Signed. Operating. Built by your team, not handed to them.
+          </p>
+        </Reveal>
+        <Reveal delay={0.35} className="col-span-12 md:col-span-5 flex md:justify-end items-start">
+          <PrimaryCTA onApply={onApply} align="left" />
+        </Reveal>
+      </div>
+    </div>
+  </section>
+);
 
 /* ══════════════════════════════════════════════════════
    MARQUEE
@@ -163,7 +196,7 @@ const MarqueeBands = () => (
 );
 
 /* ══════════════════════════════════════════════════════
-   GUARANTEE BAND — bold black with seal
+   2 - THE GUARANTEE - bold black with seal
    ══════════════════════════════════════════════════════ */
 const GuaranteeBand = () => (
   <section style={{ background: ink, color: paper, padding: '120px 24px' }}>
@@ -201,13 +234,14 @@ const GuaranteeBand = () => (
             lineHeight: 0.92, letterSpacing: '-0.01em', color: paper,
             textTransform: 'uppercase', margin: 0, fontWeight: 400,
           }}>
-            RESULTS<br />OR YOU<br />DON'T PAY.
+            RESULTS<br />OR YOU<br />DO NOT PAY.
           </h2>
+          {/* TODO: replace with Justin's exact current guarantee terms */}
           <p style={{
             fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6,
-            color: paper, opacity: 0.75, marginTop: 24, maxWidth: 640,
+            color: paper, opacity: 0.78, marginTop: 24, maxWidth: 640,
           }}>
-            After 8 weeks you walk away with a documented sales process, an accountability framework, and a consequence ladder installed in your agency. If you don't have a clear path forward, you get every dollar back. No questions, no hoops.
+            I am not selling you a course to put on a shelf. If you run the system with me and your team does not move, you do not pay.
           </p>
 
           <div className="flex flex-wrap gap-3 mt-8">
@@ -228,7 +262,7 @@ const GuaranteeBand = () => (
 );
 
 /* ══════════════════════════════════════════════════════
-   PROBLEM — staggered editorial
+   3 - THE PAIN - staggered editorial
    ══════════════════════════════════════════════════════ */
 const ProblemSection = () => (
   <section style={{ background: paper, padding: '120px 24px' }}>
@@ -260,7 +294,15 @@ const ProblemSection = () => (
           textTransform: 'uppercase', marginTop: 48, fontWeight: 400,
           maxWidth: 900,
         }}>
-          THAT'S NOT A SALES TEAM.<br />THAT'S A COIN FLIP.
+          THAT IS NOT A SALES TEAM.<br />THAT IS A COIN FLIP.
+        </p>
+      </Reveal>
+      <Reveal delay={0.28}>
+        <p style={{
+          fontFamily: body, fontSize: 18, fontWeight: 400, lineHeight: 1.6,
+          color: ink, opacity: 0.8, marginTop: 40, maxWidth: 760,
+        }}>
+          Your production swings because your process lives in one person's head. The top producer just does it. Everyone else guesses. When the standard is not written down, it cannot be taught, coached, or repeated, and every month is a roll of the dice.
         </p>
       </Reveal>
     </div>
@@ -268,7 +310,7 @@ const ProblemSection = () => (
 );
 
 /* ══════════════════════════════════════════════════════
-   PROMISE — black band
+   4 - THE PROMISE - black band
    ══════════════════════════════════════════════════════ */
 const PromiseSection = () => (
   <section style={{ background: ink, color: paper, padding: '120px 24px' }}>
@@ -287,50 +329,155 @@ const PromiseSection = () => (
           lineHeight: 0.9, letterSpacing: '-0.01em', color: paper,
           textTransform: 'uppercase', margin: 0, fontWeight: 400,
         }}>
-          IN 8 WEEKS,<br />
-          <span className="md:pl-[8vw] inline-block">YOU'LL HAVE</span><br />
+          IN EIGHT WEEKS,<br />
+          <span className="md:pl-[8vw] inline-block">YOU WILL HAVE</span><br />
           <span className="md:pl-[14vw] inline-block" style={{ color: blue }}>CERTAINTY.</span>
         </h2>
       </Reveal>
       <Reveal delay={0.2}>
-        <div className="flex flex-wrap gap-x-10 gap-y-3 mt-12">
-          {['A Process.', 'A Scorecard.', 'A Rhythm.', 'A Guarantee.'].map((p) => (
-            <span key={p} style={{
-              fontFamily: editorial, fontSize: 'clamp(20px, 2.4vw, 32px)',
-              letterSpacing: '-0.01em', color: paper, opacity: 0.85,
-            }}>
-              {p}
-            </span>
-          ))}
-        </div>
+        <p style={{
+          fontFamily: body, fontSize: 18, fontWeight: 400, lineHeight: 1.6,
+          color: paper, opacity: 0.82, marginTop: 48, maxWidth: 760,
+        }}>
+          A call your whole team runs the same way every time. Numbers they hit every day. A consequence everyone understands before it ever gets used. All of it written, signed, and operating by week eight.
+        </p>
       </Reveal>
     </div>
   </section>
 );
 
 /* ══════════════════════════════════════════════════════
-   THREE SYSTEMS — bold list with side images
+   5 - HOW IT WORKS (daily access + the loop)
+   ══════════════════════════════════════════════════════ */
+const howItWorks = [
+  {
+    label: 'Where it lives',
+    body: "A private channel between me and your sales manager. Every weekday a short voice note from me lands there, in my voice, on that week's focus. Not a portal they forget to log into. Their phone, every morning.",
+  },
+  {
+    label: 'The loop',
+    body: 'Your manager voices me back the same day: their real numbers, the decision they made, the place they are stuck. I answer. This is daily coaching, not a weekly check-in. Eight weeks of me in the room with the person who runs your floor.',
+  },
+  {
+    label: 'The weekly call',
+    body: "Once a week we go deep on a live call and lock that week's piece of the document into place, in your manager's own words.",
+  },
+];
+
+const HowItWorks = () => (
+  <section style={{ background: paper, padding: '120px 24px', borderTop: `1px solid ${ink}` }}>
+    <div className="max-w-[1280px] mx-auto">
+      <Reveal>
+        <p style={{
+          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+          color: ink, textTransform: 'uppercase', marginBottom: 24,
+        }}>
+          / How It Works
+        </p>
+      </Reveal>
+      <Reveal delay={0.06}>
+        <h2 style={{
+          fontFamily: display, fontSize: 'clamp(36px, 6vw, 96px)',
+          lineHeight: 0.95, letterSpacing: '-0.01em', color: ink,
+          textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 64, maxWidth: 1100,
+        }}>
+          I AM IN YOUR MANAGER'S POCKET EVERY MORNING.
+        </h2>
+      </Reveal>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-0" style={{ borderTop: `1px solid ${ink}` }}>
+        {howItWorks.map((b, i) => (
+          <Reveal key={b.label} delay={i * 0.08}>
+            <div style={{
+              padding: '40px 28px 48px',
+              borderBottom: `1px solid ${ink}`,
+              borderRight: i < howItWorks.length - 1 ? `1px solid ${ink}1a` : 'none',
+              height: '100%',
+            }}>
+              <span style={{
+                fontFamily: editorial, fontSize: 20, color: ink,
+                opacity: 0.3, letterSpacing: '-0.01em', display: 'block', marginBottom: 16,
+              }}>
+                0{i + 1} / 03
+              </span>
+              <p style={{
+                fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.18em',
+                color: blue, textTransform: 'uppercase', marginBottom: 16,
+              }}>
+                {b.label}
+              </p>
+              <p style={{
+                fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6,
+                color: ink, opacity: 0.8,
+              }}>
+                {b.body}
+              </p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
+   6 - THE WHOLE TEAM MOVES TOO
+   ══════════════════════════════════════════════════════ */
+const TeamMoves = () => (
+  <section style={{ background: ink, color: paper, padding: '120px 24px' }}>
+    <div className="max-w-[1280px] mx-auto">
+      <div className="grid grid-cols-12 gap-8 items-center">
+        <Reveal className="col-span-12 md:col-span-7">
+          <p style={{
+            fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+            color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 24,
+          }}>
+            / Not Just The Manager
+          </p>
+          <h2 style={{
+            fontFamily: display, fontSize: 'clamp(36px, 6vw, 88px)',
+            lineHeight: 0.95, letterSpacing: '-0.01em', color: paper,
+            textTransform: 'uppercase', margin: 0, fontWeight: 400,
+          }}>
+            YOUR PRODUCERS<br />TRAIN ON THE<br />SAME ARC.
+          </h2>
+        </Reveal>
+        <Reveal delay={0.1} className="col-span-12 md:col-span-5">
+          <p style={{
+            fontFamily: body, fontSize: 18, fontWeight: 400, lineHeight: 1.65,
+            color: paper, opacity: 0.82,
+          }}>
+            This is not manager-only coaching that never reaches the floor. Every Monday your team gets a short video that primes them for the week's focus. Every Wednesday they get a workbook that makes them apply it on real calls. So when your manager rolls out the standard, the team is already moving with it, not braced against it.
+          </p>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
+   7 - THREE SYSTEMS - bold list with side images
    ══════════════════════════════════════════════════════ */
 const systems = [
   {
     num: '01',
     label: 'Sales Process',
-    headline: 'A documented, repeatable call framework.',
-    sub: 'Your whole team runs the same playbook — no more winging it. Every call has a structure, every objection has a response.',
+    headline: 'A documented, repeatable call.',
+    sub: 'The opening, the coverage conversation, the close, the follow-up. One way to sell, run by everyone.',
     img: salesProcessCardImg,
   },
   {
     num: '02',
-    label: 'Accountability',
-    headline: <>Daily tracking. Weekly scorecards. <span style={{ color: blue }}>AI</span>-graded calls.</>,
-    sub: 'Every producer knows exactly where they stand. Managers coach off data, not a gut feeling.',
+    label: 'Tracking & Scorecards',
+    headline: 'Daily tracking and weekly scorecards.',
+    sub: 'The activity numbers your team hits every day, and AI-graded calls so coaching is on the process, not on opinions. Agency Brain is bundled in, so the tracking and the grading are built into the program.',
     img: accountabilityCardImg,
   },
   {
     num: '03',
     label: 'Consequence Ladder',
-    headline: "A clear path when standards aren't met.",
-    sub: 'Underperformance gets addressed, not ignored — a fair, transparent escalation your team actually respects.',
+    headline: 'A clear path when standards are not met.',
+    sub: 'A written, escalating consequence everyone understands, built on the activity your team controls.',
     img: consequenceLadderCardImg,
   },
 ];
@@ -415,7 +562,7 @@ const SystemsSection = () => (
                       }}
                     >
                       <div style={{ aspectRatio: '4 / 5', overflow: 'hidden', background: '#eee' }}>
-                        <img src={s.img} alt={s.label}
+                        <img src={s.img} alt={s.label} loading="lazy"
                           style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       </div>
                       <p style={{
@@ -437,35 +584,188 @@ const SystemsSection = () => (
 );
 
 /* ══════════════════════════════════════════════════════
-   AGENCY BRAIN BAND — 3 tilted polaroids on black
+   8 - THE EIGHT WEEKS (the arc)
+   ══════════════════════════════════════════════════════ */
+const arc = [
+  { week: 'Week 1', headline: 'Find the real number.', sub: 'The honest baseline.' },
+  { week: 'Weeks 2 to 4', headline: 'Build the talk path.', sub: 'The opening, the gap conversation, the close and follow-up.' },
+  { week: 'Weeks 5 to 6', headline: 'Set the numbers.', sub: 'The daily floor and the monthly line.' },
+  { week: 'Week 7', headline: 'Write the consequence ladder.', sub: 'The escalation everyone understands before it is used.' },
+  { week: 'Week 8', headline: 'Sign it. Stand it up.', sub: 'Signed and operating.' },
+];
+
+const ArcSection = () => (
+  <section style={{ background: ink, color: paper, padding: '120px 24px' }}>
+    <div className="max-w-[1280px] mx-auto">
+      <Reveal>
+        <p style={{
+          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+          color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 24,
+        }}>
+          / The Path
+        </p>
+      </Reveal>
+      <Reveal delay={0.06}>
+        <h2 style={{
+          fontFamily: display, fontSize: 'clamp(40px, 7vw, 100px)',
+          lineHeight: 0.95, letterSpacing: '-0.01em', color: paper,
+          textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 56,
+        }}>
+          FIND IT. BUILD IT.<br />SIGN IT. RUN IT.
+        </h2>
+      </Reveal>
+
+      <div style={{ borderTop: `1px solid ${paper}26` }}>
+        {arc.map((a, i) => (
+          <Reveal key={a.week} delay={i * 0.06}>
+            <div className="grid grid-cols-12 gap-4 md:gap-8 items-baseline" style={{
+              borderBottom: `1px solid ${paper}26`, padding: '32px 0',
+            }}>
+              <div className="col-span-12 md:col-span-3">
+                <span style={{
+                  fontFamily: editorial, fontSize: 'clamp(20px, 2.4vw, 30px)',
+                  letterSpacing: '-0.01em', color: blue, textTransform: 'uppercase', fontWeight: 400,
+                }}>
+                  {a.week}
+                </span>
+              </div>
+              <div className="col-span-12 md:col-span-9">
+                <h3 style={{
+                  fontFamily: display, fontSize: 'clamp(26px, 3.4vw, 48px)',
+                  lineHeight: 1, letterSpacing: '-0.01em', color: paper,
+                  textTransform: 'uppercase', margin: 0, fontWeight: 400,
+                }}>
+                  {a.headline}
+                </h3>
+                <p style={{
+                  fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.55,
+                  color: paper, opacity: 0.7, marginTop: 10,
+                }}>
+                  {a.sub}
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
+   9 - HERE IS EXACTLY WHAT YOU GET (deliverables grid)
+   ══════════════════════════════════════════════════════ */
+const deliverables = [
+  { num: '40', title: 'Daily Voice Coaching Prompts', sub: 'My voice, Monday to Friday, for eight weeks, straight to your manager.' },
+  { num: '8', title: 'Weekly Coaching Calls', sub: 'Live, with me, to lock each piece of the system.' },
+  { num: '16', title: 'Team Training Assets', sub: 'Eight Monday videos and eight Wednesday workbooks, so the producers move too.' },
+  { num: '1', title: 'Sales Process, Authored and Signed', sub: "Your team's call, in writing, with their names on it." },
+  { num: '1', title: 'Live Accountability System', sub: 'The daily floor, the monthly line, and the consequence ladder, running.' },
+  { num: 'mark', title: 'The Guarantee', sub: 'Results or you do not pay.' },
+];
+
+const WhatYouGet = ({ onApply }: { onApply: () => void }) => (
+  <section style={{ background: paper, padding: '120px 24px', borderTop: `1px solid ${ink}` }}>
+    <div className="max-w-[1280px] mx-auto">
+      <Reveal>
+        <p style={{
+          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+          color: ink, textTransform: 'uppercase', marginBottom: 24,
+        }}>
+          / What You Get
+        </p>
+      </Reveal>
+      <Reveal delay={0.06}>
+        <h2 style={{
+          fontFamily: display, fontSize: 'clamp(40px, 7vw, 104px)',
+          lineHeight: 0.95, letterSpacing: '-0.01em', color: ink,
+          textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 64,
+        }}>
+          HERE IS EXACTLY<br />WHAT YOU GET.
+        </h2>
+      </Reveal>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-0" style={{ borderTop: `1px solid ${ink}`, borderLeft: `1px solid ${ink}` }}>
+        {deliverables.map((d, i) => (
+          <Reveal key={d.title} delay={(i % 3) * 0.06}>
+            <div style={{
+              padding: '36px 28px 40px',
+              borderRight: `1px solid ${ink}`,
+              borderBottom: `1px solid ${ink}`,
+              height: '100%',
+              display: 'flex', flexDirection: 'column',
+            }}>
+              {d.num === 'mark' ? (
+                <span aria-hidden style={{
+                  display: 'inline-block', width: 44, height: 44, borderRadius: 999,
+                  background: blue, marginBottom: 18, alignSelf: 'flex-start',
+                }} />
+              ) : (
+                <span style={{
+                  fontFamily: display, fontSize: 'clamp(56px, 7vw, 88px)', fontWeight: 400,
+                  lineHeight: 0.85, letterSpacing: '-0.03em',
+                  color: ink, marginBottom: 18,
+                }}>
+                  {d.num}
+                </span>
+              )}
+              <h3 style={{
+                fontFamily: editorial, fontSize: 'clamp(18px, 2vw, 24px)',
+                lineHeight: 1.05, letterSpacing: '-0.01em', color: ink,
+                textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 12,
+              }}>
+                {d.title}
+              </h3>
+              <p style={{
+                fontFamily: body, fontSize: 15, fontWeight: 400, lineHeight: 1.55,
+                color: ink, opacity: 0.75,
+              }}>
+                {d.sub}
+              </p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal delay={0.12}>
+        <div style={{ marginTop: 56 }}>
+          <PrimaryCTA onApply={onApply} align="left" size="lg" />
+        </div>
+      </Reveal>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
+   10 - SOFTWARE IS LEVERAGE (Agency Brain)
    ══════════════════════════════════════════════════════ */
 const brainFeatures = [
-  { label: 'Dashboard', headline: 'Total Visibility.', sub: 'Premium, policies, activity — one view.', img: salesExpDashImg, tilt: -8 },
+  { label: 'Dashboard', headline: 'Total Visibility.', sub: 'Premium, policies, activity, one view.', img: salesExpDashImg, tilt: -8 },
   { label: 'Team Hub', headline: 'Team & Meeting Hub.', sub: 'Centralized meetings, collaboration, comms.', img: teamMeetingImg, tilt: 7 },
-  { label: 'Training', headline: 'Training & Feedback.', sub: 'Modules unlock Mon/Wed. Friday discovery feedback to the manager.', img: trainingModulesImg, tilt: -6 },
+  { label: 'Training', headline: 'Training & Feedback.', sub: 'Modules unlock Monday and Wednesday. Friday feedback to the manager.', img: trainingModulesImg, tilt: -6 },
 ];
 
 const AgencyBrainBand = () => (
-  <section style={{ background: ink, color: paper, padding: '120px 0', overflow: 'hidden' }}>
+  <section id="software" style={{ background: ink, color: paper, padding: '120px 0', overflow: 'hidden' }}>
     <div className="px-6 md:px-10 max-w-[1440px] mx-auto">
       <Reveal>
         <p style={{
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / Tools You'll Use Daily
+          / Software Is Leverage
         </p>
       </Reveal>
       <Reveal delay={0.1}>
-        <img src={agencyBrainLogo} alt="Agency Brain"
-          style={{ height: 'clamp(40px, 6vw, 72px)', width: 'auto', filter: 'invert(1)', marginBottom: 16 }} />
+        <img src={agencyBrainLogo} alt="Agency Brain" loading="lazy"
+          style={{ height: 'clamp(40px, 6vw, 72px)', width: 'auto', filter: 'brightness(0) invert(1)', marginBottom: 16 }} />
       </Reveal>
       <Reveal delay={0.15}>
         <p style={{
-          fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.65,
-          color: paper, opacity: 0.75, maxWidth: 620,
+          fontFamily: body, fontSize: 17, fontWeight: 400, lineHeight: 1.65,
+          color: paper, opacity: 0.82, maxWidth: 680,
         }}>
-          Agency Brain isn't a third-party tool I bolted on. I build it. Pick the calls that matter, upload them, and the <span style={{ color: blue }}>AI</span> scores them against your team's standard. The gaps become impossible to ignore.
+          The tracking, the scorecards, and the AI call grading run inside Agency Brain, which is bundled into the program, so the system keeps operating long after week eight. The work you build does not leave when I do.
         </p>
       </Reveal>
     </div>
@@ -506,7 +806,7 @@ const AgencyBrainBand = () => (
               }}
             >
               <div style={{ aspectRatio: '4 / 3', overflow: 'hidden', background: '#eee' }}>
-                <img src={f.img} alt={f.label}
+                <img src={f.img} alt={f.label} loading="lazy"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div style={{ marginTop: 16 }}>
@@ -538,69 +838,10 @@ const AgencyBrainBand = () => (
 );
 
 /* ══════════════════════════════════════════════════════
-   INCLUDED — 4 giant numbers
-   ══════════════════════════════════════════════════════ */
-const Included = () => (
-  <section style={{ background: paper, padding: '120px 24px' }}>
-    <div className="max-w-[1280px] mx-auto">
-      <Reveal>
-        <p style={{
-          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-          color: ink, textTransform: 'uppercase', marginBottom: 24,
-        }}>
-          / What's Included
-        </p>
-      </Reveal>
-      <Reveal delay={0.05}>
-        <h2 style={{
-          fontFamily: display, fontSize: 'clamp(36px, 6vw, 84px)',
-          lineHeight: 0.95, letterSpacing: '-0.01em', color: ink,
-          textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 64,
-        }}>
-          THE NUMBERS.
-        </h2>
-      </Reveal>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-0" style={{ borderTop: `1px solid ${ink}` }}>
-        {[
-          { num: '8', unit: 'weekly', detail: 'coaching calls' },
-          { num: '8', unit: 'weeks of', detail: 'graded calls' },
-          { num: '1', unit: 'documented', detail: 'sales process' },
-          { num: '1', unit: 'deployed', detail: 'accountability system' },
-        ].map((item, i) => (
-          <Reveal key={i} delay={i * 0.06}>
-            <div style={{
-              padding: '40px 24px',
-              borderBottom: `1px solid ${ink}`,
-              borderRight: i % 2 === 0 ? `1px solid ${ink}` : 'none',
-              display: 'flex', alignItems: 'baseline', gap: 24,
-            }}>
-              <span style={{
-                fontFamily: display, fontSize: 'clamp(80px, 12vw, 180px)', fontWeight: 400,
-                lineHeight: 0.85, letterSpacing: '-0.04em', color: ink,
-              }}>
-                {item.num}
-              </span>
-              <span style={{
-                fontFamily: editorial, fontSize: 'clamp(18px, 2.6vw, 28px)',
-                lineHeight: 1.05, letterSpacing: '-0.01em', color: ink,
-                textTransform: 'uppercase', fontWeight: 400,
-              }}>
-                {item.unit}<br />{item.detail}
-              </span>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-/* ══════════════════════════════════════════════════════
-   SUCCESS STORY
+   11 - PROOF
    ══════════════════════════════════════════════════════ */
 const SuccessStory = () => (
-  <section style={{ background: ink, color: paper, padding: '120px 24px' }}>
+  <section style={{ background: ink, color: paper, padding: '120px 24px', borderTop: `1px solid ${paper}1a` }}>
     <div className="max-w-[1280px] mx-auto">
       <div className="grid grid-cols-12 gap-8 items-center">
         <Reveal className="col-span-12 md:col-span-7">
@@ -608,7 +849,7 @@ const SuccessStory = () => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 24,
           }}>
-            / Success Story
+            / Proof
           </p>
           <h2 style={{
             fontFamily: display, fontSize: 'clamp(40px, 6.5vw, 92px)',
@@ -621,7 +862,7 @@ const SuccessStory = () => (
             fontFamily: body, fontSize: 13, fontWeight: 600, letterSpacing: '0.16em',
             color: paper, opacity: 0.7, textTransform: 'uppercase', marginTop: 28,
           }}>
-Dan Westrick, Allstate Agency Owner
+            Dan Westrick, Allstate Agency Owner
           </p>
         </Reveal>
 
@@ -636,7 +877,7 @@ Dan Westrick, Allstate Agency Owner
               poster="/video/westrick-testimonial-poster.jpg"
               controls
               playsInline
-              preload="metadata"
+              preload="none"
               title="Dan Westrick Success Story"
               className="w-full"
               style={{ aspectRatio: '9/16', border: 'none', display: 'block', background: '#000' }}
@@ -648,15 +889,15 @@ Dan Westrick, Allstate Agency Owner
       <div className="grid grid-cols-12 gap-8" style={{ marginTop: 96 }}>
         {[
           {
-            quote: "I've learned a lot from this process — a lot about myself as a manager and leader as well. I feel that I can move forward a lot more confidently knowing what questions to ask myself and being a bit more inquisitive rather than jumping into action that may not be the most efficient or produce the best outcome. You've really taught me not just to think but how to think in just 7 hours which is wild.",
+            quote: "I've learned a lot from this process, a lot about myself as a manager and leader as well. I feel that I can move forward a lot more confidently knowing what questions to ask myself and being a bit more inquisitive rather than jumping into action that may not be the most efficient or produce the best outcome. You've really taught me not just to think but how to think in just 7 hours which is wild.",
             name: 'Mike V.',
           },
           {
-            quote: "Creating and enforcing a standard is something every leader needs help with. Working with Justin was a game changer — you don't realize what you're missing until you have someone who truly understands your challenges and helps deliver results that matter. Accountability was something I struggled to implement, but once we established and enforced our own standards, it forced everyone to level up.",
+            quote: "Creating and enforcing a standard is something every leader needs help with. Working with Justin was a game changer. You don't realize what you're missing until you have someone who truly understands your challenges and helps deliver results that matter. Accountability was something I struggled to implement, but once we established and enforced our own standards, it forced everyone to level up.",
             name: 'Luis S.',
           },
           {
-            quote: "Working with Justin over the 8-week training was eye-opening and transformative — he showed me how to become a stronger, more accountable leader for my team and can truly bulletproof your agency, as long as you're able to hold yourself accountable as well.",
+            quote: "Working with Justin over the 8-week training was eye-opening and transformative. He showed me how to become a stronger, more accountable leader for my team and can truly bulletproof your agency, as long as you're able to hold yourself accountable as well.",
             name: 'Jonas B.',
           },
         ].map((t, i) => (
@@ -680,9 +921,193 @@ Dan Westrick, Allstate Agency Owner
                 fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.16em',
                 color: paper, opacity: 0.7, textTransform: 'uppercase', marginTop: 24,
               }}>
-                — {t.name}
+                {t.name}
               </figcaption>
             </figure>
+          </Reveal>
+        ))}
+      </div>
+
+      {/* TODO: optional second cleared testimonial or a named result with a number. Render nothing until approved content is supplied. */}
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
+   12 - THE INVESTMENT
+   ══════════════════════════════════════════════════════ */
+const InvestmentSection = ({ onApply }: { onApply: () => void }) => (
+  <section id="investment" style={{ background: paper, padding: '120px 24px', borderTop: `1px solid ${ink}` }}>
+    <div className="max-w-[1280px] mx-auto">
+      <Reveal>
+        <p style={{
+          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+          color: ink, textTransform: 'uppercase', marginBottom: 28,
+        }}>
+          / The Investment
+        </p>
+      </Reveal>
+
+      <div className="grid grid-cols-12 gap-8 items-start">
+        <Reveal className="col-span-12 md:col-span-7">
+          <h2 style={{
+            fontFamily: display, fontSize: 'clamp(36px, 5.5vw, 84px)',
+            lineHeight: 0.95, letterSpacing: '-0.01em', color: ink,
+            textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 28,
+          }}>
+            ONE PRICE.<br />THE WHOLE SYSTEM.
+          </h2>
+          <div style={{ display: 'inline-block' }}>
+            <h3 style={{
+              fontFamily: display, fontSize: 'clamp(72px, 18vw, 260px)',
+              lineHeight: 0.85, letterSpacing: '-0.04em', color: ink,
+              margin: 0, fontWeight: 400,
+            }}>
+              $4,500
+            </h3>
+            <p style={{
+              fontFamily: editorial, fontSize: 'clamp(22px, 2.8vw, 40px)',
+              lineHeight: 1, letterSpacing: '-0.01em', color: blue,
+              margin: 0, marginTop: 16, fontWeight: 400, textTransform: 'uppercase',
+            }}>
+              one time, or $625 per week
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="col-span-12 md:col-span-5">
+          <Reveal delay={0.1}>
+            <p style={{
+              fontFamily: body, fontSize: 17, fontWeight: 400, lineHeight: 1.6,
+              color: ink, opacity: 0.82, marginBottom: 32,
+            }}>
+              Everything above: the daily coaching, the weekly calls, the team training, the documented system, and the guarantee.
+            </p>
+            <PrimaryCTA onApply={onApply} align="left" size="lg" />
+          </Reveal>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
+   13 - WHAT THIS IS, AND WHO IT IS FOR
+   ══════════════════════════════════════════════════════ */
+const WhoForSection = () => (
+  <section style={{ background: ink, color: paper, padding: '120px 24px' }}>
+    <div className="max-w-[1280px] mx-auto">
+      <Reveal>
+        <p style={{
+          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+          color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 24,
+        }}>
+          / Who It Is For
+        </p>
+      </Reveal>
+      <Reveal delay={0.06}>
+        <h2 style={{
+          fontFamily: display, fontSize: 'clamp(36px, 6vw, 92px)',
+          lineHeight: 0.95, letterSpacing: '-0.01em', color: paper,
+          textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 48, maxWidth: 1100,
+        }}>
+          WHAT THIS IS, AND WHO IT IS FOR.
+        </h2>
+      </Reveal>
+      <div className="grid grid-cols-12 gap-8">
+        <Reveal delay={0.1} className="col-span-12 md:col-span-6">
+          <p style={{
+            fontFamily: body, fontSize: 18, fontWeight: 400, lineHeight: 1.65,
+            color: paper, opacity: 0.85,
+          }}>
+            This is for the agency owner who is tired of being the only person who can sell, and who is ready to let their sales manager actually run it. It is hands-on. Your manager works every day, your team works every week, and I am in it with them the whole way.
+          </p>
+        </Reveal>
+        <Reveal delay={0.16} className="col-span-12 md:col-span-6">
+          <p style={{
+            fontFamily: body, fontSize: 18, fontWeight: 400, lineHeight: 1.65,
+            color: paper, opacity: 0.85,
+          }}>
+            It is not for the owner who wants to buy a course, hand it off, and disappear. If you are not going to let your manager lead, this will not work, and I will tell you that on the call.
+          </p>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
+   14 - QUESTIONS (FAQ)
+   ══════════════════════════════════════════════════════ */
+const faqs = [
+  {
+    q: 'What is the daily piece, exactly?',
+    a: "A short voice note from me to your sales manager every weekday, on that week's focus. They voice me back; I answer. Daily coaching, on their phone.",
+  },
+  {
+    q: "How much of my manager's time does this take?",
+    a: 'A few minutes a day on the voice thread, one weekly call, and the real work of running the week. It is built to fit a working manager, not to add a second job.',
+  },
+  {
+    q: 'What does my team have to do?',
+    a: 'Watch one short video on Monday and complete one workbook on Wednesday, each week. About thirty minutes, plus running what they learn on live calls.',
+  },
+  {
+    q: 'What if we fall behind?',
+    a: 'The program is paced, but it bends to your agency. We finish with a signed, operating system in eight weeks. That is the promise.',
+  },
+  {
+    q: 'Who is this not for?',
+    a: 'Owners who will not let their manager lead, or who want a set-and-forget course. This is a build, and it needs you bought in.',
+  },
+  {
+    q: 'What is the guarantee?',
+    /* TODO: match Justin's exact guarantee terms */
+    a: 'Results or you do not pay.',
+  },
+];
+
+const QuestionsSection = () => (
+  <section style={{ background: paper, padding: '120px 24px' }}>
+    <div className="max-w-[1080px] mx-auto">
+      <Reveal>
+        <p style={{
+          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+          color: ink, textTransform: 'uppercase', marginBottom: 12,
+        }}>
+          / Questions
+        </p>
+      </Reveal>
+      <Reveal delay={0.05}>
+        <h2 style={{
+          fontFamily: display, fontSize: 'clamp(44px, 7vw, 100px)',
+          lineHeight: 0.95, letterSpacing: '-0.01em', color: ink,
+          textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 56,
+        }}>
+          QUESTIONS.
+        </h2>
+      </Reveal>
+
+      <div style={{ borderTop: `1px solid ${ink}` }}>
+        {faqs.map((f, i) => (
+          <Reveal key={i} delay={i * 0.06}>
+            <details style={{ borderBottom: `1px solid ${ink}`, padding: '28px 0' }}>
+              <summary style={{
+                fontFamily: display, fontSize: 'clamp(20px, 2.4vw, 32px)', lineHeight: 1.1,
+                letterSpacing: '-0.01em', color: ink, textTransform: 'uppercase', fontWeight: 400,
+                cursor: 'pointer', listStyle: 'none', display: 'flex', justifyContent: 'space-between',
+                alignItems: 'baseline', gap: 24,
+              }}>
+                {f.q}
+                <span style={{ color: blue, flexShrink: 0, fontFamily: body, fontWeight: 700 }}>+</span>
+              </summary>
+              <p style={{
+                fontFamily: body, fontSize: 'clamp(16px, 1.5vw, 19px)', fontWeight: 400, lineHeight: 1.6,
+                color: ink, opacity: 0.8, marginTop: 20, maxWidth: 760,
+              }}>
+                {f.a}
+              </p>
+            </details>
           </Reveal>
         ))}
       </div>
@@ -691,157 +1116,37 @@ Dan Westrick, Allstate Agency Owner
 );
 
 /* ══════════════════════════════════════════════════════
-   PURCHASE SECTION — bold pricing block
+   15 - FINAL CLOSE
    ══════════════════════════════════════════════════════ */
-const PurchaseSection = () => {
-  const [open, setOpen] = useState(false);
-
-  const programIncludes = [
-    'How to Build a Sales Experience e-book',
-    '8 Monday video trainings',
-    '8 Wednesday training documents',
-    'Sales-team call scoring (4 calls/rep/week, unlimited reps)',
-    'Fully deployed Sales Process',
-    'Accountability Process document',
-    'Consequence Process document',
-    '8 1:1 Zoom calls with agency owner or manager',
-    'Stack access',
-  ];
-
-  return (
-    <section id="purchase" style={{ background: paper, padding: '120px 24px', borderTop: `1px solid ${ink}` }}>
-      <div className="max-w-[1280px] mx-auto">
-        <Reveal>
-          <p style={{
-            fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-            color: ink, textTransform: 'uppercase', marginBottom: 28,
-          }}>
-            / Lock It In
-          </p>
-        </Reveal>
-
-        <div className="grid grid-cols-12 gap-8">
-          {/* Left: massive price */}
-          <Reveal className="col-span-12 md:col-span-7">
-            <p style={{
-              fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-              color: ink, opacity: 0.6, textTransform: 'uppercase', marginBottom: 12,
-            }}>
-              8-Week Sales Mgmt Training · Pay In Full
-            </p>
-            <div style={{ position: 'relative', display: 'inline-block', paddingBottom: 8 }}>
-              <h2 style={{
-                fontFamily: display, fontSize: 'clamp(72px, 18vw, 260px)',
-                lineHeight: 0.85, letterSpacing: '-0.04em', color: ink,
-                margin: 0, fontWeight: 400, position: 'relative', zIndex: 1,
-              }}>
-                $4,500
-              </h2>
-              <p style={{
-                fontFamily: editorial, fontSize: 'clamp(22px, 2.8vw, 40px)',
-                lineHeight: 1, letterSpacing: '-0.01em', color: blue,
-                margin: 0, marginTop: 16,
-                fontWeight: 400, textTransform: 'uppercase',
-                position: 'relative', zIndex: 2,
-              }}>
-                or $625 / week
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-3 mt-10">
-              <a
-                href="https://link.fastpaydirect.com/payment-link/67b9e4c1020837472ed0b709"
-                target="_blank" rel="noopener noreferrer"
-                style={{
-                  fontFamily: body, fontSize: 13, fontWeight: 700, letterSpacing: '0.14em',
-                  color: '#fff', background: ink, textTransform: 'uppercase',
-                  padding: '16px 30px', textDecoration: 'none', transition: 'all .25s',
-                }}
-                className="hover:bg-[#2997FF]"
-              >
-                Secure PIF →
-              </a>
-              <a
-                href="https://link.fastpaydirect.com/payment-link/67b9e53c156a771b286e2ca6"
-                target="_blank" rel="noopener noreferrer"
-                style={{
-                  fontFamily: body, fontSize: 13, fontWeight: 700, letterSpacing: '0.14em',
-                  color: ink, background: 'transparent', textTransform: 'uppercase',
-                  padding: '15px 28px', border: `1.5px solid ${ink}`, textDecoration: 'none', transition: 'all .25s',
-                }}
-                className="hover:bg-black hover:text-white"
-              >
-                Secure Weekly →
-              </a>
-            </div>
-
-            <button
-              onClick={() => setOpen(true)}
-              style={{
-                fontFamily: body, fontSize: 13, fontWeight: 600, letterSpacing: '0.14em',
-                color: ink, opacity: 0.7, background: 'none', border: 'none', cursor: 'pointer',
-                padding: '24px 0 0', textTransform: 'uppercase', textDecoration: 'underline',
-              }}
-              className="hover:opacity-100"
-            >
-              Questions first? Book a strategy call →
-            </button>
-            <StandardFitModal open={open} onOpenChange={setOpen} />
-          </Reveal>
-
-          {/* Right: includes + guarantee */}
-          <div className="col-span-12 md:col-span-5">
-            <Reveal>
-              <p style={{
-                fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.18em',
-                color: ink, textTransform: 'uppercase', marginBottom: 14,
-              }}>
-                // Program Includes
-              </p>
-              <ul style={{
-                listStyle: 'none', margin: 0, padding: 0,
-                borderTop: `1px solid ${ink}`,
-              }}>
-                {programIncludes.map((item) => (
-                  <li key={item} style={{
-                    fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.5,
-                    color: ink, padding: '12px 0', borderBottom: `1px solid ${ink}1a`,
-                    display: 'flex', alignItems: 'flex-start', gap: 10,
-                  }}>
-                    <span style={{ color: blue, fontSize: 14, lineHeight: '21px', flexShrink: 0, fontWeight: 700 }}>✓</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-
-            <Reveal delay={0.1}>
-              <div style={{
-                marginTop: 28,
-                background: ink,
-                color: paper,
-                padding: '28px 24px',
-              }}>
-                <p style={{
-                  fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.16em',
-                  color: blue, textTransform: 'uppercase', marginBottom: 12,
-                }}>
-                  ★ The Only Guarantee That Matters
-                </p>
-                <p style={{
-                  fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.6,
-                  color: paper, opacity: 0.85,
-                }}>
-                  If you don't see value after 8 weeks, I'll give you your money back. Straight up. Not because the system doesn't work — because if it didn't work for you, you weren't working. I only want money from people who implement. Fact?
-                </p>
-              </div>
-            </Reveal>
-          </div>
+const FinalClose = ({ onApply }: { onApply: () => void }) => (
+  <section style={{ background: ink, color: paper, padding: '130px 24px 110px', borderTop: `1px solid ${ink}` }}>
+    <div className="max-w-[1280px] mx-auto text-center">
+      <Reveal>
+        <h2 style={{
+          fontFamily: display, fontSize: 'clamp(40px, 7vw, 104px)',
+          lineHeight: 0.95, letterSpacing: '-0.01em', color: paper,
+          textTransform: 'uppercase', margin: 0, fontWeight: 400,
+        }}>
+          THE SYSTEM<br /><span style={{ color: blue }}>OUTLASTS THE CHAOS.</span>
+        </h2>
+      </Reveal>
+      <Reveal delay={0.12}>
+        <p style={{
+          fontFamily: editorial, fontSize: 'clamp(18px, 2.2vw, 30px)', lineHeight: 1.2,
+          letterSpacing: '0.01em', color: paper, opacity: 0.85, textTransform: 'uppercase',
+          marginTop: 40, fontWeight: 400,
+        }}>
+          Sales is the fruit. The standard is the root.
+        </p>
+      </Reveal>
+      <Reveal delay={0.2}>
+        <div style={{ marginTop: 48, display: 'flex', justifyContent: 'center' }}>
+          <PrimaryCTA onApply={onApply} align="center" onDark size="lg" />
         </div>
-      </div>
-    </section>
-  );
-};
+      </Reveal>
+    </div>
+  </section>
+);
 
 /* ══════════════════════════════════════════════════════
    FOOTER
@@ -911,7 +1216,7 @@ const BoldFooter = () => (
 
       <div className="pt-8 text-center">
         <p style={{ fontFamily: body, fontSize: 11, opacity: 0.5, letterSpacing: '0.08em' }}>
-          © {new Date().getFullYear()} STANDARD PLAYBOOK INC. ALL RIGHTS RESERVED.
+          {String.fromCharCode(169)} {new Date().getFullYear()} STANDARD PLAYBOOK INC. ALL RIGHTS RESERVED.
         </p>
       </div>
     </div>
@@ -921,49 +1226,76 @@ const BoldFooter = () => (
 /* ══════════════════════════════════════════════════════
    MOBILE STICKY CTA
    ══════════════════════════════════════════════════════ */
-const MobileStickyCTA = () => {
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <div className="fixed bottom-0 left-0 right-0 md:hidden z-40"
-        style={{
-          background: ink, padding: '12px 16px',
-          borderTop: `1px solid ${paper}33`,
-        }}>
-        <button onClick={() => setOpen(true)}
-          style={{
-            fontFamily: body, fontSize: 13, fontWeight: 700, letterSpacing: '0.14em',
-            color: ink, background: paper, padding: '14px 0', width: '100%',
-            border: 'none', cursor: 'pointer', textTransform: 'uppercase',
-          }}>
-          Book a Strategy Call
-        </button>
-      </div>
-      <StandardFitModal open={open} onOpenChange={setOpen} />
-    </>
-  );
-};
+const MobileStickyCTA = ({ onApply }: { onApply: () => void }) => (
+  <div className="fixed bottom-0 left-0 right-0 md:hidden z-40"
+    style={{ background: ink, padding: '12px 16px', borderTop: `1px solid ${paper}33` }}>
+    <button onClick={onApply}
+      style={{
+        fontFamily: body, fontSize: 13, fontWeight: 700, letterSpacing: '0.14em',
+        color: ink, background: paper, padding: '14px 0', width: '100%',
+        border: 'none', cursor: 'pointer', textTransform: 'uppercase',
+      }}>
+      {CTA_LABEL}
+    </button>
+  </div>
+);
 
 /* ══════════════════════════════════════════════════════
    PAGE
    ══════════════════════════════════════════════════════ */
-const BoldSalesExperience = ({ autoOpenBooking = false }: { autoOpenBooking?: boolean }) => (
-  <div style={{ background: paper, fontFamily: body, color: ink }}>
-    <BoldNav />
-    <Hero autoOpenBooking={autoOpenBooking} />
-    <MarqueeBands />
-    <GuaranteeBand />
-    <ProblemSection />
-    <PromiseSection />
-    <SystemsSection />
-    <AgencyBrainBand />
-    <Included />
-    <SuccessStory />
-    <PurchaseSection />
-    <BoldFooter />
-    <ContentMeta lastUpdated="March 2026" />
-    <MobileStickyCTA />
-  </div>
-);
+const BoldSalesExperience = ({ autoOpenBooking = false }: { autoOpenBooking?: boolean }) => {
+  const [applyOpen, setApplyOpen] = useState(false);
+
+  const openApply = () => {
+    // Fire the existing Meta Pixel conversion event on every CTA, matching
+    // the site convention used in BoldStandard90 / BookingOnboardingForm.
+    try {
+      (window as any).fbq?.('track', 'InitiateCheckout', { content_name: `${PROGRAM_NAME} Booking` });
+    } catch {
+      /* analytics is best-effort; never block the CTA */
+    }
+    setApplyOpen(true);
+  };
+
+  // The /8-week route passes autoOpenBooking so the page opens straight into
+  // the 8-Week booking flow (not the general fit call).
+  useEffect(() => {
+    if (autoOpenBooking) openApply();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoOpenBooking]);
+
+  return (
+    <div style={{ background: paper, fontFamily: body, color: ink }}>
+      <BoldNav />
+      <Hero onApply={openApply} />
+      <MarqueeBands />
+      <GuaranteeBand />
+      <ProblemSection />
+      <PromiseSection />
+      <HowItWorks />
+      <TeamMoves />
+      <SystemsSection />
+      <ArcSection />
+      <WhatYouGet onApply={openApply} />
+      <AgencyBrainBand />
+      <SuccessStory />
+      <InvestmentSection onApply={openApply} />
+      <WhoForSection />
+      <QuestionsSection />
+      <FinalClose onApply={openApply} />
+      <BoldFooter />
+      <ContentMeta lastUpdated="June 2026" />
+      <MobileStickyCTA onApply={openApply} />
+      <StandardFitModal
+        open={applyOpen}
+        onOpenChange={setApplyOpen}
+        source={CTA_SOURCE}
+        bookingBaseUrl={BOOK_URL}
+        callLengthLabel="8-Week"
+        programName={PROGRAM_NAME}
+      />
+    </div>
+  );
+};
 
 export default BoldSalesExperience;
