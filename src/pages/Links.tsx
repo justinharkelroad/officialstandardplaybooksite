@@ -160,7 +160,7 @@ const coachingPrograms: ProgramRow[] = [
       'Sales Process Training',
       'Daily Habit Training',
     ],
-    href: '/the-challenge',
+    href: 'https://myagencybrain.com/six-week-challenge',
     cta: 'Learn More →',
   },
 ];
