@@ -82,7 +82,7 @@ const Hero = () => (
             fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.85, maxWidth: 680,
           }}>
-            The weekly room for insurance agency owners who are done collecting information and ready to <span style={{ color: blue }}>execute</span>. Every Monday at 1pm Eastern, you report on last week, work a real problem with the room, and leave with one commitment.
+            The weekly room for insurance agency owners and their key employees and managers who are done collecting information and ready to <span style={{ color: blue }}>execute</span>. Every Monday at 1pm Eastern, you report on last week, work a real problem with the room, and leave with one commitment.
           </p>
         </Reveal>
         <Reveal delay={0.3} className="col-span-12 md:col-span-5 flex md:justify-end items-start gap-3 flex-wrap">
