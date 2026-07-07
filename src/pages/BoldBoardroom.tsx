@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
@@ -22,6 +22,10 @@ const blue = '#2997FF';
 const STRIPE_JOIN = 'https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l';
 const STRIPE_BURN = 'https://link.fastpaydirect.com/payment-link/68371b280a5741f8835218c8';
 
+/* ── Self-hosted square (1:1) videos (Vimeo embeds black out, so served native from /public/video) ── */
+const SUMMARY_VIDEO = '/video/boardroom-summary.mp4';
+const SUMMARY_POSTER = '/video/boardroom-summary-poster.jpg';
+
 /* ── Reveal helper ─────────────────────────────────────── */
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
   <motion.div
@@ -41,12 +45,22 @@ const Reveal = ({ children, className = '', delay = 0 }: { children: React.React
 const Hero = () => (
   <section style={{ background: paper, paddingTop: 56 + 24, paddingBottom: 60, position: 'relative', overflow: 'hidden' }}>
     <div className="px-6 md:px-10 max-w-[1440px] mx-auto relative">
+      {/* REMOVABLE LAUNCH BANNER: delete this Reveal block after launch */}
+      <Reveal>
+        <p style={{
+          fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.18em',
+          color: blue, textTransform: 'uppercase', marginBottom: 14,
+        }}>
+          New Weekly Format Begins Monday, July 27
+        </p>
+      </Reveal>
+
       <Reveal>
         <p style={{
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / Membership · $299/mo
+          / Membership &middot; $299/mo
         </p>
       </Reveal>
 
@@ -68,7 +82,7 @@ const Hero = () => (
             fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.85, maxWidth: 680,
           }}>
-            The mastermind for insurance agency owners who want a direct line to operators who've already built what you're trying to build — including the software and the <span style={{ color: blue }}>AI</span> running inside it.
+            The weekly room for insurance agency owners who are done collecting information and ready to <span style={{ color: blue }}>execute</span>. Every Monday at 1pm Eastern, you report on last week, work a real problem with the room, and leave with one commitment.
           </p>
         </Reveal>
         <Reveal delay={0.3} className="col-span-12 md:col-span-5 flex md:justify-end items-start gap-3 flex-wrap">
@@ -88,32 +102,31 @@ const Hero = () => (
               padding: '15px 28px', border: `1.5px solid ${ink}`, transition: 'all .25s',
             }}
             className="hover:bg-[#2997FF] hover:border-[#2997FF]">
-            Claim Your Seat →
+            Claim Your Seat &rarr;
           </a>
         </Reveal>
       </div>
 
-      {/* Hero video */}
+      {/* Hero video (square 1:1 summary, self-hosted native) */}
       <Reveal delay={0.4}>
         <div className="mt-16">
           <p style={{
             fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.18em',
             color: ink, opacity: 0.5, textTransform: 'uppercase', marginBottom: 14,
           }}>
-            // The Boardroom Walkthrough
+            // The Boardroom In Two Minutes
           </p>
           <motion.div
             whileHover={{ rotate: 0 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             style={{
               position: 'relative', background: ink, padding: 8,
-              maxWidth: 1080, marginInline: 'auto',
+              width: '100%', maxWidth: 620, marginInline: 'auto',
               boxShadow: '0 36px 70px -18px rgba(0,0,0,0.55)',
               transform: 'rotate(-1.5deg)',
             }}>
-            <div style={{ aspectRatio: '16/9', background: '#000' }}>
-              <VideoPlayer videoId="36Ns-DrlHEA" title="The Boardroom Walkthrough"
-                className="w-full h-full" />
+            <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', background: '#000', overflow: 'hidden' }}>
+              <MoveVideo src={SUMMARY_VIDEO} poster={SUMMARY_POSTER} title="The Boardroom In Two Minutes" />
             </div>
           </motion.div>
         </div>
@@ -162,13 +175,10 @@ const MarqueeBands = () => (
    INCLUDES
    ══════════════════════════════════════════════════════ */
 const includedItems: React.ReactNode[] = [
-  '2 Hour Group Boardroom Call',
-  <>Agency Brain access — <span style={{ color: blue }}>AI</span> tools and daily Flow library included</>,
+  'Weekly Boardroom Call, Every Monday At 1pm ET',
+  <>Agency Brain access: <span style={{ color: blue }}>AI</span> tools and daily Flow library included</>,
   'Access to The Mirror Self-Assessment',
-  'I AM THE STANDARD T-Shirt',
-  'I AM THE STANDARD Wristband',
-  'Standard Playbook Pen',
-  '1v1 Video Coaching 24/7 w/ Justin',
+  <>Daily Telegram Group<span style={{ display: 'block', fontFamily: body, textTransform: 'none', fontSize: 13, fontWeight: 400, letterSpacing: 0, lineHeight: 1.4, opacity: 0.6, marginTop: 6 }}>Drop voice notes and reflections back and forth with Justin and the room, every single day</span></>,
   <>20 <span style={{ color: blue }}>AI</span> Calls Scored Per Month In Standard Call Scoring</>,
 ];
 
@@ -188,7 +198,7 @@ const IncludesSection = () => (
             lineHeight: 0.95, letterSpacing: '-0.01em', color: ink,
             textTransform: 'uppercase', margin: 0, fontWeight: 400,
           }}>
-            EVERY MONTH.<br />
+            EVERY WEEK.<br />
             <span style={{ color: blue }}>EVERY MEMBER.</span>
           </h2>
         </Reveal>
@@ -197,7 +207,7 @@ const IncludesSection = () => (
             fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.65,
             color: ink, opacity: 0.7,
           }}>
-            Eight deliverables. Built so the room stays high-signal and the work compounds month over month.
+            Five deliverables. Built so the room stays high-signal and the work compounds week over week.
           </p>
         </Reveal>
       </div>
@@ -224,7 +234,7 @@ const IncludesSection = () => (
               }}>
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <span style={{ color: blue, fontSize: 18, lineHeight: 1, flexShrink: 0, fontWeight: 700 }}>✓</span>
+              <span style={{ color: blue, fontSize: 18, lineHeight: 1, flexShrink: 0, fontWeight: 700 }}>&#10003;</span>
               <span style={{
                 fontFamily: editorial, fontSize: 'clamp(15px, 1.3vw, 18px)',
                 lineHeight: 1.2, letterSpacing: '-0.01em',
@@ -241,7 +251,166 @@ const IncludesSection = () => (
 );
 
 /* ══════════════════════════════════════════════════════
-   PRICING — bold pricing block
+   HOW EVERY MONDAY RUNS: the four weekly moves
+   ══════════════════════════════════════════════════════ */
+const weeklyMoves = [
+  {
+    label: 'Return And Report',
+    body: "You come in having already looked at your own week. What did you say you'd get done? Did you do it? You tell the truth before you ever hit the call.",
+    video: '/video/boardroom-return-report.mp4',
+    poster: '/video/boardroom-return-report-poster.jpg',
+  },
+  {
+    label: 'The Breakout',
+    body: "You get in a small room with owners who run the exact business you run, and you say it out loud. What worked, what didn't, where you're stuck.",
+    video: '/video/boardroom-breakout.mp4',
+    poster: '/video/boardroom-breakout-poster.jpg',
+  },
+  {
+    label: 'The Hot Seat',
+    body: "We put one or two real problems in front of the room and work them all the way through. The problem on that seat is almost never just one person's. Solve it for one, you solve it for yourself.",
+    video: '/video/boardroom-hot-seat.mp4',
+    poster: '/video/boardroom-hot-seat-poster.jpg',
+  },
+  {
+    label: 'The Domino',
+    body: 'Before you leave, you declare the one thing that matters most this week. Seven days later, you come back and report on it. That is how momentum compounds.',
+    video: '/video/boardroom-domino.mp4',
+    poster: '/video/boardroom-domino-poster.jpg',
+  },
+];
+
+/* Square move video: autoplays muted + loops while in view, native controls let you unmute */
+const MoveVideo = ({ src, poster, title }: { src: string; poster: string; title: string }) => {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.muted = true;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            el.play().catch(() => {});
+          } else {
+            el.pause();
+          }
+        });
+      },
+      { threshold: 0.35 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <video
+      ref={ref}
+      src={src}
+      poster={poster}
+      autoPlay
+      muted
+      loop
+      playsInline
+      controls
+      preload="metadata"
+      title={title}
+      className="absolute inset-0 w-full h-full"
+      style={{ border: 0, objectFit: 'cover' }}
+    />
+  );
+};
+
+const WeeklyCallSection = () => (
+  <section style={{ borderTop: `1px solid ${ink}` }}>
+    {/* dark title band */}
+    <div style={{ background: ink, padding: '96px 24px' }}>
+      <div className="max-w-[1280px] mx-auto">
+        <Reveal>
+          <p style={{
+            fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+            color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 24,
+          }}>
+            / The Weekly Call
+          </p>
+        </Reveal>
+        <Reveal delay={0.05}>
+          <h2 style={{
+            fontFamily: display, fontSize: 'clamp(40px, 7vw, 100px)',
+            lineHeight: 0.95, letterSpacing: '-0.01em', color: paper,
+            textTransform: 'uppercase', margin: 0, fontWeight: 400,
+          }}>
+            HOW EVERY <span style={{ color: blue }}>MONDAY</span> RUNS.
+          </h2>
+        </Reveal>
+      </div>
+    </div>
+
+    {/* light steps */}
+    <div style={{ background: paper, padding: '80px 24px 120px' }}>
+      <div className="max-w-[1280px] mx-auto">
+        <Reveal>
+          <p style={{
+            fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55,
+            color: ink, opacity: 0.85, maxWidth: 720, marginBottom: 48,
+          }}>
+            Boardroom is not a lecture you attend. It's an operating system you run. Every week, four moves.
+          </p>
+        </Reveal>
+
+        {/* Four across: one square video per weekly move */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
+          {weeklyMoves.map((m, i) => (
+            <Reveal key={m.label} delay={i * 0.08}>
+              <div style={{ borderTop: `1px solid ${ink}`, paddingTop: 18 }}>
+                <div className="flex items-baseline gap-3" style={{ marginBottom: 16 }}>
+                  <span style={{
+                    fontFamily: editorial, fontSize: 16, color: ink,
+                    opacity: 0.35, letterSpacing: '-0.01em',
+                  }}>
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h3 style={{
+                    fontFamily: display, fontSize: 'clamp(20px, 1.9vw, 27px)',
+                    lineHeight: 0.95, letterSpacing: '-0.01em', color: ink,
+                    textTransform: 'uppercase', margin: 0, fontWeight: 400,
+                  }}>
+                    {m.label}
+                  </h3>
+                </div>
+                <div style={{
+                  position: 'relative', background: ink, padding: 6,
+                  boxShadow: '0 24px 48px -20px rgba(0,0,0,0.45)', marginBottom: 18,
+                }}>
+                  <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', background: '#000', overflow: 'hidden' }}>
+                    <MoveVideo src={m.video} poster={m.poster} title={m.label} />
+                  </div>
+                </div>
+                <p style={{
+                  fontFamily: body, fontSize: 15, fontWeight: 400, lineHeight: 1.55,
+                  color: ink, opacity: 0.75,
+                }}>
+                  {m.body}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={0.1}>
+          <p style={{
+            fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6,
+            color: ink, opacity: 0.75, marginTop: 44, maxWidth: 760,
+          }}>
+            Between the Mondays, the room doesn't go quiet. The Boardroom Telegram group runs every day. Voice notes back and forth, daily reflections, and the accountability that keeps last Monday's Domino from going cold before the next one.
+          </p>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
+   PRICING: bold pricing block
    ══════════════════════════════════════════════════════ */
 const PricingSection = () => (
   <section style={{ background: paper, padding: '120px 24px', borderTop: `1px solid ${ink}` }}>
@@ -262,7 +431,7 @@ const PricingSection = () => (
               fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
               color: ink, opacity: 0.6, textTransform: 'uppercase', marginBottom: 12,
             }}>
-              Boardroom Membership · Monthly
+              Boardroom Membership &middot; Monthly
             </p>
             <div style={{ position: 'relative', display: 'inline-block', paddingBottom: 8 }}>
               <h2 style={{
@@ -287,7 +456,7 @@ const PricingSection = () => (
               fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.55,
               color: ink, opacity: 0.75, marginTop: 28, maxWidth: 520,
             }}>
-              Sit in a room of agency owners who are building what you're building. Make the contacts. Build a mastermind so sharp nobody else can touch your numbers.
+              Sit in a room of agency owners building what you're building, every single week. $299 a month. Show up, do the work, run your game.
             </p>
 
             <div className="flex flex-wrap gap-3 mt-10">
@@ -298,7 +467,7 @@ const PricingSection = () => (
                   padding: '16px 30px', transition: 'all .25s',
                 }}
                 className="hover:bg-[#2997FF]">
-                Claim Your Seat →
+                Claim Your Seat &rarr;
               </a>
               <a href={STRIPE_BURN} target="_blank" rel="noopener noreferrer"
                 style={{
@@ -307,7 +476,7 @@ const PricingSection = () => (
                   padding: '15px 28px', border: `1.5px solid ${ink}`, transition: 'all .25s',
                 }}
                 className="hover:bg-black hover:text-white">
-                Burn The Boats →
+                Burn The Boats &rarr;
               </a>
             </div>
           </Reveal>
@@ -322,7 +491,7 @@ const PricingSection = () => (
                 fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.16em',
                 color: blue, textTransform: 'uppercase', marginBottom: 14,
               }}>
-                ★ The Standard Promise
+                &#9733; The Standard Promise
               </p>
               <p style={{
                 fontFamily: display, fontSize: 'clamp(24px, 2.8vw, 32px)',
@@ -335,7 +504,7 @@ const PricingSection = () => (
                 fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.6,
                 color: paper, opacity: 0.8,
               }}>
-                Direct access to proven operators, the apparel, the scoring credits, and the room. Cancel anytime in Stripe.
+                Direct access to proven operators, the scoring credits, and the room. Cancel anytime in Stripe.
               </p>
             </div>
           </Reveal>
@@ -346,27 +515,27 @@ const PricingSection = () => (
 );
 
 /* ══════════════════════════════════════════════════════
-   IT'S NOT JUST BUSINESS — Being / Body / Balance
+   IT'S NOT JUST BUSINESS: Being / Body / Balance
    ══════════════════════════════════════════════════════ */
 const pillars = [
   {
     label: 'Being',
     headline: 'Sharpen mind & spirit.',
-    sub: "Lock in who you are before the workday locks in who you'll be. Daily Flows and morning grounding inside the app — the practice that decides whether you run the agency or the agency runs you.",
+    sub: "Lock in who you are before the workday locks in who you'll be. Daily Flows and morning grounding inside the app. The practice that decides whether you run the agency or the agency runs you.",
     videoId: 'jFDqWyLuwHI',
     tilt: -3,
   },
   {
     label: 'Body',
     headline: 'Weaponize your health.',
-    sub: 'Body fuels everything else. Workout templates, macro goals, and a habit tracker log every rep and meal — so high energy becomes your baseline, not your good day.',
+    sub: 'Body fuels everything else. Workout templates, macro goals, and a habit tracker log every rep and meal, so high energy becomes your baseline, not your good day.',
     videoId: 'qUWOzQF1Xrg',
     tilt: 3,
   },
   {
     label: 'Balance',
     headline: 'Marriage. Kids. Mission.',
-    sub: 'Date nights, one-on-one time with each kid, fast family check-ins — scheduled and tracked, so home life shows progress too.',
+    sub: 'Date nights, one-on-one time with each kid, fast family check-ins, scheduled and tracked, so home life shows progress too.',
     videoId: 'RMsIHtsv2ak',
     tilt: -2,
   },
@@ -397,7 +566,7 @@ const PillarsSection = () => (
             fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.65,
             color: ink, opacity: 0.7,
           }}>
-            A thriving agency isn't built on numbers alone. The Boardroom keeps owners internally grounded, physically strong, and at peace at home — because that's where the numbers actually come from.
+            A thriving agency isn't built on numbers alone. The Boardroom keeps owners internally grounded, physically strong, and at peace at home, because that's where the numbers actually come from.
           </p>
         </Reveal>
       </div>
@@ -463,12 +632,12 @@ const PillarsSection = () => (
 );
 
 /* ══════════════════════════════════════════════════════
-   FAQ — bold accordion
+   FAQ: bold accordion
    ══════════════════════════════════════════════════════ */
 const faq = [
   { q: '"Is this right for someone at my level?"', a: "If you're asking, you already know. The real question: how much longer are you willing to let \"your level\" be your ceiling?" },
   { q: '"What if I\'m not ready?"', a: "Nobody's ever ready. Ready is a feeling you get after you start, not before." },
-  { q: '"How fast will I see results?"', a: 'Wrong question. Ask instead: "How much has playing small already cost you?"' },
+  { q: '"How fast will I see results?"', a: "The room moves every week, so you're never more than seven days from your next rep. What changes first is your honesty and your follow-through. Results compound from there." },
   { q: '"What if I\'m the smallest one in the room?"', a: "Then you're finally in a room that can change your trajectory. Being the smartest guy in the room is expensive. Being the one with the most to learn? That pays." },
 ];
 
@@ -565,16 +734,16 @@ const FAQSection = () => {
 };
 
 /* ══════════════════════════════════════════════════════
-   THE PRACTICE — the seven daily Flows
+   THE PRACTICE: the seven daily Flows
    ══════════════════════════════════════════════════════ */
 const boardroomFlows = [
   { name: 'War Flow', desc: "When it's not just an idea, it's a fight. Name the enemy, define winning, map four fronts (obstacle, move, ally). Walk out with a campaign." },
   { name: 'Idea Flow', desc: 'When something lit up. Force it specific. Four measurable facts. Execute-vs-cost-of-not. Walk out with a real plan.' },
-  { name: 'Discovery Flow', desc: 'Right after you learn something worth keeping. Capture what landed, pull the lesson, choose where it applies — before tomorrow forgets.' },
+  { name: 'Discovery Flow', desc: 'Right after you learn something worth keeping. Capture what landed, pull the lesson, choose where it applies, before tomorrow forgets.' },
   { name: 'Irritation Flow', desc: 'When someone or something is getting to you. Surface the story, test it against facts, write a new one that serves you. Defuse the charge.' },
   { name: 'Gratitude Flow', desc: "Don't let a good moment just pass. Story vs. facts, the lesson underneath, one move in 24 hours to honor it." },
   { name: 'Prayer Flow', desc: "When you're carrying something. Name it. Walk out with the lesson and one action that lives it out." },
-  { name: 'Bible Flow', desc: 'Anchored to scripture. Start, Stop, and Keep commitments — each measured, each anchored to a belief.' },
+  { name: 'Bible Flow', desc: 'Anchored to scripture. Start, Stop, and Keep commitments, each measured, each anchored to a belief.' },
 ];
 
 const PracticeSection = () => (
@@ -601,7 +770,7 @@ const PracticeSection = () => (
           fontFamily: body, fontSize: 'clamp(16px, 1.4vw, 19px)', fontWeight: 400, lineHeight: 1.6,
           color: paper, opacity: 0.8, marginTop: 28, maxWidth: 860,
         }}>
-          Boardroom membership unlocks the full daily Flow library inside Agency Brain — seven structured practices, each tuned to a specific reality of running an agency. Strategy, conflict, learning capture, idea pressure-testing, gratitude depth, and the quieter practices that hold the rest. Every Flow ends with an action — so the work in the app becomes the work in the agency by Tuesday morning.
+          Boardroom membership unlocks the full daily Flow library inside Agency Brain: seven structured practices, each tuned to a specific reality of running an agency. Strategy, conflict, learning capture, idea pressure-testing, gratitude depth, and the quieter practices that hold the rest. Every Flow ends with an action, so the work in the app becomes the work in the agency by Tuesday morning.
         </p>
       </Reveal>
 
@@ -638,7 +807,7 @@ const PracticeSection = () => (
           fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6,
           color: paper, opacity: 0.75, marginTop: 12, maxWidth: 680,
         }}>
-          Tracked and leaderboard-visible. The system that proves daily practice produces better business decisions — measurable, repeatable, in your team's view if you want it.
+          Tracked and leaderboard-visible. The system that proves daily practice produces better business decisions: measurable, repeatable, in your team's view if you want it.
         </p>
       </Reveal>
     </div>
@@ -646,7 +815,7 @@ const PracticeSection = () => (
 );
 
 /* ══════════════════════════════════════════════════════
-   GIANT CTA — JOIN.
+   GIANT CTA: JOIN.
    ══════════════════════════════════════════════════════ */
 const GiantCTA = () => (
   <section
@@ -679,7 +848,7 @@ const GiantCTA = () => (
           fontFamily: body, fontSize: 14, fontWeight: 500, letterSpacing: '0.06em',
           color: paper, opacity: 0.7, marginTop: 32, textTransform: 'uppercase',
         }}>
-          Click anywhere &nbsp;→&nbsp; Claim Your Seat at $299/mo
+          Click anywhere &nbsp;&rarr;&nbsp; Claim Your Seat at $299/mo
         </p>
       </Reveal>
     </div>
@@ -754,7 +923,7 @@ const BoldFooter = () => (
 
       <div className="pt-8 text-center">
         <p style={{ fontFamily: body, fontSize: 11, opacity: 0.5, letterSpacing: '0.08em' }}>
-          © {new Date().getFullYear()} STANDARD PLAYBOOK INC. ALL RIGHTS RESERVED.
+          &copy; {new Date().getFullYear()} STANDARD PLAYBOOK INC. ALL RIGHTS RESERVED.
         </p>
       </div>
     </div>
@@ -774,7 +943,7 @@ const MobileStickyCTA = () => (
         border: 'none', cursor: 'pointer', textTransform: 'uppercase',
         display: 'block', textAlign: 'center', textDecoration: 'none',
       }}>
-      Burn The Boats →
+      Burn The Boats &rarr;
     </a>
   </div>
 );
@@ -788,13 +957,14 @@ const BoldBoardroom = () => (
     <Hero />
     <MarqueeBands />
     <IncludesSection />
+    <WeeklyCallSection />
     <PricingSection />
     <PillarsSection />
     <PracticeSection />
     <FAQSection />
     <GiantCTA />
     <BoldFooter />
-    <ContentMeta lastUpdated="March 2026" />
+    <ContentMeta lastUpdated="July 2026" />
     <MobileStickyCTA />
   </div>
 );
