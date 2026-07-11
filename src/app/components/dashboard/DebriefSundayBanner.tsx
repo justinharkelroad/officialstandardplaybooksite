@@ -53,12 +53,12 @@ export function DebriefSundayBanner() {
   }
 
   return (
-    <div className="relative mb-6 flex items-center justify-between gap-4 bg-[#0A0A0B] p-5 text-[#F4F2EE]">
+    <div className="relative mb-6 flex items-center justify-between gap-4 bg-foreground p-5 text-background">
       <div className="flex items-center gap-4">
         <span aria-hidden className="hidden h-3 w-3 shrink-0 rounded-full bg-[#2997FF] sm:block" />
         <div>
           <p className="sp-display text-xl leading-none">Your weekend Debrief is ready</p>
-          <p className="sp-label mt-2 text-[10px] text-[#F4F2EE]/60">
+          <p className="sp-label mt-2 text-[10px] text-background/60">
             Reflect on your week, plan the next one, get your coaching analysis.
           </p>
         </div>
@@ -66,11 +66,11 @@ export function DebriefSundayBanner() {
       <div className="flex items-center gap-2">
         <Button
           onClick={() => navigate("/app/debrief")}
-          className="border-[1.5px] border-[#F4F2EE] bg-[#F4F2EE] px-6 font-bold text-[#0A0A0B] hover:border-[#2997FF] hover:bg-[#2997FF] hover:text-white"
+          className="border-[1.5px] border-background bg-background px-6 font-bold text-foreground hover:border-[#2997FF] hover:bg-[#2997FF] hover:text-white"
         >
           Begin Debrief
         </Button>
-        <button onClick={handleDismiss} className="p-1 text-[#F4F2EE]/40 hover:text-[#F4F2EE]" aria-label="Dismiss weekly debrief banner">
+        <button onClick={handleDismiss} className="p-1 text-background/40 hover:text-background" aria-label="Dismiss weekly debrief banner">
           <X className="h-4 w-4" />
         </button>
       </div>

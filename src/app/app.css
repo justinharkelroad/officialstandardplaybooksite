@@ -36,9 +36,34 @@
   --ring: 211 100% 58%;
   --radius: 0rem;                  /* squared, editorial */
 
-  background-color: var(--paper);
-  color: var(--ink);
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Dark mode — inverted editorial: ink page, paper type, same blue.
+   Toggled by adding the `dark` class to the .member-app wrapper, which also
+   activates every transplanted component's Tailwind `dark:` variants. */
+.member-app.dark {
+  --background: 240 5% 5%;
+  --foreground: 40 21% 93%;
+  --card: 240 4% 9%;
+  --card-foreground: 40 21% 93%;
+  --popover: 240 4% 9%;
+  --popover-foreground: 40 21% 93%;
+  --primary: 40 21% 93%;
+  --primary-foreground: 240 5% 5%;
+  --secondary: 240 4% 13%;
+  --secondary-foreground: 40 21% 93%;
+  --muted: 240 4% 13%;
+  --muted-foreground: 40 8% 62%;
+  --accent: 211 100% 58%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 72% 55%;
+  --destructive-foreground: 40 21% 95%;
+  --border: 240 4% 22%;
+  --input: 240 4% 28%;
+  --ring: 211 100% 58%;
 }
 
 /* Display type — the landing's editorial headline stack */
@@ -65,9 +90,9 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #fff;
-  background: #0a0a0b;
-  border: 1.5px solid #0a0a0b;
+  color: hsl(var(--primary-foreground));
+  background: hsl(var(--primary));
+  border: 1.5px solid hsl(var(--primary));
   padding: 12px 24px;
   cursor: pointer;
   transition: all 0.25s;
@@ -75,6 +100,7 @@
 .sp-btn-ink:hover {
   background: #2997ff;
   border-color: #2997ff;
+  color: #fff;
 }
 .sp-btn-ink:disabled {
   opacity: 0.5;
@@ -88,16 +114,16 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #0a0a0b;
+  color: hsl(var(--foreground));
   background: transparent;
-  border: 1.5px solid #0a0a0b;
+  border: 1.5px solid hsl(var(--foreground));
   padding: 11px 22px;
   cursor: pointer;
   transition: all 0.25s;
 }
 .sp-btn-outline:hover {
-  background: #0a0a0b;
-  color: #fff;
+  background: hsl(var(--foreground));
+  color: hsl(var(--background));
 }
 
 /* Cursor-following spotlight ported from the source platform. Position is
@@ -131,9 +157,10 @@
 
 /* ── Editorial alignment layer (matches the landing page) ────────────── */
 
-/* Every h1/h2 in the member app is display type, exactly like the landing. */
+/* Every heading in the member app is display type, exactly like the landing. */
 .member-app h1,
-.member-app h2 {
+.member-app h2,
+.member-app h3 {
   font-family: "Anton", "Archivo Black", "Oswald", Impact, sans-serif;
   text-transform: uppercase;
   font-weight: 400;
@@ -147,13 +174,16 @@
   border-radius: 0 !important;
 }
 
-/* Buttons read like the landing CTAs: uppercase tracked micro-type. */
-.member-app button {
+/* Buttons AND button-styled links read like the landing CTAs:
+   uppercase tracked micro-type. */
+.member-app button,
+.member-app a[class*="justify-between"],
+.member-app a[class*="inline-flex"] {
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
 /* Cards get hairline ink borders instead of soft gray. */
 .member-app .bg-card {
-  border-color: rgba(10, 10, 11, 0.25);
+  border-color: color-mix(in srgb, hsl(var(--foreground)) 25%, transparent);
 }

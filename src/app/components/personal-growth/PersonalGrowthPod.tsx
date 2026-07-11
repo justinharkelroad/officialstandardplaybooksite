@@ -155,7 +155,7 @@ export const PersonalGrowthPod = forwardRef<
               // 1.5px ink border, ink fill on hover, matching the landing's
               // "Learn More" CTA language.
               !cta.variant &&
-                "border-[1.5px] border-[#0A0A0B] bg-transparent text-[#0A0A0B] hover:bg-[#0A0A0B] hover:text-[#F4F2EE]",
+                "border-[1.5px] border-foreground bg-transparent text-foreground hover:bg-foreground hover:text-background",
             )}
           >
             <Link to={cta.to}>

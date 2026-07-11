@@ -159,7 +159,7 @@ export function TodayRhythmHero() {
                     "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                     completed
                       ? cn("scale-[1.02] border-[1.5px] border-transparent", token.solidClass)
-                      : "border-[1.5px] border-[#0A0A0B]/25 bg-white text-[#0A0A0B]/80 hover:border-[#0A0A0B] hover:text-[#0A0A0B]",
+                      : "border-[1.5px] border-foreground/25 bg-card text-foreground/80 hover:border-foreground hover:text-foreground",
                   )}
                 >
                   <Icon
