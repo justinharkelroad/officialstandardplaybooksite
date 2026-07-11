@@ -32,11 +32,11 @@ export default function FlowStart() {
   // Update browser tab title
   useEffect(() => {
     if (templateName) {
-      document.title = `Start ${templateName} | AgencyBrain`;
+      document.title = `Start ${templateName} | Standard Playbook`;
     } else {
-      document.title = "Start Flow | AgencyBrain";
+      document.title = "Start Flow | Standard Playbook";
     }
-    return () => { document.title = "AgencyBrain"; };
+    return () => { document.title = "Standard Playbook"; };
   }, [templateName]);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export default function FlowStart() {
         .single();
 
       if (templateError || !template) {
-        navigate('/flows');
+        navigate('/app/flows');
         return;
       }
 
@@ -83,7 +83,7 @@ export default function FlowStart() {
           // Empty phantom draft - delete silently and navigate directly
           console.log('[FlowStart] Auto-deleting empty phantom draft:', existingSession.id);
           await supabase.from('flow_sessions').delete().eq('id', existingSession.id);
-          navigate(`/flows/session/${slug}`, { replace: true });
+          navigate(`/app/flows/session/${slug}`, { replace: true });
           return;
         }
         
@@ -92,16 +92,16 @@ export default function FlowStart() {
         setLoading(false);
       } else {
         // No draft - navigate directly, session will be created lazily by useFlowSession
-        navigate(`/flows/session/${slug}`, { replace: true });
+        navigate(`/app/flows/session/${slug}`, { replace: true });
       }
     } catch (err) {
       console.error('Error checking for drafts:', err);
-      navigate('/flows');
+      navigate('/app/flows');
     }
   };
 
   const handleContinueDraft = () => {
-    navigate(`/flows/session/${slug}`, { 
+    navigate(`/app/flows/session/${slug}`, { 
       replace: true,
       state: { sessionId: draftSession?.id }
     });
@@ -120,7 +120,7 @@ export default function FlowStart() {
       setShowDeleteConfirm(false);
       
       // Just navigate - session will be created lazily on first answer
-      navigate(`/flows/session/${slug}`, { replace: true });
+      navigate(`/app/flows/session/${slug}`, { replace: true });
     } catch (err) {
       console.error('Error deleting draft:', err);
     }
@@ -138,7 +138,7 @@ export default function FlowStart() {
     }
     
     // Navigate directly, session will be created lazily by useFlowSession
-    navigate(`/flows/session/${slug}`, { replace: true });
+    navigate(`/app/flows/session/${slug}`, { replace: true });
   };
 
   // Count answered questions

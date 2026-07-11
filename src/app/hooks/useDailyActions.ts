@@ -1,8 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { useLocation } from "react-router-dom";
-import { useStaffAuth } from "@/app/hooks/useStaffAuth";
 
 export interface DailyActionsOutput {
   body: string[];
@@ -35,19 +33,9 @@ interface GenerateDailyActionsParams {
 }
 
 export function useDailyActions() {
-  const { pathname } = useLocation();
-  const staffMode = pathname.startsWith('/staff/');
-  const { sessionToken } = useStaffAuth();
-
   return useMutation({
     mutationFn: async (params: GenerateDailyActionsParams) => {
-      if (staffMode && !sessionToken) throw new Error('Not authenticated');
-      const headers = staffMode
-        ? { 'x-staff-session': sessionToken! }
-        : undefined;
-
       const { data, error } = await supabase.functions.invoke('life_targets_daily_actions', {
-        headers,
         body: params
       });
 

@@ -1,30 +1,3 @@
-/*
- * Phase 2C discovery findings before refactor:
- * - src/pages/flows/FlowSession.tsx: 956 lines. Owner Flow session UI, legacy DB prompt rendering,
- *   draft resume via location.state.sessionId, lazy flow_sessions creation, response autosave,
- *   regex-only challenge prompts, post-flow action refinement, Weekly Playbook add, completion navigation.
- * - src/pages/staff/StaffFlowSession.tsx: 805 lines. Near-duplicate staff Flow UI using
- *   useStaffFlowSession, x-staff-session auth, staff focus items, staff completion route.
- * - src/pages/flows/FlowStart.tsx: 253 lines. Owner entry point; resolves template, detects
- *   in-progress drafts, deletes empty phantom drafts, then navigates to /flows/session/:slug.
- * - src/hooks/useFlowSession.ts: 334 lines. Loads templates/sessions, computes visible questions,
- *   preserves show_if behavior, creates sessions lazily, saves responses_json, interpolates
- *   prior answers as typed prompt segments.
- * - src/components/flows/ChatBubble.tsx: 88 lines. Shared incoming/outgoing bubble primitive with
- *   sanitized rich-text support and avatar/icon rendering.
- * - src/components/flows/ChatInput.tsx: 269 lines. Text/textarea/select answer control with option
- *   chips, browser speech-to-text dictation, and rich text expansion for textarea answers.
- * - src/types/flows.ts: 91 lines. FlowTemplate, FlowQuestion, FlowSession, FlowAnalysis, and
- *   challenge log types.
- * - package.json: 164 lines. ElevenLabs is already present as @11labs/react ^0.2.0 and
- *   @elevenlabs/client ^0.9.1; @elevenlabs/react is not installed, and the repo's current
- *   working integrations use @11labs/react.
- * - No metadata-backed useFeatureFlag helper existed in src/lib or src/hooks before this change.
- * - New files created for this phase: FlowSessionAgent, FlowSessionLegacy, StaffFlowSessionAgent,
- *   StaffFlowSessionLegacy, FlowModeToggle, VoiceModeIndicator, StreamingChatBubble,
- *   useFlowAgentSession, flowAgentApi, featureFlags.
- */
-
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
@@ -64,7 +37,6 @@ import { FlowTypeIcon } from '@/app/components/flows/FlowTypeIcon';
 import { StreamingChatBubble } from '@/app/components/flows/StreamingChatBubble';
 import { TypingIndicator } from '@/app/components/flows/TypingIndicator';
 import { useFocusItems } from '@/app/hooks/useFocusItems';
-import { useStaffFocusItems } from '@/app/hooks/useStaffFocusItems';
 import {
   FlowAgentMode,
   FlowAgentStatus,

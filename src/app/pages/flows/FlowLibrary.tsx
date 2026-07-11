@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/app/lib/supabaseClient';
 import { useAuth } from '@/app/lib/auth';
-import { useStaffAuth } from '@/app/hooks/useStaffAuth';
 import { FlowSession } from '@/app/types/flows';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -14,11 +13,8 @@ import { FlowTypeIcon } from '@/app/components/flows/FlowTypeIcon';
 
 export default function FlowLibrary() {
   const navigate = useNavigate();
-  const location = useLocation();
   const { user } = useAuth();
-  const { sessionToken, loading: staffAuthLoading } = useStaffAuth();
-  const isStaffLibrary = location.pathname.startsWith('/staff/');
-  
+
   const [sessions, setSessions] = useState<FlowSession[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -27,40 +23,22 @@ export default function FlowLibrary() {
   const [activeSessionIconId, setActiveSessionIconId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (isStaffLibrary) {
-      if (!staffAuthLoading && sessionToken) {
-        fetchSessions();
-      }
-      return;
-    }
-
     if (user?.id) {
       fetchSessions();
     }
-  }, [user?.id, sessionToken, staffAuthLoading, isStaffLibrary]);
+  }, [user?.id]);
 
   const fetchSessions = async () => {
     setLoading(true);
     try {
-      if (isStaffLibrary) {
-        const { data, error } = await supabase.functions.invoke('get_staff_flows', {
-          headers: {
-            'x-staff-session': sessionToken!,
-          },
-        });
+      const { data, error } = await supabase
+        .from('flow_sessions')
+        .select('*, flow_template:flow_templates(id, name, slug, icon)')
+        .eq('user_id', user!.id)
+        .order('created_at', { ascending: false });
 
-        if (error || data?.error) throw error || new Error(data?.error || 'Failed to fetch staff sessions');
-        setSessions((data?.sessions || []) as FlowSession[]);
-      } else {
-        const { data, error } = await supabase
-          .from('flow_sessions')
-          .select('*, flow_template:flow_templates(id, name, slug, icon)')
-          .eq('user_id', user!.id)
-          .order('created_at', { ascending: false });
-
-        if (error) throw error;
-        setSessions(data || []);
-      }
+      if (error) throw error;
+      setSessions(data || []);
     } catch (err) {
       console.error('Error fetching sessions:', err);
     } finally {
@@ -98,16 +76,13 @@ export default function FlowLibrary() {
 
   const handleSessionClick = (session: FlowSession) => {
     if (session.status === 'completed') {
-      navigate(isStaffLibrary ? `/staff/flows/view/${session.id}` : `/flows/view/${session.id}`);
+      navigate(`/app/flows/view/${session.id}`);
     } else {
-      navigate(
-        isStaffLibrary ? `/staff/flows/session/${session.flow_template?.slug}` : `/flows/session/${session.flow_template?.slug}`,
-        isStaffLibrary ? { state: { sessionId: session.id } } : undefined,
-      );
+      navigate(`/app/flows/session/${session.flow_template?.slug}`);
     }
   };
 
-  if (loading || (isStaffLibrary && staffAuthLoading)) {
+  if (loading) {
     return (
       <div className="p-6 max-w-4xl mx-auto">
         <div className="animate-pulse space-y-4">
@@ -129,7 +104,7 @@ export default function FlowLibrary() {
       <div className="mb-6">
         <Button
           variant="ghost"
-          onClick={() => navigate(isStaffLibrary ? '/staff/flows' : '/flows')}
+          onClick={() => navigate('/app/flows')}
           className="mb-4 -ml-2"
         >
           <ArrowLeft className="h-4 w-4 mr-2" strokeWidth={1.5} />
@@ -196,7 +171,7 @@ export default function FlowLibrary() {
                 <p className="text-sm text-muted-foreground/70 mb-4">
                   Start your first Flow to begin building your library.
                 </p>
-                <Button onClick={() => navigate(isStaffLibrary ? '/staff/flows' : '/flows')}>
+                <Button onClick={() => navigate('/app/flows')}>
                   Start a Flow
                 </Button>
               </>

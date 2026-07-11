@@ -4,12 +4,10 @@ import { supabase } from '@/app/lib/supabaseClient';
 import { useAuth } from '@/app/lib/auth';
 import { useFlowProfile } from '@/app/hooks/useFlowProfile';
 import { generateFlowPDF } from '@/app/lib/generateFlowPDF';
-import { FlowShareButton } from '@/app/components/flows/FlowShareButton';
 import { FlowSession, FlowTemplate, FlowQuestion, FlowAnalysis } from '@/app/types/flows';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Loader2 } from 'lucide-react';
-import { ExchangeShareModal } from '@/app/components/exchange/ExchangeShareModal';
 import { FlowReportCard } from '@/app/components/flows/FlowReportCard';
 
 export default function FlowView() {
@@ -25,7 +23,6 @@ export default function FlowView() {
   const [loading, setLoading] = useState(true);
   const [analyzing, setAnalyzing] = useState(false);
   const [generatingPDF, setGeneratingPDF] = useState(false);
-  const [shareModalOpen, setShareModalOpen] = useState(false);
 
   // Check if current user is the owner of this flow
   const isOwner = session?.user_id === user?.id;
@@ -33,11 +30,11 @@ export default function FlowView() {
   // Update browser tab title
   useEffect(() => {
     if (template?.name) {
-      document.title = `${template.name} Flow | AgencyBrain`;
+      document.title = `${template.name} Flow | Standard Playbook`;
     } else {
-      document.title = "View Flow | AgencyBrain";
+      document.title = "View Flow | Standard Playbook";
     }
-    return () => { document.title = "AgencyBrain"; };
+    return () => { document.title = "Standard Playbook"; };
   }, [template?.name]);
 
   useEffect(() => {
@@ -121,7 +118,7 @@ export default function FlowView() {
 
   const handleBack = () => {
     if (isOwner) {
-      navigate('/flows/library');
+      navigate('/app/flows/library');
     } else {
       navigate(-1);
     }
@@ -172,38 +169,9 @@ export default function FlowView() {
           analyzing={analyzing}
           isReadOnly={!isOwner}
           generatingPDF={generatingPDF}
-          onShare={isOwner ? () => setShareModalOpen(true) : undefined}
           onDownloadPDF={handleDownloadPDF}
-          onNewFlow={isOwner ? () => navigate(`/flows/start/${template.slug}`) : undefined}
-          publicShareButton={isOwner && session.status === 'completed' ? (
-            <FlowShareButton
-              sessionId={session.id}
-              session={session}
-              template={template}
-              questions={questions}
-              analysis={analysis}
-              userName={profile?.preferred_name || undefined}
-              label="Public Link"
-              size="sm"
-            />
-          ) : undefined}
+          onNewFlow={isOwner ? () => navigate(`/app/flows/start/${template.slug}`) : undefined}
         />
-
-        {/* Public-link button now lives in the FlowReportCard header row (publicShareButton) */}
-        
-        {/* Share Modal - only for owners */}
-        {isOwner && (
-          <ExchangeShareModal
-            open={shareModalOpen}
-            onOpenChange={setShareModalOpen}
-            contentType="flow_result"
-            sourceReference={{
-              type: 'flow_result',
-              id: session.id,
-              title: session.title || `${template.name} Flow`,
-            }}
-          />
-        )}
       </div>
     </div>
   );

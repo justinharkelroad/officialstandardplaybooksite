@@ -94,7 +94,7 @@ export function TodayRhythmHero() {
               </p>
             </div>
           </div>
-          <Link to="/core4" className="shrink-0">
+          <Link to="/app/core4" className="shrink-0">
             <Button
               variant="ghost"
               size="sm"
@@ -182,7 +182,7 @@ export function TodayRhythmHero() {
           </div>
         </div>
 
-        <Link to="/core4" className="block">
+        <Link to="/app/core4" className="block">
           <Button variant="outline" className="w-full justify-between">
             Open Core 4 week
             <ArrowRight className="h-4 w-4" />
@@ -406,7 +406,7 @@ function FlowStartTile({ weeklyProgress }: { weeklyProgress: number }) {
         </div>
       </div>
       <Button asChild size="sm" className="h-7 shrink-0 px-2 text-xs">
-        <Link to="/flows">Start</Link>
+        <Link to="/app/flows">Start</Link>
       </Button>
     </div>
   );

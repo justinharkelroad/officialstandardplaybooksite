@@ -2,14 +2,11 @@ import { PlaybookItemCard } from "./PlaybookItemCard";
 import { cn } from "@/lib/utils";
 import { format, isToday } from "date-fns";
 import type { FocusItem, PlaybookDomain } from "@/app/hooks/useFocusItems";
-import type { StaffFocusItem } from "@/app/hooks/useStaffFocusItems";
-
-type AnyFocusItem = FocusItem | StaffFocusItem;
 
 interface PlaybookDayViewProps {
   date: Date;
-  items: AnyFocusItem[];
-  queueItems: AnyFocusItem[];
+  items: FocusItem[];
+  queueItems: FocusItem[];
   onToggleComplete: (id: string) => void;
   onDelete: (id: string) => void;
   onUnschedule: (id: string) => void;

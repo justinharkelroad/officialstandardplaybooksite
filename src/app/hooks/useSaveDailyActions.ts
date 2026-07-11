@@ -2,9 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { migrateOldFormat } from "@/app/lib/quarterUtils";
-import { useLocation } from "react-router-dom";
 import { useAuth } from "@/app/lib/auth";
-import { useStaffAuth } from "@/app/hooks/useStaffAuth";
 import type { QuarterlyTargets } from "@/app/hooks/useQuarterlyTargets";
 
 interface SaveDailyActionsParams {
@@ -20,44 +18,12 @@ interface SaveActionPoolParams {
 
 export function useSaveDailyActions() {
   const queryClient = useQueryClient();
-  const { pathname } = useLocation();
-  const staffMode = pathname.startsWith('/staff/');
   const { user } = useAuth();
-  const { user: staffUser, sessionToken } = useStaffAuth();
-  const actorKey = staffMode
-    ? (staffUser?.id ? `staff:${staffUser.id}` : 'staff:pending')
-    : (user?.id ? `owner:${user.id}` : 'owner:pending');
+  const actorKey = user?.id ? `owner:${user.id}` : 'owner:pending';
 
   return useMutation({
     mutationFn: async ({ quarter, selectedActions, showToast = true }: SaveDailyActionsParams) => {
       const normalizedQuarter = migrateOldFormat(quarter);
-
-      if (staffMode) {
-        if (!sessionToken) throw new Error('Not authenticated');
-
-        const { data, error } = await supabase.functions.invoke('staff_life_targets', {
-          headers: { 'x-staff-session': sessionToken },
-          body: {
-            action: 'update-actions',
-            data: {
-              quarter: normalizedQuarter,
-              body_daily_actions: selectedActions.body || [],
-              being_daily_actions: selectedActions.being || [],
-              balance_daily_actions: selectedActions.balance || [],
-              business_daily_actions: selectedActions.business || [],
-            },
-          },
-        });
-
-        if (error) throw error;
-        if (data?.error) throw new Error(data.error);
-
-        if (showToast) {
-          toast.success('Daily actions saved');
-        }
-
-        return { quarter: normalizedQuarter, selectedActions };
-      }
 
       if (!user) throw new Error('Not authenticated');
 
@@ -97,39 +63,12 @@ export function useSaveDailyActions() {
 // pool changes. Selections are saved separately via useSaveDailyActions.
 export function useSaveActionPool() {
   const queryClient = useQueryClient();
-  const { pathname } = useLocation();
-  const staffMode = pathname.startsWith('/staff/');
   const { user } = useAuth();
-  const { user: staffUser, sessionToken } = useStaffAuth();
-  const actorKey = staffMode
-    ? (staffUser?.id ? `staff:${staffUser.id}` : 'staff:pending')
-    : (user?.id ? `owner:${user.id}` : 'owner:pending');
+  const actorKey = user?.id ? `owner:${user.id}` : 'owner:pending';
 
   return useMutation({
     mutationFn: async ({ quarter, pool }: SaveActionPoolParams) => {
       const normalizedQuarter = migrateOldFormat(quarter);
-
-      if (staffMode) {
-        if (!sessionToken) throw new Error('Not authenticated');
-
-        const { data, error } = await supabase.functions.invoke('staff_life_targets', {
-          headers: { 'x-staff-session': sessionToken },
-          body: {
-            action: 'update-pool',
-            data: {
-              quarter: normalizedQuarter,
-              body_action_pool: pool.body || [],
-              being_action_pool: pool.being || [],
-              balance_action_pool: pool.balance || [],
-              business_action_pool: pool.business || [],
-            },
-          },
-        });
-
-        if (error) throw error;
-        if (data?.error) throw new Error(data.error);
-        return { quarter: normalizedQuarter, pool };
-      }
 
       if (!user) throw new Error('Not authenticated');
 

@@ -1,16 +1,12 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Calendar, Search, Plus, GripVertical, Dumbbell, Heart, Briefcase, Trash2 } from "lucide-react";
 import { LatinCross } from "@/app/components/icons/LatinCross";
 import { useDraggable } from "@dnd-kit/core";
 import { cn } from "@/lib/utils";
 import type { FocusItem, PlaybookDomain } from "@/app/hooks/useFocusItems";
-import type { StaffFocusItem } from "@/app/hooks/useStaffFocusItems";
-
-type AnyFocusItem = FocusItem | StaffFocusItem;
 
 const domainFilters: { key: PlaybookDomain | "all"; label: string; icon?: React.ElementType; color?: string }[] = [
   { key: "all", label: "All" },
@@ -21,7 +17,7 @@ const domainFilters: { key: PlaybookDomain | "all"; label: string; icon?: React.
 ];
 
 interface PlaybookBenchPanelProps {
-  items: AnyFocusItem[];
+  items: FocusItem[];
   onSchedule: (id: string) => void;
   onDelete: (id: string) => void;
   onCreateNew: () => void;
@@ -125,7 +121,7 @@ function BenchItem({
   onSchedule,
   onDelete,
 }: {
-  item: AnyFocusItem;
+  item: FocusItem;
   onSchedule: (id: string) => void;
   onDelete: (id: string) => void;
 }) {
@@ -163,14 +159,6 @@ function BenchItem({
       )}
       {item.domain && (
         <div className={cn("h-2 w-2 rounded-full shrink-0", domainColors[item.domain])} />
-      )}
-      {item.source_type === "mirror" && (
-        <Badge
-          variant="outline"
-          className="shrink-0 border-sky-500/40 bg-sky-500/10 px-1 py-0 text-[9px] font-medium leading-[14px] text-sky-700"
-        >
-          Mirror
-        </Badge>
       )}
       <Tooltip>
         <TooltipTrigger asChild>

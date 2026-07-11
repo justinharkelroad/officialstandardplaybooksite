@@ -11,7 +11,6 @@ export type PlaybookDomain = "body" | "being" | "balance" | "business";
 export interface FocusItem {
   id: string;
   user_id: string;
-  agency_id: string | null;
   title: string;
   description: string | null;
   priority_level: PriorityLevel;
@@ -46,8 +45,6 @@ export interface CreateFocusItemData {
   zone?: PlaybookZone;
   domain?: PlaybookDomain;
   sub_tag_id?: string;
-  source_mirror_analysis_id?: string;
-  source_action_index?: number;
 }
 
 export interface UpdateFocusItemData {
@@ -108,7 +105,6 @@ export function useFocusItems(weekKey?: string) {
   const invalidate = () => {
     queryClient.invalidateQueries({ queryKey: ["focus-items", currentUser?.id] });
     queryClient.invalidateQueries({ queryKey: ["playbook-stats", currentUser?.id] });
-    queryClient.invalidateQueries({ queryKey: ["mirror-bench-items"] });
   };
 
   const createItem = useMutation({
@@ -131,9 +127,6 @@ export function useFocusItems(weekKey?: string) {
           zone: newItem.zone || "bench",
           domain: newItem.domain || null,
           sub_tag_id: newItem.sub_tag_id || null,
-          source_mirror_analysis_id: newItem.source_mirror_analysis_id || null,
-          source_action_index:
-            newItem.source_action_index === undefined ? null : newItem.source_action_index,
         })
         .select()
         .single();

@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/app/lib/auth";
@@ -10,40 +10,24 @@ type SmartBackButtonProps = {
 };
 
 /**
- * Smart back button that navigates to:
- * - /staff from Staff Portal routes
- * - the configured authenticated destination for Brain Portal users
- * - /auth if user is not authenticated
+ * Back button that returns members to the configured hub destination,
+ * or to /login when unauthenticated.
  */
 export function SmartBackButton({
   className,
-  authenticatedPath = "/dashboard",
-  authenticatedLabel = "Dashboard",
+  authenticatedPath = "/app",
+  authenticatedLabel = "Hub",
 }: SmartBackButtonProps) {
   const navigate = useNavigate();
-  const location = useLocation();
   const { user } = useAuth();
-  const isStaffPortal = location.pathname.startsWith("/staff/");
-  const destination = isStaffPortal
-    ? "/staff"
-    : user
-      ? authenticatedPath
-      : "/auth";
-  const destinationLabel = isStaffPortal
-    ? "Staff Dashboard"
-    : user
-      ? authenticatedLabel
-      : "Login";
-
-  const handleBack = () => {
-    navigate(destination);
-  };
+  const destination = user ? authenticatedPath : "/login";
+  const destinationLabel = user ? authenticatedLabel : "Login";
 
   return (
     <Button
       variant="ghost"
       size="sm"
-      onClick={handleBack}
+      onClick={() => navigate(destination)}
       className={className}
     >
       <ArrowLeft className="h-4 w-4 mr-2" />

@@ -4,25 +4,22 @@ import { toast } from "sonner";
 
 export interface PlaybookTag {
   id: string;
-  agency_id: string;
   domain: string;
   name: string;
   is_active: boolean;
   sort_order: number;
 }
 
-export function usePlaybookTags(agencyId: string | null, { includeInactive = false }: { includeInactive?: boolean } = {}) {
+export function usePlaybookTags({ includeInactive = false }: { includeInactive?: boolean } = {}) {
   const queryClient = useQueryClient();
 
   const { data: tags = [], isLoading } = useQuery({
-    queryKey: ["playbook-tags", agencyId, includeInactive],
+    queryKey: ["playbook-tags", includeInactive],
     queryFn: async () => {
-      if (!agencyId) return [];
-
       let query = supabase
-        .from("agency_playbook_tags")
-        .select("id, agency_id, domain, name, is_active, sort_order")
-        .eq("agency_id", agencyId)
+        .from("playbook_tags")
+        .select("id, domain, name, is_active, sort_order")
+        .order("domain", { ascending: true })
         .order("sort_order", { ascending: true });
 
       if (!includeInactive) {
@@ -33,13 +30,12 @@ export function usePlaybookTags(agencyId: string | null, { includeInactive = fal
       if (error) throw error;
       return data as PlaybookTag[];
     },
-    enabled: !!agencyId,
   });
 
   const createTag = useMutation({
-    mutationFn: async (tag: { agency_id: string; domain: string; name: string; sort_order?: number }) => {
+    mutationFn: async (tag: { domain: string; name: string; sort_order?: number }) => {
       const { data, error } = await supabase
-        .from("agency_playbook_tags")
+        .from("playbook_tags")
         .insert(tag)
         .select()
         .single();
@@ -47,7 +43,7 @@ export function usePlaybookTags(agencyId: string | null, { includeInactive = fal
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["playbook-tags", agencyId] });
+      queryClient.invalidateQueries({ queryKey: ["playbook-tags"] });
       toast.success("Tag created");
     },
     onError: () => toast.error("Failed to create tag"),
@@ -56,8 +52,8 @@ export function usePlaybookTags(agencyId: string | null, { includeInactive = fal
   const updateTag = useMutation({
     mutationFn: async ({ id, updates }: { id: string; updates: Partial<PlaybookTag> }) => {
       const { data, error } = await supabase
-        .from("agency_playbook_tags")
-        .update({ ...updates, updated_at: new Date().toISOString() })
+        .from("playbook_tags")
+        .update(updates)
         .eq("id", id)
         .select()
         .single();
@@ -65,18 +61,18 @@ export function usePlaybookTags(agencyId: string | null, { includeInactive = fal
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["playbook-tags", agencyId] });
+      queryClient.invalidateQueries({ queryKey: ["playbook-tags"] });
     },
     onError: () => toast.error("Failed to update tag"),
   });
 
   const deleteTag = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("agency_playbook_tags").delete().eq("id", id);
+      const { error } = await supabase.from("playbook_tags").delete().eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["playbook-tags", agencyId] });
+      queryClient.invalidateQueries({ queryKey: ["playbook-tags"] });
       toast.success("Tag deleted");
     },
     onError: () => toast.error("Failed to delete tag"),

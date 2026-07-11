@@ -2,9 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { migrateOldFormat } from "@/app/lib/quarterUtils";
-import { useLocation } from "react-router-dom";
 import { useAuth } from "@/app/lib/auth";
-import { useStaffAuth } from "@/app/hooks/useStaffAuth";
 
 export interface QuarterlyTargets {
   id?: string;
@@ -51,43 +49,20 @@ export interface QuarterlyTargets {
   business_target2?: string | null;
   business_narrative2?: string | null;
   business_primary_is_target1?: boolean | null;
-  
+
   created_at?: string;
   updated_at?: string;
 }
 
-export function useQuarterlyTargets(
-  quarter: string,
-  portalMode?: 'staff' | 'portal',
-) {
-  const { pathname } = useLocation();
+export function useQuarterlyTargets(quarter: string) {
   const { user, loading: ownerLoading } = useAuth();
-  const { user: staffUser, sessionToken, loading: staffLoading } = useStaffAuth();
-  const staffMode = portalMode ? portalMode === 'staff' : pathname.startsWith('/staff/');
-  const actorKey = staffMode
-    ? (staffUser?.id ? `staff:${staffUser.id}` : 'staff:pending')
-    : (user?.id ? `owner:${user.id}` : 'owner:pending');
-  const authReady = staffMode
-    ? !staffLoading && !!staffUser?.id && !!sessionToken
-    : !ownerLoading && !!user?.id;
+  const actorKey = user?.id ? `owner:${user.id}` : 'owner:pending';
+  const authReady = !ownerLoading && !!user?.id;
 
   return useQuery({
     queryKey: ['quarterly-targets', actorKey, migrateOldFormat(quarter)],
     queryFn: async () => {
       const normalizedQuarter = migrateOldFormat(quarter);
-
-      if (staffMode) {
-        if (!sessionToken) throw new Error('Not authenticated');
-
-        const { data, error } = await supabase.functions.invoke('staff_life_targets', {
-          headers: { 'x-staff-session': sessionToken },
-          body: { action: 'get', quarter: normalizedQuarter },
-        });
-
-        if (error) throw error;
-        if (data?.error) throw new Error(data.error);
-        return data?.target as QuarterlyTargets | null;
-      }
 
       if (!user) throw new Error('Not authenticated');
 
@@ -110,15 +85,10 @@ interface SaveQuarterlyTargetsVariables {
   showToast?: boolean;
 }
 
-export function useSaveQuarterlyTargets(portalMode?: 'staff' | 'portal') {
+export function useSaveQuarterlyTargets() {
   const queryClient = useQueryClient();
-  const { pathname } = useLocation();
   const { user } = useAuth();
-  const { user: staffUser, sessionToken } = useStaffAuth();
-  const staffMode = portalMode ? portalMode === 'staff' : pathname.startsWith('/staff/');
-  const actorKey = staffMode
-    ? (staffUser?.id ? `staff:${staffUser.id}` : 'staff:pending')
-    : (user?.id ? `owner:${user.id}` : 'owner:pending');
+  const actorKey = user?.id ? `owner:${user.id}` : 'owner:pending';
 
   return useMutation({
     mutationFn: async (variables: SaveQuarterlyTargetsVariables) => {
@@ -158,19 +128,6 @@ export function useSaveQuarterlyTargets(portalMode?: 'staff' | 'portal') {
         business_daily_actions: targets.business_daily_actions,
         business_monthly_missions: targets.business_monthly_missions,
       };
-
-      if (staffMode) {
-        if (!sessionToken) throw new Error('Not authenticated');
-
-        const { data, error } = await supabase.functions.invoke('staff_life_targets', {
-          headers: { 'x-staff-session': sessionToken },
-          body: { action: 'save', data: payload },
-        });
-
-        if (error) throw error;
-        if (data?.error) throw new Error(data.error);
-        return data.target;
-      }
 
       if (!user) throw new Error('Not authenticated');
 

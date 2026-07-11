@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, CheckCircle2, Circle, Clock3, Flag, History, Info, ShieldAlert, Target } from "lucide-react";
 import type { ReactNode } from "react";
 import { format } from "date-fns";
+import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -24,8 +25,6 @@ type DailyFrameRow = DailyFrameCommitment & {
 };
 
 interface DailyFrameWidgetProps {
-  portal: "owner" | "staff";
-  staffSessionToken?: string | null;
   showRecent?: boolean;
   variant?: "default" | "dashboard" | "personal-growth";
   className?: string;
@@ -181,8 +180,6 @@ function DailyFrameDetailsDialog({
 }
 
 export function DailyFrameWidget({
-  portal,
-  staffSessionToken,
   showRecent = true,
   variant = "default",
   className,
@@ -190,17 +187,12 @@ export function DailyFrameWidget({
   const queryClient = useQueryClient();
   const isDashboard = variant === "dashboard";
   const isPersonalGrowth = variant === "personal-growth";
-  const headers = portal === "staff" && staffSessionToken
-    ? { "x-staff-session": staffSessionToken }
-    : undefined;
-  const startPath = portal === "staff" ? "/staff/flows/start/daily-frame" : "/flows/start/daily-frame";
+  const startPath = "/app/flows/start/daily-frame";
 
   const query = useQuery({
-    queryKey: ["daily-frame", portal, staffSessionToken ?? "owner"],
-    enabled: portal === "owner" || Boolean(staffSessionToken),
+    queryKey: ["daily-frame"],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke("daily-frame-commitments", {
-        headers,
         body: { action: "get_my_frames", history_days: 7 },
       });
 
@@ -212,7 +204,6 @@ export function DailyFrameWidget({
   const markComplete = useMutation({
     mutationFn: async (commitmentId: string) => {
       const { data, error } = await supabase.functions.invoke("daily-frame-commitments", {
-        headers,
         body: { action: "mark_complete", commitment_id: commitmentId },
       });
 
@@ -220,19 +211,18 @@ export function DailyFrameWidget({
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["daily-frame", portal] });
+      queryClient.invalidateQueries({ queryKey: ["daily-frame"] });
+    },
+    onError: () => {
+      toast.error("Failed to mark the Daily Frame complete");
     },
   });
 
   const today = query.data?.today ?? null;
   const todayStatus = today?.effective_status ?? today?.status;
   const recent = (query.data?.recent ?? []).filter((row) => row.id !== today?.id);
-  const viewPath = today
-    ? portal === "staff" && today.staff_flow_session_id
-      ? `/staff/flows/complete/${today.staff_flow_session_id}`
-      : portal === "owner" && today.flow_session_id
-        ? `/flows/complete/${today.flow_session_id}`
-        : null
+  const viewPath = today?.flow_session_id
+    ? `/app/flows/complete/${today.flow_session_id}`
     : null;
   const actionPath = viewPath ?? startPath;
   const actionLabel = today && viewPath ? "View" : today ? "Start New" : "Start";

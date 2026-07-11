@@ -27,9 +27,8 @@ interface DebriefWizardProps {
   stats: DebriefStatsData;
   review: WeeklyReview | null;
   isLoading: boolean;
-  agencyId: string | null;
   exitPath: string;
-  onCreateOrResume: (agencyId: string | null) => Promise<unknown>;
+  onCreateOrResume: () => Promise<unknown>;
   onSaveStep: (step: number) => void;
   onSaveGratitudeNote: (note: string) => void;
   onSaveDomainReflection: (domain: string, reflection: DomainReflection) => void;
@@ -52,7 +51,6 @@ export function DebriefWizard({
   stats,
   review,
   isLoading,
-  agencyId,
   exitPath,
   onCreateOrResume,
   onSaveStep,
@@ -90,7 +88,7 @@ export function DebriefWizard({
   const handleBegin = async () => {
     if (!review) {
       try {
-        await onCreateOrResume(agencyId);
+        await onCreateOrResume();
       } catch (err) {
         console.error("Failed to create debrief record:", err);
         toast.error("Unable to start your debrief. Please refresh and try again.");
@@ -219,7 +217,6 @@ export function DebriefWizard({
 
         {step === 3 && (
           <DebriefNextWeekPlanning
-            agencyId={agencyId}
             debriefWeekKey={weekKey}
             nextWeekOBT={review?.next_week_one_big_thing || ""}
             onSaveOBT={onSaveNextWeekOBT}

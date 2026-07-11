@@ -277,7 +277,7 @@ function DebriefPod() {
       cta={
         canOpen
           ? {
-              to: "/debrief",
+              to: "/app/debrief",
               label:
                 status === "completed"
                   ? "Review this week's debrief"
@@ -390,7 +390,7 @@ function MonthlyMissionsPod() {
           {missionRows.length}/4 set
         </Badge>
       }
-      cta={{ to: "/monthly-missions", label: "Open Monthly Missions" }}
+      cta={{ to: "/app/monthly-missions", label: "Open Monthly Missions" }}
     >
       {isLoading ? (
         <p className="text-sm text-muted-foreground">
@@ -478,7 +478,7 @@ function QuarterlyTargetsPod() {
           {setTargetCount}/4 set
         </Badge>
       }
-      cta={{ to: "/life-targets", label: "Open Quarterly Targets" }}
+      cta={{ to: "/app/life-targets", label: "Open Quarterly Targets" }}
     >
       {isLoading ? (
         <p className="text-sm text-muted-foreground">
@@ -579,7 +579,7 @@ function NinetyDayAudioPod() {
       iconAccent="being"
       active={hasCompletedTrack}
       className="h-full"
-      cta={{ to: "/theta-talk-track", label: "Open 90 Day Audio" }}
+      cta={{ to: "/app/theta-talk-track", label: "Open 90 Day Audio" }}
     >
       <div className="rounded-lg border border-border/60 p-3 text-sm text-muted-foreground">
         Rebuild or revisit your theta track whenever your quarterly targets

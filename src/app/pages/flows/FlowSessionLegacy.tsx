@@ -31,7 +31,7 @@ export default function FlowSession() {
   const navigate = useNavigate();
   const location = useLocation();
   const { profile } = useFlowProfile();
-  const { user } = useAuth();
+  const { user, member } = useAuth();
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLElement>(null);
@@ -102,29 +102,17 @@ export default function FlowSession() {
     return () => observer.disconnect();
   }, []);
 
-  // Fetch user profile photo
+  // Derive avatar initials from the member record
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      if (!user?.id) return;
-      
-      const { data } = await supabase
-        .from('profiles')
-        .select('full_name, profile_photo_url')
-        .eq('id', user.id)
-        .single();
-      
-      if (data) {
-        setUserPhotoUrl(data.profile_photo_url || null);
-        const name = data.full_name || user.email || '';
-        const initials = name
-          ? name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
-          : user.email?.[0].toUpperCase() || '??';
-        setUserInitials(initials);
-      }
-    };
-    
-    fetchUserProfile();
-  }, [user?.id, user?.email]);
+    if (!user?.id) return;
+
+    setUserPhotoUrl(null);
+    const name = member?.full_name || user.email || '';
+    const initials = name
+      ? name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
+      : user.email?.[0].toUpperCase() || '??';
+    setUserInitials(initials);
+  }, [user?.id, user?.email, member?.full_name]);
   
   // Cleanup timeout on unmount or question change
   useEffect(() => {
@@ -146,11 +134,11 @@ export default function FlowSession() {
   // Update browser tab title
   useEffect(() => {
     if (template?.name) {
-      document.title = `${template.name} | AgencyBrain`;
+      document.title = `${template.name} | Standard Playbook`;
     } else {
-      document.title = "Flow Session | AgencyBrain";
+      document.title = "Flow Session | Standard Playbook";
     }
-    return () => { document.title = "AgencyBrain"; };
+    return () => { document.title = "Standard Playbook"; };
   }, [template?.name]);
 
   useEffect(() => {
@@ -280,7 +268,7 @@ export default function FlowSession() {
   }, [questions, responses]);
 
   const handleCompleteFlow = useCallback(() => {
-    navigate(`/flows/complete/${session?.id}`);
+    navigate(`/app/flows/complete/${session?.id}`);
   }, [navigate, session?.id]);
 
   const refineActionItem = async (actionText: string) => {
@@ -553,7 +541,7 @@ export default function FlowSession() {
     if (currentValue.trim() && currentQuestion) {
       await saveResponse(currentQuestion.id, currentValue.trim());
     }
-    navigate('/flows');
+    navigate('/app/flows');
   };
 
   const handleClickPreviousAnswer = (idx: number) => {
@@ -579,7 +567,7 @@ export default function FlowSession() {
         <Card>
           <CardContent className="p-8 text-center">
             <p className="text-muted-foreground">Flow template not found.</p>
-            <Button className="mt-4" onClick={() => navigate('/flows')}>
+            <Button className="mt-4" onClick={() => navigate('/app/flows')}>
               Back to Flows
             </Button>
           </CardContent>
@@ -591,9 +579,9 @@ export default function FlowSession() {
   // If all questions are answered (currentQuestion is undefined), navigate to completion
   if (!currentQuestion) {
     if (session?.id) {
-      navigate(`/flows/complete/${session.id}`, { replace: true });
+      navigate(`/app/flows/complete/${session.id}`, { replace: true });
     } else {
-      navigate('/flows', { replace: true });
+      navigate('/app/flows', { replace: true });
     }
     return (
       <div className="min-h-screen flex items-center justify-center">

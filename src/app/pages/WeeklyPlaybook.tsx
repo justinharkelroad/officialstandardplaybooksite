@@ -1,12 +1,10 @@
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { format, startOfWeek, addDays, subDays, isBefore, startOfDay } from "date-fns";
 import { DndContext, DragOverlay, PointerSensor, closestCenter, useSensor, useSensors, type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
 import { useFocusItems } from "@/app/hooks/useFocusItems";
 import { usePlaybookStats } from "@/app/hooks/usePlaybookStats";
 import { usePlaybookTags } from "@/app/hooks/usePlaybookTags";
-import { useAuth } from "@/app/lib/auth";
 import { getWeekKey } from "@/app/lib/date-utils";
-import { supabase } from "@/integrations/supabase/client";
 import { PlaybookWeekHeader } from "@/app/components/playbook/PlaybookWeekHeader";
 import { HelpButton } from "@/app/components/HelpButton";
 import { PlaybookDayView } from "@/app/components/playbook/PlaybookDayView";
@@ -19,7 +17,6 @@ import { toast } from "sonner";
 import type { PlaybookDomain } from "@/app/hooks/useFocusItems";
 
 export default function WeeklyPlaybook() {
-  const { user, isKeyEmployee, keyEmployeeAgencyId } = useAuth();
   const [weekStart, setWeekStart] = useState(() => startOfWeek(new Date(), { weekStartsOn: 1 }));
   const [selectedDayIndex, setSelectedDayIndex] = useState(() => {
     const today = new Date().getDay();
@@ -34,24 +31,7 @@ export default function WeeklyPlaybook() {
   const { items, isLoading, createItem, completeItem, uncompleteItem, deleteItem, scheduleItem, unscheduleItem, setOneBigThing, completeOneBigThing, clearOneBigThing } = useFocusItems(weekKey);
   const { weeklyPoints, dailyCompleted } = usePlaybookStats();
 
-  // Resolve agency ID from auth context (profiles for owners, key_employees for KEs)
-  const [agencyId, setAgencyId] = useState<string | null>(null);
-  useEffect(() => {
-    if (isKeyEmployee && keyEmployeeAgencyId) {
-      setAgencyId(keyEmployeeAgencyId);
-      return;
-    }
-    if (!user?.id) return;
-    supabase
-      .from("profiles")
-      .select("agency_id")
-      .eq("id", user.id)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (data?.agency_id) setAgencyId(data.agency_id);
-      });
-  }, [user?.id, isKeyEmployee, keyEmployeeAgencyId]);
-  const { tags } = usePlaybookTags(agencyId);
+  const { tags } = usePlaybookTags();
 
   const selectedDate = addDays(weekStart, selectedDayIndex);
   const selectedDateStr = format(selectedDate, "yyyy-MM-dd");

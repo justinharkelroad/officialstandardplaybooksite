@@ -7,8 +7,8 @@ export default function MonthlyMissions() {
       <div className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-border px-4 py-3">
         <div className="max-w-4xl mx-auto flex items-center gap-3">
           <SmartBackButton
-            authenticatedPath="/personal-growth"
-            authenticatedLabel="Personal Growth"
+            authenticatedPath="/app"
+            authenticatedLabel="Hub"
           />
           <div>
             <h1 className="text-xl font-bold">Monthly Missions</h1>

@@ -1,10 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAuth } from "@/app/lib/auth";
-import { Navigate } from "react-router-dom";
-import { useSubscription } from "@/app/hooks/useSubscription";
 import { supabase } from "@/integrations/supabase/client";
 import { getDebriefWeekKey, weekKeyToDateRange, formatWeekLabel } from "@/app/lib/date-utils";
-import { hasWeeklyDebriefAccess } from "@/app/utils/tierAccess";
 import { DebriefWizard } from "@/app/components/debrief/DebriefWizard";
 import { DebriefCompleted } from "@/app/components/debrief/DebriefCompleted";
 import { useWeekSummary } from "@/app/hooks/useWeekSummary";
@@ -17,17 +14,7 @@ import { toast } from "sonner";
 import type { PlaybookDomain } from "@/app/hooks/useFocusItems";
 
 export default function WeeklyDebrief() {
-  const {
-    user,
-    isKeyEmployee,
-    keyEmployeeAgencyId,
-    membershipTier,
-    softwareTier,
-    loading: authLoading,
-    tierLoading,
-  } = useAuth();
-  const { data: subscription, isLoading: subscriptionLoading } = useSubscription();
-  const [agencyId, setAgencyId] = useState<string | null>(null);
+  const { user, loading: authLoading } = useAuth();
   const [pastReview, setPastReview] = useState<WeeklyReview | null>(null);
   const [loadingPast, setLoadingPast] = useState(false);
 
@@ -35,28 +22,6 @@ export default function WeeklyDebrief() {
   const weekKey = getDebriefWeekKey();
   const { monday, sunday } = weekKeyToDateRange(weekKey);
   const weekLabel = formatWeekLabel(monday, sunday);
-  const hasDebriefAccess = hasWeeklyDebriefAccess(
-    membershipTier,
-    softwareTier,
-    subscription?.status,
-  );
-
-  // Resolve agency ID
-  useEffect(() => {
-    if (isKeyEmployee && keyEmployeeAgencyId) {
-      setAgencyId(keyEmployeeAgencyId);
-      return;
-    }
-    if (!user?.id) return;
-    supabase
-      .from("profiles")
-      .select("agency_id")
-      .eq("id", user.id)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (data?.agency_id) setAgencyId(data.agency_id);
-      });
-  }, [user?.id, isKeyEmployee, keyEmployeeAgencyId]);
 
   const weekSummary = useWeekSummary(weekKey);
   const stats = useDebriefStats(weekKey);
@@ -117,16 +82,12 @@ export default function WeeklyDebrief() {
     }
   };
 
-  if (authLoading || tierLoading || subscriptionLoading) {
+  if (authLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
       </div>
     );
-  }
-
-  if (!hasDebriefAccess) {
-    return <Navigate to="/dashboard" replace />;
   }
 
   if (loadingPast) {
@@ -145,7 +106,7 @@ export default function WeeklyDebrief() {
       <DebriefCompleted
         review={pastReview}
         weekLabel={pastWeekLabel}
-        exitPath="/personal-growth"
+        exitPath="/app"
         onBack={() => setPastReview(null)}
         onViewDebrief={handleViewPastDebrief}
       />
@@ -159,7 +120,7 @@ export default function WeeklyDebrief() {
         review={review}
         weekLabel={weekLabel}
         stats={stats}
-        exitPath="/personal-growth"
+        exitPath="/app"
         onViewDebrief={handleViewPastDebrief}
       />
     );
@@ -173,9 +134,8 @@ export default function WeeklyDebrief() {
       stats={stats}
       review={review}
       isLoading={isLoading}
-      agencyId={agencyId}
-      exitPath="/personal-growth"
-      onCreateOrResume={(aid) => createOrResume.mutateAsync(aid)}
+      exitPath="/app"
+      onCreateOrResume={() => createOrResume.mutateAsync()}
       onSaveStep={(step) => saveStep.mutate(step)}
       onSaveGratitudeNote={(note) => saveGratitudeNote.mutate(note)}
       onSaveDomainReflection={(domain, reflection) => saveDomainReflection.mutate({ domain, reflection })}

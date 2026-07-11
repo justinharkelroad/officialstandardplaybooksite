@@ -81,7 +81,7 @@ export function TodaysPowerPlays({
       }
       cta={
         isPersonalGrowth
-          ? { to: "/weekly-playbook", label: "Set Power Plays" }
+          ? { to: "/app/weekly-playbook", label: "Set Power Plays" }
           : undefined
       }
     >
@@ -97,7 +97,7 @@ export function TodaysPowerPlays({
       ) : (
         <div className="flex justify-end">
           <Button asChild variant="ghost" size="sm">
-            <Link to="/weekly-playbook">
+            <Link to="/app/weekly-playbook">
               View Week
               <ChevronRight className="ml-1 h-4 w-4" />
             </Link>

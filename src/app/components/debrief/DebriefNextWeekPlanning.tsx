@@ -16,7 +16,6 @@ import { toast } from "sonner";
 import type { PlaybookDomain } from "@/app/hooks/useFocusItems";
 
 interface DebriefNextWeekPlanningProps {
-  agencyId: string | null;
   debriefWeekKey: string;
   nextWeekOBT: string;
   onSaveOBT: (obt: string) => void;
@@ -25,7 +24,6 @@ interface DebriefNextWeekPlanningProps {
 }
 
 export function DebriefNextWeekPlanning({
-  agencyId,
   debriefWeekKey,
   nextWeekOBT,
   onSaveOBT,
@@ -52,7 +50,7 @@ export function DebriefNextWeekPlanning({
     clearOneBigThing,
   } = useFocusItems(nextWeekKey);
 
-  const { tags } = usePlaybookTags(agencyId);
+  const { tags } = usePlaybookTags();
 
   const [selectedDayIndex, setSelectedDayIndex] = useState(0); // Mon
   const [scheduleItemId, setScheduleItemId] = useState<string | null>(null);

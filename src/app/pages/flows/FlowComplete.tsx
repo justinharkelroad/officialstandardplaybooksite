@@ -9,7 +9,6 @@ import { useFlowProfile } from '@/app/hooks/useFlowProfile';
 import { useFlowStats } from '@/app/hooks/useFlowStats';
 import { useToast } from '@/app/hooks/use-toast';
 import { generateFlowPDF } from '@/app/lib/generateFlowPDF';
-import { FlowShareButton } from '@/app/components/flows/FlowShareButton';
 import { FlowSession,
   FlowTemplate,
   FlowAnalysis,
@@ -27,11 +26,9 @@ import { Loader2,
   Tags,
   Brain,
   HelpCircle,
-  Share2,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import confetti from 'canvas-confetti';
-import { ExchangeShareModal } from '@/app/components/exchange/ExchangeShareModal';
 import { parseDeclaredFlowActions } from '@/app/lib/declaredFlowActions';
 import { isHtmlContent } from '@/app/components/flows/ChatBubble';
 import DOMPurify from 'dompurify';
@@ -54,7 +51,6 @@ export default function FlowComplete() {
   const [analyzing, setAnalyzing] = useState(false);
   const [analysisError, setAnalysisError] = useState<string | null>(null);
   const [generatingPDF, setGeneratingPDF] = useState(false);
-  const [shareModalOpen, setShareModalOpen] = useState(false);
 
   // Celebration effect for milestones and streaks
   useEffect(() => {
@@ -90,8 +86,8 @@ export default function FlowComplete() {
 
   // Update browser tab title
   useEffect(() => {
-    document.title = "Flow Complete | AgencyBrain";
-    return () => { document.title = "AgencyBrain"; };
+    document.title = "Flow Complete | Standard Playbook";
+    return () => { document.title = "Standard Playbook"; };
   }, []);
 
   useEffect(() => {
@@ -131,7 +127,7 @@ export default function FlowComplete() {
       }
     } catch (err) {
       console.error('Error loading session:', err);
-      navigate('/flows');
+      navigate('/app/flows');
     }
   };
 
@@ -204,7 +200,7 @@ export default function FlowComplete() {
         <Card>
           <CardContent className="p-8 text-center">
             <p className="text-muted-foreground">Session not found.</p>
-            <Button className="mt-4" onClick={() => navigate('/flows')}>
+            <Button className="mt-4" onClick={() => navigate('/app/flows')}>
               Back to Flows
             </Button>
           </CardContent>
@@ -474,17 +470,6 @@ export default function FlowComplete() {
           <Button 
             className="w-full" 
             variant="outline"
-            onClick={() => setShareModalOpen(true)}
-          >
-            <Share2 className="h-4 w-4 mr-2" strokeWidth={1.5} />
-            Share to The Exchange
-          </Button>
-          )}
-          
-          {!isDailyFrameFlow && (
-          <Button 
-            className="w-full" 
-            variant="outline"
             onClick={handleDownloadPDF}
             disabled={generatingPDF}
           >
@@ -497,50 +482,23 @@ export default function FlowComplete() {
           </Button>
           )}
 
-          {session && template && (
-            <FlowShareButton
-              className="w-full"
-              sessionId={session.id}
-              session={session}
-              template={template}
-              questions={((typeof template.questions_json === 'string'
-                ? JSON.parse(template.questions_json)
-                : template.questions_json) || []) as FlowQuestion[]}
-              analysis={analysis}
-              userName={profile?.preferred_name || undefined}
-              label="Share public link"
-            />
-          )}
-          
-          <Button 
+          <Button
             className="w-full"
-            onClick={() => navigate(`/flows/start/${template.slug}`)}
+            onClick={() => navigate(`/app/flows/start/${template.slug}`)}
           >
             <RotateCcw className="h-4 w-4 mr-2" strokeWidth={1.5} />
             Start New {template.name} Flow
           </Button>
-          
+
           <Button
             className="w-full"
             variant="ghost"
-            onClick={() => navigate('/personal-growth')}
+            onClick={() => navigate('/app')}
           >
             <Home className="h-4 w-4 mr-2" strokeWidth={1.5} />
             Back to Personal Growth
           </Button>
         </div>
-        
-        {/* Share Modal */}
-        <ExchangeShareModal
-          open={shareModalOpen}
-          onOpenChange={setShareModalOpen}
-          contentType="flow_result"
-          sourceReference={{
-            type: 'flow_result',
-            id: session.id,
-            title: session.title || `${template.name} Flow`,
-          }}
-        />
       </div>
     </div>
   );

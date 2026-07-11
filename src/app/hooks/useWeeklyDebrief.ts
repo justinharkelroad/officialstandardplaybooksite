@@ -13,7 +13,6 @@ export interface DomainReflection {
 export interface WeeklyReview {
   id: string;
   user_id: string;
-  agency_id: string | null;
   week_key: string;
   core4_points: number;
   flow_points: number;
@@ -52,19 +51,8 @@ export function useWeeklyDebrief(weekKey: string) {
   });
 
   const createOrResume = useMutation({
-    mutationFn: async (agencyId: string | null) => {
+    mutationFn: async () => {
       if (!user?.id) throw new Error("Not authenticated");
-
-      const { data: verifiedAgencyId, error: agencyError } = await supabase.rpc(
-        "weekly_debrief_actor_agency_id",
-        { p_user_id: user.id },
-      );
-      if (agencyError || !verifiedAgencyId) {
-        throw agencyError ?? new Error("Unable to verify Weekly Debrief agency");
-      }
-      if (agencyId && agencyId !== verifiedAgencyId) {
-        throw new Error("Weekly Debrief agency changed. Please refresh and try again.");
-      }
 
       // Check if already exists
       const { data: existing, error: existingError } = await supabase
@@ -82,7 +70,6 @@ export function useWeeklyDebrief(weekKey: string) {
         .from("weekly_reviews")
         .insert({
           user_id: user.id,
-          agency_id: verifiedAgencyId,
           week_key: weekKey,
           status: "in_progress",
           current_step: 0,

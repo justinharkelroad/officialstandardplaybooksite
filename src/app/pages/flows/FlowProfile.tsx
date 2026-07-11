@@ -135,7 +135,7 @@ export default function FlowProfile() {
       if (redirectTo) {
         navigate(redirectTo);
       } else {
-        navigate('/flows');
+        navigate('/app/flows');
       }
     }
   };
@@ -158,7 +158,7 @@ export default function FlowProfile() {
         <Button
           variant="ghost"
           size="sm"
-          onClick={() => navigate('/flows')}
+          onClick={() => navigate('/app/flows')}
           className="mb-4 -ml-2"
         >
           <ArrowLeft className="h-4 w-4 mr-1" />
@@ -402,7 +402,7 @@ export default function FlowProfile() {
           <Button
             type="button"
             variant="ghost"
-            onClick={() => navigate('/flows')}
+            onClick={() => navigate('/app/flows')}
           >
             Cancel
           </Button>
