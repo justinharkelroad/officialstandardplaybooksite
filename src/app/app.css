@@ -1,5 +1,104 @@
-/* Member-app-only styles (loaded with the lazy /app chunk; the marketing
-   site's index.css is untouched). */
+/* Member-app styles (loaded with the lazy /app chunk; the marketing site's
+   index.css is untouched).
+
+   The app inherits the site's Bold editorial design system (see
+   src/pages/BoldMockup.tsx): newsprint paper + ink, Anton/Archivo Black
+   display type, squared corners, 1.5px ink borders, #2997FF accent.
+   Scoping the shadcn CSS variables to .member-app re-skins every
+   transplanted component without touching the marketing tokens. */
+
+.member-app {
+  /* Bold palette */
+  --paper: #f4f2ee;
+  --ink: #0a0a0b;
+  --sp-blue: #2997ff;
+  --sp-blue-dark: #0066cc;
+
+  /* shadcn token overrides — editorial light */
+  --background: 40 21% 95%;        /* paper #F4F2EE */
+  --foreground: 240 5% 4%;         /* ink #0A0A0B */
+  --card: 0 0% 100%;
+  --card-foreground: 240 5% 4%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 5% 4%;
+  --primary: 240 5% 4%;            /* ink buttons, like the landing */
+  --primary-foreground: 40 21% 95%;
+  --secondary: 40 14% 89%;
+  --secondary-foreground: 240 5% 4%;
+  --muted: 40 14% 89%;
+  --muted-foreground: 240 4% 38%;
+  --accent: 211 100% 58%;          /* SP blue */
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 40 8% 78%;
+  --input: 40 8% 72%;
+  --ring: 211 100% 58%;
+  --radius: 0rem;                  /* squared, editorial */
+
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Display type — the landing's editorial headline stack */
+.sp-display {
+  font-family: "Anton", "Archivo Black", "Oswald", Impact, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+  font-weight: 400;
+}
+
+/* Uppercase micro-label — the landing's tagline/CTA type */
+.sp-label {
+  font-family: Inter, -apple-system, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+}
+
+/* Editorial ink button (matches the landing's "Book a Call") */
+.sp-btn-ink {
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #0a0a0b;
+  border: 1.5px solid #0a0a0b;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.sp-btn-ink:hover {
+  background: #2997ff;
+  border-color: #2997ff;
+}
+.sp-btn-ink:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Editorial outline button (matches "Learn More") */
+.sp-btn-outline {
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #0a0a0b;
+  background: transparent;
+  border: 1.5px solid #0a0a0b;
+  padding: 11px 22px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.sp-btn-outline:hover {
+  background: #0a0a0b;
+  color: #fff;
+}
 
 /* Cursor-following spotlight ported from the source platform. Position is
    driven by --spot-x/--spot-y (set by the useSpotlight hook), defaulting to

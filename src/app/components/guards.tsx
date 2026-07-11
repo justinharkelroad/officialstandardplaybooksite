@@ -3,7 +3,7 @@ import { useAuth } from "@/app/lib/auth";
 
 function FullScreenSpinner() {
   return (
-    <div className="dark flex min-h-screen items-center justify-center bg-background">
+    <div className="member-app flex min-h-screen items-center justify-center">
       <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#2997FF] border-t-transparent" />
     </div>
   );
@@ -14,8 +14,8 @@ function InactiveScreen() {
   // Fire-and-forget: RLS already blocks this session's data access.
   void signOut();
   return (
-    <div className="dark flex min-h-screen items-center justify-center bg-background px-4">
-      <p className="max-w-md text-center text-foreground">
+    <div className="member-app flex min-h-screen items-center justify-center px-6">
+      <p className="sp-label max-w-md text-center text-[12px] text-[#0A0A0B]">
         Your access is inactive — contact Justin.
       </p>
     </div>

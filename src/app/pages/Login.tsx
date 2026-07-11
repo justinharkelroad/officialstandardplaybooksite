@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import "@/app/app.css";
 
 const INACTIVE_MESSAGE = "Your access is inactive — contact Justin.";
 
@@ -60,52 +57,61 @@ export default function Login() {
   };
 
   return (
-    <div className="dark min-h-screen bg-background text-foreground flex items-center justify-center px-4">
-      <Card className="w-full max-w-md border-border bg-card">
-        <CardHeader className="text-center">
-          <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#2997FF]">
-            Standard Playbook
+    <div className="member-app flex min-h-screen items-center justify-center px-6">
+      <div className="w-full max-w-md">
+        <div className="mb-10">
+          <p className="sp-label mb-3 text-[11px] text-[#2997FF]">
+            Standard Playbook · Member App
           </p>
-          <CardTitle className="text-2xl mt-2">Member Login</CardTitle>
-          <CardDescription>
+          <h1 className="sp-display text-[clamp(48px,9vw,84px)] text-[#0A0A0B]">
+            Member
+            <br />
+            Login
+          </h1>
+          <p className="sp-label mt-4 max-w-xs text-[10px] leading-relaxed text-[#0A0A0B]/60">
             Accounts are created by Justin. There is no self-signup.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                autoComplete="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            {error && (
-              <p role="alert" className="text-sm text-destructive">
-                {error}
-              </p>
-            )}
-            <Button type="submit" className="w-full" disabled={submitting}>
-              {submitting ? "Signing in…" : "Sign in"}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label htmlFor="email" className="sp-label mb-1.5 block text-[10px] text-[#0A0A0B]/70">
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full border-[1.5px] border-[#0A0A0B] bg-white px-4 py-3 font-[Inter] text-sm text-[#0A0A0B] outline-none transition-colors focus:border-[#2997FF]"
+            />
+          </div>
+          <div>
+            <label htmlFor="password" className="sp-label mb-1.5 block text-[10px] text-[#0A0A0B]/70">
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full border-[1.5px] border-[#0A0A0B] bg-white px-4 py-3 font-[Inter] text-sm text-[#0A0A0B] outline-none transition-colors focus:border-[#2997FF]"
+            />
+          </div>
+          {error && (
+            <p role="alert" className="sp-label text-[11px] text-red-600">
+              {error}
+            </p>
+          )}
+          <button type="submit" className="sp-btn-ink w-full" disabled={submitting}>
+            {submitting ? "Signing in…" : "Sign in"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
