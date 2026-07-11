@@ -3,7 +3,6 @@ export const generateSitemap = () => {
   const baseUrl = 'https://standardplaybook.com';
   const routes = [
     { path: '/', priority: '1.0', changefreq: 'weekly' },
-    { path: '/app', priority: '0.8', changefreq: 'weekly' },
     { path: '/boardroom', priority: '0.8', changefreq: 'weekly' },
     { path: '/directive', priority: '0.8', changefreq: 'weekly' },
     { path: '/sales-experience', priority: '0.8', changefreq: 'weekly' },

@@ -291,10 +291,6 @@ export const structuredDataByRoute: Record<string, object[]> = {
     breadcrumb("Call Scoring", "/callscoring"),
   ],
 
-  '/app': [
-    breadcrumb("App", "/app"),
-  ],
-
   '/about': [
     {
       "@context": "https://schema.org",

@@ -97,7 +97,7 @@ const WelcomeToCoaching = () => {
                   <ul className="space-y-3">
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>You will receive password reset from support@wakeupwarrior.com</span>
+                      <span>Justin creates your login and sends you your password directly</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>

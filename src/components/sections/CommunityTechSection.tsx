@@ -11,7 +11,7 @@ const CommunityTechSection = () => {
       icon: Smartphone,
       title: 'STANDARD APP',
       description: 'Daily accountability and tracking system designed for agency owners who refuse to settle for mediocrity.',
-      link: '/app',
+      link: '/appinfo',
       isExternal: false,
     },
     {

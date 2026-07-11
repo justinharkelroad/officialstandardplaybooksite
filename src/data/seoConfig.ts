@@ -86,14 +86,6 @@ export const seoConfig: Record<string, SEOConfig> = {
     type: 'article',
     structuredData: structuredDataByRoute['/callscoring'],
   },
-  '/app': {
-    title: 'The Standard Playbook App — Sales Training & Accountability Platform',
-    description: 'Access The Standard Playbook training platform: The Armory (30 modules), Core 4 Tracker, 19 Stacking frameworks, call scoring, role-play practice, and performance analytics.',
-    keywords: ['coaching app', 'sales training app', 'accountability platform', 'Core 4 tracker', 'business coaching tools'],
-    ogImage: OG_IMAGE,
-    type: 'article',
-    structuredData: structuredDataByRoute['/app'],
-  },
   '/appinfo': {
     title: 'App Access — Standard Playbook Training Platform',
     description: 'Access the Standard Playbook training and coaching app. Sales training modules, habit tracking, and performance tools for insurance producers and agency owners.',
