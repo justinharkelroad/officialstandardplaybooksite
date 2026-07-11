@@ -158,20 +158,20 @@ export function TodayRhythmHero() {
                     "flex flex-col items-center justify-center gap-3 rounded-xl p-6 transition-all duration-300",
                     "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                     completed
-                      ? cn("scale-[1.02] shadow-xl", token.solidClass)
-                      : "bg-muted text-muted-foreground hover:bg-muted/80",
+                      ? cn("scale-[1.02] border-[1.5px] border-transparent", token.solidClass)
+                      : "border-[1.5px] border-[#0A0A0B]/25 bg-white text-[#0A0A0B]/80 hover:border-[#0A0A0B] hover:text-[#0A0A0B]",
                   )}
                 >
                   <Icon
                     className={cn(
                       "h-10 w-10",
-                      completed ? "text-white" : "text-muted-foreground",
+                      completed ? "text-white" : "text-current",
                     )}
                   />
                   <span
                     className={cn(
                       "text-sm font-bold tracking-wider uppercase",
-                      completed ? "text-white" : "text-muted-foreground",
+                      completed ? "text-white" : "text-current",
                     )}
                   >
                     {token.label}

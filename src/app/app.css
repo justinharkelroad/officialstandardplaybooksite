@@ -128,3 +128,32 @@
     display: none;
   }
 }
+
+/* ── Editorial alignment layer (matches the landing page) ────────────── */
+
+/* Every h1/h2 in the member app is display type, exactly like the landing. */
+.member-app h1,
+.member-app h2 {
+  font-family: "Anton", "Archivo Black", "Oswald", Impact, sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 0.95;
+}
+
+/* Squared corners everywhere — the landing has zero rounded rectangles.
+   Circles (rounded-full: rings, dots, icon chips) stay round. */
+.member-app :is(.rounded-sm, .rounded, .rounded-md, .rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl) {
+  border-radius: 0 !important;
+}
+
+/* Buttons read like the landing CTAs: uppercase tracked micro-type. */
+.member-app button {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Cards get hairline ink borders instead of soft gray. */
+.member-app .bg-card {
+  border-color: rgba(10, 10, 11, 0.25);
+}

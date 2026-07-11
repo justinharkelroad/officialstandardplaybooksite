@@ -9,9 +9,15 @@ Justin-only steps), `docs/handoffs/personal-growth-app-handoff.md` (the brief).
 
 **Design note:** mid-run Justin directed the app onto the site's current Bold
 editorial design system (BoldMockup language) instead of the handoff's "dark
-theme" wording. Done: scoped token overrides (`.member-app` in
-`src/app/app.css`) re-skin every transplanted component — paper `#F4F2EE`, ink
-`#0A0A0B`, Anton display type, squared corners, `#2997FF` accent.
+theme" wording. Done in two passes: (1) scoped token overrides (`.member-app`
+in `src/app/app.css`) — paper `#F4F2EE`, ink `#0A0A0B`, radius 0, `#2997FF`
+accent; (2) after Justin's side-by-side screenshot review, a deeper editorial
+alignment layer: all h1/h2 render in Anton display type (44px section heads),
+every rounded rectangle squared (circles kept), buttons in uppercase tracked
+micro-type, hairline ink card borders, white ink-bordered Core 4 tiles, and
+the Debrief banner as an ink band with a paper CTA (hover blue). Verified via
+computed-style probes on every /app route (Anton headings + 0px radius on all
+seven feature pages).
 
 ---
 

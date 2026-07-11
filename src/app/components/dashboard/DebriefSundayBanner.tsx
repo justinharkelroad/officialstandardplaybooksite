@@ -4,7 +4,7 @@ import { useAuth } from "@/app/lib/auth";
 import { supabase } from "@/integrations/supabase/client";
 import { getDebriefWeekKey } from "@/app/lib/date-utils";
 import { Button } from "@/components/ui/button";
-import { ClipboardEdit, X } from "lucide-react";
+import { X } from "lucide-react";
 
 // Reworked from source: tier gating removed (every member has the Debrief)
 // and dismissal is localStorage-only (the source's banner_dismissals table
@@ -53,24 +53,24 @@ export function DebriefSundayBanner() {
   }
 
   return (
-    <div className="relative bg-gradient-to-r from-sky-50 to-slate-100 dark:from-neutral-900 dark:to-black text-foreground dark:text-white rounded-xl p-5 mb-6 flex items-center justify-between">
+    <div className="relative mb-6 flex items-center justify-between gap-4 bg-[#0A0A0B] p-5 text-[#F4F2EE]">
       <div className="flex items-center gap-4">
-        <div className="bg-foreground/10 rounded-lg p-2.5">
-          <ClipboardEdit className="h-6 w-6 text-amber-400" />
-        </div>
+        <span aria-hidden className="hidden h-3 w-3 shrink-0 rounded-full bg-[#2997FF] sm:block" />
         <div>
-          <p className="font-semibold text-base">Your weekend Debrief is ready</p>
-          <p className="text-sm text-muted-foreground dark:text-white/60 mt-0.5">Reflect on your week, plan the next one, and get your coaching analysis.</p>
+          <p className="sp-display text-xl leading-none">Your weekend Debrief is ready</p>
+          <p className="sp-label mt-2 text-[10px] text-[#F4F2EE]/60">
+            Reflect on your week, plan the next one, get your coaching analysis.
+          </p>
         </div>
       </div>
       <div className="flex items-center gap-2">
         <Button
           onClick={() => navigate("/app/debrief")}
-          className="bg-foreground text-background hover:bg-foreground/90 font-semibold rounded-full px-6"
+          className="border-[1.5px] border-[#F4F2EE] bg-[#F4F2EE] px-6 font-bold text-[#0A0A0B] hover:border-[#2997FF] hover:bg-[#2997FF] hover:text-white"
         >
           Begin Debrief
         </Button>
-        <button onClick={handleDismiss} className="text-muted-foreground/50 hover:text-muted-foreground dark:text-white/30 dark:hover:text-white/60 p-1" aria-label="Dismiss weekly debrief banner">
+        <button onClick={handleDismiss} className="p-1 text-[#F4F2EE]/40 hover:text-[#F4F2EE]" aria-label="Dismiss weekly debrief banner">
           <X className="h-4 w-4" />
         </button>
       </div>

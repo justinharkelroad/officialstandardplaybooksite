@@ -161,13 +161,13 @@ function SectionHeading({
   meta?: string;
 }) {
   return (
-    <div className="flex items-baseline justify-between gap-4 border-b border-border/50 pb-2">
-      <h2 className="text-base font-semibold uppercase tracking-[0.06em] text-foreground">
+    <div className="flex items-end justify-between gap-4 border-b-[1.5px] border-[#0A0A0B] pb-3">
+      <h2 className="text-[clamp(28px,3.6vw,44px)] text-[#0A0A0B]">
         {label}
       </h2>
       {meta ? (
-        <span className="text-[11px] font-medium text-muted-foreground">
-          {meta}
+        <span className="sp-label pb-1 text-[11px] text-[#0A0A0B]/55">
+          &bull;&nbsp;&nbsp;{meta}
         </span>
       ) : null}
     </div>

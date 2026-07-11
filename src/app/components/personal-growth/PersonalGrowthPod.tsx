@@ -151,16 +151,11 @@ export const PersonalGrowthPod = forwardRef<
             variant={cta.variant ?? "outline"}
             className={cn(
               "mt-auto w-full justify-between",
-              // Default (no explicit cta.variant): accent-tinted fill + accent
-              // border. Clearly a button, distinct from the card edge — but
-              // not the full-saturation bar that shouted over the content.
+              // Default (no explicit cta.variant): editorial outline row —
+              // 1.5px ink border, ink fill on hover, matching the landing's
+              // "Learn More" CTA language.
               !cta.variant &&
-                accentToken &&
-                cn(
-                  accentToken.softClass,
-                  accentToken.softHoverClass,
-                  accentToken.borderClass,
-                ),
+                "border-[1.5px] border-[#0A0A0B] bg-transparent text-[#0A0A0B] hover:bg-[#0A0A0B] hover:text-[#F4F2EE]",
             )}
           >
             <Link to={cta.to}>
