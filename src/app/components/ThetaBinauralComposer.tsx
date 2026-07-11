@@ -38,8 +38,8 @@ export function ThetaBinauralComposer({
       setGeneratedResult(result);
       toast.success('Affirmations generated! Now mixing your track...');
     } catch (error) {
+      // The mutation's onError already surfaces the real error message in a toast.
       console.error('Generation failed:', error);
-      toast.error('Failed to generate affirmations');
     }
   };
 

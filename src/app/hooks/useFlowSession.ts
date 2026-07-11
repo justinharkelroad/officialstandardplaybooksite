@@ -80,7 +80,7 @@ export function useFlowSession({ templateSlug, sessionId }: UseFlowSessionProps)
           : data.flow_template.questions_json
       } as FlowTemplate;
 
-      setSession(data as FlowSession);
+      setSession(data as unknown as FlowSession);
       setTemplate(templateData);
       setResponses((data.responses_json as Record<string, string>) || {});
       setSessionLoadedFromDb(true); // Mark as loaded from DB
@@ -141,9 +141,9 @@ export function useFlowSession({ templateSlug, sessionId }: UseFlowSessionProps)
 
       if (existing) {
         console.log('[useFlowSession] Found existing session, reusing:', existing.id);
-        setSession(existing as FlowSession);
+        setSession(existing as unknown as FlowSession);
         setResponses((existing.responses_json as Record<string, string>) || {});
-        return existing as FlowSession;
+        return existing as unknown as FlowSession;
       }
 
       // No existing session, create new one
@@ -174,9 +174,9 @@ export function useFlowSession({ templateSlug, sessionId }: UseFlowSessionProps)
 
           if (racingSession) {
             console.log('[useFlowSession] Reused session created by concurrent request:', racingSession.id);
-            setSession(racingSession as FlowSession);
+            setSession(racingSession as unknown as FlowSession);
             setResponses((racingSession.responses_json as Record<string, string>) || {});
-            return racingSession as FlowSession;
+            return racingSession as unknown as FlowSession;
           }
         }
 
@@ -184,8 +184,8 @@ export function useFlowSession({ templateSlug, sessionId }: UseFlowSessionProps)
       }
       
       console.log('[useFlowSession] Created new session:', data.id);
-      setSession(data as FlowSession);
-      return data as FlowSession;
+      setSession(data as unknown as FlowSession);
+      return data as unknown as FlowSession;
     } catch (err: any) {
       setError(err.message);
       return null;

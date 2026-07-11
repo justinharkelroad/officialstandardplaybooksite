@@ -88,7 +88,7 @@ export default function FlowStart() {
         }
         
         // Found a real draft with answers - show options
-        setDraftSession(existingSession);
+        setDraftSession(existingSession as unknown as FlowSession);
         setLoading(false);
       } else {
         // No draft - navigate directly, session will be created lazily by useFlowSession
@@ -216,7 +216,7 @@ export default function FlowStart() {
             <Button 
               className="w-full" 
               variant="ghost"
-              onClick={() => navigate('/flows')}
+              onClick={() => navigate('/app/flows')}
             >
               Cancel
             </Button>

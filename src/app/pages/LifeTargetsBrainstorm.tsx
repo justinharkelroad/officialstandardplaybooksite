@@ -17,7 +17,7 @@ import {
   useClearBrainstormSession
 } from "@/app/hooks/useBrainstormTargets";
 import { toast } from "sonner";
-import { isValidUUID } from "@/lib/utils";
+import { isValidUUID } from "@/app/lib/validation";
 
 
 const DOMAINS = [
@@ -174,7 +174,7 @@ export default function LifeTargetsBrainstorm() {
       setCurrentStep('selection');
       
       toast.success('Analysis complete! Review your targets.');
-      navigate(`/life-targets/selection?session=${sessionId}`);
+      navigate(`/app/life-targets/selection?session=${sessionId}`);
     } catch (error) {
       // Error already handled by mutation
     }
@@ -224,7 +224,7 @@ export default function LifeTargetsBrainstorm() {
         <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
           <p className="text-sm font-semibold text-primary">Start here.</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Dump several ideas for each Core Four area. Do not worry about perfect wording yet. After this, Agency Brain will help you pick the targets that matter most and sharpen them before you lock in your quarter.
+            Dump several ideas for each Core Four area. Do not worry about perfect wording yet. After this, Standard Playbook will help you pick the targets that matter most and sharpen them before you lock in your quarter.
           </p>
         </div>
       </div>

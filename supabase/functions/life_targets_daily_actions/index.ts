@@ -1,0 +1,329 @@
+// life_targets_daily_actions — ported to the Standard Playbook member app.
+// Auth: requireActiveMember replaces the source's verifyRequest + tier gate.
+// Model: gpt-4o-mini. Prompts and post-processing filters kept as-is.
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { corsHeaders } from "../_shared/cors.ts";
+import { requireActiveMember } from "../_shared/memberAuth.ts";
+
+const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+
+interface DomainInput {
+  target?: string;
+  monthlyMissions?: Record<string, any>;
+  narrative?: string;
+}
+
+interface BatchInput {
+  body?: DomainInput;
+  being?: DomainInput;
+  balance?: DomainInput;
+  business?: DomainInput;
+}
+
+interface DailyActionsOutput {
+  body: string[];
+  being: string[];
+  balance: string[];
+  business: string[];
+}
+
+serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const member = await requireActiveMember(req);
+    if (member instanceof Response) return member;
+
+    if (!openAIApiKey) {
+      return new Response(
+        JSON.stringify({ error: "AI isn't configured yet (missing OPENAI_API_KEY)" }),
+        {
+          status: 503,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    const input: BatchInput = await req.json();
+
+    if (JSON.stringify(input).length > 100_000) {
+      throw new Error('Daily action request is too large');
+    }
+    for (const domain of ['body', 'being', 'balance', 'business'] as const) {
+      const values = input[domain];
+      if (!values) continue;
+      if ((values.target?.length ?? 0) > 500 || (values.narrative?.length ?? 0) > 2_000) {
+        throw new Error(`Quarterly target input is too long for ${domain}`);
+      }
+    }
+
+    const systemPrompt = `You are an expert life coach specializing in creating sustainable DAILY habits.
+
+🚨 CRITICAL RULE: Every action MUST be repeatable EVERY SINGLE DAY without exception.
+
+For each domain provided, generate 10 SIMPLE daily action options that support the quarterly target.
+
+Each action MUST:
+- Be doable literally EVERY day (365 days per year, including weekends, holidays, sick days)
+- Take 5-30 minutes maximum
+- Be specific and concrete (not vague goals)
+- Start with an action verb (Read, Write, Practice, Do, Walk, Call, Journal, etc.)
+- Be sustainable to repeat daily indefinitely
+- Describe a repeatable personal behavior, not an appointment, not a scheduled event, and not something that depends on a calendar
+- Be something the person can initiate on their own, even if others may or may not participate
+- Explicitly include an approximate time (for example: "for 10 minutes", "for 20 minutes", "for about 5 minutes")
+- Be SUPPORTING ACTIONS that build toward the target, NOT the target itself (Think: "What small daily behavior helps me achieve my bigger goal?" not "Do my bigger goal daily")
+
+Must NOT contain these words or phrases:
+"daily", "every day", "each day", "per day", "weekly", "once a week", "every Sunday", "Sundays", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "monthly", "once a month", "quarterly", "event", "meeting", "service project", "game night", "outing", "gathering", "every weekend", "bi-weekly", "semi-monthly", "appointment", "session", "class", "workshop", "conference", "scheduled", "attend", "join", "participate in"
+
+Do not generate actions that:
+- Require a specific day of the week
+- Require a specific time of the month
+- Depend on external events being scheduled (meetings, services, events, trips, gatherings)
+- Require other people to be present or agree to participate
+
+INVALID EXAMPLES (DO NOT GENERATE):
+❌ "Attend youth group meetings once a week" (weekly, not daily + contains "meeting")
+❌ "Plan a family outing monthly" (monthly, not daily + contains "outing")
+❌ "Schedule one-on-one time weekly" (weekly, not daily + contains "scheduled")
+❌ "Organize an event" (one-time, not repeatable + contains "event")
+❌ "Go to church every Sunday" (weekly, not daily + contains "Sunday")
+❌ "Attend a short daily team huddle" (contains "attend" + "meeting" concept)
+❌ "Host family game night" (scheduled event + contains "game night")
+❌ "Join a weekly accountability call" (weekly + contains "join")
+❌ "Participate in team standup" (contains "participate in" + scheduled)
+❌ "Take a yoga class on Tuesdays" (specific day + contains "class")
+❌ "Schedule a coaching session" (contains "session" + "scheduled")
+❌ "Attend networking events" (contains "attend" + "events")
+❌ "Go to gym on weekdays" (specific days, not truly daily)
+
+VALID EXAMPLES (GENERATE LIKE THESE):
+✅ "Read a devotional for 10 minutes every morning"
+✅ "Journal about gratitude for 5 minutes before bed"
+✅ "Practice 10 minutes of mindfulness meditation"
+✅ "Text or call one friend or family member to check in for 5 minutes"
+✅ "Do 20 push-ups and 20 squats"
+✅ "Walk for 15 minutes after dinner"
+✅ "Read one chapter of a book for 15 minutes"
+✅ "Write down 3 things you're grateful for (5 minutes)"
+✅ "Pray or reflect for 10 minutes in the morning"
+✅ "Practice a new skill for 20 minutes"
+
+KEY PRINCIPLE - SUPPORTING ACTIONS vs LITERAL TARGETS:
+❌ Target: "Spend 30 min with kids weekly" → Don't suggest: "Spend 30 min with kids daily"
+✅ Target: "Spend 30 min with kids weekly" → Do suggest: "Ask one child about their day for 10 minutes"
+
+❌ Target: "Exercise 3x/week" → Don't suggest: "Exercise for 30 minutes daily"
+✅ Target: "Exercise 3x/week" → Do suggest: "Do 10 squats and stretches for 5 minutes"
+
+❌ Target: "Read 2 books this quarter" → Don't suggest: "Read a book for 1 hour daily"
+✅ Target: "Read 2 books this quarter" → Do suggest: "Read for 15 minutes before bed"
+
+VALIDATION CHECK:
+Before including an action, ask yourself: "Can someone literally do this 365 days per year, including weekends, holidays, sick days, and days when their schedule changes unexpectedly?"
+If the answer is NO, do not include it.
+
+HABITS vs EVENTS:
+✅ HABITS = Repeatable personal behaviors (reading, writing, exercising, praying, journaling, practicing)
+❌ EVENTS = Scheduled activities that happen at specific times (meetings, services, gatherings, outings, nights, projects)
+
+FINAL SELF-CHECK PROCESS:
+Before finalizing the list:
+1. Scan your actions and remove any that are not clearly daily habits
+2. Remove any that include forbidden words ("weekly", "monthly", "Sunday", "meeting", "event", "outing", "gathering", etc.)
+3. Verify every action includes an approximate time duration (5-30 minutes)
+4. Verify every action can be done alone without requiring others
+5. Replace any removed actions with new actions that meet all rules
+
+Return ONLY valid JSON with no markdown formatting. Each action should be a simple string (no objects, no metadata).`;
+
+    // Build the input list for the prompt
+    const domainInputs: string[] = [];
+    const domains = ['body', 'being', 'balance', 'business'] as const;
+    const requestedDomains: Array<typeof domains[number]> = [];
+
+    for (const domain of domains) {
+      const domainData = input[domain];
+      if (domainData && domainData.target) {
+        requestedDomains.push(domain);
+        let domainText = `${domain.toUpperCase()}:\n`;
+        domainText += `Target: ${domainData.target}\n`;
+        if (domainData.narrative) {
+          domainText += `Context: ${domainData.narrative}\n`;
+        }
+        if (domainData.monthlyMissions) {
+          domainText += `Monthly Missions: ${JSON.stringify(domainData.monthlyMissions, null, 2)}\n`;
+        }
+        domainInputs.push(domainText);
+      }
+    }
+
+    if (requestedDomains.length === 0) {
+      throw new Error('At least one quarterly target is required');
+    }
+
+    const userPrompt = `Generate 10 daily action options for EACH of these domains:
+
+${domainInputs.join('\n\n')}
+
+Return JSON in this EXACT format - just arrays of simple strings:
+{
+  "body": [
+    "Walk for 20 minutes after dinner",
+    "Do 20 push-ups in the morning for 5 minutes",
+    "Drink 8 glasses of water throughout the day",
+    "Stretch for 10 minutes before bed",
+    "Take the stairs for 5 minutes",
+    "Hold a plank for 5 minutes",
+    "Practice yoga poses for 15 minutes",
+    "Track protein intake for 5 minutes",
+    "Meditate for 5 minutes after waking",
+    "Journal about physical sensations for 5 minutes"
+  ],
+  "being": [...10 actions...],
+  "balance": [...10 actions...],
+  "business": [...10 actions...]
+}
+
+IMPORTANT:
+🚨 DAILY FREQUENCY REQUIREMENT (CRITICAL):
+- Return EXACTLY 10 actions per domain
+- Each action should be a simple string (no objects)
+- Make actions diverse and varied
+- Only include domains that were provided in the input
+- EVERY action must be doable EVERY SINGLE DAY (no weekly/monthly/event-based suggestions)
+- Every action must mention an approximate duration between 5 and 30 minutes
+- If you're unsure if something is daily, ask yourself: "Can someone literally do this 365 days per year?" If no, don't include it
+
+NO PATTERNS ALLOWED:
+- NO weekly activities (no "once a week", "every Sunday", "weekly")
+- NO monthly activities (no "once a month", "monthly")
+- NO scheduled events (no "meeting", "service", "gathering", "outing", "event", "game night")
+- NO calendar-dependent actions (no "Sundays", "weekends", "first Monday")
+- NO actions requiring specific external schedules
+
+365-DAY TEST: Every action must pass this test: "Can I do this today, tomorrow, next Tuesday, on Christmas, when I'm traveling, when I'm sick, on weekends, and on my birthday?" If NO to any, reject it.
+
+FOCUS: Generate HABITS (daily personal behaviors) not EVENTS (scheduled activities).
+
+DURATION REQUIREMENT: Every action must include an explicit time phrase like "for 10 minutes", "for 5 minutes", "for 20 minutes".
+
+EVENT REJECTION RULE: If any suggestion even slightly resembles a scheduled event (service, meeting, group, outing, night, project), discard it and replace it with a solo, repeatable daily behavior.`;
+
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${openAIApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        temperature: 0.8,
+        max_tokens: 2500,
+      }),
+    });
+
+    if (!response.ok) {
+      console.error('OpenAI daily actions request failed:', response.status);
+      throw new Error(`OpenAI API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const content = data.choices[0].message.content;
+
+    let dailyActions: Partial<DailyActionsOutput>;
+    try {
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      dailyActions = JSON.parse(jsonMatch ? jsonMatch[0] : content);
+    } catch {
+      console.error('OpenAI daily actions response was not valid JSON');
+      throw new Error('Failed to parse daily actions from AI response');
+    }
+
+    // Validate structure
+    for (const domain of requestedDomains) {
+      const actions = dailyActions[domain];
+      if (!Array.isArray(actions)) {
+        throw new Error(`${domain} must be an array`);
+      }
+      if (actions.length !== 10) {
+        throw new Error(`${domain} must have exactly 10 actions, got ${actions.length}`);
+      }
+      for (const action of actions) {
+        if (typeof action !== 'string') {
+          throw new Error(`All actions in ${domain} must be strings`);
+        }
+      }
+    }
+
+    // GATE 2: Post-processing validation to filter out any violations
+    const bannedWords = [
+      'daily', 'every day', 'each day', 'per day',
+      'weekly', 'once a week', 'every sunday', 'sundays', 'monday', 'tuesday', 'wednesday',
+      'thursday', 'friday', 'saturday', 'monthly', 'once a month', 'quarterly', 'event',
+      'meeting', 'service project', 'game night', 'outing', 'gathering', 'every weekend',
+      'bi-weekly', 'semi-monthly', 'appointment', 'session', 'class', 'workshop',
+      'conference', 'scheduled', 'attend', 'join', 'participate in'
+    ];
+
+    const validateActions = (actions: string[], domain: string): string[] => {
+      return actions.filter(action => {
+        const lowerAction = action.toLowerCase();
+
+        // Check for banned words
+        const hasBannedWord = bannedWords.some(word => lowerAction.includes(word));
+        if (hasBannedWord) {
+          console.warn(`Filtered one ${domain} action because it contained a banned phrase`);
+          return false;
+        }
+
+        // Check for duration mention (must have "for X minutes" pattern)
+        const hasDuration = /for (\d+|about \d+|around \d+) minutes?/i.test(action);
+        if (!hasDuration) {
+          console.warn(`Filtered one ${domain} action because it lacked a duration`);
+          return false;
+        }
+
+        return true;
+      });
+    };
+
+    // Apply validation and rebuild with filtered actions
+    const validated: Partial<DailyActionsOutput> = {};
+    for (const domain of requestedDomains) {
+      validated[domain] = validateActions(dailyActions[domain] as string[], domain);
+      const filtered = (dailyActions[domain] as string[]).length - (validated[domain] as string[]).length;
+      if (filtered > 0) {
+        console.log(`Filtered ${domain}: removed ${filtered} invalid actions, kept ${validated[domain]?.length}`);
+      }
+    }
+
+    console.log('Successfully generated and validated daily actions');
+
+    return new Response(
+      JSON.stringify({ dailyActions: validated }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
+  } catch (error) {
+    console.error('Error in life_targets_daily_actions function:', error);
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Unknown error generating daily actions'
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
+  }
+});

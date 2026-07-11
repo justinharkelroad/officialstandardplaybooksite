@@ -12,24 +12,6 @@ interface GeneratePDFParams {
   userName?: string;
 }
 
-const LOGO_URL = 'https://wjqyccbytctqwceuhzhk.supabase.co/storage/v1/object/public/AgencyBrain%20Logo/Agency%20Brain%20Logo%20Stan.png';
-
-async function getLogoBase64(): Promise<string | null> {
-  try {
-    const response = await fetch(LOGO_URL);
-    const blob = await response.blob();
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result as string);
-      reader.onerror = () => resolve(null);
-      reader.readAsDataURL(blob);
-    });
-  } catch (error) {
-    console.error('Failed to fetch logo:', error);
-    return null;
-  }
-}
-
 // Strip HTML tags and decode common entities for plain-text contexts (e.g. PDF)
 function stripHtml(html: string): string {
   // Use DOMParser when available (browser), otherwise regex fallback
@@ -249,21 +231,11 @@ async function buildFlowPDFDoc({
   doc.setFillColor(brandDark);
   doc.rect(0, 0, pageWidth, headerHeight, 'F');
 
-  // Add logo (top right of header)
-  try {
-    const logoBase64 = await getLogoBase64();
-
-    if (logoBase64) {
-      const logoWidth = 32;
-      const logoHeight = 13;
-      const logoX = pageWidth - margin - logoWidth;
-      const logoY = 5;
-
-      doc.addImage(logoBase64, 'PNG', logoX, logoY, logoWidth, logoHeight);
-    }
-  } catch (err) {
-    console.error('Failed to add logo to PDF:', err);
-  }
+  // Brand wordmark (top right of header)
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor('#ffffff');
+  doc.text('STANDARD PLAYBOOK', pageWidth - margin, 12, { align: 'right' });
 
   // Flow type (left side) - no emoji
   doc.setFontSize(11);
@@ -580,7 +552,7 @@ async function buildFlowPDFDoc({
     doc.setFontSize(8);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(mutedColor);
-    doc.text('Agency Brain Flows', margin, pageHeight - 8);
+    doc.text('Standard Playbook Flows', margin, pageHeight - 8);
     doc.text(
       `Page ${i} of ${totalPages}`,
       pageWidth - margin,

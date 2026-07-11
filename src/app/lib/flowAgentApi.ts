@@ -45,7 +45,6 @@ export interface BibleScriptureContext {
 
 interface StartFlowSessionArgs {
   flowSlug: string;
-  staffSessionToken?: string | null;
   startFresh?: boolean;
   resumeSessionId?: string | null;
   flowAgentRunId?: string | null;
@@ -255,7 +254,6 @@ async function invokeFlowAgentFunction<T>(
 
 export async function startFlowSession({
   flowSlug,
-  staffSessionToken,
   startFresh = false,
   resumeSessionId,
   flowAgentRunId,
@@ -271,7 +269,7 @@ export async function startFlowSession({
   const { agentId, routing } = getFlowAgentId(flowSlug);
   const resolvedFlowAgentRunId = flowAgentRunId || createFlowAgentRunId();
 
-  if (!userJwt && !staffSessionToken) {
+  if (!userJwt) {
     throw new Error('Not authenticated.');
   }
 
@@ -284,9 +282,6 @@ export async function startFlowSession({
   }
   if (authorizationToken) {
     headers.Authorization = `Bearer ${authorizationToken}`;
-  }
-  if (staffSessionToken) {
-    headers['x-staff-session'] = staffSessionToken;
   }
 
   console.info('[FlowAgentVoiceSession]', {
@@ -366,18 +361,18 @@ export function submitFlowAgentAnswer(
   });
 }
 
+// The `evaluate_answer_quality` edge function is not deployed in this project.
+// Answer-quality pushback fails soft: never push back, and the answer is
+// submitted normally. Callers already treat this as the safe default.
 export function evaluateFlowAgentAnswer(
   flowSession: StartFlowSessionResponse,
-  questionId: string,
-  answer: string,
+  _questionId: string,
+  _answer: string,
 ): Promise<EvaluateAnswerQualityResponse> {
-  return invokeFlowAgentFunction<EvaluateAnswerQualityResponse>('evaluate_answer_quality', {
-    session_id: flowSession.session_id,
-    session_token: flowSession.session_token,
-    question_id: questionId,
-    answer,
+  return Promise.resolve({
+    should_push_back: false,
+    pushback_message: null,
     flow_agent_run_id: flowSession.flow_agent_run_id ?? null,
-    conversation_id: flowSession.conversation_id ?? null,
   });
 }
 

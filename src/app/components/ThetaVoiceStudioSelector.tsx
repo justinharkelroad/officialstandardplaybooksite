@@ -7,6 +7,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Play, Pause, Volume2, Check } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { getSupabaseFunctionErrorMessage } from "@/app/lib/supabaseFunctionErrors";
 
 interface Voice {
   id: string;
@@ -95,7 +96,9 @@ export function ThetaVoiceStudioSelector({
       
     } catch (error) {
       console.error('Error playing voice sample:', error);
-      toast.error('Failed to play voice sample');
+      toast.error(await getSupabaseFunctionErrorMessage(error, {
+        fallbackMessage: 'Failed to play voice sample',
+      }));
       setPlayingVoice(null);
     } finally {
       setLoadingVoice(null);

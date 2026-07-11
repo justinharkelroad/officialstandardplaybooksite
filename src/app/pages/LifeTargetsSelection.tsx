@@ -154,7 +154,7 @@ export default function LifeTargetsSelection() {
       
       toast.success('Targets locked in. Review and save your quarterly targets next.');
       setTimeout(() => {
-        navigate('/life-targets/quarterly');
+        navigate('/app/life-targets/quarterly');
       }, 1000);
     } catch (error) {
       // Error already handled by mutation
@@ -181,7 +181,7 @@ export default function LifeTargetsSelection() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button onClick={() => navigate('/life-targets/brainstorm')}>
+            <Button onClick={() => navigate('/app/life-targets/brainstorm')}>
               Start Brain Dump
             </Button>
           </CardContent>
@@ -196,7 +196,7 @@ export default function LifeTargetsSelection() {
         <Card>
           <CardContent className="pt-6 text-center">
             <p className="text-muted-foreground">No analyzed targets in this session. Go back and add targets.</p>
-            <Button onClick={() => navigate('/life-targets/brainstorm')} className="mt-4">
+            <Button onClick={() => navigate('/app/life-targets/brainstorm')} className="mt-4">
               Back to Brain Dump
             </Button>
           </CardContent>

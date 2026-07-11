@@ -3,8 +3,7 @@ import {
   useEffect,
   useMemo,
   useRef } from "react";
-import { useLocation,
-  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -132,9 +131,7 @@ const dedupeStandaloneMissionsByKey = (rows: ExistingStandaloneMission[]) => {
 
 export default function LifeTargetsMissions() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const isStaffPortal = location.pathname.startsWith('/staff/');
-  const lifeTargetsBasePath = isStaffPortal ? '/staff/life-targets' : '/life-targets';
+  const lifeTargetsBasePath = '/app/life-targets';
   const queryClient = useQueryClient();
   const { currentQuarter, monthlyMissions, setMonthlyMissions, setCurrentStep, changeQuarter } = useLifeTargetsStore();
   const { data: targets } = useQuarterlyTargets(currentQuarter);
@@ -321,11 +318,7 @@ export default function LifeTargetsMissions() {
 
     if (candidateRows.length === 0) return;
 
-    if (isStaffPortal) {
-      await syncStaffStandaloneMonthlyMissions(candidateRows);
-    } else {
-      await syncOwnerStandaloneMonthlyMissions(candidateRows);
-    }
+    await syncOwnerStandaloneMonthlyMissions(candidateRows);
   };
 
   const syncOwnerStandaloneMonthlyMissions = async (candidateRows: StandaloneMissionSyncRow[]) => {
@@ -390,47 +383,6 @@ export default function LifeTargetsMissions() {
         if (updateError) throw updateError;
       })
     );
-  };
-
-  const syncStaffStandaloneMonthlyMissions = async (candidateRows: StandaloneMissionSyncRow[]) => {
-    const sessionToken = localStorage.getItem("staff_session_token");
-    if (!sessionToken) return;
-
-    const uniqueMonthYears = [...new Set(candidateRows.map((row) => row.month_year))];
-    const existingRows: ExistingStandaloneMission[] = [];
-
-    for (const monthYear of uniqueMonthYears) {
-      const { data, error } = await supabase.functions.invoke("get_staff_core4_entries", {
-        headers: { "x-staff-session": sessionToken },
-        body: { action: "fetch_missions", month_year: monthYear },
-      });
-
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      existingRows.push(...((data?.missions || []) as ExistingStandaloneMission[]));
-    }
-
-    const existingByKey = dedupeStandaloneMissionsByKey(existingRows);
-
-    for (const row of candidateRows) {
-      const existing = existingByKey.get(`${row.domain}:${row.month_year}`);
-      if (existing && !shouldUpdateStandaloneMission(existing, row)) continue;
-
-      const { data, error } = await supabase.functions.invoke("get_staff_core4_entries", {
-        headers: { "x-staff-session": sessionToken },
-        body: {
-          action: "create_mission",
-          domain: row.domain,
-          title: row.title,
-          items: Array.isArray(existing?.items) ? existing.items : [],
-          weekly_measurable: row.weekly_measurable,
-          month_year: row.month_year,
-        },
-      });
-
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-    }
   };
 
   useEffect(() => {
@@ -725,7 +677,7 @@ export default function LifeTargetsMissions() {
           <CardContent className="p-6">
             <p className="font-semibold">Finish all four Core Four targets first.</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Monthly Missions are built one per domain. Add a target for {missingTargetDomains.map((domain) => domain.label).join(", ")} so Agency Brain does not duplicate another area or leave a gap.
+              Monthly Missions are built one per domain. Add a target for {missingTargetDomains.map((domain) => domain.label).join(", ")} so Standard Playbook does not duplicate another area or leave a gap.
             </p>
             <Button
               className="mt-4"

@@ -1,6 +1,7 @@
 // Member app route tree, mounted lazily at /app/* so none of this code is in
 // the marketing bundle. Paths here are relative to /app.
 import { Navigate, Route, Routes } from "react-router-dom";
+import "@/app/app.css";
 import { MemberAuthProvider } from "@/app/lib/auth";
 import { RequireAdmin, RequireMember } from "@/app/components/guards";
 import AppShell from "@/app/components/AppShell";

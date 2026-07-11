@@ -1,6 +1,4 @@
-import {
-  useLocation,
-  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card,
   CardContent,
@@ -37,8 +35,7 @@ const QUARTER_MONTHS: Record<string, string[]> = {
 
 function QuarterCard({ plan }: { plan: QuarterlyTargetsSummary }) {
   const navigate = useNavigate();
-  const location = useLocation();
-  const lifeTargetsBasePath = location.pathname.startsWith('/staff/') ? '/staff/life-targets' : '/life-targets';
+  const lifeTargetsBasePath = '/app/life-targets';
   const deleteMutation = useDeleteQuarterlyTargets();
 
   const quarterMatch = plan.quarter.match(/Q[1-4]/);
@@ -133,12 +130,12 @@ function QuarterCard({ plan }: { plan: QuarterlyTargetsSummary }) {
           <Eye className="mr-2 h-4 w-4" />
           View Full Plan
         </Button>
-        <Button onClick={handleExportPDF} variant="flat" size="sm">
+        <Button onClick={handleExportPDF} variant="ghost" size="sm">
           <Download className="h-4 w-4" />
         </Button>
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant="flat" size="sm" disabled={deleteMutation.isPending}>
+            <Button variant="ghost" size="sm" disabled={deleteMutation.isPending}>
               <Trash2 className="h-4 w-4" />
             </Button>
           </AlertDialogTrigger>
@@ -164,9 +161,8 @@ function QuarterCard({ plan }: { plan: QuarterlyTargetsSummary }) {
 
 export default function LifeTargetsHistory() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const lifeTargetsBasePath = location.pathname.startsWith('/staff/') ? '/staff/life-targets' : '/life-targets';
-  const homePath = location.pathname.startsWith('/staff/') ? '/staff' : '/personal-growth';
+  const lifeTargetsBasePath = '/app/life-targets';
+  const homePath = '/app';
   const { data: plans, isLoading } = useQuarterlyTargetsHistory();
 
   return (

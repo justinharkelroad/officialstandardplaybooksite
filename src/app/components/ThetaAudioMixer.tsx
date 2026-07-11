@@ -22,6 +22,21 @@ import {
   isLikelyConstrainedThetaRenderDevice,
 } from "@/app/lib/thetaAudio";
 
+declare global {
+  interface LameJsEncoder {
+    encodeBuffer(left: Int16Array, right?: Int16Array): Int8Array;
+    flush(): Int8Array;
+  }
+
+  interface LameJsGlobal {
+    Mp3Encoder: new (channels: number, sampleRate: number, kbps: number) => LameJsEncoder;
+  }
+
+  interface Window {
+    lamejs?: LameJsGlobal;
+  }
+}
+
 interface AudioSegment {
   text: string;
   audio_base64: string;

@@ -1,22 +1,17 @@
-import {
-  useLocation,
-  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Brain,
   Waves,
   Music,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { SidebarLayout } from "@/app/components/SidebarLayout";
 import { AnimatedDownload as Download } from "@/app/components/icons/AnimatedDownload";
 
 export default function ThetaTalkTrack() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const isStaffPortal = location.pathname.startsWith('/staff/');
-  const createPath = isStaffPortal ? '/staff/theta-talk-track/create' : '/theta-talk-track/create';
+  const createPath = '/app/theta-talk-track/create';
 
-  const content = (
+  return (
       <div className="flex-1 bg-background">
         {/* Hero Section */}
         <div className="container mx-auto px-4 py-16 max-w-4xl">
@@ -126,6 +121,4 @@ export default function ThetaTalkTrack() {
         </div>
       </div>
   );
-
-  return isStaffPortal ? content : <SidebarLayout>{content}</SidebarLayout>;
 }

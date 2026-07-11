@@ -113,12 +113,12 @@ export default function FlowComplete() {
           : data.flow_template.questions_json
       };
 
-      setSession(data);
+      setSession(data as unknown as FlowSession);
       setTemplate(templateData);
 
       // Check if we already have analysis
       if (data.ai_analysis_json) {
-        setAnalysis(data.ai_analysis_json);
+        setAnalysis(data.ai_analysis_json as unknown as FlowAnalysis);
         setLoading(false);
       } else {
         // Trigger AI analysis

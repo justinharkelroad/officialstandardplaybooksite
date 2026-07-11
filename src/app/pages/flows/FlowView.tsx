@@ -60,10 +60,10 @@ export default function FlowView() {
           : data.flow_template.questions_json
       };
 
-      setSession(data);
+      setSession(data as unknown as FlowSession);
       setTemplate(templateData);
       setQuestions(templateData.questions_json);
-      setAnalysis(data.ai_analysis_json);
+      setAnalysis(data.ai_analysis_json as unknown as FlowAnalysis);
 
       // If completed but no analysis, trigger it (only for owner)
       if (data.status === 'completed' && !data.ai_analysis_json && data.user_id === user?.id) {

@@ -116,7 +116,7 @@ export function Core4MonthlyMissions() {
       const parsedMissions = (data || []).map(m => ({
         ...m,
         items: Array.isArray(m.items) ? m.items : [],
-      })) as Core4Mission[];
+      })) as unknown as Core4Mission[];
       
       setMissions(dedupeActiveMissionsByDomain(parsedMissions));
     } catch (err) {
@@ -187,7 +187,7 @@ export function Core4MonthlyMissions() {
           .from('core4_monthly_missions')
           .update({
             title: newMission.title.trim(),
-            items,
+            items: items as never,
             weekly_measurable: newMission.weekly_measurable.trim() || null,
             updated_at: new Date().toISOString(),
           })
@@ -203,7 +203,7 @@ export function Core4MonthlyMissions() {
             user_id: user.id,
             domain: newMission.domain,
             title: newMission.title.trim(),
-            items,
+            items: items as never,
             weekly_measurable: newMission.weekly_measurable.trim() || null,
             month_year: currentMonthYear,
             status: 'active',
@@ -239,7 +239,7 @@ export function Core4MonthlyMissions() {
     try {
       const { error } = await supabase
         .from('core4_monthly_missions')
-        .update({ items: updatedItems, updated_at: new Date().toISOString() })
+        .update({ items: updatedItems as never, updated_at: new Date().toISOString() })
         .eq('id', missionId);
 
       if (error) throw error;

@@ -5,7 +5,7 @@ import type { MeasurabilityAnalysis } from '@/app/hooks/useTargetMeasurability';
 import type { MonthlyMissionsOutput } from '@/app/hooks/useMonthlyMissions';
 import type { DailyActionsOutput } from '@/app/hooks/useDailyActions';
 import { getCurrentQuarter as getQuarterFromUtils, migrateOldFormat } from './quarterUtils';
-import { isValidUUID } from '@/lib/utils';
+import { isValidUUID } from '@/app/lib/validation';
 
 
 type Quarter = string; // YYYY-QX format (e.g., "2026-Q1")
@@ -35,7 +35,7 @@ export function normalizePersistedLifeTargetsState(
 
   const state = { ...(persistedState as Partial<LifeTargetsState>) };
   state.actorScope =
-    typeof state.actorScope === 'string' && /^(owner|staff):[^:\s]{1,160}$/i.test(state.actorScope)
+    typeof state.actorScope === 'string' && /^owner:[^:\s]{1,160}$/i.test(state.actorScope)
       ? state.actorScope
       : null;
   state.currentQuarter = normalizePersistedQuarter(state.currentQuarter) ?? getQuarterFromUtils();

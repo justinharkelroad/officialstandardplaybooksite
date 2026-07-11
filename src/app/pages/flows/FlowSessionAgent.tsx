@@ -121,7 +121,6 @@ function readStoredFlowMode(): FlowAgentMode {
 interface FlowSessionAgentBaseProps {
   exitPath: string;
   completePathPrefix?: string;
-  staffSessionToken?: string | null;
   avatarUrl?: string | null;
   avatarFallback?: string;
 }
@@ -675,8 +674,7 @@ function FlowAnswerReviewDialog({
 
 export function FlowSessionAgentBase({
   exitPath,
-  completePathPrefix = '/flows/complete',
-  staffSessionToken,
+  completePathPrefix = '/app/flows/complete',
   avatarUrl,
   avatarFallback = '??',
 }: FlowSessionAgentBaseProps) {
@@ -702,7 +700,6 @@ export function FlowSessionAgentBase({
   const initialPostFlowActionRef = useRef<string | null>(null);
   const addingToPlaybookRef = useRef(false);
   const { createItem: createOwnerItem } = useFocusItems();
-  const { createItem: createStaffItem } = useStaffFocusItems();
 
   const {
     status,
@@ -729,7 +726,6 @@ export function FlowSessionAgentBase({
     flowSlug: slug,
     mode,
     enabled: modeChosen,
-    staffSessionToken,
     resumeSessionId,
     bibleScripture: selectedBibleScripture,
   });
@@ -771,10 +767,10 @@ export function FlowSessionAgentBase({
 
   useEffect(() => {
     document.title = flowSession?.flow_name
-      ? `${flowSession.flow_name} | AgencyBrain`
-      : 'Flow Session | AgencyBrain';
+      ? `${flowSession.flow_name} | Standard Playbook`
+      : 'Flow Session | Standard Playbook';
     return () => {
-      document.title = 'AgencyBrain';
+      document.title = 'Standard Playbook';
     };
   }, [flowSession?.flow_name]);
 
@@ -840,7 +836,6 @@ export function FlowSessionAgentBase({
 
   const refineActionItem = useCallback(async (actionText: string) => {
     const { data, error } = await supabase.functions.invoke('refine_flow_action_item', {
-      headers: staffSessionToken ? { 'x-staff-session': staffSessionToken } : undefined,
       body: {
         action_text: actionText,
         flow_name: flowSession?.flow_name,
@@ -863,7 +858,6 @@ export function FlowSessionAgentBase({
     completedAnswers?.title,
     declaredActions,
     flowSession?.flow_name,
-    staffSessionToken,
   ]);
 
   const startPostFlowReview = useCallback(async (actionText: string) => {
@@ -923,19 +917,6 @@ export function FlowSessionAgentBase({
 
   const addDraftActionToPlaybook = async (actionText: string) => {
     if (!flowSession) throw new Error('Flow session is not available.');
-
-    if (staffSessionToken) {
-      await createStaffItem.mutateAsync({
-        title: actionText,
-        description: `Action from ${flowSession.flow_name} flow session`,
-        priority_level: 'mid',
-        source_type: 'flow',
-        source_name: flowSession.flow_name,
-        source_staff_flow_session_id: flowSession.session_id,
-        zone: 'bench',
-      });
-      return;
-    }
 
     await createOwnerItem.mutateAsync({
       title: actionText,
@@ -1019,7 +1000,6 @@ export function FlowSessionAgentBase({
   if (isBibleFlow && !resumeSessionId && !selectedBibleScripture && !modeChosen) {
     return (
       <BibleFlowScriptureSetup
-        staffSessionToken={staffSessionToken}
         onSelect={setSelectedBibleScripture}
         onBack={() => navigate(exitPath)}
       />
@@ -1402,54 +1382,14 @@ export function FlowSessionAgentBase({
 }
 
 export default function FlowSessionAgent() {
-  const { user } = useAuth();
-  const userId = user?.id ?? null;
-  const userEmail = user?.email ?? null;
-  const userFullName = typeof user?.user_metadata?.full_name === 'string' ? user.user_metadata.full_name : null;
-  const [userPhotoUrl, setUserPhotoUrl] = useState<string | null>(null);
-  const [userInitials, setUserInitials] = useState(() => initialsForName(getAuthDisplayName(user)));
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const fetchUserAvatar = async () => {
-      if (!userId) {
-        setUserPhotoUrl(null);
-        setUserInitials('??');
-        return;
-      }
-
-      const authDisplayName = userFullName?.trim() ? userFullName : userEmail;
-      setUserInitials(initialsForName(authDisplayName));
-
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('full_name, profile_photo_url')
-        .eq('id', userId)
-        .maybeSingle();
-
-      if (cancelled) return;
-
-      if (error) {
-        console.error('Flow agent profile avatar fetch error:', error);
-        return;
-      }
-
-      setUserPhotoUrl(data?.profile_photo_url || null);
-      setUserInitials(initialsForName(data?.full_name || authDisplayName));
-    };
-
-    void fetchUserAvatar();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [userEmail, userFullName, userId]);
+  const { user, member } = useAuth();
+  const displayName = member?.full_name?.trim() ? member.full_name : getAuthDisplayName(user);
+  const userInitials = user?.id ? initialsForName(displayName) : '??';
 
   return (
     <FlowSessionAgentBase
-      exitPath="/flows"
-      avatarUrl={userPhotoUrl}
+      exitPath="/app/flows"
+      avatarUrl={null}
       avatarFallback={userInitials}
     />
   );

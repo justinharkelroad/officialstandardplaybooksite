@@ -1,5 +1,4 @@
 import {
-  useLocation,
   useNavigate,
   useSearchParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
@@ -22,8 +21,7 @@ import { AnimatedDownload as Download } from "@/app/components/icons/AnimatedDow
 
 export default function LifeTargetsCascade() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const lifeTargetsBasePath = location.pathname.startsWith('/staff/') ? '/staff/life-targets' : '/life-targets';
+  const lifeTargetsBasePath = '/app/life-targets';
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
   const { currentQuarter, selectedDailyActions, changeQuarter } = useLifeTargetsStore();
@@ -73,7 +71,7 @@ export default function LifeTargetsCascade() {
     saveMutation.mutate({ data: updatedTargets, showToast: true }, {
       onSuccess: () => {
         toast.success('All changes saved successfully!');
-        navigate(isHistoricalView ? `${lifeTargetsBasePath}/history` : (lifeTargetsBasePath.startsWith('/staff') ? '/staff' : '/personal-growth'));
+        navigate(isHistoricalView ? `${lifeTargetsBasePath}/history` : '/app');
       },
       onError: (error) => {
         console.error('Failed to save changes:', error);

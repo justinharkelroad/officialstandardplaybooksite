@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useThetaRequestContext } from "@/app/hooks/useThetaRequestContext";
+import { getSupabaseFunctionErrorMessage } from "@/app/lib/supabaseFunctionErrors";
 
 export type Tone = 'inspiring' | 'motivational' | 'calm' | 'energizing';
 
@@ -24,13 +25,14 @@ export function useGenerateAffirmations() {
       if (!request.ready) throw new Error('Not authenticated');
       console.log('Generating affirmations with tone:', tone);
       const { data, error } = await supabase.functions.invoke('generate_affirmations', {
-        headers: request.headers,
         body: { sessionId, tone }
       });
 
       if (error) {
         console.error('Edge function error:', error);
-        throw error;
+        throw new Error(await getSupabaseFunctionErrorMessage(error, {
+          fallbackMessage: 'Affirmation generation failed. Please try again.',
+        }));
       }
 
       if (data?.error) {
@@ -61,7 +63,6 @@ export function useSaveAffirmations() {
     }) => {
       if (!request.ready) throw new Error('Not authenticated');
       const { data, error } = await supabase.functions.invoke('theta_audio_state', {
-        headers: request.headers,
         body: {
           action: 'save_affirmations',
           sessionId,
@@ -69,7 +70,11 @@ export function useSaveAffirmations() {
           tone,
         },
       });
-      if (error) throw error;
+      if (error) {
+        throw new Error(await getSupabaseFunctionErrorMessage(error, {
+          fallbackMessage: 'Saving affirmations failed. Please try again.',
+        }));
+      }
       if (data?.error) throw new Error(data.error);
       return data?.affirmations ?? [];
     },
@@ -89,10 +94,13 @@ export function useGetAffirmations(sessionId: string) {
     queryKey: ['theta-affirmations', request.actorKey, sessionId],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke('theta_audio_state', {
-        headers: request.headers,
         body: { action: 'get_affirmations', sessionId },
       });
-      if (error) throw error;
+      if (error) {
+        throw new Error(await getSupabaseFunctionErrorMessage(error, {
+          fallbackMessage: 'Loading affirmations failed. Please try again.',
+        }));
+      }
       if (data?.error) throw new Error(data.error);
 
       // Group by category

@@ -1,0 +1,186 @@
+// life_targets_measurability — ported to the Standard Playbook member app.
+// Auth: requireActiveMember replaces the source's verifyRequest + tier gate.
+// Model: gpt-4o-mini. Prompts and validation kept as-is.
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { corsHeaders } from "../_shared/cors.ts";
+import { requireActiveMember } from "../_shared/memberAuth.ts";
+
+const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+
+interface ItemAnalysis {
+  original: string;
+  clarity_score: number;
+  rewritten_target: string;
+}
+
+interface AnalysisOutput {
+  body: ItemAnalysis[];
+  being: ItemAnalysis[];
+  balance: ItemAnalysis[];
+  business: ItemAnalysis[];
+}
+
+serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const member = await requireActiveMember(req);
+    if (member instanceof Response) return member;
+
+    if (!openAIApiKey) {
+      return new Response(
+        JSON.stringify({ error: "AI isn't configured yet (missing OPENAI_API_KEY)" }),
+        {
+          status: 503,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    const { targets } = await req.json();
+
+    if (!targets || typeof targets !== 'object') {
+      throw new Error('Invalid targets object');
+    }
+    if (JSON.stringify(targets).length > 10_000) {
+      throw new Error('Target analysis request is too large');
+    }
+    for (const domain of ['body', 'being', 'balance', 'business'] as const) {
+      const values = targets[domain];
+      if (!Array.isArray(values) || values.length > 2 || values.some((value) => typeof value !== 'string' || value.length > 500)) {
+        throw new Error(`Invalid target list for ${domain}`);
+      }
+    }
+
+    const systemPrompt = `You are an expert life coach specializing in goal-setting and SMART criteria.
+Analyze each target item and provide:
+1. A clarity score (0-10) based on how specific, measurable, achievable, and relevant it is
+2. A rewritten version that is MORE clear, specific, and MEASURABLE with actual numbers
+
+CRITICAL: These are QUARTERLY targets (90-day timeframe). Add specific measurability:
+- For recurring activities: suggest realistic frequency (e.g., "1-2x per week = 12-24 times this quarter")
+- For quantities: suggest specific numbers, percentages, or minimum thresholds
+- For vague goals: add countable metrics (e.g., "at least X", "minimum Y per week", "increase by Z%")
+
+CRITICAL: MEASURABLE means countable/verifiable at the end of 90 days. Words like "regular", "consistent", "more" are NOT measurable unless paired with specific numbers.
+
+CRITICAL: Do NOT add calendar dates, quarters, or years (e.g., "by Q4 2023" or "in December") - but DO add quantities and frequencies.
+
+Return ONLY valid JSON with no markdown formatting.`;
+
+    const userPrompt = `Analyze these QUARTERLY (90-day) targets for measurability. For EACH item in EACH domain, provide clarity_score and rewritten_target with SPECIFIC NUMBERS:
+
+BODY: ${JSON.stringify(targets.body || [])}
+BEING: ${JSON.stringify(targets.being || [])}
+BALANCE: ${JSON.stringify(targets.balance || [])}
+BUSINESS: ${JSON.stringify(targets.business || [])}
+
+CRITICAL RULES FOR MEASURABILITY:
+1. ADD specific numbers, frequencies, or percentages to make targets countable
+2. For recurring activities, suggest REALISTIC frequencies that allow for life events (70-80% completion rates):
+   - "Date my wife" → "Have 10-12 date nights with my wife this quarter (aim for weekly)"
+   - "Exercise" → "Complete 35-45 workout sessions (target 3-4x per week, ~70-80% adherence)"
+   - "Pray" → "Spend 15 minutes in prayer 70+ days this quarter (5-6 days/week)"
+   - "Read Bible daily" → "Read Scripture 65-75 days this quarter (allowing grace for travel, illness, etc.)"
+3. For business/financial goals, suggest quantities or percentages:
+   - "Sell more" → "Increase quarterly sales by 20%"
+   - "Sell more" → "Close at least 15 new deals"
+   - "Grow revenue" → "Add $50,000 in new quarterly revenue"
+4. For weight/fitness, use specific measurements:
+   - "Lose weight" → "Lose 15-20 pounds"
+   - "Get stronger" → "Increase bench press by 20 pounds"
+5. Use measurable language: "at least X", "70-80 out of 90 days", "5-6 days/week", "X-Y range", "increase by Z%"
+6. AVOID perfection language: Never suggest "daily for 90 days" or "100% completion" - build in grace
+7. AVOID leaving targets vague: "regular", "consistent", "more", "better" are NOT measurable alone
+8. DO NOT add calendar dates or timeframes (no "by March" or "in Q2") - but DO add frequencies and quantities
+
+Return JSON in this EXACT format:
+{
+  "body": [
+    {
+      "original": "the original target text",
+      "clarity_score": 7,
+      "rewritten_target": "Specific measurable version with numbers"
+    }
+  ],
+  "being": [...],
+  "balance": [...],
+  "business": [...]
+}
+
+IMPORTANT: Return one analysis object for EACH item in EACH domain array. If a domain has 2 items, return 2 analysis objects for that domain.`;
+
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${openAIApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        temperature: 0.7,
+        max_tokens: 2000,
+      }),
+    });
+
+    if (!response.ok) {
+      console.error('OpenAI measurability request failed:', response.status);
+      throw new Error(`OpenAI API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const content = data.choices[0].message.content;
+
+    let analysis: AnalysisOutput;
+    try {
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      analysis = JSON.parse(jsonMatch ? jsonMatch[0] : content);
+    } catch {
+      console.error('OpenAI measurability response was not valid JSON');
+      throw new Error('Failed to parse analysis from AI response');
+    }
+
+    // Validate structure
+    const domains = ['body', 'being', 'balance', 'business'] as const;
+    for (const domain of domains) {
+      if (!Array.isArray(analysis[domain])) {
+        throw new Error(`Invalid analysis structure: ${domain} must be an array`);
+      }
+
+      for (const item of analysis[domain]) {
+        if (!item.original ||
+            typeof item.clarity_score !== 'number' ||
+            !item.rewritten_target) {
+          throw new Error(`Invalid item structure in domain: ${domain}`);
+        }
+      }
+    }
+
+    console.log('Successfully generated measurability analysis');
+
+    return new Response(
+      JSON.stringify({ analysis }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
+  } catch (error) {
+    console.error('Error in life_targets_measurability function:', error);
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Unknown error analyzing measurability'
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
+  }
+});

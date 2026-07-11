@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useThetaRequestContext } from "@/app/hooks/useThetaRequestContext";
+import { getSupabaseFunctionErrorMessage } from "@/app/lib/supabaseFunctionErrors";
 
 interface GenerateTrackParams {
   sessionId: string;
@@ -14,15 +15,16 @@ export function useGenerateThetaTrack() {
     mutationFn: async ({ sessionId, voiceId }: GenerateTrackParams) => {
       if (!request.ready) throw new Error('Not authenticated');
       console.log('Generating theta track...');
-      
+
       const { data, error } = await supabase.functions.invoke('generate_theta_track', {
-        headers: request.headers,
         body: { sessionId, voiceId }
       });
 
       if (error) {
         console.error('Edge function error:', error);
-        throw error;
+        throw new Error(await getSupabaseFunctionErrorMessage(error, {
+          fallbackMessage: 'Track generation failed. Please try again.',
+        }));
       }
 
       if (data?.error) {

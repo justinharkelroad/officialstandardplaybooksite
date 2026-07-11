@@ -1,10 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Loader2, RotateCcw } from "lucide-react";
-import { SidebarLayout } from "@/app/components/SidebarLayout";
 import { useThetaStore } from "@/app/lib/thetaTrackStore";
 import { ThetaTargetsInput } from "@/app/components/ThetaTargetsInput";
 import { ThetaToneSelector } from "@/app/components/ThetaToneSelector";
@@ -24,7 +22,6 @@ import {
   resolveThetaTargetsFromQuarterly,
 } from "@/app/lib/thetaQuarterlyTargets";
 import { useAuth } from "@/app/lib/auth";
-import { useStaffAuth } from "@/app/hooks/useStaffAuth";
 import { toast } from "sonner";
 
 export default function ThetaTalkTrackCreate() {
@@ -43,19 +40,11 @@ export default function ThetaTalkTrackCreate() {
     resetForActor,
     resetSession,
   } = useThetaStore();
-  const location = useLocation();
   const { user, loading: authLoading } = useAuth();
-  const { user: staffUser, loading: staffAuthLoading } = useStaffAuth();
-  const isStaffPortal = location.pathname.startsWith('/staff/');
   const { currentQuarter } = useLifeTargetsStore();
-  const { data: quarterlyTargets } = useQuarterlyTargets(
-    currentQuarter,
-    isStaffPortal ? 'staff' : 'portal',
-  );
-  const activeActorScope = isStaffPortal
-    ? staffUser?.id ? `staff:${staffUser.id}` : null
-    : user?.id ? `owner:${user.id}` : null;
-  const actorLoading = isStaffPortal ? staffAuthLoading : authLoading;
+  const { data: quarterlyTargets } = useQuarterlyTargets(currentQuarter);
+  const activeActorScope = user?.id ? `owner:${user.id}` : null;
+  const actorLoading = authLoading;
   const actorReady = Boolean(activeActorScope && actorScope === activeActorScope);
   const transferredTargets = useMemo(
     () => quarterlyTargets
@@ -184,7 +173,7 @@ export default function ThetaTalkTrackCreate() {
     );
   }
 
-  const content = (
+  return (
       <div className="flex-1 bg-background">
         {/* Header with Start Over button */}
         <header className="border-b border-border">
@@ -295,6 +284,4 @@ export default function ThetaTalkTrackCreate() {
         />
       </div>
   );
-
-  return isStaffPortal ? content : <SidebarLayout>{content}</SidebarLayout>;
 }

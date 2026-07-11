@@ -46,7 +46,7 @@ export default function Flows() {
         .eq('is_active', true)
         .order('display_order');
 
-      setTemplates((templatesData || []) as FlowTemplate[]);
+      setTemplates((templatesData || []) as unknown as FlowTemplate[]);
 
       // Fetch recent completed sessions for this user so drafts do not appear in history.
       if (user?.id) {
@@ -58,7 +58,7 @@ export default function Flows() {
           .order('created_at', { ascending: false })
           .limit(5);
 
-        setRecentSessions((sessionsData || []) as FlowSession[]);
+        setRecentSessions((sessionsData || []) as unknown as FlowSession[]);
       }
     } catch (err) {
       console.error('Error fetching flows data:', err);
@@ -112,7 +112,7 @@ export default function Flows() {
         </div>
         
         <Button
-          variant="flat"
+          variant="ghost"
           onClick={() => navigate('/app/flows/profile')}
           className="flex items-center gap-2"
         >

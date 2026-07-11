@@ -5,6 +5,7 @@
 interface HelpButtonProps {
   videoKey: string;
   label?: string;
+  size?: string;
   className?: string;
 }
 

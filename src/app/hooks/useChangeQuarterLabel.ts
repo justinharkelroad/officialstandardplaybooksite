@@ -2,33 +2,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { remapMonthlyMissions } from "@/app/lib/quarterUtils";
-import { useLocation } from "react-router-dom";
 import { useAuth } from "@/app/lib/auth";
-import { useStaffAuth } from "@/app/hooks/useStaffAuth";
 
 export function useChangeQuarterLabel() {
   const queryClient = useQueryClient();
-  const { pathname } = useLocation();
-  const staffMode = pathname.startsWith('/staff/');
   const { user } = useAuth();
-  const { user: staffUser, sessionToken } = useStaffAuth();
-  const actorKey = staffMode
-    ? (staffUser?.id ? `staff:${staffUser.id}` : 'staff:pending')
-    : (user?.id ? `owner:${user.id}` : 'owner:pending');
-  
+  const actorKey = user?.id ? `owner:${user.id}` : 'owner:pending';
+
   return useMutation({
     mutationFn: async ({ fromQuarter, toQuarter }: { fromQuarter: string, toQuarter: string }) => {
-      if (staffMode) {
-        if (!sessionToken) throw new Error('Not authenticated');
-        const { data, error } = await supabase.functions.invoke('staff_life_targets', {
-          headers: { 'x-staff-session': sessionToken },
-          body: { action: 'move', fromQuarter, toQuarter },
-        });
-        if (error) throw error;
-        if (data?.error) throw new Error(data.error);
-        return data.target;
-      }
-
       if (!user) throw new Error('Not authenticated');
       
       // Check if target quarter already has data

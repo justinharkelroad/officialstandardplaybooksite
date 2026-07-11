@@ -1,0 +1,31 @@
+/* Member-app-only styles (loaded with the lazy /app chunk; the marketing
+   site's index.css is untouched). */
+
+/* Cursor-following spotlight ported from the source platform. Position is
+   driven by --spot-x/--spot-y (set by the useSpotlight hook), defaulting to
+   centered when JS hasn't fired. Pair with `relative isolate`. */
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  background: radial-gradient(
+    14rem circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    currentColor,
+    transparent 45%
+  );
+}
+
+.spotlight:hover::after {
+  opacity: 0.28;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spotlight::after {
+    display: none;
+  }
+}

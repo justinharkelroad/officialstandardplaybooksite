@@ -2,8 +2,7 @@ import {
   useMemo,
   useEffect,
   useState } from "react";
-import { useLocation,
-  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Card,
   CardContent,
   CardDescription } from "@/components/ui/card";
@@ -49,9 +48,7 @@ import { AnimatedDownload as Download } from "@/app/components/icons/AnimatedDow
 
 export default function LifeTargets() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const isStaffPortal = location.pathname.startsWith('/staff/');
-  const lifeTargetsBasePath = isStaffPortal ? '/staff/life-targets' : '/life-targets';
+  const lifeTargetsBasePath = '/app/life-targets';
   const {
     currentQuarter,
     currentStep: storedCurrentStep,
@@ -68,7 +65,7 @@ export default function LifeTargets() {
   const { data: targets, isLoading } = useQuarterlyTargets(currentQuarter);
   const { data: brainstormTargets } = useBrainstormTargets(
     currentQuarter,
-    isStaffPortal ? null : currentSessionId,
+    currentSessionId,
   );
   const { data: historyTargets } = useQuarterlyTargetsHistory();
   const [downloadingQuarter, setDownloadingQuarter] = useState<string | null>(null);
@@ -121,7 +118,7 @@ export default function LifeTargets() {
     [targets]
   );
 
-  const hasBrainstormTargets = !isStaffPortal && Boolean(
+  const hasBrainstormTargets = Boolean(
     currentSessionId && brainstormTargets && brainstormTargets.length > 0,
   );
 
@@ -190,12 +187,12 @@ export default function LifeTargets() {
     {
       id: 'brainstorm',
       title: 'Brain Dump',
-      description: 'Start here. Dump several ideas, then let Agency Brain help you pick and sharpen the targets that matter most.',
+      description: 'Start here. Dump several ideas, then let Standard Playbook help you pick and sharpen the targets that matter most.',
       icon: Target,
       status: targetsSet > 0 || hasBrainstormTargets ? 'complete' : 'current',
       onClick: () => navigate(`${lifeTargetsBasePath}/brainstorm`),
       badge: undefined,
-      hidden: isStaffPortal,
+      hidden: false,
     },
     {
       id: 'selection',
@@ -205,14 +202,14 @@ export default function LifeTargets() {
       status: targetsSet > 0 ? 'complete' : hasBrainstormTargets ? 'current' : 'locked',
       onClick: () => hasBrainstormTargets && currentSessionId ? navigate(`${lifeTargetsBasePath}/selection?session=${currentSessionId}`) : null,
       badge: targetsSet > 0 ? `${targetsSet} selected` : undefined,
-      hidden: isStaffPortal,
+      hidden: false,
     },
     {
       id: 'targets',
       title: 'Set Quarterly Targets',
       description: 'Review the targets from Brain Dump, analyze their clarity, and save the quarter before Monthly Missions unlock.',
       icon: Target,
-      status: targetsSet > 0 ? 'complete' : isStaffPortal ? 'current' : 'locked',
+      status: targetsSet > 0 ? 'complete' : 'locked',
       onClick: () => navigate(`${lifeTargetsBasePath}/quarterly`),
       badge: targetsSet > 0 ? `${targetsSet}/4 set` : undefined,
     },
@@ -406,15 +403,13 @@ export default function LifeTargets() {
                 <Download className="h-4 w-4 mr-2" />
                 {downloadingQuarter === currentQuarter ? 'Generating...' : 'Download PDF'}
               </Button>
-              {!isStaffPortal && (
-                <Button
-                  variant="outline"
-                  onClick={() => setShowMoveQuarterDialog(true)}
-                >
-                  <CalendarIcon className="h-4 w-4 mr-2" />
-                  Move to Different Quarter
-                </Button>
-              )}
+              <Button
+                variant="outline"
+                onClick={() => setShowMoveQuarterDialog(true)}
+              >
+                <CalendarIcon className="h-4 w-4 mr-2" />
+                Move to Different Quarter
+              </Button>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant="outline" className="text-destructive hover:text-destructive">

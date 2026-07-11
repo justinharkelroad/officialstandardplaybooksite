@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, AudioLines } from "lucide-react";
@@ -16,12 +16,8 @@ import { toast } from "sonner";
 
 export default function LifeTargetsQuarterly() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const isStaffPortal = location.pathname.startsWith('/staff/');
-  const lifeTargetsBasePath = isStaffPortal ? '/staff/life-targets' : '/life-targets';
-  const thetaCreatePath = isStaffPortal
-    ? '/staff/theta-talk-track/create?source=quarterly-targets'
-    : '/theta-talk-track/create?source=quarterly-targets';
+  const lifeTargetsBasePath = '/app/life-targets';
+  const thetaCreatePath = '/app/theta-talk-track/create?source=quarterly-targets';
   const queryClient = useQueryClient();
   const { currentQuarter, measurabilityResults, setMeasurabilityResults, changeQuarter } = useLifeTargetsStore();
   const { data: targets, isLoading, isError } = useQuarterlyTargets(currentQuarter);
@@ -35,11 +31,11 @@ export default function LifeTargetsQuarterly() {
   const [showChangeDialog, setShowChangeDialog] = useState(false);
 
   useEffect(() => {
-    if (isStaffPortal || isLoading || isError || targets) return;
+    if (isLoading || isError || targets) return;
 
     toast.info("Start with Brain Dump so your quarterly targets are clear before you set them.");
     navigate(`${lifeTargetsBasePath}/brainstorm`, { replace: true });
-  }, [isError, isLoading, isStaffPortal, lifeTargetsBasePath, navigate, targets]);
+  }, [isError, isLoading, lifeTargetsBasePath, navigate, targets]);
 
   const handleSave = async (formTargets: QuarterlyTargets) => {
     try {

@@ -69,7 +69,9 @@ export function ThetaTargetsInput() {
       setCurrentStep(2);
     } catch (error) {
       console.error("Error saving targets:", error);
-      toast.error("Failed to save targets. Please try again.");
+      toast.error(error instanceof Error && error.message.trim()
+        ? error.message
+        : "Failed to save targets. Please try again.");
     }
   };
 

@@ -3,8 +3,7 @@ import {
   useRef,
   useCallback } from "react";
 import { useState } from "react";
-import { useLocation,
-  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft,
@@ -24,8 +23,7 @@ import { AnimatedRefresh as RefreshCw } from "@/app/components/icons/AnimatedRef
 
 export default function LifeTargetsDaily() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const lifeTargetsBasePath = location.pathname.startsWith('/staff/') ? '/staff/life-targets' : '/life-targets';
+  const lifeTargetsBasePath = '/app/life-targets';
   const queryClient = useQueryClient();
   const { 
     currentQuarter, 

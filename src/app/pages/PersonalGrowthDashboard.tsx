@@ -617,7 +617,6 @@ export default function PersonalGrowthDashboard() {
           <div className="grid auto-rows-fr items-stretch gap-4 lg:grid-cols-2">
             <TodaysPowerPlays variant="personal-growth" />
             <DailyFrameWidget
-              portal="owner"
               showRecent={false}
               variant="personal-growth"
               className="h-full w-full"

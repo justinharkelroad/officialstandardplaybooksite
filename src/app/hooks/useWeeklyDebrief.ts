@@ -45,7 +45,7 @@ export function useWeeklyDebrief(weekKey: string) {
         .eq("week_key", weekKey)
         .maybeSingle();
       if (error) throw error;
-      return data as WeeklyReview | null;
+      return data as unknown as WeeklyReview | null;
     },
     enabled: !!user?.id,
   });
@@ -64,7 +64,7 @@ export function useWeeklyDebrief(weekKey: string) {
 
       if (existingError) throw existingError;
 
-      if (existing) return existing as WeeklyReview;
+      if (existing) return existing as unknown as WeeklyReview;
 
       const { data, error } = await supabase
         .from("weekly_reviews")
@@ -90,7 +90,7 @@ export function useWeeklyDebrief(weekKey: string) {
         }
         throw error;
       }
-      return data as WeeklyReview;
+      return data as unknown as WeeklyReview;
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey });
@@ -148,11 +148,11 @@ export function useWeeklyDebrief(weekKey: string) {
         .eq("user_id", user!.id)
         .single();
       if (latestError) throw latestError;
-      const currentReflections = (latest?.domain_reflections as Record<string, DomainReflection>) || {};
+      const currentReflections = (latest?.domain_reflections as unknown as Record<string, DomainReflection>) || {};
       const updated = { ...currentReflections, [domain]: reflection };
       const { data, error } = await supabase
         .from("weekly_reviews")
-        .update({ domain_reflections: updated, updated_at: new Date().toISOString() })
+        .update({ domain_reflections: updated as never, updated_at: new Date().toISOString() })
         .eq("id", review.id)
         .eq("user_id", user!.id)
         .select("id")

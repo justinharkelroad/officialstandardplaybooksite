@@ -38,7 +38,7 @@ export default function FlowLibrary() {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setSessions(data || []);
+      setSessions((data || []) as unknown as FlowSession[]);
     } catch (err) {
       console.error('Error fetching sessions:', err);
     } finally {

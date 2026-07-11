@@ -1,9 +1,8 @@
-import { ReactNode } from 'react';
 import {
   Card,
   CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { 
+import {
   Download,
   RotateCcw,
   Sparkles,
@@ -13,7 +12,6 @@ import {
   Loader2,
   Brain,
   HelpCircle,
-  Share2,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { FlowSession, FlowTemplate, FlowQuestion, FlowAnalysis } from '@/app/types/flows';
@@ -30,11 +28,8 @@ interface FlowReportCardProps {
   analyzing?: boolean;
   isReadOnly?: boolean;
   generatingPDF?: boolean;
-  onShare?: () => void;
   onDownloadPDF?: () => void;
   onNewFlow?: () => void;
-  /** Optional extra action rendered in the header button row (e.g. public share link). */
-  publicShareButton?: ReactNode;
 }
 
 export function FlowReportCard({
@@ -45,10 +40,8 @@ export function FlowReportCard({
   analyzing = false,
   isReadOnly = false,
   generatingPDF = false,
-  onShare,
   onDownloadPDF,
   onNewFlow,
-  publicShareButton,
 }: FlowReportCardProps) {
   const declaredActions = parseDeclaredFlowActions(session.responses_json);
 
@@ -99,18 +92,6 @@ export function FlowReportCard({
         {/* Action buttons - only show for owners */}
         {!isReadOnly && (
           <div className="flex gap-2">
-            {onShare && (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={onShare}
-                title="Share to Exchange"
-              >
-                <Share2 className="h-4 w-4 mr-1" strokeWidth={1.5} />
-                Share
-              </Button>
-            )}
-            {publicShareButton}
             {onDownloadPDF && (
               <Button 
                 variant="outline" 

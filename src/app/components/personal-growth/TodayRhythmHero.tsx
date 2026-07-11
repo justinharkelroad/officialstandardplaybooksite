@@ -8,7 +8,7 @@ import {
   Zap,
 } from "lucide-react";
 import { format } from "date-fns";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/app/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { HelpButton } from "@/app/components/HelpButton";
 import { SectionHelpTip } from "@/components/ui/section-help-tip";

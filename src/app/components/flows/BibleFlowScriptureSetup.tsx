@@ -19,7 +19,6 @@ const BIBLE_FLOW_DEFAULT_TRANSLATION_LABEL = 'The Message (MSG)';
 const BIBLE_FLOW_CONTEXT_MIN_LENGTH = 12;
 
 interface BibleFlowScriptureSetupProps {
-  staffSessionToken?: string | null;
   onSelect: (scripture: BibleScriptureContext) => void;
   onBack: () => void;
 }
@@ -76,11 +75,12 @@ export function BibleScriptureReader({
 }
 
 export function BibleFlowScriptureSetup({
-  staffSessionToken,
   onSelect,
   onBack,
 }: BibleFlowScriptureSetupProps) {
-  const [mode, setMode] = useState<'recommend' | 'lookup' | 'paste'>('recommend');
+  // Scripture lookup/recommendation edge function is not deployed here, so
+  // manual paste is the default entry path. The other modes fail soft.
+  const [mode, setMode] = useState<'recommend' | 'lookup' | 'paste'>('paste');
   const [reference, setReference] = useState('');
   const [userContext, setUserContext] = useState('');
   const [pastedScripture, setPastedScripture] = useState('');
@@ -126,7 +126,6 @@ export function BibleFlowScriptureSetup({
         mode: 'lookup_reference',
         reference: reference.trim(),
         preferredBibleId: BIBLE_FLOW_DEFAULT_BIBLE_ID,
-        staffSessionToken,
       });
       setResolvedScripture(scripture);
       setRecommendations([]);
@@ -167,7 +166,6 @@ export function BibleFlowScriptureSetup({
         preferredBibleId: BIBLE_FLOW_DEFAULT_BIBLE_ID,
         maxResults: 3,
         excludeReferences: currentReferences,
-        staffSessionToken,
       });
       setSafetyMessage(result.safetyMessage ?? null);
       setRecommendationMessage(result.responseMessage ?? null);

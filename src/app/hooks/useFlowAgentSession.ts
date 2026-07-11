@@ -35,7 +35,6 @@ interface UseFlowAgentSessionArgs {
   flowSlug?: string;
   mode: FlowAgentMode;
   enabled: boolean;
-  staffSessionToken?: string | null;
   resumeSessionId?: string | null;
   bibleScripture?: BibleScriptureContext | null;
 }
@@ -153,7 +152,7 @@ function buildFlowCoachPrompt(session: StartFlowSessionResponse): string {
     ? 'Bible Flow note: the selected Scripture is visible in the app. Do not read long Scripture passages by default. Invite the user to read what is on screen, then ask the exact current Flow question.'
     : '';
 
-  return `You are running a structured AgencyBrain Flow. You are not an open-ended coach in this session.
+  return `You are running a structured Standard Playbook Flow. You are not an open-ended coach in this session.
 The app already created the Flow session before this conversation started. Never call start_flow_session. If you need state, call get_flow_state.
 The current question when this conversation starts is "${session.first_question.id}": ${session.first_question.prompt}
 
@@ -280,7 +279,7 @@ function sanitizeFlowAgentLogValue(value: unknown): unknown {
       continue;
     }
 
-    if (key === 'session_token' || key === 'sessionToken' || key === 'staff_session_token') {
+    if (key === 'session_token' || key === 'sessionToken') {
       sanitized[`has${key.charAt(0).toUpperCase()}${key.slice(1)}`] =
         typeof rawValue === 'string' && rawValue.length > 0;
       continue;
@@ -391,7 +390,6 @@ export function useFlowAgentSession({
   flowSlug,
   mode,
   enabled,
-  staffSessionToken,
   resumeSessionId,
   bibleScripture,
 }: UseFlowAgentSessionArgs): UseFlowAgentSessionResult {
@@ -1180,16 +1178,15 @@ export function useFlowAgentSession({
         current_question_id: currentQuestion.id,
         current_question_prompt: interpolateSessionPrompt(session, currentQuestion.prompt, currentAnswers),
         flow_questions: JSON.stringify(buildQuestionMap(session)),
-        staff_session_token: staffSessionToken || '',
       };
     },
-    [resolveCurrentQuestionForSession, staffSessionToken],
+    [resolveCurrentQuestionForSession],
   );
 
   const startConversation = useCallback(
     async (session: StartFlowSessionResponse, jwt: string | null, includeFirstMessage: boolean) => {
       if (!agentId) {
-        throw new Error('The Flow Master agent ID is not configured.');
+        throw new Error('Voice mode is not configured yet. Switch to TEXT mode above to continue this Flow.');
       }
 
       if (conversation.status === 'connected' || conversation.status === 'connecting') {
@@ -1320,7 +1317,6 @@ export function useFlowAgentSession({
           conversationIdRef.current = null;
           const result = await startFlowSession({
             flowSlug,
-            staffSessionToken,
             startFresh,
             resumeSessionId,
             flowAgentRunId,
@@ -1390,7 +1386,12 @@ export function useFlowAgentSession({
         connectionStartedRef.current = true;
         setStatus('active');
       } catch (error) {
-        setErrorMessage(normalizeError(error));
+        let message = normalizeError(error);
+        if (mode === 'voice' && !/text/i.test(message)) {
+          // Voice must degrade gracefully: always point the user at TEXT mode.
+          message = `${message} You can switch to TEXT mode above and continue this Flow.`;
+        }
+        setErrorMessage(message);
         setStatus('error');
       } finally {
         startInFlightRef.current = false;
@@ -1405,7 +1406,6 @@ export function useFlowAgentSession({
       mode,
       rememberFlowState,
       resumeSessionId,
-      staffSessionToken,
       startConversation,
       userJwt,
     ],
