@@ -1,6 +1,6 @@
 // Flow agent runtime helpers — ported from the source platform's
 // flow_agent_runtime.ts with staff plumbing removed. CORS headers come from
-// the member-app _shared/cors.ts (no x-staff-session headers).
+// the member-app _shared/cors.ts (member headers only).
 import {
   createClient,
   type SupabaseClient,
