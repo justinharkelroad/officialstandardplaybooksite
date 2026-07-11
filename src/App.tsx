@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -5,7 +6,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import AppAccess from "./pages/AppAccess";
-import AppRedirect from "./pages/AppRedirect";
+
+// Member app (Standard Playbook client portal) — lazy so the marketing
+// bundle is unaffected.
+const MemberLogin = lazy(() => import("./app/LoginRoute"));
+const MemberApp = lazy(() => import("./app/MemberAppRoutes"));
 import Boardroom from "./pages/Boardroom";
 import Directive from "./pages/Directive";
 import SalesExperience from "./pages/SalesExperience";
@@ -75,7 +80,8 @@ const App = () => (
           <Route path="/bold" element={<BoldMockup />} />
           <Route path="/apple" element={<AppleMockup />} />
           <Route path="/legacy" element={<NewLanding />} />
-          <Route path="/app" element={<AppRedirect />} />
+          <Route path="/login" element={<Suspense fallback={null}><MemberLogin /></Suspense>} />
+          <Route path="/app/*" element={<Suspense fallback={null}><MemberApp /></Suspense>} />
           <Route path="/appinfo" element={<AppAccess />} />
           <Route path="/boardroom" element={<BoldBoardroom />} />
           <Route path="/legacy-boardroom" element={<Boardroom />} />

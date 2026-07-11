@@ -45,3 +45,6 @@ verify_jwt = false
 
 [functions.acuity-mirror-webhook]
 verify_jwt = false
+# ── Member app functions ──────────────────────────────────────
+[functions.admin-manage-member]
+verify_jwt = true

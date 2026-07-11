@@ -33,3 +33,6 @@ COPY_REWRITE_MISSION_A.md
 Plans/
 ads/
 public/Team Standard (Facebook Video).mp4
+
+# local-only env (local Supabase stack creds)
+.env.local
