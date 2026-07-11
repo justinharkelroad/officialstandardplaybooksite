@@ -357,3 +357,49 @@ create the ElevenLabs ConvAI agent.
 flow-share + Exchange stripped (out of scope); help-content system stubbed;
 AI-key happy paths unverified until secrets exist (§7.5 degradation verified
 everywhere instead); no AI rate limiting (closed roster, revisit later).
+
+---
+
+## Post-audit hardening (advisor + Cato findings, all closed)
+
+The E5 verification pass ran a commitment-boundary advisor review plus a Cato
+audit (note: Cato's codex/GPT-5.4 cross-vendor call timed out at its 120s cap,
+so its verdict is a second same-family read, not a true cross-vendor audit —
+its "concerns" verdict and every finding are addressed below):
+
+1. **Flow session_token kill switch** (advisor P0): the five session-token flow
+   functions run service-role and previously honored a deactivated member's
+   live session_token. Fixed in `verifyFlowSession` (members.is_active check).
+   Proof: active submit 200 → deactivate → same token
+   `403 {"code":"MEMBER_INACTIVE"}` on submit_flow_answer and get_flow_state.
+2. **Per-function deactivation proof** (Cato major): a deactivated member's
+   still-valid JWT probed against every service-role family:
+   daily-frame-commitments, theta_audio_state, life_targets_measurability,
+   analyze_debrief, refine_flow_action_item, generate_affirmations,
+   generate_voice_sample, start_flow_session, analyze_flow_session —
+   **all 9 return 403 "Your access is inactive — contact Justin."**
+   (analyze_debrief initially returned its missing-key 503 first; reordered so
+   auth precedes configuration checks, then re-proved.)
+3. **analyze_flow_session caller scoping** (Cato minor): gateway verify_jwt
+   only guarantees *some* JWT; added owner+active check for non-service
+   bearers. Proof: active member A passing C's session_id →
+   `403 {"error":"Not authorized for this session"}`; fn-to-fn service-key
+   path unchanged.
+4. **session_token never logged** (Cato minor): `buildFlowRequestLogEnvelope`
+   whitelists fields (session_id, question_id, answerLength, …) — the token is
+   not among them.
+5. **Reassignment/`WITH CHECK` probes** (advisor): A updating own row to
+   `user_id = B` → 42501 on core4_entries and focus_items; A inserting
+   flow_challenge_logs against C's session → 42501.
+6. **pg_policies sweep + bucket audit** (advisor): quoted in §9.8.
+7. Hosted collision probe: all 16 new table names absent on
+   puidotfmyrouxezsorlt (PGRST205 each).
+
+Cato's remaining recommendation (rerun a true cross-vendor codex audit with
+artifact paths wired into the ISA) is logged as an open item — the 120s
+tool cap prevented it this run.
+
+Local stack left RUNNING for inspection: API http://127.0.0.1:56321, Studio
+http://127.0.0.1:56323, dev server http://localhost:8083 (`supabase stop`
+in this repo shuts the stack down; it is isolated from the other local
+Supabase projects by the 563xx ports).

@@ -112,6 +112,34 @@ serve(async (req) => {
       )
     }
 
+    // Caller authorization: the gateway (verify_jwt=true) only guarantees SOME
+    // valid JWT. Unless the bearer is the service key (fn-to-fn call from
+    // complete_flow_session), the JWT must belong to an ACTIVE member who OWNS
+    // this session — otherwise any member could trigger analysis/writes on
+    // another member's session.
+    const bearer = (req.headers.get('Authorization') ?? '').replace(/^Bearer\s+/i, '')
+    if (bearer !== supabaseServiceKey) {
+      const { data: callerData, error: callerError } = await supabase.auth.getUser(bearer)
+      const callerId = callerData?.user?.id
+      if (callerError || !callerId || callerId !== session.user_id) {
+        return new Response(
+          JSON.stringify({ error: 'Not authorized for this session' }),
+          { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+      const { data: callerMember } = await supabase
+        .from('members')
+        .select('is_active')
+        .eq('id', callerId)
+        .maybeSingle()
+      if (!callerMember?.is_active) {
+        return new Response(
+          JSON.stringify({ error: 'Your access is inactive — contact Justin.' }),
+          { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+    }
+
     if (session.flow_template?.slug === 'daily-frame') {
       const completedAt = new Date().toISOString()
       const dailyFrameInput = extractDailyFrameInput(session.responses_json, completedAt.slice(0, 10))

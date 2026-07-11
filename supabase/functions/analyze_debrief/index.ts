@@ -245,6 +245,11 @@ serve(async (req) => {
   let claimStartedAt: string | null = null;
 
   try {
+    // Auth FIRST: a deactivated member must see the kill switch, never a
+    // configuration message.
+    const member = await requireActiveMember(req);
+    if (member instanceof Response) return member;
+
     const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY');
     const resendKey = Deno.env.get('RESEND_API_KEY');
 
@@ -254,9 +259,6 @@ serve(async (req) => {
         { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
-
-    const member = await requireActiveMember(req);
-    if (member instanceof Response) return member;
     supabase = member.supabase;
     const userId = member.userId;
 
