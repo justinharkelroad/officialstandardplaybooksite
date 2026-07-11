@@ -1,0 +1,204 @@
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import { migrateOldFormat } from "@/app/lib/quarterUtils";
+import { useLocation } from "react-router-dom";
+import { useAuth } from "@/app/lib/auth";
+import { useStaffAuth } from "@/app/hooks/useStaffAuth";
+
+export interface QuarterlyTargets {
+  id?: string;
+  user_id?: string;
+  quarter: string;
+  // Target 1 (primary by default)
+  body_target: string | null;
+  body_narrative: string | null;
+  body_daily_habit: string | null;
+  body_monthly_missions: any;
+  body_daily_actions?: string[];
+  body_action_pool?: string[];
+  // Target 2 (secondary)
+  body_target2?: string | null;
+  body_narrative2?: string | null;
+  body_primary_is_target1?: boolean | null;
+
+  being_target: string | null;
+  being_narrative: string | null;
+  being_daily_habit: string | null;
+  being_monthly_missions: any;
+  being_daily_actions?: string[];
+  being_action_pool?: string[];
+  being_target2?: string | null;
+  being_narrative2?: string | null;
+  being_primary_is_target1?: boolean | null;
+
+  balance_target: string | null;
+  balance_narrative: string | null;
+  balance_daily_habit: string | null;
+  balance_monthly_missions: any;
+  balance_daily_actions?: string[];
+  balance_action_pool?: string[];
+  balance_target2?: string | null;
+  balance_narrative2?: string | null;
+  balance_primary_is_target1?: boolean | null;
+
+  business_target: string | null;
+  business_narrative: string | null;
+  business_daily_habit: string | null;
+  business_monthly_missions: any;
+  business_daily_actions?: string[];
+  business_action_pool?: string[];
+  business_target2?: string | null;
+  business_narrative2?: string | null;
+  business_primary_is_target1?: boolean | null;
+  
+  created_at?: string;
+  updated_at?: string;
+}
+
+export function useQuarterlyTargets(
+  quarter: string,
+  portalMode?: 'staff' | 'portal',
+) {
+  const { pathname } = useLocation();
+  const { user, loading: ownerLoading } = useAuth();
+  const { user: staffUser, sessionToken, loading: staffLoading } = useStaffAuth();
+  const staffMode = portalMode ? portalMode === 'staff' : pathname.startsWith('/staff/');
+  const actorKey = staffMode
+    ? (staffUser?.id ? `staff:${staffUser.id}` : 'staff:pending')
+    : (user?.id ? `owner:${user.id}` : 'owner:pending');
+  const authReady = staffMode
+    ? !staffLoading && !!staffUser?.id && !!sessionToken
+    : !ownerLoading && !!user?.id;
+
+  return useQuery({
+    queryKey: ['quarterly-targets', actorKey, migrateOldFormat(quarter)],
+    queryFn: async () => {
+      const normalizedQuarter = migrateOldFormat(quarter);
+
+      if (staffMode) {
+        if (!sessionToken) throw new Error('Not authenticated');
+
+        const { data, error } = await supabase.functions.invoke('staff_life_targets', {
+          headers: { 'x-staff-session': sessionToken },
+          body: { action: 'get', quarter: normalizedQuarter },
+        });
+
+        if (error) throw error;
+        if (data?.error) throw new Error(data.error);
+        return data?.target as QuarterlyTargets | null;
+      }
+
+      if (!user) throw new Error('Not authenticated');
+
+      const { data, error } = await supabase
+        .from('life_targets_quarterly')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('quarter', normalizedQuarter)
+        .maybeSingle();
+
+      if (error) throw error;
+      return data as QuarterlyTargets | null;
+    },
+    enabled: !!quarter && authReady,
+  });
+}
+
+interface SaveQuarterlyTargetsVariables {
+  data: QuarterlyTargets;
+  showToast?: boolean;
+}
+
+export function useSaveQuarterlyTargets(portalMode?: 'staff' | 'portal') {
+  const queryClient = useQueryClient();
+  const { pathname } = useLocation();
+  const { user } = useAuth();
+  const { user: staffUser, sessionToken } = useStaffAuth();
+  const staffMode = portalMode ? portalMode === 'staff' : pathname.startsWith('/staff/');
+  const actorKey = staffMode
+    ? (staffUser?.id ? `staff:${staffUser.id}` : 'staff:pending')
+    : (user?.id ? `owner:${user.id}` : 'owner:pending');
+
+  return useMutation({
+    mutationFn: async (variables: SaveQuarterlyTargetsVariables) => {
+      const targets = variables.data;
+      const payload = {
+        quarter: migrateOldFormat(targets.quarter),
+        body_target: targets.body_target,
+        body_target2: targets.body_target2,
+        body_narrative: targets.body_narrative,
+        body_narrative2: targets.body_narrative2,
+        body_primary_is_target1: targets.body_primary_is_target1,
+        body_daily_habit: targets.body_daily_habit,
+        body_daily_actions: targets.body_daily_actions,
+        body_monthly_missions: targets.body_monthly_missions,
+        being_target: targets.being_target,
+        being_target2: targets.being_target2,
+        being_narrative: targets.being_narrative,
+        being_narrative2: targets.being_narrative2,
+        being_primary_is_target1: targets.being_primary_is_target1,
+        being_daily_habit: targets.being_daily_habit,
+        being_daily_actions: targets.being_daily_actions,
+        being_monthly_missions: targets.being_monthly_missions,
+        balance_target: targets.balance_target,
+        balance_target2: targets.balance_target2,
+        balance_narrative: targets.balance_narrative,
+        balance_narrative2: targets.balance_narrative2,
+        balance_primary_is_target1: targets.balance_primary_is_target1,
+        balance_daily_habit: targets.balance_daily_habit,
+        balance_daily_actions: targets.balance_daily_actions,
+        balance_monthly_missions: targets.balance_monthly_missions,
+        business_target: targets.business_target,
+        business_target2: targets.business_target2,
+        business_narrative: targets.business_narrative,
+        business_narrative2: targets.business_narrative2,
+        business_primary_is_target1: targets.business_primary_is_target1,
+        business_daily_habit: targets.business_daily_habit,
+        business_daily_actions: targets.business_daily_actions,
+        business_monthly_missions: targets.business_monthly_missions,
+      };
+
+      if (staffMode) {
+        if (!sessionToken) throw new Error('Not authenticated');
+
+        const { data, error } = await supabase.functions.invoke('staff_life_targets', {
+          headers: { 'x-staff-session': sessionToken },
+          body: { action: 'save', data: payload },
+        });
+
+        if (error) throw error;
+        if (data?.error) throw new Error(data.error);
+        return data.target;
+      }
+
+      if (!user) throw new Error('Not authenticated');
+
+      const portalPayload = {
+        ...payload,
+        user_id: user.id,
+      };
+
+      const { data, error } = await supabase
+        .from('life_targets_quarterly')
+        .upsert(portalPayload, { onConflict: 'user_id,quarter' })
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ['quarterly-targets', actorKey, migrateOldFormat(variables.data.quarter)],
+      });
+      if (variables.showToast !== false) {
+        toast.success('Targets saved successfully');
+      }
+    },
+    onError: (error) => {
+      console.error('Save targets error:', error);
+      toast.error(error instanceof Error ? error.message : 'Failed to save targets');
+    }
+  });
+}

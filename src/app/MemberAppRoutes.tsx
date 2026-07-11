@@ -4,8 +4,10 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { MemberAuthProvider } from "@/app/lib/auth";
 import { RequireAdmin, RequireMember } from "@/app/components/guards";
 import AppShell from "@/app/components/AppShell";
-import HubPage from "@/app/pages/HubPage";
 import AdminPage from "@/app/pages/AdminPage";
+import PersonalGrowthDashboard from "@/app/pages/PersonalGrowthDashboard";
+import Core4 from "@/app/pages/Core4";
+import MonthlyMissions from "@/app/pages/MonthlyMissions";
 
 export default function MemberAppRoutes() {
   return (
@@ -13,7 +15,9 @@ export default function MemberAppRoutes() {
       <Routes>
         <Route element={<RequireMember />}>
           <Route element={<AppShell />}>
-            <Route index element={<HubPage />} />
+            <Route index element={<PersonalGrowthDashboard />} />
+            <Route path="core4" element={<Core4 />} />
+            <Route path="monthly-missions" element={<MonthlyMissions />} />
             <Route element={<RequireAdmin />}>
               <Route path="admin" element={<AdminPage />} />
             </Route>
