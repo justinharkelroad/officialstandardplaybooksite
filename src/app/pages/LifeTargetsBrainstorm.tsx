@@ -18,13 +18,14 @@ import {
 } from "@/app/hooks/useBrainstormTargets";
 import { toast } from "sonner";
 import { isValidUUID } from "@/app/lib/validation";
+import { DomainIcon } from "@/app/components/icons/appIcons";
 
 
 const DOMAINS = [
-  { key: 'body', label: 'Body', icon: '💪', color: 'hsl(var(--primary))' },
-  { key: 'being', label: 'Being', icon: '✝️', color: 'hsl(var(--accent))' },
-  { key: 'balance', label: 'Balance', icon: '⚖️', color: 'hsl(var(--secondary))' },
-  { key: 'business', label: 'Business', icon: '💼', color: 'hsl(var(--muted))' },
+  { key: 'body', label: 'Body', color: 'hsl(var(--primary))' },
+  { key: 'being', label: 'Being', color: 'hsl(var(--accent))' },
+  { key: 'balance', label: 'Balance', color: 'hsl(var(--secondary))' },
+  { key: 'business', label: 'Business', color: 'hsl(var(--muted))' },
 ] as const;
 
 type Domain = typeof DOMAINS[number]['key'];
@@ -231,7 +232,7 @@ export default function LifeTargetsBrainstorm() {
 
       {/* Domain Sections */}
       <div className="grid gap-6">
-        {DOMAINS.map(({ key, label, icon }) => (
+        {DOMAINS.map(({ key, label }) => (
           <Card key={key} className="relative overflow-hidden">
             <div 
               className="absolute top-0 left-0 w-1 h-full opacity-50"
@@ -240,7 +241,7 @@ export default function LifeTargetsBrainstorm() {
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-2xl">{icon}</span>
+                  <DomainIcon domain={key} className="h-6 w-6" />
                   <span>{label}</span>
                 </div>
                 <Badge variant="secondary">

@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { getSupabaseFunctionErrorMessage } from "@/app/lib/supabaseFunctionErrors";
 
+
 interface Voice {
   id: string;
   name: string;
@@ -170,7 +171,7 @@ export function ThetaVoiceStudioSelector({
                                 : 'bg-[#2997FF]/10 text-[#2997FF] border-[#2997FF]/20'
                             }
                           >
-                            {voice.gender === 'male' ? '♂' : '♀'}
+                            {voice.gender === 'male' ? 'M' : 'F'}
                           </Badge>
                         </div>
                         <p className="text-xs text-muted-foreground mb-1">

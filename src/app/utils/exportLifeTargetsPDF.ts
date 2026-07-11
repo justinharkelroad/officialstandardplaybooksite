@@ -177,7 +177,7 @@ export function exportLifeTargetsPDF(
       doc.setFontSize(10);
       dailyActions.forEach((action) => {
         checkPageBreak(8);
-        doc.text('☐', 25, yPosition);
+        doc.rect(25, yPosition - 3, 3.5, 3.5);
         const actionLines = doc.splitTextToSize(action, 160);
         doc.text(actionLines, 32, yPosition);
         yPosition += actionLines.length * 5 + 2;

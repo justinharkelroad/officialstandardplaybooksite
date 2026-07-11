@@ -6,6 +6,7 @@ import { Music, Sparkles } from "lucide-react";
 import { useGenerateThetaTrack } from "@/app/hooks/useThetaTrack";
 import { ThetaAudioMixer } from "./ThetaAudioMixer";
 import { toast } from "sonner";
+import { AppIcon } from "@/app/components/icons/appIcons";
 
 interface ThetaBinauralComposerProps {
   sessionId: string;
@@ -103,7 +104,7 @@ export function ThetaBinauralComposer({
           </div>
 
           <div className="text-xs text-muted-foreground bg-muted/30 p-3 rounded">
-            <p className="font-medium mb-1">🎧 Best Practices:</p>
+            <p className="mb-1 flex items-center gap-2 font-medium"><AppIcon name="headphones" className="h-4 w-4" /> Best Practices:</p>
             <ul className="space-y-1 ml-4">
               <li>• Listen with headphones for full binaural effect</li>
               <li>• Use during meditation, sleep, or focused work</li>

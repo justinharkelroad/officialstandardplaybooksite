@@ -16,6 +16,7 @@ import { format, addDays, isToday } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { SmartBackButton } from '@/app/components/SmartBackButton';
 import { HelpButton } from '@/app/components/HelpButton';
+import { AppIcon } from "@/app/components/icons/appIcons";
 
 const domains: { key: Core4Domain; label: string; icon: React.ElementType; color: string }[] = [
   { key: 'body', label: 'BODY', icon: Dumbbell, color: 'from-[#2997FF] to-[#2997FF]' },
@@ -227,7 +228,7 @@ export default function Core4() {
           <div className="flex flex-col items-center justify-center">
             <div className="text-center space-y-4">
               <div className="text-8xl">
-                {selectedDatePoints === 4 ? '🔥' : '🧘'}
+                {selectedDatePoints === 4 ? <AppIcon name="streak" className="h-5 w-5" /> : <AppIcon name="reflect" className="h-5 w-5" />}
               </div>
               <div>
                 <p className="text-4xl font-bold">{selectedDatePoints}/4</p>

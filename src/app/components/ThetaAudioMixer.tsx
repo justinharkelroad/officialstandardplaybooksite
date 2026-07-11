@@ -21,6 +21,7 @@ import {
   getThetaAudioDeviceSignals,
   isLikelyConstrainedThetaRenderDevice,
 } from "@/app/lib/thetaAudio";
+import { AppIcon } from "@/app/components/icons/appIcons";
 
 declare global {
   interface LameJsEncoder {
@@ -420,7 +421,7 @@ export function ThetaAudioMixer({ segments, backgroundTrackPath, trackId }: Thet
               21-minute personalized theta binaural beats with your affirmations (~25 MB MP3)
             </p>
             <p className="text-muted-foreground text-xs mt-1">
-              ✅ Works on all devices (iOS, Android, Windows, Mac)
+              <AppIcon name="success" className="mr-1.5 inline h-4 w-4" />Works on all devices (iOS, Android, Windows, Mac)
             </p>
           </div>
           <div className="flex gap-3 justify-center">

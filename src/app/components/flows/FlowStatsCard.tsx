@@ -9,6 +9,7 @@ import { Flame,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { AnimatedTrophy as Trophy } from "@/app/components/icons/AnimatedTrophy";
+import { AppIcon, type AppIconKey } from "@/app/components/icons/appIcons";
 
 export function FlowStatsCard() {
   const stats = useFlowStats();
@@ -175,7 +176,7 @@ function MilestoneBadge({ milestone }: { milestone: Milestone }) {
       )}
       title={milestone.achieved ? `${milestone.label} achieved!` : `Reach ${milestone.days} days`}
     >
-      <span>{milestone.icon}</span>
+      <AppIcon name={milestone.icon as AppIconKey} className="h-4 w-4" />
       <span>{milestone.label}</span>
     </div>
   );

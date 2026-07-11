@@ -194,7 +194,7 @@ export default function LifeTargetsDaily() {
 
     // Set new timeout to save after 2 seconds of inactivity
     saveTimeoutRef.current = setTimeout(() => {
-      console.log('🔄 Auto-saving daily actions after 2s debounce...');
+      console.log('Auto-saving daily actions after 2s debounce...');
       saveDailyActions.mutate({
         quarter: currentQuarter,
         selectedActions: selections,

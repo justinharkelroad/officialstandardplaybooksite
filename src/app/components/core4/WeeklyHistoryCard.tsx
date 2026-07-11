@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, Flame, Zap, Calendar, Target } from 'lucide-
 import { format, subWeeks, startOfWeek, addDays, isSameWeek } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { getWeekKey } from '@/app/lib/date-utils';
+import { AppIcon } from "@/app/components/icons/appIcons";
 
 interface WeeklyHistoryEntry {
   weekStart: Date;
@@ -229,7 +230,7 @@ export function WeeklyHistoryCard({
                     </span>
                   </div>
                   {week.combinedPoints === week.maxPoints && (
-                    <span className="text-[#2997FF] font-medium">Perfect! 🎉</span>
+                    <span className="inline-flex items-center gap-1.5 text-[#2997FF] font-medium">Perfect! <AppIcon name="celebrate" className="h-4 w-4" /></span>
                   )}
                 </div>
               </div>

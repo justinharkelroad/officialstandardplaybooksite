@@ -33,10 +33,10 @@ export interface Milestone {
 }
 
 const MILESTONES = [
-  { days: 7, label: '1 Week', icon: '🔥' },
-  { days: 30, label: '1 Month', icon: '⭐' },
-  { days: 100, label: '100 Days', icon: '💎' },
-  { days: 365, label: '1 Year', icon: '👑' },
+  { days: 7, label: '1 Week', icon: 'streak' as const },
+  { days: 30, label: '1 Month', icon: 'star' as const },
+  { days: 100, label: '100 Days', icon: 'gem' as const },
+  { days: 365, label: '1 Year', icon: 'crown' as const },
 ];
 
 export function useFlowStats(): FlowStats {

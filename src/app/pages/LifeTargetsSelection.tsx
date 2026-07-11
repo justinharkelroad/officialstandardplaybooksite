@@ -14,12 +14,13 @@ import {
 } from "@/app/hooks/useBrainstormTargets";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { DomainIcon } from "@/app/components/icons/appIcons";
 
 const DOMAINS = [
-  { key: 'body', label: 'Body', icon: '💪' },
-  { key: 'being', label: 'Being', icon: '🧘' },
-  { key: 'balance', label: 'Balance', icon: '⚖️' },
-  { key: 'business', label: 'Business', icon: '💼' },
+  { key: 'body', label: 'Body' },
+  { key: 'being', label: 'Being' },
+  { key: 'balance', label: 'Balance' },
+  { key: 'business', label: 'Business' },
 ] as const;
 
 type Domain = typeof DOMAINS[number]['key'];
@@ -223,7 +224,7 @@ export default function LifeTargetsSelection() {
 
       {/* Domain Sections */}
       <div className="grid gap-6">
-        {DOMAINS.map(({ key, label, icon }) => {
+        {DOMAINS.map(({ key, label }) => {
           const targets = targetsByDomain[key];
           const selectedCount = selections[key].size;
           
@@ -232,7 +233,7 @@ export default function LifeTargetsSelection() {
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="text-2xl">{icon}</span>
+                    <DomainIcon domain={key} className="h-6 w-6" />
                     <span>{label}</span>
                   </div>
                   <Badge variant={selectedCount >= 1 && selectedCount <= 2 ? "default" : "secondary"}>

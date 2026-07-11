@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { ArrowLeft, Search, Clock, CheckCircle2, FileEdit, ChevronRight, Sparkles } from 'lucide-react';
 import { format } from 'date-fns';
 import { FlowTypeIcon } from '@/app/components/flows/FlowTypeIcon';
+import { AppIcon } from "@/app/components/icons/appIcons";
 
 export default function FlowLibrary() {
   const navigate = useNavigate();
@@ -112,7 +113,7 @@ export default function FlowLibrary() {
         </Button>
         
         <h1 className="text-2xl font-medium flex items-center gap-2">
-          📚 Your Flow Library
+          <AppIcon name="library" className="h-5 w-5" /> Your Flow Library
         </h1>
         <p className="text-muted-foreground/70 mt-1">
           {completedCount} completed {draftCount > 0 ? `• ${draftCount} draft${draftCount === 1 ? '' : 's'}` : ''}
@@ -201,7 +202,7 @@ export default function FlowLibrary() {
                 <div className="flex items-center gap-4">
                   <FlowTypeIcon
                     flowSlug={session.flow_template?.slug}
-                    fallback={session.flow_template?.icon}
+                    
                     size="md"
                     active={activeSessionIconId === session.id}
                     className="text-foreground"

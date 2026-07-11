@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Mic, MicOff } from 'lucide-react';
+import { AppIcon } from "@/app/components/icons/appIcons";
 
 interface FlowQuestionProps {
   question: FlowQuestionType;
@@ -103,7 +104,7 @@ export function FlowQuestionComponent({
   return (
     <div className="space-y-4">
       <div className="flex items-start gap-3">
-        <span className="text-2xl flex-shrink-0">🧠</span>
+        <AppIcon name="reflect" className="h-6 w-6 flex-shrink-0" />
         <div className="space-y-3">
           {hasInterpolations ? (
             promptSegments.map((segment, idx) => (

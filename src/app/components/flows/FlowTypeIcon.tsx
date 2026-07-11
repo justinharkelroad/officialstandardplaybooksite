@@ -10,6 +10,7 @@ import { HandHeartIcon } from '@/app/components/icons/hand-heart';
 import { HandsPrayingIcon } from '@/app/components/icons/hands-praying';
 import { TelescopeIcon } from '@/app/components/icons/telescope';
 import { cn } from '@/lib/utils';
+import { NotebookPen } from "lucide-react";
 
 export type FlowTypeIconHandle = {
   startAnimation: () => void;
@@ -104,7 +105,7 @@ export function FlowTypeIcon({
         aria-label={ariaLabel}
         aria-hidden={ariaLabel ? undefined : true}
       >
-        {fallback ?? '📝'}
+        {fallback ?? <NotebookPen className="h-[0.9em] w-[0.9em]" aria-hidden />}
       </span>
     );
   }

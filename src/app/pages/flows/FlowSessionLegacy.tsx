@@ -592,7 +592,7 @@ export default function FlowSession() {
   const flowIcon = (
     <FlowTypeIcon
       flowSlug={template.slug}
-      fallback={template.icon || '🧠'}
+      fallback={undefined}
       size="sm"
       animateOnHover
       className="text-foreground"
@@ -612,7 +612,7 @@ export default function FlowSession() {
             <div className="flex items-center gap-2">
               <FlowTypeIcon
                 flowSlug={template.slug}
-                fallback={template.icon || '🧠'}
+                fallback={undefined}
                 size="sm"
                 animateOnHover
                 className="text-foreground"

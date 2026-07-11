@@ -15,6 +15,7 @@ import { FlowStatsCard } from '@/app/components/flows/FlowStatsCard';
 import { HelpButton } from '@/app/components/HelpButton';
 import { FlowTypeIcon } from '@/app/components/flows/FlowTypeIcon';
 import { FlowInfoButton } from '@/app/components/flows/FlowInfoButton';
+import { AppIcon } from "@/app/components/icons/appIcons";
 
 export default function Flows() {
   const navigate = useNavigate();
@@ -226,7 +227,7 @@ export default function Flows() {
               <CardContent className="p-6">
                 <FlowTypeIcon
                   flowSlug={template.slug}
-                  fallback={template.icon}
+                  /* line-icon default; never fall back to the template's emoji */
                   size="lg"
                   active={activeTemplateIconId === template.id}
                   className="mb-3 text-foreground"
@@ -252,7 +253,7 @@ export default function Flows() {
       {/* Recent Stacks / Library */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-medium">📚 Your Flow Library</h2>
+          <h2 className="flex items-center gap-2 text-lg font-medium"><AppIcon name="library" className="h-5 w-5" /> Your Flow Library</h2>
           {recentSessions.length > 0 && (
             <Button
               variant="ghost"
@@ -291,7 +292,7 @@ export default function Flows() {
                   <div className="flex items-center gap-4">
                     <FlowTypeIcon
                       flowSlug={session.flow_template?.slug}
-                      fallback={session.flow_template?.icon}
+                      
                       size="md"
                       active={activeRecentIconId === session.id}
                       className="text-foreground"

@@ -27,6 +27,7 @@ import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { Core4Domain } from '@/app/hooks/useCore4Stats';
+import { AppIcon } from "@/app/components/icons/appIcons";
 
 interface MissionItem {
   text: string;
@@ -393,7 +394,7 @@ export function Core4MonthlyMissions() {
 
                     {mission.weekly_measurable && (
                       <p className="text-xs text-muted-foreground border-t border-border pt-2 mt-2">
-                        📊 {mission.weekly_measurable}
+                        <AppIcon name="metric" className="mr-1.5 inline h-3.5 w-3.5" />{mission.weekly_measurable}
                       </p>
                     )}
 

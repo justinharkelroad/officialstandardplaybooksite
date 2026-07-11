@@ -308,7 +308,7 @@ function VoiceSeat({
             )}
           >
             {isCoach ? (
-              <FlowTypeIcon flowSlug={flowSlug} active={active} size="xl" fallback="🧠" />
+              <FlowTypeIcon flowSlug={flowSlug} active={active} size="xl" />
             ) : (
               avatarFallback || <UserRound className="h-14 w-14" />
             )}
@@ -750,7 +750,6 @@ export function FlowSessionAgentBase({
   const flowIcon = (
     <FlowTypeIcon
       flowSlug={slug}
-      fallback="🧠"
       size="sm"
       animateOnHover
       className="text-foreground"

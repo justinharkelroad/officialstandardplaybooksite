@@ -35,6 +35,7 @@ import DOMPurify from 'dompurify';
 import { AnimatedDownload as Download } from "@/app/components/icons/AnimatedDownload";
 import { FlowTypeIcon } from '@/app/components/flows/FlowTypeIcon';
 import { DailyFrameReportCard } from '@/app/components/daily-frame/DailyFrameReportCard';
+import { AppIcon } from "@/app/components/icons/appIcons";
 
 export default function FlowComplete() {
   const { sessionId } = useParams<{ sessionId: string }>();
@@ -77,7 +78,7 @@ export default function FlowComplete() {
       } else if (stats.todayCompleted && stats.currentStreak > 1) {
         // Show streak alive toast
         toast({
-          title: '🔥 Streak Alive!',
+          title: 'Streak Alive!',
           description: `Day ${stats.currentStreak} in the books!`,
         });
       }
@@ -264,7 +265,7 @@ export default function FlowComplete() {
               {session.title || 'Untitled Flow'}
             </h2>
             <p className="text-sm text-muted-foreground">
-              {session.domain && <span className="mr-3">📊 {session.domain}</span>}
+              {session.domain && <span className="mr-3 inline-flex items-center gap-1.5"><AppIcon name="metric" className="h-3.5 w-3.5" /> {session.domain}</span>}
               {format(new Date(session.created_at), 'MMMM d, yyyy • h:mm a')}
             </p>
           </CardContent>

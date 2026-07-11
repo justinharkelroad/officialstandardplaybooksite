@@ -13,6 +13,7 @@ import { getAvailableQuarters, formatQuarterDisplay, getCurrentQuarter } from "@
 import { useLifeTargetsStore } from "@/app/lib/lifeTargetsStore";
 import { AlertTriangle } from "lucide-react";
 import { useState } from "react";
+import { AppIcon } from "@/app/components/icons/appIcons";
 
 interface ChangeQuarterDialogProps {
   open: boolean;
@@ -54,7 +55,7 @@ export function ChangeQuarterDialog({
             {hasUnsavedChanges ? (
               // Type A: Has unsaved changes (Quarterly page)
               <div className="text-sm space-y-2">
-                <p className="font-medium text-foreground">⚠️ You have unsaved changes.</p>
+                <p className="flex items-center gap-2 font-medium text-foreground"><AppIcon name="warning" className="h-4 w-4" /> You have unsaved changes.</p>
                 <p>Changing quarters will discard your current edits.</p>
                 <p>Your saved targets, missions, and actions will be relabeled to the new quarter.</p>
               </div>
