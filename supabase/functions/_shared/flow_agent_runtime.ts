@@ -411,6 +411,25 @@ export async function verifyFlowSession(
     };
   }
 
+  // Membership kill switch: these functions run with the service role and are
+  // reachable with only a session_token, so RLS cannot protect them. A
+  // deactivated member's live session must die here too.
+  const { data: member, error: memberError } = await supabase
+    .from("members")
+    .select("is_active")
+    .eq("id", row.user_id)
+    .maybeSingle();
+  if (memberError || !member?.is_active) {
+    return {
+      ok: false,
+      response: errorResponse(
+        403,
+        "MEMBER_INACTIVE",
+        "Your access is inactive — contact Justin.",
+      ),
+    };
+  }
+
   const template = row.flow_template
     ? {
       ...row.flow_template,
