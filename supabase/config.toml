@@ -1,5 +1,30 @@
 project_id = "puidotfmyrouxezsorlt"
 
+# Local-dev ports offset to 563xx so this stack can run alongside other local
+# Supabase projects on this machine (543xx / 553xx are taken).
+[api]
+port = 56321
+
+[db]
+port = 56322
+shadow_port = 56320
+
+[db.pooler]
+port = 56329
+
+[studio]
+port = 56323
+
+[inbucket]
+port = 56324
+
+[analytics]
+port = 56327
+
+[auth]
+site_url = "http://localhost:8080"
+enable_signup = false
+
 [functions.send-booking-notification]
 verify_jwt = false
 
