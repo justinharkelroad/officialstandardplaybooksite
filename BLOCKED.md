@@ -64,6 +64,43 @@ Nothing here is asserted as passing without evidence in the final report.
    client-side mixing, zero server storage). Not ported; current pages don't
    use them.
 
+10. **`evaluate_answer_quality` edge fn** (flow-answer pushback scorer) is called
+    by the source client but was not on the handoff's port list. Ported client
+    now deterministically returns "no pushback" (the safe default all call
+    sites already handled). Restore the invoke if that fn is ever ported.
+11. **`resolve_bible_scripture` edge fn** not on the port list: Bible flow's
+    Find/Reference lookup modes fail soft with a clear message; Paste mode is
+    the default and fully works.
+
+## Flags raised by the acceptance run
+
+1. **Hosted self-signup is OPEN.** `POST /auth/v1/signup` on
+   `puidotfmyrouxezsorlt.supabase.co` returned HTTP 200 and created an
+   unconfirmed stub user `gate-probe-not-real@test.invalid`
+   (id `386e494d-00b5-40d7-9832-9d99bb7374f0`). Exactly the §9.2 flag: only the
+   dashboard toggle can close this. Justin: disable signups AND delete that
+   stub auth user. Mitigation already in place: a signup-only user has no
+   `members` row, so `is_active_member()` denies every table and every ported
+   edge function 403s them.
+2. **Ban ≠ token invalidation (by design, documented).** Deactivation bans the
+   auth user (blocks re-login + refresh) — but an already-issued access token
+   stays cryptographically valid until expiry. The thing that actually cuts a
+   live session's data access is the RLS `is_active_member()` gate plus the
+   same check inside `verifyFlowSession` (service-role flow functions). Do not
+   "optimize away" the RLS gate believing the ban covers it.
+3. **Source repo HEAD moved during the run — external.** Baseline
+   `aec1e708…` → `12d0da1c…` is a commit authored by Justin at 12:24
+   ("fix(coaching): avoid partial-index evidence upserts") from a parallel
+   session. Working-tree porcelain delta vs baseline is EMPTY and this run
+   executed zero mutating commands in the source repo.
+4. **No rate limiting on AI functions.** Any active member can invoke the
+   OpenAI/Anthropic/ElevenLabs-backed functions at will. Acceptable for a
+   closed roster; consider per-member quotas later.
+5. **Interceptor screenshot timeouts.** Two screenshots timed out over
+   WebSocket (known extension issue); verification fell back to DOM/computed-
+   style probes per the skill's documented fallback. One full-page screenshot
+   (hub, Bold reskin) was captured successfully.
+
 ## Justin's checklist (from §12 + discoveries)
 
 - [ ] Set Supabase secrets: `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`,
