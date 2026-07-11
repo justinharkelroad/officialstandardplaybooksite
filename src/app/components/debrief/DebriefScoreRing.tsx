@@ -26,15 +26,15 @@ export function DebriefScoreRing({ total, max, size = "lg", className }: Debrief
 
   // Color based on score percentage
   const getColor = () => {
-    if (pct >= 0.8) return "text-emerald-400";
-    if (pct >= 0.5) return "text-amber-400";
-    return "text-blue-400";
+    if (pct >= 0.8) return "text-[#2997FF]";
+    if (pct >= 0.5) return "text-[#2997FF]";
+    return "text-[#2997FF]";
   };
 
   const getStrokeColor = () => {
-    if (pct >= 0.8) return "#34d399";
-    if (pct >= 0.5) return "#fbbf24";
-    return "#60a5fa";
+    if (pct >= 0.8) return "#2997FF";
+    if (pct >= 0.5) return "#2997FF";
+    return "#2997FF";
   };
 
   return (

@@ -164,8 +164,8 @@ export default function FlowStart() {
       <div className="min-h-screen flex items-center justify-center p-6">
         <Card className="max-w-md w-full">
           <CardHeader className="text-center">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-yellow-500/15 mx-auto mb-2">
-              <FileEdit className="h-6 w-6 text-yellow-500" />
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#2997FF]/15 mx-auto mb-2">
+              <FileEdit className="h-6 w-6 text-[#2997FF]" />
             </div>
             <CardTitle>Draft Found</CardTitle>
           </CardHeader>

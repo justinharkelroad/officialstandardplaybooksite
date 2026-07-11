@@ -187,3 +187,76 @@
 .member-app .bg-card {
   border-color: color-mix(in srgb, hsl(var(--foreground)) 25%, transparent);
 }
+
+/* ── Portalled surfaces (toasts, dialogs, popovers) follow the app theme ──
+   These render outside .member-app, so they key off the root stamp instead.
+   The marketing site never sets data-sp-theme, so it is unaffected. */
+[data-sp-theme="dark"] [data-sonner-toast],
+[data-sp-theme="dark"] [role="dialog"],
+[data-sp-theme="dark"] [data-radix-popper-content-wrapper] > * {
+  background: #16161a !important;
+  color: #f1eee9 !important;
+  border-color: rgba(241, 238, 233, 0.25) !important;
+  border-radius: 0 !important;
+}
+
+[data-sp-theme="light"] [data-sonner-toast],
+[data-sp-theme="light"] [role="dialog"] {
+  border-radius: 0 !important;
+}
+
+/* ── Marquee band (the landing's signature rotated brand band) ─────────── */
+.sp-marquee-wrap {
+  position: relative;
+  overflow: hidden;
+  padding: 26px 0;
+}
+
+.sp-marquee {
+  display: block;
+  width: 120%;
+  margin-left: -10%;
+  padding: 12px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  background: hsl(var(--foreground));
+  color: hsl(var(--background));
+  border-top: 1px solid hsl(var(--foreground));
+  border-bottom: 1px solid hsl(var(--foreground));
+}
+
+.sp-marquee-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  animation: sp-marquee-scroll 28s linear infinite;
+}
+
+.sp-marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  font-family: "Archivo Black", "Anton", Impact, sans-serif;
+  font-size: clamp(16px, 2vw, 26px);
+  letter-spacing: 0.04em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.sp-marquee-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: #2997ff;
+  flex-shrink: 0;
+}
+
+@keyframes sp-marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sp-marquee-track { animation: none; }
+}

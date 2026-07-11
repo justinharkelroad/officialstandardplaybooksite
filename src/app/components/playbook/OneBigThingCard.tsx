@@ -27,10 +27,10 @@ interface OneBigThingCardProps {
 }
 
 const domainConfig: Record<string, { label: string; icon: React.ElementType; color: string; border: string }> = {
-  body: { label: "BODY", icon: Dumbbell, color: "text-emerald-600", border: "border-emerald-500/30" },
-  being: { label: "BEING", icon: LatinCross, color: "text-purple-600", border: "border-purple-500/30" },
-  balance: { label: "BALANCE", icon: Heart, color: "text-rose-600", border: "border-rose-500/30" },
-  business: { label: "BIZ", icon: Briefcase, color: "text-blue-600", border: "border-blue-500/30" },
+  body: { label: "BODY", icon: Dumbbell, color: "text-[#2997FF]", border: "border-[#2997FF]/30" },
+  being: { label: "BEING", icon: LatinCross, color: "text-[#2997FF]", border: "border-[#2997FF]/30" },
+  balance: { label: "BALANCE", icon: Heart, color: "text-[#2997FF]", border: "border-[#2997FF]/30" },
+  business: { label: "BIZ", icon: Briefcase, color: "text-[#2997FF]", border: "border-[#2997FF]/30" },
 };
 
 export function OneBigThingCard({ item, onComplete, onUncomplete, onClear, readOnly }: OneBigThingCardProps) {
@@ -57,7 +57,7 @@ export function OneBigThingCard({ item, onComplete, onUncomplete, onClear, readO
           readOnly
             ? "border-border/40 bg-muted/10 opacity-60"
             : isOver
-              ? "border-emerald-500 bg-emerald-500/10 scale-[1.01]"
+              ? "border-[#2997FF] bg-[#2997FF]/10 scale-[1.01]"
               : "border-border/60 bg-muted/20"
         )}
       >
@@ -77,7 +77,7 @@ export function OneBigThingCard({ item, onComplete, onUncomplete, onClear, readO
   // Completed state — celebration
   if (item.completed) {
     return (
-      <div className="relative rounded-xl border-2 border-emerald-500/40 bg-emerald-500/5 p-5 transition-all">
+      <div className="relative rounded-xl border-2 border-[#2997FF]/40 bg-[#2997FF]/5 p-5 transition-all">
         {/* Undo button — always available so past-week OBTs can be toggled */}
         <Button
           variant="ghost"
@@ -91,13 +91,13 @@ export function OneBigThingCard({ item, onComplete, onUncomplete, onClear, readO
 
         <div className="flex items-start gap-4">
           {/* Big green check */}
-          <div className="shrink-0 h-14 w-14 rounded-full bg-emerald-500/15 flex items-center justify-center">
-            <CheckCircle2 className="h-9 w-9 text-emerald-500" />
+          <div className="shrink-0 h-14 w-14 rounded-full bg-[#2997FF]/15 flex items-center justify-center">
+            <CheckCircle2 className="h-9 w-9 text-[#2997FF]" />
           </div>
 
           <div className="flex-1 min-w-0 space-y-2">
             <div className="flex items-center gap-2">
-              <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600">
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#2997FF]">
                 One Big Thing — Done
               </p>
               {dc && DomainIcon && (
@@ -174,7 +174,7 @@ export function OneBigThingCard({ item, onComplete, onUncomplete, onClear, readO
 
             <Button
               size="sm"
-              className="mt-2 bg-emerald-600 hover:bg-emerald-700 text-white"
+              className="mt-2 bg-[#2997FF] hover:bg-[#2997FF] text-white"
               onClick={() => setShowCompleteDialog(true)}
             >
               <CheckCircle2 className="h-4 w-4 mr-2" />

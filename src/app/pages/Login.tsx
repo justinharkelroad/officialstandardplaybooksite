@@ -105,7 +105,7 @@ export default function Login() {
             />
           </div>
           {error && (
-            <p role="alert" className="sp-label text-[11px] text-red-600">
+            <p role="alert" className="sp-label text-[11px] text-[#2997FF]">
               {error}
             </p>
           )}

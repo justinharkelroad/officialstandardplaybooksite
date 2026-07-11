@@ -188,7 +188,7 @@ function FlowAudioBars({
             key={`${tone}-${index}`}
             className={cn(
               'block w-[4px] rounded-full transition-[height,opacity] duration-100',
-              tone === 'coach' ? 'bg-emerald-400' : 'bg-zinc-300',
+              tone === 'coach' ? 'bg-[#2997FF]' : 'bg-zinc-300',
             )}
             style={{
               height: `${Math.max(4, Math.min(36, activity * 36))}px`,
@@ -281,7 +281,7 @@ function VoiceSeat({
         'flex min-h-[320px] flex-col items-center justify-center rounded-lg border p-6 text-center transition-colors duration-200',
         active
           ? isCoach
-            ? 'border-emerald-400/45 bg-emerald-400/[0.04]'
+            ? 'border-[#2997FF]/45 bg-[#2997FF]/[0.04]'
             : 'border-zinc-300/35 bg-zinc-300/[0.04]'
           : 'border-white/10 bg-white/[0.02]',
       )}
@@ -291,7 +291,7 @@ function VoiceSeat({
           'relative flex h-36 w-36 items-center justify-center overflow-hidden rounded-full border transition-all duration-200',
           active
             ? isCoach
-              ? 'border-emerald-300/70 shadow-[0_0_0_8px_rgba(52,211,153,0.08),0_0_34px_rgba(52,211,153,0.28)]'
+              ? 'border-[#2997FF]/70 shadow-[0_0_0_8px_rgba(52,211,153,0.08),0_0_34px_rgba(52,211,153,0.28)]'
               : 'border-zinc-200/65 shadow-[0_0_0_8px_rgba(228,228,231,0.08),0_0_34px_rgba(161,161,170,0.18)]'
             : 'border-white/10',
         )}
@@ -303,7 +303,7 @@ function VoiceSeat({
             className={cn(
               'flex h-full w-full items-center justify-center text-3xl font-semibold',
               isCoach
-                ? 'bg-[radial-gradient(circle_at_50%_30%,rgba(52,211,153,0.16),rgba(23,23,23,0.94)_58%,rgba(10,10,10,1))] text-emerald-100'
+                ? 'bg-[radial-gradient(circle_at_50%_30%,rgba(52,211,153,0.16),rgba(23,23,23,0.94)_58%,rgba(10,10,10,1))] text-[#2997FF]'
                 : 'bg-[radial-gradient(circle_at_50%_30%,rgba(212,212,216,0.18),rgba(23,23,23,0.94)_58%,rgba(10,10,10,1))] text-zinc-100',
             )}
           >
@@ -429,10 +429,10 @@ function FlowVoiceSessionRoom({
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-2 rounded-md bg-emerald-400/12 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-emerald-300">
+              <span className="inline-flex items-center gap-2 rounded-md bg-[#2997FF]/12 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-[#2997FF]">
                 <span className="relative flex h-2 w-2">
-                  {connected && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-70" />}
-                  <span className={cn('relative inline-flex h-2 w-2 rounded-full', connected ? 'bg-emerald-300' : 'bg-zinc-500')} />
+                  {connected && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#2997FF] opacity-70" />}
+                  <span className={cn('relative inline-flex h-2 w-2 rounded-full', connected ? 'bg-[#2997FF]' : 'bg-zinc-500')} />
                 </span>
                 {connected ? 'Live' : 'Voice'}
               </span>
@@ -506,7 +506,7 @@ function FlowVoiceSessionRoom({
         <Button
           type="button"
           onClick={onEndSession}
-          className="min-w-40 bg-rose-700 text-white hover:bg-rose-800"
+          className="min-w-40 bg-[#2997FF] text-white hover:bg-[#2997FF]"
         >
           <MicOff className="mr-2 h-4 w-4" />
           End session
@@ -1193,7 +1193,7 @@ export function FlowSessionAgentBase({
               <div className="space-y-4">
                 <div className="rounded-lg border border-border/60 bg-card p-4">
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-500" />
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#2997FF]" />
                     <div>
                       <p className="font-medium">Flow saved.</p>
                       <p className="mt-1 text-sm text-muted-foreground">

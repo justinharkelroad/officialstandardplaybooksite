@@ -94,8 +94,8 @@ export function QuarterlyTargetsForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in" aria-label="Quarterly targets form">
       {hasUnsavedChanges && (
-        <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 animate-fade-in" role="alert">
-          <div className="flex items-center gap-2 text-amber-900 dark:text-amber-100">
+        <div className="p-4 rounded-lg bg-[#2997FF]/10 dark:bg-[#2997FF] border border-[#2997FF]/30 dark:border-[#2997FF] animate-fade-in" role="alert">
+          <div className="flex items-center gap-2 text-[#2997FF] dark:text-[#2997FF]">
             <Sparkles className="h-4 w-4" aria-hidden="true" />
             <p className="text-sm font-medium">
               You have unsaved changes. Click "Save Targets" below to finalize your updates.

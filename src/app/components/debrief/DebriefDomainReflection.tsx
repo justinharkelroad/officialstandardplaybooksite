@@ -20,23 +20,23 @@ import type { PlaybookDomain } from "@/app/hooks/useFocusItems";
 const DOMAIN_CONFIG = {
   body: {
     icon: Heart,
-    color: "text-red-400",
-    bgColor: "bg-red-500/10",
+    color: "text-[#2997FF]",
+    bgColor: "bg-[#2997FF]/10",
   },
   being: {
     icon: Brain,
-    color: "text-purple-400",
-    bgColor: "bg-purple-500/10",
+    color: "text-[#2997FF]",
+    bgColor: "bg-[#2997FF]/10",
   },
   balance: {
     icon: Scale,
-    color: "text-blue-400",
-    bgColor: "bg-blue-500/10",
+    color: "text-[#2997FF]",
+    bgColor: "bg-[#2997FF]/10",
   },
   business: {
     icon: Briefcase,
-    color: "text-amber-400",
-    bgColor: "bg-amber-500/10",
+    color: "text-[#2997FF]",
+    bgColor: "bg-[#2997FF]/10",
   },
 } as const;
 
@@ -181,7 +181,7 @@ export function DebriefDomainReflection({
                 {domainAccomplishments.powerPlays.map((pp) => (
                   <div key={pp.id} className="flex items-center gap-1.5 text-xs">
                     {pp.completed ? (
-                      <CheckCircle2 className="h-3 w-3 text-emerald-400 shrink-0" />
+                      <CheckCircle2 className="h-3 w-3 text-[#2997FF] shrink-0" />
                     ) : (
                       <div className="h-3 w-3 rounded-full border border-border shrink-0" />
                     )}
@@ -302,7 +302,7 @@ export function DebriefDomainReflection({
             <div className="space-y-1.5">
               {currentAddedTasks.map((task, i) => (
                 <div key={i} className="flex items-center gap-2 text-xs text-muted-foreground bg-foreground/5 rounded-lg px-3 py-2">
-                  <CheckCircle2 className="h-3 w-3 text-emerald-400 shrink-0" />
+                  <CheckCircle2 className="h-3 w-3 text-[#2997FF] shrink-0" />
                   <span className="flex-1">{task}</span>
                   <span className="text-muted-foreground/50 text-[10px]">on bench</span>
                 </div>

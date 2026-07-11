@@ -100,25 +100,25 @@ function QuarterCard({ plan }: { plan: QuarterlyTargetsSummary }) {
         <div className="space-y-2 text-sm">
           {bodyTarget && (
             <div className="flex gap-2">
-              <span className="font-semibold text-orange-600 dark:text-orange-400 shrink-0">Body:</span>
+              <span className="font-semibold text-[#2997FF] dark:text-[#2997FF] shrink-0">Body:</span>
               <span className="text-muted-foreground line-clamp-1">{bodyTarget}</span>
             </div>
           )}
           {beingTarget && (
             <div className="flex gap-2">
-              <span className="font-semibold text-blue-600 dark:text-blue-400 shrink-0">Being:</span>
+              <span className="font-semibold text-[#2997FF] dark:text-[#2997FF] shrink-0">Being:</span>
               <span className="text-muted-foreground line-clamp-1">{beingTarget}</span>
             </div>
           )}
           {balanceTarget && (
             <div className="flex gap-2">
-              <span className="font-semibold text-green-600 dark:text-green-400 shrink-0">Balance:</span>
+              <span className="font-semibold text-[#2997FF] dark:text-[#2997FF] shrink-0">Balance:</span>
               <span className="text-muted-foreground line-clamp-1">{balanceTarget}</span>
             </div>
           )}
           {businessTarget && (
             <div className="flex gap-2">
-              <span className="font-semibold text-purple-600 dark:text-purple-400 shrink-0">Business:</span>
+              <span className="font-semibold text-[#2997FF] dark:text-[#2997FF] shrink-0">Business:</span>
               <span className="text-muted-foreground line-clamp-1">{businessTarget}</span>
             </div>
           )}

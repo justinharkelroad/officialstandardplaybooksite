@@ -46,8 +46,8 @@ const domainLabels: Record<string, string> = {
 };
 
 function statusClass(status?: string) {
-  if (status === "completed") return "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300";
-  if (status === "overdue" || status === "missed") return "bg-amber-500/10 text-amber-700 dark:text-amber-300";
+  if (status === "completed") return "bg-[#2997FF]/10 text-[#2997FF] dark:text-[#2997FF]";
+  if (status === "overdue" || status === "missed") return "bg-[#2997FF]/10 text-[#2997FF] dark:text-[#2997FF]";
   return "bg-muted text-muted-foreground";
 }
 
@@ -77,11 +77,11 @@ function DailyFrameProgressTrail({
             className={cn(
               "rounded-lg border px-2.5 py-2 text-center text-[11px] font-semibold uppercase tracking-wide",
               step.active && step.key === "completed"
-                ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+                ? "border-[#2997FF]/40 bg-[#2997FF]/10 text-[#2997FF] dark:text-[#2997FF]"
                 : step.active
-                  ? "border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-300"
+                  ? "border-[#2997FF]/40 bg-[#2997FF]/10 text-[#2997FF] dark:text-[#2997FF]"
                   : reached
-                    ? "border-emerald-500/35 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+                    ? "border-[#2997FF]/35 bg-[#2997FF]/10 text-[#2997FF] dark:text-[#2997FF]"
                     : "border-border/60 bg-muted/20 text-muted-foreground",
             )}
           >
@@ -260,8 +260,8 @@ export function DailyFrameWidget({
                   className={cn(
                     "flex h-10 w-10 shrink-0 items-center justify-center rounded-lg",
                     today
-                      ? "bg-[#f59e0b] text-white shadow-md shadow-[#f59e0b]/30"
-                      : "bg-[#f59e0b]/15 text-[#b45309] dark:text-[#fbbf24]",
+                      ? "bg-[#2997FF] text-white shadow-md shadow-[#2997FF]/30"
+                      : "bg-[#2997FF]/15 text-[#b45309] dark:text-[#2997FF]",
                   )}
                 >
                   <Flag className="h-5 w-5" />
@@ -283,7 +283,7 @@ export function DailyFrameWidget({
           <div className="flex items-start justify-between gap-3">
             <div>
               <CardTitle className="flex items-center gap-2 text-base">
-                <Flag className="h-4 w-4 text-amber-500" />
+                <Flag className="h-4 w-4 text-[#2997FF]" />
                 Daily Frame
               </CardTitle>
               <p className="mt-1 text-sm text-muted-foreground">
@@ -362,7 +362,7 @@ export function DailyFrameWidget({
                 return (
                   <div key={row.id} className="flex items-center gap-3 rounded-md border border-border/50 px-3 py-2 text-sm">
                     {status === "completed" ? (
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-500" />
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#2997FF]" />
                     ) : (
                       <Circle className="h-4 w-4 shrink-0 text-muted-foreground" />
                     )}

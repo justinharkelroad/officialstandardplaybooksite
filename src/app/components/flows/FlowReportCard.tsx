@@ -157,7 +157,7 @@ export function FlowReportCard({
                 {/* Congratulations */}
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Sparkles className="h-5 w-5 text-yellow-500" strokeWidth={1.5} />
+                    <Sparkles className="h-5 w-5 text-[#2997FF]" strokeWidth={1.5} />
                     <h3 className="font-medium">Recognition</h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
@@ -169,7 +169,7 @@ export function FlowReportCard({
                 {analysis.deep_dive_insight && (
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <Brain className="h-5 w-5 text-indigo-500" strokeWidth={1.5} />
+                      <Brain className="h-5 w-5 text-[#2997FF]" strokeWidth={1.5} />
                       <h3 className="font-medium">Deep Dive</h3>
                     </div>
                     <p className="text-muted-foreground leading-relaxed">
@@ -182,7 +182,7 @@ export function FlowReportCard({
                 {analysis.connections && analysis.connections.length > 0 && (
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <Lightbulb className="h-5 w-5 text-blue-500" strokeWidth={1.5} />
+                      <Lightbulb className="h-5 w-5 text-[#2997FF]" strokeWidth={1.5} />
                       <h3 className="font-medium">Connections</h3>
                     </div>
                     <ul className="space-y-2">
@@ -200,7 +200,7 @@ export function FlowReportCard({
                 {analysis.themes && analysis.themes.length > 0 && (
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <Tags className="h-5 w-5 text-purple-500" strokeWidth={1.5} />
+                      <Tags className="h-5 w-5 text-[#2997FF]" strokeWidth={1.5} />
                       <h3 className="font-medium">Themes</h3>
                     </div>
                     <div className="flex flex-wrap gap-2">
@@ -220,10 +220,10 @@ export function FlowReportCard({
                 {analysis.provocative_question && (
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <HelpCircle className="h-5 w-5 text-amber-500" strokeWidth={1.5} />
+                      <HelpCircle className="h-5 w-5 text-[#2997FF]" strokeWidth={1.5} />
                       <h3 className="font-medium">Question to Consider</h3>
                     </div>
-                    <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
+                    <div className="bg-[#2997FF]/10 border border-[#2997FF]/20 rounded-lg p-4">
                       <p className="text-sm italic">
                         {analysis.provocative_question}
                       </p>
@@ -235,10 +235,10 @@ export function FlowReportCard({
                 {analysis.suggested_action && (
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <Target className="h-5 w-5 text-green-500" strokeWidth={1.5} />
+                      <Target className="h-5 w-5 text-[#2997FF]" strokeWidth={1.5} />
                       <h3 className="font-medium">Micro-Step</h3>
                     </div>
-                    <div className="bg-green-500/15 border border-green-500/20 rounded-lg p-4">
+                    <div className="bg-[#2997FF]/15 border border-[#2997FF]/20 rounded-lg p-4">
                       <p className="text-sm">
                         {analysis.suggested_action}
                       </p>

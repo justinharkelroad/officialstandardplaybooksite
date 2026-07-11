@@ -12,26 +12,26 @@ const DOMAINS = [
   { 
     key: 'body', 
     label: 'Body', 
-    color: 'border-blue-500/50 bg-blue-500/5',
-    textColor: 'text-blue-600 dark:text-blue-400'
+    color: 'border-[#2997FF]/50 bg-[#2997FF]/5',
+    textColor: 'text-[#2997FF] dark:text-[#2997FF]'
   },
   { 
     key: 'being', 
     label: 'Being', 
-    color: 'border-purple-500/50 bg-purple-500/5',
-    textColor: 'text-purple-600 dark:text-purple-400'
+    color: 'border-[#2997FF]/50 bg-[#2997FF]/5',
+    textColor: 'text-[#2997FF] dark:text-[#2997FF]'
   },
   { 
     key: 'balance', 
     label: 'Balance', 
-    color: 'border-green-500/50 bg-green-500/5',
-    textColor: 'text-green-600 dark:text-green-400'
+    color: 'border-[#2997FF]/50 bg-[#2997FF]/5',
+    textColor: 'text-[#2997FF] dark:text-[#2997FF]'
   },
   { 
     key: 'business', 
     label: 'Business', 
-    color: 'border-orange-500/50 bg-orange-500/5',
-    textColor: 'text-orange-600 dark:text-orange-400'
+    color: 'border-[#2997FF]/50 bg-[#2997FF]/5',
+    textColor: 'text-[#2997FF] dark:text-[#2997FF]'
   },
 ] as const;
 

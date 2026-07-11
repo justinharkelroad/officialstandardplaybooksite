@@ -16,10 +16,10 @@ interface DailyActionsSelectorProps {
 }
 
 const DOMAINS = [
-  { key: 'body', label: 'Body', color: 'text-blue-600 dark:text-blue-400' },
-  { key: 'being', label: 'Being', color: 'text-purple-600 dark:text-purple-400' },
-  { key: 'balance', label: 'Balance', color: 'text-green-600 dark:text-green-400' },
-  { key: 'business', label: 'Business', color: 'text-orange-600 dark:text-orange-400' },
+  { key: 'body', label: 'Body', color: 'text-[#2997FF] dark:text-[#2997FF]' },
+  { key: 'being', label: 'Being', color: 'text-[#2997FF] dark:text-[#2997FF]' },
+  { key: 'balance', label: 'Balance', color: 'text-[#2997FF] dark:text-[#2997FF]' },
+  { key: 'business', label: 'Business', color: 'text-[#2997FF] dark:text-[#2997FF]' },
 ] as const;
 
 function DomainActions({

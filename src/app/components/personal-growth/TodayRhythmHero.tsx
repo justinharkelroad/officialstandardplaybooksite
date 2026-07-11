@@ -256,19 +256,19 @@ function ScoreRing({
           value={core4}
           goal={CORE4_WEEKLY_GOAL}
           label="Core 4"
-          strokeClass="text-[#078a52]"
+          strokeClass="text-[#2997FF]"
         />
         <MiniRing
           value={flow}
           goal={FLOW_WEEKLY_GOAL}
           label="Flow"
-          strokeClass="text-[#43089f] dark:text-[#b48cff]"
+          strokeClass="text-[#2997FF] dark:text-[#2997FF]"
         />
         <MiniRing
           value={playbook}
           goal={PLAYBOOK_WEEKLY_GOAL}
           label="Playbook"
-          strokeClass="text-[#0089ad]"
+          strokeClass="text-[#2997FF]"
         />
       </div>
     </div>
@@ -354,7 +354,7 @@ function StreakRow({
         value={flowStreak}
         longest={flowLongest}
         Icon={Zap}
-        iconClass="bg-[#43089f]/15 text-[#43089f] dark:text-[#b48cff]"
+        iconClass="bg-[#2997FF]/15 text-[#2997FF] dark:text-[#2997FF]"
         activeToday={flowCompletedToday}
       />
       <StreakTile
@@ -362,7 +362,7 @@ function StreakRow({
         value={core4Streak}
         longest={core4Longest}
         Icon={Flame}
-        iconClass="bg-orange-500/15 text-orange-500"
+        iconClass="bg-[#2997FF]/15 text-[#2997FF]"
       />
       <FlowStartTile weeklyProgress={flowWeeklyProgress} />
     </div>
@@ -377,7 +377,7 @@ function FlowStartTile({ weeklyProgress }: { weeklyProgress: number }) {
 
   return (
     <div className="flex items-center gap-3 rounded-xl border border-border/70 bg-muted/30 p-3">
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#43089f]/15 text-[#43089f] dark:text-[#b48cff]">
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#2997FF]/15 text-[#2997FF] dark:text-[#2997FF]">
         <Sparkles className="h-5 w-5" />
       </span>
       <div className="min-w-0 flex-1">
@@ -400,7 +400,7 @@ function FlowStartTile({ weeklyProgress }: { weeklyProgress: number }) {
           className="mt-1.5 h-1 overflow-hidden rounded-full bg-muted"
         >
           <div
-            className="h-full rounded-full bg-[#43089f] transition-[width] duration-500"
+            className="h-full rounded-full bg-[#2997FF] transition-[width] duration-500"
             style={{ width: `${progressPct}%` }}
           />
         </div>
@@ -444,7 +444,7 @@ function StreakTile({
             {value === 1 ? "day" : "days"}
           </span>
           {activeToday ? (
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#43089f] dark:text-[#b48cff]">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#2997FF] dark:text-[#2997FF]">
               · Active
             </span>
           ) : null}
@@ -476,7 +476,7 @@ function TodayLine({
       <span
         className={cn(
           "inline-flex items-center gap-1",
-          flowCompletedToday ? "text-[#43089f] dark:text-[#b48cff]" : "",
+          flowCompletedToday ? "text-[#2997FF] dark:text-[#2997FF]" : "",
         )}
       >
         <Zap className="h-3.5 w-3.5" />
@@ -496,7 +496,7 @@ function CalendarTile({ date }: { date: Date }) {
       className="flex h-16 w-16 shrink-0 flex-col overflow-hidden rounded-xl border border-border/70 bg-background shadow-sm"
       aria-label={format(date, "EEEE, MMMM d")}
     >
-      <div className="flex h-[18px] items-center justify-center bg-[#af0000] text-[10px] font-bold uppercase tracking-[0.14em] text-white">
+      <div className="flex h-[18px] items-center justify-center bg-[#2997FF] text-[10px] font-bold uppercase tracking-[0.14em] text-white">
         {month}
       </div>
       <div className="flex flex-1 flex-col items-center justify-center leading-none">

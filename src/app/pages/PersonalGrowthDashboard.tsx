@@ -7,6 +7,7 @@ import {
   Rocket,
 } from "lucide-react";
 import { DebriefSundayBanner } from "@/app/components/dashboard/DebriefSundayBanner";
+import { MarqueeBand } from "@/app/components/MarqueeBand";
 import { TodaysPowerPlays } from "@/app/components/playbook/TodaysPowerPlays";
 import { TodayRhythmHero } from "@/app/components/personal-growth/TodayRhythmHero";
 import { PersonalGrowthPod } from "@/app/components/personal-growth/PersonalGrowthPod";
@@ -602,6 +603,8 @@ export default function PersonalGrowthDashboard() {
 
         <TodayRhythmHero />
 
+        <MarqueeBand />
+
         <section className="space-y-3">
           <SectionHeading label="This Quarter" meta={quarterLabel} />
           <QuarterlyTargetsPod />
@@ -623,6 +626,8 @@ export default function PersonalGrowthDashboard() {
             />
           </div>
         </section>
+
+        <MarqueeBand phrase="STANDARD PLAYBOOK" rotate={1.5} />
 
         <section className="space-y-3">
           <SectionHeading

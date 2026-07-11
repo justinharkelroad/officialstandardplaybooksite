@@ -2,10 +2,10 @@ import { cn } from "@/lib/utils";
 import { Heart, Brain, Scale, Briefcase } from "lucide-react";
 
 const DOMAINS = [
-  { key: "body", label: "Body", icon: Heart, color: "bg-red-500/20 text-red-400 border-red-500/30" },
-  { key: "being", label: "Being", icon: Brain, color: "bg-purple-500/20 text-purple-400 border-purple-500/30" },
-  { key: "balance", label: "Balance", icon: Scale, color: "bg-blue-500/20 text-blue-400 border-blue-500/30" },
-  { key: "business", label: "Business", icon: Briefcase, color: "bg-amber-500/20 text-amber-400 border-amber-500/30" },
+  { key: "body", label: "Body", icon: Heart, color: "bg-[#2997FF]/20 text-[#2997FF] border-[#2997FF]/30" },
+  { key: "being", label: "Being", icon: Brain, color: "bg-[#2997FF]/20 text-[#2997FF] border-[#2997FF]/30" },
+  { key: "balance", label: "Balance", icon: Scale, color: "bg-[#2997FF]/20 text-[#2997FF] border-[#2997FF]/30" },
+  { key: "business", label: "Business", icon: Briefcase, color: "bg-[#2997FF]/20 text-[#2997FF] border-[#2997FF]/30" },
 ] as const;
 
 interface DebriefDomainTabsProps {
@@ -35,7 +35,7 @@ export function DebriefDomainTabs({ activeDomain, onDomainChange, completedDomai
             <div className="relative">
               <Icon className="h-5 w-5" />
               {isCompleted && (
-                <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-400 rounded-full" />
+                <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#2997FF] rounded-full" />
               )}
             </div>
             <span className="text-[10px] font-semibold uppercase tracking-wider">{label}</span>

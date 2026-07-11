@@ -29,7 +29,7 @@ export function DebriefWelcome({ weekSummary, weekLabel, stats, onBegin, onViewD
   return (
     <div className="flex flex-col items-center text-center px-6 py-8 animate-in fade-in duration-700">
       <div className="mb-2">
-        <Sparkles className="h-6 w-6 text-amber-400 mx-auto mb-4 animate-pulse" />
+        <Sparkles className="h-6 w-6 text-[#2997FF] mx-auto mb-4 animate-pulse" />
         <p className="text-xs text-muted-foreground uppercase tracking-[0.2em] mb-1">Week in Review</p>
         <p className="text-sm text-muted-foreground font-medium">{weekLabel}</p>
       </div>

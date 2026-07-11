@@ -18,9 +18,9 @@ const DOMAINS = [
 ] as const;
 
 function getScoreColor(score: number): string {
-  if (score >= 8) return 'text-green-600 dark:text-green-400';
-  if (score >= 5) return 'text-yellow-600 dark:text-yellow-400';
-  return 'text-red-600 dark:text-red-400';
+  if (score >= 8) return 'text-[#2997FF] dark:text-[#2997FF]';
+  if (score >= 5) return 'text-[#2997FF] dark:text-[#2997FF]';
+  return 'text-[#2997FF] dark:text-[#2997FF]';
 }
 
 function getScoreBadgeVariant(score: number): "default" | "secondary" | "destructive" {
@@ -77,7 +77,7 @@ function AnalysisItem({
               size="sm"
               variant="outline"
               disabled
-              className="w-full bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-800 text-green-700 dark:text-green-300"
+              className="w-full bg-[#2997FF]/10 dark:bg-[#2997FF] border-[#2997FF]/30 dark:border-[#2997FF] text-[#2997FF] dark:text-[#2997FF]"
               aria-label={`Suggestion applied for ${domain} target`}
             >
               <Check className="mr-2 h-4 w-4" aria-hidden="true" />

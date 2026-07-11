@@ -712,7 +712,7 @@ export default function LifeTargetsMissions() {
                       onClick={handleContinue}
                       disabled={!canContinue}
                       size="lg"
-                      className={canContinue ? "bg-green-600 hover:bg-green-700" : ""}
+                      className={canContinue ? "bg-[#2997FF] hover:bg-[#2997FF]" : ""}
                     >
                       {canContinue && <CheckCircle2 className="mr-2 h-4 w-4" />}
                       Continue to Daily Actions

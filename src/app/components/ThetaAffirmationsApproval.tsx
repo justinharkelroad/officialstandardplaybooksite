@@ -28,10 +28,10 @@ interface ThetaAffirmationsApprovalProps {
 }
 
 const categoryConfig = {
-  body: { label: 'Body', color: 'bg-red-500/15 text-red-700 border-red-500/20' },
-  being: { label: 'Being', color: 'bg-purple-500/15 text-purple-700 border-purple-500/20' },
-  balance: { label: 'Balance', color: 'bg-blue-500/15 text-blue-700 border-blue-500/20' },
-  business: { label: 'Business', color: 'bg-green-500/15 text-green-700 border-green-500/20' }
+  body: { label: 'Body', color: 'bg-[#2997FF]/15 text-[#2997FF] border-[#2997FF]/20' },
+  being: { label: 'Being', color: 'bg-[#2997FF]/15 text-[#2997FF] border-[#2997FF]/20' },
+  balance: { label: 'Balance', color: 'bg-[#2997FF]/15 text-[#2997FF] border-[#2997FF]/20' },
+  business: { label: 'Business', color: 'bg-[#2997FF]/15 text-[#2997FF] border-[#2997FF]/20' }
 };
 const MAX_AFFIRMATION_CHARS = 300;
 

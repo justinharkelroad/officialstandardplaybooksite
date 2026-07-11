@@ -128,7 +128,7 @@ export function DebriefWizard({
         particleCount: 150,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ["#34d399", "#60a5fa", "#fbbf24", "#f472b6"],
+        colors: ["#2997FF", "#2997FF", "#2997FF", "#2997FF"],
       });
 
       toast.success("Debrief sealed! Your coaching report is being prepared.");

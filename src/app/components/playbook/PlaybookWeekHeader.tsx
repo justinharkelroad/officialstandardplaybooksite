@@ -60,7 +60,7 @@ function DroppableDayTab({
               ? "bg-muted/30 text-muted-foreground/60 hover:bg-muted/50"
               : "bg-muted/50 text-muted-foreground hover:bg-muted",
         isPast && !selected && "opacity-60",
-        isOver && total < 4 && "ring-2 ring-emerald-500 ring-offset-2 ring-offset-background scale-105"
+        isOver && total < 4 && "ring-2 ring-[#2997FF] ring-offset-2 ring-offset-background scale-105"
       )}
     >
       <span className="font-medium">{label}</span>
@@ -153,7 +153,7 @@ export function PlaybookWeekHeader({
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
               {weeklyPoints >= 20 ? (
-                <Target className="h-4 w-4 text-emerald-500" />
+                <Target className="h-4 w-4 text-[#2997FF]" />
               ) : (
                 <span className="text-xs font-bold">{weeklyPoints}</span>
               )}
@@ -163,7 +163,7 @@ export function PlaybookWeekHeader({
           <div className="text-center">
             <p className="text-sm font-semibold">{weekLabel}</p>
             <p className="text-xs text-muted-foreground">
-              <span className={cn("font-medium", weeklyPoints >= 20 ? "text-emerald-500" : "text-foreground")}>
+              <span className={cn("font-medium", weeklyPoints >= 20 ? "text-[#2997FF]" : "text-foreground")}>
                 {weeklyPoints}
               </span>
               <span>/20 pts</span>

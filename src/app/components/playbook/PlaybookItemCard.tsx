@@ -106,7 +106,7 @@ export function PlaybookItemCard({
             </Badge>
           )}
           {sourceType === "flow" && (
-            <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-5 gap-1 border-purple-500/20 bg-purple-500/10 text-purple-600">
+            <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-5 gap-1 border-[#2997FF]/20 bg-[#2997FF]/10 text-[#2997FF]">
               <Sparkles className="h-3 w-3" />
               {sourceName || "Flow"}
             </Badge>

@@ -6,10 +6,10 @@ import type { DomainReflection } from "@/app/hooks/useWeeklyDebrief";
 import { cn } from "@/lib/utils";
 
 const DOMAIN_META = [
-  { key: "body", label: "Body", icon: Heart, color: "text-red-400" },
-  { key: "being", label: "Being", icon: Brain, color: "text-purple-400" },
-  { key: "balance", label: "Balance", icon: Scale, color: "text-blue-400" },
-  { key: "business", label: "Business", icon: Briefcase, color: "text-amber-400" },
+  { key: "body", label: "Body", icon: Heart, color: "text-[#2997FF]" },
+  { key: "being", label: "Being", icon: Brain, color: "text-[#2997FF]" },
+  { key: "balance", label: "Balance", icon: Scale, color: "text-[#2997FF]" },
+  { key: "business", label: "Business", icon: Briefcase, color: "text-[#2997FF]" },
 ] as const;
 
 interface DebriefSummaryProps {
@@ -109,7 +109,7 @@ export function DebriefSummary({
       {nextWeekOBT && (
         <div className="bg-foreground/5 rounded-xl p-4 border border-border">
           <p className="text-sm font-semibold text-foreground mb-1">Next Week's One Big Thing</p>
-          <p className="text-sm text-amber-400 font-medium">{nextWeekOBT}</p>
+          <p className="text-sm text-[#2997FF] font-medium">{nextWeekOBT}</p>
         </div>
       )}
 

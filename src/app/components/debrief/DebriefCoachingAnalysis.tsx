@@ -34,7 +34,7 @@ export function DebriefCoachingAnalysis({
   return (
     <div className="max-w-lg mx-auto px-4 py-6 space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center mb-4">
-        <Sparkles className="h-6 w-6 text-amber-400 mx-auto mb-3" />
+        <Sparkles className="h-6 w-6 text-[#2997FF] mx-auto mb-3" />
         <h2 className="text-xl font-bold text-foreground">Your Coach's Analysis</h2>
         <p className="text-sm text-muted-foreground mt-1">Personalized insights from your weekly debrief</p>
       </div>
@@ -76,7 +76,7 @@ export function DebriefCoachingAnalysis({
           onClick={onSeal}
           disabled={sealing}
           size="lg"
-          className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 rounded-full"
+          className="bg-[#2997FF] hover:bg-[#2997FF] text-white font-semibold px-8 rounded-full"
         >
           <Stamp className="mr-2 h-5 w-5" />
           {sealing ? "Sealing..." : "Seal Your Debrief"}

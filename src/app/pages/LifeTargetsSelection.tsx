@@ -26,9 +26,9 @@ type Domain = typeof DOMAINS[number]['key'];
 
 function getScoreColor(score: number | null): string {
   if (!score) return 'text-muted-foreground';
-  if (score >= 8) return 'text-green-600 dark:text-green-400';
-  if (score >= 5) return 'text-yellow-600 dark:text-yellow-400';
-  return 'text-red-600 dark:text-red-400';
+  if (score >= 8) return 'text-[#2997FF] dark:text-[#2997FF]';
+  if (score >= 5) return 'text-[#2997FF] dark:text-[#2997FF]';
+  return 'text-[#2997FF] dark:text-[#2997FF]';
 }
 
 function getScoreLabel(score: number | null): string {
@@ -276,8 +276,8 @@ export default function LifeTargetsSelection() {
                               {target.target_text}
                             </p>
                             <div className="flex items-center gap-1 shrink-0">
-                              {score && score >= 8 && <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400" />}
-                              {score && score < 5 && <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400" />}
+                              {score && score >= 8 && <CheckCircle2 className="h-4 w-4 text-[#2997FF] dark:text-[#2997FF]" />}
+                              {score && score < 5 && <AlertCircle className="h-4 w-4 text-[#2997FF] dark:text-[#2997FF]" />}
                               <span className={cn("text-xs font-semibold", getScoreColor(score))}>
                                 {score?.toFixed(1) || 'N/A'}
                               </span>

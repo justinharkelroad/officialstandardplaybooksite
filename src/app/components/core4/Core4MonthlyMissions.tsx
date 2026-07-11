@@ -47,10 +47,10 @@ interface Core4Mission {
 }
 
 const domainConfig: Record<Core4Domain, { label: string; icon: React.ElementType; color: string }> = {
-  body: { label: 'Body', icon: Dumbbell, color: 'text-green-500' },
-  being: { label: 'Being', icon: LatinCross, color: 'text-purple-500' },
-  balance: { label: 'Balance', icon: Heart, color: 'text-pink-500' },
-  business: { label: 'Business', icon: Briefcase, color: 'text-blue-500' },
+  body: { label: 'Body', icon: Dumbbell, color: 'text-[#2997FF]' },
+  being: { label: 'Being', icon: LatinCross, color: 'text-[#2997FF]' },
+  balance: { label: 'Balance', icon: Heart, color: 'text-[#2997FF]' },
+  business: { label: 'Business', icon: Briefcase, color: 'text-[#2997FF]' },
 };
 
 function getMissionTimestamp(mission: Pick<Core4Mission, 'updated_at' | 'created_at'>) {
@@ -414,7 +414,7 @@ export function Core4MonthlyMissions() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="h-7 text-xs text-red-500 hover:text-red-600"
+                          className="h-7 text-xs text-[#2997FF] hover:text-[#2997FF]"
                           onClick={() => archiveMission(mission.id)}
                         >
                           <Trash2 className="h-3 w-3 mr-1" />
@@ -423,7 +423,7 @@ export function Core4MonthlyMissions() {
                         <Button 
                           size="sm" 
                           variant="ghost" 
-                          className="h-7 text-xs text-green-500 hover:text-green-600"
+                          className="h-7 text-xs text-[#2997FF] hover:text-[#2997FF]"
                           onClick={() => updateMissionStatus(mission.id, 'completed')}
                         >
                           <CheckCircle2 className="h-3 w-3 mr-1" />

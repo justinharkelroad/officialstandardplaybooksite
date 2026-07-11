@@ -166,8 +166,8 @@ export function ThetaVoiceStudioSelector({
                             variant="outline" 
                             className={
                               voice.gender === 'male' 
-                                ? 'bg-blue-500/15 text-blue-700 border-blue-500/20' 
-                                : 'bg-pink-500/10 text-pink-700 border-pink-500/20'
+                                ? 'bg-[#2997FF]/15 text-[#2997FF] border-[#2997FF]/20' 
+                                : 'bg-[#2997FF]/10 text-[#2997FF] border-[#2997FF]/20'
                             }
                           >
                             {voice.gender === 'male' ? '♂' : '♀'}

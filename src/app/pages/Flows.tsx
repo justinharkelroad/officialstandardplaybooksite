@@ -188,12 +188,12 @@ export default function Flows() {
             <p className="text-sm text-muted-foreground mb-4 text-center">THE STREAKS</p>
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center p-3 bg-muted/50 rounded-lg">
-                <Zap className="h-5 w-5 mx-auto mb-1 text-purple-500" />
+                <Zap className="h-5 w-5 mx-auto mb-1 text-[#2997FF]" />
                 <p className="text-xl font-bold">{flowStats.currentStreak}</p>
                 <p className="text-xs text-muted-foreground">Flow</p>
               </div>
               <div className="text-center p-3 bg-muted/50 rounded-lg">
-                <Flame className="h-5 w-5 mx-auto mb-1 text-orange-500" />
+                <Flame className="h-5 w-5 mx-auto mb-1 text-[#2997FF]" />
                 <p className="text-xl font-bold">{core4Stats.currentStreak}</p>
                 <p className="text-xs text-muted-foreground">Core 4</p>
               </div>
@@ -306,7 +306,7 @@ export default function Flows() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    <CheckCircle2 className="h-5 w-5 text-[#2997FF]" />
                     <ChevronRight className="h-4 w-4 text-muted-foreground" />
                   </div>
                 </CardContent>

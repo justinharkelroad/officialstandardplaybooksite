@@ -126,9 +126,9 @@ export function WeeklyHistoryCard({
 
   const getScoreColor = (score: number, max: number) => {
     const percentage = (score / max) * 100;
-    if (percentage >= 80) return 'text-green-500';
-    if (percentage >= 60) return 'text-cyan-500';
-    if (percentage >= 40) return 'text-yellow-500';
+    if (percentage >= 80) return 'text-[#2997FF]';
+    if (percentage >= 60) return 'text-[#2997FF]';
+    if (percentage >= 40) return 'text-[#2997FF]';
     return 'text-muted-foreground';
   };
 
@@ -207,7 +207,7 @@ export function WeeklyHistoryCard({
                 {/* Progress bar */}
                 <div className="h-2 bg-muted rounded-full overflow-hidden mb-2">
                   <div 
-                    className="h-full bg-gradient-to-r from-cyan-500 to-primary rounded-full transition-all duration-300"
+                    className="h-full bg-gradient-to-r from-[#2997FF] to-primary rounded-full transition-all duration-300"
                     style={{ width: `${getProgressWidth(week.combinedPoints, week.maxPoints)}%` }}
                   />
                 </div>
@@ -216,11 +216,11 @@ export function WeeklyHistoryCard({
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <div className="flex items-center gap-3">
                     <span className="flex items-center gap-1">
-                      <Flame className="h-3 w-3 text-orange-500" />
+                      <Flame className="h-3 w-3 text-[#2997FF]" />
                       Core: {week.core4Points}/28
                     </span>
                     <span className="flex items-center gap-1">
-                      <Zap className="h-3 w-3 text-purple-500" />
+                      <Zap className="h-3 w-3 text-[#2997FF]" />
                       Flow: {week.flowPoints}/7
                     </span>
                     <span className="flex items-center gap-1">
@@ -229,7 +229,7 @@ export function WeeklyHistoryCard({
                     </span>
                   </div>
                   {week.combinedPoints === week.maxPoints && (
-                    <span className="text-green-500 font-medium">Perfect! 🎉</span>
+                    <span className="text-[#2997FF] font-medium">Perfect! 🎉</span>
                   )}
                 </div>
               </div>

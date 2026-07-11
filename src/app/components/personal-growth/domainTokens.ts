@@ -18,59 +18,46 @@ export type DomainToken = {
   glowClass: string;
 };
 
+// Brand palette: black, white, blue. Nothing else.
+// The four domains are told apart by icon and label — not by hue — so the app
+// reads as one brand instead of a rainbow dashboard. Blue is reserved for
+// "done / active"; ink and paper carry everything else.
+const BLUE = "#2997FF";
+
+const brandToken = (
+  key: PersonalGrowthDomain | CadenceKey,
+  label: string,
+  tagline: string,
+  icon: LucideIcon | typeof LatinCross,
+): DomainToken => ({
+  key,
+  label,
+  tagline,
+  icon,
+  hex: BLUE,
+  ringClass: "ring-[#2997FF]",
+  solidClass: "bg-[#2997FF] text-white",
+  softClass: "bg-[#2997FF]/12 text-[#2997FF]",
+  softHoverClass: "hover:bg-[#2997FF]/20",
+  borderClass: "border-foreground/25",
+  glowClass: "shadow-none",
+});
+
 export const DOMAIN_TOKENS: Record<PersonalGrowthDomain, DomainToken> = {
-  body: {
-    key: "body",
-    label: "Body",
-    tagline: "Move, fuel, and rest the machine.",
-    icon: Dumbbell,
-    hex: "#078a52",
-    ringClass: "ring-[#078a52]",
-    solidClass: "bg-[#078a52] text-white shadow-[#078a52]/30",
-    softClass: "bg-[#078a52]/15 text-[#078a52] dark:text-[#3fd99a]",
-    softHoverClass: "hover:bg-[#078a52]/25",
-    borderClass: "border-[#078a52]/40",
-    glowClass: "shadow-[0_0_0_1px_rgba(7,138,82,0.35)]",
-  },
-  being: {
-    key: "being",
-    label: "Being",
-    tagline: "Grow the inner life.",
-    icon: LatinCross,
-    hex: "#43089f",
-    ringClass: "ring-[#43089f]",
-    solidClass: "bg-[#43089f] text-white shadow-[#43089f]/30",
-    softClass: "bg-[#43089f]/15 text-[#43089f] dark:text-[#b48cff]",
-    softHoverClass: "hover:bg-[#43089f]/25",
-    borderClass: "border-[#43089f]/40",
-    glowClass: "shadow-[0_0_0_1px_rgba(67,8,159,0.35)]",
-  },
-  balance: {
-    key: "balance",
-    label: "Balance",
-    tagline: "Tend relationships and the life outside work.",
-    icon: Heart,
-    hex: "#fc7981",
-    ringClass: "ring-[#fc7981]",
-    solidClass: "bg-[#fc7981] text-white shadow-[#fc7981]/30",
-    softClass: "bg-[#fc7981]/15 text-[#fc7981] dark:text-[#fda4aa]",
-    softHoverClass: "hover:bg-[#fc7981]/25",
-    borderClass: "border-[#fc7981]/40",
-    glowClass: "shadow-[0_0_0_1px_rgba(252,121,129,0.35)]",
-  },
-  business: {
-    key: "business",
-    label: "Business",
-    tagline: "Build the craft and the company.",
-    icon: Briefcase,
-    hex: "#0089ad",
-    ringClass: "ring-[#0089ad]",
-    solidClass: "bg-[#0089ad] text-white shadow-[#0089ad]/30",
-    softClass: "bg-[#0089ad]/15 text-[#0089ad] dark:text-[#53c8e7]",
-    softHoverClass: "hover:bg-[#0089ad]/25",
-    borderClass: "border-[#0089ad]/40",
-    glowClass: "shadow-[0_0_0_1px_rgba(0,137,173,0.35)]",
-  },
+  body: brandToken("body", "Body", "Move, fuel, and rest the machine.", Dumbbell),
+  being: brandToken("being", "Being", "Grow the inner life.", LatinCross),
+  balance: brandToken(
+    "balance",
+    "Balance",
+    "Tend relationships and the life outside work.",
+    Heart,
+  ),
+  business: brandToken(
+    "business",
+    "Business",
+    "Build the craft and the company.",
+    Briefcase,
+  ),
 };
 
 export const DOMAIN_ORDER: PersonalGrowthDomain[] = [
@@ -89,48 +76,42 @@ export function getDomainToken(
 }
 
 // Cadence accents — time-horizon framing, distinct from the four life domains.
+// "Today" is the only one that earns the blue; the longer horizons stay ink.
 export type CadenceKey = "today" | "quarter" | "month";
 
+const inkToken = (
+  key: CadenceKey,
+  label: string,
+  tagline: string,
+  icon: LucideIcon,
+): DomainToken => ({
+  key,
+  label,
+  tagline,
+  icon,
+  hex: "#0A0A0B",
+  ringClass: "ring-foreground",
+  solidClass: "bg-foreground text-background",
+  softClass: "bg-foreground/10 text-foreground",
+  softHoverClass: "hover:bg-foreground/15",
+  borderClass: "border-foreground/25",
+  glowClass: "shadow-none",
+});
+
 export const CADENCE_TOKENS: Record<CadenceKey, DomainToken> = {
-  today: {
-    key: "today",
-    label: "Today",
-    tagline: "What moves the needle right now.",
-    icon: Briefcase,
-    hex: "#af0000",
-    ringClass: "ring-[#af0000]",
-    solidClass: "bg-[#af0000] text-white shadow-[#af0000]/30",
-    softClass: "bg-[#af0000]/15 text-[#af0000] dark:text-[#ff6b6b]",
-    softHoverClass: "hover:bg-[#af0000]/25",
-    borderClass: "border-[#af0000]/40",
-    glowClass: "shadow-[0_0_0_1px_rgba(175,0,0,0.35)]",
-  },
-  quarter: {
-    key: "quarter",
-    label: "Quarter",
-    tagline: "Keep the longer horizon visible.",
-    icon: CalendarRange,
-    hex: "#64748b",
-    ringClass: "ring-[#64748b]",
-    solidClass: "bg-[#64748b] text-white shadow-[#64748b]/30",
-    softClass: "bg-[#64748b]/15 text-[#475569] dark:text-[#cbd5e1]",
-    softHoverClass: "hover:bg-[#64748b]/25",
-    borderClass: "border-[#64748b]/40",
-    glowClass: "shadow-[0_0_0_1px_rgba(100,116,139,0.35)]",
-  },
-  month: {
-    key: "month",
-    label: "Month",
-    tagline: "Turn direction into this month's focus.",
-    icon: CalendarRange,
-    hex: "#64748b",
-    ringClass: "ring-[#64748b]",
-    solidClass: "bg-[#64748b] text-white shadow-[#64748b]/30",
-    softClass: "bg-[#64748b]/15 text-[#475569] dark:text-[#cbd5e1]",
-    softHoverClass: "hover:bg-[#64748b]/25",
-    borderClass: "border-[#64748b]/40",
-    glowClass: "shadow-[0_0_0_1px_rgba(100,116,139,0.35)]",
-  },
+  today: brandToken("today", "Today", "What moves the needle right now.", Briefcase),
+  quarter: inkToken(
+    "quarter",
+    "Quarter",
+    "Keep the longer horizon visible.",
+    CalendarRange,
+  ),
+  month: inkToken(
+    "month",
+    "Month",
+    "Turn direction into this month's focus.",
+    CalendarRange,
+  ),
 };
 
 export function getAccentToken(

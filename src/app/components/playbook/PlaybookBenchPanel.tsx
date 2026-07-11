@@ -10,10 +10,10 @@ import type { FocusItem, PlaybookDomain } from "@/app/hooks/useFocusItems";
 
 const domainFilters: { key: PlaybookDomain | "all"; label: string; icon?: React.ElementType; color?: string }[] = [
   { key: "all", label: "All" },
-  { key: "body", label: "Body", icon: Dumbbell, color: "text-emerald-600" },
-  { key: "being", label: "Being", icon: LatinCross, color: "text-purple-600" },
-  { key: "balance", label: "Balance", icon: Heart, color: "text-rose-600" },
-  { key: "business", label: "Biz", icon: Briefcase, color: "text-blue-600" },
+  { key: "body", label: "Body", icon: Dumbbell, color: "text-[#2997FF]" },
+  { key: "being", label: "Being", icon: LatinCross, color: "text-[#2997FF]" },
+  { key: "balance", label: "Balance", icon: Heart, color: "text-[#2997FF]" },
+  { key: "business", label: "Biz", icon: Briefcase, color: "text-[#2997FF]" },
 ];
 
 interface PlaybookBenchPanelProps {
@@ -136,10 +136,10 @@ function BenchItem({
     : undefined;
 
   const domainColors: Record<string, string> = {
-    body: "bg-emerald-500",
-    being: "bg-purple-500",
-    balance: "bg-rose-500",
-    business: "bg-blue-500",
+    body: "bg-[#2997FF]",
+    being: "bg-[#2997FF]",
+    balance: "bg-[#2997FF]",
+    business: "bg-[#2997FF]",
   };
 
   return (

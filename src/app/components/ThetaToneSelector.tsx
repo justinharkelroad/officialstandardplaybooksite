@@ -14,28 +14,28 @@ const tones = [
     label: 'Inspiring',
     icon: Sparkles,
     description: 'Uplifting affirmations focusing on potential and possibility',
-    gradient: 'from-purple-500/10 to-pink-500/10 border-purple-500/20'
+    gradient: 'from-[#2997FF]/10 to-[#2997FF]/10 border-[#2997FF]/20'
   },
   {
     value: 'motivational',
     label: 'Motivational',
     icon: Zap,
     description: 'Action-oriented affirmations focusing on drive and achievement',
-    gradient: 'from-orange-500/10 to-red-500/10 border-orange-500/20'
+    gradient: 'from-[#2997FF]/10 to-[#2997FF]/10 border-[#2997FF]/20'
   },
   {
     value: 'calm',
     label: 'Calm',
     icon: Heart,
     description: 'Peaceful affirmations focusing on inner peace and balance',
-    gradient: 'from-blue-500/10 to-cyan-500/10 border-blue-500/20'
+    gradient: 'from-[#2997FF]/10 to-[#2997FF]/10 border-[#2997FF]/20'
   },
   {
     value: 'energizing',
     label: 'Energizing',
     icon: Sun,
     description: 'Powerful affirmations focusing on strength and vitality',
-    gradient: 'from-yellow-500/10 to-amber-500/10 border-yellow-500/20'
+    gradient: 'from-[#2997FF]/10 to-[#2997FF]/10 border-[#2997FF]/20'
   }
 ];
 

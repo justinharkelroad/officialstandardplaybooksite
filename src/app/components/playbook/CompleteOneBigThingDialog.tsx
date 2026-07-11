@@ -47,8 +47,8 @@ export function CompleteOneBigThingDialog({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <div className="flex items-center gap-3 mb-1">
-            <div className="h-10 w-10 rounded-full bg-emerald-500/10 flex items-center justify-center">
-              <CheckCircle2 className="h-6 w-6 text-emerald-500" />
+            <div className="h-10 w-10 rounded-full bg-[#2997FF]/10 flex items-center justify-center">
+              <CheckCircle2 className="h-6 w-6 text-[#2997FF]" />
             </div>
             <div>
               <DialogTitle className="text-base">Complete Your One Big Thing</DialogTitle>
@@ -96,7 +96,7 @@ export function CompleteOneBigThingDialog({
           <Button
             onClick={handleConfirm}
             disabled={!proof.trim()}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white"
+            className="bg-[#2997FF] hover:bg-[#2997FF] text-white"
           >
             <CheckCircle2 className="h-4 w-4 mr-2" />
             Mark Complete

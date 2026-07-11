@@ -38,7 +38,7 @@ export function DailyFrameReportCard({ card }: DailyFrameReportCardProps) {
         <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border/10 pb-4">
           <div>
             <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-              <Sparkles className="h-4 w-4 text-amber-500" />
+              <Sparkles className="h-4 w-4 text-[#2997FF]" />
               Daily Frame Card
             </div>
             <h2 className="mt-1 text-xl font-semibold">Today has a frame.</h2>
@@ -57,8 +57,8 @@ export function DailyFrameReportCard({ card }: DailyFrameReportCardProps) {
         <Field label="If-Then Plan" value={card.if_then_plan} icon={Flag} />
 
         {card.declared_action ? (
-          <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/10 p-4">
-            <div className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-300">
+          <div className="rounded-lg border border-[#2997FF]/25 bg-[#2997FF]/10 p-4">
+            <div className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#2997FF] dark:text-[#2997FF]">
               <CheckCircle2 className="h-3.5 w-3.5" />
               Declared Commitment
             </div>

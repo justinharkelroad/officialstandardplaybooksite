@@ -241,8 +241,8 @@ export default function FlowComplete() {
       <div className="max-w-2xl mx-auto">
         {/* Success Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-500/15 mb-4">
-            <CheckCircle2 className="h-8 w-8 text-green-500" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#2997FF]/15 mb-4">
+            <CheckCircle2 className="h-8 w-8 text-[#2997FF]" />
           </div>
           <h1 className="text-2xl font-medium">Flow Complete!</h1>
           <p className="mt-2 inline-flex items-center justify-center gap-2 text-muted-foreground">
@@ -308,7 +308,7 @@ export default function FlowComplete() {
                 {/* Congratulations */}
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Sparkles className="h-5 w-5 text-yellow-500" strokeWidth={1.5} />
+                    <Sparkles className="h-5 w-5 text-[#2997FF]" strokeWidth={1.5} />
                     <h3 className="font-medium">Recognition</h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
@@ -320,7 +320,7 @@ export default function FlowComplete() {
                 {analysis.deep_dive_insight && (
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <Brain className="h-5 w-5 text-indigo-500" strokeWidth={1.5} />
+                      <Brain className="h-5 w-5 text-[#2997FF]" strokeWidth={1.5} />
                       <h3 className="font-medium">Deep Dive</h3>
                     </div>
                     <p className="text-muted-foreground leading-relaxed">
@@ -333,7 +333,7 @@ export default function FlowComplete() {
                 {analysis.connections && analysis.connections.length > 0 && (
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <Lightbulb className="h-5 w-5 text-blue-500" strokeWidth={1.5} />
+                      <Lightbulb className="h-5 w-5 text-[#2997FF]" strokeWidth={1.5} />
                       <h3 className="font-medium">Connections</h3>
                     </div>
                     <ul className="space-y-2">
@@ -351,7 +351,7 @@ export default function FlowComplete() {
                 {analysis.themes && analysis.themes.length > 0 && (
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <Tags className="h-5 w-5 text-purple-500" strokeWidth={1.5} />
+                      <Tags className="h-5 w-5 text-[#2997FF]" strokeWidth={1.5} />
                       <h3 className="font-medium">Themes</h3>
                     </div>
                     <div className="flex flex-wrap gap-2">
@@ -371,10 +371,10 @@ export default function FlowComplete() {
                 {analysis.provocative_question && (
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <HelpCircle className="h-5 w-5 text-amber-500" strokeWidth={1.5} />
+                      <HelpCircle className="h-5 w-5 text-[#2997FF]" strokeWidth={1.5} />
                       <h3 className="font-medium">Question to Consider</h3>
                     </div>
-                    <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
+                    <div className="bg-[#2997FF]/10 border border-[#2997FF]/20 rounded-lg p-4">
                       <p className="text-sm text-foreground italic">
                         {analysis.provocative_question}
                       </p>
@@ -386,10 +386,10 @@ export default function FlowComplete() {
                 {analysis.suggested_action && (
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <Target className="h-5 w-5 text-green-500" strokeWidth={1.5} />
+                      <Target className="h-5 w-5 text-[#2997FF]" strokeWidth={1.5} />
                       <h3 className="font-medium">Micro-Step</h3>
                     </div>
-                    <div className="bg-green-500/15 border border-green-500/20 rounded-lg p-4">
+                    <div className="bg-[#2997FF]/15 border border-[#2997FF]/20 rounded-lg p-4">
                       <p className="text-sm text-foreground">
                         {analysis.suggested_action}
                       </p>

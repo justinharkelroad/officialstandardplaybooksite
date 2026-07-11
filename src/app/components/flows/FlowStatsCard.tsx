@@ -114,11 +114,11 @@ export function FlowStatsCard() {
             <div className="flex items-center gap-3">
               <div className={cn(
                 'w-10 h-10 rounded-lg flex items-center justify-center',
-                stats.currentStreak > 0 ? 'bg-orange-500/20' : 'bg-muted/30'
+                stats.currentStreak > 0 ? 'bg-[#2997FF]/20' : 'bg-muted/30'
               )}>
                 <Flame className={cn(
                   'h-5 w-5',
-                  stats.currentStreak > 0 ? 'text-orange-500' : 'text-muted-foreground'
+                  stats.currentStreak > 0 ? 'text-[#2997FF]' : 'text-muted-foreground'
                 )} strokeWidth={1.5} />
               </div>
               <div>
@@ -144,7 +144,7 @@ export function FlowStatsCard() {
         {stats.longestStreak > 0 && (
           <div className="px-6 py-3 border-t border-border/10 bg-muted/5">
             <div className="flex items-center gap-2 flex-wrap">
-              <Trophy className="h-4 w-4 text-yellow-500" strokeWidth={1.5} />
+              <Trophy className="h-4 w-4 text-[#2997FF]" strokeWidth={1.5} />
               <span className="text-xs text-muted-foreground">Milestones:</span>
               <div className="flex gap-2 flex-wrap">
                 {stats.milestones.map((milestone, idx) => (
@@ -170,7 +170,7 @@ function MilestoneBadge({ milestone }: { milestone: Milestone }) {
       className={cn(
         'px-2 py-0.5 rounded-full text-xs flex items-center gap-1 transition-all',
         milestone.achieved
-          ? 'bg-yellow-500/20 text-yellow-600'
+          ? 'bg-[#2997FF]/20 text-[#2997FF]'
           : 'bg-muted/30 text-muted-foreground/50'
       )}
       title={milestone.achieved ? `${milestone.label} achieved!` : `Reach ${milestone.days} days`}

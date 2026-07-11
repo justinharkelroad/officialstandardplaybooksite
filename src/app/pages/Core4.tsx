@@ -18,10 +18,10 @@ import { SmartBackButton } from '@/app/components/SmartBackButton';
 import { HelpButton } from '@/app/components/HelpButton';
 
 const domains: { key: Core4Domain; label: string; icon: React.ElementType; color: string }[] = [
-  { key: 'body', label: 'BODY', icon: Dumbbell, color: 'from-green-500 to-emerald-600' },
-  { key: 'being', label: 'BEING', icon: LatinCross, color: 'from-purple-500 to-violet-600' },
-  { key: 'balance', label: 'BALANCE', icon: Heart, color: 'from-pink-500 to-rose-600' },
-  { key: 'business', label: 'BUSINESS', icon: Briefcase, color: 'from-blue-500 to-indigo-600' },
+  { key: 'body', label: 'BODY', icon: Dumbbell, color: 'from-[#2997FF] to-[#2997FF]' },
+  { key: 'being', label: 'BEING', icon: LatinCross, color: 'from-[#2997FF] to-[#2997FF]' },
+  { key: 'balance', label: 'BALANCE', icon: Heart, color: 'from-[#2997FF] to-[#2997FF]' },
+  { key: 'business', label: 'BUSINESS', icon: Briefcase, color: 'from-[#2997FF] to-[#2997FF]' },
 ];
 
 export default function Core4() {
@@ -157,18 +157,18 @@ export default function Core4() {
                   className={cn(
                     "flex flex-col items-center p-2 rounded-lg transition-all",
                     day.isToday && "ring-2 ring-primary",
-                    day.points === 4 && "bg-gradient-to-br from-cyan-500/20 to-blue-600/20",
+                    day.points === 4 && "bg-gradient-to-br from-[#2997FF]/20 to-[#2997FF]/20",
                     day.isFuture && "opacity-40"
                   )}
                 >
                   <span className="text-xs text-muted-foreground">{day.dayLabel}</span>
                   <span className={cn(
                     "text-lg font-bold",
-                    day.points === 4 ? "text-cyan-500" : day.points > 0 ? "text-foreground" : "text-muted-foreground"
+                    day.points === 4 ? "text-[#2997FF]" : day.points > 0 ? "text-foreground" : "text-muted-foreground"
                   )}>
                     {day.points}
                   </span>
-                  {day.points === 4 && <Flame className="h-3 w-3 text-orange-500" />}
+                  {day.points === 4 && <Flame className="h-3 w-3 text-[#2997FF]" />}
                 </button>
               ))}
             </div>
@@ -236,7 +236,7 @@ export default function Core4() {
                 </p>
               </div>
               {currentStreak > 0 && isToday(selectedDate) && (
-                <div className="flex items-center justify-center gap-2 text-orange-500">
+                <div className="flex items-center justify-center gap-2 text-[#2997FF]">
                   <Flame className="h-6 w-6" />
                   <span className="text-xl font-bold">{currentStreak} day streak!</span>
                 </div>
@@ -292,12 +292,12 @@ export default function Core4() {
               <p className="text-sm text-muted-foreground mb-4 text-center">THE STREAKS</p>
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-3 bg-muted/50 rounded-lg">
-                  <Zap className="h-5 w-5 mx-auto mb-1 text-purple-500" />
+                  <Zap className="h-5 w-5 mx-auto mb-1 text-[#2997FF]" />
                   <p className="text-xl font-bold">{flowStats.currentStreak}</p>
                   <p className="text-xs text-muted-foreground">Flow</p>
                 </div>
                 <div className="text-center p-3 bg-muted/50 rounded-lg">
-                  <Flame className="h-5 w-5 mx-auto mb-1 text-orange-500" />
+                  <Flame className="h-5 w-5 mx-auto mb-1 text-[#2997FF]" />
                   <p className="text-xl font-bold">{currentStreak}</p>
                   <p className="text-xs text-muted-foreground">Core 4</p>
                 </div>

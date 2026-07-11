@@ -36,9 +36,9 @@ export function DebriefCompleted({ review, weekLabel, stats, exitPath, onBack, o
       <header className="border-b border-border/50 bg-background/95 backdrop-blur sticky top-0 z-10">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+            <CheckCircle2 className="h-4 w-4 text-[#2997FF]" />
             <span className="text-sm font-medium text-muted-foreground">The Debrief</span>
-            <span className="text-xs text-emerald-400 font-medium">Completed</span>
+            <span className="text-xs text-[#2997FF] font-medium">Completed</span>
           </div>
           <Button
             variant="ghost"
@@ -55,7 +55,7 @@ export function DebriefCompleted({ review, weekLabel, stats, exitPath, onBack, o
       <main className="flex-1 overflow-y-auto">
         <div className="flex flex-col items-center text-center px-6 py-8 animate-in fade-in duration-500">
           {/* Score + Week label */}
-          <CheckCircle2 className="h-8 w-8 text-emerald-400 mb-3" />
+          <CheckCircle2 className="h-8 w-8 text-[#2997FF] mb-3" />
           <p className="text-xs text-muted-foreground uppercase tracking-[0.2em] mb-1">Debrief Sealed</p>
           <p className="text-sm text-muted-foreground font-medium mb-6">{weekLabel}</p>
 
@@ -89,7 +89,7 @@ export function DebriefCompleted({ review, weekLabel, stats, exitPath, onBack, o
           {analysis && (
             <div className="w-full max-w-2xl mb-8">
               <div className="flex items-center gap-2 justify-center mb-4">
-                <Sparkles className="h-5 w-5 text-amber-400" />
+                <Sparkles className="h-5 w-5 text-[#2997FF]" />
                 <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Coach's Analysis</p>
               </div>
               <div className="bg-gradient-to-br from-foreground/[0.08] to-foreground/[0.03] rounded-xl p-6 border border-border text-left">
@@ -106,7 +106,7 @@ export function DebriefCompleted({ review, weekLabel, stats, exitPath, onBack, o
           {review.gratitude_note && (
             <div className="w-full max-w-2xl mb-6">
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider text-center mb-3">Gratitude</p>
-              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 text-left">
+              <div className="bg-[#2997FF]/10 border border-[#2997FF]/20 rounded-xl p-4 text-left">
                 <p className="text-sm text-foreground/80 italic">"{review.gratitude_note}"</p>
               </div>
             </div>
@@ -120,7 +120,7 @@ export function DebriefCompleted({ review, weekLabel, stats, exitPath, onBack, o
                 {Object.entries(reflections).map(([domain, r]) => {
                   if (!r) return null;
                   const ref = r as { rating?: number; wins?: string; course_correction?: boolean; course_correction_note?: string };
-                  const ratingColor = (ref.rating || 0) >= 7 ? "text-emerald-400" : (ref.rating || 0) >= 4 ? "text-amber-400" : "text-red-400";
+                  const ratingColor = (ref.rating || 0) >= 7 ? "text-[#2997FF]" : (ref.rating || 0) >= 4 ? "text-[#2997FF]" : "text-[#2997FF]";
                   return (
                     <div key={domain} className="bg-foreground/5 border border-border rounded-xl p-4 text-left">
                       <div className="flex items-center justify-between mb-2">
@@ -144,7 +144,7 @@ export function DebriefCompleted({ review, weekLabel, stats, exitPath, onBack, o
           {review.next_week_one_big_thing && (
             <div className="w-full max-w-2xl mb-8">
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider text-center mb-3">Next Week's One Big Thing</p>
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
+              <div className="bg-[#2997FF]/10 border border-[#2997FF]/20 rounded-xl p-4">
                 <p className="text-sm font-semibold text-foreground">{review.next_week_one_big_thing}</p>
               </div>
             </div>

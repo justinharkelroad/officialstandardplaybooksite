@@ -57,11 +57,11 @@ export function DataStatusIndicator() {
   if (!hasUnsavedChanges && !saveDailyActions.isPending) return null;
 
   return (
-    <Alert className={`mb-4 ${hasUnsavedChanges ? 'border-yellow-500/50 bg-yellow-500/15' : 'border-green-500/50 bg-green-500/15'}`}>
+    <Alert className={`mb-4 ${hasUnsavedChanges ? 'border-[#2997FF]/50 bg-[#2997FF]/15' : 'border-[#2997FF]/50 bg-[#2997FF]/15'}`}>
       {hasUnsavedChanges ? (
-        <AlertTriangle className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+        <AlertTriangle className="h-4 w-4 text-[#2997FF] dark:text-[#2997FF]" />
       ) : (
-        <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400" />
+        <CheckCircle2 className="h-4 w-4 text-[#2997FF] dark:text-[#2997FF]" />
       )}
       <AlertDescription className="flex items-center justify-between gap-4">
         <div className="flex-1">

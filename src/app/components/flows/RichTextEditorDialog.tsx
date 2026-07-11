@@ -45,11 +45,11 @@ interface RichTextEditorDialogProps {
 
 const TEXT_COLORS = [
   { label: 'Default', value: '' },
-  { label: 'Red', value: '#ef4444' },
-  { label: 'Orange', value: '#f97316' },
-  { label: 'Green', value: '#22c55e' },
-  { label: 'Blue', value: '#3b82f6' },
-  { label: 'Purple', value: '#a855f7' },
+  { label: 'Red', value: '#2997FF' },
+  { label: 'Orange', value: '#2997FF' },
+  { label: 'Green', value: '#2997FF' },
+  { label: 'Blue', value: '#2997FF' },
+  { label: 'Purple', value: '#2997FF' },
 ];
 
 const HIGHLIGHT_COLORS = [

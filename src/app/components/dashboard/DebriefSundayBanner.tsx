@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { getDebriefWeekKey } from "@/app/lib/date-utils";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 // Reworked from source: tier gating removed (every member has the Debrief)
 // and dismissal is localStorage-only (the source's banner_dismissals table
@@ -52,13 +53,21 @@ export function DebriefSundayBanner() {
     return null;
   }
 
+  // Belongs to whichever theme is active rather than inverting against it: in
+  // light it's the landing's ink band on paper; in dark it's a raised ink card
+  // with the same blue rule, so it reads as part of the page.
   return (
-    <div className="relative mb-6 flex items-center justify-between gap-4 bg-foreground p-5 text-background">
+    <div
+      className={cn(
+        "relative mb-6 flex items-center justify-between gap-4 border-l-4 border-l-[#2997FF] p-5",
+        "bg-foreground text-background",
+        "dark:bg-card dark:text-foreground dark:border-y-[1.5px] dark:border-r-[1.5px] dark:border-y-foreground/20 dark:border-r-foreground/20",
+      )}
+    >
       <div className="flex items-center gap-4">
-        <span aria-hidden className="hidden h-3 w-3 shrink-0 rounded-full bg-[#2997FF] sm:block" />
         <div>
           <p className="sp-display text-xl leading-none">Your weekend Debrief is ready</p>
-          <p className="sp-label mt-2 text-[10px] text-background/60">
+          <p className="sp-label mt-2 text-[10px] text-background/60 dark:text-foreground/55">
             Reflect on your week, plan the next one, get your coaching analysis.
           </p>
         </div>
@@ -66,11 +75,21 @@ export function DebriefSundayBanner() {
       <div className="flex items-center gap-2">
         <Button
           onClick={() => navigate("/app/debrief")}
-          className="border-[1.5px] border-background bg-background px-6 font-bold text-foreground hover:border-[#2997FF] hover:bg-[#2997FF] hover:text-white"
+          className={cn(
+            "border-[1.5px] px-6 font-bold",
+            "border-background bg-background text-foreground",
+            "dark:border-foreground dark:bg-foreground dark:text-background",
+            "hover:border-[#2997FF] hover:bg-[#2997FF] hover:text-white",
+            "dark:hover:border-[#2997FF] dark:hover:bg-[#2997FF] dark:hover:text-white",
+          )}
         >
           Begin Debrief
         </Button>
-        <button onClick={handleDismiss} className="p-1 text-background/40 hover:text-background" aria-label="Dismiss weekly debrief banner">
+        <button
+          onClick={handleDismiss}
+          className="p-1 text-background/40 hover:text-background dark:text-foreground/40 dark:hover:text-foreground"
+          aria-label="Dismiss weekly debrief banner"
+        >
           <X className="h-4 w-4" />
         </button>
       </div>

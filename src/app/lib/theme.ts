@@ -25,6 +25,12 @@ export function useSpTheme(): [SpTheme, () => void] {
     } catch {
       /* private mode — theme just won't persist */
     }
+    // Stamp the root so surfaces that portal OUTSIDE the .member-app wrapper
+    // (sonner toasts, radix dialogs/popovers) can follow the member-app theme.
+    // Deliberately an attribute, not the `dark` class: the marketing site's
+    // global tokens key off `.dark`, and it must stay light.
+    document.documentElement.setAttribute("data-sp-theme", theme);
+    return () => document.documentElement.removeAttribute("data-sp-theme");
   }, [theme]);
 
   const toggle = useCallback(() => {

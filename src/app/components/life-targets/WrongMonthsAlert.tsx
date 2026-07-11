@@ -55,8 +55,8 @@ export function WrongMonthsAlert({ quarter, missions }: WrongMonthsAlertProps) {
   const expectedMonths = QUARTER_MONTHS[quarterPart as keyof typeof QUARTER_MONTHS] || [];
 
   return (
-    <Alert className="mb-6 border-yellow-500/50 bg-yellow-500/15">
-      <AlertTriangle className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+    <Alert className="mb-6 border-[#2997FF]/50 bg-[#2997FF]/15">
+      <AlertTriangle className="h-4 w-4 text-[#2997FF] dark:text-[#2997FF]" />
       <AlertDescription>
         <p className="font-medium text-foreground mb-1">
           Wrong month labels detected

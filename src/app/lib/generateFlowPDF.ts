@@ -141,9 +141,9 @@ async function buildFlowPDFDoc({
   let yPosition = margin;
 
   // Brand Colors
-  const brandDark = '#1e283a';
-  const textColor = '#1f2937';
-  const mutedColor = '#6b7280';
+  const brandDark = '#0A0A0B';
+  const textColor = '#0A0A0B';
+  const mutedColor = '#64748b';
   const lightBg = '#f3f4f6';
 
   // Helper function to add new page if needed
@@ -383,7 +383,7 @@ async function buildFlowPDFDoc({
       doc.roundedRect(margin, yPosition, contentWidth, questionHeight, 2, 2, 'F');
       
       // Left border
-      doc.setFillColor('#f59e0b'); // amber-500
+      doc.setFillColor('#2997FF'); // amber-500
       doc.rect(margin, yPosition, 3, questionHeight, 'F');
       
       // Header
@@ -420,13 +420,13 @@ async function buildFlowPDFDoc({
       doc.roundedRect(margin, yPosition, contentWidth, actionHeight, 2, 2, 'F');
       
       // Green left border
-      doc.setFillColor('#22c55e');
+      doc.setFillColor('#2997FF');
       doc.rect(margin, yPosition, 3, actionHeight, 'F');
       
       // Header
       doc.setFontSize(9);
       doc.setFont('helvetica', 'bold');
-      doc.setTextColor('#166534');
+      doc.setTextColor('#2997FF');
       doc.text('Micro-Step', margin + 8, yPosition + 6);
       
       // Action text

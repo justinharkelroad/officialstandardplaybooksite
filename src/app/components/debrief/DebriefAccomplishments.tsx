@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils";
 import type { WeekSummaryData } from "@/app/hooks/useWeekSummary";
 
 const DOMAIN_META: Record<string, { icon: typeof Heart; color: string; label: string }> = {
-  body: { icon: Heart, color: "text-red-400 bg-red-500/20", label: "Body" },
-  being: { icon: Brain, color: "text-purple-400 bg-purple-500/20", label: "Being" },
-  balance: { icon: Scale, color: "text-blue-400 bg-blue-500/20", label: "Balance" },
-  business: { icon: Briefcase, color: "text-amber-400 bg-amber-500/20", label: "Business" },
+  body: { icon: Heart, color: "text-[#2997FF] bg-[#2997FF]/20", label: "Body" },
+  being: { icon: Brain, color: "text-[#2997FF] bg-[#2997FF]/20", label: "Being" },
+  balance: { icon: Scale, color: "text-[#2997FF] bg-[#2997FF]/20", label: "Balance" },
+  business: { icon: Briefcase, color: "text-[#2997FF] bg-[#2997FF]/20", label: "Business" },
 };
 
 interface DebriefAccomplishmentsProps {
@@ -55,12 +55,12 @@ export function DebriefAccomplishments({
       {core4DaysCompleted > 0 && (
         <div className="bg-foreground/5 rounded-xl p-4 border border-border">
           <div className="flex items-center gap-2 mb-2">
-            <Flame className="h-4 w-4 text-orange-400" />
+            <Flame className="h-4 w-4 text-[#2997FF]" />
             <span className="text-sm font-semibold text-foreground">Core 4</span>
           </div>
           <p className="text-sm text-muted-foreground">
             {core4DaysCompleted === 7 ? (
-              <span className="text-emerald-400 font-medium">Perfect week! All 4 domains every day.</span>
+              <span className="text-[#2997FF] font-medium">Perfect week! All 4 domains every day.</span>
             ) : (
               <>Completed all 4 domains on <span className="text-foreground font-medium">{core4DaysCompleted}</span> day{core4DaysCompleted !== 1 ? "s" : ""}</>
             )}
@@ -72,7 +72,7 @@ export function DebriefAccomplishments({
       {flowSessionCount > 0 && (
         <div className="bg-foreground/5 rounded-xl p-4 border border-border">
           <div className="flex items-center gap-2 mb-2">
-            <Sparkles className="h-4 w-4 text-violet-400" />
+            <Sparkles className="h-4 w-4 text-[#2997FF]" />
             <span className="text-sm font-semibold text-foreground">Flows</span>
           </div>
           <p className="text-sm text-muted-foreground">
@@ -85,12 +85,12 @@ export function DebriefAccomplishments({
       {oneBigThing && (
         <div className="bg-foreground/5 rounded-xl p-4 border border-border">
           <div className="flex items-center gap-2 mb-2">
-            <Target className="h-4 w-4 text-amber-400" />
+            <Target className="h-4 w-4 text-[#2997FF]" />
             <span className="text-sm font-semibold text-foreground">One Big Thing</span>
           </div>
           <div className="flex items-center gap-2">
             {oneBigThing.completed ? (
-              <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+              <CheckCircle2 className="h-4 w-4 text-[#2997FF] shrink-0" />
             ) : (
               <div className="h-4 w-4 rounded-full border border-border shrink-0" />
             )}
@@ -105,7 +105,7 @@ export function DebriefAccomplishments({
       {completedPowerPlays.length > 0 && (
         <div className="bg-foreground/5 rounded-xl p-4 border border-border">
           <div className="flex items-center gap-2 mb-3">
-            <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+            <CheckCircle2 className="h-4 w-4 text-[#2997FF]" />
             <span className="text-sm font-semibold text-foreground">
               Completed Power Plays ({completedPowerPlays.length})
             </span>

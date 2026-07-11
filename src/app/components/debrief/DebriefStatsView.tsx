@@ -26,7 +26,7 @@ function DeltaBadge({ delta, suffix = "" }: { delta: number; suffix?: string }) 
   if (delta === 0) return <span className="text-muted-foreground/50 text-xs"><Minus className="h-3 w-3 inline" /></span>;
   const isUp = delta > 0;
   return (
-    <span className={cn("text-xs font-semibold inline-flex items-center gap-0.5", isUp ? "text-emerald-400" : "text-red-400")}>
+    <span className={cn("text-xs font-semibold inline-flex items-center gap-0.5", isUp ? "text-[#2997FF]" : "text-[#2997FF]")}>
       {isUp ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
       {isUp ? "+" : ""}{delta}{suffix}
     </span>
@@ -54,11 +54,11 @@ function CompareCard({ value, label, highlighted }: { value: number; label: stri
   return (
     <div className={cn(
       "flex flex-col items-center gap-1 px-4 py-3 rounded-xl",
-      highlighted ? "bg-emerald-500/20 border border-emerald-500/30" : "bg-foreground/5 border border-border"
+      highlighted ? "bg-[#2997FF]/20 border border-[#2997FF]/30" : "bg-foreground/5 border border-border"
     )}>
       <span className={cn(
         "text-xl font-bold",
-        highlighted ? "text-emerald-400" : "text-foreground"
+        highlighted ? "text-[#2997FF]" : "text-foreground"
       )}>{value}</span>
       <span className="text-[10px] text-muted-foreground uppercase tracking-wider">{label}</span>
     </div>
@@ -67,9 +67,9 @@ function CompareCard({ value, label, highlighted }: { value: number; label: stri
 
 function CategoryDonut({ stats }: { stats: DebriefStatsData }) {
   const categories = [
-    { key: "core4", label: "Core 4", stat: stats.core4, color: "#3bd3fd" },
-    { key: "flow", label: "Flow", stat: stats.flow, color: "#c1b0ff" },
-    { key: "playbook", label: "Playbook", stat: stats.playbook, color: "#fc7981" },
+    { key: "core4", label: "Core 4", stat: stats.core4, color: "#2997FF" },
+    { key: "flow", label: "Flow", stat: stats.flow, color: "#2997FF" },
+    { key: "playbook", label: "Playbook", stat: stats.playbook, color: "#2997FF" },
   ];
 
   const totalPct = stats.total.pct;
@@ -105,7 +105,7 @@ function CategoryDonut({ stats }: { stats: DebriefStatsData }) {
             <circle
               cx="70" cy="70" r={radius}
               fill="none"
-              stroke="#3bd3fd"
+              stroke="#2997FF"
               strokeWidth={strokeWidth}
               strokeLinecap="round"
               strokeDasharray={`${(stats.core4.pct / 100) * circumference * 0.5} ${circumference}`}
@@ -114,7 +114,7 @@ function CategoryDonut({ stats }: { stats: DebriefStatsData }) {
             <circle
               cx="70" cy="70" r={radius - strokeWidth - 2}
               fill="none"
-              stroke="#c1b0ff"
+              stroke="#2997FF"
               strokeWidth={strokeWidth}
               strokeLinecap="round"
               strokeDasharray={`${(stats.flow.pct / 100) * circumference * 0.42} ${circumference}`}
@@ -123,7 +123,7 @@ function CategoryDonut({ stats }: { stats: DebriefStatsData }) {
             <circle
               cx="70" cy="70" r={radius - (strokeWidth + 2) * 2}
               fill="none"
-              stroke="#fc7981"
+              stroke="#2997FF"
               strokeWidth={strokeWidth}
               strokeLinecap="round"
               strokeDasharray={`${(stats.playbook.pct / 100) * circumference * 0.34} ${circumference}`}
@@ -174,15 +174,15 @@ function WeekdayChart({ dailyBreakdown }: { dailyBreakdown: DailyBreakdown[] }) 
 
       <div className="flex gap-4 mb-3 text-[10px]">
         <div className="flex items-center gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-sm bg-[#3bd3fd]" />
+          <div className="w-2.5 h-2.5 rounded-sm bg-[#2997FF]" />
           <span className="text-muted-foreground">Core 4</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-sm bg-[#c1b0ff]" />
+          <div className="w-2.5 h-2.5 rounded-sm bg-[#2997FF]" />
           <span className="text-muted-foreground">Flow</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-sm bg-[#fc7981]" />
+          <div className="w-2.5 h-2.5 rounded-sm bg-[#2997FF]" />
           <span className="text-muted-foreground">Playbook</span>
         </div>
       </div>
@@ -202,9 +202,9 @@ function WeekdayChart({ dailyBreakdown }: { dailyBreakdown: DailyBreakdown[] }) 
             domain={[0, 9]}
           />
           <Tooltip content={<CustomTooltip />} cursor={{ fill: "hsl(var(--foreground) / 0.05)" }} />
-          <Bar dataKey="Core 4" stackId="a" fill="#3bd3fd" radius={[0, 0, 0, 0]} />
-          <Bar dataKey="Flow" stackId="a" fill="#c1b0ff" radius={[0, 0, 0, 0]} />
-          <Bar dataKey="Playbook" stackId="a" fill="#fc7981" radius={[2, 2, 0, 0]} />
+          <Bar dataKey="Core 4" stackId="a" fill="#2997FF" radius={[0, 0, 0, 0]} />
+          <Bar dataKey="Flow" stackId="a" fill="#2997FF" radius={[0, 0, 0, 0]} />
+          <Bar dataKey="Playbook" stackId="a" fill="#2997FF" radius={[2, 2, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -224,13 +224,13 @@ export function DebriefStatsView({ stats }: DebriefStatsViewProps) {
     <div className="space-y-4 animate-in fade-in duration-500">
       {/* Score header bar */}
       <div className="flex flex-wrap gap-4 justify-center bg-foreground/5 rounded-xl p-4 border border-border">
-        <ScoreHeaderItem label="Total" icon={Trophy} stat={stats.total} color="text-amber-400" />
+        <ScoreHeaderItem label="Total" icon={Trophy} stat={stats.total} color="text-[#2997FF]" />
         <div className="w-px bg-border hidden sm:block" />
-        <ScoreHeaderItem label="Core 4" icon={Heart} stat={stats.core4} color="text-blue-400" />
+        <ScoreHeaderItem label="Core 4" icon={Heart} stat={stats.core4} color="text-[#2997FF]" />
         <div className="w-px bg-border hidden sm:block" />
-        <ScoreHeaderItem label="Flow" icon={Sparkles} stat={stats.flow} color="text-purple-400" />
+        <ScoreHeaderItem label="Flow" icon={Sparkles} stat={stats.flow} color="text-[#2997FF]" />
         <div className="w-px bg-border hidden sm:block" />
-        <ScoreHeaderItem label="Playbook" icon={Target} stat={stats.playbook} color="text-pink-400" />
+        <ScoreHeaderItem label="Playbook" icon={Target} stat={stats.playbook} color="text-[#2997FF]" />
       </div>
 
       {/* Compare To row */}

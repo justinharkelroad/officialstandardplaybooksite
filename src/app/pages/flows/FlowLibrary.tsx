@@ -228,12 +228,12 @@ export default function FlowLibrary() {
                 </div>
                 <div className="flex items-center gap-3">
                   {session.status === 'completed' ? (
-                    <span className="flex items-center gap-1 text-sm text-green-500">
+                    <span className="flex items-center gap-1 text-sm text-[#2997FF]">
                       <CheckCircle2 className="h-4 w-4" />
                       Completed
                     </span>
                   ) : (
-                    <span className="flex items-center gap-1 text-sm text-yellow-500">
+                    <span className="flex items-center gap-1 text-sm text-[#2997FF]">
                       <FileEdit className="h-4 w-4" />
                       Draft
                     </span>

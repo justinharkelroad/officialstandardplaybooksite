@@ -317,7 +317,7 @@ export function BibleFlowScriptureSetup({
               )}
 
               {safetyMessage && (
-                <div className="rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm leading-6 text-amber-700 dark:text-amber-300">
+                <div className="rounded-md border border-[#2997FF]/30 bg-[#2997FF]/10 px-3 py-2 text-sm leading-6 text-[#2997FF] dark:text-[#2997FF]">
                   {safetyMessage}
                 </div>
               )}
@@ -352,7 +352,7 @@ export function BibleFlowScriptureSetup({
               {recommendations.length > 0 && (
                 <div className="space-y-3">
                   <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div className="flex items-center gap-2 text-sm font-medium text-emerald-700 dark:text-emerald-300">
+                    <div className="flex items-center gap-2 text-sm font-medium text-[#2997FF] dark:text-[#2997FF]">
                       <CheckCircle2 className="h-4 w-4" />
                       {recommendationCount} verified {recommendationCount === 1 ? 'passage' : 'passages'}
                     </div>
@@ -416,7 +416,7 @@ export function BibleFlowScriptureSetup({
 
               {resolvedScripture && (
                 <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-sm font-medium text-emerald-700 dark:text-emerald-300">
+                  <div className="flex items-center gap-2 text-sm font-medium text-[#2997FF] dark:text-[#2997FF]">
                     <CheckCircle2 className="h-4 w-4" />
                     Scripture ready
                   </div>
