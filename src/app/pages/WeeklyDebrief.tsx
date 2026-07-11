@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "@/app/lib/auth";
 import { supabase } from "@/integrations/supabase/client";
+import { getSupabaseFunctionErrorMessage } from "@/app/lib/supabaseFunctionErrors";
 import { getDebriefWeekKey, weekKeyToDateRange, formatWeekLabel } from "@/app/lib/date-utils";
 import { DebriefWizard } from "@/app/components/debrief/DebriefWizard";
 import { DebriefCompleted } from "@/app/components/debrief/DebriefCompleted";
@@ -43,7 +44,7 @@ export default function WeeklyDebrief() {
     const { data, error } = await supabase.functions.invoke("analyze_debrief", {
       body: { review_id: reviewId },
     });
-    if (error) throw error;
+    if (error) throw new Error(await getSupabaseFunctionErrorMessage(error, { fallbackMessage: "AI feedback isn't configured yet" }));
     return data?.analysis || "";
   };
 

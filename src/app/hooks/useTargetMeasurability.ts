@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { getSupabaseFunctionErrorMessage } from "@/app/lib/supabaseFunctionErrors";
 import { toast } from "sonner";
 
 export interface ItemAnalysis {
@@ -35,7 +36,7 @@ export function useTargetMeasurability() {
 
       if (error) {
         console.error('Edge function error:', error);
-        throw error;
+        throw new Error(await getSupabaseFunctionErrorMessage(error, { fallbackMessage: 'AI analysis failed' }));
       }
 
       if (data.error) {
