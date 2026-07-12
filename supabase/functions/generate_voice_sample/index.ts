@@ -16,11 +16,10 @@ serve(async (req) => {
     const member = await requireActiveMember(req);
     if (member instanceof Response) return member;
 
-    const elevenApiKey = Deno.env.get('ELEVEN_API_KEY') ??
-      Deno.env.get('ELEVENLABS_API_KEY');
+    const elevenApiKey = Deno.env.get('ELEVEN_API_KEY');
     if (!elevenApiKey) {
       return new Response(
-        JSON.stringify({ error: "Audio generation isn't configured yet (missing ELEVEN_API_KEY/ELEVENLABS_API_KEY)" }),
+        JSON.stringify({ error: "Audio generation isn't configured yet (missing ELEVEN_API_KEY)" }),
         {
           status: 503,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },

@@ -143,10 +143,8 @@ function getStoredBibleContext(raw: unknown): Record<string, unknown> | null {
 async function createVoiceSession(
   agentId: string | null,
 ): Promise<VoiceSessionResult> {
-  const elevenApiKey = Deno.env.get("ELEVENLABS_API_KEY") ??
-    Deno.env.get("ELEVEN_API_KEY");
-  const resolvedAgentId = agentId ?? Deno.env.get("ELEVEN_FLOW_AGENT_ID") ??
-    Deno.env.get("ELEVEN_AGENT_ID") ?? null;
+  const elevenApiKey = Deno.env.get("ELEVEN_API_KEY");
+  const resolvedAgentId = agentId ?? Deno.env.get("ELEVEN_FLOW_AGENT_ID") ?? null;
 
   if (!elevenApiKey || !resolvedAgentId) {
     return {
@@ -154,7 +152,7 @@ async function createVoiceSession(
       error: {
         code: "VOICE_NOT_CONFIGURED",
         message:
-          "Voice mode isn't configured yet (missing ELEVENLABS_API_KEY/ELEVEN_API_KEY or ELEVEN_FLOW_AGENT_ID/ELEVEN_AGENT_ID). Text mode is still available.",
+          "Voice mode isn't configured yet (missing ELEVEN_API_KEY or ELEVEN_FLOW_AGENT_ID). Text mode is still available.",
       },
     };
   }

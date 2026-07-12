@@ -3,7 +3,7 @@
 // gates; ownership via theta_targets.user_id. Model: eleven_multilingual_v2,
 // mp3_44100_128, batched with retry; returns base64 segments plus
 // background_track_url '21m.mp3' for client-side mixing.
-// Reads BOTH ELEVEN_API_KEY and ELEVENLABS_API_KEY.
+// Reads ELEVEN_API_KEY.
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { corsHeaders } from "../_shared/cors.ts";
@@ -26,11 +26,10 @@ serve(async (req) => {
     const supabase = member.supabase;
     const userId = member.userId;
 
-    const elevenApiKey = Deno.env.get('ELEVEN_API_KEY') ??
-      Deno.env.get('ELEVENLABS_API_KEY');
+    const elevenApiKey = Deno.env.get('ELEVEN_API_KEY');
     if (!elevenApiKey) {
       return new Response(
-        JSON.stringify({ error: "Audio generation isn't configured yet (missing ELEVEN_API_KEY/ELEVENLABS_API_KEY)" }),
+        JSON.stringify({ error: "Audio generation isn't configured yet (missing ELEVEN_API_KEY)" }),
         {
           status: 503,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
