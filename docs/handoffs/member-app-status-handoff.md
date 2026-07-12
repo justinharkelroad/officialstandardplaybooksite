@@ -72,7 +72,7 @@ computed-style probes are the reliable fallback.
 - 16 tables, RLS on all, 23 edge functions deployed, all API keys set
 - Self-signup disabled; `21m.mp3` uploaded to the `binaural-beats` bucket
 
-### Open item #1 — VOICE MODE hangs at "Connecting" — DIAGNOSED 2026-07-12
+### Open item #1 — VOICE MODE hang — RESOLVED 2026-07-12
 
 > **The §2 "top suspect" below was WRONG. Left in place for the record; do not
 > chase it.** There was never a signed URL to mismatch a transport with. Three
@@ -102,9 +102,23 @@ computed-style probes are the reliable fallback.
 >    is ON, so the SDK sat in `connecting` forever with no error. *Fixed in
 >    code: the hook now throws the server's actual message.*
 >
-> Fixed in code (this repo, uncommitted → see git log): `flowAgentApi.ts` (adds
-> `voice_error` to the type), `useFlowAgentSession.ts` (surfaces it, no bare
-> agentId fallback). **Still needs #1 and #2 from Justin before voice can work.**
+> 4. **CSP had no `blob:` in `script-src`.** The ElevenLabs SDK builds its audio
+>    processor as an AudioWorklet from a `blob:` URL, and worklets are governed
+>    by `script-src`. Proven in the live page: `audioWorklet.addModule(blob)` →
+>    `AbortError: Unable to load a worklet's module.` The socket connected and
+>    the agent sent `conversation_initiation_metadata`, then the SDK stalled in
+>    `connecting` forever because its audio pipeline never loaded.
+> 5. **The auto-start effect retried forever and hid the error.** It guarded only
+>    on `connectionStartedRef`, which stays false when a connect fails, and
+>    `begin` changes identity most renders — so it re-fired every ~2s, called
+>    `endSession()` on the still-connecting socket, and cleared the error message
+>    before it could render. Observed: 9 `conversation_start` logs sharing one
+>    `sessionId`, 8 sockets opened and killed (1006/1005), console clean. This is
+>    why four separate bugs presented as one silent "Connecting…".
+>
+> **ALL RESOLVED. Voice works in production** — agent connects and speaks
+> (1 socket, 21 messages, one `conversation_start`). Commits `0998f81`,
+> `6f70dce`, `533245b`.
 
 ### Original (refuted) analysis — VOICE MODE hangs at "Connecting"
 
@@ -192,26 +206,28 @@ All verified by live probe against production, not by inspection:
 (everything uses `ELEVEN_API_KEY`). Safe to delete; a rotation of the wrong one
 would be a confusing afternoon.
 
-### Open item #2 — what is STILL unproven (as of 2026-07-12)
+### Open item #2 — RESOLVED 2026-07-12: every AI surface proven
 
-- **`ANTHROPIC_API_KEY` has never been exercised.** THE LAST UNPROVEN KEY. The
-  secret exists (calls get past the key check), but nothing has ever sent a
-  request to Anthropic and read a response, so its *validity* is unknown. It powers Debrief coaching analysis
-  (claude-opus-4-7) and 90 Day Audio affirmations (claude-haiku-4-5). Fastest
-  test: complete a Debrief → "Get Your Coaching Analysis". Needs a real debrief
-  record, so it can't be probed synthetically.
-- **Real audio in/out on voice.** The pipeline is proven with a synthetic silent
-  mic; nobody has confirmed a human is transcribed or the coach is audible.
-- **90 Day Audio full chain.** TTS permission is proven, but affirmations →
-  `generate_theta_track` → `binaural-beats` bucket → playback has never run.
-  Most expensive path in ElevenLabs credits — run it deliberately, once.
-- ~~Text flow → completion → `analyze_flow_session`~~ **PROVEN 2026-07-12.** Drove
-  the Idea flow to completion on prod. `analyze_flow_session` returned a real
-  analysis (and pulled TELOS/profile context the transcript never mentioned --
-  Formula 2026, nutrition), `refine_flow_action_item` offered a sharpened
-  declaration, the accepted action wrote through to the Weekly Playbook, and the
-  Hub streak incremented. Session `28629665-6878-487b-a6a2-0a2ab81309e5` is real
-  test content Justin chose to keep.
+All five keys are now exercised end to end against production. Nothing in the
+AI stack is unverified.
+
+| Surface | Key | Status |
+|---|---|---|
+| Flow voice mode | `ELEVEN_API_KEY` (Agents / convai_write) | agent connects + speaks |
+| Text flow → `analyze_flow_session` | `OPENAI_API_KEY` | real analysis; pulls TELOS context |
+| `refine_flow_action_item` | `OPENAI_API_KEY` | sharpened declaration → Weekly Playbook |
+| Debrief → coaching report | `ANTHROPIC_API_KEY` | report returned |
+| 90 Day Audio (affirmations → track → bucket) | `ANTHROPIC_API_KEY` + `ELEVEN_API_KEY` (TTS) | track generated + downloaded |
+| Bible Flow scripture lookup | `API_BIBLE_API_KEY` | FIND + REFERENCE return real MSG passages |
+
+Getting here took four stacked bug fixes, none of which were the key itself:
+`0998f81` `6f70dce` `533245b` (voice), `3745019` (debrief 42703 claim),
+`c33774a` (sealed-debrief dead end), `746de59` (Bible port), `9db49ca`
+(dark-mode Selects).
+
+**Cruft:** `ELEVENLABS_API_KEY` exists in Lovable secrets but no code reads it
+(everything uses `ELEVEN_API_KEY`). Safe to delete; rotating the wrong one some
+day would be a confusing afternoon.
 
 ### Open item #3 — never validated end to end
 No real client has used the app yet. The acceptance run was done against a local
@@ -226,11 +242,20 @@ stack with seeded test users.
   mode, and inline styles beat CSS. The app has its own token-based copies under
   `src/app/components/ui/`. **App code must import dialogs/cards from
   `@/app/components/ui/`, never `@/components/ui/dialog`.**
-- **Radix portals escape the theme scope.** Dialogs/toasts render outside
-  `.member-app`, so scoped tokens don't reach them. Two mechanisms handle this:
-  `dialogClass()` (re-applies `member-app` + `dark` to DialogContent) and a
-  `data-sp-theme` attribute stamped on `<html>` by `src/app/lib/theme.ts` that
-  `app.css` keys off for toasts.
+- **Radix portals escape the theme scope — and `app.css` only half-fixes it.**
+  Dialogs, selects, popovers and toasts render on `<body>`, outside
+  `.member-app`, so scoped tokens don't reach them and `bg-background` resolves
+  to the MARKETING token. Measured: the same `bg-background` element computes
+  `rgb(255,255,255)` outside the scope and `rgb(12,12,13)` inside.
+  `app.css` force-darkens the portalled *container* via `[data-sp-theme="dark"]
+  [role="dialog"]`, but **`background` does not inherit** — so token-styled
+  *children* (select triggers, inputs) stayed white inside a correct-looking dark
+  dialog. That's the trap: the dialog looks right, the fields inside it don't.
+  **The rule: every portalled surface must carry `spScopeClass()`**
+  (`src/app/lib/theme.ts`), which re-applies `member-app [dark]`. App `Select`
+  (`@/app/components/ui/select`) does this for you — import from there, never
+  `@/components/ui/select`. Fixed in `9db49ca`; `Popover`/`DropdownMenu`/
+  `Tooltip` have no app-scoped copy yet, so scope them by hand if you use them.
 - **Route prefixes.** Every member route needs `/app`. A `sed` pass that only
   covered quoted strings missed template literals — ``navigate(`/flows/start/${slug}`)``
   shipped and 404'd. Grep both forms when touching routes.
