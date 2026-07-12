@@ -194,9 +194,9 @@ would be a confusing afternoon.
 
 ### Open item #2 — what is STILL unproven (as of 2026-07-12)
 
-- **`ANTHROPIC_API_KEY` has never been exercised.** The secret exists (calls get
-  past the key check), but nothing has ever sent a request to Anthropic and read
-  a response, so its *validity* is unknown. It powers Debrief coaching analysis
+- **`ANTHROPIC_API_KEY` has never been exercised.** THE LAST UNPROVEN KEY. The
+  secret exists (calls get past the key check), but nothing has ever sent a
+  request to Anthropic and read a response, so its *validity* is unknown. It powers Debrief coaching analysis
   (claude-opus-4-7) and 90 Day Audio affirmations (claude-haiku-4-5). Fastest
   test: complete a Debrief → "Get Your Coaching Analysis". Needs a real debrief
   record, so it can't be probed synthetically.
@@ -205,8 +205,13 @@ would be a confusing afternoon.
 - **90 Day Audio full chain.** TTS permission is proven, but affirmations →
   `generate_theta_track` → `binaural-beats` bucket → playback has never run.
   Most expensive path in ElevenLabs credits — run it deliberately, once.
-- **Text flow → completion → `analyze_flow_session`.** OpenAI key is good, but no
-  flow has been driven to completion to produce a real analysis.
+- ~~Text flow → completion → `analyze_flow_session`~~ **PROVEN 2026-07-12.** Drove
+  the Idea flow to completion on prod. `analyze_flow_session` returned a real
+  analysis (and pulled TELOS/profile context the transcript never mentioned --
+  Formula 2026, nutrition), `refine_flow_action_item` offered a sharpened
+  declaration, the accepted action wrote through to the Weekly Playbook, and the
+  Hub streak incremented. Session `28629665-6878-487b-a6a2-0a2ab81309e5` is real
+  test content Justin chose to keep.
 
 ### Open item #3 — never validated end to end
 No real client has used the app yet. The acceptance run was done against a local
