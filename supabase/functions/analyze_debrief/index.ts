@@ -303,16 +303,35 @@ serve(async (req) => {
 
     claimStartedAt = new Date().toISOString();
     const staleClaimBefore = new Date(Date.now() - 15 * 60 * 1000).toISOString();
-    const { data: claimedReview, error: claimError } = await supabase
-      .from('weekly_reviews')
-      .update({ analysis_generation_started_at: claimStartedAt })
-      .eq('id', review_id)
-      .eq('user_id', userId)
-      .eq('status', 'completed')
-      .is('coaching_analysis', null)
-      .or(`analysis_generation_started_at.is.null,analysis_generation_started_at.lt.${staleClaimBefore}`)
+
+    // Claim in two single-condition passes instead of one `.or()`.
+    // PostgREST table-qualifies columns inside an OR, but aliases the table on
+    // mutations, so `.or()` on an update raises 42703 "column
+    // weekly_reviews.analysis_generation_started_at does not exist" -- on a
+    // column that plainly exists. Reads are unaffected, which is why this only
+    // ever surfaced here. Each pass stays a single atomic conditional update,
+    // so the claim is still race-safe: pass 1 takes an unclaimed review, pass 2
+    // takes one whose claim has gone stale.
+    const claimBase = () =>
+      supabase
+        .from('weekly_reviews')
+        .update({ analysis_generation_started_at: claimStartedAt })
+        .eq('id', review_id)
+        .eq('user_id', userId)
+        .eq('status', 'completed')
+        .is('coaching_analysis', null);
+
+    let { data: claimedReview, error: claimError } = await claimBase()
+      .is('analysis_generation_started_at', null)
       .select('id')
       .maybeSingle();
+
+    if (!claimError && !claimedReview) {
+      ({ data: claimedReview, error: claimError } = await claimBase()
+        .lt('analysis_generation_started_at', staleClaimBefore)
+        .select('id')
+        .maybeSingle());
+    }
 
     if (claimError) {
       console.error('[analyze_debrief] failed to claim analysis generation', claimError);
