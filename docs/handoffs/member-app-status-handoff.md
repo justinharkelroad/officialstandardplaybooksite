@@ -78,15 +78,18 @@ computed-style probes are the reliable fallback.
 > chase it.** There was never a signed URL to mismatch a transport with. Three
 > real causes, all verified with live probes:
 >
-> 1. **`VITE_ELEVENLABS_AGENT_ID` is not set in the Cloudflare Pages build.**
->    This is the hard blocker. `agentId` (`useFlowAgentSession.ts:1165`) is
->    `undefined`, so `if (!agentId) throw` at :1188 always fires and esbuild
->    **dead-code-eliminates the entire rest of `startConversation`**. Proof: the
+> 1. **`VITE_ELEVENLABS_AGENT_ID` was never set for the frontend build.**
+>    This was the hard blocker. `agentId` (`useFlowAgentSession.ts:1165`) was
+>    `undefined`, so `if (!agentId) throw` at :1188 always fired and esbuild
+>    **dead-code-eliminated the entire rest of `startConversation`**. Proof: the
 >    deployed bundle contains the line-1189 throw but NOT the mic-permission
->    throw 11 lines later, and no agent id anywhere. Voice has never been able
->    to start client-side. *Fix: add the var in Cloudflare Pages → rebuild.*
+>    throw 11 lines later, and no agent id anywhere. Voice could never start
+>    client-side. **Fixed:** added to the committed `.env`, which is where this
+>    app's frontend build vars live (Cloudflare Pages has *no* variables set —
+>    `VITE_SUPABASE_*` come from `.env` too). Not a secret: it ships in the
+>    public bundle by design, same as the Supabase publishable key.
 >    Note this also means any local artifact grep for voice code returns nothing
->    unless you build with the var set — the DCE will hide your own edits.
+>    unless the var is set — the DCE will hide your own edits.
 > 2. **`ELEVEN_API_KEY` (Lovable secret) lacks the `convai_write` permission.**
 >    ElevenLabs 401s both `get_signed_url` and `/token`, so the server returns
 >    `voice_session: null` + `voice_error: VOICE_SESSION_FAILED`. Verbatim from
