@@ -16,8 +16,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/app/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { getStoredSpTheme } from "@/app/lib/theme";
 import type { DailyFrameCommitment, DailyFrameStatus } from "@/app/lib/dailyFrame";
 
 type DailyFrameRow = DailyFrameCommitment & {

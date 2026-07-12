@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import standardLogo from "@/assets/standard-word-logo.png";
 import { supabase } from "@/integrations/supabase/client";
 import "@/app/app.css";
 import { getStoredSpTheme } from "@/app/lib/theme";
@@ -62,9 +63,11 @@ export default function Login() {
     <div className={cn("member-app flex min-h-screen items-center justify-center px-6", getStoredSpTheme() === "dark" && "dark")}>
       <div className="w-full max-w-md">
         <div className="mb-10">
-          <p className="sp-label mb-3 text-[11px] text-[#2997FF]">
-            Standard Playbook · Member App
-          </p>
+          <img
+            src={standardLogo}
+            alt="Standard Playbook"
+            className="mb-6 h-6 w-auto invert dark:invert-0"
+          />
           <h1 className="sp-display text-[clamp(48px,9vw,84px)] text-foreground">
             Member
             <br />

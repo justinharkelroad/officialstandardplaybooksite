@@ -6,19 +6,19 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@/components/ui/dialog";
+} from "@/app/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { CheckCircle2 } from "lucide-react";
-
+import { getStoredSpTheme } from "@/app/lib/theme";
+import { cn } from "@/lib/utils";
 interface CompleteOneBigThingDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   itemTitle: string;
   onConfirm: (proof: string, feeling: string) => void;
 }
-
 export function CompleteOneBigThingDialog({
   open,
   onOpenChange,
@@ -27,7 +27,6 @@ export function CompleteOneBigThingDialog({
 }: CompleteOneBigThingDialogProps) {
   const [proof, setProof] = useState("");
   const [feeling, setFeeling] = useState("");
-
   // Reset form when dialog opens (prevents stale drafts from previous items)
   useEffect(() => {
     if (open) {
@@ -35,13 +34,11 @@ export function CompleteOneBigThingDialog({
       setFeeling("");
     }
   }, [open]);
-
   const handleConfirm = () => {
     onConfirm(proof.trim(), feeling.trim());
     setProof("");
     setFeeling("");
   };
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
@@ -58,7 +55,6 @@ export function CompleteOneBigThingDialog({
             </div>
           </div>
         </DialogHeader>
-
         <div className="space-y-4 py-2">
           <div className="space-y-2">
             <Label htmlFor="proof" className="text-sm font-medium">
@@ -73,7 +69,6 @@ export function CompleteOneBigThingDialog({
               className="resize-none"
             />
           </div>
-
           <div className="space-y-2">
             <Label htmlFor="feeling" className="text-sm font-medium">
               How does it feel to get this accomplished?
@@ -88,7 +83,6 @@ export function CompleteOneBigThingDialog({
             />
           </div>
         </div>
-
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel

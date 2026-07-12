@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/components/ui/dialog";
+} from "@/app/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,7 +19,8 @@ import {
 } from "@/components/ui/select";
 import type { PlaybookDomain } from "@/app/hooks/useFocusItems";
 import type { PlaybookTag } from "@/app/hooks/usePlaybookTags";
-
+import { getStoredSpTheme } from "@/app/lib/theme";
+import { cn } from "@/lib/utils";
 interface CreatePlaybookItemDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -31,14 +32,12 @@ interface CreatePlaybookItemDialogProps {
     sub_tag_id?: string;
   }) => void;
 }
-
 const domainOptions: { value: PlaybookDomain; label: string }[] = [
   { value: "body", label: "Body" },
   { value: "being", label: "Being" },
   { value: "balance", label: "Balance" },
   { value: "business", label: "Business" },
 ];
-
 export function CreatePlaybookItemDialog({
   open,
   onOpenChange,
@@ -49,9 +48,7 @@ export function CreatePlaybookItemDialog({
   const [description, setDescription] = useState("");
   const [domain, setDomain] = useState<PlaybookDomain | "">("");
   const [subTagId, setSubTagId] = useState<string>("");
-
   const availableTags = domain ? tags.filter((t) => t.domain === domain) : [];
-
   const handleSubmit = () => {
     if (!title.trim()) return;
     onConfirm({
@@ -66,14 +63,12 @@ export function CreatePlaybookItemDialog({
     setDomain("");
     setSubTagId("");
   };
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>New Playbook Item</DialogTitle>
         </DialogHeader>
-
         <div className="space-y-4">
           <div className="space-y-2">
             <Label>Title *</Label>
@@ -84,7 +79,6 @@ export function CreatePlaybookItemDialog({
               autoFocus
             />
           </div>
-
           <div className="space-y-2">
             <Label>Description</Label>
             <Textarea
@@ -94,7 +88,6 @@ export function CreatePlaybookItemDialog({
               rows={2}
             />
           </div>
-
           <div className="space-y-2">
             <Label>Domain</Label>
             <Select value={domain} onValueChange={(v) => { setDomain(v as PlaybookDomain); setSubTagId(""); }}>
@@ -108,7 +101,6 @@ export function CreatePlaybookItemDialog({
               </SelectContent>
             </Select>
           </div>
-
           {availableTags.length > 0 && (
             <div className="space-y-2">
               <Label>Sub-tag</Label>
@@ -124,9 +116,7 @@ export function CreatePlaybookItemDialog({
               </Select>
             </div>
           )}
-
         </div>
-
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
           <Button onClick={handleSubmit} disabled={!title.trim()}>Create</Button>

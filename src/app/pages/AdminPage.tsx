@@ -3,6 +3,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { KeyRound, UserPlus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/app/lib/auth";
+import { getStoredSpTheme } from "@/app/lib/theme";
+import { cn } from "@/lib/utils";
 import type { MemberRow } from "@/app/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,7 +18,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/app/components/ui/dialog";
 import { toast } from "sonner";
 
 async function invokeAdminManageMember(payload: Record<string, unknown>) {
@@ -41,6 +43,11 @@ async function invokeAdminManageMember(payload: Record<string, unknown>) {
   return data;
 }
 
+// Radix portals dialogs outside the .member-app wrapper, so the scoped design
+// tokens don't reach them. Re-apply the scope on the content itself.
+const dialogClass = () =>
+  cn("member-app border-[1.5px] border-foreground", getStoredSpTheme() === "dark" && "dark");
+
 export default function AdminPage() {
   const queryClient = useQueryClient();
   const { member: self } = useAuth();
@@ -52,7 +59,8 @@ export default function AdminPage() {
   const [newPassword, setNewPassword] = useState("");
   const busyRef = useRef(false);
 
-  const { data: members, isLoading } = useQuery({
+  const { data: members, isLoading, isError, error: membersError, refetch } = useQuery({
+    retry: 1,
     queryKey: ["admin-members"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -151,7 +159,16 @@ export default function AdminPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {isLoading ? (
+          {isError ? (
+            <div className="space-y-2">
+              <p className="text-sm text-destructive">
+                Couldn't load members: {membersError instanceof Error ? membersError.message : "unknown error"}
+              </p>
+              <Button variant="outline" size="sm" onClick={() => refetch()}>
+                Retry
+              </Button>
+            </div>
+          ) : isLoading ? (
             <p className="text-sm text-muted-foreground">Loading…</p>
           ) : (
             <div className="divide-y divide-border">
@@ -202,7 +219,7 @@ export default function AdminPage() {
       </Card>
 
       <Dialog open={createOpen} onOpenChange={setCreateOpen}>
-        <DialogContent>
+        <DialogContent className={dialogClass()}>
           <DialogHeader>
             <DialogTitle>New client</DialogTitle>
             <DialogDescription>
@@ -241,7 +258,7 @@ export default function AdminPage() {
       </Dialog>
 
       <Dialog open={!!resetTarget} onOpenChange={(open) => !open && setResetTarget(null)}>
-        <DialogContent>
+        <DialogContent className={dialogClass()}>
           <DialogHeader>
             <DialogTitle>Reset password</DialogTitle>
             <DialogDescription>{resetTarget?.email}</DialogDescription>

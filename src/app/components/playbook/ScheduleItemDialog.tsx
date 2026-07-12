@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/components/ui/dialog";
+} from "@/app/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -18,7 +18,8 @@ import {
 import { format, addDays, startOfWeek } from "date-fns";
 import type { PlaybookDomain } from "@/app/hooks/useFocusItems";
 import type { PlaybookTag } from "@/app/hooks/usePlaybookTags";
-
+import { getStoredSpTheme } from "@/app/lib/theme";
+import { cn } from "@/lib/utils";
 interface ScheduleItemDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -29,14 +30,12 @@ interface ScheduleItemDialogProps {
   onConfirm: (date: string, domain?: PlaybookDomain, subTagId?: string, scheduledTime?: string) => void;
   defaultDate?: string;
 }
-
 const domainOptions: { value: PlaybookDomain; label: string }[] = [
   { value: "body", label: "Body" },
   { value: "being", label: "Being" },
   { value: "balance", label: "Balance" },
   { value: "business", label: "Business" },
 ];
-
 export function ScheduleItemDialog({
   open,
   onOpenChange,
@@ -51,14 +50,12 @@ export function ScheduleItemDialog({
   const [domain, setDomain] = useState<PlaybookDomain | "">("");
   const [subTagId, setSubTagId] = useState<string>("");
   const [scheduledTime, setScheduledTime] = useState<string>("");
-
   // Pre-select date when opened from drag-and-drop
   useEffect(() => {
     if (open && defaultDate) {
       setSelectedDate(defaultDate);
     }
   }, [open, defaultDate]);
-
   // Reset state when dialog opens/closes
   const resetState = () => {
     setSelectedDate("");
@@ -66,12 +63,10 @@ export function ScheduleItemDialog({
     setSubTagId("");
     setScheduledTime("");
   };
-
   const handleOpenChange = (nextOpen: boolean) => {
     if (!nextOpen) resetState();
     onOpenChange(nextOpen);
   };
-
   // Generate Mon-Sun for the current week
   const weekDays = Array.from({ length: 7 }, (_, i) => {
     const date = addDays(weekStart, i);
@@ -80,9 +75,7 @@ export function ScheduleItemDialog({
     const isBonus = i >= 5; // Sat & Sun
     return { date, dateStr, label: format(date, "EEE, MMM d"), count, isBonus };
   });
-
   const availableTags = domain ? tags.filter((t) => t.domain === domain) : [];
-
   // Generate time options (30-min increments, 6 AM to 9 PM)
   const timeOptions = Array.from({ length: 31 }, (_, i) => {
     const totalMinutes = 360 + i * 30; // start at 6:00 AM (360 min)
@@ -94,31 +87,26 @@ export function ScheduleItemDialog({
     const label = `${displayH}:${String(m).padStart(2, "0")} ${period}`;
     return { value, label };
   });
-
   const handleConfirm = () => {
     if (!selectedDate) return;
     const timeVal = scheduledTime && scheduledTime !== "none" ? scheduledTime : undefined;
     onConfirm(selectedDate, domain || undefined, subTagId || undefined, timeVal);
     handleOpenChange(false);
   };
-
   const selectedDayCount = dayItemCounts[selectedDate] || 0;
   const isFull = selectedDayCount >= 4;
-
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Schedule Power Play</DialogTitle>
         </DialogHeader>
-
         <div className="space-y-4">
           <div>
             <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
               &ldquo;{itemTitle}&rdquo;
             </p>
           </div>
-
           {/* Day picker */}
           <div className="space-y-2">
             <Label>Day</Label>
@@ -153,7 +141,6 @@ export function ScheduleItemDialog({
               <p className="text-xs text-destructive">This day already has 4 Power Plays.</p>
             )}
           </div>
-
           {/* Time */}
           <div className="space-y-2">
             <Label>Time (optional)</Label>
@@ -171,7 +158,6 @@ export function ScheduleItemDialog({
               </SelectContent>
             </Select>
           </div>
-
           {/* Domain */}
           <div className="space-y-2">
             <Label>Domain (optional)</Label>
@@ -188,7 +174,6 @@ export function ScheduleItemDialog({
               </SelectContent>
             </Select>
           </div>
-
           {/* Sub-tag */}
           {availableTags.length > 0 && (
             <div className="space-y-2">
@@ -208,7 +193,6 @@ export function ScheduleItemDialog({
             </div>
           )}
         </div>
-
         <DialogFooter>
           <Button variant="outline" onClick={() => handleOpenChange(false)}>
             Cancel

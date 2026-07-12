@@ -18,6 +18,7 @@ import {
   Sun,
   X,
 } from "lucide-react";
+import standardLogo from "@/assets/standard-word-logo.png";
 import { useAuth } from "@/app/lib/auth";
 import { useSpTheme } from "@/app/lib/theme";
 import { cn } from "@/lib/utils";
@@ -130,12 +131,15 @@ export default function AppShell() {
         >
           <NavLink to="/app" className="flex items-center gap-2 overflow-hidden">
             {collapsed ? (
-              <span className="sp-display text-lg leading-none text-foreground">SP</span>
+              <span aria-hidden className="h-2.5 w-2.5 rounded-full bg-[#2997FF]" />
             ) : (
               <>
-                <span className="sp-display whitespace-nowrap text-base leading-none text-foreground">
-                  Standard&nbsp;Playbook
-                </span>
+                {/* White-artwork logo: inverts to ink in light mode. */}
+                <img
+                  src={standardLogo}
+                  alt="Standard Playbook"
+                  className="h-[22px] w-auto shrink-0 invert dark:invert-0"
+                />
                 <span aria-hidden className="h-2 w-2 shrink-0 rounded-full bg-[#2997FF]" />
               </>
             )}
@@ -176,9 +180,11 @@ export default function AppShell() {
           />
           <aside className="fixed inset-y-0 left-0 z-50 flex w-[248px] flex-col border-r-[1.5px] border-foreground bg-background lg:hidden">
             <div className="flex h-14 shrink-0 items-center justify-between border-b-[1.5px] border-foreground px-5">
-              <span className="sp-display text-base leading-none text-foreground">
-                Standard&nbsp;Playbook
-              </span>
+              <img
+                src={standardLogo}
+                alt="Standard Playbook"
+                className="h-[22px] w-auto invert dark:invert-0"
+              />
               <button
                 type="button"
                 onClick={() => setMobileOpen(false)}
