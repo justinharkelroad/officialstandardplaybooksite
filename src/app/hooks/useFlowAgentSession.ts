@@ -405,6 +405,12 @@ export function useFlowAgentSession({
   const [lastUserTranscript, setLastUserTranscript] = useState<string | null>(null);
   const [lastUserTranscriptAt, setLastUserTranscriptAt] = useState<number | null>(null);
   const connectionStartedRef = useRef(false);
+  // Auto-start fires once per enable. `begin` changes identity on most renders,
+  // and a failed connect leaves connectionStartedRef false, so without this the
+  // effect below reconnects forever and clears the error each time round --
+  // which is what made a CSP-blocked audio worklet look like an endless
+  // "Connecting" instead of a visible failure.
+  const autoStartedRef = useRef(false);
   const startInFlightRef = useRef(false);
   const startFreshRef = useRef(false);
   const explicitEndRef = useRef(false);
@@ -1435,7 +1441,12 @@ export function useFlowAgentSession({
   }, [completeSubmittedFlow, rememberFlowState]);
 
   useEffect(() => {
-    if (!enabled || connectionStartedRef.current) return;
+    if (!enabled) {
+      autoStartedRef.current = false;
+      return;
+    }
+    if (connectionStartedRef.current || autoStartedRef.current) return;
+    autoStartedRef.current = true;
     void begin(false);
   }, [begin, enabled]);
 
