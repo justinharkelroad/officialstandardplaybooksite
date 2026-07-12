@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { CheckCircle2 } from "lucide-react";
-import { getStoredSpTheme } from "@/app/lib/theme";
+import { getStoredSpTheme, spScopeClass } from "@/app/lib/theme";
 import { cn } from "@/lib/utils";
 interface CompleteOneBigThingDialogProps {
   open: boolean;
@@ -41,7 +41,7 @@ export function CompleteOneBigThingDialog({
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className={cn(spScopeClass(), "sm:max-w-md")}>
         <DialogHeader>
           <div className="flex items-center gap-3 mb-1">
             <div className="h-10 w-10 rounded-full bg-[#2997FF]/10 flex items-center justify-center">

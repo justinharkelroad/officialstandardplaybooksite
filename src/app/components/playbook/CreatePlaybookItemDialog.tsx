@@ -16,10 +16,10 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/app/components/ui/select";
 import type { PlaybookDomain } from "@/app/hooks/useFocusItems";
 import type { PlaybookTag } from "@/app/hooks/usePlaybookTags";
-import { getStoredSpTheme } from "@/app/lib/theme";
+import { getStoredSpTheme, spScopeClass } from "@/app/lib/theme";
 import { cn } from "@/lib/utils";
 interface CreatePlaybookItemDialogProps {
   open: boolean;
@@ -65,7 +65,7 @@ export function CreatePlaybookItemDialog({
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className={cn(spScopeClass(), "sm:max-w-md")}>
         <DialogHeader>
           <DialogTitle>New Playbook Item</DialogTitle>
         </DialogHeader>

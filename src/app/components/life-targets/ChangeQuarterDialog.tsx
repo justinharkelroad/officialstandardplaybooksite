@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select";
 import { getAvailableQuarters, formatQuarterDisplay, getCurrentQuarter } from "@/app/lib/quarterUtils";
 import { useLifeTargetsStore } from "@/app/lib/lifeTargetsStore";
 import { AlertTriangle } from "lucide-react";

@@ -15,7 +15,7 @@ import { Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue } from "@/components/ui/select";
+  SelectValue } from "@/app/components/ui/select";
 import { Tooltip,
   TooltipContent,
   TooltipProvider,

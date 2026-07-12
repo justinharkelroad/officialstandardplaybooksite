@@ -16,6 +16,20 @@ export function getStoredSpTheme(): SpTheme {
   }
 }
 
+/**
+ * Scope class for anything Radix renders in a portal (DialogContent,
+ * SelectContent, DropdownMenuContent, TooltipContent...).
+ *
+ * Portalled content mounts on <body>, outside the `.member-app` wrapper, so the
+ * scoped tokens never reach it and `bg-background` resolves to the MARKETING
+ * value -- white -- even in dark mode. Verified in prod: the same `bg-background`
+ * element computes rgb(255,255,255) outside the scope and rgb(12,12,13) inside.
+ * Re-applying the scope on the portalled node fixes it.
+ */
+export function spScopeClass(): string {
+  return getStoredSpTheme() === "dark" ? "member-app dark" : "member-app";
+}
+
 export function useSpTheme(): [SpTheme, () => void] {
   const [theme, setTheme] = useState<SpTheme>(getStoredSpTheme);
 

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { spScopeClass } from "@/app/lib/theme";
 import { supabase } from '@/app/lib/supabaseClient';
 import { useAuth } from '@/app/lib/auth';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -20,7 +21,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from '@/app/components/ui/select';
 import { Dumbbell, Heart, Briefcase, Plus, CheckCircle2, Loader2, Pencil, Trash2 } from 'lucide-react';
 import { LatinCross } from '@/app/components/icons/LatinCross';
 import { format } from 'date-fns';
@@ -298,7 +299,7 @@ export function Core4MonthlyMissions() {
               Add Mission
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className={spScopeClass()}>
             <DialogHeader>
               <div className="flex items-center gap-3">
                 {(() => {

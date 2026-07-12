@@ -1,4 +1,4 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Calendar } from "lucide-react";
 import { useLifeTargetsStore } from "@/app/lib/lifeTargetsStore";

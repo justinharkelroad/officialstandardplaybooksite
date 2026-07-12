@@ -18,7 +18,7 @@ import {
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { getStoredSpTheme } from "@/app/lib/theme";
+import { getStoredSpTheme, spScopeClass } from "@/app/lib/theme";
 import type { DailyFrameCommitment, DailyFrameStatus } from "@/app/lib/dailyFrame";
 
 type DailyFrameRow = DailyFrameCommitment & {
@@ -140,7 +140,7 @@ function DailyFrameDetailsDialog({
           Details
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-h-[85vh] max-w-xl overflow-y-auto">
+      <DialogContent className={cn(spScopeClass(), "max-h-[85vh] max-w-xl overflow-y-auto")}>
         <DialogHeader>
           <DialogTitle>Daily Frame details</DialogTitle>
           <DialogDescription>

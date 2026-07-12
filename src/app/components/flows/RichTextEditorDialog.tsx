@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+import { spScopeClass } from "@/app/lib/theme";
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import LinkExtension from '@tiptap/extension-link';
@@ -151,7 +152,7 @@ export function RichTextEditorDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="max-w-none w-full h-full sm:max-w-none sm:rounded-none p-0 flex flex-col"
+        className={cn(spScopeClass(), "max-w-none w-full h-full sm:max-w-none sm:rounded-none p-0 flex flex-col")}
         hideCloseButton
       >
         <DialogTitle className="sr-only">Rich Text Editor</DialogTitle>

@@ -14,11 +14,11 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/app/components/ui/select";
 import { format, addDays, startOfWeek } from "date-fns";
 import type { PlaybookDomain } from "@/app/hooks/useFocusItems";
 import type { PlaybookTag } from "@/app/hooks/usePlaybookTags";
-import { getStoredSpTheme } from "@/app/lib/theme";
+import { getStoredSpTheme, spScopeClass } from "@/app/lib/theme";
 import { cn } from "@/lib/utils";
 interface ScheduleItemDialogProps {
   open: boolean;
@@ -97,7 +97,7 @@ export function ScheduleItemDialog({
   const isFull = selectedDayCount >= 4;
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className={cn(spScopeClass(), "sm:max-w-md")}>
         <DialogHeader>
           <DialogTitle>Schedule Power Play</DialogTitle>
         </DialogHeader>

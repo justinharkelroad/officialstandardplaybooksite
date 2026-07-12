@@ -6,7 +6,7 @@ import { FlowSession } from '@/app/types/flows';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select';
 import { ArrowLeft, Search, Clock, CheckCircle2, FileEdit, ChevronRight, Sparkles } from 'lucide-react';
 import { format } from 'date-fns';
 import { FlowTypeIcon } from '@/app/components/flows/FlowTypeIcon';

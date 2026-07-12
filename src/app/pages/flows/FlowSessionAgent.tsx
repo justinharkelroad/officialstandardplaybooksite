@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { cn } from "@/lib/utils";
+import { spScopeClass } from "@/app/lib/theme";
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   AlertCircle,
@@ -575,7 +577,7 @@ function FlowAnswerReviewDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="flex max-h-[88vh] w-[min(calc(100vw-1.5rem),42rem)] flex-col gap-0 overflow-hidden p-0 sm:rounded-lg">
+      <DialogContent className={cn(spScopeClass(), "flex max-h-[88vh] w-[min(calc(100vw-1.5rem),42rem)] flex-col gap-0 overflow-hidden p-0 sm:rounded-lg")}>
         <DialogHeader className="border-b border-border/60 px-5 py-4">
           <DialogTitle className="flex items-center gap-2 text-base">
             <ListChecks className="h-4 w-4" />

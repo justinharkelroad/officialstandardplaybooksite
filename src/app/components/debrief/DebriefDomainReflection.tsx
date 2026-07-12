@@ -8,7 +8,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/app/components/ui/select";
 import { ArrowRight, ArrowLeft, CheckCircle2, Heart, Brain, Scale, Briefcase, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
