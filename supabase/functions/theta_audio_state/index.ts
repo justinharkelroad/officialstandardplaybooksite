@@ -11,7 +11,7 @@ import {
   validateThetaSessionId,
   validateThetaTargets,
   validateThetaTone,
-} from "./thetaAudio.ts";
+} from "../_shared/thetaAudio.ts";
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {

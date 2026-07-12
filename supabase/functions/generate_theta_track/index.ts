@@ -13,7 +13,7 @@ import {
   thetaActorColumns,
   thetaRowBelongsToActor,
   validateThetaSessionId,
-} from "../theta_audio_state/thetaAudio.ts";
+} from "../_shared/thetaAudio.ts";
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {

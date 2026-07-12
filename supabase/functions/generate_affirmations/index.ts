@@ -11,7 +11,7 @@ import {
   validateThetaSessionId,
   validateThetaTargets,
   validateThetaTone,
-} from "../theta_audio_state/thetaAudio.ts";
+} from "../_shared/thetaAudio.ts";
 
 const anthropicApiKey = Deno.env.get('ANTHROPIC_API_KEY');
 
