@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/app/lib/auth";
 import { supabase } from "@/integrations/supabase/client";
 import { getSupabaseFunctionErrorMessage } from "@/app/lib/supabaseFunctionErrors";
@@ -37,6 +38,8 @@ export default function WeeklyDebrief() {
     completeDebrief,
   } = useWeeklyDebrief(weekKey);
 
+  const queryClient = useQueryClient();
+
   // Focus items for creating bench items from domain reflections
   const { createItem } = useFocusItems();
 
@@ -46,6 +49,13 @@ export default function WeeklyDebrief() {
     });
     if (error) throw new Error(await getSupabaseFunctionErrorMessage(error, { fallbackMessage: "AI feedback isn't configured yet" }));
     return data?.analysis || "";
+  };
+
+  // Sealed view: run the analysis, then pull the saved report back into the cache.
+  const handleRequestAnalysisAndRefresh = async (reviewId: string): Promise<string> => {
+    const analysis = await handleRequestAnalysis(reviewId);
+    await queryClient.invalidateQueries({ queryKey: ["weekly-debrief", user?.id, weekKey] });
+    return analysis;
   };
 
   const handleAddToBench = (title: string, domain: string) => {
@@ -123,6 +133,7 @@ export default function WeeklyDebrief() {
         stats={stats}
         exitPath="/app"
         onViewDebrief={handleViewPastDebrief}
+        onRequestAnalysis={handleRequestAnalysisAndRefresh}
       />
     );
   }

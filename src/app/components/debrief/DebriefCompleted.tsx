@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Sparkles, ArrowLeft } from "lucide-react";
+import { CheckCircle2, Sparkles, ArrowLeft, Loader2 } from "lucide-react";
 import { DebriefScoreRing } from "./DebriefScoreRing";
 import { DebriefStatsView } from "./DebriefStatsView";
 import { DebriefHistory } from "./DebriefHistory";
@@ -15,6 +16,8 @@ interface DebriefCompletedProps {
   exitPath: string;
   onBack?: () => void;
   onViewDebrief?: (weekKey: string) => void;
+  /** Absent on past-debrief views, where re-running the analysis isn't offered. */
+  onRequestAnalysis?: (reviewId: string) => Promise<string>;
 }
 
 const DOMAIN_LABELS: Record<string, string> = {
@@ -24,11 +27,29 @@ const DOMAIN_LABELS: Record<string, string> = {
   business: "Business",
 };
 
-export function DebriefCompleted({ review, weekLabel, stats, exitPath, onBack, onViewDebrief }: DebriefCompletedProps) {
+export function DebriefCompleted({ review, weekLabel, stats, exitPath, onBack, onViewDebrief, onRequestAnalysis }: DebriefCompletedProps) {
   const navigate = useNavigate();
   const analysis = (review as unknown as Record<string, unknown>)?.coaching_analysis as string | null ?? null;
   const reflections = review.domain_reflections || {};
   const isPastView = !!onBack;
+  const [requesting, setRequesting] = useState(false);
+
+  // A sealed debrief whose analysis failed used to be a dead end -- the block
+  // below only renders when `analysis` exists, and nothing offered a retry.
+  const canRequestAnalysis = !analysis && !isPastView && !!onRequestAnalysis;
+
+  const requestAnalysis = async () => {
+    if (!onRequestAnalysis) return;
+    setRequesting(true);
+    try {
+      await onRequestAnalysis(review.id);
+      toast.success("Your coaching report is ready.");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not prepare the coaching report.");
+    } finally {
+      setRequesting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -99,6 +120,17 @@ export function DebriefCompleted({ review, weekLabel, stats, exitPath, onBack, o
                   </p>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* No analysis yet -- offer to generate it rather than dead-ending */}
+          {canRequestAnalysis && (
+            <div className="w-full max-w-2xl mb-8 flex flex-col items-center gap-3">
+              <Button onClick={requestAnalysis} disabled={requesting} className="gap-2">
+                {requesting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
+                {requesting ? "Preparing your report..." : "Get Your Coaching Analysis"}
+              </Button>
+              <p className="text-xs text-muted-foreground">Takes about a minute.</p>
             </div>
           )}
 
