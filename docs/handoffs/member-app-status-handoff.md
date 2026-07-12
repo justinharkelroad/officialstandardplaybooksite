@@ -171,13 +171,42 @@ not `INITIAL_SESSION`. The fix follows Supabase's documented guidance, but it is
 **verified in artifact only, not by live repro.** Re-probe after deploy:
 `navigator.locks.query()` on `/app` should show no held auth lock.
 
-### Open item #2 — AI surfaces untested with keys present
-The keys are set and functions redeployed, but nobody has confirmed:
-- Text flow → completion → real AI analysis (`analyze_flow_session`, gpt-4o-mini)
-- Debrief → "Get Your Coaching Analysis" (`analyze_debrief`, claude-opus-4-7)
-- 90 Day Audio → affirmations (claude-haiku-4-5) → track (eleven_multilingual_v2)
+### RESOLVED 2026-07-12 — voice, auth deadlock, Bible Flow
 
-Each should now produce real output instead of a "not configured" toast.
+All verified by live probe against production, not by inspection:
+
+- **Voice mode works.** Signed URL → WebSocket → agent connected and speaking
+  (1 socket, 21 messages, one `conversation_start`). Took four stacked causes:
+  missing `VITE_ELEVENLABS_AGENT_ID` (DCE'd the code), an ElevenLabs key without
+  `convai_write`, a client that ignored `voice_error`, and a CSP with no `blob:`
+  for the SDK's AudioWorklet — plus an auto-start effect that looped forever and
+  hid all of it. Commits `0998f81`, `6f70dce`, `533245b`.
+- **Auth deadlock fixed** (see #1b below).
+- **Bible Flow scripture lookup works.** `resolve_bible_scripture` ported +
+  deployed, `API_BIBLE_API_KEY` set. FIND and REFERENCE both return real MSG
+  passages; the key IS licensed for The Message. Commit `746de59`.
+- **Keys verified live:** `ELEVEN_API_KEY` (Agents + Text-to-Speech),
+  `OPENAI_API_KEY` (real model output), `API_BIBLE_API_KEY`.
+
+**Cruft:** `ELEVENLABS_API_KEY` exists in Lovable secrets but no code reads it
+(everything uses `ELEVEN_API_KEY`). Safe to delete; a rotation of the wrong one
+would be a confusing afternoon.
+
+### Open item #2 — what is STILL unproven (as of 2026-07-12)
+
+- **`ANTHROPIC_API_KEY` has never been exercised.** The secret exists (calls get
+  past the key check), but nothing has ever sent a request to Anthropic and read
+  a response, so its *validity* is unknown. It powers Debrief coaching analysis
+  (claude-opus-4-7) and 90 Day Audio affirmations (claude-haiku-4-5). Fastest
+  test: complete a Debrief → "Get Your Coaching Analysis". Needs a real debrief
+  record, so it can't be probed synthetically.
+- **Real audio in/out on voice.** The pipeline is proven with a synthetic silent
+  mic; nobody has confirmed a human is transcribed or the coach is audible.
+- **90 Day Audio full chain.** TTS permission is proven, but affirmations →
+  `generate_theta_track` → `binaural-beats` bucket → playback has never run.
+  Most expensive path in ElevenLabs credits — run it deliberately, once.
+- **Text flow → completion → `analyze_flow_session`.** OpenAI key is good, but no
+  flow has been driven to completion to produce a real analysis.
 
 ### Open item #3 — never validated end to end
 No real client has used the app yet. The acceptance run was done against a local
