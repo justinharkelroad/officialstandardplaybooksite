@@ -19,6 +19,10 @@ export interface StartFlowSessionResponse {
     connection_type: 'webrtc' | 'websocket';
     agent_id: string;
   } | null;
+  voice_error?: {
+    code: 'VOICE_NOT_CONFIGURED' | 'VOICE_SESSION_FAILED';
+    message: string;
+  } | null;
   voice_routing?: {
     mode: 'base' | 'base_with_voice_overrides' | 'custom_canary';
     routing: 'base' | 'base_with_voice_override';

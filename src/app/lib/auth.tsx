@@ -67,11 +67,19 @@ export function MemberAuthProvider({ children }: { children: ReactNode }) {
       if (!cancelled) setLoading(false);
     });
 
-    const { data: sub } = supabase.auth.onAuthStateChange(async (_event, nextSession) => {
+    // The callback runs while supabase-js holds the auth lock. Any Supabase
+    // call awaited in here never releases it, which strands every tab on the
+    // origin at the auth spinner. Set the session synchronously, defer the
+    // member query out of the lock.
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       if (cancelled) return;
       setSession(nextSession);
-      await loadMember(nextSession);
-      if (!cancelled) setLoading(false);
+      setTimeout(() => {
+        if (cancelled) return;
+        void loadMember(nextSession).finally(() => {
+          if (!cancelled) setLoading(false);
+        });
+      }, 0);
     });
 
     return () => {

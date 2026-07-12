@@ -72,7 +72,38 @@ computed-style probes are the reliable fallback.
 - 16 tables, RLS on all, 23 edge functions deployed, all API keys set
 - Self-signup disabled; `21m.mp3` uploaded to the `binaural-beats` bucket
 
-### Open item #1 — VOICE MODE hangs at "Connecting" ⬅ START HERE
+### Open item #1 — VOICE MODE hangs at "Connecting" — DIAGNOSED 2026-07-12
+
+> **The §2 "top suspect" below was WRONG. Left in place for the record; do not
+> chase it.** There was never a signed URL to mismatch a transport with. Three
+> real causes, all verified with live probes:
+>
+> 1. **`VITE_ELEVENLABS_AGENT_ID` is not set in the Cloudflare Pages build.**
+>    This is the hard blocker. `agentId` (`useFlowAgentSession.ts:1165`) is
+>    `undefined`, so `if (!agentId) throw` at :1188 always fires and esbuild
+>    **dead-code-eliminates the entire rest of `startConversation`**. Proof: the
+>    deployed bundle contains the line-1189 throw but NOT the mic-permission
+>    throw 11 lines later, and no agent id anywhere. Voice has never been able
+>    to start client-side. *Fix: add the var in Cloudflare Pages → rebuild.*
+>    Note this also means any local artifact grep for voice code returns nothing
+>    unless you build with the var set — the DCE will hide your own edits.
+> 2. **`ELEVEN_API_KEY` (Lovable secret) lacks the `convai_write` permission.**
+>    ElevenLabs 401s both `get_signed_url` and `/token`, so the server returns
+>    `voice_session: null` + `voice_error: VOICE_SESSION_FAILED`. Verbatim from
+>    the function logs: *"The API key you used is missing the permission
+>    convai_write."* *Fix: enable it on the key in ElevenLabs. No redeploy —
+>    the secret's value doesn't change.*
+> 3. **The client ignored `voice_error` entirely** — it wasn't even on the
+>    `StartFlowSessionResponse` type. With no voice session it fell through to
+>    connecting with a bare `agentId`, which cannot work now that `enable_auth`
+>    is ON, so the SDK sat in `connecting` forever with no error. *Fixed in
+>    code: the hook now throws the server's actual message.*
+>
+> Fixed in code (this repo, uncommitted → see git log): `flowAgentApi.ts` (adds
+> `voice_error` to the type), `useFlowAgentSession.ts` (surfaces it, no bare
+> agentId fallback). **Still needs #1 and #2 from Justin before voice can work.**
+
+### Original (refuted) analysis — VOICE MODE hangs at "Connecting"
 
 **Symptom:** open a flow → Voice → banner clears, shows "Connecting…" forever.
 No console error. (Earlier it said "not configured"; that's fixed.)
@@ -117,6 +148,26 @@ functions → `start_flow_session` → Logs (it console.warns the ElevenLabs sta
 - `evaluate_answer_quality` does not exist in this app (never ported) — don't
   add it back to the agent.
 
+### Open item #1b — AUTH DEADLOCK strands the whole app (found 2026-07-12)
+
+`src/app/lib/auth.tsx` awaited a Supabase query (`fetchMemberRow`) **inside** the
+`onAuthStateChange` callback. That callback runs while supabase-js holds the
+`lock:sb-<project>-auth-token` Web Lock, and awaiting a Supabase call in there
+never releases it. Web Locks are **origin-wide**, so one stranded tab poisons
+every other tab: they make *zero* Supabase requests and sit on the auth spinner
+forever, with no console error.
+
+Observed live on prod: the lock was held `exclusive` indefinitely by a
+long-lived tab (confirmed by comparing `clientId`s via `navigator.locks.query()`
+— the holder was not the tab under test). Fixed by setting the session
+synchronously and deferring the member query out of the lock with `setTimeout`.
+
+**Not reproducible on a fresh local load** — a clean-code control also loaded
+fine, so the trigger is almost certainly `TOKEN_REFRESHED` on a long-lived tab,
+not `INITIAL_SESSION`. The fix follows Supabase's documented guidance, but it is
+**verified in artifact only, not by live repro.** Re-probe after deploy:
+`navigator.locks.query()` on `/app` should show no held auth lock.
+
 ### Open item #2 — AI surfaces untested with keys present
 The keys are set and functions redeployed, but nobody has confirmed:
 - Text flow → completion → real AI analysis (`analyze_flow_session`, gpt-4o-mini)
@@ -158,6 +209,15 @@ stack with seeded test users.
   Use `git show HEAD:path` to confirm.
 - **Edge functions can't import across function dirs.** Shared code goes in
   `supabase/functions/_shared/` or the bundler fails.
+- **A missing `VITE_*` var can silently delete the code you're inspecting.**
+  `import.meta.env.VITE_X` is inlined at build time; if it's unset it becomes
+  `undefined`, an early `if (!x) throw` becomes always-true, and esbuild
+  dead-code-eliminates *everything after it*. Grepping `dist/` for your own edit
+  then returns nothing and looks like a broken build. This cost real time on the
+  voice bug. If an artifact grep can't find code you know you wrote, check for
+  an env-var guard above it before you suspect the bundler.
+- **The Lovable project id in `README.md` is stale** (404s). The real one is
+  `b1ed6863-6f4d-4305-91a3-17d24e3672c4`.
 
 ---
 

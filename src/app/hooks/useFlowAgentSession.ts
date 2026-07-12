@@ -1202,6 +1202,18 @@ export function useFlowAgentSession({
       }
 
       const voiceSession = mode === 'voice' ? session.voice_session : null;
+
+      // No voice session means the server could not get a credential from
+      // ElevenLabs (it returns voice_error saying why). Connecting with a bare
+      // agentId is not a fallback — the agent requires auth, so the SDK would
+      // sit in `connecting` forever. Fail loudly instead.
+      if (mode === 'voice' && !voiceSession) {
+        throw new Error(
+          session.voice_error?.message ??
+            'Voice mode is unavailable right now. Switch to TEXT mode above to continue this Flow.',
+        );
+      }
+
       const ttsVoiceId = mode === 'voice' && session.voice_routing?.routing === 'base_with_voice_override'
         ? session.voice_routing.tts_voice_id
         : null;
