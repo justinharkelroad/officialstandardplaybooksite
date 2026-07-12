@@ -316,15 +316,15 @@ function VoiceSeat({
         )}
 
         {muted && (
-          <div className="absolute bottom-3 right-3 rounded-full border border-white/15 bg-neutral-950/90 p-2 text-zinc-200">
+          <div className="absolute bottom-3 right-3 rounded-full border border-foreground/20 bg-card/90 p-2 text-foreground/70">
             <MicOff className="h-4 w-4" />
           </div>
         )}
       </div>
 
       <div className="mt-6">
-        <p className="text-lg font-semibold leading-tight text-white">{label}</p>
-        <p className="mt-1 text-sm text-zinc-400">{sublabel}</p>
+        <p className="text-lg font-semibold leading-tight text-foreground">{label}</p>
+        <p className="mt-1 text-sm text-foreground/70">{sublabel}</p>
       </div>
 
       <div className="mt-9 w-full">
@@ -424,8 +424,8 @@ function FlowVoiceSessionRoom({
           : <Mic className="h-4 w-4" />;
 
   return (
-    <section className="overflow-hidden rounded-lg border border-neutral-800 bg-neutral-950 text-white shadow-sm">
-      <div className="border-b border-white/10 bg-neutral-950 px-5 py-5 sm:px-7">
+    <section className="overflow-hidden rounded-lg border border-foreground/25 bg-card text-foreground shadow-sm">
+      <div className="border-b border-foreground/15 bg-card px-5 py-5 sm:px-7">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
@@ -436,16 +436,16 @@ function FlowVoiceSessionRoom({
                 </span>
                 {connected ? 'Live' : 'Voice'}
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-2.5 py-1 text-[11px] text-zinc-200">
+              <span className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-2.5 py-1 text-[11px] text-foreground/70">
                 {stateIcon}
                 {VOICE_STATE_LABELS[voiceState]}
               </span>
-              <span className="inline-flex rounded-md border border-white/15 px-2.5 py-1 text-[11px] text-zinc-300">
+              <span className="inline-flex rounded-md border border-white/15 px-2.5 py-1 text-[11px] text-foreground/70">
                 Flow session
               </span>
             </div>
-            <h2 className="mt-4 truncate text-2xl font-semibold tracking-tight text-white">{flowName}</h2>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
+            <h2 className="mt-4 truncate text-2xl font-semibold tracking-tight text-foreground">{flowName}</h2>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-foreground/70">
               Settle in. Take your time, speak naturally, and let the Coach guide the next question.
             </p>
           </div>
@@ -455,7 +455,7 @@ function FlowVoiceSessionRoom({
             size="icon"
             onClick={onEndSession}
             aria-label="Close voice session"
-            className="self-end text-zinc-300 hover:bg-white/10 hover:text-white lg:self-start"
+            className="self-end text-foreground/70 hover:bg-foreground/10 hover:text-foreground lg:self-start"
           >
             <X className="h-4 w-4" />
           </Button>
@@ -484,11 +484,11 @@ function FlowVoiceSessionRoom({
       </div>
 
       {heardRecently && lastUserTranscript ? (
-        <div className="border-t border-white/10 px-5 pb-5 text-center text-xs text-zinc-400">
-          Heard: <span className="text-zinc-200">{lastUserTranscript}</span>
+        <div className="border-t border-white/10 px-5 pb-5 text-center text-xs text-foreground/70">
+          Heard: <span className="text-foreground/70">{lastUserTranscript}</span>
         </div>
       ) : inputRecently ? (
-        <div className="border-t border-white/10 px-5 pb-5 text-center text-xs text-zinc-400">
+        <div className="border-t border-white/10 px-5 pb-5 text-center text-xs text-foreground/70">
           Mic input detected. Listening for your words.
         </div>
       ) : null}
@@ -498,7 +498,7 @@ function FlowVoiceSessionRoom({
           type="button"
           variant="outline"
           onClick={onToggleMute}
-          className="min-w-32 border-white/15 bg-transparent text-white hover:bg-white/10 hover:text-white"
+          className="min-w-32 border-foreground/25 bg-transparent text-foreground hover:bg-foreground/10 hover:text-foreground"
         >
           {muted ? <MicOff className="mr-2 h-4 w-4" /> : <Mic className="mr-2 h-4 w-4" />}
           {muted ? 'Muted' : 'Mute'}

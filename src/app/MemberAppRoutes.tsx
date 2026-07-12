@@ -5,6 +5,7 @@ import "@/app/app.css";
 import { MemberAuthProvider } from "@/app/lib/auth";
 import { RequireAdmin, RequireMember } from "@/app/components/guards";
 import AppShell from "@/app/components/AppShell";
+import ImmersiveFrame from "@/app/components/ImmersiveFrame";
 import AdminPage from "@/app/pages/AdminPage";
 import PersonalGrowthDashboard from "@/app/pages/PersonalGrowthDashboard";
 import Core4 from "@/app/pages/Core4";
@@ -34,6 +35,14 @@ export default function MemberAppRoutes() {
     <MemberAuthProvider>
       <Routes>
         <Route element={<RequireMember />}>
+          {/* Immersive flow surfaces: full-viewport, no sidebar chrome. */}
+          <Route element={<ImmersiveFrame />}>
+            <Route path="flows/start/:slug" element={<FlowStart />} />
+            <Route path="flows/session/:slug" element={<FlowSession />} />
+            <Route path="flows/complete/:sessionId" element={<FlowComplete />} />
+            <Route path="flows/view/:sessionId" element={<FlowView />} />
+          </Route>
+
           <Route element={<AppShell />}>
             <Route index element={<PersonalGrowthDashboard />} />
             <Route path="core4" element={<Core4 />} />
@@ -51,10 +60,6 @@ export default function MemberAppRoutes() {
             <Route path="flows" element={<Flows />} />
             <Route path="flows/library" element={<FlowLibrary />} />
             <Route path="flows/profile" element={<FlowProfile />} />
-            <Route path="flows/start/:slug" element={<FlowStart />} />
-            <Route path="flows/session/:slug" element={<FlowSession />} />
-            <Route path="flows/complete/:sessionId" element={<FlowComplete />} />
-            <Route path="flows/view/:sessionId" element={<FlowView />} />
             <Route path="theta-talk-track" element={<ThetaTalkTrack />} />
             <Route path="theta-talk-track/create" element={<ThetaTalkTrackCreate />} />
             <Route element={<RequireAdmin />}>

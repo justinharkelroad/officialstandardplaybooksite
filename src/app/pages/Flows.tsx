@@ -75,9 +75,9 @@ export default function Flows() {
   const startFlow = (template: FlowTemplate) => {
     if (!hasProfile) {
       // Redirect to profile setup first
-      navigate('/app/flows/profile', { state: { redirectTo: `/flows/start/${template.slug}` } });
+      navigate('/app/flows/profile', { state: { redirectTo: `/app/flows/start/${template.slug}` } });
     } else {
-      navigate(`/flows/start/${template.slug}`);
+      navigate(`/app/flows/start/${template.slug}`);
     }
   };
 
@@ -282,7 +282,7 @@ export default function Flows() {
               <Card
                 key={session.id}
                 className="cursor-pointer hover:bg-accent/5 transition-colors"
-                onClick={() => navigate(`/flows/view/${session.id}`)}
+                onClick={() => navigate(`/app/flows/view/${session.id}`)}
                 onMouseEnter={() => setActiveRecentIconId(session.id)}
                 onMouseLeave={() => setActiveRecentIconId(null)}
                 onFocus={() => setActiveRecentIconId(session.id)}
