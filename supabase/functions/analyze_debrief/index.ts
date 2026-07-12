@@ -7,6 +7,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { corsHeaders } from '../_shared/cors.ts';
 import { requireActiveMember } from '../_shared/memberAuth.ts';
 import { BRAND, buildEmailHtml, EmailComponents, escapeHtml } from '../_shared/email-template.ts';
+import { sendMemberEmail } from '../_shared/member-email.ts';
 
 /** Returns ISO 8601 week key like '2026-W11' */
 function getWeekKey(date: Date): string {
@@ -251,7 +252,6 @@ serve(async (req) => {
     if (member instanceof Response) return member;
 
     const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY');
-    const resendKey = Deno.env.get('RESEND_API_KEY');
 
     if (!anthropicKey) {
       return new Response(
@@ -695,9 +695,10 @@ serve(async (req) => {
 
     claimedReviewId = null;
 
-    // Send email with debrief + analysis (optional — skipped when
-    // RESEND_API_KEY isn't configured; never fails the analysis)
-    if (review.status === 'completed' && resendKey && member.email) {
+    // Send the debrief + analysis. Never fails the analysis, but every outcome —
+    // including a missing RESEND_API_KEY — is recorded in member_emails. The old
+    // `&& resendKey` guard here is why this email sent nothing, silently, for weeks.
+    if (review.status === 'completed' && member.email) {
       try {
         // Build domain reflections HTML
         let domainHtml = '';
@@ -749,26 +750,20 @@ serve(async (req) => {
           `,
         });
 
-        const resendResponse = await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${resendKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            from: BRAND.fromEmail,
-            to: member.email,
-            subject: `Your Weekly Debrief — ${weekLabel}`,
-            html: emailHtml,
-          }),
+        await sendMemberEmail({
+          supabase,
+          memberId: userId,
+          to: member.email,
+          kind: 'debrief_report',
+          refKey: review.week_key,
+          subject: `Your Weekly Debrief — ${weekLabel}`,
+          html: emailHtml,
         });
-
-        if (!resendResponse.ok) {
-          throw new Error(`Resend rejected the debrief email with status ${resendResponse.status}`);
-        }
       } catch (emailErr) {
         console.error('Email send error:', emailErr);
-        // Don't fail the whole request if email fails
+        // Don't fail the whole request if email fails. sendMemberEmail already
+        // recorded the outcome in member_emails; this catch only covers a throw
+        // while BUILDING the html above.
       }
     }
 

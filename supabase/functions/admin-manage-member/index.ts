@@ -15,6 +15,42 @@ import {
   jsonResponse,
   requireAdminMember,
 } from "../_shared/memberAuth.ts";
+import { sendMemberEmail } from "../_shared/member-email.ts";
+import {
+  BRAND,
+  buildEmailHtml,
+  EmailComponents,
+  escapeHtml,
+} from "../_shared/email-template.ts";
+
+const APP_URL = "https://standardplaybook.com/app";
+
+function buildWelcomeHtml(
+  fullName: string,
+  email: string,
+  password: string,
+): string {
+  const firstName = fullName.trim().split(/\s+/)[0] || "there";
+  return buildEmailHtml({
+    title: "Welcome to Standard Playbook",
+    eyebrow: "YOUR ACCOUNT IS LIVE",
+    footerName: BRAND.name,
+    bodyContent: `
+      ${EmailComponents.paragraph(`${escapeHtml(firstName)},`)}
+      ${EmailComponents.paragraph(
+        "Your account is live. Everything we work on now has a home — your Core 4, " +
+          "your weekly playbook, your flows, and your debrief.",
+      )}
+      ${EmailComponents.additionalFields([
+        { label: "Sign in", value: escapeHtml(APP_URL) },
+        { label: "Email", value: escapeHtml(email) },
+        { label: "Password", value: escapeHtml(password) },
+      ])}
+      ${EmailComponents.button("Sign in", APP_URL)}
+      ${EmailComponents.infoText("Change your password once you're in.")}
+    `,
+  });
+}
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return handleOptions(req);
@@ -66,9 +102,23 @@ Deno.serve(async (req) => {
         return errorResponse(`Member row creation failed: ${memberError.message}`, 400);
       }
 
+      // Welcome mail carries the credentials Justin just typed. A send failure
+      // must NOT undo a good account — surface it in the response instead, and
+      // the member_emails ledger holds the reason.
+      const welcome = await sendMemberEmail({
+        supabase,
+        memberId: created.user.id,
+        to: email,
+        kind: "welcome",
+        refKey: created.user.id, // one welcome per member, ever
+        subject: "Welcome to Standard Playbook",
+        html: buildWelcomeHtml(fullName, email, password),
+      });
+
       return jsonResponse({
         ok: true,
         member: { id: created.user.id, full_name: fullName, email },
+        welcome_email: welcome,
       });
     }
 
