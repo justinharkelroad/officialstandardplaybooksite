@@ -25,12 +25,12 @@ import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { to: "/app", label: "Hub", icon: LayoutGrid, end: true },
-  { to: "/app/core4", label: "Core 4", icon: Dumbbell },
-  { to: "/app/weekly-playbook", label: "Playbook", icon: ListChecks },
+  { to: "/app/core4", label: "Daily", icon: Dumbbell },
+  { to: "/app/weekly-playbook", label: "Weekly", icon: ListChecks },
+  { to: "/app/monthly-missions", label: "Monthly", icon: Rocket },
+  { to: "/app/life-targets", label: "Quarterly", icon: CalendarRange },
   { to: "/app/flows", label: "Flows", icon: Sparkles },
   { to: "/app/debrief", label: "Debrief", icon: ClipboardEdit },
-  { to: "/app/monthly-missions", label: "Missions", icon: Rocket },
-  { to: "/app/life-targets", label: "Targets", icon: CalendarRange },
   { to: "/app/theta-talk-track", label: "90 Day Audio", icon: AudioLines },
 ];
 
