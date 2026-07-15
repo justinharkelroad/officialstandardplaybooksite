@@ -22,6 +22,7 @@ const ROUTES = [
   '/',
   '/boardroom',
   '/directive',
+  '/ascension',
   '/partnership',
   '/sales-experience',
   '/producer-power-up',

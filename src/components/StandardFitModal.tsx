@@ -48,7 +48,9 @@ const StandardFitModal = ({
           gap: 0,
         }}
       >
-        <DialogTitle className="sr-only">Standard Fit Application</DialogTitle>
+        <DialogTitle className="sr-only">
+          {programName ? `${programName} Strategy Call Application` : 'Standard Fit Application'}
+        </DialogTitle>
         <BookingOnboardingForm
           onComplete={() => onOpenChange?.(false)}
           source={source}

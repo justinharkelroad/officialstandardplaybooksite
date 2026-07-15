@@ -345,7 +345,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
       </p>
       <h2 style={headlineStyle}>
         {step === 1
-          ? (programName ? 'Book Your\n8-Week Call.' : (source === 'standard-fit' ? 'Background\nInfo for Call' : 'Contact\nInformation.'))
+          ? (programName ? 'Book Your\nStrategy Call.' : (source === 'standard-fit' ? 'Background\nInfo for Call' : 'Contact\nInformation.'))
           : 'Tell Us\nAbout You.'}
       </h2>
 
@@ -354,7 +354,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
           fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.55,
           color: ink, opacity: 0.7, marginTop: 14,
         }}>
-          Two quick steps, then you book your {programName} call. This is the 8-Week call, not a general fit call.
+          Two quick steps, then you can choose a time for a strategy call about {programName}.
         </p>
       )}
 
@@ -383,7 +383,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
               onChange={handlePhoneChange}
               maxLength={14}
               style={inputStyle} onFocus={handleFocus} onBlur={handleBlur} />
-            <p style={captionStyle}>Personal cell — not the agency line</p>
+            <p style={captionStyle}>Personal cell - not the agency line</p>
           </div>
           <button
             onClick={handleNext}
