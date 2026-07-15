@@ -1249,14 +1249,25 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
           href="/standard90"
           cta="See Standard 90"
         />
-        <p className="decision-waitlist">
-          <a
-            href="/directive"
-            onClick={() => trackHomepageEvent('program_cta_clicked', { program: 'private_long_term_coaching_waitlist', destination: '/directive' })}
-          >
-            Looking for private long-term coaching? View the waitlist.<span aria-hidden> →</span>
-          </a>
-        </p>
+        <section className="decision-sold-out" aria-labelledby="private-coaching-heading">
+          <p id="private-coaching-heading">Private long-term coaching</p>
+          <div className="decision-sold-out-list">
+            <article>
+              <div>
+                <span>Private 1:1 coaching</span>
+                <h5>The Directive</h5>
+              </div>
+              <span className="decision-sold-out-stamp" aria-label="Sold out">Sold Out</span>
+            </article>
+            <article>
+              <div>
+                <span>Highest-access coaching</span>
+                <h5>Partnership</h5>
+              </div>
+              <span className="decision-sold-out-stamp" aria-label="Sold out">Sold Out</span>
+            </article>
+          </div>
+        </section>
       </div>
     );
   }
@@ -1485,7 +1496,6 @@ const DecisionProgramsSection = () => {
         }
         .decision-path-trigger:focus-visible,
         .decision-offer a:focus-visible,
-        .decision-waitlist a:focus-visible,
         .decision-agency-brain a:focus-visible {
           outline: 3px solid ${blue};
           outline-offset: -3px;
@@ -1591,17 +1601,63 @@ const DecisionProgramsSection = () => {
           white-space: nowrap;
           padding: 8px 0;
         }
-        .decision-waitlist {
+        .decision-sold-out {
           grid-column: 1 / -1;
           border-top: 1px solid rgba(244,242,238,.25);
           margin: 26px 0 0;
           padding: 22px 0 0;
         }
-        .decision-waitlist a {
-          color: ${paper};
-          font: 500 12px/1.5 ${body};
-          text-decoration-color: ${blue};
-          text-underline-offset: 4px;
+        .decision-sold-out > p {
+          font: 700 10px/1.4 ${body};
+          letter-spacing: .18em;
+          text-transform: uppercase;
+          opacity: .5;
+          margin: 0 0 14px;
+        }
+        .decision-sold-out-list {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 24px;
+        }
+        .decision-sold-out-list article {
+          min-width: 0;
+          min-height: 74px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 18px;
+          border-top: 1px solid rgba(244,242,238,.16);
+          padding: 16px 4px 4px 0;
+        }
+        .decision-sold-out-list article > div > span {
+          display: block;
+          font: 600 9px/1.3 ${body};
+          letter-spacing: .14em;
+          text-transform: uppercase;
+          opacity: .45;
+          margin-bottom: 5px;
+        }
+        .decision-sold-out-list h5 {
+          font: 400 clamp(24px, 2.3vw, 34px)/1 ${display};
+          text-transform: uppercase;
+          margin: 0;
+        }
+        .decision-sold-out-stamp {
+          display: inline-block;
+          flex-shrink: 0;
+          color: #D4332A;
+          border: 3px solid #D4332A;
+          outline: 1px solid #D4332A;
+          outline-offset: 3px;
+          font: 400 clamp(18px, 2vw, 25px)/.9 ${display};
+          letter-spacing: .05em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          padding: 5px 10px 4px;
+          transform: rotate(-5deg);
+        }
+        .decision-sold-out-list article:nth-child(2) .decision-sold-out-stamp {
+          transform: rotate(4deg);
         }
         .decision-team-groups { display: grid; gap: 40px; }
         .decision-team-groups > section > h4 {
@@ -1661,7 +1717,11 @@ const DecisionProgramsSection = () => {
             border-top: 1px solid rgba(244,242,238,.25);
             padding-left: 0;
           }
-          .decision-waitlist { margin-top: 0; }
+          .decision-sold-out { margin-top: 0; }
+          .decision-sold-out-list { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+          .decision-sold-out-list article { min-height: 68px; padding-right: 6px; }
+          .decision-sold-out-list h5 { font-size: 26px; }
+          .decision-sold-out-stamp { font-size: 18px; }
         }
         @media (prefers-reduced-motion: reduce) {
           .decision-path,
