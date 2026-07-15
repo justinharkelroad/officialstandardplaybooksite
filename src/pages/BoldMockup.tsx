@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
 import BoldNav from '@/components/BoldNav';
 import CertifiedStandardBand from '@/components/CertifiedStandardBand';
@@ -26,6 +26,31 @@ const ink = '#0A0A0B';     // near-black
 const paper = '#F4F2EE';   // warm off-white (newsprint)
 const blue = '#2997FF';    // SP brand blue (already in tailwind)
 const blueDark = '#0066CC';
+
+type AnalyticsPayload = Record<string, string>;
+
+const trackHomepageEvent = (event: string, payload: AnalyticsPayload = {}) => {
+  if (typeof window === 'undefined') return;
+
+  const analyticsWindow = window as Window & {
+    dataLayer?: Array<Record<string, string>>;
+    fbq?: (command: 'trackCustom', eventName: string, parameters?: AnalyticsPayload) => void;
+  };
+
+  try {
+    (analyticsWindow.dataLayer ??= []).push({ event, ...payload });
+  } catch {
+    // Analytics must never block the visitor's navigation or interaction.
+  }
+
+  try {
+    analyticsWindow.fbq?.('trackCustom', event, payload);
+  } catch {
+    // Meta may be unavailable when tracking permissions are disabled.
+  }
+
+  window.dispatchEvent(new CustomEvent(event, { detail: payload }));
+};
 
 /* ── Reveal helper ─────────────────────────────────────── */
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
@@ -161,7 +186,10 @@ const HeroSection = () => {
               Learn More
             </a>
             <button
-              onClick={() => setFitOpen(true)}
+              onClick={() => {
+                trackHomepageEvent('strategy_application_started', { source: 'home_hero' });
+                setFitOpen(true);
+              }}
               style={{
                 fontFamily: body, fontSize: 13, fontWeight: 700, letterSpacing: '0.12em',
                 color: '#fff', background: ink, textTransform: 'uppercase',
@@ -1139,6 +1167,512 @@ const ProgramsSection = () => {
   );
 };
 
+type DecisionPathId = 'owner_coaching' | 'team_programs' | 'agency_brain';
+
+type DecisionPath = {
+  id: DecisionPathId;
+  index: string;
+  label: string;
+  description: string;
+  cta: string;
+};
+
+const decisionPaths: DecisionPath[] = [
+  {
+    id: 'owner_coaching',
+    index: '01',
+    label: "I'M THE BOTTLENECK.",
+    description: 'Get the agency out of your head with coaching, accountability, and a plan you can execute.',
+    cta: 'See owner coaching',
+  },
+  {
+    id: 'team_programs',
+    index: '02',
+    label: 'MY TEAM NEEDS A STANDARD.',
+    description: 'Train producers, install accountability, and turn inconsistent execution into a repeatable system.',
+    cta: 'See team programs',
+  },
+  {
+    id: 'agency_brain',
+    index: '03',
+    label: 'I NEED THE OPERATING SYSTEM.',
+    description: 'Put scorecards, pipeline, training, retention, and daily execution into one system.',
+    cta: 'See Agency Brain',
+  },
+];
+
+type DecisionOfferProps = {
+  eyebrow: string;
+  name: string;
+  price?: string;
+  description: string;
+  href: string;
+  cta: string;
+  external?: boolean;
+};
+
+const DecisionOffer = ({ eyebrow, name, price, description, href, cta, external }: DecisionOfferProps) => (
+  <article className="decision-offer">
+    <div>
+      <p className="decision-offer-eyebrow">{eyebrow}</p>
+      <h4>{name}</h4>
+    </div>
+    {price && <p className="decision-offer-price">{price}</p>}
+    <p className="decision-offer-copy">{description}</p>
+    <a
+      href={href}
+      {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      onClick={() => trackHomepageEvent('program_cta_clicked', { program: name, destination: href })}
+    >
+      {cta}<span aria-hidden> →</span>
+    </a>
+  </article>
+);
+
+const PathDetails = ({ path }: { path: DecisionPathId }) => {
+  if (path === 'owner_coaching') {
+    return (
+      <div className="decision-details-grid decision-details-grid--two">
+        <DecisionOffer
+          eyebrow="Recurring group coaching"
+          name="The Boardroom"
+          price="$299/month"
+          description="Monthly coaching, operator accountability, and a room of owners committed to moving the work forward."
+          href="/boardroom"
+          cta="See The Boardroom"
+        />
+        <DecisionOffer
+          eyebrow="Focused 90-day one-on-one path"
+          name="Standard 90"
+          price="Fit Call"
+          description="A custom 90-day action map with personal coaching, accountability, and weekly course correction."
+          href="/standard90"
+          cta="See Standard 90"
+        />
+        <p className="decision-waitlist">
+          <a
+            href="/directive"
+            onClick={() => trackHomepageEvent('program_cta_clicked', { program: 'private_long_term_coaching_waitlist', destination: '/directive' })}
+          >
+            Looking for private long-term coaching? View the waitlist.<span aria-hidden> →</span>
+          </a>
+        </p>
+      </div>
+    );
+  }
+
+  if (path === 'team_programs') {
+    return (
+      <div className="decision-team-groups">
+        <section aria-labelledby="train-the-team">
+          <h4 id="train-the-team">Train the team</h4>
+          <div className="decision-details-grid decision-details-grid--two">
+            <DecisionOffer
+              eyebrow="AI sales certification · One-time"
+              name="Certified Standard"
+              price="$399/seat"
+              description="Certify producers on the full Hello-to-Bind sales call with training, roleplay, quizzes, and scored certification."
+              href="/certified-standard?src=home-programs"
+              cta="Get Certified"
+            />
+            <DecisionOffer
+              eyebrow="Team sprint"
+              name="6 Week Producer Challenge"
+              price="$299/producer"
+              description="Six weeks of sales-process training, daily habits, action takeaways, and owner visibility."
+              href="https://myagencybrain.com/six-week-challenge"
+              cta="Start the Challenge"
+              external
+            />
+          </div>
+        </section>
+        <section aria-labelledby="lead-the-team">
+          <h4 id="lead-the-team">Lead the team</h4>
+          <div className="decision-details-grid decision-details-grid--two">
+            <DecisionOffer
+              eyebrow="Manager training"
+              name="8 Week Experience"
+              price="Apply"
+              description="Install a complete sales-management system through eight live coaching calls and a manager playbook."
+              href="/sales-experience"
+              cta="See the Experience"
+            />
+            <DecisionOffer
+              eyebrow="Sales team accountability · By application"
+              name="The Team Standard"
+              price="From $2,500/mo"
+              description="Owner-free team accountability calls, weekly scoreboard rhythms, and direct reporting to the owner."
+              href="/team-standard"
+              cta="See The Standard"
+            />
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  return (
+    <div className="decision-agency-brain">
+      <p className="decision-offer-eyebrow">The agency operating system</p>
+      <h4>Agency Brain</h4>
+      <p>
+        Bring scorecards, pipeline, team visibility, training, retention, and daily execution into one operating loop.
+      </p>
+      <a
+        href="https://myagencybrain.com/info#pricing"
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => trackHomepageEvent('program_cta_clicked', { program: 'Agency Brain', destination: 'https://myagencybrain.com/info#pricing' })}
+      >
+        See Agency Brain <span aria-hidden>→</span>
+      </a>
+      <p className="decision-agency-brain-secondary">Compare Core, Plus, and Pro on Agency Brain.</p>
+    </div>
+  );
+};
+
+const DecisionProgramsSection = () => {
+  const [expanded, setExpanded] = useState<DecisionPathId | null>(null);
+  const reduceMotion = useReducedMotion();
+
+  const selectPath = (id: DecisionPathId) => {
+    const next = expanded === id ? null : id;
+    setExpanded(next);
+    if (next) trackHomepageEvent('path_selected', { path: id });
+  };
+
+  return (
+    <section id="programs" className="decision-board">
+      <div className="decision-board-layout">
+        <header className="decision-board-intro">
+          <p>/ Programs</p>
+          <h2>What needs to change first?</h2>
+          <div className="decision-board-intro-rule" aria-hidden />
+          <p>Choose the problem you need solved. We’ll show you the shortest path.</p>
+        </header>
+
+        <div className="decision-paths">
+          {decisionPaths.map((path) => {
+            const isExpanded = expanded === path.id;
+            const panelId = `decision-panel-${path.id}`;
+            const triggerId = `decision-trigger-${path.id}`;
+
+            return (
+              <article key={path.id} className={`decision-path ${isExpanded ? 'is-expanded' : ''}`}>
+                <button
+                  id={triggerId}
+                  type="button"
+                  className="decision-path-trigger"
+                  aria-expanded={isExpanded}
+                  aria-controls={panelId}
+                  onClick={() => selectPath(path.id)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault();
+                      selectPath(path.id);
+                    }
+                  }}
+                >
+                  <span className="decision-path-index">{path.index}</span>
+                  <span className="decision-path-copy">
+                    <span className="decision-path-label">{path.label}</span>
+                    <span className="decision-path-description">{path.description}</span>
+                  </span>
+                  <span className="decision-path-action">
+                    <span>{path.cta}</span>
+                    <span className="decision-path-plus" aria-hidden>{isExpanded ? '−' : '+'}</span>
+                  </span>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isExpanded && (
+                    <motion.div
+                      id={panelId}
+                      role="region"
+                      aria-labelledby={triggerId}
+                      className="decision-path-panel"
+                      initial={reduceMotion ? false : { opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -8 }}
+                      transition={{ duration: reduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      <PathDetails path={path.id} />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+
+      <style>{`
+        .decision-board {
+          background: ${paper};
+          border-top: 1px solid ${ink};
+          color: ${ink};
+          padding: clamp(72px, 8vw, 120px) 24px clamp(96px, 10vw, 150px);
+          overflow: clip;
+        }
+        .decision-board-layout {
+          display: grid;
+          grid-template-columns: minmax(0, 0.95fr) minmax(0, 2.05fr);
+          gap: clamp(40px, 6vw, 96px);
+          max-width: 1280px;
+          margin: 0 auto;
+          align-items: start;
+        }
+        .decision-board-intro {
+          position: sticky;
+          top: 100px;
+        }
+        .decision-board-intro > p:first-child,
+        .decision-offer-eyebrow {
+          font: 700 11px/1.4 ${body};
+          letter-spacing: .18em;
+          text-transform: uppercase;
+          margin: 0 0 18px;
+        }
+        .decision-board-intro h2 {
+          font: 400 clamp(50px, 6.1vw, 94px)/.89 ${display};
+          letter-spacing: -.02em;
+          text-transform: uppercase;
+          text-wrap: balance;
+          margin: 0;
+        }
+        .decision-board-intro-rule {
+          width: 44px;
+          height: 4px;
+          background: ${blue};
+          margin: 30px 0 24px;
+        }
+        .decision-board-intro > p:last-child {
+          font: 500 15px/1.6 ${body};
+          max-width: 30ch;
+          margin: 0;
+        }
+        .decision-paths {
+          border-top: 1px solid ${ink};
+        }
+        .decision-path {
+          border-bottom: 1px solid ${ink};
+          background: ${paper};
+          color: ${ink};
+        }
+        .decision-path.is-expanded {
+          background: ${ink};
+          color: ${paper};
+        }
+        .decision-path-trigger {
+          appearance: none;
+          width: 100%;
+          min-height: 176px;
+          display: grid;
+          grid-template-columns: 44px minmax(0, 1fr) auto;
+          gap: 20px;
+          align-items: center;
+          color: inherit;
+          background: transparent;
+          border: 0;
+          border-radius: 0;
+          padding: 30px 24px;
+          text-align: left;
+          cursor: pointer;
+          transition: transform .22s ease;
+        }
+        .decision-path:not(.is-expanded) .decision-path-trigger:hover {
+          transform: translateX(4px);
+        }
+        .decision-path-trigger:focus-visible,
+        .decision-offer a:focus-visible,
+        .decision-waitlist a:focus-visible,
+        .decision-agency-brain a:focus-visible {
+          outline: 3px solid ${blue};
+          outline-offset: -3px;
+        }
+        .decision-path-index {
+          align-self: start;
+          font: 400 18px/1 ${editorial};
+          opacity: .45;
+          padding-top: 5px;
+        }
+        .decision-path-copy { display: block; min-width: 0; }
+        .decision-path-label {
+          display: block;
+          font: 400 clamp(34px, 4vw, 60px)/.95 ${display};
+          letter-spacing: -.015em;
+          text-transform: uppercase;
+          text-wrap: balance;
+        }
+        .decision-path-description {
+          display: block;
+          max-width: 59ch;
+          margin-top: 14px;
+          font: 400 14px/1.55 ${body};
+          opacity: .72;
+        }
+        .decision-path-action {
+          min-width: 132px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 18px;
+          font: 700 10px/1 ${body};
+          letter-spacing: .13em;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+        .decision-path-plus {
+          width: 42px;
+          height: 42px;
+          display: grid;
+          place-items: center;
+          border: 1px solid currentColor;
+          color: inherit;
+          font: 400 22px/1 ${body};
+        }
+        .is-expanded .decision-path-plus {
+          border-color: ${blue};
+          background: ${blue};
+          color: ${ink};
+        }
+        .decision-path-panel {
+          padding: 0 24px 36px 88px;
+          transform-origin: top;
+        }
+        .decision-details-grid {
+          display: grid;
+          gap: 0;
+          border-top: 1px solid rgba(244,242,238,.38);
+        }
+        .decision-details-grid--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .decision-offer {
+          display: grid;
+          grid-template-rows: auto auto 1fr auto;
+          gap: 15px;
+          min-width: 0;
+          padding: 26px 28px 2px 0;
+        }
+        .decision-offer + .decision-offer {
+          border-left: 1px solid rgba(244,242,238,.25);
+          padding-left: 28px;
+        }
+        .decision-offer-eyebrow {
+          color: ${blue};
+          margin-bottom: 8px;
+        }
+        .decision-offer h4,
+        .decision-agency-brain h4 {
+          font: 400 clamp(28px, 3vw, 44px)/1 ${display};
+          text-transform: uppercase;
+          margin: 0;
+        }
+        .decision-offer-price {
+          font: 700 14px/1 ${body};
+          margin: 0;
+          font-variant-numeric: tabular-nums;
+        }
+        .decision-offer-copy,
+        .decision-agency-brain > p:not(.decision-offer-eyebrow):not(.decision-agency-brain-secondary) {
+          font: 400 13px/1.6 ${body};
+          opacity: .72;
+          margin: 0;
+          max-width: 44ch;
+        }
+        .decision-offer a,
+        .decision-agency-brain > a {
+          justify-self: start;
+          color: ${paper};
+          border-bottom: 2px solid ${blue};
+          font: 700 11px/1.2 ${body};
+          letter-spacing: .12em;
+          text-transform: uppercase;
+          text-decoration: none;
+          white-space: nowrap;
+          padding: 8px 0;
+        }
+        .decision-waitlist {
+          grid-column: 1 / -1;
+          border-top: 1px solid rgba(244,242,238,.25);
+          margin: 26px 0 0;
+          padding: 22px 0 0;
+        }
+        .decision-waitlist a {
+          color: ${paper};
+          font: 500 12px/1.5 ${body};
+          text-decoration-color: ${blue};
+          text-underline-offset: 4px;
+        }
+        .decision-team-groups { display: grid; gap: 40px; }
+        .decision-team-groups > section > h4 {
+          font: 700 11px/1.4 ${body};
+          letter-spacing: .18em;
+          text-transform: uppercase;
+          margin: 0 0 10px;
+        }
+        .decision-agency-brain {
+          border-top: 1px solid rgba(244,242,238,.38);
+          padding-top: 28px;
+        }
+        .decision-agency-brain h4 { margin-bottom: 16px; }
+        .decision-agency-brain > a { display: inline-block; margin-top: 22px; }
+        .decision-agency-brain-secondary {
+          font: 500 12px/1.5 ${body};
+          opacity: .55;
+          margin: 18px 0 0;
+        }
+        @media (max-width: 767px) {
+          .decision-board { padding-inline: 16px; }
+          .decision-board-layout { grid-template-columns: minmax(0, 1fr); gap: 54px; }
+          .decision-board-intro { position: static; }
+          .decision-board-intro h2 { font-size: clamp(48px, 14vw, 70px); }
+          .decision-board-intro > p:last-child { max-width: 36ch; }
+          .decision-path-trigger {
+            min-height: 0;
+            grid-template-columns: 28px minmax(0, 1fr) 38px;
+            gap: 10px;
+            padding: 24px 4px;
+          }
+          .decision-path-label { font-size: clamp(30px, 9vw, 42px); }
+          .decision-path-description { font-size: 13px; margin-top: 10px; }
+          .decision-path-action { min-width: 0; gap: 14px; }
+          .decision-path-action { display: contents; }
+          .decision-path-action > span:first-child {
+            grid-column: 2 / 3;
+            grid-row: 2;
+            justify-self: start;
+            padding-top: 6px;
+            font-size: 10px;
+            letter-spacing: .12em;
+            white-space: nowrap;
+          }
+          .decision-path-plus {
+            grid-column: 3;
+            grid-row: 1;
+            align-self: start;
+            width: 38px;
+            height: 48px;
+          }
+          .decision-path-panel { padding: 0 4px 30px 42px; }
+          .decision-details-grid--two { grid-template-columns: minmax(0, 1fr); }
+          .decision-offer { padding: 24px 0; }
+          .decision-offer + .decision-offer {
+            border-left: 0;
+            border-top: 1px solid rgba(244,242,238,.25);
+            padding-left: 0;
+          }
+          .decision-waitlist { margin-top: 0; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .decision-path,
+          .decision-path-trigger { transition: none !important; }
+          .decision-path:not(.is-expanded) .decision-path-trigger:hover { transform: none; }
+        }
+      `}</style>
+    </section>
+  );
+};
+
 /* ══════════════════════════════════════════════════════
    SOFTWARE DETAIL — what it is + the feature surface (§6)
    ══════════════════════════════════════════════════════ */
@@ -1337,9 +1871,23 @@ const DailyPracticeSection = () => (
    ══════════════════════════════════════════════════════ */
 const GiantCTA = () => {
   const [open, setOpen] = useState(false);
+  const startApplication = () => {
+    trackHomepageEvent('strategy_application_started', { source: 'home_closing_cta' });
+    setOpen(true);
+  };
+
   return (
     <section
-      onClick={() => setOpen(true)}
+      onClick={(event) => {
+        if ((event.target as HTMLElement).closest('[role="dialog"]')) return;
+        startApplication();
+      }}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          startApplication();
+        }
+      }}
       style={{
         background: ink,
         padding: '100px 24px 70px',
@@ -1350,6 +1898,7 @@ const GiantCTA = () => {
         isolation: 'isolate',
       }}
       role="button"
+      tabIndex={0}
       aria-label="Apply for a strategy call"
     >
       <IconWatermark corner="right" opacity={0.06} />
@@ -1489,7 +2038,7 @@ const BoldMockup = () => (
     <SoftwareDetail />
     <PolaroidGrid />
     <DailyPracticeSection />
-    <ProgramsSection />
+    <DecisionProgramsSection />
     <GiantCTA />
     <BoldFooter />
   </div>
