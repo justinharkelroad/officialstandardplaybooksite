@@ -7,6 +7,8 @@ import CertifiedStandardBand from '@/components/CertifiedStandardBand';
 import StandardFitModal from '@/components/StandardFitModal';
 
 import standardLogo from '@/assets/standard-word-logo.png';
+import spIconWhite from '@/assets/sp-icon-white.png';
+import spIconBlue from '@/assets/sp-icon-blue.png';
 import salesDashImg from '@/assets/sales-dashboard.png';
 import salesAnalyticsImg from '@/assets/sales-analytics.png';
 import lqsImg from '@/assets/lqs.png';
@@ -38,6 +40,30 @@ const Reveal = ({ children, className = '', delay = 0 }: { children: React.React
   </motion.div>
 );
 
+/* ── Icon watermark — opaque SP monogram bleeding off a corner ── */
+const IconWatermark = ({
+  corner = 'right',
+  size = 'clamp(260px, 34vw, 560px)',
+  opacity = 0.05,
+}: { corner?: 'left' | 'right'; size?: string; opacity?: number }) => (
+  <img
+    aria-hidden
+    src={spIconWhite}
+    alt=""
+    style={{
+      position: 'absolute',
+      bottom: 'clamp(-80px, -6vw, -40px)',
+      [corner]: 'clamp(-80px, -6vw, -40px)',
+      width: size,
+      height: 'auto',
+      opacity,
+      pointerEvents: 'none',
+      userSelect: 'none',
+      zIndex: -1,
+    } as React.CSSProperties}
+  />
+);
+
 
 /* ══════════════════════════════════════════════════════
    HERO — editorial display headline + tilted image
@@ -58,7 +84,7 @@ const HeroSection = () => {
       <div className="px-6 md:px-10 max-w-[1440px] mx-auto relative">
         <div className="grid grid-cols-12 gap-6 items-start relative">
           {/* Massive headline — wraps across the grid like an editorial cover */}
-          <Reveal className="col-span-12 md:col-span-9 relative z-20">
+          <Reveal className="order-1 col-span-12 md:col-span-9 relative z-20">
             <h1
               style={{
                 fontFamily: display,
@@ -78,7 +104,7 @@ const HeroSection = () => {
           </Reveal>
 
           {/* Tilted image card — bursting into the headline like the Dom Pérignon bottle */}
-          <Reveal delay={0.15} className="col-span-12 md:col-span-3 relative z-10">
+          <Reveal delay={0.15} className="order-4 md:order-2 col-span-12 md:col-span-3 relative z-10">
             <motion.div
               initial={{ rotate: -8, y: 20 }}
               animate={{ rotate: -8 }}
@@ -102,11 +128,9 @@ const HeroSection = () => {
               />
             </motion.div>
           </Reveal>
-        </div>
 
-        {/* Sub-row: tagline + CTA */}
-        <div className="grid grid-cols-12 gap-6 mt-12">
-          <Reveal delay={0.25} className="col-span-12 md:col-span-6">
+          {/* On mobile, the promise and application CTA appear before the portrait. */}
+          <Reveal delay={0.25} className="order-2 md:order-3 col-span-12 md:col-span-6 md:mt-6">
             <p
               style={{
                 fontFamily: body,
@@ -123,7 +147,7 @@ const HeroSection = () => {
             </p>
           </Reveal>
 
-          <Reveal delay={0.35} className="col-span-12 md:col-span-6 flex md:justify-end items-center gap-3">
+          <Reveal delay={0.35} className="order-3 md:order-4 col-span-12 md:col-span-6 flex flex-wrap md:justify-end items-center gap-3 md:mt-6">
             <a
               href="#mission"
               style={{
@@ -146,7 +170,7 @@ const HeroSection = () => {
               }}
               className="hover:bg-[#2997FF] hover:border-[#2997FF]"
             >
-              Book a Call
+              Apply for a Strategy Call
             </button>
           </Reveal>
         </div>
@@ -160,10 +184,11 @@ const HeroSection = () => {
 /* ══════════════════════════════════════════════════════
    MARQUEE — dual rotated brand bands
    ══════════════════════════════════════════════════════ */
-const Marquee = ({ rotate = -3, bg = ink, color = paper, dot = blue, phrase = 'STANDARD PLAYBOOK' }: { rotate?: number; bg?: string; color?: string; dot?: string; phrase?: string }) => {
+const Marquee = ({ rotate = -3, bg = ink, color = paper, dot = blue, icon, phrase = 'STANDARD PLAYBOOK' }: { rotate?: number; bg?: string; color?: string; dot?: string; icon?: string; phrase?: string }) => {
   const items = Array.from({ length: 20 });
   return (
     <div
+      className="home-marquee"
       style={{
         background: bg,
         color,
@@ -178,6 +203,7 @@ const Marquee = ({ rotate = -3, bg = ink, color = paper, dot = blue, phrase = 'S
       }}
     >
       <div
+        className="home-marquee-track"
         style={{
           display: 'inline-flex',
           alignItems: 'center',
@@ -186,17 +212,24 @@ const Marquee = ({ rotate = -3, bg = ink, color = paper, dot = blue, phrase = 'S
         }}
       >
         {items.map((_, i) => (
-          <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 28 }}>
+          <span key={i} className="home-marquee-item" style={{ display: 'inline-flex', alignItems: 'center', gap: 28 }}>
             <span style={{
               fontFamily: editorial,
               fontSize: 'clamp(22px, 3.4vw, 44px)',
               letterSpacing: '0.04em',
               fontWeight: 400,
             }}>{phrase}</span>
-            <span aria-hidden style={{
-              display: 'inline-block', width: 18, height: 18, borderRadius: 999,
-              background: dot, flexShrink: 0,
-            }} />
+            {icon ? (
+              <img aria-hidden src={icon} alt="" className="home-marquee-dot" style={{
+                width: 34, height: 34, objectFit: 'contain', flexShrink: 0,
+                transform: `rotate(${-rotate}deg)`,
+              }} />
+            ) : (
+              <span aria-hidden className="home-marquee-dot" style={{
+                display: 'inline-block', width: 18, height: 18, borderRadius: 999,
+                background: dot, flexShrink: 0,
+              }} />
+            )}
           </span>
         ))}
       </div>
@@ -206,14 +239,34 @@ const Marquee = ({ rotate = -3, bg = ink, color = paper, dot = blue, phrase = 'S
 
 const MarqueeBands = () => (
   <div style={{ background: paper, padding: '40px 0', position: 'relative', overflow: 'hidden' }}>
-    <Marquee rotate={-3} bg={ink} color={paper} dot={blue} phrase="BODY · BEING · BALANCE · BUSINESS" />
+    <Marquee rotate={-3} bg={ink} color={paper} icon={spIconWhite} phrase="BODY · BEING · BALANCE · BUSINESS" />
     <div style={{ marginTop: -24 }}>
-      <Marquee rotate={2.5} bg={paper} color={ink} dot={ink} />
+      <Marquee rotate={2.5} bg={paper} color={ink} icon={spIconBlue} />
     </div>
     <style>{`
       @keyframes sp-marquee {
         from { transform: translateX(0); }
         to { transform: translateX(-50%); }
+      }
+      @media (max-width: 639px) {
+        .home-marquee {
+          width: 100% !important;
+          margin-left: 0 !important;
+          transform: none !important;
+          padding-block: 10px !important;
+        }
+        .home-marquee-track,
+        .home-marquee-item {
+          gap: 18px !important;
+        }
+        span.home-marquee-dot {
+          width: 12px !important;
+          height: 12px !important;
+        }
+        img.home-marquee-dot {
+          width: 22px !important;
+          height: 22px !important;
+        }
       }
     `}</style>
   </div>
@@ -376,7 +429,8 @@ const BuilderSection = () => (
    (Dom Pérignon bottle moment)
    ══════════════════════════════════════════════════════ */
 const AgencyBrainBand = () => (
-  <section id="software" style={{ background: ink, padding: '120px 0', overflow: 'hidden', position: 'relative' }}>
+  <section id="software" style={{ background: ink, padding: '120px 0', overflow: 'hidden', position: 'relative', isolation: 'isolate' }}>
+    <IconWatermark corner="left" />
     <div className="px-6 md:px-10 max-w-[1440px] mx-auto">
       <Reveal>
         <p style={{
@@ -807,13 +861,11 @@ const ProgramRowItem = ({ p, expanded, onToggle }: { p: ProgramRow; expanded: bo
       className="group hover:bg-black/[0.03] transition-colors"
     >
       <div
+        className="grid grid-cols-[36px_minmax(0,1fr)_36px] gap-x-3 gap-y-4 px-1 py-6 sm:grid-cols-[60px_minmax(0,1fr)_auto_auto_auto] sm:gap-5 sm:px-2 sm:py-7"
         style={{
-          padding: '28px 8px',
-          display: 'grid',
-          gridTemplateColumns: '60px 1fr auto auto auto',
-          gap: 20,
           alignItems: 'center',
           position: 'relative',
+          overflow: 'clip',
         }}
       >
         <span style={{
@@ -861,7 +913,7 @@ const ProgramRowItem = ({ p, expanded, onToggle }: { p: ProgramRow; expanded: bo
           {p.price}
         </span>
         {isSoldOut ? (
-          <span style={{
+          <span className="col-start-2 row-start-2 justify-self-start sm:col-auto sm:row-auto" style={{
             fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.14em',
             color: ink, textTransform: 'uppercase', padding: '10px 18px',
             border: `1.5px solid ${ink}`, whiteSpace: 'nowrap', opacity: 0.3,
@@ -879,13 +931,14 @@ const ProgramRowItem = ({ p, expanded, onToggle }: { p: ProgramRow; expanded: bo
               padding: '10px 18px', border: `1.5px solid ${ink}`, transition: 'all .25s',
               whiteSpace: 'nowrap',
             }}
-            className="hover:bg-black hover:text-white"
+            className="col-start-2 row-start-2 justify-self-start hover:bg-black hover:text-white sm:col-auto sm:row-auto"
           >
             {p.cta || 'Apply →'}
           </a>
         )}
         <span
           aria-hidden
+          className="col-start-3 row-start-1 sm:col-auto sm:row-auto"
           style={{
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
             width: 36, height: 36, border: `1.5px solid ${ink}`,
@@ -934,14 +987,9 @@ const ProgramRowItem = ({ p, expanded, onToggle }: { p: ProgramRow; expanded: bo
         style={{ overflow: 'hidden' }}
       >
         <div
-          style={{
-            padding: '8px 8px 36px',
-            display: 'grid',
-            gridTemplateColumns: '60px 1fr',
-            gap: 20,
-          }}
+          className="grid grid-cols-1 gap-5 px-1 pb-9 pt-2 sm:grid-cols-[60px_1fr] sm:px-2"
         >
-          <div /> {/* spacer to align with number column */}
+          <div className="hidden sm:block" /> {/* spacer to align with number column */}
           <div>
             <p style={{
               fontFamily: body, fontSize: 15, fontWeight: 400, lineHeight: 1.6,
@@ -1297,10 +1345,14 @@ const GiantCTA = () => {
         padding: '100px 24px 70px',
         cursor: 'pointer',
         borderTop: `1px solid ${ink}`,
+        position: 'relative',
+        overflow: 'hidden',
+        isolation: 'isolate',
       }}
       role="button"
-      aria-label="Book your strategy call"
+      aria-label="Apply for a strategy call"
     >
+      <IconWatermark corner="right" opacity={0.06} />
       <div className="max-w-[1440px] mx-auto text-center">
         <Reveal>
           <p style={{
@@ -1329,7 +1381,7 @@ const GiantCTA = () => {
             fontFamily: body, fontSize: 14, fontWeight: 500, letterSpacing: '0.06em',
             color: paper, opacity: 0.7, marginTop: 32, textTransform: 'uppercase',
           }}>
-            Click anywhere &nbsp;→&nbsp; Book a 20-minute strategy call
+            Click anywhere &nbsp;→&nbsp; Apply for a strategy call
           </p>
         </Reveal>
       </div>
