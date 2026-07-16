@@ -22,6 +22,7 @@ import CallScoring from "./pages/CallScoring";
 import Decision from "./pages/Decision";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
+import DataDeletion from "./pages/DataDeletion";
 import Terms from "./pages/Terms";
 import ThankYou from "./pages/ThankYou";
 import ChallengeThankYou from "./pages/ChallengeThankYou";
@@ -107,6 +108,7 @@ const App = () => (
           <Route path="/contact" element={<BoldContact />} />
           <Route path="/legacy-contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/data-deletion" element={<DataDeletion />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/challenge-thank-you" element={<ChallengeThankYou />} />
