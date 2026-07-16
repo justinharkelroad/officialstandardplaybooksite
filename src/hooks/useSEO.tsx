@@ -7,7 +7,9 @@ export const useSEO = (customConfig?: Partial<SEOConfig>) => {
   const location = useLocation();
 
   useEffect(() => {
-    const pathname = location.pathname;
+    const pathname = location.pathname.length > 1
+      ? location.pathname.replace(/\/+$/, '')
+      : location.pathname;
     const config = seoConfig[pathname] || seoConfig['/'];
     const finalConfig = { ...config, ...customConfig };
 
@@ -44,7 +46,7 @@ export const useSEO = (customConfig?: Partial<SEOConfig>) => {
     updateMetaTag('twitter:description', finalConfig.description, 'name');
     updateMetaTag('twitter:image', ogImage, 'name');
 
-    // Update canonical URL — self-referencing per page
+    // Update canonical URL with a self-reference for each page.
     const canonicalUrl = finalConfig.canonical || `https://standardplaybook.com${pathname === '/' ? '' : pathname}`;
     updateCanonicalUrl(canonicalUrl);
 

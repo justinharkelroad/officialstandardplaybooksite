@@ -1,0 +1,694 @@
+.eightweek-page {
+  --ew-ink: #0a0a0b;
+  --ew-paper: #f4f2ee;
+  --ew-soft: #e8e6e1;
+  --ew-blue: #1976d2;
+  --ew-muted: #66635e;
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  overflow-x: clip;
+  color: var(--ew-ink);
+  background: var(--ew-paper);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.eightweek-page *,
+.eightweek-page *::before,
+.eightweek-page *::after { box-sizing: border-box; }
+
+.eightweek-page button,
+.eightweek-page a { -webkit-tap-highlight-color: transparent; }
+
+.eightweek-shell {
+  width: min(100% - 48px, 1280px);
+  margin-inline: auto;
+}
+
+.eightweek-nav {
+  border-bottom: 1px solid rgba(10, 10, 11, 0.18);
+  background: rgba(244, 242, 238, 0.95);
+}
+
+.eightweek-nav__inner {
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.eightweek-nav__brand { display: inline-flex; align-items: center; }
+.eightweek-nav__brand img { display: block; width: 168px; height: auto; filter: brightness(0); }
+
+.eightweek-nav__apply {
+  border: 2px solid var(--ew-blue);
+  padding: 12px 16px;
+  color: var(--ew-paper);
+  background: var(--ew-blue);
+  font: 800 12px/1 Inter, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.eightweek-nav__apply:hover,
+.eightweek-nav__apply:focus-visible { color: var(--ew-blue); background: transparent; }
+.eightweek-nav__apply:active { transform: translateY(1px); }
+
+.eightweek-hero {
+  min-height: calc(100dvh - 79px);
+  display: flex;
+  align-items: center;
+  padding: 62px 0 72px;
+}
+
+.eightweek-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 350px);
+  gap: clamp(38px, 6vw, 96px);
+  align-items: center;
+}
+
+.eightweek-kicker {
+  margin: 0 0 24px;
+  color: var(--ew-blue);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.eightweek-hero h1,
+.eightweek-page h2 {
+  margin: 0;
+  font-family: "Anton", "Archivo Black", "Oswald", Impact, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.eightweek-hero h1 {
+  max-width: 1050px;
+  font-size: clamp(92px, 13.5vw, 196px);
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+
+.eightweek-hero h1 span {
+  display: block;
+  max-width: 870px;
+  margin: 26px 0 0;
+  font-family: "Archivo Black", "Anton", Impact, sans-serif;
+  font-size: clamp(22px, 3.2vw, 48px);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  color: var(--ew-blue);
+}
+
+.eightweek-hero__intro {
+  max-width: 660px;
+  margin: 22px 0 30px;
+  color: #353431;
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.55;
+}
+
+.eightweek-cta {
+  min-height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 34px;
+  border: 2px solid var(--ew-ink);
+  border-radius: 0;
+  padding: 16px 20px;
+  color: var(--ew-paper);
+  background: var(--ew-blue);
+  font: 800 12px/1 Inter, sans-serif;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 180ms ease, background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.eightweek-cta:hover,
+.eightweek-cta:focus-visible { color: var(--ew-paper); background: var(--ew-ink); border-color: var(--ew-ink); }
+.eightweek-cta:active { transform: translateY(1px); }
+.eightweek-cta span { font-size: 18px; line-height: 0; }
+
+.eightweek-hero__aside {
+  min-width: 0;
+  padding: 12px;
+  color: var(--ew-paper);
+  background: var(--ew-blue);
+}
+.eightweek-hero__visual {
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--ew-ink);
+}
+.eightweek-hero__visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.08);
+}
+.eightweek-hero__facts { padding: 8px 10px 10px; }
+.eightweek-hero__facts > div {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 18px;
+  align-items: center;
+  padding: 17px 0;
+  border-bottom: 1px solid rgba(244, 242, 238, 0.42);
+}
+.eightweek-hero__facts strong {
+  font-family: "Anton", Impact, sans-serif;
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1;
+}
+.eightweek-hero__facts span,
+.eightweek-hero__facts > p {
+  color: var(--ew-paper);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+.eightweek-hero__facts > p { margin: 18px 0 0; opacity: 0.76; }
+
+.eightweek-section {
+  padding: clamp(96px, 12vw, 168px) 0;
+  border-top: 1px solid rgba(10, 10, 11, 0.2);
+}
+
+.eightweek-section h2 {
+  max-width: 1080px;
+  font-size: clamp(54px, 7.6vw, 112px);
+  line-height: 0.9;
+  letter-spacing: -0.025em;
+}
+
+.eightweek-coinflip__line {
+  margin: 0 0 24px;
+  font-size: clamp(19px, 2vw, 26px);
+  font-weight: 800;
+}
+
+.eightweek-coinflip__copy {
+  max-width: 760px;
+  margin: 64px 0 0 auto;
+  padding-top: 24px;
+  border-top: 4px solid var(--ew-ink);
+}
+.eightweek-coinflip__copy p { margin: 0; font-size: 19px; line-height: 1.65; }
+.eightweek-coinflip__copy p + p { margin-top: 24px; font-weight: 800; }
+
+.eightweek-promise { background: var(--ew-soft); }
+.eightweek-promise__grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.65fr) minmax(420px, 1.35fr);
+  gap: 56px clamp(64px, 10vw, 150px);
+  align-items: start;
+}
+.eightweek-promise h2 { font-size: clamp(56px, 7vw, 92px); }
+.eightweek-promise blockquote {
+  margin: 0;
+  font-family: "Archivo Black", "Anton", Impact, sans-serif;
+  font-size: clamp(34px, 4.6vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+.eightweek-promise__grid > p {
+  grid-column: 2;
+  max-width: 590px;
+  margin: -18px 0 0;
+  color: var(--ew-muted);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.eightweek-build h2 { margin-bottom: 72px; }
+.eightweek-build__list { border-top: 4px solid var(--ew-ink); }
+.eightweek-build__list article {
+  display: grid;
+  grid-template-columns: 160px minmax(260px, 0.85fr) minmax(300px, 1.15fr);
+  gap: 44px;
+  align-items: start;
+  padding: 30px 0 34px;
+  border-bottom: 1px solid rgba(10, 10, 11, 0.25);
+}
+.eightweek-build__list article > div p,
+.eightweek-build__list article > div span {
+  display: block;
+  margin: 0;
+  color: var(--ew-blue);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.eightweek-build__list article > div span { margin-top: 6px; color: var(--ew-muted); }
+.eightweek-build h3,
+.eightweek-rhythm h3 {
+  margin: 0;
+  font-family: "Archivo Black", "Anton", Impact, sans-serif;
+  font-size: clamp(24px, 2.7vw, 38px);
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+.eightweek-build__list article > p {
+  margin: 0;
+  color: var(--ew-muted);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.eightweek-rhythm { background: var(--ew-soft); }
+.eightweek-rhythm__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(420px, 1.2fr);
+  gap: clamp(60px, 10vw, 150px);
+}
+.eightweek-rhythm__heading h2 {
+  position: sticky;
+  top: 40px;
+  font-size: clamp(52px, 6.6vw, 90px);
+}
+.eightweek-rhythm__list { border-top: 4px solid var(--ew-ink); }
+.eightweek-rhythm__list article {
+  display: grid;
+  grid-template-columns: 118px 1fr;
+  gap: 26px;
+  padding: 28px 0 30px;
+  border-bottom: 1px solid rgba(10, 10, 11, 0.25);
+}
+.eightweek-rhythm__list article > p {
+  margin: 4px 0 0;
+  color: var(--ew-blue);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.eightweek-rhythm h3 { font-size: 25px; }
+.eightweek-rhythm__list span {
+  display: block;
+  margin-top: 12px;
+  color: var(--ew-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.eightweek-system { color: var(--ew-paper); background: var(--ew-blue); border-color: var(--ew-blue); }
+.eightweek-system__grid {
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: clamp(54px, 10vw, 150px);
+  align-items: end;
+}
+.eightweek-system__number strong {
+  display: block;
+  font-family: "Anton", Impact, sans-serif;
+  font-size: clamp(190px, 25vw, 360px);
+  font-weight: 400;
+  line-height: 0.68;
+  letter-spacing: -0.04em;
+}
+.eightweek-system__number span {
+  display: block;
+  margin-top: 32px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.eightweek-system__grid h2 { font-size: clamp(50px, 6.3vw, 88px); }
+.eightweek-system__grid > div:last-child p {
+  max-width: 610px;
+  margin: 30px 0 0;
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.eightweek-included__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(460px, 1.1fr);
+  gap: clamp(60px, 10vw, 150px);
+}
+.eightweek-included h2 { font-size: clamp(50px, 6.4vw, 88px); }
+.eightweek-included ol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 34px;
+  margin: 0;
+  padding: 0;
+  border-top: 4px solid var(--ew-ink);
+  list-style: none;
+}
+.eightweek-included li {
+  min-height: 150px;
+  display: flex;
+  gap: 16px;
+  padding: 22px 0;
+  border-bottom: 1px solid rgba(10, 10, 11, 0.25);
+}
+.eightweek-included li > span { flex: 0 0 auto; color: var(--ew-blue); font-size: 11px; font-weight: 800; }
+.eightweek-included li strong { display: block; font-size: 15px; line-height: 1.35; text-transform: uppercase; }
+.eightweek-included li p { margin: 10px 0 0; color: var(--ew-muted); font-size: 13px; line-height: 1.5; }
+
+.eightweek-after { background: var(--ew-soft); }
+.eightweek-after__copy { max-width: 900px; }
+.eightweek-after__copy p { max-width: 650px; margin: 30px 0 0; color: var(--ew-muted); font-size: 18px; line-height: 1.65; }
+.eightweek-after__media {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 24px;
+  align-items: end;
+  margin-top: 72px;
+}
+.eightweek-after figure { margin: 0; }
+.eightweek-after figure:nth-child(2) { margin-bottom: -42px; }
+.eightweek-after img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top;
+  border: 1px solid rgba(10, 10, 11, 0.22);
+}
+.eightweek-after figcaption {
+  margin-top: 10px;
+  color: var(--ew-muted);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.eightweek-proof {
+  color: var(--ew-paper);
+  background: var(--ew-blue);
+  border-color: rgba(244, 242, 238, 0.24);
+}
+.eightweek-proof__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+  gap: clamp(62px, 10vw, 150px);
+  align-items: center;
+}
+.eightweek-proof .eightweek-kicker { color: var(--ew-paper); opacity: 0.74; }
+.eightweek-proof blockquote {
+  max-width: 900px;
+  margin: 0;
+  font-family: "Archivo Black", "Anton", Impact, sans-serif;
+  font-size: clamp(54px, 7vw, 104px);
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+.eightweek-proof__name {
+  margin: 32px 0 0;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.eightweek-proof__body {
+  max-width: 620px;
+  margin: 46px 0 0;
+  padding-top: 22px;
+  border-top: 1px solid rgba(244, 242, 238, 0.5);
+  font-size: 17px;
+  line-height: 1.65;
+}
+.eightweek-proof__media {
+  max-width: 320px;
+  margin-left: auto;
+  padding: 10px;
+  background: var(--ew-ink);
+  transform: rotate(2.5deg);
+}
+.eightweek-proof__media video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  background: var(--ew-ink);
+}
+.eightweek-proof__quotes {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 0 clamp(42px, 7vw, 100px);
+  margin-top: clamp(88px, 10vw, 140px);
+  border-top: 1px solid rgba(244, 242, 238, 0.5);
+}
+.eightweek-proof__quotes figure {
+  min-width: 0;
+  margin: 0;
+  padding: 34px 0 42px;
+}
+.eightweek-proof__quotes figure:nth-child(2) {
+  padding-left: clamp(28px, 4vw, 60px);
+  border-left: 1px solid rgba(244, 242, 238, 0.28);
+}
+.eightweek-proof__quotes figure:nth-child(3) {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: clamp(42px, 7vw, 100px);
+  align-items: end;
+  border-top: 1px solid rgba(244, 242, 238, 0.28);
+}
+.eightweek-proof__quotes blockquote {
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(18px, 2vw, 25px);
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+  text-transform: none;
+}
+.eightweek-proof__quotes figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 28px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.eightweek-proof__quotes figcaption strong { color: var(--ew-paper); }
+.eightweek-proof__quotes figcaption span { color: rgba(244, 242, 238, 0.68); }
+.eightweek-proof__quotes figure:nth-child(3) figcaption { margin-top: 0; }
+
+.eightweek-fit h2 { max-width: 990px; }
+.eightweek-fit__grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 0;
+  margin-top: 72px;
+  border-top: 4px solid var(--ew-ink);
+}
+.eightweek-fit article {
+  min-height: 290px;
+  padding: 34px clamp(28px, 5vw, 70px) 34px 0;
+}
+.eightweek-fit article + article {
+  padding-left: clamp(28px, 5vw, 70px);
+  padding-right: 0;
+  border-left: 1px solid rgba(10, 10, 11, 0.24);
+}
+.eightweek-fit h3 {
+  margin: 0;
+  color: var(--ew-blue);
+  font-family: "Archivo Black", "Anton", Impact, sans-serif;
+  font-size: clamp(28px, 3.5vw, 48px);
+  line-height: 1;
+  text-transform: uppercase;
+}
+.eightweek-fit article p {
+  max-width: 520px;
+  margin: 26px 0 0;
+  color: var(--ew-muted);
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.eightweek-offer__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(390px, 0.62fr);
+  gap: clamp(64px, 11vw, 170px);
+  align-items: end;
+}
+.eightweek-offer__copy h2 { font-size: clamp(54px, 7vw, 98px); }
+.eightweek-offer__copy > p:last-child { max-width: 600px; margin: 34px 0 0; color: var(--ew-muted); font-size: 18px; line-height: 1.65; }
+.eightweek-offer__price { padding-top: 24px; border-top: 4px solid var(--ew-ink); }
+.eightweek-offer__price > p,
+.eightweek-offer__price > span { margin: 0; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+.eightweek-offer__price strong {
+  display: block;
+  margin: 22px 0 4px;
+  font-family: "Anton", Impact, sans-serif;
+  font-size: clamp(74px, 9vw, 126px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+.eightweek-offer__price > span { color: var(--ew-muted); }
+.eightweek-offer__price .eightweek-cta { width: 100%; margin-top: 38px; }
+
+.eightweek-faq { background: var(--ew-soft); }
+.eightweek-faq__grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.7fr) minmax(480px, 1.3fr);
+  gap: clamp(60px, 10vw, 150px);
+  align-items: start;
+}
+.eightweek-faq h2 { font-size: clamp(52px, 6.4vw, 88px); }
+.eightweek-faq__list { border-top: 4px solid var(--ew-ink); }
+.eightweek-faq details { border-bottom: 1px solid rgba(10, 10, 11, 0.28); }
+.eightweek-faq summary {
+  min-height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 22px 0;
+  cursor: pointer;
+  list-style: none;
+}
+.eightweek-faq summary::-webkit-details-marker { display: none; }
+.eightweek-faq summary span:first-child {
+  font-family: "Archivo Black", "Anton", Impact, sans-serif;
+  font-size: clamp(21px, 2.2vw, 30px);
+  line-height: 1.08;
+  text-transform: uppercase;
+}
+.eightweek-faq summary span:last-child {
+  flex: 0 0 auto;
+  color: var(--ew-blue);
+  font-size: 30px;
+  font-weight: 800;
+  transition: transform 180ms ease;
+}
+.eightweek-faq details[open] summary span:last-child { transform: rotate(45deg); }
+.eightweek-faq details > p {
+  max-width: 680px;
+  margin: -4px 0 26px;
+  color: var(--ew-muted);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.eightweek-guarantee { padding: clamp(100px, 13vw, 180px) 0; background: var(--ew-blue); color: var(--ew-paper); }
+.eightweek-guarantee__inner { max-width: 1100px; }
+.eightweek-guarantee .eightweek-kicker { color: var(--ew-paper); opacity: 0.72; }
+.eightweek-guarantee h2 { font-size: clamp(48px, 7vw, 98px); line-height: 0.94; letter-spacing: -0.025em; }
+
+.eightweek-final { padding: clamp(108px, 14vw, 200px) 0; color: var(--ew-paper); background: var(--ew-ink); text-align: center; }
+.eightweek-final__inner { display: flex; flex-direction: column; align-items: center; }
+.eightweek-final img { width: min(210px, 50vw); height: auto; }
+.eightweek-final h2 { margin-top: 42px; max-width: 1050px; font-size: clamp(70px, 11vw, 158px); line-height: 0.88; letter-spacing: -0.035em; }
+.eightweek-final p { max-width: 530px; margin: 28px 0 34px; color: #aaa7a0; font-size: 17px; }
+.eightweek-cta--light { color: var(--ew-ink); background: var(--ew-paper); border-color: var(--ew-paper); }
+.eightweek-cta--light:hover,
+.eightweek-cta--light:focus-visible { color: var(--ew-paper); background: var(--ew-blue); border-color: var(--ew-blue); }
+
+.eightweek-footer { padding: 28px 0; color: #aaa7a0; background: var(--ew-ink); border-top: 1px solid #2b2b2d; }
+.eightweek-footer .eightweek-shell { display: flex; justify-content: space-between; gap: 32px; }
+.eightweek-footer p { max-width: 760px; margin: 0; font-size: 11px; line-height: 1.5; }
+
+@media (max-width: 1000px) {
+  .eightweek-hero__grid,
+  .eightweek-promise__grid,
+  .eightweek-rhythm__grid,
+  .eightweek-system__grid,
+  .eightweek-included__grid,
+  .eightweek-offer__grid,
+  .eightweek-proof__grid,
+  .eightweek-faq__grid { grid-template-columns: 1fr; }
+  .eightweek-hero h1 { white-space: normal; }
+  .eightweek-hero__aside { max-width: 680px; }
+  .eightweek-hero__facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 22px; }
+  .eightweek-hero__facts > p { grid-column: 1 / -1; }
+  .eightweek-promise__grid > p { grid-column: 1; margin: 0; }
+  .eightweek-rhythm__heading h2 { position: static; }
+  .eightweek-build__list article { grid-template-columns: 120px minmax(220px, 0.8fr) minmax(260px, 1.2fr); gap: 26px; }
+  .eightweek-system__number strong { font-size: 220px; }
+  .eightweek-proof__media { margin: 0; }
+}
+
+@media (max-width: 680px) {
+  .eightweek-shell { width: min(100% - 32px, 1280px); }
+  .eightweek-nav__inner { min-height: 66px; }
+  .eightweek-nav__brand img { width: 138px; }
+  .eightweek-nav__apply { font-size: 10px; }
+  .eightweek-hero { min-height: auto; align-items: flex-start; padding: 46px 0 74px; }
+  .eightweek-hero__grid { gap: 44px; }
+  .eightweek-kicker { max-width: 290px; margin-bottom: 19px; font-size: 10px; line-height: 1.4; }
+  .eightweek-hero h1 { font-size: clamp(69px, 20.8vw, 84px); line-height: 0.84; }
+  .eightweek-hero h1 span { margin-top: 19px; font-size: clamp(25px, 8.4vw, 34px); line-height: 0.98; }
+  .eightweek-hero__intro { margin: 18px 0 25px; font-size: 16px; line-height: 1.48; }
+  .eightweek-cta { width: 100%; min-height: 54px; }
+  .eightweek-hero__aside { width: 100%; padding: 9px; }
+  .eightweek-hero__visual { aspect-ratio: 16 / 9; }
+  .eightweek-hero__facts { display: block; padding: 8px 7px 9px; }
+  .eightweek-hero__facts > p { margin-top: 18px; }
+  .eightweek-section { padding: 88px 0; }
+  .eightweek-section h2 { font-size: clamp(48px, 14.2vw, 66px); line-height: 0.93; }
+  .eightweek-coinflip__copy { margin-top: 48px; }
+  .eightweek-coinflip__copy p { font-size: 17px; }
+  .eightweek-promise blockquote { font-size: clamp(34px, 10.5vw, 48px); }
+  .eightweek-build h2 { margin-bottom: 46px; }
+  .eightweek-build__list article { grid-template-columns: 1fr; gap: 16px; padding: 26px 0 30px; }
+  .eightweek-build__list article > p { font-size: 15px; }
+  .eightweek-rhythm__grid,
+  .eightweek-system__grid,
+  .eightweek-included__grid,
+  .eightweek-offer__grid { gap: 52px; }
+  .eightweek-rhythm__list article { grid-template-columns: 92px 1fr; gap: 16px; }
+  .eightweek-rhythm h3 { font-size: 21px; }
+  .eightweek-system__number strong { font-size: 190px; }
+  .eightweek-system__number span { margin-top: 24px; }
+  .eightweek-system__grid > div:last-child p { font-size: 16px; }
+  .eightweek-included ol { grid-template-columns: 1fr; }
+  .eightweek-included li { min-height: auto; }
+  .eightweek-after__media { grid-template-columns: 1fr; margin-top: 50px; }
+  .eightweek-after figure:nth-child(2) { margin-bottom: 0; }
+  .eightweek-proof__grid { gap: 50px; }
+  .eightweek-proof blockquote { font-size: clamp(47px, 13vw, 61px); }
+  .eightweek-proof__body { margin-top: 36px; font-size: 16px; }
+  .eightweek-proof__media { width: min(100%, 280px); margin-inline: auto; transform: rotate(1.5deg); }
+  .eightweek-proof__quotes { grid-template-columns: 1fr; margin-top: 80px; }
+  .eightweek-proof__quotes figure { padding: 30px 0 34px; }
+  .eightweek-proof__quotes figure:nth-child(2) { padding-left: 0; border-top: 1px solid rgba(244, 242, 238, 0.28); border-left: 0; }
+  .eightweek-proof__quotes figure:nth-child(3) { grid-column: auto; display: block; }
+  .eightweek-proof__quotes figure:nth-child(3) figcaption { margin-top: 28px; }
+  .eightweek-proof__quotes blockquote { font-size: 18px; line-height: 1.5; }
+  .eightweek-fit__grid { grid-template-columns: 1fr; margin-top: 48px; }
+  .eightweek-fit article { min-height: auto; padding: 28px 0 34px; }
+  .eightweek-fit article + article { padding: 34px 0 28px; border-top: 1px solid rgba(10, 10, 11, 0.24); border-left: 0; }
+  .eightweek-fit article p { font-size: 16px; }
+  .eightweek-offer__price strong { font-size: 86px; }
+  .eightweek-faq__grid { gap: 46px; }
+  .eightweek-faq summary { min-height: 78px; gap: 18px; }
+  .eightweek-faq summary span:first-child { font-size: 21px; }
+  .eightweek-guarantee h2 { font-size: clamp(48px, 13.2vw, 62px); }
+  .eightweek-final h2 { font-size: clamp(67px, 19vw, 88px); }
+  .eightweek-footer .eightweek-shell { flex-direction: column; gap: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eightweek-page *,
+  .eightweek-page *::before,
+  .eightweek-page *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+}

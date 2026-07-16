@@ -42,6 +42,7 @@ import AIWalkthrough from "./pages/AIWalkthrough";
 import AppleMockup from "./pages/AppleMockup";
 import BoldMockup from "./pages/BoldMockup";
 import BoldSalesExperience from "./pages/BoldSalesExperience";
+import SalesExperienceOnePager from "./pages/SalesExperienceOnePager";
 import BoldDirective from "./pages/BoldDirective";
 import BoldBoardroom from "./pages/BoldBoardroom";
 import BoldAbout from "./pages/BoldAbout";
@@ -89,7 +90,7 @@ const App = () => (
           <Route path="/legacy-boardroom" element={<Boardroom />} />
           <Route path="/directive" element={<BoldDirective />} />
           <Route path="/legacy-directive" element={<Directive />} />
-          <Route path="/sales-experience" element={<BoldSalesExperience />} />
+          <Route path="/sales-experience" element={<SalesExperienceOnePager />} />
           <Route path="/8-week" element={<BoldSalesExperience autoOpenBooking />} />
           <Route path="/apple-sales-experience" element={<SalesExperience />} />
           <Route path="/8-week-apply" element={<BoldEightWeekApply />} />
