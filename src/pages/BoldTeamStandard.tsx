@@ -103,16 +103,33 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
         </Reveal>
       </div>
 
-      <div className="grid grid-cols-12 gap-8 mt-12 items-center">
+      <div className="grid grid-cols-12 gap-8 mt-12 items-start">
         <Reveal delay={0.2} className="col-span-12 md:col-span-6">
           <p style={{
             fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.85, maxWidth: 620,
           }}>
-            The Team Standard is an accountability system for the people your agency runs on. I become the teammate they did not know they were missing, and everything I see comes straight back to you.
+            You set the numbers. I run the standard, hold the scoreboard, and report everything back to you.
           </p>
           <div style={{ marginTop: 32 }}>
             <PrimaryCTA onApply={onApply} />
+          </div>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-5" style={{ marginTop: 36, maxWidth: 620, borderTop: `1px solid ${ink}`, paddingTop: 22 }}>
+            {[
+              ['By application', 'Personally run'],
+              ['Handful of teams', 'Limited capacity'],
+              ['Month to month', 'No contract'],
+              ['$2,500 or $4,000', 'Biweekly or weekly'],
+            ].map(([value, label]) => (
+              <div key={value}>
+                <p style={{ fontFamily: editorial, fontSize: 'clamp(16px, 1.5vw, 20px)', lineHeight: 1.05, color: ink, textTransform: 'uppercase', margin: 0 }}>
+                  {value}
+                </p>
+                <p style={{ fontFamily: body, fontSize: 11, fontWeight: 600, letterSpacing: '0.12em', lineHeight: 1.4, color: ink, opacity: 0.55, textTransform: 'uppercase', margin: '7px 0 0' }}>
+                  {label}
+                </p>
+              </div>
+            ))}
           </div>
         </Reveal>
 
@@ -173,11 +190,8 @@ const Marquee = ({ rotate = -3, bg = ink, color = paper, dot = blue, phrase = 'T
 );
 
 const MarqueeBands = () => (
-  <div style={{ background: paper, padding: '40px 0', position: 'relative', overflow: 'hidden' }}>
+  <div style={{ background: paper, padding: '34px 0', position: 'relative', overflow: 'hidden' }}>
     <Marquee rotate={-3} bg={ink} color={paper} dot={blue} phrase="ONE TEAM, ONE STANDARD" />
-    <div style={{ marginTop: -24 }}>
-      <Marquee rotate={2.5} bg={paper} color={ink} dot={ink} phrase="A MAN ON THE INSIDE" />
-    </div>
     <style>{`
       @keyframes sp-marquee {
         from { transform: translateX(0); }
@@ -356,6 +370,10 @@ const WhyDifferent = () => (
    ══════════════════════════════════════════════════════ */
 const howBlocks = [
   {
+    label: 'Set the bar',
+    body: 'We start with a working entry session before day one. You set the four numbers, lock the board, and agree on the consequence when the standard is missed.',
+  },
+  {
     label: 'Where it lives',
     body: [
       'A private channel for your team, just them and me. We run on voice notes, not text, because a voice note carries tone and conviction a typed message never will.',
@@ -368,12 +386,12 @@ const howBlocks = [
     body: 'Three drops a week. Monday, they declare where their head is, the one domino they are chasing, and their own goals. Wednesday, where are you at. Friday, on track or off track. In between, they bring me questions whenever they need to, and I answer in the morning and at night, never in the noise of the business day.',
   },
   {
-    label: 'The report',
+    label: 'The snapshot',
     body: 'The day before every call, your sales manager sends the team\'s snapshot. The numbers you set. I never chase data. No snapshot, no call.',
   },
   {
-    label: 'The call',
-    body: 'Fifty minutes, owner-free, and it runs the same way every time. The board goes up. We read it. We open the floor on the gaps. Everyone owns their week. I send them off with the one thing to carry.',
+    label: 'The call and report',
+    body: 'Fifty minutes, owner-free, and run the same way every time. The board goes up. We read it, open the floor on the gaps, and everyone owns their week. After the cycle, you get the truth: who moved, who slipped, and what needs your leadership.',
   },
 ];
 
@@ -407,7 +425,7 @@ const HowItWorks = () => (
                     fontFamily: editorial, fontSize: 18, color: ink, opacity: 0.35,
                     letterSpacing: '-0.01em', display: 'inline-block', marginBottom: 12,
                   }}>
-                    {`0${i + 1}`} / 04
+                    {`0${i + 1}`} / 05
                   </span>
                   <h3 style={{
                     fontFamily: display, fontSize: 'clamp(26px, 3.2vw, 44px)', lineHeight: 0.98,
@@ -429,6 +447,29 @@ const HowItWorks = () => (
         ))}
       </div>
 
+      <Reveal delay={0.08}>
+        <div className="grid grid-cols-12 gap-8 items-end" style={{ background: ink, color: paper, padding: 'clamp(32px, 5vw, 64px)', marginTop: 56 }}>
+          <div className="col-span-12 md:col-span-4">
+            <span style={{ fontFamily: display, fontSize: 'clamp(104px, 15vw, 210px)', lineHeight: 0.72, color: blue, display: 'block' }}>4</span>
+            <p style={{ fontFamily: editorial, fontSize: 'clamp(20px, 2.4vw, 32px)', lineHeight: 1, textTransform: 'uppercase', margin: '20px 0 0' }}>
+              Numbers. Your bar.
+            </p>
+          </div>
+          <div className="col-span-12 md:col-span-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2">
+              {['Outbound calls', 'Quoted households', 'Talk time', 'Items sold'].map((metric, i) => (
+                <div key={metric} style={{ padding: '18px 0', borderTop: `1px solid ${paper}55` }} className={i % 2 === 0 ? 'sm:pr-8' : 'sm:pl-8'}>
+                  <span style={{ fontFamily: body, fontSize: 'clamp(16px, 1.5vw, 20px)', color: paper }}>{metric}</span>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontFamily: body, fontSize: 'clamp(15px, 1.4vw, 18px)', lineHeight: 1.55, color: paper, opacity: 0.72, margin: '22px 0 0', maxWidth: 650 }}>
+              These four are examples, not requirements. You choose the metrics that matter inside your agency, and I build the board around the bar you set. Every person reports against that same board, in front of the same team, so the gaps cannot hide behind a good story.
+            </p>
+          </div>
+        </div>
+      </Reveal>
+
       <Reveal delay={0.1}>
         <p style={{
           fontFamily: display, fontSize: 'clamp(28px, 4.4vw, 60px)', lineHeight: 1.02,
@@ -437,63 +478,6 @@ const HowItWorks = () => (
           You put a man on the <span style={{ color: blue }}>inside</span>. Everything that happens in that room comes back to you.
         </p>
       </Reveal>
-    </div>
-  </section>
-);
-
-/* ══════════════════════════════════════════════════════
-   7 - HERE IS EXACTLY WHAT YOU GET (card grid, no price)
-   ══════════════════════════════════════════════════════ */
-const getCards = [
-  { title: 'A private channel for your team', body: 'A private space inside a simple messaging app, just your team and me. The heartbeat between calls.' },
-  { title: 'Me in their pocket', body: 'They send a voice note when they are stuck. I answer before the day starts and after it ends, so it never becomes noise in the middle of their day.' },
-  { title: 'Three drops a week', body: 'Monday declare, Wednesday check, Friday verdict. A standing rhythm that keeps the standard in front of them.' },
-  { title: 'The accountability call', body: 'A fifty minute owner-free call, built on the scoreboard, run the same way every time.' },
-  { title: 'The scoreboard', body: 'Every person\'s numbers, against the bar you set, in front of each other, every cycle. Nowhere to hide.' },
-  { title: 'Your report, every cycle', body: 'Who moved, who slipped, who is pulling weight. The truth in your hands, so you lead with better information than you have ever had.' },
-  { title: 'A sales manager who holds the line', body: 'Week by week, your manager learns to run the rhythm and hold the standard.' },
-];
-
-const WhatYouGet = () => (
-  <section style={{ background: ink, color: paper, padding: '120px 24px' }}>
-    <div className="max-w-[1280px] mx-auto">
-      <Reveal>
-        <p style={{
-          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-          color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 24,
-        }}>
-          / What You Get
-        </p>
-      </Reveal>
-      <Reveal delay={0.05}>
-        <h2 style={{
-          fontFamily: display, fontSize: 'clamp(40px, 7vw, 100px)', lineHeight: 0.95,
-          letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 64,
-        }}>
-          Here is exactly<br />what you get.
-        </h2>
-      </Reveal>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" style={{ borderTop: `1px solid ${paper}33`, borderLeft: `1px solid ${paper}33` }}>
-        {getCards.map((c, i) => (
-          <Reveal key={c.title} delay={(i % 3) * 0.06}>
-            <div style={{
-              padding: '36px 28px', borderBottom: `1px solid ${paper}33`, borderRight: `1px solid ${paper}33`,
-              height: '100%',
-            }}>
-              <h3 style={{
-                fontFamily: editorial, fontSize: 'clamp(18px, 2vw, 24px)', lineHeight: 1.1,
-                letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: '0 0 14px', fontWeight: 400,
-              }}>
-                {c.title}
-              </h3>
-              <p style={{ fontFamily: body, fontSize: 15, fontWeight: 400, lineHeight: 1.55, color: paper, opacity: 0.78, margin: 0 }}>
-                {c.body}
-              </p>
-            </div>
-          </Reveal>
-        ))}
-      </div>
     </div>
   </section>
 );
@@ -522,7 +506,7 @@ const TwoWaysIn = ({ onApply }: { onApply: () => void }) => (
       </Reveal>
       <Reveal delay={0.08}>
         <p style={{ fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55, color: ink, opacity: 0.8, maxWidth: 680, marginBottom: 56 }}>
-          You choose your level of access, and your report comes on that same rhythm.
+          Both include target-setting, daily check-ins, and ongoing conversation in the private channel all month. The only difference is the call and report cadence.
         </p>
       </Reveal>
 
@@ -534,7 +518,7 @@ const TwoWaysIn = ({ onApply }: { onApply: () => void }) => (
               Weekly
             </p>
             <p style={{ fontFamily: body, fontSize: 17, fontWeight: 400, lineHeight: 1.55, color: ink, opacity: 0.85, marginBottom: 28 }}>
-              Four fifty-minute calls a month. A report every week. Full intensity, for the team that needs the heat turned all the way up.
+              Four fifty-minute calls a month, with a report every week. Between calls, your team sets targets, checks in daily, and talks with me inside the private channel.
             </p>
             <p style={{
               fontFamily: display, fontSize: 'clamp(40px, 6vw, 72px)', lineHeight: 0.9,
@@ -551,7 +535,7 @@ const TwoWaysIn = ({ onApply }: { onApply: () => void }) => (
               Biweekly
             </p>
             <p style={{ fontFamily: body, fontSize: 17, fontWeight: 400, lineHeight: 1.55, color: ink, opacity: 0.85, marginBottom: 28 }}>
-              Two fifty-minute calls a month. A report every two weeks. The standard rhythm.
+              Two fifty-minute calls a month, with a report every two weeks. The calls are biweekly. The accountability is not. Your team still sets targets, checks in daily, and talks with me throughout the month.
             </p>
             <p style={{
               fontFamily: display, fontSize: 'clamp(40px, 6vw, 72px)', lineHeight: 0.9,
@@ -565,7 +549,7 @@ const TwoWaysIn = ({ onApply }: { onApply: () => void }) => (
 
       <Reveal delay={0.1}>
         <p style={{ fontFamily: body, fontSize: 'clamp(16px, 1.5vw, 19px)', fontWeight: 400, lineHeight: 1.6, color: ink, opacity: 0.8, maxWidth: 820, margin: '48px 0 40px' }}>
-          Both run the same daily engine inside the channel. Both are dedicated to your team alone, nothing shared, nothing recycled. By application, and I cap it to a handful of teams, because it is me in there, not a bench of junior coaches.
+          Both are dedicated to your team alone, nothing shared, nothing recycled. By application, and I cap it to a handful of teams, because it is me in there, not a bench of junior coaches.
         </p>
       </Reveal>
       <Reveal delay={0.12}>
@@ -644,8 +628,22 @@ const WhyMe = () => (
       </Reveal>
       <Reveal delay={0.05}>
         <p style={{ fontFamily: body, fontSize: 'clamp(20px, 2.4vw, 32px)', fontWeight: 400, lineHeight: 1.45, color: paper, opacity: 0.92, margin: 0 }}>
-          I am Justin Harkelroad. Twenty years in insurance, and I still build the systems myself. I do not hand your team off to a junior coach. I embed in your team personally and I run the standard myself. That is why I only take a handful of teams.
+          I am Justin Harkelroad. I built, scaled, and sold multiple agencies, including a $3.6 million exit in 2019. I do not hand your team to a junior coach. I embed personally and run the standard myself.
         </p>
+      </Reveal>
+      <Reveal delay={0.1}>
+        <div className="grid grid-cols-1 sm:grid-cols-3" style={{ borderTop: `1px solid ${paper}55`, marginTop: 52, paddingTop: 28 }}>
+          {[
+            ['20 years', 'In insurance'],
+            ['$3.6M', 'Agency exit in 2019'],
+            ['234', 'Coaching sessions analyzed'],
+          ].map(([value, label], i) => (
+            <div key={value} style={{ padding: '12px 0' }} className={i === 0 ? '' : 'sm:pl-8'}>
+              <p style={{ fontFamily: display, fontSize: 'clamp(42px, 5vw, 68px)', lineHeight: 0.9, color: blue, textTransform: 'uppercase', margin: 0 }}>{value}</p>
+              <p style={{ fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.12em', lineHeight: 1.4, color: paper, opacity: 0.62, textTransform: 'uppercase', margin: '12px 0 0' }}>{label}</p>
+            </div>
+          ))}
+        </div>
       </Reveal>
     </div>
   </section>
@@ -1025,7 +1023,6 @@ const BoldTeamStandard = () => {
       <ThirtyDaysIn onApply={openApply} />
       <WhyDifferent />
       <HowItWorks />
-      <WhatYouGet />
       <TwoWaysIn onApply={openApply} />
       <Principles />
       <WhyMe />
