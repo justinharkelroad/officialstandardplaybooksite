@@ -1,6 +1,6 @@
 // life_targets_measurability — ported to the Standard Playbook member app.
 // Auth: requireActiveMember replaces the source's verifyRequest + tier gate.
-// Model: gpt-4o-mini. Prompts and validation kept as-is.
+// Model: GPT-5.4 mini. Prompts and validation kept as-is.
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { corsHeaders } from "../_shared/cors.ts";
@@ -120,13 +120,14 @@ IMPORTANT: Return one analysis object for EACH item in EACH domain array. If a d
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: Deno.env.get('LIFE_TARGETS_MODEL') ?? 'gpt-5.4-mini',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ],
-        temperature: 0.7,
-        max_tokens: 2000,
+        reasoning_effort: 'low',
+        max_completion_tokens: 3000,
+        response_format: { type: 'json_object' },
       }),
     });
 

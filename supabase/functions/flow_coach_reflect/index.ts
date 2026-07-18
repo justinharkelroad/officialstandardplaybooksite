@@ -3,10 +3,13 @@ import { corsHeaders } from "../_shared/cors.ts";
 import { requireActiveMember, isResponse } from "../_shared/memberAuth.ts";
 import {
   assembleCoachPrompt,
+  assembleCoachResolutionPrompt,
   dispatchModel,
-  renderReflection,
+  renderCoachResolution,
+  renderCoachTurn,
   retrieveInsights,
   type CoachIntensity,
+  type CoachWorkingThesis,
 } from "../_shared/flowCoach/index.ts";
 import {
   createServiceClient,
@@ -22,6 +25,8 @@ type RequestBody = {
   session_token?: unknown;
   question_id?: unknown;
   answer?: unknown;
+  probe_answer?: unknown;
+  allow_probe?: unknown;
 };
 
 const MEMORY_DISCLOSURE = "I've read your past flows so I can coach you with continuity.";
@@ -94,7 +99,9 @@ serve(async (req) => {
     const sessionToken = typeof body.session_token === "string" ? body.session_token : undefined;
     const questionId = typeof body.question_id === "string" ? body.question_id : null;
     const requestedAnswer = typeof body.answer === "string" ? body.answer.trim() : "";
-    if (!sessionId || !questionId || !requestedAnswer) return response({ skipped: true });
+    const probeAnswer = typeof body.probe_answer === "string" ? body.probe_answer.trim() : "";
+    const allowProbe = body.allow_probe === true;
+    if (!sessionId || !questionId || (!requestedAnswer && !probeAnswer)) return response({ skipped: true });
     if (Deno.env.get("FLOW_COACH_ENABLED")?.toLowerCase() === "false") {
       return response({ skipped: true, reason: "disabled" });
     }
@@ -134,7 +141,7 @@ serve(async (req) => {
     const normalizedRequestedAnswer = question.type === "select"
       ? normalizeSelectAnswer(question, requestedAnswer) ?? requestedAnswer
       : requestedAnswer;
-    if (normalizedRequestedAnswer !== persistedAnswer) return response({ skipped: true, reason: "stale_answer" });
+    if (!probeAnswer && normalizedRequestedAnswer !== persistedAnswer) return response({ skipped: true, reason: "stale_answer" });
     const answer = persistedAnswer.slice(0, 2000);
     const visibleQuestions = getVisibleQuestions(questions, storedAnswers);
     if (!visibleQuestions.some((candidate) => candidate.id === questionId)) {
@@ -143,12 +150,110 @@ serve(async (req) => {
     const visibleCount = visibleQuestions.length;
 
     const existing = await supabase.from("flow_coach_messages")
-      .select("reflection,memory_refs,answer_hash").eq("flow_session_id", sessionId)
+      .select("id,reflection,probe,probe_answer,resolution,working_thesis,memory_refs,answer_hash").eq("flow_session_id", sessionId)
       .eq("question_id", questionId).maybeSingle();
     if (existing.error) throw existing.error;
     const answerHash = await sha256(persistedAnswer);
+
+    if (probeAnswer) {
+      if (!existing.data?.probe) return response({ skipped: true, reason: "no_pending_probe" });
+      if (existing.data.answer_hash !== answerHash) return response({ skipped: true, reason: "stale_probe" });
+      if (existing.data.probe_answer) {
+        return response({
+          coach_message_id: existing.data.id,
+          resolution: existing.data.resolution,
+          probe_resolved: true,
+          working_thesis: existing.data.working_thesis ?? {},
+        });
+      }
+
+      const profileResult = await supabase.from("flow_profiles").select("*").eq("user_id", userId).maybeSingle();
+      if (profileResult.error) throw profileResult.error;
+      const rawProfile = profileResult.data;
+      const questionNote = (template.coach_question_notes as Record<string, unknown> | null)?.[question.id] ?? null;
+      const themes = typeof questionNote === "object" && questionNote !== null
+        ? (Array.isArray((questionNote as Record<string, unknown>).themes)
+          ? (questionNote as Record<string, unknown>).themes as unknown[]
+          : [(questionNote as Record<string, unknown>).theme])
+          .filter((theme): theme is string => typeof theme === "string")
+        : [];
+      const memory = await retrieveInsights(supabase, userId, {
+        flowSlug: String(template.slug ?? ""), stepKey: questionId, themes, limit: 20,
+      });
+      const resolutionPrompt = assembleCoachResolutionPrompt({
+        charter: typeof template.coach_prompt === "string" ? template.coach_prompt : null,
+        intensity: (template.coach_intensity ?? "standard") as CoachIntensity,
+        profile: sanitizeProfile(rawProfile),
+        transcript: sanitizePromptRecord(storedAnswers) as Record<string, string>,
+        memory,
+        workingThesis: existing.data.working_thesis as CoachWorkingThesis | null,
+        question: { id: question.id, prompt: question.prompt, note: questionNote },
+        answer: persistedAnswer,
+        reflection: existing.data.reflection,
+        probe: existing.data.probe,
+        probeAnswer,
+      });
+      const configuredModel = Deno.env.get("FLOW_COACH_MODEL") ?? "gpt-5.4-mini";
+      let resolution: string | null = null;
+      let workingThesis = existing.data.working_thesis ?? {};
+      let memoryRefs = existing.data.memory_refs ?? [];
+      let model = configuredModel;
+      let inputTokens: number | null = null;
+      let outputTokens: number | null = null;
+      try {
+        const modelResult = await dispatchModel({
+          model: configuredModel,
+          openaiApiKey: Deno.env.get("OPENAI_API_KEY"),
+          anthropicApiKey: Deno.env.get("ANTHROPIC_API_KEY"),
+          maxTokens: 900,
+          reasoningEffort: "low",
+          jsonMode: true,
+        }, resolutionPrompt);
+        const rendered = renderCoachResolution(modelResult.text, memory);
+        resolution = rendered.resolution || null;
+        workingThesis = rendered.thesis;
+        memoryRefs = [
+          ...(Array.isArray(existing.data.memory_refs) ? existing.data.memory_refs : []),
+          ...rendered.memoryRefs,
+        ].filter((item, index, all) => all.findIndex((candidate) => candidate.id === item.id) === index);
+        model = modelResult.model;
+        inputTokens = modelResult.inputTokens;
+        outputTokens = modelResult.outputTokens;
+      } catch (error) {
+        console.warn("[flow_coach_reflect] probe resolution failed open", error instanceof Error ? error.message : String(error));
+      }
+
+      const answeredAt = new Date().toISOString();
+      const updated = await supabase.from("flow_coach_messages").update({
+        probe_answer: probeAnswer.slice(0, 2000),
+        resolution,
+        working_thesis: workingThesis,
+        memory_refs: memoryRefs,
+        probe_answered_at: answeredAt,
+        model,
+        input_tokens: inputTokens,
+        output_tokens: outputTokens,
+      }).eq("id", existing.data.id).select("id,resolution,working_thesis,memory_refs").single();
+      if (updated.error) throw updated.error;
+      return response({
+        coach_message_id: updated.data.id,
+        resolution: updated.data.resolution,
+        probe_resolved: true,
+        working_thesis: updated.data.working_thesis,
+        memory_refs: updated.data.memory_refs,
+      });
+    }
+
     if (existing.data?.answer_hash === answerHash) {
-      return response({ reflection: existing.data.reflection, memory_refs: existing.data.memory_refs ?? [] });
+      return response({
+        coach_message_id: existing.data.id,
+        reflection: existing.data.reflection,
+        probe: existing.data.probe && !existing.data.probe_answer ? existing.data.probe : null,
+        probe_answer: existing.data.probe_answer,
+        resolution: existing.data.resolution,
+        working_thesis: existing.data.working_thesis ?? {},
+        memory_refs: existing.data.memory_refs ?? [],
+      });
     }
 
     if (CRISIS_SIGNAL.test(persistedAnswer)) {
@@ -207,6 +312,17 @@ serve(async (req) => {
       flowSlug: String(template.slug ?? ""), stepKey: questionId, themes, limit: 20,
     });
     const discloseMemory = Boolean(memory.length && !rawProfile?.coach_memory_announced_at);
+    const previousCoach = await supabase.from("flow_coach_messages")
+      .select("working_thesis").eq("flow_session_id", sessionId)
+      .neq("question_id", questionId).order("created_at", { ascending: false }).limit(1).maybeSingle();
+    if (previousCoach.error) throw previousCoach.error;
+    const usedProbes = await supabase.from("flow_coach_messages")
+      .select("id", { count: "exact", head: true }).eq("flow_session_id", sessionId).not("probe", "is", null);
+    if (usedProbes.error) throw usedProbes.error;
+    const maxProbes = Number(template.coach_max_probes ?? 0);
+    const probesRemaining = Math.max(0, maxProbes - (usedProbes.count ?? 0));
+    const depthEnabled = template.coach_depth_enabled === true;
+    const probeEligible = allowProbe && depthEnabled && question.id !== "title";
     const prompt = assembleCoachPrompt({
       charter: typeof template.coach_prompt === "string" ? template.coach_prompt : null,
       intensity: (template.coach_intensity ?? "standard") as CoachIntensity,
@@ -221,15 +337,21 @@ serve(async (req) => {
       },
       answer,
       discloseMemory,
+      allowProbe: probeEligible,
+      probesRemaining,
+      workingThesis: previousCoach.data?.working_thesis as CoachWorkingThesis | null,
     });
 
-    const configuredModel = Deno.env.get("FLOW_COACH_MODEL") ?? "gpt-4o-mini";
+    const configuredModel = Deno.env.get("FLOW_COACH_MODEL") ?? "gpt-5.4-mini";
     const modelResult = await dispatchModel({
       model: configuredModel,
       openaiApiKey: Deno.env.get("OPENAI_API_KEY"),
       anthropicApiKey: Deno.env.get("ANTHROPIC_API_KEY"),
+      maxTokens: 900,
+      reasoningEffort: "low",
+      jsonMode: true,
     }, prompt);
-    const rendered = renderReflection(modelResult.text, memory);
+    const rendered = renderCoachTurn(modelResult.text, memory);
     if (!rendered.reflection) return response({ skipped: true });
     const finalReflection = discloseMemory
       ? `${MEMORY_DISCLOSURE} ${rendered.reflection}`
@@ -241,6 +363,10 @@ serve(async (req) => {
       answer_excerpt: answer.slice(0, 240),
       answer_hash: answerHash,
       reflection: finalReflection,
+      probe: rendered.probe,
+      probe_answer: null,
+      resolution: null,
+      working_thesis: rendered.thesis,
       memory_refs: rendered.memoryRefs,
       model: modelResult.model,
       input_tokens: modelResult.inputTokens,
@@ -248,7 +374,7 @@ serve(async (req) => {
     };
     const saved = await supabase.from("flow_coach_messages").upsert(record, {
       onConflict: "flow_session_id,question_id",
-    }).select("reflection,memory_refs").single();
+    }).select("id,reflection,probe,working_thesis,memory_refs").single();
     if (saved.error) throw saved.error;
 
     if (rendered.memoryRefs.length) {

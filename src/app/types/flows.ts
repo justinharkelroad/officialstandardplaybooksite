@@ -55,8 +55,10 @@ export interface FlowTemplate {
   ai_challenge_intensity: string;
   ai_analysis_prompt: string | null;
   coach_enabled?: boolean;
+  coach_depth_enabled?: boolean;
   coach_prompt?: string | null;
   coach_intensity?: FlowCoachIntensity;
+  coach_max_probes?: number;
   coach_question_notes?: Record<string, unknown>;
   is_active: boolean;
   display_order: number;

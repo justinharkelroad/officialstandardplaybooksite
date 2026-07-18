@@ -308,8 +308,13 @@ export type Database = {
           memory_refs: Json
           model: string | null
           output_tokens: number | null
+          probe: string | null
+          probe_answer: string | null
+          probe_answered_at: string | null
           question_id: string
           reflection: string
+          resolution: string | null
+          working_thesis: Json
         }
         Insert: {
           answer_excerpt?: string | null
@@ -321,8 +326,13 @@ export type Database = {
           memory_refs?: Json
           model?: string | null
           output_tokens?: number | null
+          probe?: string | null
+          probe_answer?: string | null
+          probe_answered_at?: string | null
           question_id: string
           reflection: string
+          resolution?: string | null
+          working_thesis?: Json
         }
         Update: {
           answer_excerpt?: string | null
@@ -334,8 +344,13 @@ export type Database = {
           memory_refs?: Json
           model?: string | null
           output_tokens?: number | null
+          probe?: string | null
+          probe_answer?: string | null
+          probe_answered_at?: string | null
           question_id?: string
           reflection?: string
+          resolution?: string | null
+          working_thesis?: Json
         }
         Relationships: [
           {
@@ -540,7 +555,9 @@ export type Database = {
           ai_challenge_enabled: boolean | null
           ai_challenge_intensity: string | null
           coach_enabled: boolean
+          coach_depth_enabled: boolean
           coach_intensity: string
+          coach_max_probes: number
           coach_prompt: string | null
           coach_question_notes: Json
           color: string | null
@@ -560,7 +577,9 @@ export type Database = {
           ai_challenge_enabled?: boolean | null
           ai_challenge_intensity?: string | null
           coach_enabled?: boolean
+          coach_depth_enabled?: boolean
           coach_intensity?: string
+          coach_max_probes?: number
           coach_prompt?: string | null
           coach_question_notes?: Json
           color?: string | null
@@ -580,7 +599,9 @@ export type Database = {
           ai_challenge_enabled?: boolean | null
           ai_challenge_intensity?: string | null
           coach_enabled?: boolean
+          coach_depth_enabled?: boolean
           coach_intensity?: string
+          coach_max_probes?: number
           coach_prompt?: string | null
           coach_question_notes?: Json
           color?: string | null

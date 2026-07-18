@@ -68,6 +68,23 @@ serve(async (req) => {
     const isComplete = session.status === "completed" ||
       session.status === "awaiting_completion" ||
       currentQuestion === null;
+    const pendingProbeResult = await supabase.from("flow_coach_messages")
+      .select("id,question_id,reflection,probe")
+      .eq("flow_session_id", session.id)
+      .not("probe", "is", null)
+      .is("probe_answer", null)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    if (pendingProbeResult.error) throw pendingProbeResult.error;
+    const pendingProbe = pendingProbeResult.data?.probe
+      ? {
+        coach_message_id: pendingProbeResult.data.id,
+        question_id: pendingProbeResult.data.question_id,
+        reflection: pendingProbeResult.data.reflection,
+        probe: pendingProbeResult.data.probe,
+      }
+      : null;
 
     console.log("[get_flow_state] success", {
       session_id: session.id,
@@ -87,7 +104,8 @@ serve(async (req) => {
       current_question_index: currentQuestionIndex,
       total_visible_questions: visibleQuestions.length,
       answers,
-      is_complete: isComplete,
+      is_complete: isComplete && !pendingProbe,
+      coach_probe: pendingProbe,
     }));
   } catch (error) {
     console.error("[get_flow_state] failed", {

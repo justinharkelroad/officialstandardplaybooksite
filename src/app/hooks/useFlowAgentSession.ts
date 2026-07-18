@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useConversation } from '@11labs/react';
 import {
   completeFlowAgentSession,
+  answerFlowCoachProbe,
   createFlowAgentRunId,
   editFlowAgentAnswer,
   evaluateFlowAgentAnswer,
@@ -9,6 +10,7 @@ import {
   FlowCoachReflectResponse,
   FlowAgentFunctionError,
   FlowAgentStateResponse,
+  PendingFlowCoachProbe,
   BibleScriptureContext,
   getFlowAgentState,
   startFlowSession,
@@ -20,32 +22,17 @@ import { FlowQuestion } from '@/app/types/flows';
 
 const REACT_CLIENT_TOOL_EXECUTOR = 'react_client_tools';
 const VOICE_TRANSCRIPT_AUTOSAVE_DELAY_MS = 4000;
-const FLOW_COACH_TOOL_TIMEOUT_MS = 8000;
-
-async function withFlowCoachTimeout<T>(promise: Promise<T>, fallback: T): Promise<T> {
-  let timeoutId: number | undefined;
-  try {
-    return await Promise.race([
-      promise,
-      new Promise<T>((resolve) => {
-        timeoutId = window.setTimeout(() => resolve(fallback), FLOW_COACH_TOOL_TIMEOUT_MS);
-      }),
-    ]);
-  } finally {
-    if (timeoutId !== undefined) window.clearTimeout(timeoutId);
-  }
-}
-
 async function requestFlowCoachReflection(
   session: StartFlowSessionResponse,
   questionId: string,
   answer: string,
 ): Promise<FlowCoachReflectResponse> {
   try {
-    return await withFlowCoachTimeout(
-      reflectFlowAgentAnswer(session, questionId, answer),
-      { skipped: true, reason: 'client_timeout' },
-    );
+    // Adaptive probes affect navigation. Do not race the server with a client
+    // timeout: a late probe arriving after the next official question would
+    // recreate the two-active-questions bug. The edge function remains
+    // fail-open and returns { skipped: true } on provider failure.
+    return await reflectFlowAgentAnswer(session, questionId, answer);
   } catch (error) {
     console.warn('[FlowAgentTool] Flowing reflection skipped:', error);
     return { skipped: true, reason: 'client_error' };
@@ -93,6 +80,12 @@ interface UseFlowAgentSessionResult {
   getOutputVolume: () => number;
   getInputByteFrequencyData: () => Uint8Array | undefined;
   getOutputByteFrequencyData: () => Uint8Array | undefined;
+}
+
+interface PendingCoachProbeState extends PendingFlowCoachProbe {
+  nextQuestion: FlowQuestion | null;
+  answers: Record<string, string>;
+  flowComplete: boolean;
 }
 
 function createMessageId(role: FlowAgentMessage['role']) {
@@ -195,15 +188,15 @@ Questions, in exact order:
 ${JSON.stringify(questions)}
 
 Hard rules:
-1. Ask exactly one Flow question at a time, in order. Do not invent extra questions.
+1. Ask exactly one active question at a time. Flowing may return one deliberate coach_probe; when it does, that probe temporarily owns the conversation and the next official Flow question must wait.
 2. Save every user answer by calling submit_flow_answer with the exact current question_id and transcript.
 3. The first user answer is for question_id "${session.first_question.id}". Do not ask that first question again after the user answers it. Save it with submit_flow_answer.
 4. Never call start_flow_session. Calling start_flow_session during this conversation creates or attempts to create a second session and breaks the Flow.
 5. Only questions with ai_challenge=true may push back. For those questions, call evaluate_answer_quality before pushing back and only push back when that tool returns should_push_back=true. Never push back on title or any question where ai_challenge is false.
 6. Accept titles as the user says them. A title can contain more than one idea.
 7. ${repeatedPromptNote}
-8. submit_flow_answer performs Flowing coaching internally and returns coach_reflection. If coach_reflection is a non-empty string, speak it exactly once before asking next_question or completing the Flow. Do not paraphrase it. If coach_reflection is null, continue silently. Never invent a reflection or memory, and do not call flow_coach_reflect separately.
-9. If submit_flow_answer returns a next_question, ask that exact prompt next. Keep it concise.
+8. submit_flow_answer performs Flowing coaching internally. If it returns coach_reflection, speak it exactly once. If it also returns coach_probe, ask that exact probe immediately and stop. Do not ask next_question in the same turn. The next user message answers the coach_probe; call submit_flow_answer again and the app will return coach_resolution plus the official next_question. Never invent or paraphrase a reflection, probe, resolution, or memory, and do not call flow_coach_reflect separately.
+9. If submit_flow_answer returns coach_resolution, speak it exactly once before asking next_question. If it returns next_question without a coach_probe, ask that exact prompt next. Keep it concise.
 10. If a raw question in the list contains a {placeholder}, use the interpolated prompt returned by get_flow_state or submit_flow_answer instead of saying the braces aloud.
 11. If submit_flow_answer returns is_complete=true, immediately call complete_flow_session, then say: "Flow complete. I saved it." Stop coaching after that.
 12. Do not ask check-in filler like "You good?", "Still here?", or "Where are you at?" after completion or while waiting.
@@ -212,7 +205,8 @@ Hard rules:
 15. If submit_flow_answer returns validation_error=true, ask the retry_question prompt again and include the allowed options when present. Do not call it a connection issue.
 16. If a tool returns success=false, do not mention tools, backend, database, or connection issues. Call get_flow_state. If a current question is returned, ask that exact question. If no current question is returned, pause and let the app show Retry.
 17. If complete_flow_session returns required_answers_missing=true, ask the returned next_question/current question again. Do not call it a connection issue.
-18. Do not continue the conversation after complete_flow_session succeeds. The app will show the next action screen.`;
+18. If get_flow_state returns coach_probe, speak its reflection and probe exactly, then wait. Do not ask current_question until the probe is resolved through submit_flow_answer.
+19. Do not continue the conversation after complete_flow_session succeeds. The app will show the next action screen.`;
 }
 
 function getStringParam(parameters: unknown, key: string) {
@@ -463,6 +457,7 @@ export function useFlowAgentSession({
   const autoSaveInFlightRef = useRef(false);
   const pendingAutoSaveQuestionIdRef = useRef<string | null>(null);
   const pendingAutoSaveAnswerRef = useRef<string | null>(null);
+  const pendingCoachProbeRef = useRef<PendingCoachProbeState | null>(null);
 
   useEffect(() => {
     flowSessionRef.current = flowSession;
@@ -483,6 +478,28 @@ export function useFlowAgentSession({
     lastKnownFlowStateRef.current = state;
     currentQuestionIdRef.current = state.current_question?.id ?? null;
     setAnswers(state.answers);
+    if (state.coach_probe) {
+      pendingCoachProbeRef.current = {
+        ...state.coach_probe,
+        nextQuestion: state.current_question,
+        answers: state.answers,
+        flowComplete: state.current_question === null,
+      };
+      const content = [state.coach_probe.reflection, state.coach_probe.probe].filter(Boolean).join('\n\n');
+      if (modeRef.current === 'text') {
+        setMessages((current) => isDuplicateMessage(current, 'assistant', content)
+          ? current
+          : [...current, {
+            id: createMessageId('assistant'),
+            role: 'assistant',
+            content,
+            streaming: true,
+            timestamp: Date.now(),
+          }]);
+      }
+    } else if (state.coach_probe === null) {
+      pendingCoachProbeRef.current = null;
+    }
   }, []);
 
   const rememberFlowProgress = useCallback((
@@ -544,9 +561,12 @@ export function useFlowAgentSession({
     const baseResult = {
       success: true,
       recovered_tool_error: true,
-      next_question: currentSession
-        ? interpolateSessionQuestion(currentSession, state.current_question, state.answers)
-        : state.current_question,
+      next_question: state.coach_probe
+        ? null
+        : currentSession
+          ? interpolateSessionQuestion(currentSession, state.current_question, state.answers)
+          : state.current_question,
+      coach_probe: state.coach_probe ?? null,
       is_complete: state.is_complete,
       answers_so_far: state.answers,
     };
@@ -575,6 +595,7 @@ export function useFlowAgentSession({
   const scheduleVoiceTranscriptAutoSave = useCallback((questionId: string | null, answer: string) => {
     if (!questionId || !answer.trim()) return;
     if (modeRef.current !== 'voice') return;
+    if (pendingCoachProbeRef.current) return;
 
     pendingAutoSaveAnswerRef.current = pendingAutoSaveQuestionIdRef.current === questionId
       ? mergeVoiceTranscriptFragments(pendingAutoSaveAnswerRef.current, answer)
@@ -911,6 +932,48 @@ export function useFlowAgentSession({
           });
           if (!currentSession) return flowToolError('Flow session is not ready.', currentSession);
 
+          const pendingProbe = pendingCoachProbeRef.current;
+          if (pendingProbe) {
+            const probeAnswer = getStringParam(parameters, 'answer').trim() || lastUserTranscriptRef.current?.trim() || '';
+            if (!probeAnswer) {
+              return stringifyReactToolResult({
+                success: true,
+                ignored_empty_answer: true,
+                coach_probe: pendingProbe.probe,
+                next_question: null,
+                is_complete: false,
+                answers_so_far: pendingProbe.answers,
+              }, currentSession);
+            }
+            const resolved = await answerFlowCoachProbe(currentSession, pendingProbe.question_id, probeAnswer);
+            if (!resolved.probe_resolved) throw new Error('Flowing could not save that follow-up yet.');
+            pendingCoachProbeRef.current = null;
+            rememberFlowProgress(
+              currentSession,
+              pendingProbe.nextQuestion,
+              pendingProbe.answers,
+              pendingProbe.flowComplete,
+            );
+            let finalAnswers = pendingProbe.answers;
+            if (pendingProbe.flowComplete) {
+              finalAnswers = await completeSubmittedFlow(currentSession, pendingProbe.answers);
+            } else {
+              setAwaitingAgent(false);
+            }
+            const result = {
+              success: true,
+              coach_resolution: resolved.resolution ?? null,
+              next_question: pendingProbe.flowComplete
+                ? null
+                : interpolateSessionQuestion(currentSession, pendingProbe.nextQuestion, finalAnswers),
+              is_complete: pendingProbe.flowComplete,
+              answers_so_far: finalAnswers,
+            };
+            const json = stringifyReactToolResult(result, currentSession);
+            logFlowAgentToolReturn('submit_flow_answer', withReactToolExecutor(result, currentSession), json);
+            return json;
+          }
+
           const requestedQuestionId = getStringParam(parameters, 'question_id');
           console.info('[FlowAgentTool]', {
             tool: 'submit_flow_answer',
@@ -934,18 +997,37 @@ export function useFlowAgentSession({
               requestedQuestionId,
               state.answers[requestedQuestionId],
             );
-            const finalAnswers = state.is_complete
+            const hasCoachProbe = Boolean(coach.probe && coach.coach_message_id);
+            if (hasCoachProbe) {
+              pendingCoachProbeRef.current = {
+                coach_message_id: coach.coach_message_id!,
+                question_id: requestedQuestionId,
+                reflection: coach.reflection ?? '',
+                probe: coach.probe!,
+                nextQuestion: state.current_question,
+                answers: state.answers,
+                flowComplete: state.is_complete,
+              };
+            }
+            rememberFlowProgress(
+              currentSession,
+              state.current_question,
+              state.answers,
+              state.is_complete && !hasCoachProbe,
+            );
+            const finalAnswers = state.is_complete && !hasCoachProbe
               ? await completeSubmittedFlow(currentSession, state.answers)
               : state.answers;
-            if (!state.is_complete) setAwaitingAgent(false);
+            if (!state.is_complete || hasCoachProbe) setAwaitingAgent(false);
             const result = {
               success: true,
-              next_question: state.is_complete
+              next_question: state.is_complete || hasCoachProbe
                 ? null
                 : interpolateSessionQuestion(currentSession, state.current_question, finalAnswers),
-              is_complete: state.is_complete,
+              is_complete: hasCoachProbe ? false : state.is_complete,
               answers_so_far: finalAnswers,
               coach_reflection: coach.reflection ?? null,
+              coach_probe: coach.probe ?? null,
             };
             const json = stringifyReactToolResult(result, currentSession);
             logFlowAgentToolReturn('submit_flow_answer', withReactToolExecutor(result, currentSession), json);
@@ -1024,10 +1106,27 @@ export function useFlowAgentSession({
             reason: coach.reason ?? null,
           });
 
-          rememberFlowProgress(currentSession, result.next_question, result.answers_so_far, result.is_complete);
+          const hasCoachProbe = Boolean(coach.probe && coach.coach_message_id);
+          if (hasCoachProbe) {
+            pendingCoachProbeRef.current = {
+              coach_message_id: coach.coach_message_id!,
+              question_id: questionId,
+              reflection: coach.reflection ?? '',
+              probe: coach.probe!,
+              nextQuestion: result.next_question,
+              answers: result.answers_so_far,
+              flowComplete: result.is_complete,
+            };
+          }
+          rememberFlowProgress(
+            currentSession,
+            result.next_question,
+            result.answers_so_far,
+            result.is_complete && !hasCoachProbe,
+          );
 
           let completedAnswersSoFar = result.answers_so_far;
-          if (result.is_complete) {
+          if (result.is_complete && !hasCoachProbe) {
             completedAnswersSoFar = await completeSubmittedFlow(currentSession, result.answers_so_far);
           }
 
@@ -1035,6 +1134,9 @@ export function useFlowAgentSession({
             ...result,
             answers_so_far: completedAnswersSoFar,
             coach_reflection: coach.reflection ?? null,
+            coach_probe: coach.probe ?? null,
+            next_question: hasCoachProbe ? null : result.next_question,
+            is_complete: hasCoachProbe ? false : result.is_complete,
           }, currentSession);
           const json = stringifyReactToolResult(interpolatedResult, currentSession);
           logFlowAgentToolReturn(
@@ -1344,6 +1446,7 @@ export function useFlowAgentSession({
 
       const currentQuestion = resolveCurrentQuestionForSession(session);
       const currentAnswers = lastKnownFlowStateRef.current?.answers ?? {};
+      const pendingProbe = pendingCoachProbeRef.current;
       const startSession = conversation.startSession as unknown as FlowConversationStartSession;
       const conversationId = await startSession({
         ...connectionOptions,
@@ -1355,7 +1458,9 @@ export function useFlowAgentSession({
               prompt: buildFlowCoachPrompt(session),
             },
             firstMessage: includeFirstMessage
-              ? interpolateSessionPrompt(session, currentQuestion.prompt, currentAnswers)
+              ? pendingProbe
+                ? [pendingProbe.reflection, pendingProbe.probe].filter(Boolean).join('\n\n')
+                : interpolateSessionPrompt(session, currentQuestion.prompt, currentAnswers)
               : undefined,
           },
           tts: ttsVoiceId ? { voiceId: ttsVoiceId } : undefined,
@@ -1420,10 +1525,16 @@ export function useFlowAgentSession({
           nextUserJwt = result.userJwt;
           flowAgentRunIdRef.current = result.flowSession.flow_agent_run_id ?? flowAgentRunId;
           flowSessionRef.current = result.flowSession;
-          currentQuestionIdRef.current = result.flowSession.first_question.id;
           setFlowSession(result.flowSession);
           setUserJwt(result.userJwt);
           includeFirstMessage = true;
+
+          const initialState = await getFlowAgentState(result.flowSession).catch(() => null);
+          if (initialState) {
+            rememberFlowState(initialState);
+          } else {
+            currentQuestionIdRef.current = result.flowSession.first_question.id;
+          }
 
           const promptMessage = {
             id: 'first-flow-question',
@@ -1433,11 +1544,13 @@ export function useFlowAgentSession({
             timestamp: Date.now(),
           } satisfies FlowAgentMessage;
 
-          setMessages((current) => {
-            if (!flowSession) return [promptMessage];
-            if (isDuplicateMessage(current, 'assistant', promptMessage.content)) return current;
-            return [...current, promptMessage];
-          });
+          if (!initialState?.coach_probe) {
+            setMessages((current) => {
+              if (!flowSession) return [promptMessage];
+              if (isDuplicateMessage(current, 'assistant', promptMessage.content)) return current;
+              return [...current, promptMessage];
+            });
+          }
         } else if (forceRestart) {
           const state = await getFlowAgentState(nextFlowSession).catch(() => null);
           if (state) {
@@ -1594,6 +1707,41 @@ export function useFlowAgentSession({
             throw new Error('Flow session is not ready.');
           }
 
+          const pendingProbe = pendingCoachProbeRef.current;
+          if (pendingProbe) {
+            const resolved = await answerFlowCoachProbe(currentSession, pendingProbe.question_id, trimmed);
+            if (!resolved.probe_resolved) throw new Error('Flowing could not save that follow-up yet. Please retry.');
+            pendingCoachProbeRef.current = null;
+            rememberFlowProgress(
+              currentSession,
+              pendingProbe.nextQuestion,
+              pendingProbe.answers,
+              pendingProbe.flowComplete,
+            );
+            await waitForTextReplyPause(replyStartedAt);
+            const nextQuestionPrompt = pendingProbe.nextQuestion
+              ? interpolateSessionPrompt(currentSession, pendingProbe.nextQuestion.prompt, pendingProbe.answers)
+              : null;
+            const assistantReply = [resolved.resolution, nextQuestionPrompt].filter(Boolean).join('\n\n');
+            if (assistantReply) {
+              setMessages((current) => [...current, {
+                id: createMessageId('assistant'),
+                role: 'assistant',
+                content: assistantReply,
+                streaming: true,
+                timestamp: Date.now(),
+              }]);
+            }
+            if (pendingProbe.flowComplete) {
+              await completeSubmittedFlow(currentSession, pendingProbe.answers);
+            } else {
+              setAwaitingAgent(false);
+              setErrorMessage(null);
+              setStatus('active');
+            }
+            return;
+          }
+
           const questionId = currentQuestionIdRef.current ?? currentSession.first_question.id;
           if (!questionId) {
             await completeSubmittedFlow(currentSession, answers);
@@ -1659,10 +1807,41 @@ export function useFlowAgentSession({
             reason: coach.reason ?? null,
           });
 
-          rememberFlowProgress(currentSession, result.next_question, result.answers_so_far, result.is_complete);
+          const hasCoachProbe = Boolean(coach.probe && coach.coach_message_id);
+          if (hasCoachProbe) {
+            pendingCoachProbeRef.current = {
+              coach_message_id: coach.coach_message_id!,
+              question_id: questionId,
+              reflection: coach.reflection ?? '',
+              probe: coach.probe!,
+              nextQuestion: result.next_question,
+              answers: result.answers_so_far,
+              flowComplete: result.is_complete,
+            };
+          }
+          rememberFlowProgress(
+            currentSession,
+            result.next_question,
+            result.answers_so_far,
+            result.is_complete && !hasCoachProbe,
+          );
           setErrorMessage(null);
 
           await waitForTextReplyPause(replyStartedAt);
+
+          if (hasCoachProbe) {
+            const assistantReply = [coach.reflection, coach.probe].filter(Boolean).join('\n\n');
+            setMessages((current) => [...current, {
+              id: createMessageId('assistant'),
+              role: 'assistant',
+              content: assistantReply,
+              streaming: true,
+              timestamp: Date.now(),
+            }]);
+            setAwaitingAgent(false);
+            setStatus('active');
+            return;
+          }
 
           if (result.is_complete) {
             if (coach.reflection) {

@@ -285,7 +285,8 @@ export function FlowReportCard({
         
         {questions.map((question) => {
           const response = session.responses_json?.[question.id];
-          const coachReflection = coachReflections[question.id]?.reflection;
+          const coachTurn = coachReflections[question.id];
+          const coachReflection = coachTurn?.reflection;
           if (!response) return null;
           
           return (
@@ -314,6 +315,17 @@ export function FlowReportCard({
                   <p className="whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">
                     {coachReflection}
                   </p>
+                  {coachTurn?.probe && coachTurn.probe_answer && (
+                    <div className="mt-3 space-y-2 border-t border-[#2997FF]/20 pt-3">
+                      <p className="text-sm font-medium text-foreground">{coachTurn.probe}</p>
+                      <p className="whitespace-pre-wrap text-sm text-foreground/90">{coachTurn.probe_answer}</p>
+                      {coachTurn.resolution && (
+                        <p className="whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">
+                          {coachTurn.resolution}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
             </div>

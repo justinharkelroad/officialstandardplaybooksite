@@ -1,5 +1,5 @@
 import { assert, assertEquals, assertStringIncludes } from "https://deno.land/std@0.190.0/testing/asserts.ts";
-import { assembleCoachPrompt, renderReflection, type CoachInsight } from "./index.ts";
+import { assembleCoachPrompt, renderCoachTurn, renderReflection, type CoachInsight } from "./index.ts";
 
 const memory: CoachInsight = {
   id: "11111111-1111-4111-8111-111111111111",
@@ -100,5 +100,45 @@ Deno.test("short answers receive the one-sentence instruction", () => {
     currentQuestion: { id: "ready", prompt: "Ready?" },
     answer: "No",
   });
-  assertStringIncludes(prompt.system, "no more than one short sentence");
+  assertStringIncludes(prompt.system, "one short reflection sentence and probe=null");
+});
+
+Deno.test("adaptive coach accepts one deliberate probe and preserves the working thesis", () => {
+  const rendered = renderCoachTurn(JSON.stringify({
+    reflection: "There is a real tension between wanting connection and keeping the conclusion closed.",
+    probe: "What feels at risk if you genuinely make room for her perspective?",
+    thesis: {
+      central_tension: "connection versus control",
+      emerging_pattern: "protective certainty may narrow listening",
+      desired_shift: "hold conviction while remaining open",
+      evidence: ["wants her to feel heard", "does not want to hear the alternative"],
+      confidence: "medium",
+    },
+  }), []);
+  assertStringIncludes(rendered.probe ?? "", "What feels at risk");
+  assertEquals(rendered.thesis.central_tension, "connection versus control");
+});
+
+Deno.test("adaptive coach rejects a compound or multi-question probe", () => {
+  const rendered = renderCoachTurn(JSON.stringify({
+    reflection: "The tension deserves a slower look.",
+    probe: "What are you protecting? And what might it cost?",
+    thesis: {},
+  }), []);
+  assertEquals(rendered.probe, null);
+});
+
+Deno.test("adaptive coach prompt explicitly withholds probes when budget is exhausted", () => {
+  const prompt = assembleCoachPrompt({
+    intensity: "hard",
+    profile: null,
+    spine: [],
+    transcript: {},
+    memory: [],
+    currentQuestion: { id: "story", prompt: "What story are you carrying?" },
+    answer: "I keep trying to control the outcome because uncertainty scares me.",
+    allowProbe: true,
+    probesRemaining: 0,
+  });
+  assertStringIncludes(prompt.system, "Return probe=null");
 });

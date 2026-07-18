@@ -383,9 +383,10 @@ async function proposeReferencesWithOpenAI(
     body: JSON.stringify({
       model: Deno.env.get("BIBLE_FLOW_REFERENCE_MODEL") ??
         Deno.env.get("BIBLE_FLOW_THEME_MODEL") ??
-        "gpt-4o",
-      temperature: 0.8,
-      max_tokens: 300,
+        "gpt-5.4-mini",
+      reasoning_effort: "low",
+      max_completion_tokens: 700,
+      response_format: { type: "json_object" },
       messages: [
         {
           role: "system",
@@ -541,9 +542,10 @@ async function personalizeRecommendations(
     body: JSON.stringify({
       model: Deno.env.get("BIBLE_FLOW_RESPONSE_MODEL") ??
         Deno.env.get("BIBLE_FLOW_THEME_MODEL") ??
-        "gpt-4o-mini",
-      temperature: 0.4,
-      max_tokens: 420,
+        "gpt-5.4-mini",
+      reasoning_effort: "low",
+      max_completion_tokens: 900,
+      response_format: { type: "json_object" },
       messages: [
         {
           role: "system",
@@ -643,9 +645,10 @@ async function classifyThemesWithOpenAI(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: Deno.env.get("BIBLE_FLOW_THEME_MODEL") ?? "gpt-4o-mini",
-      temperature: 0.1,
-      max_tokens: 120,
+      model: Deno.env.get("BIBLE_FLOW_THEME_MODEL") ?? "gpt-5.4-mini",
+      reasoning_effort: "low",
+      max_completion_tokens: 500,
+      response_format: { type: "json_object" },
       messages: [
         {
           role: "system",

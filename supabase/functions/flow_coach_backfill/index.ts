@@ -84,7 +84,7 @@ serve(async (req) => {
           priorInsights,
           questions,
           config: {
-            model: Deno.env.get("FLOW_COACH_DISTILL_MODEL") ?? "gpt-4o-mini",
+            model: Deno.env.get("FLOW_COACH_DISTILL_MODEL") ?? "gpt-5.4-mini",
             openaiApiKey: Deno.env.get("OPENAI_API_KEY"),
             anthropicApiKey: Deno.env.get("ANTHROPIC_API_KEY"),
           },

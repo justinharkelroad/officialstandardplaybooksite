@@ -89,6 +89,21 @@ async function distillCompletedFlowMemory(supabase: any, session: any): Promise<
     const questions = typeof session.flow_template?.questions_json === 'string'
       ? JSON.parse(session.flow_template.questions_json)
       : session.flow_template?.questions_json ?? []
+    const { data: coachProbeRows, error: coachProbeError } = await supabase
+      .from('flow_coach_messages')
+      .select('question_id,probe,probe_answer')
+      .eq('flow_session_id', session.id)
+      .not('probe_answer', 'is', null)
+      .order('created_at', { ascending: true })
+    if (coachProbeError) throw coachProbeError
+    const probeQuestions: Array<{ id: string; prompt: string }> = []
+    const probeResponses: Record<string, string> = {}
+    for (const row of coachProbeRows ?? []) {
+      if (!row.probe || !row.probe_answer) continue
+      const id = `coach_probe:${row.question_id}`
+      probeQuestions.push({ id, prompt: row.probe })
+      probeResponses[id] = row.probe_answer
+    }
     const priorInsights = await retrieveInsights(supabase, session.user_id, {
       flowSlug: session.flow_template?.slug ?? '',
       stepKey: '',
@@ -101,11 +116,11 @@ async function distillCompletedFlowMemory(supabase: any, session: any): Promise<
         title: session.title,
         flow_slug: session.flow_template?.slug ?? '',
       },
-      responses: session.responses_json ?? {},
+      responses: { ...(session.responses_json ?? {}), ...probeResponses },
       priorInsights,
-      questions,
+      questions: [...questions, ...probeQuestions],
       config: {
-        model: Deno.env.get('FLOW_COACH_DISTILL_MODEL') ?? 'gpt-4o-mini',
+        model: Deno.env.get('FLOW_COACH_DISTILL_MODEL') ?? 'gpt-5.4-mini',
         openaiApiKey: Deno.env.get('OPENAI_API_KEY'),
         anthropicApiKey: Deno.env.get('ANTHROPIC_API_KEY'),
       },
@@ -259,6 +274,20 @@ serve(async (req) => {
       question: q.prompt,
       answer: session.responses_json?.[q.id] || '(not answered)',
     }))
+    const { data: completedCoachTurns, error: completedCoachTurnsError } = await supabase
+      .from('flow_coach_messages')
+      .select('question_id,reflection,probe,probe_answer,resolution')
+      .eq('flow_session_id', session.id)
+      .order('created_at', { ascending: true })
+    if (completedCoachTurnsError) throw completedCoachTurnsError
+    for (const turn of completedCoachTurns ?? []) {
+      if (turn.probe && turn.probe_answer) {
+        qaPairs.push({
+          question: `Flowing follow-up after ${turn.question_id}: ${turn.probe}`,
+          answer: turn.probe_answer,
+        })
+      }
+    }
 
     // Detect flow category for context-aware prompting
     const flowCategory = getFlowCategory(
@@ -280,13 +309,14 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: Deno.env.get('FLOW_ANALYSIS_MODEL') ?? Deno.env.get('FLOW_COACH_MODEL') ?? 'gpt-5.4-mini',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt },
         ],
-        temperature: 0.7,
-        max_tokens: 2500,
+        reasoning_effort: 'low',
+        max_completion_tokens: 4000,
+        response_format: { type: 'json_object' },
       }),
     })
 

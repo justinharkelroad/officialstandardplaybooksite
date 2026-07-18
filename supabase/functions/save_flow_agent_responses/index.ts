@@ -151,6 +151,18 @@ serve(async (req) => {
 
     if (updateError) throw updateError;
 
+    // A coach probe is tied to the exact official answer. Editing that answer
+    // invalidates the associated reflection/probe row so a stale pending probe
+    // cannot own the next turn after the edit.
+    if (editedQuestionId) {
+      const { error: coachDeleteError } = await supabase
+        .from("flow_coach_messages")
+        .delete()
+        .eq("flow_session_id", session.id)
+        .eq("question_id", editedQuestionId);
+      if (coachDeleteError) throw coachDeleteError;
+    }
+
     console.log("[save_flow_agent_responses] success", {
       session_id: session.id,
       user_id: session.user_id,

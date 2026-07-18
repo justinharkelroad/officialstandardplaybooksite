@@ -1,6 +1,6 @@
 // refine_flow_action_item — ported to the Standard Playbook member app.
 // Auth: requireActiveMember (JWT-only; the source's staff-session branch is
-// deleted). Model: gpt-4o-mini.
+// deleted). Model: GPT-5.4 mini.
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { corsHeaders } from "../_shared/cors.ts";
 import { requireActiveMember } from "../_shared/memberAuth.ts";
@@ -98,13 +98,14 @@ Sharpen this action item so it is more measurable and a little deeper, while sti
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
+        model: Deno.env.get("FLOW_ACTION_MODEL") ?? Deno.env.get("FLOW_COACH_MODEL") ?? "gpt-5.4-mini",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },
         ],
-        temperature: 0.5,
-        max_tokens: 500,
+        reasoning_effort: "low",
+        max_completion_tokens: 900,
+        response_format: { type: "json_object" },
       }),
     });
 

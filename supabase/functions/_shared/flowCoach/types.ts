@@ -25,6 +25,31 @@ export interface CoachModelConfig {
   anthropicApiKey?: string | null;
   maxTokens?: number;
   temperature?: number;
+  reasoningEffort?: "none" | "low" | "medium" | "high" | "xhigh";
+  jsonMode?: boolean;
+}
+
+export interface CoachWorkingThesis {
+  central_tension: string | null;
+  emerging_pattern: string | null;
+  desired_shift: string | null;
+  evidence: string[];
+  confidence: "low" | "medium" | "high";
+}
+
+export interface CoachTurnDraft {
+  reflection: string;
+  probe: string | null;
+  thesis: CoachWorkingThesis;
+}
+
+export interface CoachTurnRendered extends CoachTurnDraft {
+  memoryRefs: Array<{ id: string; flow_slug: string | null; session_title: string | null }>;
+}
+
+export interface CoachResolutionDraft {
+  resolution: string;
+  thesis: CoachWorkingThesis;
 }
 
 export interface CoachModelResult {

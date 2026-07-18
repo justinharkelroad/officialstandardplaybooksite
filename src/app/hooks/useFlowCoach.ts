@@ -3,6 +3,9 @@ import { supabase } from '@/app/lib/supabaseClient';
 
 export interface FlowCoachReflection {
   reflection: string;
+  probe?: string | null;
+  probe_answer?: string | null;
+  resolution?: string | null;
   memory_refs: Array<{ id: string; flow_slug: string | null; session_title: string | null }>;
 }
 
@@ -23,12 +26,15 @@ export function useFlowCoach(sessionId?: string | null) {
     let active = true;
     void (async () => {
       const { data } = await supabase.from('flow_coach_messages')
-        .select('question_id,reflection,memory_refs')
+        .select('question_id,reflection,probe,probe_answer,resolution,memory_refs')
         .eq('flow_session_id', sessionId)
         .order('created_at', { ascending: true });
       if (!active || !data) return;
       const loaded = Object.fromEntries(data.map((row) => [row.question_id, {
         reflection: row.reflection,
+        probe: row.probe,
+        probe_answer: row.probe_answer,
+        resolution: row.resolution,
         memory_refs: Array.isArray(row.memory_refs) ? row.memory_refs as FlowCoachReflection['memory_refs'] : [],
       }]));
       setReflectionsBySession((current) => ({
@@ -53,6 +59,7 @@ export function useFlowCoach(sessionId?: string | null) {
           session_id: input.sessionId,
           question_id: input.questionId,
           answer: input.answer,
+          allow_probe: false,
         },
       });
       const delivery = invocation.then((result) => {
@@ -64,6 +71,9 @@ export function useFlowCoach(sessionId?: string | null) {
             ...(current[input.sessionId] ?? {}),
             [input.questionId]: {
               reflection: result.data.reflection,
+              probe: result.data.probe ?? null,
+              probe_answer: result.data.probe_answer ?? null,
+              resolution: result.data.resolution ?? null,
               memory_refs: Array.isArray(result.data.memory_refs) ? result.data.memory_refs : [],
             },
           },
