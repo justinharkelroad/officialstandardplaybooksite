@@ -49,6 +49,12 @@ function isTrivialAnswer(answer: string): boolean {
   return words.length <= 3 || /^(yes|no|yep|nope|ok|okay)\.?$/i.test(answer.trim());
 }
 
+export function shouldCoachQuestion(question: { id: string; type?: string | null }): boolean {
+  // Titles label the session and selects route the deterministic Flow. Neither
+  // contains enough member-authored meaning to support a grounded reflection.
+  return question.id !== "title" && question.type !== "select";
+}
+
 const EMPTY_THESIS: CoachWorkingThesis = {
   central_tension: null,
   emerging_pattern: null,

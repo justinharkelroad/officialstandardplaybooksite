@@ -4,6 +4,7 @@ import {
   renderCoachTurn,
   renderReflection,
   serializeSavedCoachTurn,
+  shouldCoachQuestion,
   type CoachInsight,
 } from "./index.ts";
 
@@ -18,6 +19,13 @@ const memory: CoachInsight = {
   content: "I want to lead without carrying everything alone.",
   created_at: "2026-07-01T00:00:00Z",
 };
+
+Deno.test("coach ignores session labels and deterministic selector steps", () => {
+  assertEquals(shouldCoachQuestion({ id: "title", type: "text" }), false);
+  assertEquals(shouldCoachQuestion({ id: "domain", type: "select" }), false);
+  assertEquals(shouldCoachQuestion({ id: "story_check", type: "select" }), false);
+  assertEquals(shouldCoachQuestion({ id: "trigger", type: "textarea" }), true);
+});
 
 Deno.test("assembleCoachPrompt treats member text as delimited data and uses flow vocabulary", () => {
   const prompt = assembleCoachPrompt({

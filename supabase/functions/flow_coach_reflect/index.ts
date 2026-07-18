@@ -9,6 +9,7 @@ import {
   renderCoachTurn,
   retrieveInsights,
   serializeSavedCoachTurn,
+  shouldCoachQuestion,
   type CoachIntensity,
   type CoachWorkingThesis,
 } from "../_shared/flowCoach/index.ts";
@@ -147,6 +148,9 @@ serve(async (req) => {
     const visibleQuestions = getVisibleQuestions(questions, storedAnswers);
     if (!visibleQuestions.some((candidate) => candidate.id === questionId)) {
       return response({ skipped: true, reason: "question_not_visible" });
+    }
+    if (!shouldCoachQuestion(question)) {
+      return response({ skipped: true, reason: "non_reflective_step" });
     }
     const visibleCount = visibleQuestions.length;
 
