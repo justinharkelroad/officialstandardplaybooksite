@@ -37,6 +37,12 @@ export interface FlowQuestion {
   };
 }
 
+export type FlowCoachIntensity = 'gentle' | 'standard' | 'hard';
+
+export function normalizeFlowCoachIntensity(value: unknown): FlowCoachIntensity {
+  return value === 'gentle' || value === 'hard' ? value : 'standard';
+}
+
 export interface FlowTemplate {
   id: string;
   name: string;
@@ -50,7 +56,7 @@ export interface FlowTemplate {
   ai_analysis_prompt: string | null;
   coach_enabled?: boolean;
   coach_prompt?: string | null;
-  coach_intensity?: 'gentle' | 'standard' | 'hard';
+  coach_intensity?: FlowCoachIntensity;
   coach_question_notes?: Record<string, unknown>;
   is_active: boolean;
   display_order: number;

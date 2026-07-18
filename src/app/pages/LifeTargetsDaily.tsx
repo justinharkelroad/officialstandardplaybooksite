@@ -38,8 +38,8 @@ export default function LifeTargetsDaily() {
   const saveDailyActions = useSaveDailyActions();
   const saveActionPool = useSaveActionPool();
   const [showChangeDialog, setShowChangeDialog] = useState(false);
-  const saveTimeoutRef = useRef<NodeJS.Timeout>();
-  const poolSaveTimeoutRef = useRef<NodeJS.Timeout>();
+  const saveTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const poolSaveTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const hydratedQuarterRef = useRef<string | null>(null);
 
   // Hydrate daily actions from DB once per quarter. Subsequent refetches

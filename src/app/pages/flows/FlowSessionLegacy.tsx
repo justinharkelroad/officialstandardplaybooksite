@@ -87,7 +87,7 @@ export default function FlowSession() {
   const addingToPlaybookRef = useRef(false);
   
   // Ref for typing timeout to prevent race conditions
-  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Track footer height changes (for select buttons vs text input)
   useEffect(() => {

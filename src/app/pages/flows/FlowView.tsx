@@ -4,7 +4,7 @@ import { supabase } from '@/app/lib/supabaseClient';
 import { useAuth } from '@/app/lib/auth';
 import { useFlowProfile } from '@/app/hooks/useFlowProfile';
 import { generateFlowPDF } from '@/app/lib/generateFlowPDF';
-import { FlowSession, FlowTemplate, FlowQuestion, FlowAnalysis } from '@/app/types/flows';
+import { FlowSession, FlowTemplate, FlowQuestion, FlowAnalysis, normalizeFlowCoachIntensity } from '@/app/types/flows';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Loader2 } from 'lucide-react';
@@ -55,6 +55,7 @@ export default function FlowView() {
 
       const templateData = {
         ...data.flow_template,
+        coach_intensity: normalizeFlowCoachIntensity(data.flow_template.coach_intensity),
         questions_json: typeof data.flow_template.questions_json === 'string'
           ? JSON.parse(data.flow_template.questions_json)
           : data.flow_template.questions_json

@@ -46,7 +46,6 @@ import {
   useFlowAgentSession,
 } from '@/app/hooks/useFlowAgentSession';
 import { FlowQuestion } from '@/app/types/flows';
-import { cn } from '@/lib/utils';
 import { useAuth } from '@/app/lib/auth';
 import { supabase } from '@/app/lib/supabaseClient';
 import { DeclaredFlowAction, getDeclaredFlowActionKey } from '@/app/lib/declaredFlowActions';
@@ -740,7 +739,7 @@ export function FlowSessionAgentBase({
   const isDailyFrameFlow = slug === 'daily-frame';
   const activeBibleScripture = selectedBibleScripture ?? flowSession?.bible_context ?? null;
   const completedActionText = isDailyFrameFlow ? null : completedAnswers?.actions?.trim() || null;
-  const savedAnswers = answers ?? completedAnswers ?? {};
+  const savedAnswers = useMemo(() => answers ?? completedAnswers ?? {}, [answers, completedAnswers]);
   const flowQuestions = useMemo(() => {
     if (flowSession?.questions?.length) return flowSession.questions;
     return flowSession?.first_question ? [flowSession.first_question] : [];

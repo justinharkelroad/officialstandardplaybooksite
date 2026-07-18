@@ -19,7 +19,7 @@ export function DailyActionsManager({
 }: DailyActionsManagerProps) {
   const { selectedDailyActions, setSelectedDailyActions } = useLifeTargetsStore();
   const [newAction, setNewAction] = useState('');
-  const saveTimeoutRef = useRef<NodeJS.Timeout>();
+  const saveTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   // Debounced save: trigger onSave 500ms after last change
   useEffect(() => {

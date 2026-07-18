@@ -11,6 +11,7 @@ import { useToast } from '@/app/hooks/use-toast';
 import { generateFlowPDF } from '@/app/lib/generateFlowPDF';
 import { FlowSession,
   FlowTemplate,
+  normalizeFlowCoachIntensity,
   FlowAnalysis,
   FlowQuestion } from '@/app/types/flows';
 import { Card,
@@ -109,6 +110,7 @@ export default function FlowComplete() {
 
       const templateData = {
         ...data.flow_template,
+        coach_intensity: normalizeFlowCoachIntensity(data.flow_template.coach_intensity),
         questions_json: typeof data.flow_template.questions_json === 'string'
           ? JSON.parse(data.flow_template.questions_json)
           : data.flow_template.questions_json

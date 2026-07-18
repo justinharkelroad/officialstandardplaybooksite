@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { supabase } from '@/app/lib/supabaseClient';
 import { useAuth } from '@/app/lib/auth';
-import { FlowTemplate, FlowSession, FlowQuestion } from '@/app/types/flows';
+import { FlowTemplate, FlowSession, FlowQuestion, normalizeFlowCoachIntensity } from '@/app/types/flows';
 import { toast } from 'sonner';
 
 export interface PromptSegment {
@@ -49,6 +49,7 @@ export function useFlowSession({ templateSlug, sessionId }: UseFlowSessionProps)
       
       const templateData = {
         ...data,
+        coach_intensity: normalizeFlowCoachIntensity(data.coach_intensity),
         questions_json: typeof data.questions_json === 'string' 
           ? JSON.parse(data.questions_json) 
           : data.questions_json
@@ -75,6 +76,7 @@ export function useFlowSession({ templateSlug, sessionId }: UseFlowSessionProps)
 
       const templateData = {
         ...data.flow_template,
+        coach_intensity: normalizeFlowCoachIntensity(data.flow_template.coach_intensity),
         questions_json: typeof data.flow_template.questions_json === 'string'
           ? JSON.parse(data.flow_template.questions_json)
           : data.flow_template.questions_json
