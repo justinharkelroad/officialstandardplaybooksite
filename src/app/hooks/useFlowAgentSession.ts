@@ -1646,11 +1646,37 @@ export function useFlowAgentSession({
             return;
           }
 
+          const coach = await requestFlowCoachReflection(
+            currentSession,
+            questionId,
+            result.answers_so_far[questionId] ?? trimmed,
+          );
+          console.info('[FlowAgentText]', {
+            phase: 'coach_reflection',
+            questionId,
+            hasReflection: Boolean(coach.reflection),
+            skipped: Boolean(coach.skipped),
+            reason: coach.reason ?? null,
+          });
+
           rememberFlowProgress(currentSession, result.next_question, result.answers_so_far, result.is_complete);
           setErrorMessage(null);
 
+          await waitForTextReplyPause(replyStartedAt);
+          if (coach.reflection) {
+            setMessages((current) => [
+              ...current,
+              {
+                id: createMessageId('assistant'),
+                role: 'assistant',
+                content: coach.reflection ?? '',
+                streaming: true,
+                timestamp: Date.now(),
+              },
+            ]);
+          }
+
           if (result.is_complete) {
-            await waitForTextReplyPause(replyStartedAt);
             await completeSubmittedFlow(currentSession, result.answers_so_far);
             return;
           }
@@ -1661,7 +1687,6 @@ export function useFlowAgentSession({
               result.next_question.prompt,
               result.answers_so_far,
             );
-            await waitForTextReplyPause(replyStartedAt);
             setMessages((current) => [
               ...current,
               {
