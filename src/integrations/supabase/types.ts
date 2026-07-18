@@ -256,6 +256,47 @@ export type Database = {
         }
         Relationships: []
       }
+      flow_challenge_logs: {
+        Row: {
+          ai_challenge: string | null
+          created_at: string | null
+          id: string
+          original_response: string | null
+          question_id: string
+          revised_response: string | null
+          session_id: string
+          user_action: string | null
+        }
+        Insert: {
+          ai_challenge?: string | null
+          created_at?: string | null
+          id?: string
+          original_response?: string | null
+          question_id: string
+          revised_response?: string | null
+          session_id: string
+          user_action?: string | null
+        }
+        Update: {
+          ai_challenge?: string | null
+          created_at?: string | null
+          id?: string
+          original_response?: string | null
+          question_id?: string
+          revised_response?: string | null
+          session_id?: string
+          user_action?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "flow_challenge_logs_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "flow_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       flow_coach_messages: {
         Row: {
           answer_excerpt: string | null
@@ -305,116 +346,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      flow_challenge_logs: {
-        Row: {
-          ai_challenge: string | null
-          created_at: string | null
-          id: string
-          original_response: string | null
-          question_id: string
-          revised_response: string | null
-          session_id: string
-          user_action: string | null
-        }
-        Insert: {
-          ai_challenge?: string | null
-          created_at?: string | null
-          id?: string
-          original_response?: string | null
-          question_id: string
-          revised_response?: string | null
-          session_id: string
-          user_action?: string | null
-        }
-        Update: {
-          ai_challenge?: string | null
-          created_at?: string | null
-          id?: string
-          original_response?: string | null
-          question_id?: string
-          revised_response?: string | null
-          session_id?: string
-          user_action?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "flow_challenge_logs_session_id_fkey"
-            columns: ["session_id"]
-            isOneToOne: false
-            referencedRelation: "flow_sessions"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      flow_profiles: {
-        Row: {
-          accountability_style: string | null
-          background_notes: string | null
-          core_values: string[] | null
-          coach_memory_announced_at: string | null
-          coach_memory_paused: boolean
-          created_at: string | null
-          current_challenges: string | null
-          current_goals: string | null
-          faith_tradition: string | null
-          feedback_preference: string | null
-          full_name: string | null
-          growth_edge: string | null
-          id: string
-          life_roles: string[] | null
-          overwhelm_response: string | null
-          peak_state: string | null
-          preferred_name: string | null
-          spiritual_beliefs: string | null
-          updated_at: string | null
-          user_id: string
-        }
-        Insert: {
-          accountability_style?: string | null
-          background_notes?: string | null
-          core_values?: string[] | null
-          coach_memory_announced_at?: string | null
-          coach_memory_paused?: boolean
-          created_at?: string | null
-          current_challenges?: string | null
-          current_goals?: string | null
-          faith_tradition?: string | null
-          feedback_preference?: string | null
-          full_name?: string | null
-          growth_edge?: string | null
-          id?: string
-          life_roles?: string[] | null
-          overwhelm_response?: string | null
-          peak_state?: string | null
-          preferred_name?: string | null
-          spiritual_beliefs?: string | null
-          updated_at?: string | null
-          user_id: string
-        }
-        Update: {
-          accountability_style?: string | null
-          background_notes?: string | null
-          core_values?: string[] | null
-          coach_memory_announced_at?: string | null
-          coach_memory_paused?: boolean
-          created_at?: string | null
-          current_challenges?: string | null
-          current_goals?: string | null
-          faith_tradition?: string | null
-          feedback_preference?: string | null
-          full_name?: string | null
-          growth_edge?: string | null
-          id?: string
-          life_roles?: string[] | null
-          overwhelm_response?: string | null
-          peak_state?: string | null
-          preferred_name?: string | null
-          spiritual_beliefs?: string | null
-          updated_at?: string | null
-          user_id?: string
-        }
-        Relationships: []
       }
       flow_member_insights: {
         Row: {
@@ -471,6 +402,75 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      flow_profiles: {
+        Row: {
+          accountability_style: string | null
+          background_notes: string | null
+          coach_memory_announced_at: string | null
+          coach_memory_paused: boolean
+          core_values: string[] | null
+          created_at: string | null
+          current_challenges: string | null
+          current_goals: string | null
+          faith_tradition: string | null
+          feedback_preference: string | null
+          full_name: string | null
+          growth_edge: string | null
+          id: string
+          life_roles: string[] | null
+          overwhelm_response: string | null
+          peak_state: string | null
+          preferred_name: string | null
+          spiritual_beliefs: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          accountability_style?: string | null
+          background_notes?: string | null
+          coach_memory_announced_at?: string | null
+          coach_memory_paused?: boolean
+          core_values?: string[] | null
+          created_at?: string | null
+          current_challenges?: string | null
+          current_goals?: string | null
+          faith_tradition?: string | null
+          feedback_preference?: string | null
+          full_name?: string | null
+          growth_edge?: string | null
+          id?: string
+          life_roles?: string[] | null
+          overwhelm_response?: string | null
+          peak_state?: string | null
+          preferred_name?: string | null
+          spiritual_beliefs?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          accountability_style?: string | null
+          background_notes?: string | null
+          coach_memory_announced_at?: string | null
+          coach_memory_paused?: boolean
+          core_values?: string[] | null
+          created_at?: string | null
+          current_challenges?: string | null
+          current_goals?: string | null
+          faith_tradition?: string | null
+          feedback_preference?: string | null
+          full_name?: string | null
+          growth_edge?: string | null
+          id?: string
+          life_roles?: string[] | null
+          overwhelm_response?: string | null
+          peak_state?: string | null
+          preferred_name?: string | null
+          spiritual_beliefs?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
       }
       flow_sessions: {
         Row: {
@@ -539,11 +539,11 @@ export type Database = {
           ai_analysis_prompt: string | null
           ai_challenge_enabled: boolean | null
           ai_challenge_intensity: string | null
-          color: string | null
           coach_enabled: boolean
           coach_intensity: string
           coach_prompt: string | null
           coach_question_notes: Json
+          color: string | null
           created_at: string | null
           description: string | null
           display_order: number | null
@@ -559,11 +559,11 @@ export type Database = {
           ai_analysis_prompt?: string | null
           ai_challenge_enabled?: boolean | null
           ai_challenge_intensity?: string | null
-          color?: string | null
           coach_enabled?: boolean
           coach_intensity?: string
           coach_prompt?: string | null
           coach_question_notes?: Json
+          color?: string | null
           created_at?: string | null
           description?: string | null
           display_order?: number | null
@@ -579,11 +579,11 @@ export type Database = {
           ai_analysis_prompt?: string | null
           ai_challenge_enabled?: boolean | null
           ai_challenge_intensity?: string | null
-          color?: string | null
           coach_enabled?: boolean
           coach_intensity?: string
           coach_prompt?: string | null
           coach_question_notes?: Json
+          color?: string | null
           created_at?: string | null
           description?: string | null
           display_order?: number | null
@@ -866,6 +866,56 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      member_emails: {
+        Row: {
+          created_at: string
+          email: string
+          error: string | null
+          id: string
+          kind: string
+          member_id: string
+          ref_key: string
+          resend_id: string | null
+          sent_at: string | null
+          status: string
+          subject: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          error?: string | null
+          id?: string
+          kind: string
+          member_id: string
+          ref_key: string
+          resend_id?: string | null
+          sent_at?: string | null
+          status?: string
+          subject: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          error?: string | null
+          id?: string
+          kind?: string
+          member_id?: string
+          ref_key?: string
+          resend_id?: string | null
+          sent_at?: string | null
+          status?: string
+          subject?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "member_emails_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       members: {
         Row: {
