@@ -31,7 +31,12 @@ export const SectionHelpTip = forwardRef<HTMLSpanElement, SectionHelpTipProps>(
             <CircleHelp className="h-3.5 w-3.5" />
           </span>
         </TooltipTrigger>
-        <TooltipContent side="top" align="start" className="max-w-[320px] p-3">
+        <TooltipContent
+          side="top"
+          align="start"
+          collisionPadding={12}
+          className="w-max max-w-[calc(100vw-24px)] p-3 sm:max-w-[320px]"
+        >
           {title && <p className="text-xs font-semibold mb-1">{title}</p>}
           <p className="text-xs leading-relaxed">{body}</p>
         </TooltipContent>

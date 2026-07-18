@@ -5,6 +5,7 @@ import {
   CalendarRange,
   ClipboardEdit,
   History,
+  LockKeyhole,
   Rocket,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -318,7 +319,8 @@ function DebriefPod() {
           aria-label="Start Weekly Debrief — available Sunday and Monday"
           className="mt-auto w-full justify-start border-[#64748b]/40 bg-[#64748b]/10 text-[#475569] disabled:cursor-not-allowed disabled:opacity-60 dark:text-[#cbd5e1]"
         >
-          Start Weekly Debrief
+          <span>New debrief opens Sunday</span>
+          <LockKeyhole className="h-4 w-4" />
         </Button>
       ) : null}
     </PersonalGrowthPod>
