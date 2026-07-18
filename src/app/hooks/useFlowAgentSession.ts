@@ -1663,20 +1663,20 @@ export function useFlowAgentSession({
           setErrorMessage(null);
 
           await waitForTextReplyPause(replyStartedAt);
-          if (coach.reflection) {
-            setMessages((current) => [
-              ...current,
-              {
-                id: createMessageId('assistant'),
-                role: 'assistant',
-                content: coach.reflection ?? '',
-                streaming: true,
-                timestamp: Date.now(),
-              },
-            ]);
-          }
 
           if (result.is_complete) {
+            if (coach.reflection) {
+              setMessages((current) => [
+                ...current,
+                {
+                  id: createMessageId('assistant'),
+                  role: 'assistant',
+                  content: coach.reflection,
+                  streaming: true,
+                  timestamp: Date.now(),
+                },
+              ]);
+            }
             await completeSubmittedFlow(currentSession, result.answers_so_far);
             return;
           }
@@ -1687,12 +1687,13 @@ export function useFlowAgentSession({
               result.next_question.prompt,
               result.answers_so_far,
             );
+            const assistantReply = [coach.reflection, nextQuestionPrompt].filter(Boolean).join('\n\n');
             setMessages((current) => [
               ...current,
               {
                 id: createMessageId('assistant'),
                 role: 'assistant',
-                content: nextQuestionPrompt,
+                content: assistantReply,
                 streaming: true,
                 timestamp: Date.now(),
               },

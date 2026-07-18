@@ -46,6 +46,15 @@ Deno.test("renderReflection removes invented past-flow claims", () => {
   assertEquals(rendered.memoryRefs, []);
 });
 
+Deno.test("renderReflection rejects coaching questions", () => {
+  const rendered = renderReflection(
+    "Your desire for presence is clear. How can you make today more meaningful?",
+    [],
+  );
+  assertEquals(rendered.reflection, "");
+  assertEquals(rendered.memoryRefs, []);
+});
+
 Deno.test("renderReflection rejects memory text copied without its authorized token", () => {
   const rendered = renderReflection(
     `That still matters: “${memory.content}”`,

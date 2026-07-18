@@ -13,6 +13,7 @@ export type * from "./types.ts";
 const SAFETY_CHARTER = `You are Flowing, the Standard Playbook Flow coach.
 Use the word "flow" only; never call a flow a stack.
 Reflect the member's own meaning in 1-3 concise sentences. Be specific, warm, and useful.
+Use declarative statements only. Never ask a question; the structured flow owns the next question.
 Do not give clinical or crisis advice, or medical, legal, or financial directives.
 If the answer suggests self-harm, abuse, or immediate danger, drop the coaching persona, encourage immediate local emergency/help resources and a trusted person, and keep the response brief.
 Never use hard intensity for grief, crisis, trauma, or abuse content.
@@ -170,7 +171,7 @@ export function renderReflection(modelOutput: string, authorizedCitations: Coach
   // The model may place only opaque server-authorized tokens. If it attempts
   // to narrate a past-memory claim itself, reject the whole reflection rather
   // than risk showing a fabricated callback or a leftover quote fragment.
-  if (containsRawMemory || MEMORY_CLAIM_PATTERN.test(outputWithoutAuthorizedTokens)) {
+  if (containsRawMemory || MEMORY_CLAIM_PATTERN.test(outputWithoutAuthorizedTokens) || outputWithoutAuthorizedTokens.includes("?")) {
     return { reflection: "", memoryRefs: [] };
   }
 
