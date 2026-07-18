@@ -6,6 +6,7 @@ import {
   editFlowAgentAnswer,
   evaluateFlowAgentAnswer,
   reflectFlowAgentAnswer,
+  FlowCoachReflectResponse,
   FlowAgentFunctionError,
   FlowAgentStateResponse,
   BibleScriptureContext,
@@ -32,6 +33,22 @@ async function withFlowCoachTimeout<T>(promise: Promise<T>, fallback: T): Promis
     ]);
   } finally {
     if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+  }
+}
+
+async function requestFlowCoachReflection(
+  session: StartFlowSessionResponse,
+  questionId: string,
+  answer: string,
+): Promise<FlowCoachReflectResponse> {
+  try {
+    return await withFlowCoachTimeout(
+      reflectFlowAgentAnswer(session, questionId, answer),
+      { skipped: true, reason: 'client_timeout' },
+    );
+  } catch (error) {
+    console.warn('[FlowAgentTool] Flowing reflection skipped:', error);
+    return { skipped: true, reason: 'client_error' };
   }
 }
 
@@ -185,7 +202,7 @@ Hard rules:
 5. Only questions with ai_challenge=true may push back. For those questions, call evaluate_answer_quality before pushing back and only push back when that tool returns should_push_back=true. Never push back on title or any question where ai_challenge is false.
 6. Accept titles as the user says them. A title can contain more than one idea.
 7. ${repeatedPromptNote}
-8. After submit_flow_answer succeeds, call flow_coach_reflect with the saved question_id and exact answer before asking the next question. If it returns a reflection, speak that reflection once. If it returns skipped=true, continue silently. Never invent a reflection or memory.
+8. submit_flow_answer performs Flowing coaching internally and returns coach_reflection. If coach_reflection is a non-empty string, speak it exactly once before asking next_question or completing the Flow. Do not paraphrase it. If coach_reflection is null, continue silently. Never invent a reflection or memory, and do not call flow_coach_reflect separately.
 9. If submit_flow_answer returns a next_question, ask that exact prompt next. Keep it concise.
 10. If a raw question in the list contains a {placeholder}, use the interpolated prompt returned by get_flow_state or submit_flow_answer instead of saying the braces aloud.
 11. If submit_flow_answer returns is_complete=true, immediately call complete_flow_session, then say: "Flow complete. I saved it." Stop coaching after that.
@@ -867,16 +884,13 @@ export function useFlowAgentSession({
           if (!questionId || !answer.trim()) {
             return stringifyReactToolResult({ success: true, skipped: true }, currentSession);
           }
-          const reflection = await withFlowCoachTimeout(
-            reflectFlowAgentAnswer(currentSession, questionId, answer),
-            { skipped: true, reason: 'client_timeout' },
-          );
+          const reflection = await requestFlowCoachReflection(currentSession, questionId, answer);
           const result = { success: true, ...reflection };
           const json = stringifyReactToolResult(result, currentSession);
           logFlowAgentToolReturn('flow_coach_reflect', withReactToolExecutor(result, currentSession), json);
           return json;
         } catch (error) {
-          console.warn('[FlowAgentTool] Flowing reflection skipped:', error);
+          console.warn('[FlowAgentTool] Flowing reflection tool skipped:', error);
           const currentSession = flowSessionRef.current;
           return stringifyReactToolResult({ success: true, skipped: true }, currentSession);
         }
@@ -915,6 +929,11 @@ export function useFlowAgentSession({
             stateAnswerKeys: Object.keys(state.answers),
           });
           if (requestedQuestionId && state.answers[requestedQuestionId]?.trim()) {
+            const coach = await requestFlowCoachReflection(
+              currentSession,
+              requestedQuestionId,
+              state.answers[requestedQuestionId],
+            );
             const finalAnswers = state.is_complete
               ? await completeSubmittedFlow(currentSession, state.answers)
               : state.answers;
@@ -926,6 +945,7 @@ export function useFlowAgentSession({
                 : interpolateSessionQuestion(currentSession, state.current_question, finalAnswers),
               is_complete: state.is_complete,
               answers_so_far: finalAnswers,
+              coach_reflection: coach.reflection ?? null,
             };
             const json = stringifyReactToolResult(result, currentSession);
             logFlowAgentToolReturn('submit_flow_answer', withReactToolExecutor(result, currentSession), json);
@@ -990,6 +1010,20 @@ export function useFlowAgentSession({
             return json;
           }
 
+          const coach = await requestFlowCoachReflection(
+            currentSession,
+            questionId,
+            result.answers_so_far[questionId] ?? answer,
+          );
+          console.info('[FlowAgentTool]', {
+            tool: 'submit_flow_answer',
+            phase: 'coach_reflection',
+            questionId,
+            hasReflection: Boolean(coach.reflection),
+            skipped: Boolean(coach.skipped),
+            reason: coach.reason ?? null,
+          });
+
           rememberFlowProgress(currentSession, result.next_question, result.answers_so_far, result.is_complete);
 
           let completedAnswersSoFar = result.answers_so_far;
@@ -1000,6 +1034,7 @@ export function useFlowAgentSession({
           const interpolatedResult = interpolateFlowAgentResultQuestions({
             ...result,
             answers_so_far: completedAnswersSoFar,
+            coach_reflection: coach.reflection ?? null,
           }, currentSession);
           const json = stringifyReactToolResult(interpolatedResult, currentSession);
           logFlowAgentToolReturn(
