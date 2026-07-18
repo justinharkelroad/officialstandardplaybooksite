@@ -256,56 +256,6 @@ export type Database = {
         }
         Relationships: []
       }
-      flow_coach_messages: {
-        Row: {
-          answer_excerpt: string | null
-          answer_hash: string | null
-          created_at: string
-          flow_session_id: string
-          id: string
-          input_tokens: number | null
-          memory_refs: Json
-          model: string | null
-          output_tokens: number | null
-          question_id: string
-          reflection: string
-        }
-        Insert: {
-          answer_excerpt?: string | null
-          answer_hash?: string | null
-          created_at?: string
-          flow_session_id: string
-          id?: string
-          input_tokens?: number | null
-          memory_refs?: Json
-          model?: string | null
-          output_tokens?: number | null
-          question_id: string
-          reflection: string
-        }
-        Update: {
-          answer_excerpt?: string | null
-          answer_hash?: string | null
-          created_at?: string
-          flow_session_id?: string
-          id?: string
-          input_tokens?: number | null
-          memory_refs?: Json
-          model?: string | null
-          output_tokens?: number | null
-          question_id?: string
-          reflection?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "flow_coach_messages_flow_session_id_fkey"
-            columns: ["flow_session_id"]
-            isOneToOne: false
-            referencedRelation: "flow_sessions"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       flow_challenge_logs: {
         Row: {
           ai_challenge: string | null
@@ -352,8 +302,6 @@ export type Database = {
           accountability_style: string | null
           background_notes: string | null
           core_values: string[] | null
-          coach_memory_announced_at: string | null
-          coach_memory_paused: boolean
           created_at: string | null
           current_challenges: string | null
           current_goals: string | null
@@ -374,8 +322,6 @@ export type Database = {
           accountability_style?: string | null
           background_notes?: string | null
           core_values?: string[] | null
-          coach_memory_announced_at?: string | null
-          coach_memory_paused?: boolean
           created_at?: string | null
           current_challenges?: string | null
           current_goals?: string | null
@@ -396,8 +342,6 @@ export type Database = {
           accountability_style?: string | null
           background_notes?: string | null
           core_values?: string[] | null
-          coach_memory_announced_at?: string | null
-          coach_memory_paused?: boolean
           created_at?: string | null
           current_challenges?: string | null
           current_goals?: string | null
@@ -415,62 +359,6 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
-      }
-      flow_member_insights: {
-        Row: {
-          claim: string | null
-          content: string
-          created_at: string
-          flow_slug: string | null
-          id: string
-          kind: string
-          last_referenced_at: string | null
-          salience: number
-          session_title: string | null
-          source_session_id: string
-          step_key: string | null
-          theme: string | null
-          user_id: string
-        }
-        Insert: {
-          claim?: string | null
-          content: string
-          created_at?: string
-          flow_slug?: string | null
-          id?: string
-          kind: string
-          last_referenced_at?: string | null
-          salience?: number
-          session_title?: string | null
-          source_session_id: string
-          step_key?: string | null
-          theme?: string | null
-          user_id: string
-        }
-        Update: {
-          claim?: string | null
-          content?: string
-          created_at?: string
-          flow_slug?: string | null
-          id?: string
-          kind?: string
-          last_referenced_at?: string | null
-          salience?: number
-          session_title?: string | null
-          source_session_id?: string
-          step_key?: string | null
-          theme?: string | null
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "flow_member_insights_source_session_id_fkey"
-            columns: ["source_session_id"]
-            isOneToOne: false
-            referencedRelation: "flow_sessions"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       flow_sessions: {
         Row: {
@@ -540,10 +428,6 @@ export type Database = {
           ai_challenge_enabled: boolean | null
           ai_challenge_intensity: string | null
           color: string | null
-          coach_enabled: boolean
-          coach_intensity: string
-          coach_prompt: string | null
-          coach_question_notes: Json
           created_at: string | null
           description: string | null
           display_order: number | null
@@ -560,10 +444,6 @@ export type Database = {
           ai_challenge_enabled?: boolean | null
           ai_challenge_intensity?: string | null
           color?: string | null
-          coach_enabled?: boolean
-          coach_intensity?: string
-          coach_prompt?: string | null
-          coach_question_notes?: Json
           created_at?: string | null
           description?: string | null
           display_order?: number | null
@@ -580,10 +460,6 @@ export type Database = {
           ai_challenge_enabled?: boolean | null
           ai_challenge_intensity?: string | null
           color?: string | null
-          coach_enabled?: boolean
-          coach_intensity?: string
-          coach_prompt?: string | null
-          coach_question_notes?: Json
           created_at?: string | null
           description?: string | null
           display_order?: number | null
@@ -866,6 +742,56 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      member_emails: {
+        Row: {
+          created_at: string
+          email: string
+          error: string | null
+          id: string
+          kind: string
+          member_id: string
+          ref_key: string
+          resend_id: string | null
+          sent_at: string | null
+          status: string
+          subject: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          error?: string | null
+          id?: string
+          kind: string
+          member_id: string
+          ref_key: string
+          resend_id?: string | null
+          sent_at?: string | null
+          status?: string
+          subject: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          error?: string | null
+          id?: string
+          kind?: string
+          member_id?: string
+          ref_key?: string
+          resend_id?: string | null
+          sent_at?: string | null
+          status?: string
+          subject?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "member_emails_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       members: {
         Row: {
@@ -1251,7 +1177,6 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      delete_my_flow_coach_memory: { Args: never; Returns: undefined }
       get_power_play_count: {
         Args: { p_date?: string; p_exclude_id?: string; p_user_id?: string }
         Returns: number
