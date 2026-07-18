@@ -90,6 +90,11 @@ export function BibleFlowScriptureSetup({
   const [safetyMessage, setSafetyMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const userContextLength = userContext.trim().length;
+  const userContextCharactersRemaining = Math.max(
+    0,
+    BIBLE_FLOW_CONTEXT_MIN_LENGTH - userContextLength,
+  );
 
   const canSubmit = useMemo(() => {
     if (mode === 'recommend') return userContext.trim().length >= BIBLE_FLOW_CONTEXT_MIN_LENGTH;
@@ -269,8 +274,12 @@ export function BibleFlowScriptureSetup({
                 <div className="space-y-2">
                   <div className="flex items-end justify-between gap-3">
                     <Label htmlFor="bible-context">What are you carrying today?</Label>
-                    <span className="text-xs text-muted-foreground">
-                      {userContext.trim().length}/{BIBLE_FLOW_CONTEXT_MIN_LENGTH}
+                    <span className="text-xs text-muted-foreground" aria-live="polite">
+                      {userContextLength} {userContextLength === 1 ? 'character' : 'characters'}
+                      {' · '}
+                      {userContextCharactersRemaining > 0
+                        ? `${userContextCharactersRemaining} more needed`
+                        : 'minimum met'}
                     </span>
                   </div>
                   <Textarea
