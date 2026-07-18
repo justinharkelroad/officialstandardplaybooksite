@@ -554,8 +554,8 @@ export type Database = {
           ai_analysis_prompt: string | null
           ai_challenge_enabled: boolean | null
           ai_challenge_intensity: string | null
-          coach_enabled: boolean
           coach_depth_enabled: boolean
+          coach_enabled: boolean
           coach_intensity: string
           coach_max_probes: number
           coach_prompt: string | null
@@ -576,8 +576,8 @@ export type Database = {
           ai_analysis_prompt?: string | null
           ai_challenge_enabled?: boolean | null
           ai_challenge_intensity?: string | null
-          coach_enabled?: boolean
           coach_depth_enabled?: boolean
+          coach_enabled?: boolean
           coach_intensity?: string
           coach_max_probes?: number
           coach_prompt?: string | null
@@ -598,8 +598,8 @@ export type Database = {
           ai_analysis_prompt?: string | null
           ai_challenge_enabled?: boolean | null
           ai_challenge_intensity?: string | null
-          coach_enabled?: boolean
           coach_depth_enabled?: boolean
+          coach_enabled?: boolean
           coach_intensity?: string
           coach_max_probes?: number
           coach_prompt?: string | null
