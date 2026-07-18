@@ -50,6 +50,7 @@ import { useAuth } from '@/app/lib/auth';
 import { supabase } from '@/app/lib/supabaseClient';
 import { DeclaredFlowAction, getDeclaredFlowActionKey } from '@/app/lib/declaredFlowActions';
 import { BibleScriptureContext, saveFlowAgentResponses } from '@/app/lib/flowAgentApi';
+import { interpolateFlowPrompt } from '@/app/lib/flowPromptInterpolation';
 import { toast } from 'sonner';
 
 const TEXT_INPUT_QUESTION: FlowQuestion = {
@@ -549,6 +550,8 @@ function FlowAnswerReviewDialog({
   const [editingQuestionId, setEditingQuestionId] = useState<string | null>(null);
   const [draftAnswer, setDraftAnswer] = useState('');
   const editingQuestion = answeredQuestions.find((question) => question.id === editingQuestionId) ?? null;
+  const promptFor = (question: FlowQuestion) =>
+    interpolateFlowPrompt(question.prompt, questions, answers);
 
   useEffect(() => {
     if (!open) {
@@ -608,7 +611,7 @@ function FlowAnswerReviewDialog({
                     <span className="block text-xs font-medium uppercase text-muted-foreground">
                       Question {index + 1}
                     </span>
-                    <span className="mt-1 block font-medium text-foreground">{question.prompt}</span>
+                    <span className="mt-1 block font-medium text-foreground">{promptFor(question)}</span>
                     <span className="mt-1 line-clamp-2 block text-muted-foreground">
                       {stripAnswerPreview(answers[question.id] ?? '')}
                     </span>
@@ -618,7 +621,7 @@ function FlowAnswerReviewDialog({
 
               {editingQuestion && (
                 <div className="space-y-3 border-t border-border/60 pt-4">
-                  <p className="text-sm font-medium">{editingQuestion.prompt}</p>
+                  <p className="text-sm font-medium">{promptFor(editingQuestion)}</p>
                   {editingQuestion.type === 'select' && editingQuestion.options?.length ? (
                     <div className="flex flex-wrap gap-2">
                       {editingQuestion.options.map((option) => (
