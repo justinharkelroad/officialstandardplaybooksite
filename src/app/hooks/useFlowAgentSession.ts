@@ -1539,7 +1539,11 @@ export function useFlowAgentSession({
           const promptMessage = {
             id: 'first-flow-question',
             role: 'assistant',
-            content: interpolateSessionPrompt(result.flowSession, result.flowSession.first_question.prompt, {}),
+            content: interpolateSessionPrompt(
+              result.flowSession,
+              result.flowSession.first_question.prompt,
+              initialState?.answers ?? {},
+            ),
             streaming: true,
             timestamp: Date.now(),
           } satisfies FlowAgentMessage;
