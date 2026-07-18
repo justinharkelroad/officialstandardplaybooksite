@@ -123,6 +123,30 @@ Intensity means directness, not certainty.
 14. Provider failure during resolution still saves the probe answer and releases the official spine; resolution may be null.
 15. Database failure while saving a probe answer leaves the client pending so the member can retry.
 
+## Critical production finding from Standard Playbook rollout
+
+The first authenticated Standard Playbook production test exposed a response-contract race that unit and build checks had not caught.
+
+### Observed failure
+
+The initial coaching call persisted a valid probe, but the insert response returned the database field `id` instead of the public API field `coach_message_id`. The client used this condition:
+
+```ts
+Boolean(coach.probe && coach.coach_message_id)
+```
+
+It therefore treated the first response as reflection-only and rendered the deterministic next official question. A later `get_flow_state` call found the persisted pending probe and rendered it too. The member saw two active questions.
+
+### Required prevention
+
+1. The Edge insert response must explicitly serialize `id` as `coach_message_id` rather than returning the raw database row.
+2. The text and voice clients must treat a non-empty persisted `probe` as the navigation authority even if an older endpoint omits `coach_message_id`.
+3. `coach_message_id` remains required in the formal API contract, but navigation must fail closed on probe presence, not fail open on a missing identifier.
+4. A newly inserted probe, an idempotently returned probe, and a reload-restored probe must all withhold `next_question` identically.
+5. Add regression coverage for the insert serialization and perform a real deployed text test; unit tests alone did not expose this cross-layer mismatch.
+
+The Standard Playbook fix is in functional commit `4141c07` and integrated production commit `53db345`.
+
 ## Verified AgencyBrain starting point
 
 The AgencyBrain repository currently has:
@@ -330,6 +354,7 @@ Requirements:
 - Use the persisted official answer, not browser text, as source of truth.
 - Compare a SHA-256 answer hash to reject stale probes.
 - Reuse the unique coach row on retries; do not duplicate provider billing.
+- Serialize a newly inserted row with `coach_message_id: saved.id`; never return only raw `id`.
 - A resolved historical row must return `probe=null` to live orchestration even though its stored probe remains available for summaries.
 - Enforce per-template maximum probes and no probe for titles/trivial answers.
 - Never ask more than one question in a probe.
@@ -442,6 +467,7 @@ Official-answer turn:
 3. If there is no probe, render reflection followed by the official next question.
 4. If there is a probe, store pending state and render reflection plus probe in one ordered assistant message.
 5. Do not render or enable the official question.
+6. Determine pending navigation from `Boolean(coach.probe)`, not from `Boolean(coach.probe && coach.coach_message_id)`. Use the identifier for persistence/diagnostics, not as permission to release the official spine.
 
 Probe-answer turn:
 
@@ -511,6 +537,8 @@ Do not flatten probe answers into repeated official labels such as “I want God
 ### Persistence/idempotency
 
 - retry of official answer returns the same row;
+- newly inserted coach response maps database `id` to API `coach_message_id`;
+- client with a valid `probe` but missing `coach_message_id` still withholds the official question;
 - resolved row returns no live pending probe;
 - retry of probe answer does not rebill or duplicate;
 - answer edit invalidates the stale row;
