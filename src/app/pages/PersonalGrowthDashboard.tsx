@@ -4,8 +4,10 @@ import {
   AudioLines,
   CalendarRange,
   ClipboardEdit,
+  History,
   Rocket,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { DebriefSundayBanner } from "@/app/components/dashboard/DebriefSundayBanner";
 import { MarqueeBand } from "@/app/components/MarqueeBand";
 import { TodaysPowerPlays } from "@/app/components/playbook/TodaysPowerPlays";
@@ -27,7 +29,7 @@ import {
   formatQuarterDisplay,
   getCurrentQuarter,
 } from "@/app/lib/quarterUtils";
-import { getDebriefWeekKey } from "@/app/lib/date-utils";
+import { getDebriefWeekKey, isDebriefWindowOpen } from "@/app/lib/date-utils";
 import { cn } from "@/lib/utils";
 import { getDomainToken } from "@/app/components/personal-growth/domainTokens";
 import { getPersonalGrowthFocusLabel } from "@/app/lib/personalGrowthFocusLabel";
@@ -184,7 +186,7 @@ function DebriefPod() {
 
   const today = useMemo(() => new Date(), []);
   const weekKey = useMemo(() => getDebriefWeekKey(today), [today]);
-  const isWeekend = today.getDay() === 0 || today.getDay() === 6;
+  const isDebriefOpen = isDebriefWindowOpen(today);
 
   useEffect(() => {
     let cancelled = false;
@@ -248,7 +250,7 @@ function DebriefPod() {
   };
 
   const { eyebrow, body } = statusCopy[status];
-  const canOpen = isWeekend || status === "completed";
+  const canOpen = isDebriefOpen || status === "completed";
 
   return (
     <PersonalGrowthPod
@@ -266,8 +268,8 @@ function DebriefPod() {
         >
           {status === "completed"
             ? "Done"
-            : !isWeekend
-              ? "Weekend only"
+            : !isDebriefOpen
+              ? "Sun + Mon only"
               : status === "in_progress"
               ? "In progress"
               : status === "loading"
@@ -297,12 +299,23 @@ function DebriefPod() {
           <p className="mt-1 text-sm">{body}</p>
         ) : null}
       </div>
+      <Button
+        asChild
+        type="button"
+        variant="ghost"
+        className="w-full justify-between border border-border/60 bg-background/40 text-foreground hover:bg-muted"
+      >
+        <Link to="/app/debrief?history=1">
+          View past debriefs
+          <History className="h-4 w-4 text-muted-foreground" />
+        </Link>
+      </Button>
       {!canOpen ? (
         <Button
           type="button"
           variant="outline"
           disabled
-          aria-label="Start Weekly Debrief — available Saturday and Sunday"
+          aria-label="Start Weekly Debrief — available Sunday and Monday"
           className="mt-auto w-full justify-start border-[#64748b]/40 bg-[#64748b]/10 text-[#475569] disabled:cursor-not-allowed disabled:opacity-60 dark:text-[#cbd5e1]"
         >
           Start Weekly Debrief

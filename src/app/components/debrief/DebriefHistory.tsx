@@ -7,9 +7,10 @@ import { ChevronRight, Loader2 } from "lucide-react";
 
 interface DebriefHistoryProps {
   onViewDebrief: (weekKey: string) => void;
+  showEmpty?: boolean;
 }
 
-export function DebriefHistory({ onViewDebrief }: DebriefHistoryProps) {
+export function DebriefHistory({ onViewDebrief, showEmpty = false }: DebriefHistoryProps) {
   const { user } = useAuth();
 
   const { data: reviews = [], isLoading } = useQuery({
@@ -37,7 +38,17 @@ export function DebriefHistory({ onViewDebrief }: DebriefHistoryProps) {
     );
   }
 
-  if (reviews.length === 0) return null;
+  if (reviews.length === 0) {
+    if (!showEmpty) return null;
+    return (
+      <div className="mt-8 w-full max-w-sm rounded-xl border border-dashed border-border/70 bg-muted/30 px-5 py-8 text-center">
+        <p className="text-sm font-medium text-foreground">No past debriefs yet</p>
+        <p className="mt-1 text-xs leading-5 text-muted-foreground">
+          Your sealed weekly debriefs will appear here.
+        </p>
+      </div>
+    );
+  }
 
   // Calculate average rating per review
   const getAvgRating = (reflections: Record<string, unknown> | null) => {

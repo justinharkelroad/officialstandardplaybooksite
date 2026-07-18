@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/app/lib/auth";
 import { supabase } from "@/integrations/supabase/client";
-import { getDebriefWeekKey } from "@/app/lib/date-utils";
+import { getDebriefWeekKey, isDebriefWindowOpen } from "@/app/lib/date-utils";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -19,8 +19,7 @@ export function DebriefSundayBanner() {
   const [completed, setCompleted] = useState<boolean | null>(null);
 
   const today = new Date();
-  const dayOfWeek = today.getDay(); // 0=Sun, 6=Sat
-  const showBanner = dayOfWeek === 0 || dayOfWeek === 6;
+  const showBanner = isDebriefWindowOpen(today);
   const weekKey = getDebriefWeekKey(today);
   const bannerKey = `${BANNER_KEY_PREFIX}_${weekKey}`;
   const localStorageKey = user?.id ? `banner_dismissed_${user.id}_${bannerKey}` : null;
@@ -66,9 +65,9 @@ export function DebriefSundayBanner() {
     >
       <div className="flex items-center gap-4">
         <div>
-          <p className="sp-display text-xl leading-none">Your weekend Debrief is ready</p>
+          <p className="sp-display text-xl leading-none">Your weekly Debrief is ready</p>
           <p className="sp-label mt-2 text-[10px] text-background/60 dark:text-foreground/55">
-            Reflect on your week, plan the next one, get your coaching analysis.
+            Open Sunday or Monday to reflect, plan the next week, and get your coaching analysis.
           </p>
         </div>
       </div>

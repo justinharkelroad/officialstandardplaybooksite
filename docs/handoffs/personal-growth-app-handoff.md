@@ -37,7 +37,7 @@ Source paths are in the SOURCE repo under `src/`. Each feature = components + ho
 | **Core 4** (daily habits: Body/Being/Balance/Business) | `pages/Core4.tsx` | `components/core4/` (Core4Card etc., SKIP TeamCore4Overview), `hooks/useCore4Stats` | `core4_entries`, user-scoped |
 | **Flows** (AI reflection sessions) | `pages/flows/` (8 pages) | `components/flows/` (~17 files), `hooks/useFlowStats` | `flow_sessions` + flow edge fns |
 | **Weekly Playbook / Power Plays** | `pages/WeeklyPlaybook.tsx` | `components/playbook/` (~12 files incl. TodaysPowerPlays, playbook-constants.ts), `hooks/useFocusItems`, `usePlaybookTags`, `usePlaybookStats` | `focus_items` (user-scoped), `agency_playbook_tags` (needs rework, §4) |
-| **The Debrief** (weekend weekly review + AI analysis) | `pages/WeeklyDebrief.tsx` | — | `weekly_reviews`; edge fn `analyze_debrief` |
+| **The Debrief** (Sunday/Monday weekly review + AI analysis) | `pages/WeeklyDebrief.tsx` | — | `weekly_reviews`; edge fn `analyze_debrief` |
 | **Monthly Missions** | `pages/MonthlyMissions.tsx` | Core4MonthlyMissions component | `core4_monthly_missions` |
 | **Quarterly / Life Targets** | `pages/LifeTargets*.tsx` (8 pages) | `hooks/useQuarterlyTargets` | `life_targets_quarterly`; life_targets edge fns |
 | **90 Day Audio (Theta Talk Track)** | `pages/ThetaTalkTrack.tsx`, `ThetaTalkTrackCreate.tsx` | Theta components (~22 files incl. `ThetaTargetsInput.tsx`), `hooks/useThetaTargets` | `theta_targets`, `theta_tracks` (+ related theta tables), user-scoped |

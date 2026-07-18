@@ -44,15 +44,22 @@ export function weekKeyToDateRange(weekKey: string): { monday: Date; sunday: Dat
 
 /**
  * Returns the week key for the debrief page.
- * On Monday or Tuesday, returns the PREVIOUS week so users have a grace period
- * to complete last week's debrief. Wednesday–Sunday returns the current week.
+ * Monday reviews the week that just ended. Sunday reviews the current ISO week.
+ * The debrief itself is only open on those two days; other days still use the
+ * current week key so completed debriefs can be viewed consistently.
  */
 export function getDebriefWeekKey(date: Date = new Date()): string {
-  const dayOfWeek = date.getDay(); // 0=Sun, 1=Mon, 2=Tue
-  if (dayOfWeek === 1 || dayOfWeek === 2) {
+  const dayOfWeek = date.getDay(); // 0=Sun, 1=Mon
+  if (dayOfWeek === 1) {
     return getWeekKey(subWeeks(date, 1));
   }
   return getWeekKey(date);
+}
+
+/** The weekly debrief can only be started or resumed on Sunday and Monday. */
+export function isDebriefWindowOpen(date: Date = new Date()): boolean {
+  const dayOfWeek = date.getDay();
+  return dayOfWeek === 0 || dayOfWeek === 1;
 }
 
 /**
