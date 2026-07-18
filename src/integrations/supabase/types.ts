@@ -297,10 +297,118 @@ export type Database = {
           },
         ]
       }
+      flow_coach_messages: {
+        Row: {
+          answer_excerpt: string | null
+          answer_hash: string | null
+          created_at: string
+          flow_session_id: string
+          id: string
+          input_tokens: number | null
+          memory_refs: Json
+          model: string | null
+          output_tokens: number | null
+          question_id: string
+          reflection: string
+        }
+        Insert: {
+          answer_excerpt?: string | null
+          answer_hash?: string | null
+          created_at?: string
+          flow_session_id: string
+          id?: string
+          input_tokens?: number | null
+          memory_refs?: Json
+          model?: string | null
+          output_tokens?: number | null
+          question_id: string
+          reflection: string
+        }
+        Update: {
+          answer_excerpt?: string | null
+          answer_hash?: string | null
+          created_at?: string
+          flow_session_id?: string
+          id?: string
+          input_tokens?: number | null
+          memory_refs?: Json
+          model?: string | null
+          output_tokens?: number | null
+          question_id?: string
+          reflection?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "flow_coach_messages_flow_session_id_fkey"
+            columns: ["flow_session_id"]
+            isOneToOne: false
+            referencedRelation: "flow_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      flow_member_insights: {
+        Row: {
+          claim: string | null
+          content: string
+          created_at: string
+          flow_slug: string | null
+          id: string
+          kind: string
+          last_referenced_at: string | null
+          salience: number
+          session_title: string | null
+          source_session_id: string
+          step_key: string | null
+          theme: string | null
+          user_id: string
+        }
+        Insert: {
+          claim?: string | null
+          content: string
+          created_at?: string
+          flow_slug?: string | null
+          id?: string
+          kind: string
+          last_referenced_at?: string | null
+          salience?: number
+          session_title?: string | null
+          source_session_id: string
+          step_key?: string | null
+          theme?: string | null
+          user_id: string
+        }
+        Update: {
+          claim?: string | null
+          content?: string
+          created_at?: string
+          flow_slug?: string | null
+          id?: string
+          kind?: string
+          last_referenced_at?: string | null
+          salience?: number
+          session_title?: string | null
+          source_session_id?: string
+          step_key?: string | null
+          theme?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "flow_member_insights_source_session_id_fkey"
+            columns: ["source_session_id"]
+            isOneToOne: false
+            referencedRelation: "flow_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       flow_profiles: {
         Row: {
           accountability_style: string | null
           background_notes: string | null
+          coach_memory_announced_at: string | null
+          coach_memory_paused: boolean
           core_values: string[] | null
           created_at: string | null
           current_challenges: string | null
@@ -321,6 +429,8 @@ export type Database = {
         Insert: {
           accountability_style?: string | null
           background_notes?: string | null
+          coach_memory_announced_at?: string | null
+          coach_memory_paused?: boolean
           core_values?: string[] | null
           created_at?: string | null
           current_challenges?: string | null
@@ -341,6 +451,8 @@ export type Database = {
         Update: {
           accountability_style?: string | null
           background_notes?: string | null
+          coach_memory_announced_at?: string | null
+          coach_memory_paused?: boolean
           core_values?: string[] | null
           created_at?: string | null
           current_challenges?: string | null
@@ -427,6 +539,10 @@ export type Database = {
           ai_analysis_prompt: string | null
           ai_challenge_enabled: boolean | null
           ai_challenge_intensity: string | null
+          coach_enabled: boolean
+          coach_intensity: string
+          coach_prompt: string | null
+          coach_question_notes: Json
           color: string | null
           created_at: string | null
           description: string | null
@@ -443,6 +559,10 @@ export type Database = {
           ai_analysis_prompt?: string | null
           ai_challenge_enabled?: boolean | null
           ai_challenge_intensity?: string | null
+          coach_enabled?: boolean
+          coach_intensity?: string
+          coach_prompt?: string | null
+          coach_question_notes?: Json
           color?: string | null
           created_at?: string | null
           description?: string | null
@@ -459,6 +579,10 @@ export type Database = {
           ai_analysis_prompt?: string | null
           ai_challenge_enabled?: boolean | null
           ai_challenge_intensity?: string | null
+          coach_enabled?: boolean
+          coach_intensity?: string
+          coach_prompt?: string | null
+          coach_question_notes?: Json
           color?: string | null
           created_at?: string | null
           description?: string | null
@@ -1177,6 +1301,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      delete_my_flow_coach_memory: { Args: never; Returns: undefined }
       get_power_play_count: {
         Args: { p_date?: string; p_exclude_id?: string; p_user_id?: string }
         Returns: number
