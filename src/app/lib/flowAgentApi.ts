@@ -97,6 +97,13 @@ export interface EvaluateAnswerQualityResponse {
   flow_agent_run_id?: string | null;
 }
 
+export interface FlowCoachReflectResponse {
+  reflection?: string;
+  memory_refs?: Array<{ id: string; flow_slug: string | null; session_title: string | null }>;
+  skipped?: boolean;
+  reason?: string;
+}
+
 export interface CompleteFlowSessionResponse {
   success: boolean;
   session_id: string;
@@ -377,6 +384,19 @@ export function evaluateFlowAgentAnswer(
     should_push_back: false,
     pushback_message: null,
     flow_agent_run_id: flowSession.flow_agent_run_id ?? null,
+  });
+}
+
+export function reflectFlowAgentAnswer(
+  flowSession: StartFlowSessionResponse,
+  questionId: string,
+  answer: string,
+): Promise<FlowCoachReflectResponse> {
+  return invokeFlowAgentFunction<FlowCoachReflectResponse>('flow_coach_reflect', {
+    session_id: flowSession.session_id,
+    session_token: flowSession.session_token,
+    question_id: questionId,
+    answer,
   });
 }
 

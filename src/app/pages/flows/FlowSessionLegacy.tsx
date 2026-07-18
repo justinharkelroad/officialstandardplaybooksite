@@ -2,6 +2,7 @@ import { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useFlowSession } from '@/app/hooks/useFlowSession';
 import { useFlowProfile } from '@/app/hooks/useFlowProfile';
+import { useFlowCoach } from '@/app/hooks/useFlowCoach';
 import { useFocusItems } from '@/app/hooks/useFocusItems';
 import { ChatBubble, isHtmlContent } from '@/app/components/flows/ChatBubble';
 import { ChatInput } from '@/app/components/flows/ChatInput';
@@ -10,7 +11,7 @@ import { TypingIndicator } from '@/app/components/flows/TypingIndicator';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { X, Loader2, ChevronDown, Plus } from 'lucide-react';
+import { X, Loader2, ChevronDown, Plus, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/app/lib/auth';
@@ -60,6 +61,7 @@ export default function FlowSession() {
     goToQuestion,
     interpolatePrompt,
   } = useFlowSession({ templateSlug: slug, sessionId });
+  const { reflections: coachReflections, pendingQuestionIds: coachPending, reflect } = useFlowCoach(session?.id);
 
   const { createItem } = useFocusItems();
 
@@ -76,6 +78,7 @@ export default function FlowSession() {
   const [userPhotoUrl, setUserPhotoUrl] = useState<string | null>(null);
   const [userInitials, setUserInitials] = useState('??');
   const [postFlowHistory, setPostFlowHistory] = useState<Array<{ prompt: string; answer: string }>>([]);
+  const [postFlowCoachQuestionId, setPostFlowCoachQuestionId] = useState<string | null>(null);
   const [declaredActions, setDeclaredActions] = useState<DeclaredFlowAction[]>([]);
   const [draftAction, setDraftAction] = useState<DraftDeclaredAction | null>(null);
   const [postFlowStage, setPostFlowStage] = useState<'idle' | 'review' | 'add_to_playbook' | 'ask_more' | 'capture_additional'>('idle');
@@ -146,7 +149,7 @@ export default function FlowSession() {
       setChallengeText('');
       setShowCurrentQuestion(true);
     }
-  }, [currentQuestion?.id, responses, isTyping]);
+  }, [currentQuestion, responses, isTyping]);
 
   // Auto-scroll to current question bubble (center it so footer doesn't cover it)
   const scrollToCurrentQuestion = useCallback(() => {
@@ -454,10 +457,18 @@ export default function FlowSession() {
     // Save immediately and clear input
     forceScrollRef.current = true;
     setCurrentValue('');
-    await saveResponse(currentQuestion.id, valueToSubmit);
+    const savedSession = await saveResponse(currentQuestion.id, valueToSubmit);
     setAnsweredQuestions(prev => new Set(prev).add(currentQuestion.id));
+    if (savedSession?.id) {
+      void reflect({
+        sessionId: savedSession.id,
+        questionId: currentQuestion.id,
+        answer: valueToSubmit,
+      });
+    }
 
     const challenge = await checkForChallenge(currentQuestion.id, valueToSubmit);
+    if (isLastQuestion) setPostFlowCoachQuestionId(currentQuestion.id);
     
     if (challenge && !answeredQuestions.has(currentQuestion.id)) {
       setChallengeText(challenge);
@@ -667,6 +678,25 @@ export default function FlowSession() {
                     {response}
                   </ChatBubble>
                 )}
+
+                {coachPending.has(q.id) && !coachReflections[q.id] && (
+                  <div className="flex items-center gap-2 pl-2 text-xs text-muted-foreground animate-pulse">
+                    <Sparkles className="h-3.5 w-3.5 text-primary" />
+                    Flowing is reflecting…
+                  </div>
+                )}
+
+                {coachReflections[q.id] && (
+                  <div className="space-y-1 animate-in fade-in slide-in-from-bottom-1 duration-300">
+                    <div className="flex items-center gap-1.5 pl-2 text-[11px] font-medium uppercase tracking-[0.16em] text-primary">
+                      <Sparkles className="h-3 w-3" />
+                      Flowing
+                    </div>
+                    <ChatBubble variant="incoming" icon={<Sparkles className="h-4 w-4 text-primary" />}>
+                      {coachReflections[q.id].reflection}
+                    </ChatBubble>
+                  </div>
+                )}
               </div>
             );
           })}
@@ -709,6 +739,23 @@ export default function FlowSession() {
               >
                 {entry.answer}
               </ChatBubble>
+              {idx === 0 && postFlowCoachQuestionId && coachPending.has(postFlowCoachQuestionId) && !coachReflections[postFlowCoachQuestionId] && (
+                <div className="flex items-center gap-2 pl-2 text-xs text-muted-foreground animate-pulse">
+                  <Sparkles className="h-3.5 w-3.5 text-primary" />
+                  Flowing is reflecting…
+                </div>
+              )}
+              {idx === 0 && postFlowCoachQuestionId && coachReflections[postFlowCoachQuestionId] && (
+                <div className="space-y-1 animate-in fade-in slide-in-from-bottom-1 duration-300">
+                  <div className="flex items-center gap-1.5 pl-2 text-[11px] font-medium uppercase tracking-[0.16em] text-primary">
+                    <Sparkles className="h-3 w-3" />
+                    Flowing
+                  </div>
+                  <ChatBubble variant="incoming" icon={<Sparkles className="h-4 w-4 text-primary" />}>
+                    {coachReflections[postFlowCoachQuestionId].reflection}
+                  </ChatBubble>
+                </div>
+              )}
             </div>
           ))}
 
@@ -740,6 +787,19 @@ export default function FlowSession() {
               >
                 {pendingAnswer}
               </ChatBubble>
+
+              {coachPending.has(currentQuestion.id) && !coachReflections[currentQuestion.id] && (
+                <div className="flex items-center gap-2 pl-2 text-xs text-muted-foreground animate-pulse">
+                  <Sparkles className="h-3.5 w-3.5 text-primary" />
+                  Flowing is reflecting…
+                </div>
+              )}
+
+              {coachReflections[currentQuestion.id] && (
+                <ChatBubble variant="incoming" icon={<Sparkles className="h-4 w-4 text-primary" />} animate>
+                  {coachReflections[currentQuestion.id].reflection}
+                </ChatBubble>
+              )}
             </div>
           )}
 

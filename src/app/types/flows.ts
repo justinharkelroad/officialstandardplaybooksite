@@ -16,6 +16,8 @@ export interface FlowProfile {
   peak_state: string | null;
   growth_edge: string | null;
   overwhelm_response: string | null;
+  coach_memory_paused?: boolean;
+  coach_memory_announced_at?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -46,6 +48,10 @@ export interface FlowTemplate {
   ai_challenge_enabled: boolean;
   ai_challenge_intensity: string;
   ai_analysis_prompt: string | null;
+  coach_enabled?: boolean;
+  coach_prompt?: string | null;
+  coach_intensity?: 'gentle' | 'standard' | 'hard';
+  coach_question_notes?: Record<string, unknown>;
   is_active: boolean;
   display_order: number;
   created_at: string;

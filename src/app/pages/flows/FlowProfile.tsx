@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useFlowProfile } from '@/app/hooks/useFlowProfile';
+import { useFlowCoachMemory } from '@/app/hooks/useFlowCoachMemory';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select';
-import { ArrowLeft, Save, Sparkles } from 'lucide-react';
+import { ArrowLeft, Brain, Loader2, Save, Sparkles, Trash2 } from 'lucide-react';
 import { useToast } from '@/app/hooks/use-toast';
 
 const LIFE_ROLES = [
@@ -55,6 +57,7 @@ export default function FlowProfile() {
   const location = useLocation();
   const { toast } = useToast();
   const { profile, loading, saveProfile, hasProfile } = useFlowProfile();
+  const coachMemory = useFlowCoachMemory();
   
   const redirectTo = (location.state as { redirectTo?: string })?.redirectTo;
 
@@ -138,6 +141,27 @@ export default function FlowProfile() {
         navigate('/app/flows');
       }
     }
+  };
+
+  const handleMemoryPause = async (paused: boolean) => {
+    const saved = await coachMemory.setPaused(paused);
+    toast({
+      title: saved ? (paused ? 'Coach memory paused' : 'Coach memory resumed') : 'Unable to update coach memory',
+      description: saved
+        ? (paused ? 'Flowing will stop adding new memories. Existing memories remain available.' : 'Flowing can add insights from future completed flows again.')
+        : 'Please try again.',
+      variant: saved ? undefined : 'destructive',
+    });
+  };
+
+  const handleDeleteMemory = async () => {
+    if (!window.confirm('Delete all Flowing coach memory and every reflection that used it? This cannot be undone.')) return;
+    const deleted = await coachMemory.deleteAll();
+    toast({
+      title: deleted ? 'Coach memory deleted' : 'Unable to delete coach memory',
+      description: deleted ? 'Flowing no longer has access to your saved coaching history.' : 'Please try again.',
+      variant: deleted ? undefined : 'destructive',
+    });
   };
 
   if (loading) {
@@ -393,6 +417,99 @@ export default function FlowProfile() {
                 placeholder="Any other context that would help us personalize your experience..."
                 className="mt-2"
               />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="mb-6 overflow-hidden border-primary/20">
+          <CardHeader className="bg-primary/[0.04]">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex gap-3">
+                <div className="mt-0.5 rounded-xl bg-primary/10 p-2 text-primary">
+                  <Brain className="h-5 w-5" />
+                </div>
+                <div>
+                  <CardTitle className="text-lg">Coach memory</CardTitle>
+                  <CardDescription className="mt-1">
+                    Flowing remembers useful moments from your completed flows so its reflections can build on your own words.
+                  </CardDescription>
+                </div>
+              </div>
+              <Switch
+                checked={!coachMemory.paused}
+                disabled={coachMemory.loading || coachMemory.updating}
+                onCheckedChange={(enabled) => void handleMemoryPause(!enabled)}
+                aria-label="Enable coach memory"
+              />
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-5 pt-6">
+            <div className="flex items-center justify-between gap-4 rounded-xl border border-border/60 bg-muted/30 px-4 py-3">
+              <div>
+                <p className="text-sm font-medium">{coachMemory.paused ? 'Memory is paused' : 'Memory is on'}</p>
+                <p className="text-xs text-muted-foreground">
+                  {coachMemory.paused ? 'No new insights will be saved.' : 'New completed flows can add durable insights.'}
+                </p>
+              </div>
+              <span className="shrink-0 text-sm font-medium text-muted-foreground">
+                {coachMemory.insightCount} {coachMemory.insightCount === 1 ? 'memory' : 'memories'}
+              </span>
+            </div>
+
+            {coachMemory.loading ? (
+              <div className="flex items-center justify-center py-6 text-muted-foreground">
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Loading memory…
+              </div>
+            ) : coachMemory.error ? (
+              <div className="rounded-xl border border-destructive/30 bg-destructive/5 px-4 py-4 text-center">
+                <p className="text-sm font-medium text-destructive">{coachMemory.error}</p>
+                <Button type="button" variant="link" size="sm" onClick={() => void coachMemory.refetch()}>
+                  Try again
+                </Button>
+              </div>
+            ) : coachMemory.insights.length > 0 ? (
+              <div className="max-h-80 space-y-2 overflow-y-auto pr-1">
+                {coachMemory.insights.map((insight) => (
+                  <div key={insight.id} className="rounded-xl border border-border/60 px-4 py-3">
+                    <div className="mb-1.5 flex items-center justify-between gap-3">
+                      <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-primary">
+                        {insight.kind}
+                      </span>
+                      <span className="truncate text-xs text-muted-foreground">
+                        {insight.session_title || (insight.flow_slug ? `${insight.flow_slug} flow` : 'Past flow')}
+                      </span>
+                    </div>
+                    <p className="text-sm leading-relaxed text-foreground/90">{insight.content}</p>
+                  </div>
+                ))}
+                {coachMemory.insightCount > coachMemory.insights.length && (
+                  <p className="py-2 text-center text-xs text-muted-foreground">
+                    Showing the {coachMemory.insights.length} most recent memories.
+                  </p>
+                )}
+              </div>
+            ) : (
+              <div className="rounded-xl border border-dashed border-border px-4 py-6 text-center">
+                <p className="text-sm font-medium">No coach memories yet</p>
+                <p className="mt-1 text-xs text-muted-foreground">They will appear here after completed flows are distilled.</p>
+              </div>
+            )}
+
+            <div className="flex items-center justify-between gap-4 border-t border-border/60 pt-4">
+              <p className="text-xs leading-relaxed text-muted-foreground">
+                Deleting memory also removes past Flowing reflections that referenced it.
+              </p>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="shrink-0 text-destructive hover:text-destructive"
+                disabled={coachMemory.updating || coachMemory.insightCount === 0}
+                onClick={() => void handleDeleteMemory()}
+              >
+                {coachMemory.updating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Trash2 className="mr-2 h-4 w-4" />}
+                Delete all
+              </Button>
             </div>
           </CardContent>
         </Card>

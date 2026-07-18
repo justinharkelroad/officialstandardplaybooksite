@@ -5,6 +5,7 @@ import {
   createFlowAgentRunId,
   editFlowAgentAnswer,
   evaluateFlowAgentAnswer,
+  reflectFlowAgentAnswer,
   FlowAgentFunctionError,
   FlowAgentStateResponse,
   BibleScriptureContext,
@@ -18,6 +19,21 @@ import { FlowQuestion } from '@/app/types/flows';
 
 const REACT_CLIENT_TOOL_EXECUTOR = 'react_client_tools';
 const VOICE_TRANSCRIPT_AUTOSAVE_DELAY_MS = 4000;
+const FLOW_COACH_TOOL_TIMEOUT_MS = 8000;
+
+async function withFlowCoachTimeout<T>(promise: Promise<T>, fallback: T): Promise<T> {
+  let timeoutId: number | undefined;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise<T>((resolve) => {
+        timeoutId = window.setTimeout(() => resolve(fallback), FLOW_COACH_TOOL_TIMEOUT_MS);
+      }),
+    ]);
+  } finally {
+    if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+  }
+}
 
 export type FlowAgentMode = 'text' | 'voice';
 export type FlowAgentStatus = 'idle' | 'starting' | 'active' | 'switching' | 'completed' | 'ended' | 'error';
@@ -169,16 +185,17 @@ Hard rules:
 5. Only questions with ai_challenge=true may push back. For those questions, call evaluate_answer_quality before pushing back and only push back when that tool returns should_push_back=true. Never push back on title or any question where ai_challenge is false.
 6. Accept titles as the user says them. A title can contain more than one idea.
 7. ${repeatedPromptNote}
-8. If submit_flow_answer returns a next_question, ask that exact prompt next. Keep it concise.
-8a. If a raw question in the list contains a {placeholder}, use the interpolated prompt returned by get_flow_state or submit_flow_answer instead of saying the braces aloud.
-9. If submit_flow_answer returns is_complete=true, immediately call complete_flow_session, then say: "Flow complete. I saved it." Stop coaching after that.
-10. Do not ask check-in filler like "You good?", "Still here?", or "Where are you at?" after completion or while waiting.
-11. Never tell the user a backend, authorization, token, session, database, or tool-call explanation. Those are internal details.
-12. If submit_flow_answer returns ignored_empty_answer=true, do not say there was a connection issue. Continue from the returned next_question/current question.
-13. If submit_flow_answer returns validation_error=true, ask the retry_question prompt again and include the allowed options when present. Do not call it a connection issue.
-14. If a tool returns success=false, do not mention tools, backend, database, or connection issues. Call get_flow_state. If a current question is returned, ask that exact question. If no current question is returned, pause and let the app show Retry.
-15. If complete_flow_session returns required_answers_missing=true, ask the returned next_question/current question again. Do not call it a connection issue.
-16. Do not continue the conversation after complete_flow_session succeeds. The app will show the next action screen.`;
+8. After submit_flow_answer succeeds, call flow_coach_reflect with the saved question_id and exact answer before asking the next question. If it returns a reflection, speak that reflection once. If it returns skipped=true, continue silently. Never invent a reflection or memory.
+9. If submit_flow_answer returns a next_question, ask that exact prompt next. Keep it concise.
+10. If a raw question in the list contains a {placeholder}, use the interpolated prompt returned by get_flow_state or submit_flow_answer instead of saying the braces aloud.
+11. If submit_flow_answer returns is_complete=true, immediately call complete_flow_session, then say: "Flow complete. I saved it." Stop coaching after that.
+12. Do not ask check-in filler like "You good?", "Still here?", or "Where are you at?" after completion or while waiting.
+13. Never tell the user a backend, authorization, token, session, database, or tool-call explanation. Those are internal details.
+14. If submit_flow_answer returns ignored_empty_answer=true, do not say there was a connection issue. Continue from the returned next_question/current question.
+15. If submit_flow_answer returns validation_error=true, ask the retry_question prompt again and include the allowed options when present. Do not call it a connection issue.
+16. If a tool returns success=false, do not mention tools, backend, database, or connection issues. Call get_flow_state. If a current question is returned, ask that exact question. If no current question is returned, pause and let the app show Retry.
+17. If complete_flow_session returns required_answers_missing=true, ask the returned next_question/current question again. Do not call it a connection issue.
+18. Do not continue the conversation after complete_flow_session succeeds. The app will show the next action screen.`;
 }
 
 function getStringParam(parameters: unknown, key: string) {
@@ -838,6 +855,30 @@ export function useFlowAgentSession({
           const recovered = await recoverToolState('evaluate_answer_quality');
           if (recovered) return recovered;
           return flowToolError(error, flowSessionRef.current);
+        }
+      },
+      flow_coach_reflect: async (parameters: unknown) => {
+        try {
+          const currentSession = flowSessionRef.current;
+          if (!currentSession) return stringifyReactToolResult({ success: true, skipped: true }, currentSession);
+          const questionId = getStringParam(parameters, 'question_id');
+          const question = currentSession.questions?.find((candidate) => candidate.id === questionId);
+          const answer = getToolAnswer(parameters, questionId, question);
+          if (!questionId || !answer.trim()) {
+            return stringifyReactToolResult({ success: true, skipped: true }, currentSession);
+          }
+          const reflection = await withFlowCoachTimeout(
+            reflectFlowAgentAnswer(currentSession, questionId, answer),
+            { skipped: true, reason: 'client_timeout' },
+          );
+          const result = { success: true, ...reflection };
+          const json = stringifyReactToolResult(result, currentSession);
+          logFlowAgentToolReturn('flow_coach_reflect', withReactToolExecutor(result, currentSession), json);
+          return json;
+        } catch (error) {
+          console.warn('[FlowAgentTool] Flowing reflection skipped:', error);
+          const currentSession = flowSessionRef.current;
+          return stringifyReactToolResult({ success: true, skipped: true }, currentSession);
         }
       },
       submit_flow_answer: async (parameters: unknown) => {

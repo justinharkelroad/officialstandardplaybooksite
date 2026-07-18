@@ -67,6 +67,12 @@ verify_jwt = false
 [functions.save_flow_agent_responses]
 verify_jwt = false
 
+[functions.flow_coach_reflect]
+verify_jwt = false
+
+[functions.flow_coach_backfill]
+verify_jwt = true
+
 [functions.refine_flow_action_item]
 verify_jwt = false
 

@@ -10,6 +10,7 @@ import {
 } from '../_shared/daily_frame.ts'
 import { corsHeaders } from '../_shared/cors.ts'
 import { getSupabaseServiceKey } from '../_shared/supabaseKeys.ts'
+import { distillInsights, retrieveInsights } from '../_shared/flowCoach/index.ts'
 
 // Flow category detection for context-aware prompting
 interface FlowCategory {
@@ -72,6 +73,53 @@ function getDeclaredActionItems(responses: Record<string, string> | null | undef
   return Array.from(actionMap.entries())
     .sort((a, b) => a[0] - b[0])
     .map(([, value]) => value);
+}
+
+async function distillCompletedFlowMemory(supabase: any, session: any): Promise<void> {
+  try {
+    const { data: profile, error: profileError } = await supabase
+      .from('flow_profiles')
+      .select('coach_memory_paused')
+      .eq('user_id', session.user_id)
+      .maybeSingle()
+    // Fail closed when the privacy preference cannot be read.
+    if (profileError) throw profileError
+    if (profile?.coach_memory_paused) return
+
+    const questions = typeof session.flow_template?.questions_json === 'string'
+      ? JSON.parse(session.flow_template.questions_json)
+      : session.flow_template?.questions_json ?? []
+    const priorInsights = await retrieveInsights(supabase, session.user_id, {
+      flowSlug: session.flow_template?.slug ?? '',
+      stepKey: '',
+      limit: 20,
+    })
+    const rows = await distillInsights({
+      session: {
+        id: session.id,
+        user_id: session.user_id,
+        title: session.title,
+        flow_slug: session.flow_template?.slug ?? '',
+      },
+      responses: session.responses_json ?? {},
+      priorInsights,
+      questions,
+      config: {
+        model: Deno.env.get('FLOW_COACH_DISTILL_MODEL') ?? 'gpt-4o-mini',
+        openaiApiKey: Deno.env.get('OPENAI_API_KEY'),
+        anthropicApiKey: Deno.env.get('ANTHROPIC_API_KEY'),
+      },
+    })
+    if (!rows.length) return
+    const { error } = await supabase.from('flow_member_insights').upsert(rows, {
+      onConflict: 'source_session_id,kind,content',
+      ignoreDuplicates: true,
+    })
+    if (error) throw error
+  } catch (error) {
+    console.warn('[analyze_flow_session] Coach memory distillation skipped:',
+      error instanceof Error ? error.message : String(error))
+  }
 }
 
 serve(async (req) => {
@@ -166,6 +214,8 @@ serve(async (req) => {
         ...session,
         completed_at: session.completed_at ?? completedAt,
       })
+
+      await distillCompletedFlowMemory(supabase, session)
 
       const { error: cleanupError } = await supabase
         .from('flow_sessions')
@@ -304,6 +354,8 @@ serve(async (req) => {
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
+
+    await distillCompletedFlowMemory(supabase, session)
 
     // Only clean up stale drafts AFTER the update succeeded, and never
     // delete the session we just completed (belt-and-suspenders).
