@@ -338,6 +338,22 @@ export function renderCoachTurn(modelOutput: string, authorizedCitations: CoachI
   };
 }
 
+export function serializeSavedCoachTurn(saved: {
+  id: string;
+  reflection: string;
+  probe: string | null;
+  working_thesis: unknown;
+  memory_refs: unknown;
+}) {
+  return {
+    coach_message_id: saved.id,
+    reflection: saved.reflection,
+    probe: saved.probe,
+    working_thesis: saved.working_thesis,
+    memory_refs: saved.memory_refs,
+  };
+}
+
 export function renderCoachResolution(modelOutput: string, authorizedCitations: CoachInsight[]): {
   resolution: string;
   thesis: CoachWorkingThesis;

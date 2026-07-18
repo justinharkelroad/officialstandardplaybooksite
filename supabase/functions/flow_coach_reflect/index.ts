@@ -8,6 +8,7 @@ import {
   renderCoachResolution,
   renderCoachTurn,
   retrieveInsights,
+  serializeSavedCoachTurn,
   type CoachIntensity,
   type CoachWorkingThesis,
 } from "../_shared/flowCoach/index.ts";
@@ -388,7 +389,7 @@ serve(async (req) => {
         coach_memory_announced_at: new Date().toISOString(),
       }, { onConflict: "user_id" });
     }
-    return response(saved.data);
+    return response(serializeSavedCoachTurn(saved.data));
   } catch (error) {
     console.error("[flow_coach_reflect] fail-open", {
       session_id: sessionId,

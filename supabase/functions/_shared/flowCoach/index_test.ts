@@ -1,5 +1,11 @@
 import { assert, assertEquals, assertStringIncludes } from "https://deno.land/std@0.190.0/testing/asserts.ts";
-import { assembleCoachPrompt, renderCoachTurn, renderReflection, type CoachInsight } from "./index.ts";
+import {
+  assembleCoachPrompt,
+  renderCoachTurn,
+  renderReflection,
+  serializeSavedCoachTurn,
+  type CoachInsight,
+} from "./index.ts";
 
 const memory: CoachInsight = {
   id: "11111111-1111-4111-8111-111111111111",
@@ -141,4 +147,17 @@ Deno.test("adaptive coach prompt explicitly withholds probes when budget is exha
     probesRemaining: 0,
   });
   assertStringIncludes(prompt.system, "Return probe=null");
+});
+
+Deno.test("newly saved adaptive turn exposes the persisted coach message id", () => {
+  const serialized = serializeSavedCoachTurn({
+    id: "22222222-2222-4222-8222-222222222222",
+    reflection: "The tension is clear.",
+    probe: "What feels at risk if you stop?",
+    working_thesis: { central_tension: "presence versus control" },
+    memory_refs: [],
+  });
+
+  assertEquals(serialized.coach_message_id, "22222222-2222-4222-8222-222222222222");
+  assertEquals(serialized.probe, "What feels at risk if you stop?");
 });

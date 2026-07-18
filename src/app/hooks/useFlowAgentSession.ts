@@ -997,10 +997,10 @@ export function useFlowAgentSession({
               requestedQuestionId,
               state.answers[requestedQuestionId],
             );
-            const hasCoachProbe = Boolean(coach.probe && coach.coach_message_id);
+            const hasCoachProbe = Boolean(coach.probe);
             if (hasCoachProbe) {
               pendingCoachProbeRef.current = {
-                coach_message_id: coach.coach_message_id!,
+                coach_message_id: coach.coach_message_id ?? requestedQuestionId,
                 question_id: requestedQuestionId,
                 reflection: coach.reflection ?? '',
                 probe: coach.probe!,
@@ -1106,10 +1106,10 @@ export function useFlowAgentSession({
             reason: coach.reason ?? null,
           });
 
-          const hasCoachProbe = Boolean(coach.probe && coach.coach_message_id);
+          const hasCoachProbe = Boolean(coach.probe);
           if (hasCoachProbe) {
             pendingCoachProbeRef.current = {
-              coach_message_id: coach.coach_message_id!,
+              coach_message_id: coach.coach_message_id ?? questionId,
               question_id: questionId,
               reflection: coach.reflection ?? '',
               probe: coach.probe!,
@@ -1807,10 +1807,10 @@ export function useFlowAgentSession({
             reason: coach.reason ?? null,
           });
 
-          const hasCoachProbe = Boolean(coach.probe && coach.coach_message_id);
+          const hasCoachProbe = Boolean(coach.probe);
           if (hasCoachProbe) {
             pendingCoachProbeRef.current = {
-              coach_message_id: coach.coach_message_id!,
+              coach_message_id: coach.coach_message_id ?? questionId,
               question_id: questionId,
               reflection: coach.reflection ?? '',
               probe: coach.probe!,
