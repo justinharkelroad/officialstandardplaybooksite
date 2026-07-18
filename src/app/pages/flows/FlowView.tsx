@@ -9,12 +9,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { FlowReportCard } from '@/app/components/flows/FlowReportCard';
+import { useFlowCoach } from '@/app/hooks/useFlowCoach';
 
 export default function FlowView() {
   const { sessionId } = useParams<{ sessionId: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { profile } = useFlowProfile();
+  const { reflections: coachReflections } = useFlowCoach(sessionId);
   
   const [session, setSession] = useState<FlowSession | null>(null);
   const [template, setTemplate] = useState<FlowTemplate | null>(null);
@@ -172,6 +174,7 @@ export default function FlowView() {
           generatingPDF={generatingPDF}
           onDownloadPDF={handleDownloadPDF}
           onNewFlow={isOwner ? () => navigate(`/app/flows/start/${template.slug}`) : undefined}
+          coachReflections={coachReflections}
         />
       </div>
     </div>

@@ -37,6 +37,7 @@ import { AnimatedDownload as Download } from "@/app/components/icons/AnimatedDow
 import { FlowTypeIcon } from '@/app/components/flows/FlowTypeIcon';
 import { DailyFrameReportCard } from '@/app/components/daily-frame/DailyFrameReportCard';
 import { AppIcon } from "@/app/components/icons/appIcons";
+import { useFlowCoach } from '@/app/hooks/useFlowCoach';
 
 export default function FlowComplete() {
   const { sessionId } = useParams<{ sessionId: string }>();
@@ -44,6 +45,7 @@ export default function FlowComplete() {
   const { profile } = useFlowProfile();
   const stats = useFlowStats();
   const { toast } = useToast();
+  const { reflections: coachReflections } = useFlowCoach(sessionId);
   const celebrationShownRef = useRef(false);
   
   const [session, setSession] = useState<FlowSession | null>(null);
@@ -440,6 +442,7 @@ export default function FlowComplete() {
               <div className="space-y-6">
                 {questions.map((question) => {
                   const response = responses[question.id];
+                  const coachReflection = coachReflections[question.id]?.reflection;
                   if (!response) return null;
 
                   return (
@@ -458,6 +461,17 @@ export default function FlowComplete() {
                         <p className="text-foreground leading-relaxed whitespace-pre-wrap">
                           {response}
                         </p>
+                      )}
+                      {coachReflection && (
+                        <div className="mt-4 border-l-2 border-[#2997FF] bg-[#2997FF]/5 px-4 py-3">
+                          <div className="mb-1 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-[#2997FF]">
+                            <Sparkles className="h-3.5 w-3.5" strokeWidth={1.5} />
+                            Flowing reflection
+                          </div>
+                          <p className="whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">
+                            {coachReflection}
+                          </p>
+                        </div>
                       )}
                     </div>
                   );
