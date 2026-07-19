@@ -297,6 +297,66 @@ export type Database = {
           },
         ]
       }
+      flow_coach_attempts: {
+        Row: {
+          answer_hash: string | null
+          coach_message_id: string | null
+          created_at: string
+          flow_session_id: string
+          id: string
+          latency_ms: number
+          model: string | null
+          outcome: string
+          provider_attempts: number
+          question_id: string
+          reason: string | null
+          request_kind: string
+        }
+        Insert: {
+          answer_hash?: string | null
+          coach_message_id?: string | null
+          created_at?: string
+          flow_session_id: string
+          id?: string
+          latency_ms?: number
+          model?: string | null
+          outcome: string
+          provider_attempts?: number
+          question_id: string
+          reason?: string | null
+          request_kind: string
+        }
+        Update: {
+          answer_hash?: string | null
+          coach_message_id?: string | null
+          created_at?: string
+          flow_session_id?: string
+          id?: string
+          latency_ms?: number
+          model?: string | null
+          outcome?: string
+          provider_attempts?: number
+          question_id?: string
+          reason?: string | null
+          request_kind?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "flow_coach_attempts_coach_message_id_fkey"
+            columns: ["coach_message_id"]
+            isOneToOne: false
+            referencedRelation: "flow_coach_messages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "flow_coach_attempts_flow_session_id_fkey"
+            columns: ["flow_session_id"]
+            isOneToOne: false
+            referencedRelation: "flow_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       flow_coach_messages: {
         Row: {
           answer_excerpt: string | null
