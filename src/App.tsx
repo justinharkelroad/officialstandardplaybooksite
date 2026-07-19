@@ -3,13 +3,14 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
 import AppAccess from "./pages/AppAccess";
 
 // Member app (Standard Playbook client portal) — lazy so the marketing
 // bundle is unaffected.
 const MemberLogin = lazy(() => import("./app/LoginRoute"));
+const ResetPassword = lazy(() => import("./app/pages/ResetPassword"));
 const MemberApp = lazy(() => import("./app/MemberAppRoutes"));
 import Boardroom from "./pages/Boardroom";
 import Directive from "./pages/Directive";
@@ -69,13 +70,20 @@ import SEOHead from "./components/SEOHead";
 
 const queryClient = new QueryClient();
 
+function RouteParticles() {
+  const { pathname } = useLocation();
+  const isMemberSurface =
+    pathname === "/login" || pathname === "/reset-password" || pathname === "/app" || pathname.startsWith("/app/");
+  return isMemberSurface ? null : <Particles />;
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <Particles />
       <BrowserRouter>
+        <RouteParticles />
         <SEOHead />
         <ScrollToTop />
         <Routes>
@@ -84,6 +92,7 @@ const App = () => (
           <Route path="/apple" element={<AppleMockup />} />
           <Route path="/legacy" element={<NewLanding />} />
           <Route path="/login" element={<Suspense fallback={null}><MemberLogin /></Suspense>} />
+          <Route path="/reset-password" element={<Suspense fallback={null}><ResetPassword /></Suspense>} />
           <Route path="/app/*" element={<Suspense fallback={null}><MemberApp /></Suspense>} />
           <Route path="/appinfo" element={<AppAccess />} />
           <Route path="/boardroom" element={<BoldBoardroom />} />
