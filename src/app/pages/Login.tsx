@@ -79,9 +79,8 @@ export default function Login() {
     setError(null);
 
     try {
-      const redirectTo = new URL("/reset-password", window.location.origin).toString();
-      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-        redirectTo,
+      const { error: resetError } = await supabase.functions.invoke("request-password-reset", {
+        body: { email: email.trim() },
       });
 
       if (resetError) {

@@ -30,12 +30,37 @@ export default function ResetPassword() {
     document.title = "Choose a New Password — Standard Playbook";
     let active = true;
 
-    void supabase.auth.getSession().then(({ data, error: sessionError }) => {
+    const initializeRecovery = async () => {
+      const params = new URLSearchParams(window.location.search);
+      const tokenHash = params.get("token_hash");
+      const recoveryType = params.get("type");
+
+      if (tokenHash && recoveryType === "recovery") {
+        const { data, error: verifyError } = await supabase.auth.verifyOtp({
+          token_hash: tokenHash,
+          type: "recovery",
+        });
+        if (!active) return;
+        if (verifyError || !data.session) {
+          setError("This reset link is invalid or has expired. Request a fresh link to continue.");
+          setHasSession(false);
+        } else {
+          window.history.replaceState({}, "", "/reset-password");
+          setHasSession(true);
+          setError(null);
+        }
+        setCheckingLink(false);
+        return;
+      }
+
+      const { data, error: sessionError } = await supabase.auth.getSession();
       if (!active) return;
       setHasSession(Boolean(data.session));
       if (sessionError) setError(sessionError.message);
       setCheckingLink(false);
-    });
+    };
+
+    void initializeRecovery();
 
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
       if (!active) return;
