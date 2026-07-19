@@ -96,6 +96,13 @@ export interface SubmitFlowAnswerResponse {
   };
   tool_executor?: string;
   flow_agent_run_id?: string | null;
+  coach_message_id?: string;
+  coach_reflection?: string;
+  coach_probe?: string | null;
+  coach_resolution?: string | null;
+  coach_skipped?: boolean;
+  coach_skip_reason?: string;
+  probe_resolved?: boolean;
 }
 
 export interface EvaluateAnswerQualityResponse {
@@ -383,6 +390,7 @@ export function submitFlowAgentAnswer(
     answer,
     flow_agent_run_id: flowSession.flow_agent_run_id ?? null,
     conversation_id: flowSession.conversation_id ?? null,
+    client_tool_executor: 'react_client_tools',
   });
 }
 
