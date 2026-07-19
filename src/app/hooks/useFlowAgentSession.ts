@@ -627,10 +627,6 @@ export function useFlowAgentSession({
 
         rememberFlowProgress(currentSession, result.next_question, result.answers_so_far, result.is_complete);
         setErrorMessage(null);
-
-        if (result.is_complete) {
-          await completeSubmittedFlow(currentSession, result.answers_so_far);
-        }
       } catch (error) {
         console.error('[FlowAgentAutoSaveError]', {
           questionId: pendingAutoSaveQuestionIdRef.current,
@@ -651,7 +647,7 @@ export function useFlowAgentSession({
         autoSaveInFlightRef.current = false;
       }
     }, VOICE_TRANSCRIPT_AUTOSAVE_DELAY_MS);
-  }, [completeSubmittedFlow, rememberFlowProgress, rememberFlowState]);
+  }, [rememberFlowProgress, rememberFlowState]);
 
   const rememberUserTranscript = useCallback((content: string) => {
     const questionId = currentQuestionIdRef.current ?? flowSessionRef.current?.first_question.id ?? null;
@@ -878,9 +874,7 @@ export function useFlowAgentSession({
               state.answers,
               state.is_complete,
             );
-            const finalAnswers = state.is_complete
-              ? await completeSubmittedFlow(currentSession, state.answers)
-              : state.answers;
+            const finalAnswers = state.answers;
             if (!state.is_complete) setAwaitingAgent(false);
             const result = {
               success: true,
@@ -896,12 +890,11 @@ export function useFlowAgentSession({
           }
 
           if (state.is_complete || !questionId) {
-            const finalAnswers = await completeSubmittedFlow(currentSession, state.answers);
             const result = {
               success: true,
               next_question: null,
               is_complete: true,
-              answers_so_far: finalAnswers,
+              answers_so_far: state.answers,
             };
             const json = stringifyReactToolResult(result, currentSession);
             logFlowAgentToolReturn('submit_flow_answer', withReactToolExecutor(result, currentSession), json);
@@ -960,14 +953,8 @@ export function useFlowAgentSession({
             result.is_complete,
           );
 
-          let completedAnswersSoFar = result.answers_so_far;
-          if (result.is_complete) {
-            completedAnswersSoFar = await completeSubmittedFlow(currentSession, result.answers_so_far);
-          }
-
           const interpolatedResult = interpolateFlowAgentResultQuestions({
             ...result,
-            answers_so_far: completedAnswersSoFar,
           }, currentSession);
           const json = stringifyReactToolResult(interpolatedResult, currentSession);
           logFlowAgentToolReturn(
@@ -1061,7 +1048,7 @@ export function useFlowAgentSession({
         }
       },
     }),
-    [completeSubmittedFlow, getToolAnswer, recoverToolState, rememberFlowProgress, rememberFlowState],
+    [getToolAnswer, recoverToolState, rememberFlowProgress, rememberFlowState],
   );
 
   const conversation = useConversation({

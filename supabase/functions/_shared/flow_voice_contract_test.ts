@@ -39,5 +39,7 @@ Deno.test("legacy voice facilitates the Flow without per-question coaching", () 
   assertEquals(prompt.includes("coach_reflection"), false);
   assertEquals(prompt.includes("coach_probe"), false);
   assertEquals(prompt.includes("coach_resolution"), false);
+  assertStringIncludes(prompt, "exactly one concise closing reflection");
+  assertStringIncludes(prompt, "The single closing reflection");
   assertStringIncludes(prompt, "immediately call complete_flow_session");
 });
