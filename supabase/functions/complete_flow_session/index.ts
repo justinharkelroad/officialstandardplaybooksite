@@ -69,6 +69,31 @@ serve(async (req) => {
       );
     }
 
+    if (session.status === "completed") {
+      const completedAt = session.completed_at ?? new Date().toISOString();
+      if (!session.completed_at) {
+        const { error: timestampError } = await supabase
+          .from("flow_sessions")
+          .update({ completed_at: completedAt })
+          .eq("id", session.id)
+          .is("completed_at", null);
+        if (timestampError) throw timestampError;
+      }
+
+      const analysisStarted = session.ai_analysis_json
+        ? false
+        : triggerAnalysis(session.id);
+
+      return jsonResponse(200, withEdgeToolExecutor(req, body, {
+        success: true,
+        session_id: session.id,
+        completed_at: completedAt,
+        answers,
+        analysis_started: analysisStarted,
+        already_completed: true,
+      }));
+    }
+
     const missingQuestionIds = getMissingRequiredQuestions(questions, answers);
     if (missingQuestionIds.length > 0) {
       return errorResponse(
@@ -82,7 +107,7 @@ serve(async (req) => {
     }
 
     const completedAt = new Date().toISOString();
-    const { error: updateError } = await supabase
+    const { data: completedRow, error: updateError } = await supabase
       .from("flow_sessions")
       .update({
         status: "completed",
@@ -90,11 +115,26 @@ serve(async (req) => {
         current_question_id: null,
         updated_at: completedAt,
       })
-      .eq("id", session.id);
+      .eq("id", session.id)
+      .neq("status", "completed")
+      .select("id, completed_at")
+      .maybeSingle();
 
     if (updateError) throw updateError;
 
-    const analysisStarted = triggerAnalysis(session.id);
+    // A concurrent completion may have won the conditional update. That call
+    // owns the analysis trigger, so this request must not start a duplicate.
+    const analysisStarted = completedRow ? triggerAnalysis(session.id) : false;
+    let effectiveCompletedAt = completedRow?.completed_at ?? session.completed_at;
+    if (!effectiveCompletedAt) {
+      const { data: currentRow, error: currentRowError } = await supabase
+        .from("flow_sessions")
+        .select("completed_at")
+        .eq("id", session.id)
+        .single();
+      if (currentRowError) throw currentRowError;
+      effectiveCompletedAt = currentRow.completed_at;
+    }
 
     console.log("[complete_flow_session] success", {
       session_id: session.id,
@@ -110,9 +150,10 @@ serve(async (req) => {
     return jsonResponse(200, withEdgeToolExecutor(req, body, {
       success: true,
       session_id: session.id,
-      completed_at: completedAt,
+      completed_at: effectiveCompletedAt,
       answers,
       analysis_started: analysisStarted,
+      already_completed: !completedRow,
     }));
   } catch (error) {
     console.error("[complete_flow_session] failed", {

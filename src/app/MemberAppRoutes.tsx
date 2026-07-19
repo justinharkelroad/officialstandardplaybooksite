@@ -12,6 +12,7 @@ import Core4 from "@/app/pages/Core4";
 import MonthlyMissions from "@/app/pages/MonthlyMissions";
 import WeeklyPlaybook from "@/app/pages/WeeklyPlaybook";
 import WeeklyDebrief from "@/app/pages/WeeklyDebrief";
+import WeeklyReflection from "@/app/pages/WeeklyReflection";
 import LifeTargets from "@/app/pages/LifeTargets";
 import LifeTargetsBrainstorm from "@/app/pages/LifeTargetsBrainstorm";
 import LifeTargetsSelection from "@/app/pages/LifeTargetsSelection";
@@ -48,6 +49,7 @@ export default function MemberAppRoutes() {
             <Route path="core4" element={<Core4 />} />
             <Route path="monthly-missions" element={<MonthlyMissions />} />
             <Route path="weekly-playbook" element={<WeeklyPlaybook />} />
+            <Route path="reflection" element={<WeeklyReflection />} />
             <Route path="debrief" element={<WeeklyDebrief />} />
             <Route path="life-targets" element={<LifeTargets />} />
             <Route path="life-targets/brainstorm" element={<LifeTargetsBrainstorm />} />

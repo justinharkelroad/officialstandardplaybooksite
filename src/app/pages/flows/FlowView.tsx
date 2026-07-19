@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { FlowReportCard } from '@/app/components/flows/FlowReportCard';
 import { useFlowCoach } from '@/app/hooks/useFlowCoach';
+import { waitForFlowAnalysis } from '@/app/lib/waitForFlowAnalysis';
 
 export default function FlowView() {
   const { sessionId } = useParams<{ sessionId: string }>();
@@ -64,7 +65,7 @@ export default function FlowView() {
       };
 
       setSession(data as unknown as FlowSession);
-      setTemplate(templateData);
+      setTemplate(templateData as unknown as FlowTemplate);
       setQuestions(templateData.questions_json);
       setAnalysis(data.ai_analysis_json as unknown as FlowAnalysis);
 
@@ -89,9 +90,13 @@ export default function FlowView() {
 
       if (error) throw error;
 
-      if (data?.analysis) {
-        setAnalysis(data.analysis);
-      }
+      const nextAnalysis = data?.analysis ?? (
+        data?.analysis_in_progress
+          ? await waitForFlowAnalysis(id)
+          : null
+      );
+
+      if (nextAnalysis) setAnalysis(nextAnalysis);
     } catch (err) {
       console.error('Analysis error:', err);
     } finally {

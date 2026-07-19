@@ -137,11 +137,97 @@ async function distillCompletedFlowMemory(supabase: any, session: any): Promise<
   }
 }
 
+const ANALYSIS_CLAIM_TTL_MS = 5 * 60 * 1000
+const ANALYSIS_WAIT_ATTEMPTS = 24
+const ANALYSIS_WAIT_MS = 500
+
+type ActiveAnalysisClaim = {
+  supabase: any
+  sessionId: string
+  startedAt: string
+}
+
+type AnalysisClaimResult =
+  | { state: 'claimed'; startedAt: string }
+  | { state: 'ready'; analysis: Record<string, unknown> }
+  | { state: 'processing' }
+
+async function claimOrAwaitFlowAnalysis(
+  supabase: any,
+  sessionId: string,
+): Promise<AnalysisClaimResult> {
+  const startedAt = new Date().toISOString()
+  const staleBefore = new Date(Date.now() - ANALYSIS_CLAIM_TTL_MS).toISOString()
+  const claimBase = () => supabase
+    .from('flow_sessions')
+    .update({
+      analysis_generation_started_at: startedAt,
+      analysis_generation_completed_at: null,
+    })
+    .eq('id', sessionId)
+    .is('ai_analysis_json', null)
+
+  // Keep each mutation filter to one condition. PostgREST aliases mutation
+  // targets, which makes `.or()` column filters fail with 42703 even though the
+  // same OR works on reads. These two conditional passes remain atomic: first
+  // claim an unclaimed session, then reclaim only an expired claim.
+  let { data: claimed, error: claimError } = await claimBase()
+    .is('analysis_generation_started_at', null)
+    .select('id')
+    .maybeSingle()
+
+  if (!claimError && !claimed) {
+    ({ data: claimed, error: claimError } = await claimBase()
+      .lt('analysis_generation_started_at', staleBefore)
+      .select('id')
+      .maybeSingle())
+  }
+
+  if (claimError) throw claimError
+  if (claimed) return { state: 'claimed', startedAt }
+
+  for (let attempt = 0; attempt < ANALYSIS_WAIT_ATTEMPTS; attempt += 1) {
+    await new Promise((resolve) => setTimeout(resolve, ANALYSIS_WAIT_MS))
+    const { data, error } = await supabase
+      .from('flow_sessions')
+      .select('ai_analysis_json, analysis_generation_started_at')
+      .eq('id', sessionId)
+      .single()
+    if (error) throw error
+    if (data.ai_analysis_json) {
+      return {
+        state: 'ready',
+        analysis: data.ai_analysis_json as Record<string, unknown>,
+      }
+    }
+    if (!data.analysis_generation_started_at) {
+      return claimOrAwaitFlowAnalysis(supabase, sessionId)
+    }
+  }
+
+  return { state: 'processing' }
+}
+
+async function releaseFlowAnalysisClaim(claim: ActiveAnalysisClaim | null): Promise<void> {
+  if (!claim) return
+  const { error } = await claim.supabase
+    .from('flow_sessions')
+    .update({ analysis_generation_started_at: null })
+    .eq('id', claim.sessionId)
+    .eq('analysis_generation_started_at', claim.startedAt)
+    .is('ai_analysis_json', null)
+  if (error) {
+    console.warn('[analyze_flow_session] Failed to release analysis claim:', error.message)
+  }
+}
+
 serve(async (req) => {
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
+
+  let activeClaim: ActiveAnalysisClaim | null = null
 
   try {
     const { session_id } = await req.json()
@@ -203,27 +289,74 @@ serve(async (req) => {
       }
     }
 
+    if (session.ai_analysis_json) {
+      return new Response(
+        JSON.stringify({ success: true, analysis: session.ai_analysis_json, cached: true }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    if (session.flow_template?.slug !== 'daily-frame' && !openaiApiKey) {
+      return new Response(
+        JSON.stringify({ error: "AI isn't configured yet (missing OPENAI_API_KEY)" }),
+        { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    const claim = await claimOrAwaitFlowAnalysis(supabase, session_id)
+    if (claim.state === 'ready') {
+      return new Response(
+        JSON.stringify({ success: true, analysis: claim.analysis, cached: true }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+    if (claim.state === 'processing') {
+      return new Response(
+        JSON.stringify({ success: false, analysis_in_progress: true }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+    activeClaim = { supabase, sessionId: session_id, startedAt: claim.startedAt }
+
     if (session.flow_template?.slug === 'daily-frame') {
       const completedAt = new Date().toISOString()
       const dailyFrameInput = extractDailyFrameInput(session.responses_json, completedAt.slice(0, 10))
       const analysis = buildDailyFrameAnalysis(dailyFrameInput)
 
-      const { error: updateError } = await supabase
+      const { data: updatedRow, error: updateError } = await supabase
         .from('flow_sessions')
         .update({
           ai_analysis_json: analysis,
           status: 'completed',
           completed_at: session.completed_at ?? completedAt,
+          analysis_generation_started_at: null,
+          analysis_generation_completed_at: completedAt,
         })
         .eq('id', session_id)
+        .eq('analysis_generation_started_at', claim.startedAt)
+        .is('ai_analysis_json', null)
+        .select('id')
+        .maybeSingle()
 
       if (updateError) {
         console.error('Failed to save Daily Frame analysis:', updateError)
+        await releaseFlowAnalysisClaim(activeClaim)
+        activeClaim = null
         return new Response(
           JSON.stringify({ error: 'Failed to save analysis' }),
           { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         )
       }
+
+      if (!updatedRow) {
+        activeClaim = null
+        return new Response(
+          JSON.stringify({ success: false, analysis_in_progress: true }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      activeClaim = null
 
       await upsertDailyFrameCommitment(supabase, {
         ...session,
@@ -247,13 +380,6 @@ serve(async (req) => {
       return new Response(
         JSON.stringify({ success: true, analysis }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
-
-    if (!openaiApiKey) {
-      return new Response(
-        JSON.stringify({ error: "AI isn't configured yet (missing OPENAI_API_KEY)" }),
-        { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
@@ -323,6 +449,8 @@ serve(async (req) => {
     if (!openaiResponse.ok) {
       const errorText = await openaiResponse.text()
       console.error('OpenAI API error:', errorText)
+      await releaseFlowAnalysisClaim(activeClaim)
+      activeClaim = null
       return new Response(
         JSON.stringify({ error: 'AI analysis failed' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -334,6 +462,8 @@ serve(async (req) => {
 
     if (!aiContent) {
       console.error('No AI content in response')
+      await releaseFlowAnalysisClaim(activeClaim)
+      activeClaim = null
       return new Response(
         JSON.stringify({ error: 'No AI response generated' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -366,24 +496,45 @@ serve(async (req) => {
     }
 
     // Save analysis to session
-    const { error: updateError } = await supabase
+    const analysisCompletedAt = new Date().toISOString()
+    const { data: updatedRow, error: updateError } = await supabase
       .from('flow_sessions')
       .update({
         ai_analysis_json: analysis,
         status: 'completed',
-        completed_at: new Date().toISOString(),
+        // Completion is the member's event, not the later AI-analysis event.
+        // Preserving it keeps local-day and ISO-week reflection membership stable.
+        completed_at: session.completed_at ?? analysisCompletedAt,
+        analysis_generation_started_at: null,
+        analysis_generation_completed_at: analysisCompletedAt,
       })
       .eq('id', session_id)
+      .eq('analysis_generation_started_at', claim.startedAt)
+      .is('ai_analysis_json', null)
+      .select('id')
+      .maybeSingle()
 
     if (updateError) {
       console.error('Failed to save analysis:', updateError)
       // Do NOT proceed to cleanup — the session is still in_progress
       // and deleting it would permanently lose the user's responses.
+      await releaseFlowAnalysisClaim(activeClaim)
+      activeClaim = null
       return new Response(
         JSON.stringify({ error: 'Failed to save analysis' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
+
+    if (!updatedRow) {
+      activeClaim = null
+      return new Response(
+        JSON.stringify({ success: false, analysis_in_progress: true }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    activeClaim = null
 
     await distillCompletedFlowMemory(supabase, session)
 
@@ -409,6 +560,7 @@ serve(async (req) => {
     )
 
   } catch (error) {
+    await releaseFlowAnalysisClaim(activeClaim)
     console.error('Unexpected error:', error)
     return new Response(
       JSON.stringify({ error: 'Internal server error' }),
