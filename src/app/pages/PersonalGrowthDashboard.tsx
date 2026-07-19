@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { DebriefSundayBanner } from "@/app/components/dashboard/DebriefSundayBanner";
+import { WeeklyReflectionPreview } from "@/app/components/dashboard/WeeklyReflectionPreview";
 import { MarqueeBand } from "@/app/components/MarqueeBand";
 import { TodaysPowerPlays } from "@/app/components/playbook/TodaysPowerPlays";
 import { TodayRhythmHero } from "@/app/components/personal-growth/TodayRhythmHero";
@@ -235,7 +236,7 @@ function DebriefPod() {
   const statusCopy: Record<DebriefStatus, { eyebrow: string; body: string }> = {
     loading: { eyebrow: "Loading…", body: "" },
     not_started: {
-      eyebrow: "Weekly reflection",
+      eyebrow: "Review last week",
       body: "Close the loop on last week and set next week's One Big Thing.",
     },
     in_progress: {
@@ -649,6 +650,7 @@ export default function PersonalGrowthDashboard() {
             label="Reflect & Reinforce"
             meta={format(today, "EEEE, MMM d")}
           />
+          <WeeklyReflectionPreview />
           <div className="grid auto-rows-fr items-stretch gap-4 lg:grid-cols-2">
             <DebriefPod />
             <NinetyDayAudioPod />

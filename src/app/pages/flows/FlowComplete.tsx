@@ -36,6 +36,8 @@ import { AnimatedDownload as Download } from "@/app/components/icons/AnimatedDow
 import { FlowTypeIcon } from '@/app/components/flows/FlowTypeIcon';
 import { DailyFrameReportCard } from '@/app/components/daily-frame/DailyFrameReportCard';
 import { AppIcon } from "@/app/components/icons/appIcons";
+import { refreshCurrentWeeklyReflection } from "@/app/hooks/useWeeklyFlowReflection";
+import { waitForFlowAnalysis } from "@/app/lib/waitForFlowAnalysis";
 
 export default function FlowComplete() {
   const { sessionId } = useParams<{ sessionId: string }>();
@@ -44,6 +46,7 @@ export default function FlowComplete() {
   const stats = useFlowStats();
   const { toast } = useToast();
   const celebrationShownRef = useRef(false);
+  const reflectionRefreshSessionRef = useRef<string | null>(null);
   
   const [session, setSession] = useState<FlowSession | null>(null);
   const [template, setTemplate] = useState<FlowTemplate | null>(null);
@@ -97,6 +100,18 @@ export default function FlowComplete() {
     }
   }, [sessionId]);
 
+  useEffect(() => {
+    if (!session?.id || !analysis || reflectionRefreshSessionRef.current === session.id) {
+      return;
+    }
+
+    reflectionRefreshSessionRef.current = session.id;
+    const completedAt = session.completed_at
+      ? new Date(session.completed_at)
+      : new Date();
+    void refreshCurrentWeeklyReflection(completedAt);
+  }, [analysis, session?.completed_at, session?.id]);
+
   const loadSession = async () => {
     try {
       const { data, error } = await supabase
@@ -115,7 +130,7 @@ export default function FlowComplete() {
       };
 
       setSession(data as unknown as FlowSession);
-      setTemplate(templateData);
+      setTemplate(templateData as unknown as FlowTemplate);
 
       // Check if we already have analysis
       if (data.ai_analysis_json) {
@@ -143,16 +158,24 @@ export default function FlowComplete() {
 
       if (error) throw error;
 
-      if (data?.analysis) {
-        setAnalysis(data.analysis);
+      const nextAnalysis = data?.analysis ?? (
+        data?.analysis_in_progress
+          ? await waitForFlowAnalysis(id)
+          : null
+      );
+
+      if (nextAnalysis) {
+        setAnalysis(nextAnalysis);
         // Update local session state
         setSession(prev => prev ? {
           ...prev,
-          ai_analysis_json: data.analysis,
+          ai_analysis_json: nextAnalysis,
           status: 'completed',
         } : null);
+      } else if (data?.analysis_in_progress) {
+        setAnalysisError('AI insights are still being prepared. Refresh this page in a moment.');
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error('Analysis error:', err);
       setAnalysisError('Unable to generate AI insights. Your flow has been saved.');
     } finally {

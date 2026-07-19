@@ -2,6 +2,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   AudioLines,
+  BookOpenText,
   CalendarRange,
   ClipboardEdit,
   Dumbbell,
@@ -30,6 +31,7 @@ const NAV_ITEMS = [
   { to: "/app/monthly-missions", label: "Monthly", icon: Rocket },
   { to: "/app/life-targets", label: "Quarterly", icon: CalendarRange },
   { to: "/app/flows", label: "Flows", icon: Sparkles },
+  { to: "/app/reflection", label: "Reflection", icon: BookOpenText },
   { to: "/app/debrief", label: "Debrief", icon: ClipboardEdit },
   { to: "/app/theta-talk-track", label: "90 Day Audio", icon: AudioLines },
 ];

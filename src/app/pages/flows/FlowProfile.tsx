@@ -155,11 +155,11 @@ export default function FlowProfile() {
   };
 
   const handleDeleteMemory = async () => {
-    if (!window.confirm('Delete all Flowing coach memory and every reflection that used it? This cannot be undone.')) return;
+    if (!window.confirm('Delete all Flowing coach memory, Flowing reflections, and Weekly Reflections built from it? This cannot be undone.')) return;
     const deleted = await coachMemory.deleteAll();
     toast({
       title: deleted ? 'Coach memory deleted' : 'Unable to delete coach memory',
-      description: deleted ? 'Flowing no longer has access to your saved coaching history.' : 'Please try again.',
+      description: deleted ? 'Flowing coach memory and its saved reflections have been removed.' : 'Please try again.',
       variant: deleted ? undefined : 'destructive',
     });
   };
@@ -497,14 +497,14 @@ export default function FlowProfile() {
 
             <div className="flex items-center justify-between gap-4 border-t border-border/60 pt-4">
               <p className="text-xs leading-relaxed text-muted-foreground">
-                Deleting memory also removes past Flowing reflections that referenced it.
+                Deleting memory also removes past Flowing reflections and Weekly Reflections built from it.
               </p>
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 className="shrink-0 text-destructive hover:text-destructive"
-                disabled={coachMemory.updating || coachMemory.insightCount === 0}
+                disabled={coachMemory.updating}
                 onClick={() => void handleDeleteMemory()}
               >
                 {coachMemory.updating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Trash2 className="mr-2 h-4 w-4" />}

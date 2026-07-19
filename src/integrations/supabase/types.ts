@@ -476,6 +476,8 @@ export type Database = {
         Row: {
           agent_metadata: Json | null
           ai_analysis_json: Json | null
+          analysis_generation_completed_at: string | null
+          analysis_generation_started_at: string | null
           completed_at: string | null
           created_at: string | null
           current_question_id: string | null
@@ -493,6 +495,8 @@ export type Database = {
         Insert: {
           agent_metadata?: Json | null
           ai_analysis_json?: Json | null
+          analysis_generation_completed_at?: string | null
+          analysis_generation_started_at?: string | null
           completed_at?: string | null
           created_at?: string | null
           current_question_id?: string | null
@@ -510,6 +514,8 @@ export type Database = {
         Update: {
           agent_metadata?: Json | null
           ai_analysis_json?: Json | null
+          analysis_generation_completed_at?: string | null
+          analysis_generation_started_at?: string | null
           completed_at?: string | null
           created_at?: string | null
           current_question_id?: string | null
@@ -1180,6 +1186,84 @@ export type Database = {
           status?: string
           user_id?: string
           voice_id?: string
+        }
+        Relationships: []
+      }
+      weekly_flow_reflections: {
+        Row: {
+          content_source_hash: string | null
+          created_at: string
+          generated_at: string | null
+          generation_started_at: string | null
+          generation_status: string
+          id: string
+          last_error: string | null
+          model: string | null
+          prompt_version: string | null
+          range_end_at: string
+          range_start_at: string
+          reflection_json: Json
+          source_count: number
+          source_day_count: number
+          source_hash: string
+          source_session_ids: string[]
+          source_version: number
+          timezone: string
+          updated_at: string
+          user_id: string
+          week_end: string
+          week_key: string
+          week_start: string
+        }
+        Insert: {
+          content_source_hash?: string | null
+          created_at?: string
+          generated_at?: string | null
+          generation_started_at?: string | null
+          generation_status?: string
+          id?: string
+          last_error?: string | null
+          model?: string | null
+          prompt_version?: string | null
+          range_end_at: string
+          range_start_at: string
+          reflection_json?: Json
+          source_count?: number
+          source_day_count?: number
+          source_hash: string
+          source_session_ids?: string[]
+          source_version?: number
+          timezone: string
+          updated_at?: string
+          user_id: string
+          week_end: string
+          week_key: string
+          week_start: string
+        }
+        Update: {
+          content_source_hash?: string | null
+          created_at?: string
+          generated_at?: string | null
+          generation_started_at?: string | null
+          generation_status?: string
+          id?: string
+          last_error?: string | null
+          model?: string | null
+          prompt_version?: string | null
+          range_end_at?: string
+          range_start_at?: string
+          reflection_json?: Json
+          source_count?: number
+          source_day_count?: number
+          source_hash?: string
+          source_session_ids?: string[]
+          source_version?: number
+          timezone?: string
+          updated_at?: string
+          user_id?: string
+          week_end?: string
+          week_key?: string
+          week_start?: string
         }
         Relationships: []
       }
