@@ -26,13 +26,14 @@ async function requestFlowCoachReflection(
   session: StartFlowSessionResponse,
   questionId: string,
   answer: string,
+  allowProbe = true,
 ): Promise<FlowCoachReflectResponse> {
   try {
     // Adaptive probes affect navigation. Do not race the server with a client
     // timeout: a late probe arriving after the next official question would
     // recreate the two-active-questions bug. The edge function remains
     // fail-open and returns { skipped: true } on provider failure.
-    return await reflectFlowAgentAnswer(session, questionId, answer);
+    return await reflectFlowAgentAnswer(session, questionId, answer, allowProbe);
   } catch (error) {
     console.warn('[FlowAgentTool] Flowing reflection skipped:', error);
     return { skipped: true, reason: 'client_error' };
@@ -1910,6 +1911,10 @@ export function useFlowAgentSession({
     try {
       const result = await editFlowAgentAnswer(currentSession, questionId, answer);
       const isComplete = result.is_complete ?? result.next_question === null;
+      // The edit RPC invalidates the old coach row. Regenerate a grounded
+      // reflection before completion analysis or navigation continues. Edits
+      // never introduce a surprise probe into an already-established route.
+      const coach = await requestFlowCoachReflection(currentSession, questionId, answer, false);
       const finalAnswers = isComplete
         ? (await completeFlowAgentSession(currentSession)).answers
         : result.answers_so_far;
@@ -1922,6 +1927,19 @@ export function useFlowAgentSession({
       setCompletedAnswers(isComplete ? finalAnswers : null);
       setErrorMessage(null);
       setStatus(isComplete ? 'completed' : 'active');
+
+      if (coach.reflection && modeRef.current === 'text') {
+        setMessages((current) => [
+          ...current,
+          {
+            id: createMessageId('assistant'),
+            role: 'assistant',
+            content: coach.reflection ?? '',
+            streaming: true,
+            timestamp: Date.now(),
+          },
+        ]);
+      }
 
       if (!isComplete && result.next_question && modeRef.current === 'text') {
         const nextQuestionPrompt = interpolateSessionPrompt(

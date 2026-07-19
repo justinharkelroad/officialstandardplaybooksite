@@ -685,9 +685,11 @@ export function FlowSessionAgentBase({
   const { slug } = useParams<{ slug: string }>();
   const location = useLocation();
   const navigate = useNavigate();
-  const resumeSessionId = typeof (location.state as { sessionId?: unknown } | null)?.sessionId === 'string'
+  const stateSessionId = typeof (location.state as { sessionId?: unknown } | null)?.sessionId === 'string'
     ? (location.state as { sessionId: string }).sessionId
     : null;
+  const querySessionId = new URLSearchParams(location.search).get('resume');
+  const resumeSessionId = stateSessionId ?? querySessionId;
   const [mode, setMode] = useState<FlowAgentMode>(() => readStoredFlowMode());
   const [modeChosen, setModeChosen] = useState(false);
   const [selectedBibleScripture, setSelectedBibleScripture] = useState<BibleScriptureContext | null>(null);
@@ -741,6 +743,17 @@ export function FlowSessionAgentBase({
   const isBibleFlow = slug === 'bible';
   const isDailyFrameFlow = slug === 'daily-frame';
   const activeBibleScripture = selectedBibleScripture ?? flowSession?.bible_context ?? null;
+
+  useEffect(() => {
+    const sessionId = flowSession?.session_id;
+    if (!sessionId || querySessionId === sessionId) return;
+    const search = new URLSearchParams(location.search);
+    search.set('resume', sessionId);
+    navigate({ pathname: location.pathname, search: `?${search.toString()}` }, {
+      replace: true,
+      state: { ...(location.state as Record<string, unknown> | null), sessionId },
+    });
+  }, [flowSession?.session_id, location.pathname, location.search, location.state, navigate, querySessionId]);
   const completedActionText = isDailyFrameFlow ? null : completedAnswers?.actions?.trim() || null;
   const savedAnswers = useMemo(() => answers ?? completedAnswers ?? {}, [answers, completedAnswers]);
   const flowQuestions = useMemo(() => {

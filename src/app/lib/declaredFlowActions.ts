@@ -76,3 +76,10 @@ export function parseDeclaredFlowActions(
     },
   ];
 }
+
+export function parseExplicitDeclaredFlowActions(
+  responses: Record<string, string> | null | undefined,
+): DeclaredFlowAction[] {
+  if (!responses || !Object.keys(responses).some((key) => DECLARED_ACTION_PATTERN.test(key))) return [];
+  return parseDeclaredFlowActions(responses);
+}

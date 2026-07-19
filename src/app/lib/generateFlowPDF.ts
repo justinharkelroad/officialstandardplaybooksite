@@ -1,8 +1,9 @@
 import jsPDF from 'jspdf';
-import { FlowSession, FlowTemplate, FlowQuestion, FlowAnalysis } from '@/app/types/flows';
+import { FlowSession, FlowTemplate, FlowQuestion, FlowAnalysis, FlowCoachTurn } from '@/app/types/flows';
 import { format } from 'date-fns';
 import { isHtmlContent } from '@/app/components/flows/ChatBubble';
-import { parseDeclaredFlowActions } from '@/app/lib/declaredFlowActions';
+import { parseExplicitDeclaredFlowActions } from '@/app/lib/declaredFlowActions';
+import { selectFlowTurningPoints } from '@/app/lib/flowTurningPoints';
 
 interface GeneratePDFParams {
   session: FlowSession;
@@ -10,6 +11,7 @@ interface GeneratePDFParams {
   questions: FlowQuestion[];
   analysis: FlowAnalysis | null;
   userName?: string;
+  coachReflections?: Record<string, FlowCoachTurn>;
 }
 
 // Strip HTML tags and decode common entities for plain-text contexts (e.g. PDF)
@@ -126,8 +128,10 @@ async function buildFlowPDFDoc({
   questions,
   analysis,
   userName,
+  coachReflections = {},
 }: GeneratePDFParams): Promise<jsPDF> {
-  const declaredActions = parseDeclaredFlowActions(session.responses_json);
+  const declaredActions = parseExplicitDeclaredFlowActions(session.responses_json);
+  const turningPoints = selectFlowTurningPoints(questions, session.responses_json ?? {}, coachReflections);
   const doc = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
@@ -441,42 +445,99 @@ async function buildFlowPDFDoc({
       yPosition += actionHeight + 8;
     }
 
-    if (declaredActions.length > 0) {
-      checkPageBreak(20);
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(mutedColor);
-      doc.text('Declared Action Items:', margin, yPosition);
-      yPosition += 6;
-
-      declaredActions.forEach((action) => {
-        const statusText =
-          action.addedToWeeklyPlaybook === null
-            ? ''
-            : action.addedToWeeklyPlaybook
-              ? ' (Added to Weekly Playbook)'
-              : ' (Not added to Weekly Playbook)';
-
-        yPosition = addWrappedText(
-          `${action.index}. ${action.finalText}${statusText}`,
-          margin + 3,
-          yPosition,
-          contentWidth - 6,
-          5,
-          9,
-          'normal',
-          textColor,
-        );
-        yPosition += 2;
-      });
-    }
-
     // Divider after analysis
     yPosition += 2;
     doc.setDrawColor('#e5e7eb');
     doc.setLineWidth(0.3);
     doc.line(margin, yPosition, pageWidth - margin, yPosition);
     yPosition += 10;
+  }
+
+  const immediateAction = session.responses_json?.actions?.trim();
+  if (immediateAction) {
+    checkPageBreak(24);
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(textColor);
+    doc.text('24-Hour Action', margin, yPosition);
+    yPosition += 7;
+    yPosition = addWrappedText(immediateAction, margin, yPosition, contentWidth, 5, 10, 'normal', textColor);
+    yPosition += 8;
+  }
+
+  if (declaredActions.length > 0) {
+    checkPageBreak(24);
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(textColor);
+    doc.text('Weekly Playbook Commitments', margin, yPosition);
+    yPosition += 7;
+    declaredActions.forEach((action) => {
+      const statusText = action.addedToWeeklyPlaybook === null
+        ? ' (Weekly Playbook choice not recorded)'
+        : action.addedToWeeklyPlaybook
+          ? ' (Added to Weekly Playbook)'
+          : ' (Not added to Weekly Playbook)';
+      yPosition = addWrappedText(
+        `${action.index}. ${action.finalText}${statusText}`,
+        margin,
+        yPosition,
+        contentWidth,
+        5,
+        9,
+        'normal',
+        textColor,
+      );
+      yPosition += 2;
+    });
+    yPosition += 6;
+  }
+
+  if (turningPoints.length > 0) {
+    checkPageBreak(22);
+    doc.setFillColor(lightBg);
+    doc.roundedRect(margin, yPosition, contentWidth, 8, 2, 2, 'F');
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(textColor);
+    doc.text('Turning Points', margin + 4, yPosition + 5.5);
+    yPosition += 15;
+
+    turningPoints.forEach((turningPoint) => {
+      checkPageBreak(32);
+      yPosition = addWrappedText(
+        interpolatePrompt(turningPoint.prompt),
+        margin,
+        yPosition,
+        contentWidth,
+        4.5,
+        9,
+        'bold',
+        mutedColor,
+      );
+      yPosition += 1;
+      yPosition = addWrappedText(turningPoint.answer, margin, yPosition, contentWidth, 5, 9, 'normal', textColor);
+      yPosition += 2;
+      yPosition = addWrappedText(
+        `Flowing: ${turningPoint.coach.reflection}`,
+        margin + 3,
+        yPosition,
+        contentWidth - 3,
+        5,
+        9,
+        'normal',
+        mutedColor,
+      );
+      if (turningPoint.coach.probe && turningPoint.coach.probe_answer) {
+        yPosition += 2;
+        yPosition = addWrappedText(`Probe: ${turningPoint.coach.probe}`, margin + 3, yPosition, contentWidth - 3, 5, 9, 'bold', textColor);
+        yPosition = addWrappedText(`Answer: ${turningPoint.coach.probe_answer}`, margin + 3, yPosition, contentWidth - 3, 5, 9, 'normal', textColor);
+        if (turningPoint.coach.resolution) {
+          yPosition = addWrappedText(`Resolution: ${turningPoint.coach.resolution}`, margin + 3, yPosition, contentWidth - 3, 5, 9, 'normal', mutedColor);
+        }
+      }
+      yPosition += 8;
+    });
   }
 
   // ==================

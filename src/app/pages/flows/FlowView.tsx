@@ -110,6 +110,7 @@ export default function FlowView() {
         questions,
         analysis,
         userName: profile?.preferred_name || undefined,
+        coachReflections,
       });
     } catch (err) {
       console.error('PDF generation error:', err);

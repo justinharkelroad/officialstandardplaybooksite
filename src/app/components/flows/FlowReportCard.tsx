@@ -17,9 +17,10 @@ import { format } from 'date-fns';
 import { FlowSession, FlowTemplate, FlowQuestion, FlowAnalysis } from '@/app/types/flows';
 import { isHtmlContent } from '@/app/components/flows/ChatBubble';
 import DOMPurify from 'dompurify';
-import { parseDeclaredFlowActions } from '@/app/lib/declaredFlowActions';
+import { parseExplicitDeclaredFlowActions } from '@/app/lib/declaredFlowActions';
 import { FlowTypeIcon } from '@/app/components/flows/FlowTypeIcon';
 import type { FlowCoachReflection } from '@/app/hooks/useFlowCoach';
+import { FlowTurningPoints } from '@/app/components/flows/FlowTurningPoints';
 
 interface FlowReportCardProps {
   session: FlowSession;
@@ -46,7 +47,7 @@ export function FlowReportCard({
   onNewFlow,
   coachReflections = {},
 }: FlowReportCardProps) {
-  const declaredActions = parseDeclaredFlowActions(session.responses_json);
+  const declaredActions = parseExplicitDeclaredFlowActions(session.responses_json);
 
   // Interpolate prompt with responses
   const interpolatePrompt = (prompt: string): string => {
@@ -249,11 +250,23 @@ export function FlowReportCard({
                   </div>
                 )}
 
+                {session.responses_json?.actions?.trim() && (
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Target className="h-5 w-5 text-muted-foreground" strokeWidth={1.5} />
+                      <h3 className="font-medium">24-Hour Action</h3>
+                    </div>
+                    <p className="rounded-lg border border-border/10 bg-muted/30 p-4 text-sm text-foreground">
+                      {session.responses_json.actions}
+                    </p>
+                  </div>
+                )}
+
                 {declaredActions.length > 0 && (
                   <div>
                     <div className="flex items-center gap-2 mb-2">
                       <Target className="h-5 w-5 text-muted-foreground" strokeWidth={1.5} />
-                      <h3 className="font-medium">Declared Action Items</h3>
+                      <h3 className="font-medium">Weekly Playbook Commitments</h3>
                     </div>
                     <div className="space-y-3">
                       {declaredActions.map((action) => (
@@ -276,6 +289,13 @@ export function FlowReportCard({
           </CardContent>
         </Card>
       )}
+
+      <FlowTurningPoints
+        questions={questions}
+        responses={session.responses_json ?? {}}
+        coachReflections={coachReflections}
+        interpolatePrompt={interpolatePrompt}
+      />
 
       {/* Q&A Section */}
       <div className="space-y-6">

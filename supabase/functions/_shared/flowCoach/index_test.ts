@@ -27,6 +27,15 @@ Deno.test("coach ignores session labels and deterministic selector steps", () =>
   assertEquals(shouldCoachQuestion({ id: "trigger", type: "textarea" }), true);
 });
 
+Deno.test("every substantive late Bible textarea remains coach eligible", () => {
+  for (const id of ["start_story", "stop_story", "sustain_story", "lesson", "revelation", "actions"]) {
+    assertEquals(shouldCoachQuestion({ id, type: "textarea" }), true, `${id} should receive coaching`);
+  }
+  for (const id of ["start_doing", "stop_doing", "sustain_doing"]) {
+    assertEquals(shouldCoachQuestion({ id, type: "select" }), false, `${id} must remain routing-only`);
+  }
+});
+
 Deno.test("assembleCoachPrompt treats member text as delimited data and uses flow vocabulary", () => {
   const prompt = assembleCoachPrompt({
     intensity: "standard",
@@ -58,6 +67,7 @@ Deno.test("renderReflection removes invented past-flow claims", () => {
   );
   assertEquals(rendered.reflection, "");
   assertEquals(rendered.memoryRefs, []);
+  assertEquals(rendered.rejectionReason, "unverified_memory_claim");
 });
 
 Deno.test("renderReflection rejects coaching questions", () => {
@@ -67,6 +77,7 @@ Deno.test("renderReflection rejects coaching questions", () => {
   );
   assertEquals(rendered.reflection, "");
   assertEquals(rendered.memoryRefs, []);
+  assertEquals(rendered.rejectionReason, "reflection_contains_question");
 });
 
 Deno.test("renderReflection rejects memory text copied without its authorized token", () => {
@@ -76,6 +87,7 @@ Deno.test("renderReflection rejects memory text copied without its authorized to
   );
   assertEquals(rendered.reflection, "");
   assertEquals(rendered.memoryRefs, []);
+  assertEquals(rendered.rejectionReason, "raw_memory_text");
 });
 
 Deno.test("renderReflection preserves a multi-sentence authorized quote exactly", () => {

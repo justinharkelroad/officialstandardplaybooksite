@@ -39,6 +39,14 @@ export interface FlowQuestion {
 
 export type FlowCoachIntensity = 'gentle' | 'standard' | 'hard';
 
+export interface FlowCoachTurn {
+  reflection: string;
+  probe?: string | null;
+  probe_answer?: string | null;
+  resolution?: string | null;
+  memory_refs: Array<{ id: string; flow_slug: string | null; session_title: string | null }>;
+}
+
 export function normalizeFlowCoachIntensity(value: unknown): FlowCoachIntensity {
   return value === 'gentle' || value === 'hard' ? value : 'standard';
 }

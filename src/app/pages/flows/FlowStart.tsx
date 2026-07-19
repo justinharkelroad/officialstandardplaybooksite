@@ -101,7 +101,7 @@ export default function FlowStart() {
   };
 
   const handleContinueDraft = () => {
-    navigate(`/app/flows/session/${slug}`, { 
+    navigate(`/app/flows/session/${slug}?resume=${encodeURIComponent(draftSession?.id ?? '')}`, {
       replace: true,
       state: { sessionId: draftSession?.id }
     });

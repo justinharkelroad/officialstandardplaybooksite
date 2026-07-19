@@ -45,7 +45,14 @@ export interface CoachTurnDraft {
 
 export interface CoachTurnRendered extends CoachTurnDraft {
   memoryRefs: Array<{ id: string; flow_slug: string | null; session_title: string | null }>;
+  rejectionReason: CoachOutputRejectionReason | null;
 }
+
+export type CoachOutputRejectionReason =
+  | "empty_reflection"
+  | "raw_memory_text"
+  | "unverified_memory_claim"
+  | "reflection_contains_question";
 
 export interface CoachResolutionDraft {
   resolution: string;

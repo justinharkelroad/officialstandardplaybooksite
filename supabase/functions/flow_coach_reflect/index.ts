@@ -31,6 +31,21 @@ type RequestBody = {
   allow_probe?: unknown;
 };
 
+type CoachAttemptOutcome = "succeeded" | "skipped" | "failed";
+
+type CoachAttemptRecord = {
+  flow_session_id: string;
+  question_id: string;
+  request_kind: "reflection" | "resolution";
+  outcome: CoachAttemptOutcome;
+  reason: string | null;
+  answer_hash: string | null;
+  coach_message_id: string | null;
+  model: string | null;
+  provider_attempts: number;
+  latency_ms: number;
+};
+
 const MEMORY_DISCLOSURE = "I've read your past flows so I can coach you with continuity.";
 const CRISIS_SIGNAL = /\b(suicide|kill myself|end my life|hurt myself|self[- ]?harm|being abused|domestic violence|i(?:'m| am) not safe|immediate danger)\b/i;
 const PROFILE_PROMPT_FIELDS = new Set([
@@ -84,6 +99,31 @@ function response(body: unknown, status = 200): Response {
   });
 }
 
+function observableFailureReason(error: unknown): string {
+  const message = error instanceof Error ? error.message : String(error);
+  const providerStatus = message.match(/(?:OpenAI|Anthropic) returned (\d{3})/i)?.[1];
+  if (providerStatus) return `provider_http_${providerStatus}`;
+  if (/API_KEY is not configured/i.test(message)) return "provider_not_configured";
+  return error instanceof Error && error.name ? `internal_${error.name.toLowerCase()}` : "internal_error";
+}
+
+async function recordCoachAttempt(
+  supabase: ReturnType<typeof createServiceClient>,
+  record: CoachAttemptRecord,
+): Promise<void> {
+  const { error } = await supabase.from("flow_coach_attempts").insert(record);
+  if (error) {
+    console.error("[flow_coach_reflect] attempt telemetry failed", {
+      flow_session_id: record.flow_session_id,
+      question_id: record.question_id,
+      request_kind: record.request_kind,
+      outcome: record.outcome,
+      reason: record.reason,
+      error: error.message,
+    });
+  }
+}
+
 async function sha256(value: string): Promise<string> {
   const bytes = new TextEncoder().encode(value);
   const digest = await crypto.subtle.digest("SHA-256", bytes);
@@ -95,6 +135,12 @@ serve(async (req) => {
   if (req.method !== "POST") return response({ skipped: true }, 405);
 
   let sessionId: string | null = null;
+  let finishAttempt: ((
+    body: unknown,
+    outcome: CoachAttemptOutcome,
+    reason?: string | null,
+    status?: number,
+  ) => Promise<Response>) | null = null;
   try {
     const body = await req.json() as RequestBody;
     sessionId = typeof body.session_id === "string" ? body.session_id : null;
@@ -132,44 +178,73 @@ serve(async (req) => {
       template = lookup.data.flow_template as Record<string, unknown>;
     }
 
-    if (!template?.coach_enabled) return response({ skipped: true, reason: "template_disabled" });
+    const attemptStartedAt = Date.now();
+    const requestKind = probeAnswer ? "resolution" as const : "reflection" as const;
+    let attemptAnswerHash: string | null = null;
+    let attemptCoachMessageId: string | null = null;
+    let attemptModel: string | null = null;
+    let providerAttempts = 0;
+    finishAttempt = async (body, outcome, reason = null, status = 200) => {
+      await recordCoachAttempt(supabase, {
+        flow_session_id: sessionId!,
+        question_id: questionId,
+        request_kind: requestKind,
+        outcome,
+        reason,
+        answer_hash: attemptAnswerHash,
+        coach_message_id: attemptCoachMessageId,
+        model: attemptModel,
+        provider_attempts: providerAttempts,
+        latency_ms: Date.now() - attemptStartedAt,
+      });
+      return response(body, status);
+    };
+
+    if (!template?.coach_enabled) return await finishAttempt({ skipped: true, reason: "template_disabled" }, "skipped", "template_disabled");
     const questions = normalizeQuestions(template.questions_json);
     const question = questions.find((candidate) => candidate.id === questionId);
-    if (!question) return response({ skipped: true });
-    if (session.status === "abandoned") return response({ skipped: true, reason: "session_closed" });
+    if (!question) return await finishAttempt({ skipped: true, reason: "question_not_found" }, "skipped", "question_not_found");
+    if (session.status === "abandoned") return await finishAttempt({ skipped: true, reason: "session_closed" }, "skipped", "session_closed");
     const storedAnswers = normalizeAnswers(session.responses_json);
     const persistedAnswer = storedAnswers[questionId]?.trim() ?? "";
-    if (!persistedAnswer) return response({ skipped: true, reason: "answer_not_saved" });
+    if (!persistedAnswer) return await finishAttempt({ skipped: true, reason: "answer_not_saved" }, "skipped", "answer_not_saved");
     const normalizedRequestedAnswer = question.type === "select"
       ? normalizeSelectAnswer(question, requestedAnswer) ?? requestedAnswer
       : requestedAnswer;
-    if (!probeAnswer && normalizedRequestedAnswer !== persistedAnswer) return response({ skipped: true, reason: "stale_answer" });
+    if (!probeAnswer && normalizedRequestedAnswer !== persistedAnswer) {
+      return await finishAttempt({ skipped: true, reason: "stale_answer" }, "skipped", "stale_answer");
+    }
     const answer = persistedAnswer.slice(0, 2000);
     const visibleQuestions = getVisibleQuestions(questions, storedAnswers);
     if (!visibleQuestions.some((candidate) => candidate.id === questionId)) {
-      return response({ skipped: true, reason: "question_not_visible" });
+      return await finishAttempt({ skipped: true, reason: "question_not_visible" }, "skipped", "question_not_visible");
     }
     if (!shouldCoachQuestion(question)) {
-      return response({ skipped: true, reason: "non_reflective_step" });
+      return await finishAttempt({ skipped: true, reason: "non_reflective_step" }, "skipped", "non_reflective_step");
     }
-    const visibleCount = visibleQuestions.length;
 
     const existing = await supabase.from("flow_coach_messages")
       .select("id,reflection,probe,probe_answer,resolution,working_thesis,memory_refs,answer_hash").eq("flow_session_id", sessionId)
       .eq("question_id", questionId).maybeSingle();
     if (existing.error) throw existing.error;
     const answerHash = await sha256(persistedAnswer);
+    attemptAnswerHash = answerHash;
 
     if (probeAnswer) {
-      if (!existing.data?.probe) return response({ skipped: true, reason: "no_pending_probe" });
-      if (existing.data.answer_hash !== answerHash) return response({ skipped: true, reason: "stale_probe" });
+      if (!existing.data?.probe) {
+        return await finishAttempt({ skipped: true, reason: "no_pending_probe" }, "skipped", "no_pending_probe");
+      }
+      attemptCoachMessageId = existing.data.id;
+      if (existing.data.answer_hash !== answerHash) {
+        return await finishAttempt({ skipped: true, reason: "stale_probe" }, "skipped", "stale_probe");
+      }
       if (existing.data.probe_answer) {
-        return response({
+        return await finishAttempt({
           coach_message_id: existing.data.id,
           resolution: existing.data.resolution,
           probe_resolved: true,
           working_thesis: existing.data.working_thesis ?? {},
-        });
+        }, "succeeded", "idempotent");
       }
 
       const profileResult = await supabase.from("flow_profiles").select("*").eq("user_id", userId).maybeSingle();
@@ -199,6 +274,7 @@ serve(async (req) => {
         probeAnswer,
       });
       const configuredModel = Deno.env.get("FLOW_COACH_MODEL") ?? "gpt-5.4-mini";
+      attemptModel = configuredModel;
       let resolution: string | null = null;
       let workingThesis = existing.data.working_thesis ?? {};
       let memoryRefs = existing.data.memory_refs ?? [];
@@ -206,6 +282,7 @@ serve(async (req) => {
       let inputTokens: number | null = null;
       let outputTokens: number | null = null;
       try {
+        providerAttempts += 1;
         const modelResult = await dispatchModel({
           model: configuredModel,
           openaiApiKey: Deno.env.get("OPENAI_API_KEY"),
@@ -214,6 +291,7 @@ serve(async (req) => {
           reasoningEffort: "low",
           jsonMode: true,
         }, resolutionPrompt);
+        attemptModel = modelResult.model;
         const rendered = renderCoachResolution(modelResult.text, memory);
         resolution = rendered.resolution || null;
         workingThesis = rendered.thesis;
@@ -240,17 +318,19 @@ serve(async (req) => {
         output_tokens: outputTokens,
       }).eq("id", existing.data.id).select("id,resolution,working_thesis,memory_refs").single();
       if (updated.error) throw updated.error;
-      return response({
+      attemptCoachMessageId = updated.data.id;
+      return await finishAttempt({
         coach_message_id: updated.data.id,
         resolution: updated.data.resolution,
         probe_resolved: true,
         working_thesis: updated.data.working_thesis,
         memory_refs: updated.data.memory_refs,
-      });
+      }, "succeeded", resolution ? null : "resolution_failed_open");
     }
 
     if (existing.data?.answer_hash === answerHash) {
-      return response({
+      attemptCoachMessageId = existing.data.id;
+      return await finishAttempt({
         coach_message_id: existing.data.id,
         reflection: existing.data.reflection,
         probe: existing.data.probe && !existing.data.probe_answer ? existing.data.probe : null,
@@ -258,7 +338,7 @@ serve(async (req) => {
         resolution: existing.data.resolution,
         working_thesis: existing.data.working_thesis ?? {},
         memory_refs: existing.data.memory_refs ?? [],
-      });
+      }, "succeeded", "idempotent");
     }
 
     if (CRISIS_SIGNAL.test(persistedAnswer)) {
@@ -273,33 +353,11 @@ serve(async (req) => {
         model: "safety-rule",
         input_tokens: 0,
         output_tokens: 0,
-      }, { onConflict: "flow_session_id,question_id" }).select("reflection,memory_refs").single();
+      }, { onConflict: "flow_session_id,question_id" }).select("id,reflection,memory_refs").single();
       if (safetyRecord.error) throw safetyRecord.error;
-      return response(safetyRecord.data);
-    }
-
-    const turns = await supabase.from("flow_coach_messages")
-      .select("id", { count: "exact", head: true }).eq("flow_session_id", sessionId);
-    if (turns.error) throw turns.error;
-    if ((turns.count ?? 0) >= visibleCount && !existing.data) return response({ skipped: true, reason: "turn_cap" });
-
-    const dayStart = new Date();
-    dayStart.setUTCHours(0, 0, 0, 0);
-    const todaySessions = await supabase.from("flow_sessions").select("id", { count: "exact" })
-      .eq("user_id", userId).gte("created_at", dayStart.toISOString()).limit(1000);
-    if (todaySessions.error) throw todaySessions.error;
-    // This cap is about sessions that actually used the coach, not every flow
-    // the member opened today. A very high raw-session count is itself abusive.
-    if ((todaySessions.count ?? 0) > 1000) return response({ skipped: true, reason: "daily_abuse_rail" });
-    const todaySessionIds = (todaySessions.data ?? []).map((row) => row.id);
-    if (todaySessionIds.length) {
-      const coachedToday = await supabase.from("flow_coach_messages")
-        .select("flow_session_id").in("flow_session_id", todaySessionIds).limit(1000);
-      if (coachedToday.error) throw coachedToday.error;
-      const coachedSessionIds = new Set((coachedToday.data ?? []).map((row) => row.flow_session_id));
-      if (coachedSessionIds.size >= 10 && !coachedSessionIds.has(sessionId)) {
-        return response({ skipped: true, reason: "daily_abuse_rail" });
-      }
+      attemptModel = "safety-rule";
+      attemptCoachMessageId = safetyRecord.data.id;
+      return await finishAttempt(safetyRecord.data, "succeeded", "safety_rule");
     }
 
     const profileResult = await supabase.from("flow_profiles").select("*").eq("user_id", userId).maybeSingle();
@@ -348,16 +406,33 @@ serve(async (req) => {
     });
 
     const configuredModel = Deno.env.get("FLOW_COACH_MODEL") ?? "gpt-5.4-mini";
-    const modelResult = await dispatchModel({
+    attemptModel = configuredModel;
+    const modelConfig = {
       model: configuredModel,
       openaiApiKey: Deno.env.get("OPENAI_API_KEY"),
       anthropicApiKey: Deno.env.get("ANTHROPIC_API_KEY"),
       maxTokens: 900,
-      reasoningEffort: "low",
+      reasoningEffort: "low" as const,
       jsonMode: true,
-    }, prompt);
-    const rendered = renderCoachTurn(modelResult.text, memory);
-    if (!rendered.reflection) return response({ skipped: true });
+    };
+    providerAttempts += 1;
+    let modelResult = await dispatchModel(modelConfig, prompt);
+    attemptModel = modelResult.model;
+    let rendered = renderCoachTurn(modelResult.text, memory);
+    if (!rendered.reflection) {
+      const repairPrompt = {
+        ...prompt,
+        system: `${prompt.system}\n\nSERVER VALIDATION REPAIR: The previous draft was rejected (${rendered.rejectionReason ?? "empty_reflection"}). Return a fresh valid JSON response. Reflect the current answer directly; do not use phrases such as "you said," "you wrote," or "you shared." The reflection must contain no question mark. Put an optional question only in the probe field when probes are allowed.`,
+      };
+      providerAttempts += 1;
+      modelResult = await dispatchModel(modelConfig, repairPrompt);
+      attemptModel = modelResult.model;
+      rendered = renderCoachTurn(modelResult.text, memory);
+    }
+    if (!rendered.reflection) {
+      const reason = `output_rejected_${rendered.rejectionReason ?? "empty_reflection"}`;
+      return await finishAttempt({ skipped: true, reason }, "skipped", reason);
+    }
     const finalReflection = discloseMemory
       ? `${MEMORY_DISCLOSURE} ${rendered.reflection}`
       : rendered.reflection;
@@ -381,6 +456,7 @@ serve(async (req) => {
       onConflict: "flow_session_id,question_id",
     }).select("id,reflection,probe,working_thesis,memory_refs").single();
     if (saved.error) throw saved.error;
+    attemptCoachMessageId = saved.data.id;
 
     if (rendered.memoryRefs.length) {
       await supabase.from("flow_member_insights")
@@ -393,12 +469,15 @@ serve(async (req) => {
         coach_memory_announced_at: new Date().toISOString(),
       }, { onConflict: "user_id" });
     }
-    return response(serializeSavedCoachTurn(saved.data));
+    return await finishAttempt(serializeSavedCoachTurn(saved.data), "succeeded");
   } catch (error) {
     console.error("[flow_coach_reflect] fail-open", {
       session_id: sessionId,
       error: error instanceof Error ? error.message : String(error),
     });
-    return response({ skipped: true });
+    if (finishAttempt) {
+      return await finishAttempt({ skipped: true, reason: observableFailureReason(error) }, "failed", observableFailureReason(error));
+    }
+    return response({ skipped: true, reason: observableFailureReason(error) });
   }
 });

@@ -405,13 +405,14 @@ export function reflectFlowAgentAnswer(
   flowSession: StartFlowSessionResponse,
   questionId: string,
   answer: string,
+  allowProbe = true,
 ): Promise<FlowCoachReflectResponse> {
   return invokeFlowAgentFunction<FlowCoachReflectResponse>('flow_coach_reflect', {
     session_id: flowSession.session_id,
     session_token: flowSession.session_token,
     question_id: questionId,
     answer,
-    allow_probe: true,
+    allow_probe: allowProbe,
   });
 }
 

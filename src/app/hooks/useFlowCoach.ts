@@ -1,13 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { supabase } from '@/app/lib/supabaseClient';
+import type { FlowCoachTurn } from '@/app/types/flows';
 
-export interface FlowCoachReflection {
-  reflection: string;
-  probe?: string | null;
-  probe_answer?: string | null;
-  resolution?: string | null;
-  memory_refs: Array<{ id: string; flow_slug: string | null; session_title: string | null }>;
-}
+export type FlowCoachReflection = FlowCoachTurn;
 
 const COACH_TIMEOUT_MS = 8000;
 

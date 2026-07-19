@@ -30,7 +30,7 @@ import { Loader2,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import confetti from 'canvas-confetti';
-import { parseDeclaredFlowActions } from '@/app/lib/declaredFlowActions';
+import { parseExplicitDeclaredFlowActions } from '@/app/lib/declaredFlowActions';
 import { isHtmlContent } from '@/app/components/flows/ChatBubble';
 import DOMPurify from 'dompurify';
 import { AnimatedDownload as Download } from "@/app/components/icons/AnimatedDownload";
@@ -38,6 +38,7 @@ import { FlowTypeIcon } from '@/app/components/flows/FlowTypeIcon';
 import { DailyFrameReportCard } from '@/app/components/daily-frame/DailyFrameReportCard';
 import { AppIcon } from "@/app/components/icons/appIcons";
 import { useFlowCoach } from '@/app/hooks/useFlowCoach';
+import { FlowTurningPoints } from '@/app/components/flows/FlowTurningPoints';
 
 export default function FlowComplete() {
   const { sessionId } = useParams<{ sessionId: string }>();
@@ -156,7 +157,7 @@ export default function FlowComplete() {
           status: 'completed',
         } : null);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Analysis error:', err);
       setAnalysisError('Unable to generate AI insights. Your flow has been saved.');
     } finally {
@@ -179,6 +180,7 @@ export default function FlowComplete() {
         questions,
         analysis,
         userName: profile?.preferred_name || undefined,
+        coachReflections,
       });
     } catch (err) {
       console.error('PDF generation error:', err);
@@ -214,7 +216,7 @@ export default function FlowComplete() {
     );
   }
 
-  const declaredActions = parseDeclaredFlowActions(session.responses_json);
+  const declaredActions = parseExplicitDeclaredFlowActions(session.responses_json);
   const isDailyFrameFlow = template.slug === 'daily-frame';
   const dailyFrameCard = analysis?.daily_frame_card ?? null;
   const questions: FlowQuestion[] = (typeof template.questions_json === 'string'
@@ -402,11 +404,23 @@ export default function FlowComplete() {
                   </div>
                 )}
 
+                {session.responses_json?.actions?.trim() && (
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <CheckCircle2 className="h-5 w-5 text-muted-foreground" strokeWidth={1.5} />
+                      <h3 className="font-medium text-muted-foreground">Your 24-Hour Action</h3>
+                    </div>
+                    <p className="rounded-lg border border-border/10 bg-muted/30 p-4 text-sm text-foreground">
+                      {session.responses_json.actions}
+                    </p>
+                  </div>
+                )}
+
                 {declaredActions.length > 0 && (
                   <div>
                     <div className="flex items-center gap-2 mb-2">
                       <CheckCircle2 className="h-5 w-5 text-muted-foreground" strokeWidth={1.5} />
-                      <h3 className="font-medium text-muted-foreground">Your Declared Action Items</h3>
+                      <h3 className="font-medium text-muted-foreground">Your Weekly Playbook Commitments</h3>
                     </div>
                     <div className="space-y-3">
                       {declaredActions.map((action) => (
@@ -433,6 +447,13 @@ export default function FlowComplete() {
           </CardContent>
         </Card>
         )}
+
+        <FlowTurningPoints
+          questions={questions}
+          responses={responses}
+          coachReflections={coachReflections}
+          interpolatePrompt={interpolatePrompt}
+        />
 
         {/* Full Flow Q&A Section */}
         {questions.length > 0 && (

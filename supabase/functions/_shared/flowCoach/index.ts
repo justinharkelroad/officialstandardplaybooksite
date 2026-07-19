@@ -4,6 +4,7 @@ import type {
   CoachIntensity,
   CoachModelConfig,
   CoachModelResult,
+  CoachOutputRejectionReason,
   CoachPromptParts,
   CoachResolutionDraft,
   CoachTurnDraft,
@@ -276,6 +277,7 @@ export async function retrieveInsights(
 function renderAuthorizedText(modelOutput: string, authorizedCitations: CoachInsight[], allowQuestion: boolean): {
   reflection: string;
   memoryRefs: Array<{ id: string; flow_slug: string | null; session_title: string | null }>;
+  rejectionReason: CoachOutputRejectionReason | null;
 } {
   const authorized = new Map(authorizedCitations.map((row) => [row.id.toLowerCase(), row]));
   const used = new Map<string, CoachInsight>();
@@ -294,8 +296,14 @@ function renderAuthorizedText(modelOutput: string, authorizedCitations: CoachIns
   // The model may place only opaque server-authorized tokens. If it attempts
   // to narrate a past-memory claim itself, reject the whole reflection rather
   // than risk showing a fabricated callback or a leftover quote fragment.
-  if (containsRawMemory || MEMORY_CLAIM_PATTERN.test(outputWithoutAuthorizedTokens) || (!allowQuestion && outputWithoutAuthorizedTokens.includes("?"))) {
-    return { reflection: "", memoryRefs: [] };
+  if (containsRawMemory) {
+    return { reflection: "", memoryRefs: [], rejectionReason: "raw_memory_text" };
+  }
+  if (MEMORY_CLAIM_PATTERN.test(outputWithoutAuthorizedTokens)) {
+    return { reflection: "", memoryRefs: [], rejectionReason: "unverified_memory_claim" };
+  }
+  if (!allowQuestion && outputWithoutAuthorizedTokens.includes("?")) {
+    return { reflection: "", memoryRefs: [], rejectionReason: "reflection_contains_question" };
   }
 
   const reflection = modelOutput.replace(tokenPattern, (_match, id: string) => {
@@ -310,6 +318,7 @@ function renderAuthorizedText(modelOutput: string, authorizedCitations: CoachIns
 
   return {
     reflection,
+    rejectionReason: reflection ? null : "empty_reflection",
     memoryRefs: [...used.values()].map((row) => ({
       id: row.id,
       flow_slug: row.flow_slug,
@@ -321,6 +330,7 @@ function renderAuthorizedText(modelOutput: string, authorizedCitations: CoachIns
 export function renderReflection(modelOutput: string, authorizedCitations: CoachInsight[]): {
   reflection: string;
   memoryRefs: Array<{ id: string; flow_slug: string | null; session_title: string | null }>;
+  rejectionReason: CoachOutputRejectionReason | null;
 } {
   return renderAuthorizedText(modelOutput, authorizedCitations, false);
 }
@@ -330,7 +340,7 @@ export function renderCoachTurn(modelOutput: string, authorizedCitations: CoachI
   const renderedReflection = renderReflection(draft.reflection, authorizedCitations);
   const renderedProbe = draft.probe
     ? renderAuthorizedText(draft.probe, authorizedCitations, true)
-    : { reflection: "", memoryRefs: [] };
+    : { reflection: "", memoryRefs: [], rejectionReason: null };
   const probe = renderedProbe.reflection.trim() || null;
   const validProbe = probe && probe.endsWith("?") && (probe.match(/\?/g)?.length ?? 0) === 1
     ? probe
@@ -339,6 +349,7 @@ export function renderCoachTurn(modelOutput: string, authorizedCitations: CoachI
     reflection: renderedReflection.reflection,
     probe: validProbe,
     thesis: draft.thesis,
+    rejectionReason: renderedReflection.rejectionReason,
     memoryRefs: [...renderedReflection.memoryRefs, ...renderedProbe.memoryRefs]
       .filter((item, index, all) => all.findIndex((candidate) => candidate.id === item.id) === index),
   };
@@ -364,10 +375,16 @@ export function renderCoachResolution(modelOutput: string, authorizedCitations: 
   resolution: string;
   thesis: CoachWorkingThesis;
   memoryRefs: Array<{ id: string; flow_slug: string | null; session_title: string | null }>;
+  rejectionReason: CoachOutputRejectionReason | null;
 } {
   const draft = parseCoachResolution(modelOutput);
   const rendered = renderReflection(draft.resolution, authorizedCitations);
-  return { resolution: rendered.reflection, thesis: draft.thesis, memoryRefs: rendered.memoryRefs };
+  return {
+    resolution: rendered.reflection,
+    thesis: draft.thesis,
+    memoryRefs: rendered.memoryRefs,
+    rejectionReason: rendered.rejectionReason,
+  };
 }
 
 export async function dispatchModel(config: CoachModelConfig, prompt: CoachPromptParts): Promise<CoachModelResult> {
