@@ -60,6 +60,14 @@
   overflow-wrap: anywhere;
 }
 
+/* Auth screens sit directly inside a padded viewport. Constrain the panel to
+   the viewport's content width so `width: 100%` never adds the page padding
+   back on and creates mobile overflow on iOS. */
+.member-app > .sp-auth-panel {
+  width: min(100%, 28rem);
+  max-width: calc(100vw - 3rem);
+}
+
 /* Dark mode — inverted editorial: ink page, paper type, same blue.
    Toggled by adding the `dark` class to the .member-app wrapper, which also
    activates every transplanted component's Tailwind `dark:` variants. */

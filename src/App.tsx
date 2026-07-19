@@ -10,6 +10,7 @@ import AppAccess from "./pages/AppAccess";
 // Member app (Standard Playbook client portal) — lazy so the marketing
 // bundle is unaffected.
 const MemberLogin = lazy(() => import("./app/LoginRoute"));
+const ResetPassword = lazy(() => import("./app/pages/ResetPassword"));
 const MemberApp = lazy(() => import("./app/MemberAppRoutes"));
 import Boardroom from "./pages/Boardroom";
 import Directive from "./pages/Directive";
@@ -72,7 +73,7 @@ const queryClient = new QueryClient();
 function RouteParticles() {
   const { pathname } = useLocation();
   const isMemberSurface =
-    pathname === "/login" || pathname === "/app" || pathname.startsWith("/app/");
+    pathname === "/login" || pathname === "/reset-password" || pathname === "/app" || pathname.startsWith("/app/");
   return isMemberSurface ? null : <Particles />;
 }
 
@@ -91,6 +92,7 @@ const App = () => (
           <Route path="/apple" element={<AppleMockup />} />
           <Route path="/legacy" element={<NewLanding />} />
           <Route path="/login" element={<Suspense fallback={null}><MemberLogin /></Suspense>} />
+          <Route path="/reset-password" element={<Suspense fallback={null}><ResetPassword /></Suspense>} />
           <Route path="/app/*" element={<Suspense fallback={null}><MemberApp /></Suspense>} />
           <Route path="/appinfo" element={<AppAccess />} />
           <Route path="/boardroom" element={<BoldBoardroom />} />
