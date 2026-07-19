@@ -49,6 +49,9 @@ verify_jwt = false
 [functions.admin-manage-member]
 verify_jwt = true
 
+[functions.request-password-reset]
+verify_jwt = false
+
 # Flow session functions authenticate via per-session session_token
 # (verifyFlowSession) or in-function requireActiveMember, matching the
 # source platform's verify_jwt flags.

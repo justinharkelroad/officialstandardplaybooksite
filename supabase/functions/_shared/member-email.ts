@@ -12,7 +12,11 @@
 import type { SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { BRAND } from './email-template.ts';
 
-export type MemberEmailKind = 'welcome' | 'debrief_reminder' | 'debrief_report';
+export type MemberEmailKind =
+  | 'welcome'
+  | 'debrief_reminder'
+  | 'debrief_report'
+  | 'password_reset';
 
 export interface SendMemberEmailArgs {
   supabase: SupabaseClient; // service-role client
