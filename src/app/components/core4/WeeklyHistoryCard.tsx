@@ -185,8 +185,8 @@ export function WeeklyHistoryCard({
                   isCurrentWeek ? "bg-primary/10 border border-primary/20" : "bg-muted/30"
                 )}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
+                <div className="mb-2 flex flex-wrap items-start justify-between gap-2">
+                  <div className="flex min-w-0 flex-wrap items-center gap-2">
                     <span className={cn(
                       "text-sm font-medium",
                       isCurrentWeek && "text-primary"
@@ -214,8 +214,8 @@ export function WeeklyHistoryCard({
                 </div>
                 
                 {/* Breakdown */}
-                <div className="flex items-center justify-between text-xs text-muted-foreground">
-                  <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                     <span className="flex items-center gap-1">
                       <Flame className="h-3 w-3 text-[#2997FF]" />
                       Core: {week.core4Points}/28

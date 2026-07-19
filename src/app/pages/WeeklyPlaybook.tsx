@@ -185,15 +185,15 @@ export default function WeeklyPlaybook() {
 
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-      <div className="container mx-auto px-4 py-6 max-w-6xl">
+      <div className="container mx-auto min-w-0 max-w-6xl px-0 py-2 sm:px-4 sm:py-6">
         <div className="flex items-center gap-2 mb-6">
           <h1 className="text-2xl font-bold">Weekly Playbook</h1>
           <HelpButton videoKey="weekly_playbook" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6">
+        <div className="grid min-w-0 grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
           {/* Main content — week view */}
-          <div className="space-y-6">
+          <div className="min-w-0 space-y-6">
             <OneBigThingCard
               item={oneBigThingItem}
               onComplete={(id, proof, feeling) => completeOneBigThing.mutate({ id, proof, feeling })}
@@ -225,7 +225,7 @@ export default function WeeklyPlaybook() {
           </div>
 
           {/* Sidebar — The Bench */}
-          <div className="lg:border-l lg:pl-6">
+          <div className="min-w-0 border-t border-foreground/20 pt-6 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
             <PlaybookBenchPanel
               items={benchItems}
               onSchedule={(id) => setScheduleItemId(id)}

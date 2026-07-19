@@ -100,24 +100,25 @@ export default function Core4() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen min-w-0 max-w-full bg-background">
       {/* Header */}
       <div className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-border px-4 py-3">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="mx-auto flex max-w-4xl min-w-0 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex min-w-0 items-start gap-2 sm:items-center sm:gap-3">
             <SmartBackButton
               authenticatedPath="/app"
               authenticatedLabel="Hub"
+              className="h-11 shrink-0 px-2 sm:px-3"
             />
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-xl font-bold">Personal Growth</h1>
+            <div className="min-w-0">
+              <div className="flex min-w-0 items-center gap-2">
+                <h1 className="text-lg font-bold sm:text-xl">Personal Growth</h1>
                 <HelpButton videoKey="core4_page" />
               </div>
-              <p className="text-sm text-muted-foreground">Core 4, Flow, and Weekly Playbook tracker</p>
+              <p className="text-xs leading-5 text-muted-foreground sm:text-sm">Core 4, Flow, and Weekly Playbook tracker</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex w-full items-center justify-between border-t border-border/60 pt-3 sm:w-auto sm:justify-end sm:border-0 sm:pt-0">
             <div className="text-right">
               <p className="text-sm text-muted-foreground">This Week</p>
               <p className="text-lg font-bold">{combinedWeeklyScore} / {combinedWeeklyGoal}</p>
@@ -129,15 +130,15 @@ export default function Core4() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-6 space-y-8">
+      <div className="mx-auto max-w-4xl min-w-0 space-y-6 px-0 py-5 sm:space-y-8 sm:px-4 sm:py-6">
         {/* Week Navigator */}
         <Card className="bg-card border-border">
-          <CardContent className="p-4">
+          <CardContent className="p-3 sm:p-4">
             <div className="flex items-center justify-between mb-4">
               <Button variant="ghost" size="icon" onClick={() => navigateWeek('prev')}>
                 <ChevronLeft className="h-5 w-5" />
               </Button>
-              <span className="font-medium">
+              <span className="min-w-0 px-2 text-center text-sm font-medium sm:text-base">
                 {format(selectedWeekStart, 'MMM d')} - {format(addDays(selectedWeekStart, 6), 'MMM d, yyyy')}
               </span>
               <Button 
@@ -150,13 +151,13 @@ export default function Core4() {
               </Button>
             </div>
             
-            <div className="grid grid-cols-7 gap-2">
+            <div className="grid min-w-0 grid-cols-7 gap-1 sm:gap-2">
               {weeklyActivity.map((day) => (
                 <button
                   key={day.dateStr}
                   onClick={() => setSelectedDate(day.date)}
                   className={cn(
-                    "flex flex-col items-center p-2 rounded-lg transition-all",
+                    "flex min-w-0 flex-col items-center px-0.5 py-2 transition-all sm:p-2",
                     day.isToday && "ring-2 ring-primary",
                     day.points === 4 && "bg-gradient-to-br from-[#2997FF]/20 to-[#2997FF]/20",
                     day.isFuture && "opacity-40"
@@ -178,7 +179,7 @@ export default function Core4() {
 
         {/* Today's Date Display */}
         <div className="text-center">
-          <p className="text-2xl font-bold">
+          <p className="text-xl font-bold sm:text-2xl">
             {format(selectedDate, 'EEEE, MMMM do yyyy')}
           </p>
           {!isToday(selectedDate) && (
@@ -195,7 +196,7 @@ export default function Core4() {
         {/* Main Content - 2 column layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left: Domain Buttons */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid min-w-0 grid-cols-2 gap-3 sm:gap-4">
             {domains.map(({ key, label, icon: Icon, color }) => {
               const completed = isDomainCompleted(key);
               return (
@@ -204,7 +205,7 @@ export default function Core4() {
                   onClick={() => handleToggle(key)}
                   disabled={!canEdit}
                   className={cn(
-                    "flex flex-col items-center justify-center gap-3 p-8 rounded-xl transition-all duration-300",
+                    "flex min-w-0 flex-col items-center justify-center gap-3 p-4 transition-all duration-300 sm:p-8",
                     "focus:outline-none focus:ring-2 focus:ring-primary/50",
                     completed
                       ? `bg-gradient-to-br ${color} text-white shadow-xl scale-[1.02]`

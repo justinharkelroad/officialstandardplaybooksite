@@ -77,7 +77,7 @@ export function OneBigThingCard({ item, onComplete, onUncomplete, onClear, readO
   // Completed state — celebration
   if (item.completed) {
     return (
-      <div className="relative rounded-xl border-2 border-[#2997FF]/40 bg-[#2997FF]/5 p-5 transition-all">
+      <div className="relative border-2 border-[#2997FF]/40 bg-[#2997FF]/5 p-4 transition-all sm:p-5">
         {/* Undo button — always available so past-week OBTs can be toggled */}
         <Button
           variant="ghost"
@@ -89,14 +89,14 @@ export function OneBigThingCard({ item, onComplete, onUncomplete, onClear, readO
           <X className="h-4 w-4" />
         </Button>
 
-        <div className="flex items-start gap-4">
+        <div className="flex min-w-0 items-start gap-3 pr-7 sm:gap-4">
           {/* Big green check */}
-          <div className="shrink-0 h-14 w-14 rounded-full bg-[#2997FF]/15 flex items-center justify-center">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#2997FF]/15 sm:h-14 sm:w-14">
             <CheckCircle2 className="h-9 w-9 text-[#2997FF]" />
           </div>
 
           <div className="flex-1 min-w-0 space-y-2">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <p className="text-xs font-semibold uppercase tracking-wider text-[#2997FF]">
                 One Big Thing — Done
               </p>
@@ -132,7 +132,7 @@ export function OneBigThingCard({ item, onComplete, onUncomplete, onClear, readO
     <>
       <div
         className={cn(
-          "relative rounded-xl border-2 p-5 transition-all",
+          "relative border-2 p-4 transition-all sm:p-5",
           "border-primary/30 bg-card"
         )}
       >
@@ -149,14 +149,14 @@ export function OneBigThingCard({ item, onComplete, onUncomplete, onClear, readO
           </Button>
         )}
 
-        <div className="flex items-start gap-4">
+        <div className="flex min-w-0 items-start gap-3 pr-7 sm:gap-4">
           {/* Target icon */}
-          <div className="shrink-0 h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10 sm:h-14 sm:w-14">
             <Target className="h-8 w-8 text-primary" />
           </div>
 
           <div className="flex-1 min-w-0 space-y-2">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <p className="text-xs font-semibold uppercase tracking-wider text-primary">
                 The One Big Thing
               </p>
@@ -174,7 +174,7 @@ export function OneBigThingCard({ item, onComplete, onUncomplete, onClear, readO
 
             <Button
               size="sm"
-              className="mt-2 bg-[#2997FF] hover:bg-[#2997FF] text-white"
+              className="mt-2 min-h-11 w-full bg-[#2997FF] text-white hover:bg-[#2997FF] sm:w-auto"
               onClick={() => setShowCompleteDialog(true)}
             >
               <CheckCircle2 className="h-4 w-4 mr-2" />

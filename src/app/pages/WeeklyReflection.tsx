@@ -75,7 +75,7 @@ function EvidenceLinks({
   return (
     <p
       className={cn(
-        "mt-2 text-xs leading-5",
+        "mt-2 min-w-0 break-words text-xs leading-5 [overflow-wrap:anywhere]",
         inverted ? "text-background/60" : "text-muted-foreground",
       )}
     >
@@ -86,7 +86,7 @@ function EvidenceLinks({
           <Link
             to={`/app/flows/view/${flow.id}`}
             className={cn(
-              "underline decoration-current/40 underline-offset-4 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2997FF]",
+              "break-words underline decoration-current/40 underline-offset-4 transition-colors [overflow-wrap:anywhere] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2997FF]",
               inverted
                 ? "text-background hover:text-[#2997FF]"
                 : "text-foreground hover:text-[#0066CC] dark:hover:text-[#2997FF]",
@@ -268,7 +268,7 @@ function ReflectionContent({ reflection }: { reflection: WeeklyFlowReflection })
   const synthesisSources = reflection.synthesisSourceFlows ?? reflection.sourceFlows;
 
   return (
-    <article className="space-y-12">
+    <article className="min-w-0 max-w-full space-y-12">
       <section
         className={cn(
           "grid gap-8",
@@ -286,7 +286,7 @@ function ReflectionContent({ reflection }: { reflection: WeeklyFlowReflection })
             ) : null}
           </div>
           {reflection.reflectionText ? (
-            <p className="mt-5 max-w-[72ch] text-base leading-7 text-foreground/85 sm:text-lg sm:leading-8">
+            <p className="mt-5 max-w-[72ch] break-words text-base leading-7 text-foreground/85 [overflow-wrap:anywhere] sm:text-lg sm:leading-8">
               {reflection.reflectionText}
             </p>
           ) : null}
@@ -456,7 +456,7 @@ export default function WeeklyReflection() {
   };
 
   return (
-    <div className="mx-auto max-w-5xl py-2 sm:py-6">
+    <div className="mx-auto min-w-0 max-w-5xl py-2 sm:py-6">
       <header className="border-b-[1.5px] border-foreground pb-6">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="min-w-0">

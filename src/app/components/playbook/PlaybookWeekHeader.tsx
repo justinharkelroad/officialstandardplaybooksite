@@ -47,7 +47,7 @@ function DroppableDayTab({
       ref={setNodeRef}
       onClick={() => onSelectDay(index)}
       className={cn(
-        "flex flex-col items-center rounded-lg py-2 px-1 text-xs transition-all",
+        "flex min-w-0 flex-col items-center px-0.5 py-2 text-xs transition-all sm:px-1",
         selected
           ? isBonus
             ? "bg-muted-foreground/80 text-primary-foreground shadow-sm"
@@ -63,7 +63,8 @@ function DroppableDayTab({
         isOver && total < 4 && "ring-2 ring-[#2997FF] ring-offset-2 ring-offset-background scale-105"
       )}
     >
-      <span className="font-medium">{label}</span>
+      <span className="font-medium sm:hidden">{label.slice(0, 1)}</span>
+      <span className="hidden font-medium sm:inline">{label}</span>
       <span className={cn(
         "text-lg font-bold leading-tight",
         selected ? "text-primary-foreground" : ""
@@ -126,12 +127,12 @@ export function PlaybookWeekHeader({
   return (
     <div className="space-y-3">
       {/* Week navigation + score ring */}
-      <div className="flex items-center justify-between">
+      <div className="flex min-w-0 items-center justify-between gap-1">
         <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onPrevWeek}>
           <ChevronLeft className="h-4 w-4" />
         </Button>
 
-        <div className="flex items-center gap-3">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
           {/* Mini progress ring */}
           <div className="relative w-12 h-12 shrink-0">
             <svg className="w-12 h-12 -rotate-90" viewBox="0 0 36 36">
@@ -160,8 +161,8 @@ export function PlaybookWeekHeader({
             </div>
           </div>
 
-          <div className="text-center">
-            <p className="text-sm font-semibold">{weekLabel}</p>
+          <div className="min-w-0 text-center">
+            <p className="truncate text-sm font-semibold">{weekLabel}</p>
             <p className="text-xs text-muted-foreground">
               <span className={cn("font-medium", weeklyPoints >= 20 ? "text-[#2997FF]" : "text-foreground")}>
                 {weeklyPoints}
@@ -177,7 +178,7 @@ export function PlaybookWeekHeader({
       </div>
 
       {/* Day tabs — each is a drop target */}
-      <div className="grid grid-cols-7 gap-1">
+      <div className="grid min-w-0 grid-cols-7 gap-1">
         {days.map((day, i) => (
           <DroppableDayTab
             key={day.dateStr}

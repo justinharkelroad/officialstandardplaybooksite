@@ -70,7 +70,7 @@ export function TodayRhythmHero() {
       spotlight
       className="overflow-hidden border-border bg-card"
     >
-      <CardContent className="space-y-6 p-6 md:p-8">
+      <CardContent className="min-w-0 space-y-6 p-4 sm:p-6 md:p-8">
         <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:justify-between sm:gap-4 sm:text-left">
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:items-start sm:gap-4">
             <CalendarTile date={new Date()} />
@@ -143,7 +143,7 @@ export function TodayRhythmHero() {
               Tap a domain to check it off
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+          <div className="grid min-w-0 grid-cols-2 gap-3 md:grid-cols-4">
             {DOMAIN_ORDER.map((key) => {
               const token = DOMAIN_TOKENS[key];
               const Icon = token.icon;
@@ -155,7 +155,7 @@ export function TodayRhythmHero() {
                   type="button"
                   onClick={() => handleToggle(key as Core4Domain)}
                   className={cn(
-                    "flex flex-col items-center justify-center gap-3 rounded-xl p-6 transition-all duration-300",
+                    "flex min-w-0 flex-col items-center justify-center gap-3 p-4 transition-all duration-300 sm:p-6",
                     "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                     completed
                       ? cn("scale-[1.02] border-[1.5px] border-transparent", token.solidClass)

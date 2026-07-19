@@ -204,14 +204,14 @@ export default function AppShell() {
       {/* Main column */}
       <div
         className={cn(
-          "flex min-h-screen flex-col",
+          "flex min-h-screen min-w-0 max-w-full flex-col",
           collapsed ? "lg:pl-[72px]" : "lg:pl-[248px]",
         )}
       >
-        <header className="sticky top-0 z-30 flex h-14 shrink-0 items-center justify-between gap-4 border-b-[1.5px] border-foreground bg-background/95 px-6 backdrop-blur">
+        <header className="sticky top-0 z-30 flex h-14 min-w-0 shrink-0 items-center justify-between gap-2 border-b-[1.5px] border-foreground bg-background/95 px-3 backdrop-blur sm:gap-4 sm:px-6">
           <button
             type="button"
-            className="text-foreground lg:hidden"
+            className="flex h-11 w-11 shrink-0 items-center justify-center text-foreground lg:hidden"
             onClick={() => setMobileOpen(true)}
             aria-label="Open navigation"
           >
@@ -220,12 +220,12 @@ export default function AppShell() {
 
           <div className="hidden lg:block" />
 
-          <div className="flex items-center gap-4">
+          <div className="flex min-w-0 items-center gap-1 sm:gap-3">
             <button
               type="button"
               onClick={toggleTheme}
               aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-              className="text-foreground/60 transition-colors hover:text-[#2997FF]"
+              className="flex h-11 w-11 shrink-0 items-center justify-center text-foreground/60 transition-colors hover:text-[#2997FF] lg:h-auto lg:w-auto"
             >
               {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
@@ -246,14 +246,14 @@ export default function AppShell() {
               type="button"
               onClick={handleSignOut}
               aria-label="Sign out"
-              className="text-foreground/60 transition-colors hover:text-[#2997FF]"
+              className="flex h-11 w-11 shrink-0 items-center justify-center text-foreground/60 transition-colors hover:text-[#2997FF] lg:h-auto lg:w-auto"
             >
               <LogOut className="h-4 w-4" />
             </button>
           </div>
         </header>
 
-        <main className="mx-auto w-full max-w-[1200px] flex-1 px-6 py-6 md:px-8">
+        <main className="mx-auto min-w-0 w-full max-w-[1200px] flex-1 px-4 py-4 sm:px-6 sm:py-6 md:px-8">
           <Outlet />
         </main>
       </div>

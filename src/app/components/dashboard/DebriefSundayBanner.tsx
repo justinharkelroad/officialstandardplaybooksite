@@ -58,24 +58,24 @@ export function DebriefSundayBanner() {
   return (
     <div
       className={cn(
-        "relative mb-6 flex items-center justify-between gap-4 border-l-4 border-l-[#2997FF] p-5",
+        "relative mb-6 flex min-w-0 flex-col items-stretch gap-4 border-l-4 border-l-[#2997FF] p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5",
         "bg-foreground text-background",
         "dark:bg-card dark:text-foreground dark:border-y-[1.5px] dark:border-r-[1.5px] dark:border-y-foreground/20 dark:border-r-foreground/20",
       )}
     >
-      <div className="flex items-center gap-4">
-        <div>
+      <div className="min-w-0">
+        <div className="min-w-0">
           <p className="sp-display text-xl leading-none">Your weekly Debrief is ready</p>
           <p className="sp-label mt-2 text-[10px] text-background/60 dark:text-foreground/55">
             Open Sunday or Monday to reflect, plan the next week, and get your coaching analysis.
           </p>
         </div>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex min-w-0 items-center gap-2 sm:shrink-0">
         <Button
           onClick={() => navigate("/app/debrief")}
           className={cn(
-            "border-[1.5px] px-6 font-bold",
+            "min-h-11 min-w-0 flex-1 whitespace-normal border-[1.5px] px-4 font-bold sm:flex-none sm:px-6",
             "border-background bg-background text-foreground",
             "dark:border-foreground dark:bg-foreground dark:text-background",
             "hover:border-[#2997FF] hover:bg-[#2997FF] hover:text-white",
@@ -86,7 +86,7 @@ export function DebriefSundayBanner() {
         </Button>
         <button
           onClick={handleDismiss}
-          className="p-1 text-background/40 hover:text-background dark:text-foreground/40 dark:hover:text-foreground"
+          className="flex h-11 w-11 shrink-0 items-center justify-center p-1 text-background/40 hover:text-background dark:text-foreground/40 dark:hover:text-foreground"
           aria-label="Dismiss weekly debrief banner"
         >
           <X className="h-4 w-4" />

@@ -31,7 +31,7 @@ export function PlaybookDayView({
   return (
     <div className="space-y-3">
       {/* Day header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-start justify-between gap-2">
         <h3
           className={cn(
             "text-sm font-semibold",
@@ -46,7 +46,7 @@ export function PlaybookDayView({
             </span>
           )}
           {isBonus && (
-            <span className="text-[10px] font-normal text-muted-foreground/60 ml-2">
+            <span className="mt-1 block text-[10px] font-normal text-muted-foreground/60 sm:ml-2 sm:mt-0 sm:inline">
               Bonus — doesn't count toward points
             </span>
           )}

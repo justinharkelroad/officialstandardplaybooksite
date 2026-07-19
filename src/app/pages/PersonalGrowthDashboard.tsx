@@ -613,7 +613,7 @@ export default function PersonalGrowthDashboard() {
   const quarterLabel = formatQuarterDisplay(getCurrentQuarter());
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-6 md:px-6 lg:px-8">
+    <div className="mx-auto min-w-0 max-w-7xl px-0 py-2 sm:px-4 sm:py-6 md:px-6 lg:px-8">
       <div className="space-y-8">
         <DebriefSundayBanner />
 

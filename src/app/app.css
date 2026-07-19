@@ -39,6 +39,25 @@
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+.member-app > div,
+.member-app > div > main {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.member-app > div > main :is(img, video, canvas, svg) {
+  max-width: 100%;
+}
+
+.member-app > div > main :is(h1, h2, h3, p, a, button) {
+  overflow-wrap: anywhere;
 }
 
 /* Dark mode — inverted editorial: ink page, paper type, same blue.
@@ -279,6 +298,12 @@ html[data-installed-app="true"] .member-app {
   width: 100%;
   min-height: 100dvh;
   overflow-x: hidden;
+}
+
+html[data-installed-app="true"] .member-app > div {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
 }
 
 html[data-installed-app="true"] .member-app > div > header {
