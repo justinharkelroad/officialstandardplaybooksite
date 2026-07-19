@@ -44,7 +44,21 @@ export function useSpTheme(): [SpTheme, () => void] {
     // Deliberately an attribute, not the `dark` class: the marketing site's
     // global tokens key off `.dark`, and it must stay light.
     document.documentElement.setAttribute("data-sp-theme", theme);
-    return () => document.documentElement.removeAttribute("data-sp-theme");
+    const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+    const statusBarStyle = document.querySelector<HTMLMetaElement>(
+      'meta[name="apple-mobile-web-app-status-bar-style"]',
+    );
+    const previousThemeColor = themeColor?.content;
+    const previousStatusBarStyle = statusBarStyle?.content;
+
+    if (themeColor) themeColor.content = theme === "dark" ? "#0a0a0b" : "#f4f2ee";
+    if (statusBarStyle) statusBarStyle.content = theme === "dark" ? "black-translucent" : "default";
+
+    return () => {
+      document.documentElement.removeAttribute("data-sp-theme");
+      if (themeColor && previousThemeColor) themeColor.content = previousThemeColor;
+      if (statusBarStyle && previousStatusBarStyle) statusBarStyle.content = previousStatusBarStyle;
+    };
   }, [theme]);
 
   const toggle = useCallback(() => {
