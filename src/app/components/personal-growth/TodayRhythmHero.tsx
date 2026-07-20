@@ -381,8 +381,10 @@ function FlowStartTile({ weeklyProgress }: { weeklyProgress: number }) {
         <Sparkles className="h-5 w-5" />
       </span>
       <div className="min-w-0 flex-1">
-        <div className="flex items-center justify-between gap-2">
-          <p className="text-sm font-semibold leading-none">Flow</p>
+        <div className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-1">
+          <p className="whitespace-nowrap text-sm font-semibold leading-none">
+            Flow<span className="text-[#2997FF]">AI</span>
+          </p>
           <span className="shrink-0 text-xs font-semibold tabular-nums">
             {weeklyProgress}/{FLOW_WEEKLY_GOAL}{" "}
             <span className="font-normal text-muted-foreground">days</span>
@@ -393,7 +395,7 @@ function FlowStartTile({ weeklyProgress }: { weeklyProgress: number }) {
         </p>
         <div
           role="progressbar"
-          aria-label={`${weeklyProgress} of ${FLOW_WEEKLY_GOAL} Flow days complete this week`}
+          aria-label={`${weeklyProgress} of ${FLOW_WEEKLY_GOAL} FlowAI days complete this week`}
           aria-valuemin={0}
           aria-valuemax={FLOW_WEEKLY_GOAL}
           aria-valuenow={weeklyProgress}

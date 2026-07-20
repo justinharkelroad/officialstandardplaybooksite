@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { BibleScriptureContext } from '@/app/lib/flowAgentApi';
 import {
@@ -54,7 +53,15 @@ export function BibleScriptureReader({
         </div>
       </div>
 
-      <ScrollArea className={cn(compact ? 'max-h-56' : 'max-h-[46dvh]')}>
+      <div
+        role="region"
+        aria-label={`${displayTitle} Scripture text`}
+        tabIndex={0}
+        className={cn(
+          'overflow-y-auto overscroll-contain focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring',
+          compact ? 'max-h-56' : 'max-h-[46dvh]',
+        )}
+      >
         <div className="space-y-4 px-4 py-4">
           {content ? (
             <p className="whitespace-pre-wrap text-sm leading-7 text-foreground">{content}</p>
@@ -69,7 +76,7 @@ export function BibleScriptureReader({
             </p>
           )}
         </div>
-      </ScrollArea>
+      </div>
     </aside>
   );
 }
