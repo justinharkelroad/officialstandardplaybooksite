@@ -10,7 +10,10 @@ import {
   methodNotAllowed,
   parseJsonBody,
 } from "../_shared/flow_agent_runtime.ts";
-import { selectBibleSearchCandidate } from "../_shared/bibleSearch.ts";
+import {
+  isSingleVerseReference,
+  selectBibleSearchCandidate,
+} from "../_shared/bibleSearch.ts";
 import { requireActiveMember } from "../_shared/memberAuth.ts";
 
 type ResolveMode = "lookup_reference" | "recommend_from_context";
@@ -86,6 +89,7 @@ type RecommendationCopy = {
 };
 
 const DEFAULT_BIBLE_ID = "6f11a7de016f942e-01";
+const DEFAULT_EXACT_VERSE_BIBLE_ID = "a6aee10bb058511c-02";
 const DEFAULT_API_BIBLE_BASE_URL = "https://rest.api.bible/v1";
 const MAX_RECOMMENDATIONS = 5;
 const CRISIS_PATTERN =
@@ -741,6 +745,20 @@ async function lookupReference(
       content_cached_at: new Date().toISOString(),
       content_cache_policy: "session_display_only_until_license_confirmed",
     };
+  }
+
+  const exactVerseBibleId = Deno.env.get("API_BIBLE_EXACT_VERSE_BIBLE_ID") ??
+    DEFAULT_EXACT_VERSE_BIBLE_ID;
+  if (
+    isSingleVerseReference(reference) &&
+    bibleId !== exactVerseBibleId
+  ) {
+    return lookupReference(
+      baseUrl,
+      apiKey,
+      exactVerseBibleId,
+      reference,
+    );
   }
 
   throw new ApiBibleUserError(
