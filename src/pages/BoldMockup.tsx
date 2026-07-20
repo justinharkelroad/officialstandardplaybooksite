@@ -770,6 +770,23 @@ const coachingPrograms: ProgramRow[] = [
   },
   {
     num: '06',
+    name: 'The Standard Ascension',
+    tier: '90-Day Private Mentorship · By Application',
+    price: 'Apply',
+    description: 'Private one-on-one mentorship for the owner ready to put one business target—and all four areas of life—on the board for 90 days.',
+    details: [
+      'A written 90-day target and operating plan',
+      'Private weekly coaching with Justin',
+      'Daily accountability across Body, Being, Balance, and Business',
+      'A weekly 56-point evidence scorecard',
+      'Direct accountability between calls',
+      'Formal reviews at weeks four and eight',
+    ],
+    href: '/ascension',
+    cta: 'Explore Ascension →',
+  },
+  {
+    num: '07',
     name: 'The Directive',
     tier: '1:1 Coaching',
     price: 'Application Only',
@@ -787,7 +804,7 @@ const coachingPrograms: ProgramRow[] = [
     soldOut: true,
   },
   {
-    num: '07',
+    num: '08',
     name: 'Partnership',
     tier: '1:1 Coaching',
     price: '—',
@@ -806,7 +823,7 @@ const coachingPrograms: ProgramRow[] = [
 
 const softwarePlans: ProgramRow[] = [
   {
-    num: '08',
+    num: '09',
     name: 'Certified Standard',
     tier: 'AI Training · One-Time',
     price: '$399/seat',
@@ -823,7 +840,7 @@ const softwarePlans: ProgramRow[] = [
     cta: 'Get Certified →',
   },
   {
-    num: '09',
+    num: '10',
     name: 'Agency Brain Core',
     tier: 'Software-Only Foundation',
     price: '$299/mo',
@@ -840,7 +857,7 @@ const softwarePlans: ProgramRow[] = [
     cta: 'Choose Core →',
   },
   {
-    num: '10',
+    num: '11',
     name: 'Agency Brain Plus',
     tier: 'Full Software Access',
     price: '$449/mo',
@@ -859,7 +876,7 @@ const softwarePlans: ProgramRow[] = [
     featured: true,
   },
   {
-    num: '11',
+    num: '12',
     name: 'Agency Brain Pro',
     tier: 'Top Tier',
     price: '$599/mo',
@@ -1249,6 +1266,14 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
           href="/standard90"
           cta="See Standard 90"
         />
+        <DecisionOffer
+          eyebrow="Private 90-day mentorship · By application"
+          name="The Standard Ascension"
+          price="Apply"
+          description="One business target and all four areas of life on the board, with private weekly coaching and daily accountability from Justin."
+          href="/ascension"
+          cta="Explore Ascension"
+        />
         <section className="decision-sold-out" aria-labelledby="private-coaching-heading">
           <p id="private-coaching-heading">Private long-term coaching</p>
           <div className="decision-sold-out-list">
@@ -1566,6 +1591,13 @@ const DecisionProgramsSection = () => {
         .decision-offer + .decision-offer {
           border-left: 1px solid rgba(244,242,238,.25);
           padding-left: 28px;
+        }
+        .decision-details-grid--two > .decision-offer:nth-of-type(3) {
+          grid-column: 1 / -1;
+          border-top: 1px solid rgba(244,242,238,.25);
+          border-left: 0;
+          margin-top: 26px;
+          padding-left: 0;
         }
         .decision-offer-eyebrow {
           color: ${blue};

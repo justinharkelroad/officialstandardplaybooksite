@@ -201,19 +201,24 @@ const Ascension = () => {
       <section className="ascension-section ascension-offer">
         <div className="ascension-shell ascension-offer__grid">
           <div className="ascension-offer__copy">
-            <p className="ascension-kicker">The investment</p>
-            <h2>Private access.<br />A deliberately small roster.</h2>
-            <p>The Ascension is for the owner who is done negotiating with the promises they make to themselves.</p>
+            <p className="ascension-kicker">Private enrollment</p>
+            <h2>The work starts<br />with the right fit.</h2>
+            <p>Ascension is for the owner who is done negotiating with the promises they make to themselves. Every application is reviewed personally before a conversation is scheduled.</p>
           </div>
-          <div className="ascension-offer__price">
-            <p>90-day mentorship</p>
-            <strong>$10,000</strong>
-            <span>$9,000 when paid in full</span>
+          <aside className="ascension-offer__application" aria-label="Ascension application details">
+            <p>Application-only mentorship</p>
+            <strong>90</strong>
+            <span>days · private 1:1 · intentionally small roster</span>
+            <ol>
+              <li><span>01</span>Submit your application</li>
+              <li><span>02</span>We review the fit</li>
+              <li><span>03</span>Qualified owners schedule a private call</li>
+            </ol>
             <button type="button" className="ascension-cta ascension-cta--dark" onClick={openApplication}>
-              Apply for Ascension
+              Start your application
               <span aria-hidden="true">↗</span>
             </button>
-          </div>
+          </aside>
         </div>
       </section>
 
