@@ -11,6 +11,7 @@ import { ArrowLeft, Loader2 } from 'lucide-react';
 import { FlowReportCard } from '@/app/components/flows/FlowReportCard';
 import { useFlowCoach } from '@/app/hooks/useFlowCoach';
 import { waitForFlowAnalysis } from '@/app/lib/waitForFlowAnalysis';
+import { FlowShareButton } from '@/app/components/flows/FlowShareButton';
 
 export default function FlowView() {
   const { sessionId } = useParams<{ sessionId: string }>();
@@ -181,6 +182,18 @@ export default function FlowView() {
           onDownloadPDF={handleDownloadPDF}
           onNewFlow={isOwner ? () => navigate(`/app/flows/start/${template.slug}`) : undefined}
           coachReflections={coachReflections}
+          publicShareButton={isOwner && session.status === 'completed' ? (
+            <FlowShareButton
+              sessionId={session.id}
+              session={session}
+              template={template}
+              questions={questions}
+              analysis={analysis}
+              userName={profile?.preferred_name || undefined}
+              label="PDF Link"
+              size="sm"
+            />
+          ) : undefined}
         />
       </div>
     </div>

@@ -42,6 +42,7 @@ import { FlowTurningPoints } from '@/app/components/flows/FlowTurningPoints';
 import { refreshCurrentWeeklyReflection } from "@/app/hooks/useWeeklyFlowReflection";
 import { waitForFlowAnalysis } from "@/app/lib/waitForFlowAnalysis";
 import { useQueryClient } from "@tanstack/react-query";
+import { FlowShareButton } from '@/app/components/flows/FlowShareButton';
 
 export default function FlowComplete() {
   const { sessionId } = useParams<{ sessionId: string }>();
@@ -559,6 +560,18 @@ export default function FlowComplete() {
             )}
             {generatingPDF ? 'Generating PDF...' : 'Download PDF'}
           </Button>
+          )}
+
+          {!isDailyFrameFlow && (
+            <FlowShareButton
+              className="w-full"
+              sessionId={session.id}
+              session={session}
+              template={template}
+              questions={questions}
+              analysis={analysis}
+              userName={profile?.preferred_name || undefined}
+            />
           )}
 
           <Button

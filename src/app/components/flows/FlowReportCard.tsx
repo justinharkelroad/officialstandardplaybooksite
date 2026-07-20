@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import {
   Card,
   CardContent } from '@/components/ui/card';
@@ -33,6 +34,7 @@ interface FlowReportCardProps {
   onDownloadPDF?: () => void;
   onNewFlow?: () => void;
   coachReflections?: Record<string, FlowCoachReflection>;
+  publicShareButton?: ReactNode;
 }
 
 export function FlowReportCard({
@@ -46,6 +48,7 @@ export function FlowReportCard({
   onDownloadPDF,
   onNewFlow,
   coachReflections = {},
+  publicShareButton,
 }: FlowReportCardProps) {
   const declaredActions = parseExplicitDeclaredFlowActions(session.responses_json);
 
@@ -96,6 +99,7 @@ export function FlowReportCard({
         {/* Action buttons - only show for owners */}
         {!isReadOnly && (
           <div className="flex gap-2">
+            {publicShareButton}
             {onDownloadPDF && (
               <Button 
                 variant="outline" 

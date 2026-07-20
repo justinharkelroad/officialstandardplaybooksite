@@ -82,6 +82,12 @@ verify_jwt = false
 [functions.analyze_flow_session]
 verify_jwt = true
 
+[functions.create_flow_share]
+verify_jwt = true
+
+[functions.revoke_flow_share]
+verify_jwt = true
+
 [functions.weekly_flow_reflection]
 verify_jwt = true
 
