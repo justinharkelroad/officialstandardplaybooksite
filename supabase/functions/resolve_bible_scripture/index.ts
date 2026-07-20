@@ -11,6 +11,7 @@ import {
   parseJsonBody,
 } from "../_shared/flow_agent_runtime.ts";
 import {
+  buildApiBibleVerseId,
   extractSingleVerseFromPassageContent,
   isSingleVerseReference,
   selectBibleSearchCandidate,
@@ -48,6 +49,10 @@ type ApiBibleSearchResponse = {
       copyright?: string;
     }>;
   };
+};
+
+type ApiBibleVerseResponse = {
+  data?: ApiBiblePassage;
 };
 
 type ApiBibleInfoResponse = {
@@ -748,6 +753,17 @@ async function lookupReference(
   }
 
   if (isSingleVerseReference(reference)) {
+    const exactVerse = await fetchExactVerse(
+      baseUrl,
+      apiKey,
+      bibleId,
+      body?.data?.passages,
+      reference,
+    );
+    if (exactVerse) {
+      return normalizeApiBiblePassage(exactVerse, bibleId, translationName);
+    }
+
     for (const passage of body?.data?.passages ?? []) {
       const verseContent = extractSingleVerseFromPassageContent(
         passage.content ?? "",
@@ -768,6 +784,55 @@ async function lookupReference(
     404,
     "I could not verify that exact reference in this translation. Try a format like John 3:16, choose a passage range, or paste the verse text.",
   );
+}
+
+async function fetchExactVerse(
+  baseUrl: string,
+  apiKey: string,
+  bibleId: string,
+  passages: ApiBiblePassage[] | undefined,
+  reference: string,
+): Promise<ApiBiblePassage | null> {
+  const verseId = buildApiBibleVerseId(passages, reference);
+  if (!verseId) return null;
+
+  const verseUrl = new URL(
+    `${baseUrl}/bibles/${encodeURIComponent(bibleId)}/verses/${encodeURIComponent(verseId)}`,
+  );
+  verseUrl.searchParams.set("content-type", "html");
+  verseUrl.searchParams.set("include-notes", "false");
+  verseUrl.searchParams.set("include-titles", "false");
+  verseUrl.searchParams.set("include-chapter-numbers", "false");
+  verseUrl.searchParams.set("include-verse-numbers", "false");
+
+  const response = await fetch(verseUrl, {
+    headers: {
+      "api-key": apiKey,
+    },
+  });
+
+  if (!response.ok) {
+    if (response.status === 429) {
+      throw new ApiBibleUserError(
+        429,
+        "Bible lookup is temporarily rate limited. Try again in a moment.",
+      );
+    }
+    console.warn("[resolve_bible_scripture] exact verse lookup failed", {
+      status: response.status,
+      verseId,
+    });
+    return null;
+  }
+
+  const body = await response.json() as ApiBibleVerseResponse;
+  if (!body.data?.content) return null;
+
+  return {
+    ...body.data,
+    reference,
+    verseCount: 1,
+  };
 }
 
 async function fetchBibleInfo(

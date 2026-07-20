@@ -2,6 +2,7 @@ import {
   assertEquals,
 } from "https://deno.land/std@0.190.0/testing/asserts.ts";
 import {
+  buildApiBibleVerseId,
   extractSingleVerseFromPassageContent,
   isSingleVerseReference,
   selectBibleSearchCandidate,
@@ -10,6 +11,16 @@ import {
 Deno.test("single-verse references are distinguished from passage ranges", () => {
   assertEquals(isSingleVerseReference("Isaiah 60: 22"), true);
   assertEquals(isSingleVerseReference("Matthew 6:25-34"), false);
+});
+
+Deno.test("an exact API.Bible verse id is built from a grouped passage id", () => {
+  assertEquals(
+    buildApiBibleVerseId(
+      [{ id: "ISA.60.8-ISA.60.22", reference: "Isaiah 60:8-22" }],
+      "Isaiah 60:22",
+    ),
+    "ISA.60.22",
+  );
 });
 
 Deno.test("single-verse lookup prefers the exact verse over a broad passage", () => {
