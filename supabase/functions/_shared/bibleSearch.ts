@@ -40,6 +40,32 @@ export function isSingleVerseReference(reference: string): boolean {
   return parseSingleVerseLocation(reference) !== null;
 }
 
+export function extractSingleVerseFromPassageContent(
+  content: string,
+  requestedReference: string,
+): string | null {
+  const requested = parseSingleVerseLocation(requestedReference);
+  if (!requested || !content) return null;
+
+  const verseMarker = new RegExp(
+    `<span\\b[^>]*\\bdata-number\\s*=\\s*["']${requested.verse}["'][^>]*>[\\s\\S]*?<\\/span>`,
+    "i",
+  );
+  const marker = verseMarker.exec(content);
+  if (!marker || marker.index === undefined) return null;
+
+  const verseStart = marker.index + marker[0].length;
+  const remainingContent = content.slice(verseStart);
+  const nextVerseMarker = /<span\b[^>]*\bdata-number\s*=\s*["']\d+["'][^>]*>/i;
+  const nextMarker = nextVerseMarker.exec(remainingContent);
+  const verseContent = remainingContent.slice(
+    0,
+    nextMarker?.index ?? remainingContent.length,
+  );
+
+  return verseContent.trim() || null;
+}
+
 function matchesSingleVerse(
   candidateReference: string | undefined,
   requested: SingleVerseLocation,

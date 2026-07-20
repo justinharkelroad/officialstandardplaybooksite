@@ -11,6 +11,7 @@ import {
   parseJsonBody,
 } from "../_shared/flow_agent_runtime.ts";
 import {
+  extractSingleVerseFromPassageContent,
   isSingleVerseReference,
   selectBibleSearchCandidate,
 } from "../_shared/bibleSearch.ts";
@@ -89,7 +90,6 @@ type RecommendationCopy = {
 };
 
 const DEFAULT_BIBLE_ID = "6f11a7de016f942e-01";
-const DEFAULT_EXACT_VERSE_BIBLE_ID = "a6aee10bb058511c-02";
 const DEFAULT_API_BIBLE_BASE_URL = "https://rest.api.bible/v1";
 const MAX_RECOMMENDATIONS = 5;
 const CRISIS_PATTERN =
@@ -747,18 +747,21 @@ async function lookupReference(
     };
   }
 
-  const exactVerseBibleId = Deno.env.get("API_BIBLE_EXACT_VERSE_BIBLE_ID") ??
-    DEFAULT_EXACT_VERSE_BIBLE_ID;
-  if (
-    isSingleVerseReference(reference) &&
-    bibleId !== exactVerseBibleId
-  ) {
-    return lookupReference(
-      baseUrl,
-      apiKey,
-      exactVerseBibleId,
-      reference,
-    );
+  if (isSingleVerseReference(reference)) {
+    for (const passage of body?.data?.passages ?? []) {
+      const verseContent = extractSingleVerseFromPassageContent(
+        passage.content ?? "",
+        reference,
+      );
+      if (verseContent) {
+        return normalizeApiBiblePassage({
+          ...passage,
+          reference,
+          content: verseContent,
+          verseCount: 1,
+        }, bibleId, translationName);
+      }
+    }
   }
 
   throw new ApiBibleUserError(

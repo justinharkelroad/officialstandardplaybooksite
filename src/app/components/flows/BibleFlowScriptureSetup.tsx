@@ -313,7 +313,7 @@ export function BibleFlowScriptureSetup({
                     }}
                   />
                   <p className="text-xs leading-5 text-muted-foreground">
-                    If MSG groups the verse into a larger passage, verification uses KJV so you receive only the verse you requested.
+                  If MSG groups the verse into a larger passage, verification trims it to only the verse you requested.
                   </p>
                 </div>
               ) : (
