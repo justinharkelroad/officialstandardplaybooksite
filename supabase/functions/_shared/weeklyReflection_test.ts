@@ -143,6 +143,12 @@ Deno.test("prompt calibrates pattern language to the amount of weekly evidence",
   );
 });
 
+Deno.test("prompt requires reflection copy to address the reader directly", () => {
+  const prompt = buildWeeklyReflectionSystemPrompt(2, 1, 1);
+  assertStringIncludes(prompt, 'using "you" and "your."');
+  assertStringIncludes(prompt, 'Never refer to the reader as "the member"');
+});
+
 Deno.test("source hashes are stable across object key order and change with source text", async () => {
   const first = session({
     responses_json: { lesson: "Choose calm", actions: "Pause" },
@@ -273,13 +279,67 @@ Deno.test("validated synthesis accepts only authorized evidence IDs", () => {
   assert(!unauthorized.ok);
 });
 
+Deno.test("validation rejects third-person weekly reflection copy", () => {
+  const result = validateWeeklyReflectionModelOutput({
+    headline: "Calm is becoming a practice",
+    reflection:
+      "This week, the member is learning to slow down before responding. Their words point toward a deliberate pause and a clearer way of choosing what comes next.",
+    signals: [{
+      text: "The member is beginning to create more room for clarity.",
+      evidence_session_ids: [SESSION_ID],
+    }],
+    iam_statements: [
+      {
+        text: "I am creating enough space to choose a clear response.",
+        category: "posture",
+        evidence_session_ids: [SESSION_ID],
+      },
+      {
+        text: "I am practicing stillness before I move into action.",
+        category: "practice",
+        evidence_session_ids: [SESSION_ID],
+      },
+    ],
+  }, [session()]);
+  assert(!result.ok);
+  if (result.ok) return;
+  assertStringIncludes(result.error, "speak directly");
+});
+
+Deno.test("validation requires every signal to address the reader", () => {
+  const result = validateWeeklyReflectionModelOutput({
+    headline: "Calm is becoming a practice",
+    reflection:
+      "You are learning to slow down before responding. Your words point toward a deliberate pause and a clearer way of choosing what comes next.",
+    signals: [{
+      text: "A deliberate pause is becoming part of the response.",
+      evidence_session_ids: [SESSION_ID],
+    }],
+    iam_statements: [
+      {
+        text: "I am creating enough space to choose a clear response.",
+        category: "posture",
+        evidence_session_ids: [SESSION_ID],
+      },
+      {
+        text: "I am practicing stillness before I move into action.",
+        category: "practice",
+        evidence_session_ids: [SESSION_ID],
+      },
+    ],
+  }, [session()]);
+  assert(!result.ok);
+  if (result.ok) return;
+  assertStringIncludes(result.error, "Every signal must speak directly");
+});
+
 Deno.test("validation rejects faith or role claims that the member did not supply", () => {
   const result = validateWeeklyReflectionModelOutput({
     headline: "Faith is directing the week",
     reflection:
       "God is building a quieter foundation under the choices you described, and prayer is guiding your next response toward greater clarity.",
     signals: [{
-      text: "Prayer is becoming the source of clear decisions.",
+      text: "Prayer is becoming a source of clarity in your decisions.",
       evidence_session_ids: [SESSION_ID],
     }],
     iam_statements: [

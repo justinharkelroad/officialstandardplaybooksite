@@ -25,7 +25,7 @@ import {
 const JSON_HEADERS = { ...corsHeaders, "Content-Type": "application/json" };
 const GENERATION_CLAIM_TTL_MS = 10 * 60 * 1000;
 const FAILED_RETRY_COOLDOWN_MS = 2 * 60 * 1000;
-const PROMPT_VERSION = "weekly-flow-reflection-v1";
+const PROMPT_VERSION = "weekly-flow-reflection-v2";
 
 interface ReflectionRow {
   id: string;
