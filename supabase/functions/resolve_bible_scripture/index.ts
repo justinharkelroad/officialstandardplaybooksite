@@ -10,6 +10,7 @@ import {
   methodNotAllowed,
   parseJsonBody,
 } from "../_shared/flow_agent_runtime.ts";
+import { selectBibleSearchCandidate } from "../_shared/bibleSearch.ts";
 import { requireActiveMember } from "../_shared/memberAuth.ts";
 
 type ResolveMode = "lookup_reference" | "recommend_from_context";
@@ -719,17 +720,13 @@ async function lookupReference(
   const translationName = bibleInfo?.nameLocal ?? bibleInfo?.name ??
     bibleInfo?.abbreviationLocal ?? bibleInfo?.abbreviation ?? null;
 
-  const passage = body?.data?.passages?.find((candidate) =>
-    Boolean(candidate.reference && candidate.content)
-  );
-  if (passage) {
-    return normalizeApiBiblePassage(passage, bibleId, translationName);
+  const candidate = selectBibleSearchCandidate(body?.data, reference);
+  if (candidate?.kind === "passage") {
+    return normalizeApiBiblePassage(candidate.value, bibleId, translationName);
   }
 
-  const verse = body?.data?.verses?.find((candidate) =>
-    Boolean(candidate.reference && (candidate.text || candidate.content))
-  );
-  if (verse) {
+  if (candidate?.kind === "verse") {
+    const verse = candidate.value;
     return {
       source: "api_bible",
       reference: verse.reference ?? reference,
@@ -745,7 +742,7 @@ async function lookupReference(
 
   throw new ApiBibleUserError(
     404,
-    "I could not verify that reference. Try a format like John 3:16 or Matthew 6:25-34.",
+    "I could not verify that exact reference in this translation. Try a format like John 3:16, choose a passage range, or paste the verse text.",
   );
 }
 
