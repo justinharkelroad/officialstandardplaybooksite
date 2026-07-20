@@ -1,7 +1,15 @@
 import {
   assertEquals,
 } from "https://deno.land/std@0.190.0/testing/asserts.ts";
-import { selectBibleSearchCandidate } from "./bibleSearch.ts";
+import {
+  isSingleVerseReference,
+  selectBibleSearchCandidate,
+} from "./bibleSearch.ts";
+
+Deno.test("single-verse references are distinguished from passage ranges", () => {
+  assertEquals(isSingleVerseReference("Isaiah 60: 22"), true);
+  assertEquals(isSingleVerseReference("Matthew 6:25-34"), false);
+});
 
 Deno.test("single-verse lookup prefers the exact verse over a broad passage", () => {
   const exactVerse = {

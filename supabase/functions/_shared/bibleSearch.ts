@@ -36,6 +36,10 @@ function parseSingleVerseLocation(reference: string): SingleVerseLocation | null
   };
 }
 
+export function isSingleVerseReference(reference: string): boolean {
+  return parseSingleVerseLocation(reference) !== null;
+}
+
 function matchesSingleVerse(
   candidateReference: string | undefined,
   requested: SingleVerseLocation,
