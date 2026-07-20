@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Standard Playbook</string>
+    <string name="title_activity_main">Standard Playbook</string>
+    <string name="package_name">com.standardplaybook.app</string>
+    <string name="custom_url_scheme">com.standardplaybook.app</string>
+</resources>

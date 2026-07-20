@@ -50,6 +50,10 @@ async function requestFlowCoachReflection(
   }
 }
 
+function emitVoiceDiagnostic(details: Record<string, string | number | boolean | null>) {
+  window.dispatchEvent(new CustomEvent('standard:voice-diagnostic', { detail: details }));
+}
+
 export type FlowAgentMode = 'text' | 'voice';
 export type FlowAgentStatus = 'idle' | 'starting' | 'active' | 'switching' | 'completed' | 'ended' | 'error';
 export type FlowAgentVoiceState = 'listening' | 'thinking' | 'speaking' | 'connecting' | 'error';
@@ -1115,6 +1119,11 @@ export function useFlowAgentSession({
         conversationId: props.conversationId,
         flowAgentRunId: flowSessionRef.current?.flow_agent_run_id ?? flowAgentRunIdRef.current,
       });
+      emitVoiceDiagnostic({
+        phase: 'connected',
+        conversationId: props.conversationId,
+        flowAgentRunId: flowSessionRef.current?.flow_agent_run_id ?? flowAgentRunIdRef.current,
+      });
       setStatus(switchingRef.current ? 'switching' : 'active');
       switchingRef.current = false;
       setErrorMessage(null);
@@ -1122,6 +1131,11 @@ export function useFlowAgentSession({
     onDisconnect: (details) => {
       console.warn('[FlowAgent] ElevenLabs conversation disconnected', {
         details,
+        conversationId: conversationIdRef.current,
+        flowAgentRunId: flowSessionRef.current?.flow_agent_run_id ?? flowAgentRunIdRef.current,
+      });
+      emitVoiceDiagnostic({
+        phase: 'disconnected',
         conversationId: conversationIdRef.current,
         flowAgentRunId: flowSessionRef.current?.flow_agent_run_id ?? flowAgentRunIdRef.current,
       });
@@ -1157,6 +1171,12 @@ export function useFlowAgentSession({
         errorName: err instanceof Error ? err.name : null,
         errorMessage: err instanceof Error ? err.message : String(err),
         errorStack: err instanceof Error ? err.stack : null,
+      });
+      emitVoiceDiagnostic({
+        phase: 'error',
+        errorName: err instanceof Error ? err.name : 'Unknown',
+        conversationId: conversationIdRef.current,
+        flowAgentRunId: flowSessionRef.current?.flow_agent_run_id ?? flowAgentRunIdRef.current,
       });
       setErrorMessage(normalizeError(error));
       setStatus('error');
@@ -1298,6 +1318,14 @@ export function useFlowAgentSession({
         voiceRoutingMode: session.voice_routing?.mode ?? null,
         ttsVoiceId,
         textOnly: mode === 'text',
+      });
+      emitVoiceDiagnostic({
+        phase: 'starting',
+        flowSlug: session.flow_slug,
+        sessionId: session.session_id,
+        flowAgentRunId: session.flow_agent_run_id ?? flowAgentRunIdRef.current,
+        connectionType: voiceSession?.connection_type ?? connectionOptions.connectionType ?? null,
+        transportCredential: voiceSession?.signed_url ? 'signed-url' : voiceSession?.conversation_token ? 'token' : 'agent-id',
       });
 
       type FlowConversationStartSession = (options: typeof connectionOptions & {

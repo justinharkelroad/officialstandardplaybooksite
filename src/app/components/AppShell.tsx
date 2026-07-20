@@ -25,6 +25,7 @@ import { useAuth } from "@/app/lib/auth";
 import { useSpTheme } from "@/app/lib/theme";
 import { IconTooltip } from "@/app/components/IconTooltip";
 import { cn } from "@/lib/utils";
+import MobileSupportDiagnostics from "@/mobile/MobileSupportDiagnostics";
 
 const NAV_GROUPS = [
   {
@@ -276,6 +277,7 @@ export default function AppShell() {
           <div className="hidden lg:block" />
 
           <div className="flex min-w-0 items-center gap-1 sm:gap-3">
+            <MobileSupportDiagnostics />
             <IconTooltip label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"} side="bottom">
               <button
                 type="button"

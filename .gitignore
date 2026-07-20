@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 dist
+dist-mobile
 dist-ssr
 *.local
 
@@ -32,8 +33,24 @@ COPY_REWRITE.md
 COPY_REWRITE_MISSION_A.md
 Plans/
 ads/
+tmp/
+.impeccable/
 public/Team Standard (Facebook Video).mp4
 public/Standard Playbook App Full Walkthrough.mp4
 
 # local-only env (local Supabase stack creds)
 .env.local
+
+# Capacitor native build/signing artifacts (projects themselves are committed)
+ios/App/Pods/
+ios/App/App.xcworkspace/xcuserdata/
+ios/App/App.xcodeproj/xcuserdata/
+ios/DerivedData/
+ios/*.xcarchive
+android/.gradle/
+android/local.properties
+android/**/build/
+android/*.jks
+android/*.keystore
+android/key.properties
+*.mobileprovision

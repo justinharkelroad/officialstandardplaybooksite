@@ -635,7 +635,12 @@ export function flowPdfFilename(session: FlowSession, template: FlowTemplate): s
 // Existing behavior preserved: generate the PDF and trigger a browser download.
 export async function generateFlowPDF(params: GeneratePDFParams): Promise<void> {
   const doc = await buildFlowPDFDoc(params);
-  doc.save(flowPdfFilename(params.session, params.template));
+  const { shareOrDownloadFile } = await import("@/mobile/nativeFiles");
+  await shareOrDownloadFile({
+    blob: doc.output("blob"),
+    fileName: flowPdfFilename(params.session, params.template),
+    title: "Share Standard Playbook Flow",
+  });
 }
 
 // New: generate the SAME PDF and return the raw bytes (no download) for sharing/upload.

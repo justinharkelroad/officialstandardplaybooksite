@@ -119,7 +119,7 @@ export default function Flows() {
 
   if (loading || profileLoading) {
     return (
-      <div className="p-6">
+      <div className="px-0 py-2 sm:p-6">
         <div className="animate-pulse space-y-4">
           <div className="h-8 bg-muted rounded w-48" />
           <div className="h-4 bg-muted rounded w-64" />
@@ -134,11 +134,11 @@ export default function Flows() {
   }
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="mx-auto max-w-6xl px-0 py-2 sm:p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-2xl font-medium flex items-center gap-2">
+      <div className="mb-6 flex flex-col items-stretch gap-4 sm:mb-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="flex min-w-0 items-center gap-2 text-2xl font-medium">
             <Sparkles className="h-6 w-6" strokeWidth={1.5} />
             Flows
             <HelpButton videoKey="flows-overview" />
@@ -151,7 +151,7 @@ export default function Flows() {
         <Button
           variant="ghost"
           onClick={() => navigate('/app/flows/profile')}
-          className="flex items-center gap-2"
+          className="flex min-h-11 w-full items-center justify-center gap-2 whitespace-normal px-3 text-center leading-tight sm:w-auto sm:shrink-0"
         >
           <User className="h-4 w-4" strokeWidth={1.5} />
           {hasProfile ? 'Edit Profile Manually' : 'Build Profile Manually'}
@@ -161,8 +161,8 @@ export default function Flows() {
       {pendingProfileReview && (
         <Card className="mb-8 border-primary/30 bg-primary/5">
           <CardContent className="p-6">
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-              <div>
+            <div className="flex flex-col items-stretch gap-5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
                 <h3 className="flex items-center gap-2 font-medium text-lg">
                   <CheckCircle2 className="h-5 w-5 text-primary" />
                   Your interview is ready to review
@@ -171,7 +171,10 @@ export default function Flows() {
                   Edit what Flow heard before you use it. Your current profile has not changed.
                 </p>
               </div>
-              <Button onClick={() => navigate(`/app/flows/profile?session_id=${encodeURIComponent(pendingProfileReview.id)}`)}>
+              <Button
+                className="min-h-11 w-full sm:w-auto sm:shrink-0"
+                onClick={() => navigate(`/app/flows/profile?session_id=${encodeURIComponent(pendingProfileReview.id)}`)}
+              >
                 Review What Flow Heard
                 <ChevronRight className="h-4 w-4 ml-1" />
               </Button>
