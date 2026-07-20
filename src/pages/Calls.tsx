@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Copy, ArrowUpRight } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BoldNav from '@/components/BoldNav';
 import { getNextOccurrence, formatOccurrence, type CallId } from '@/lib/callSchedule';
 
@@ -62,11 +62,11 @@ const CALLS: Call[] = [
     index: '02',
     title: 'The Standard',
     titleAccent: 'Boardroom',
-    tagline: 'Monthly mastermind. Real numbers, real wins, real accountability.',
-    cadenceLabel: '2nd Wednesday Monthly',
-    cadenceWeek: 2,
-    meetingId: '862 3263 2504',
-    registerUrl: 'https://us06web.zoom.us/meeting/register/tZIvdOuurTkvGtB3DFPus_VohU6a22LFlb8t',
+    tagline: 'Weekly mastermind. Real numbers, real wins, real accountability.',
+    cadenceLabel: 'Every Monday · 1–1:55 PM ET',
+    cadenceWeek: 1,
+    meetingId: '849 8063 5452',
+    registerUrl: 'https://us06web.zoom.us/meeting/register/SmhhvsDlS0y5dH_e-xAOKQ',
     logoUrl: `${STORAGE}/${encodeURIComponent('Standard Boardroom Logo.png')}`,
     dominant: true,
     requiresMembership: true,
@@ -95,8 +95,8 @@ const PERSONAL_ROOM = {
 };
 
 /* ── Call Card (editorial sheet) ───────────────────────── */
-const CallCard = ({ call }: { call: Call }) => {
-  const occ = getNextOccurrence(call.id, call.cadenceWeek);
+const CallCard = ({ call, now }: { call: Call; now: Date }) => {
+  const occ = getNextOccurrence(call.id, call.cadenceWeek, now);
   const dateLine = formatOccurrence(occ);
   const [copied, setCopied] = useState(false);
   const dominant = !!call.dominant;
@@ -130,7 +130,7 @@ const CallCard = ({ call }: { call: Call }) => {
             padding: '8px 12px',
           }}
         >
-          ★ Flagship Monthly Call
+          ★ Flagship Weekly Call
         </div>
       )}
 
@@ -294,6 +294,13 @@ const CallCard = ({ call }: { call: Call }) => {
 /* ── Page ──────────────────────────────────────────────── */
 const Calls = () => {
   const [copied, setCopied] = useState(false);
+  const [scheduleNow, setScheduleNow] = useState(() => new Date());
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setScheduleNow(new Date()), 60_000);
+    return () => window.clearInterval(timer);
+  }, []);
+
   const copyPMI = async () => {
     try {
       await navigator.clipboard.writeText(PERSONAL_ROOM.pmi);
@@ -314,7 +321,7 @@ const Calls = () => {
               fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
               color: paper, textTransform: 'uppercase', marginBottom: 24, opacity: 0.85,
             }}>
-              / Monthly Recurring Calls
+              / Recurring Calls
             </p>
           </Reveal>
 
@@ -371,7 +378,7 @@ const Calls = () => {
               BOARDROOM <span style={{ color: blue, padding: '0 24px' }}>●</span>
               AGENCYBRAIN <span style={{ color: blue, padding: '0 24px' }}>●</span>
               AI <span style={{ color: blue, padding: '0 24px' }}>●</span>
-              EVERY MONTH <span style={{ color: blue, padding: '0 24px' }}>●</span>
+              WEEKLY + MONTHLY <span style={{ color: blue, padding: '0 24px' }}>●</span>
               SHOW UP <span style={{ color: blue, padding: '0 24px' }}>●</span>
               CAMERAS ON <span style={{ color: blue, padding: '0 24px' }}>●</span>
             </span>
@@ -385,7 +392,7 @@ const Calls = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-5 md:items-center">
             {CALLS.map((c, i) => (
               <Reveal key={c.id} delay={i * 0.08}>
-                <CallCard call={c} />
+                <CallCard call={c} now={scheduleNow} />
               </Reveal>
             ))}
           </div>

@@ -1,10 +1,7 @@
 /**
- * Computes the next occurrence of an Nth-Wednesday-of-the-month recurring call,
- * with support for one-off date/time overrides per call per month.
- *
- * Edit OVERRIDES below to change a specific month's date/time. Once that
- * overridden date passes, the standard Nth-Wednesday cadence resumes
- * automatically.
+ * Computes the next occurrence of each recurring call in America/New_York.
+ * Boardroom runs weekly on Mondays; the other calls use an Nth-Wednesday
+ * monthly cadence with support for one-off overrides.
  */
 
 export type CallId = 'boardroom' | 'agencybrain' | 'ai';
@@ -29,21 +26,35 @@ export const OVERRIDES: Record<string, Override> = {
 
 // Default times for each call (America/New_York).
 const DEFAULT_TIMES: Record<CallId, { start: string; end: string }> = {
-  boardroom:   { start: '13:00', end: '15:00' },
+  boardroom:   { start: '13:00', end: '13:55' },
   agencybrain: { start: '14:00', end: '14:45' },
   ai:          { start: '14:00', end: '14:45' },
 };
 
 const TZ = 'America/New_York';
+const BOARDROOM_FIRST_CALL = '2026-07-27';
+const BOARDROOM_START_HOUR = 13;
 
-/** Today's date in America/New_York as YYYY-MM-DD. */
-function todayInTZ(): { y: number; m: number; d: number } {
+/** Current calendar date and time in America/New_York. */
+function nowInTZ(now: Date): { y: number; m: number; d: number; h: number; minute: number } {
   const fmt = new Intl.DateTimeFormat('en-CA', {
-    timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit',
+    timeZone: TZ,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
   });
-  const parts = fmt.formatToParts(new Date());
+  const parts = fmt.formatToParts(now);
   const get = (t: string) => Number(parts.find((p) => p.type === t)!.value);
-  return { y: get('year'), m: get('month'), d: get('day') };
+  return {
+    y: get('year'),
+    m: get('month'),
+    d: get('day'),
+    h: get('hour'),
+    minute: get('minute'),
+  };
 }
 
 /** Day-of-week (0=Sun..6=Sat) for a given Y-M-D treated as a local calendar date. */
@@ -70,6 +81,43 @@ interface Occurrence {
 
 function pad(n: number) { return n.toString().padStart(2, '0'); }
 
+function calendarDateToUtc(date: string): Date {
+  const [year, month, day] = date.split('-').map(Number);
+  return new Date(Date.UTC(year, month - 1, day));
+}
+
+function addCalendarDays(date: string, days: number): string {
+  const result = calendarDateToUtc(date);
+  result.setUTCDate(result.getUTCDate() + days);
+  return `${result.getUTCFullYear()}-${pad(result.getUTCMonth() + 1)}-${pad(result.getUTCDate())}`;
+}
+
+function nextBoardroomOccurrence(now: Date): Occurrence {
+  const current = nowInTZ(now);
+  const today = `${current.y}-${pad(current.m)}-${pad(current.d)}`;
+  const firstCallTime = calendarDateToUtc(BOARDROOM_FIRST_CALL).getTime();
+  const todayTime = calendarDateToUtc(today).getTime();
+
+  let date = BOARDROOM_FIRST_CALL;
+
+  if (todayTime >= firstCallTime) {
+    const daysSinceFirstCall = Math.floor((todayTime - firstCallTime) / 86_400_000);
+    const daysUntilMonday = (7 - (daysSinceFirstCall % 7)) % 7;
+    date = addCalendarDays(today, daysUntilMonday);
+
+    // Once Monday's call begins, the page should immediately advertise next week.
+    if (daysUntilMonday === 0 && current.h >= BOARDROOM_START_HOUR) {
+      date = addCalendarDays(date, 7);
+    }
+  }
+
+  return {
+    date,
+    ...DEFAULT_TIMES.boardroom,
+    isOverride: false,
+  };
+}
+
 function cadenceOccurrenceForMonth(
   callId: CallId,
   cadenceWeek: number,
@@ -92,10 +140,13 @@ function cadenceOccurrenceForMonth(
 }
 
 /**
- * Returns the next upcoming occurrence (today counts as upcoming until its end time passes).
+ * Returns the next advertised occurrence. Boardroom advances at its 1:00 PM ET
+ * start time every Monday; monthly calls count as upcoming for their full date.
  */
-export function getNextOccurrence(callId: CallId, cadenceWeek: number): Occurrence {
-  const today = todayInTZ();
+export function getNextOccurrence(callId: CallId, cadenceWeek: number, now = new Date()): Occurrence {
+  if (callId === 'boardroom') return nextBoardroomOccurrence(now);
+
+  const today = nowInTZ(now);
   // Check current month, then next, then the one after (safety).
   for (let offset = 0; offset < 3; offset++) {
     const year  = today.y + Math.floor((today.m - 1 + offset) / 12);
