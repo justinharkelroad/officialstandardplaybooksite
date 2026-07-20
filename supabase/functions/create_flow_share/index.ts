@@ -38,7 +38,7 @@ function hasPdfMagic(bytes: Uint8Array): boolean {
 }
 
 function publicPdfUrl(supabaseUrl: string, token: string): string {
-  return `${supabaseUrl}/storage/v1/object/public/${BUCKET}/${token}.pdf`;
+  return `${supabaseUrl}/functions/v1/download_flow_share?token=${encodeURIComponent(token)}`;
 }
 
 serve(async (req: Request): Promise<Response> => {

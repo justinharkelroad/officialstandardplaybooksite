@@ -85,6 +85,9 @@ verify_jwt = true
 [functions.create_flow_share]
 verify_jwt = true
 
+[functions.download_flow_share]
+verify_jwt = false
+
 [functions.revoke_flow_share]
 verify_jwt = true
 

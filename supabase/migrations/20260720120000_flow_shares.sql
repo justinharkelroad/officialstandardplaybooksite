@@ -1,6 +1,6 @@
 -- Public, revocable PDF links for completed Standard Playbook Flows.
--- The public object path contains a server-minted UUID. Members cannot list or
--- write bucket objects directly; all mutations go through authenticated Edge functions.
+-- PDFs live in a private Lovable Cloud Storage bucket. Public downloads are
+-- served only through download_flow_share after resolving a server-minted token.
 
 CREATE TABLE public.flow_shares (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -36,7 +36,5 @@ CREATE POLICY "flow_shares_select_own"
   );
 
 -- INSERT, UPDATE, and DELETE are service-role-only through the Edge functions.
-
-INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-VALUES ('flow-shares', 'flow-shares', true, 10485760, ARRAY['application/pdf'])
-ON CONFLICT (id) DO NOTHING;
+-- Lovable Cloud creates the private `flow-shares` bucket with a 10 MiB PDF limit
+-- through its Storage tool; direct storage.buckets SQL is intentionally omitted.
