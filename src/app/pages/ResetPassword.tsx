@@ -106,7 +106,7 @@ export default function ResetPassword() {
     <div className={cn("member-app flex min-h-screen w-full items-center justify-center overflow-x-hidden px-6 py-10", getStoredSpTheme() === "dark" && "dark")}>
       <div className="sp-auth-panel w-full max-w-md">
         <div className="mb-10">
-          <img src={standardLogo} alt="Standard Playbook" className="mb-6 h-6 w-auto invert dark:invert-0" />
+          <img src={standardLogo} alt="Standard Playbook" className="mb-6 h-6 w-auto brightness-0 dark:invert" />
           <h1 className="sp-display text-[clamp(48px,9vw,84px)] text-foreground">
             {complete ? "Password" : "Choose New"}
             <br />

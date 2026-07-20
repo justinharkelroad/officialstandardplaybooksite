@@ -7,7 +7,7 @@ import "@/app/app.css";
 import { getStoredSpTheme } from "@/app/lib/theme";
 import { cn } from "@/lib/utils";
 
-const INACTIVE_MESSAGE = "Your access is inactive — contact Justin.";
+const INACTIVE_MESSAGE = "Your access is inactive — contact info@standardplaybook.com.";
 type LoginMode = "login" | "forgot" | "sent";
 
 export default function Login() {
@@ -102,19 +102,30 @@ export default function Login() {
           <img
             src={standardLogo}
             alt="Standard Playbook"
-            className="mb-6 h-6 w-auto invert dark:invert-0"
+            className="mb-6 h-6 w-auto brightness-0 dark:invert"
           />
           <h1 className="sp-display text-[clamp(48px,9vw,84px)] text-foreground">
             {mode === "login" ? "Member" : mode === "sent" ? "Check Your" : "Reset"}
             <br />
             {mode === "login" ? "Login" : mode === "sent" ? "Email" : "Password"}
           </h1>
-          <p className="sp-label mt-4 max-w-xs text-[10px] leading-relaxed text-foreground/60">
-            {mode === "login"
-              ? "Accounts are created by Justin. There is no self-signup."
-              : mode === "sent"
-                ? "If a member account matches that email, a secure reset link is on its way."
-                : "Enter the email connected to your member account. We’ll send a secure reset link."}
+          <p className="sp-label mt-4 max-w-sm text-[10px] leading-relaxed text-foreground/60">
+            {mode === "login" ? (
+              <>
+                Accounts are created by The Standard Playbook. There is no self sign up. If you&apos;re interested please contact{" "}
+                <a
+                  href="mailto:info@standardplaybook.com"
+                  className="text-foreground underline decoration-foreground/35 underline-offset-4 transition-colors hover:text-[#2997FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2997FF]"
+                >
+                  info@standardplaybook.com
+                </a>
+                .
+              </>
+            ) : mode === "sent" ? (
+              "If a member account matches that email, a secure reset link is on its way."
+            ) : (
+              "Enter the email connected to your member account. We’ll send a secure reset link."
+            )}
           </p>
         </div>
 

@@ -18,7 +18,7 @@ function InactiveScreen() {
   return (
     <div className={cn("member-app flex min-h-screen items-center justify-center px-6", getStoredSpTheme() === "dark" && "dark")}>
       <p className="sp-label max-w-md text-center text-[12px] text-foreground">
-        Your access is inactive — contact Justin.
+        Your access is inactive — contact info@standardplaybook.com.
       </p>
     </div>
   );

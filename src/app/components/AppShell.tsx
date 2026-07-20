@@ -20,6 +20,7 @@ import {
   X,
 } from "lucide-react";
 import standardLogo from "@/assets/standard-word-logo.png";
+import spIconBlack from "@/assets/sp-icon-black.png";
 import { useAuth } from "@/app/lib/auth";
 import { useSpTheme } from "@/app/lib/theme";
 import { cn } from "@/lib/utils";
@@ -133,17 +134,17 @@ export default function AppShell() {
         >
           <NavLink to="/app" className="flex items-center gap-2 overflow-hidden">
             {collapsed ? (
-              <span aria-hidden className="h-2.5 w-2.5 rounded-full bg-[#2997FF]" />
+              <img
+                src={spIconBlack}
+                alt="Standard Playbook"
+                className="h-8 w-8 object-contain dark:invert"
+              />
             ) : (
-              <>
-                {/* White-artwork logo: inverts to ink in light mode. */}
-                <img
-                  src={standardLogo}
-                  alt="Standard Playbook"
-                  className="h-[22px] w-auto shrink-0 invert dark:invert-0"
-                />
-                <span aria-hidden className="h-2 w-2 shrink-0 rounded-full bg-[#2997FF]" />
-              </>
+              <img
+                src={standardLogo}
+                alt="Standard Playbook"
+                className="h-[22px] w-auto shrink-0 brightness-0 dark:invert"
+              />
             )}
           </NavLink>
         </div>
@@ -185,7 +186,7 @@ export default function AppShell() {
               <img
                 src={standardLogo}
                 alt="Standard Playbook"
-                className="h-[22px] w-auto invert dark:invert-0"
+                className="h-[22px] w-auto brightness-0 dark:invert"
               />
               <button
                 type="button"
