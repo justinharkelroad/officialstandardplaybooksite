@@ -615,6 +615,47 @@ export type Database = {
           },
         ]
       }
+      flow_shares: {
+        Row: {
+          created_at: string
+          created_by_user_id: string
+          flow_session_id: string
+          id: string
+          pdf_path: string
+          revoked: boolean
+          token: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by_user_id: string
+          flow_session_id: string
+          id?: string
+          pdf_path: string
+          revoked?: boolean
+          token?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by_user_id?: string
+          flow_session_id?: string
+          id?: string
+          pdf_path?: string
+          revoked?: boolean
+          token?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "flow_shares_flow_session_id_fkey"
+            columns: ["flow_session_id"]
+            isOneToOne: false
+            referencedRelation: "flow_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       flow_templates: {
         Row: {
           ai_analysis_prompt: string | null
