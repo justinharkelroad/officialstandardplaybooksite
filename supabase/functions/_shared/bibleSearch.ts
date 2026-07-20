@@ -40,6 +40,21 @@ export function isSingleVerseReference(reference: string): boolean {
   return parseSingleVerseLocation(reference) !== null;
 }
 
+export function buildApiBibleVerseId(
+  passages: BibleSearchPassage[] | undefined,
+  requestedReference: string,
+): string | null {
+  const requested = parseSingleVerseLocation(requestedReference);
+  if (!requested) return null;
+
+  for (const passage of passages ?? []) {
+    const bookId = passage.id?.match(/^([A-Z0-9]+)\./i)?.[1];
+    if (bookId) return `${bookId}.${requested.chapter}.${requested.verse}`;
+  }
+
+  return null;
+}
+
 export function extractSingleVerseFromPassageContent(
   content: string,
   requestedReference: string,
