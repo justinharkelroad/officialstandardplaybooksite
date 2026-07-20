@@ -95,6 +95,7 @@ type RecommendationCopy = {
 };
 
 const DEFAULT_BIBLE_ID = "6f11a7de016f942e-01";
+const DEFAULT_EXACT_VERSE_BIBLE_ID = "de4e12af7f28f599-02";
 const DEFAULT_API_BIBLE_BASE_URL = "https://rest.api.bible/v1";
 const MAX_RECOMMENDATIONS = 5;
 const CRISIS_PATTERN =
@@ -753,6 +754,17 @@ async function lookupReference(
   }
 
   if (isSingleVerseReference(reference)) {
+    const exactVerseBibleId = Deno.env.get("API_BIBLE_EXACT_VERSE_BIBLE_ID") ??
+      DEFAULT_EXACT_VERSE_BIBLE_ID;
+    if (bibleId !== exactVerseBibleId) {
+      return lookupReference(
+        baseUrl,
+        apiKey,
+        exactVerseBibleId,
+        reference,
+      );
+    }
+
     const exactVerse = await fetchExactVerse(
       baseUrl,
       apiKey,
