@@ -6,5 +6,7 @@ import FlowSessionLegacy from './FlowSessionLegacy';
 export default function FlowSession() {
   const { slug } = useParams<{ slug: string }>();
   const useAgent = useFeatureFlag('agent_driven_flows');
-  return useAgent || slug === 'bible' || slug === 'daily-frame' ? <FlowSessionAgent /> : <FlowSessionLegacy />;
+  const requiresAgent = slug === 'bible' || slug === 'daily-frame'
+    || slug === 'profile-builder' || slug === 'profile-reprofile';
+  return useAgent || requiresAgent ? <FlowSessionAgent /> : <FlowSessionLegacy />;
 }

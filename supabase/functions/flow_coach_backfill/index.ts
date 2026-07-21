@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { corsHeaders } from "../_shared/cors.ts";
 import { isResponse, requireAdminMember } from "../_shared/memberAuth.ts";
 import { distillInsights, retrieveInsights } from "../_shared/flowCoach/index.ts";
+import { isProfileFlowSlug, joinedFlowTemplateSlug } from "../_shared/profileFlow.ts";
 
 function response(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
@@ -51,6 +52,10 @@ serve(async (req) => {
       examined += 1;
       lastCursor = session.id;
       try {
+        if (isProfileFlowSlug(joinedFlowTemplateSlug(session.flow_template))) {
+          skipped += 1;
+          continue;
+        }
         const existing = await member.supabase.from("flow_member_insights")
           .select("id", { count: "exact", head: true }).eq("source_session_id", session.id);
         if (existing.error) throw existing.error;

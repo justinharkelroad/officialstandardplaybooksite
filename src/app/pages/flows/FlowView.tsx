@@ -12,6 +12,7 @@ import { FlowReportCard } from '@/app/components/flows/FlowReportCard';
 import { useFlowCoach } from '@/app/hooks/useFlowCoach';
 import { waitForFlowAnalysis } from '@/app/lib/waitForFlowAnalysis';
 import { FlowShareButton } from '@/app/components/flows/FlowShareButton';
+import { isProfileFlowSlug } from '@/app/lib/flowProfileInterview';
 
 export default function FlowView() {
   const { sessionId } = useParams<{ sessionId: string }>();
@@ -64,6 +65,11 @@ export default function FlowView() {
           ? JSON.parse(data.flow_template.questions_json)
           : data.flow_template.questions_json
       };
+
+      if (isProfileFlowSlug(templateData.slug)) {
+        navigate(`/app/flows/profile?session_id=${encodeURIComponent(data.id)}`, { replace: true });
+        return;
+      }
 
       setSession(data as unknown as FlowSession);
       setTemplate(templateData as unknown as FlowTemplate);

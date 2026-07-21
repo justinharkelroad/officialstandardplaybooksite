@@ -18,6 +18,9 @@ export interface FlowProfile {
   overwhelm_response: string | null;
   coach_memory_paused?: boolean;
   coach_memory_announced_at?: string | null;
+  guided_interview_confirmed_at?: string | null;
+  guided_interview_session_id?: string | null;
+  guided_interview_version?: number | null;
   created_at: string;
   updated_at: string;
 }
@@ -82,11 +85,12 @@ export interface FlowSession {
   domain: string | null;
   responses_json: Record<string, string>;
   ai_analysis_json: FlowAnalysis | null;
-  status: 'in_progress' | 'completed';
+  status: 'in_progress' | 'awaiting_completion' | 'completed' | 'abandoned';
   completed_at: string | null;
   pdf_url: string | null;
   created_at: string;
   updated_at: string;
+  agent_metadata?: Record<string, unknown> | null;
   // Joined data
   flow_template?: FlowTemplate;
 }

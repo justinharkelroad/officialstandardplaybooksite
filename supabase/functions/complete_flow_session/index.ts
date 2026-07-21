@@ -17,6 +17,7 @@ import {
   verifyFlowSession,
 } from "../_shared/flow_agent_runtime.ts";
 import { getSupabaseServiceKey } from "../_shared/supabaseKeys.ts";
+import { isProfileFlowSlug } from "../_shared/profileFlow.ts";
 
 declare const EdgeRuntime:
   | { waitUntil(promise: Promise<unknown>): void }
@@ -80,9 +81,13 @@ serve(async (req) => {
         if (timestampError) throw timestampError;
       }
 
-      const analysisStarted = session.ai_analysis_json
+      const profileInterview = isProfileFlowSlug(verified.value.template.slug);
+      const analysisStarted = profileInterview || session.ai_analysis_json
         ? false
         : triggerAnalysis(session.id);
+      const profileExtractionStarted = profileInterview
+        ? triggerProfileExtraction(session.id)
+        : false;
 
       return jsonResponse(200, withEdgeToolExecutor(req, body, {
         success: true,
@@ -90,6 +95,7 @@ serve(async (req) => {
         completed_at: completedAt,
         answers,
         analysis_started: analysisStarted,
+        profile_extraction_started: profileExtractionStarted,
         already_completed: true,
       }));
     }
@@ -124,7 +130,13 @@ serve(async (req) => {
 
     // A concurrent completion may have won the conditional update. That call
     // owns the analysis trigger, so this request must not start a duplicate.
-    const analysisStarted = completedRow ? triggerAnalysis(session.id) : false;
+    const profileInterview = isProfileFlowSlug(verified.value.template.slug);
+    const analysisStarted = completedRow && !profileInterview
+      ? triggerAnalysis(session.id)
+      : false;
+    const profileExtractionStarted = completedRow && profileInterview
+      ? triggerProfileExtraction(session.id)
+      : false;
     let effectiveCompletedAt = completedRow?.completed_at ?? session.completed_at;
     if (!effectiveCompletedAt) {
       const { data: currentRow, error: currentRowError } = await supabase
@@ -153,6 +165,7 @@ serve(async (req) => {
       completed_at: effectiveCompletedAt,
       answers,
       analysis_started: analysisStarted,
+      profile_extraction_started: profileExtractionStarted,
       already_completed: !completedRow,
     }));
   } catch (error) {
@@ -214,5 +227,44 @@ function triggerAnalysis(sessionId: string): boolean {
     EdgeRuntime.waitUntil(analysisPromise);
   }
 
+  return true;
+}
+
+function triggerProfileExtraction(sessionId: string): boolean {
+  const supabaseUrl = Deno.env.get("SUPABASE_URL");
+  let serviceRoleKey: string;
+  try {
+    serviceRoleKey = getSupabaseServiceKey();
+  } catch {
+    return false;
+  }
+  if (!supabaseUrl) return false;
+
+  const extractionPromise = fetch(
+    `${supabaseUrl}/functions/v1/extract_flow_profile`,
+    {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${serviceRoleKey}`,
+        "apikey": serviceRoleKey,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ session_id: sessionId }),
+    },
+  ).then(async (response) => {
+    if (!response.ok) {
+      console.error("[complete_flow_session] extract_flow_profile returned non-2xx", {
+        session_id: sessionId,
+        status: response.status,
+      });
+    }
+  }).catch((error) => {
+    console.error("[complete_flow_session] extract_flow_profile trigger failed", {
+      session_id: sessionId,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  });
+
+  if (typeof EdgeRuntime !== "undefined") EdgeRuntime.waitUntil(extractionPromise);
   return true;
 }

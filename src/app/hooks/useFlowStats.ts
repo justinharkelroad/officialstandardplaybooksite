@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { supabase } from '@/app/lib/supabaseClient';
 import { useAuth } from '@/app/lib/auth';
 import { startOfWeek, startOfDay, subDays, format, isToday, parseISO, isSameDay } from 'date-fns';
+import { isProfileFlowSlug } from '@/app/lib/flowProfileInterview';
 
 export interface FlowStats {
   currentStreak: number;
@@ -55,14 +56,16 @@ export function useFlowStats(): FlowStats {
     try {
       const { data, error } = await supabase
         .from('flow_sessions')
-        .select('completed_at')
+        .select('completed_at, flow_template:flow_templates(slug)')
         .eq('user_id', user!.id)
         .eq('status', 'completed')
         .not('completed_at', 'is', null)
         .order('completed_at', { ascending: false });
 
       if (error) throw error;
-      setSessions(data || []);
+      setSessions((data || [])
+        .filter(row => !isProfileFlowSlug(row.flow_template?.slug))
+        .map(row => ({ completed_at: row.completed_at! })));
     } catch (err) {
       console.error('Error fetching flow sessions:', err);
     } finally {

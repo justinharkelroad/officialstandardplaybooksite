@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { corsHeaders } from "../_shared/cors.ts";
 import { jsonResponse, requireActiveMember } from "../_shared/memberAuth.ts";
+import { isProfileFlowSlug, joinedFlowTemplateSlug } from "../_shared/profileFlow.ts";
 import {
   buildBoundedWeeklyReflectionPromptData,
   buildEmptyReflectionContent,
@@ -270,7 +271,7 @@ async function listAvailableWeeks(
   const limit = Math.min(Math.max(numericLimit, 1), 52);
   const sessionLimit = Math.min(Math.max(limit * 50, 500), 2000);
   const { data, error } = await db.from("flow_sessions")
-    .select("id,completed_at")
+    .select("id,completed_at,flow_template:flow_templates(slug)")
     .eq("user_id", userId)
     .eq("status", "completed")
     .not("completed_at", "is", null)
@@ -288,6 +289,7 @@ async function listAvailableWeeks(
   }>();
   const storedByWeek = new Map(rows.map((row) => [row.week_key, row]));
   for (const source of data ?? []) {
+    if (isProfileFlowSlug(joinedFlowTemplateSlug(source.flow_template))) continue;
     if (typeof source.completed_at !== "string") continue;
     const localDate = localDateForInstant(source.completed_at, timezone);
     const weekKey = isoWeekKey(localDate);
@@ -345,7 +347,10 @@ async function loadCompletedFlows(
     .order("completed_at", { ascending: true })
     .order("id", { ascending: true });
   if (error) throw error;
-  return (data ?? []) as FlowSessionForReflection[];
+  return (data ?? []).filter(
+    (session: { flow_template?: unknown }) =>
+      !isProfileFlowSlug(joinedFlowTemplateSlug(session.flow_template)),
+  ) as FlowSessionForReflection[];
 }
 
 async function loadSourceSnapshot(

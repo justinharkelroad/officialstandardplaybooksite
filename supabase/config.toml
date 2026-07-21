@@ -67,6 +67,9 @@ verify_jwt = false
 [functions.complete_flow_session]
 verify_jwt = false
 
+[functions.extract_flow_profile]
+verify_jwt = false
+
 [functions.save_flow_agent_responses]
 verify_jwt = false
 

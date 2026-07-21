@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/app/lib/auth";
 import { format, addDays, subWeeks, startOfYear } from "date-fns";
 import { getWeekKey, weekKeyToDateRange } from "@/app/lib/date-utils";
+import { isProfileFlowSlug } from "@/app/lib/flowProfileInterview";
 
 export interface WeeklyScoreSnapshot {
   week_key: string;
@@ -82,7 +83,7 @@ export function useDebriefStats(weekKey: string): DebriefStatsData {
       // Flow sessions for the week
       const { data: flowSessions } = await supabase
         .from("flow_sessions")
-        .select("completed_at")
+        .select("completed_at, flow_template:flow_templates(slug)")
         .eq("user_id", user.id)
         .eq("status", "completed")
         .not("completed_at", "is", null)
@@ -114,7 +115,7 @@ export function useDebriefStats(weekKey: string): DebriefStatsData {
       // Build daily breakdown
       const dailyBreakdown: DailyBreakdown[] = [];
       const flowDates = new Set<string>();
-      (flowSessions || []).forEach((s) => {
+      (flowSessions || []).filter(s => !isProfileFlowSlug(s.flow_template?.slug)).forEach((s) => {
         const d = format(new Date(s.completed_at), "yyyy-MM-dd");
         flowDates.add(d);
       });
@@ -172,7 +173,7 @@ export function useDebriefStats(weekKey: string): DebriefStatsData {
           .eq("user_id", user.id)
           .gte("date", lookbackStart),
         supabase.from("flow_sessions")
-          .select("completed_at")
+          .select("completed_at, flow_template:flow_templates(slug)")
           .eq("user_id", user.id)
           .eq("status", "completed")
           .not("completed_at", "is", null)
@@ -203,7 +204,7 @@ export function useDebriefStats(weekKey: string): DebriefStatsData {
 
       // Deduplicate flow sessions by date (max 1 point per day)
       const flowByWeek = new Map<string, Set<string>>();
-      (histFlowRes.data || []).forEach((s) => {
+      (histFlowRes.data || []).filter(s => !isProfileFlowSlug(s.flow_template?.slug)).forEach((s) => {
         const d = format(new Date(s.completed_at), "yyyy-MM-dd");
         const wk = getWeekKey(new Date(s.completed_at));
         if (!flowByWeek.has(wk)) flowByWeek.set(wk, new Set());

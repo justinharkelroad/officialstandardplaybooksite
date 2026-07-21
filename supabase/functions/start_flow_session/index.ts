@@ -21,6 +21,7 @@ import {
   serializeQuestion,
 } from "../_shared/flow_agent_runtime.ts";
 import { requireActiveMember } from "../_shared/memberAuth.ts";
+import { isProfileFlowSlug } from "../_shared/profileFlow.ts";
 
 type RequestBody = {
   flow_slug?: unknown;
@@ -269,7 +270,12 @@ serve(async (req) => {
       body?.bible_scripture,
     );
 
-    const template = await loadTemplateBySlug(supabase, flowSlug);
+    // memberAuth and the shared Flow runtime resolve compatible Supabase clients
+    // from different pinned module versions. Their runtime shape is identical.
+    const template = await loadTemplateBySlug(
+      supabase as unknown as Parameters<typeof loadTemplateBySlug>[0],
+      flowSlug,
+    );
     if (!template) {
       return errorResponse(
         404,
@@ -277,6 +283,17 @@ serve(async (req) => {
         "Flow template not found or inactive.",
       );
     }
+
+    const { data: priorProfile, error: priorProfileError } = isProfileFlowSlug(template.slug)
+      ? await supabase
+        .from("flow_profiles")
+        .select(
+          "preferred_name,life_roles,core_values,current_goals,current_challenges,peak_state,growth_edge,overwhelm_response,accountability_style,feedback_preference,spiritual_beliefs,background_notes",
+        )
+        .eq("user_id", userId)
+        .maybeSingle()
+      : { data: null, error: null };
+    if (priorProfileError) throw priorProfileError;
 
     const questions = template.questions_json;
     const firstQuestion = getFirstVisibleQuestion(questions);
@@ -307,6 +324,9 @@ serve(async (req) => {
       voice_agent_routing: voiceRouting.routing,
       voice_agent_tts_voice_id: voiceRouting.tts_voice_id,
       voice_agent_started_at: new Date().toISOString(),
+      ...(isProfileFlowSlug(template.slug)
+        ? { profile_interview_version: 2 }
+        : {}),
     };
 
     if (startFresh) {
@@ -420,6 +440,7 @@ serve(async (req) => {
           voice_routing: voiceRouting,
           bible_context: biblePrefill?.context ??
             getStoredBibleContext(existing.responses_json),
+          prior_profile: isProfileFlowSlug(template.slug) ? priorProfile ?? null : undefined,
         });
       }
     }
@@ -484,6 +505,7 @@ serve(async (req) => {
             voice_routing: voiceRouting,
             bible_context: biblePrefill?.context ??
               getStoredBibleContext(racingSession.responses_json),
+            prior_profile: isProfileFlowSlug(template.slug) ? priorProfile ?? null : undefined,
           });
         }
       }
@@ -514,6 +536,7 @@ serve(async (req) => {
       voice_error: voiceError,
       voice_routing: voiceRouting,
       bible_context: biblePrefill?.context,
+      prior_profile: isProfileFlowSlug(template.slug) ? priorProfile ?? null : undefined,
     });
   } catch (error) {
     console.error("[start_flow_session] failed", {

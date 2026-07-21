@@ -8,6 +8,17 @@ import { corsHeaders } from '../_shared/cors.ts';
 import { requireActiveMember } from '../_shared/memberAuth.ts';
 import { BRAND, buildEmailHtml, EmailComponents, escapeHtml } from '../_shared/email-template.ts';
 import { sendMemberEmail } from '../_shared/member-email.ts';
+import { isProfileFlowSlug, joinedFlowTemplateSlug } from '../_shared/profileFlow.ts';
+
+type DebriefHistoryRow = {
+  week_key: string;
+  total_points?: number;
+  core4_points?: number;
+  flow_points?: number;
+  playbook_points?: number;
+  next_week_one_big_thing?: string;
+  domain_reflections?: Record<string, { rating?: unknown }>;
+};
 
 /** Returns ISO 8601 week key like '2026-W11' */
 function getWeekKey(date: Date): string {
@@ -67,7 +78,7 @@ async function computeLiveScores(
       .lte('date', sunday),
     supabase
       .from('flow_sessions')
-      .select('completed_at')
+      .select('completed_at, flow_template:flow_templates(slug)')
       .eq('user_id', userId)
       .eq('status', 'completed')
       .not('completed_at', 'is', null)
@@ -100,7 +111,10 @@ async function computeLiveScores(
   }, 0);
 
   const flowDates = new Set<string>();
-  for (const session of (flowRes.data || [])) {
+  for (const session of (flowRes.data || []).filter(
+    (row: { flow_template?: unknown }) =>
+      !isProfileFlowSlug(joinedFlowTemplateSlug(row.flow_template)),
+  )) {
     if (session.completed_at) {
       flowDates.add(String(session.completed_at).split('T')[0]);
     }
@@ -413,7 +427,7 @@ serve(async (req) => {
         .eq('user_id', userId)
         .gte('date', lookbackStr),
       supabase.from('flow_sessions')
-        .select('completed_at')
+        .select('completed_at, flow_template:flow_templates(slug)')
         .eq('user_id', userId)
         .eq('status', 'completed')
         .not('completed_at', 'is', null)
@@ -443,7 +457,10 @@ serve(async (req) => {
     }
 
     const flowByWeek = new Map<string, Set<string>>();
-    for (const s of (histFlow.data || [])) {
+    for (const s of (histFlow.data || []).filter(
+      (row: { flow_template?: unknown }) =>
+        !isProfileFlowSlug(joinedFlowTemplateSlug(row.flow_template)),
+    )) {
       const dateStr = s.completed_at.split('T')[0];
       const wk = getWeekKey(new Date(s.completed_at));
       if (!flowByWeek.has(wk)) flowByWeek.set(wk, new Set());
@@ -469,8 +486,10 @@ serve(async (req) => {
     }
 
     // Merge: prefer debrief review data, fall back to synthetic scores
-    const reviewByWeek = new Map((priorReviews || []).map((r: any) => [r.week_key, r]));
-    const allHistWeeks = new Set([
+    const reviewByWeek = new Map<string, DebriefHistoryRow>(
+      (priorReviews || []).map((row: DebriefHistoryRow) => [String(row.week_key), row]),
+    );
+    const allHistWeeks = new Set<string>([
       ...Array.from(syntheticWeeks.keys()),
       ...Array.from(reviewByWeek.keys()),
     ]);

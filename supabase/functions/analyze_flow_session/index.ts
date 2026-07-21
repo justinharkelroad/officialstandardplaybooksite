@@ -289,6 +289,13 @@ serve(async (req) => {
       }
     }
 
+    if (session.flow_template?.slug === 'profile-builder' || session.flow_template?.slug === 'profile-reprofile') {
+      return new Response(
+        JSON.stringify({ error: 'Profile interviews use the profile review extraction path.' }),
+        { status: 409, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
     if (session.ai_analysis_json) {
       return new Response(
         JSON.stringify({ success: true, analysis: session.ai_analysis_json, cached: true }),

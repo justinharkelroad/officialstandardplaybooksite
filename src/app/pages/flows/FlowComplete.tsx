@@ -43,6 +43,7 @@ import { refreshCurrentWeeklyReflection } from "@/app/hooks/useWeeklyFlowReflect
 import { waitForFlowAnalysis } from "@/app/lib/waitForFlowAnalysis";
 import { useQueryClient } from "@tanstack/react-query";
 import { FlowShareButton } from '@/app/components/flows/FlowShareButton';
+import { isProfileFlowSlug } from '@/app/lib/flowProfileInterview';
 
 export default function FlowComplete() {
   const { sessionId } = useParams<{ sessionId: string }>();
@@ -140,6 +141,11 @@ export default function FlowComplete() {
           ? JSON.parse(data.flow_template.questions_json)
           : data.flow_template.questions_json
       };
+
+      if (isProfileFlowSlug(templateData.slug)) {
+        navigate(`/app/flows/profile?session_id=${encodeURIComponent(data.id)}`, { replace: true });
+        return;
+      }
 
       setSession(data as unknown as FlowSession);
       setTemplate(templateData as unknown as FlowTemplate);

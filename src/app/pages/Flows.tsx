@@ -16,17 +16,21 @@ import { HelpButton } from '@/app/components/HelpButton';
 import { FlowTypeIcon } from '@/app/components/flows/FlowTypeIcon';
 import { FlowInfoButton } from '@/app/components/flows/FlowInfoButton';
 import { AppIcon } from "@/app/components/icons/appIcons";
+import { isOpenProfileInterviewReview, isProfileFlowSlug } from '@/app/lib/flowProfileInterview';
+
+type PendingProfileReview = { id: string; created_at: string };
 
 export default function Flows() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { loading: profileLoading, hasProfile } = useFlowProfile();
+  const { profile, loading: profileLoading, hasProfile } = useFlowProfile();
   const flowStats = useFlowStats();
   const core4Stats = useCore4Stats();
   const playbookStats = usePlaybookStats();
   
   const [templates, setTemplates] = useState<FlowTemplate[]>([]);
   const [recentSessions, setRecentSessions] = useState<FlowSession[]>([]);
+  const [pendingProfileReview, setPendingProfileReview] = useState<PendingProfileReview | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTemplateIconId, setActiveTemplateIconId] = useState<string | null>(null);
   const [activeRecentIconId, setActiveRecentIconId] = useState<string | null>(null);
@@ -47,7 +51,7 @@ export default function Flows() {
         .eq('is_active', true)
         .order('display_order');
 
-      setTemplates((templatesData || []) as unknown as FlowTemplate[]);
+      setTemplates((templatesData || []).filter(template => !isProfileFlowSlug(template.slug)) as unknown as FlowTemplate[]);
 
       // Fetch recent completed sessions for this user so drafts do not appear in history.
       if (user?.id) {
@@ -57,9 +61,17 @@ export default function Flows() {
           .eq('user_id', user.id)
           .eq('status', 'completed')
           .order('created_at', { ascending: false })
-          .limit(5);
+          .limit(100);
 
-        setRecentSessions((sessionsData || []) as unknown as FlowSession[]);
+        const completedSessions = (sessionsData || []) as unknown as FlowSession[];
+        setRecentSessions(completedSessions
+          .filter(session => !isProfileFlowSlug(session.flow_template?.slug))
+          .slice(0, 5));
+        const review = completedSessions.find(session =>
+          isProfileFlowSlug(session.flow_template?.slug)
+          && isOpenProfileInterviewReview(session.status, session.agent_metadata)
+        );
+        setPendingProfileReview(review ? { id: review.id, created_at: review.created_at } : null);
       }
     } catch (err) {
       console.error('Error fetching flows data:', err);
@@ -74,12 +86,36 @@ export default function Flows() {
 
   const startFlow = (template: FlowTemplate) => {
     if (!hasProfile) {
-      // Redirect to profile setup first
-      navigate('/app/flows/profile', { state: { redirectTo: `/app/flows/start/${template.slug}` } });
+      const redirectTo = `/app/flows/start/${template.slug}`;
+      if (pendingProfileReview) {
+        navigate(`/app/flows/profile?session_id=${encodeURIComponent(pendingProfileReview.id)}`, {
+          state: { redirectTo },
+        });
+      } else {
+        navigate('/app/flows/start/profile-builder', { state: { redirectTo } });
+      }
     } else {
       navigate(`/app/flows/start/${template.slug}`);
     }
   };
+
+  const hasConfirmedGuidedProfile = profile?.guided_interview_version === 2
+    && Boolean(profile.guided_interview_confirmed_at);
+  const profileCardTitle = !hasProfile
+    ? 'Build a coach that actually knows you'
+    : hasConfirmedGuidedProfile
+      ? 'Revisit your Flow Profile'
+      : 'Deepen your Flow Profile';
+  const profileCardDescription = !hasProfile
+    ? 'Take a guided 20 to 40 minute conversation across Body, Being, Balance, and Business. Use text or voice.'
+    : hasConfirmedGuidedProfile
+      ? 'Life changes. Revisit the full conversation whenever you want sharper, more current coaching.'
+      : 'Your current profile stays in place while Flow helps you build a deeper one. You review every field before anything changes.';
+  const profileCardAction = !hasProfile
+    ? 'Build My Flow Profile'
+    : hasConfirmedGuidedProfile
+      ? 'Revisit My Flow Profile'
+      : 'Deepen My Flow Profile';
 
   if (loading || profileLoading) {
     return (
@@ -118,25 +154,51 @@ export default function Flows() {
           className="flex items-center gap-2"
         >
           <User className="h-4 w-4" strokeWidth={1.5} />
-          {hasProfile ? 'Edit Your AI Experience' : 'Setup Profile'}
+          {hasProfile ? 'Edit Profile Manually' : 'Build Profile Manually'}
         </Button>
       </div>
 
-      {/* Profile Setup Prompt (if no profile) */}
-      {!hasProfile && (
+      {pendingProfileReview && (
         <Card className="mb-8 border-primary/30 bg-primary/5">
           <CardContent className="p-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h3 className="font-medium text-lg">Required for Flow Usage</h3>
+                <h3 className="flex items-center gap-2 font-medium text-lg">
+                  <CheckCircle2 className="h-5 w-5 text-primary" />
+                  Your interview is ready to review
+                </h3>
                 <p className="text-muted-foreground/70 text-sm mt-1">
-                  Share as much information as possible to enhance your AI-powered flow experience.
+                  Edit what Flow heard before you use it. Your current profile has not changed.
                 </p>
               </div>
-              <Button onClick={() => navigate('/app/flows/profile')}>
-                Get Started
+              <Button onClick={() => navigate(`/app/flows/profile?session_id=${encodeURIComponent(pendingProfileReview.id)}`)}>
+                Review What Flow Heard
                 <ChevronRight className="h-4 w-4 ml-1" />
               </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {!pendingProfileReview && (
+        <Card className="mb-8 border-primary/30 bg-primary/5">
+          <CardContent className="p-6">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h3 className="font-medium text-lg">{profileCardTitle}</h3>
+                <p className="text-muted-foreground/70 text-sm mt-1">
+                  {profileCardDescription}
+                </p>
+              </div>
+              <div className="flex flex-col items-start gap-2 sm:items-end">
+                <Button onClick={() => navigate(`/app/flows/start/${hasProfile ? 'profile-reprofile' : 'profile-builder'}`)}>
+                  {profileCardAction}
+                  <ChevronRight className="h-4 w-4 ml-1" />
+                </Button>
+                <Button variant="link" className="h-auto p-0 text-sm" onClick={() => navigate('/app/flows/profile')}>
+                  {hasProfile ? 'Edit it manually' : 'Build it manually'}
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>

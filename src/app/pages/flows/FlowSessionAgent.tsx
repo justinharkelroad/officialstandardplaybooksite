@@ -51,6 +51,7 @@ import { useAuth } from '@/app/lib/auth';
 import { supabase } from '@/app/lib/supabaseClient';
 import { DeclaredFlowAction, getDeclaredFlowActionKey } from '@/app/lib/declaredFlowActions';
 import { BibleScriptureContext, saveFlowAgentResponses } from '@/app/lib/flowAgentApi';
+import { isProfileFlowSlug } from '@/app/lib/flowProfileInterview';
 import { interpolateFlowPrompt } from '@/app/lib/flowPromptInterpolation';
 import { toast } from 'sonner';
 
@@ -729,6 +730,9 @@ export function FlowSessionAgentBase({
     : null;
   const querySessionId = new URLSearchParams(location.search).get('resume');
   const resumeSessionId = stateSessionId ?? querySessionId;
+  const profileSaveRedirectTo = typeof (location.state as { redirectTo?: unknown } | null)?.redirectTo === 'string'
+    ? (location.state as { redirectTo: string }).redirectTo
+    : undefined;
   const [mode, setMode] = useState<FlowAgentMode>(() => readStoredFlowMode());
   const [modeChosen, setModeChosen] = useState(false);
   const [selectedBibleScripture, setSelectedBibleScripture] = useState<BibleScriptureContext | null>(null);
@@ -744,6 +748,7 @@ export function FlowSessionAgentBase({
   const bottomRef = useRef<HTMLDivElement>(null);
   const initialPostFlowActionRef = useRef<string | null>(null);
   const addingToPlaybookRef = useRef(false);
+  const profileCompletionRedirectedRef = useRef(false);
   const { createItem: createOwnerItem } = useFocusItems();
 
   const {
@@ -781,6 +786,7 @@ export function FlowSessionAgentBase({
   const mobileViewportHeight = useMobileVisualViewportHeight(modeChosen && !useVoiceRoom);
   const isBibleFlow = slug === 'bible';
   const isDailyFrameFlow = slug === 'daily-frame';
+  const isProfileFlow = isProfileFlowSlug(slug);
   const activeBibleScripture = selectedBibleScripture ?? flowSession?.bible_context ?? null;
 
   useEffect(() => {
@@ -886,8 +892,29 @@ export function FlowSessionAgentBase({
       return;
     }
 
+    if (isProfileFlow) {
+      navigate(`/app/flows/profile?session_id=${encodeURIComponent(flowSession.session_id)}`, {
+        state: {
+          sessionId: flowSession.session_id,
+          redirectTo: profileSaveRedirectTo,
+        },
+      });
+      return;
+    }
+
     navigate(`${completePathPrefix}/${flowSession.session_id}`);
-  }, [completePathPrefix, exitPath, flowSession, navigate]);
+  }, [completePathPrefix, exitPath, flowSession, isProfileFlow, navigate, profileSaveRedirectTo]);
+
+  useEffect(() => {
+    profileCompletionRedirectedRef.current = false;
+  }, [flowSession?.session_id]);
+
+  useEffect(() => {
+    if (!isCompleted || !isProfileFlow || !flowSession) return;
+    if (profileCompletionRedirectedRef.current) return;
+    profileCompletionRedirectedRef.current = true;
+    handleViewResults();
+  }, [flowSession, handleViewResults, isCompleted, isProfileFlow]);
 
   const refineActionItem = useCallback(async (actionText: string) => {
     const { data, error } = await supabase.functions.invoke('refine_flow_action_item', {
@@ -1080,6 +1107,18 @@ export function FlowSessionAgentBase({
 
               <FlowModeToggle value={mode} onChange={setMode} />
 
+              {isProfileFlow && (
+                <div className="rounded-xl border border-border/60 bg-muted/25 p-4 text-sm leading-6 text-muted-foreground">
+                  <p>
+                    This is a 20 to 40 minute guided conversation through Business, Being, Body, and Balance.
+                    Flow will ask one question at a time and may follow up when an answer needs more depth.
+                  </p>
+                  <p className="mt-2 font-medium text-foreground">
+                    Your progress is saved. Your current profile will not change until you review and confirm what Flow heard.
+                  </p>
+                </div>
+              )}
+
               <p className="text-sm leading-6 text-muted-foreground">
                 Your choice applies to this Flow. You can switch modes after the conversation starts, and
                 this choice will be pre-selected next time.
@@ -1250,9 +1289,11 @@ export function FlowSessionAgentBase({
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#2997FF]" />
                     <div>
-                      <p className="font-medium">Flow saved.</p>
+                      <p className="font-medium">{isProfileFlow ? 'Interview complete.' : 'Flow saved.'}</p>
                       <p className="mt-1 text-sm text-muted-foreground">
-                        {isDailyFrameFlow
+                        {isProfileFlow
+                          ? 'Review the profile we built together. Nothing is saved to your profile until you confirm it.'
+                          : isDailyFrameFlow
                           ? 'Your Daily Frame commitment is being added to your dashboard.'
                           : 'Review your declared action items before you close this out.'}
                       </p>

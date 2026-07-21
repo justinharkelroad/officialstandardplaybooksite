@@ -30,6 +30,7 @@ export interface StartFlowSessionResponse {
     tts_voice_id: string | null;
   } | null;
   bible_context?: BibleScriptureContext | null;
+  prior_profile?: Record<string, unknown> | null;
 }
 
 export interface BibleScriptureContext {

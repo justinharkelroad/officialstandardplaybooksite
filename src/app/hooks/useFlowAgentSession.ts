@@ -20,6 +20,7 @@ import {
 import { interpolateFlowPrompt, interpolateFlowQuestionPrompt } from '@/app/lib/flowPromptInterpolation';
 import { buildFlowVoicePrompt, buildQuestionMap } from '@/app/lib/flowVoicePrompt';
 import { FlowQuestion } from '@/app/types/flows';
+import { isProfileFlowSlug } from '@/app/lib/flowProfileInterview';
 
 const REACT_CLIENT_TOOL_EXECUTOR = 'react_client_tools';
 const VOICE_TRANSCRIPT_AUTOSAVE_DELAY_MS = 4000;
@@ -539,6 +540,9 @@ export function useFlowAgentSession({
     if (!questionId || !answer.trim()) return;
     if (modeRef.current !== 'voice') return;
     if (pendingCoachProbeRef.current) return;
+    // A profile voice interview may ask one stateful follow-up before saving
+    // the official topic. Its explicit submit tool owns that combined answer.
+    if (isProfileFlowSlug(flowSessionRef.current?.flow_slug)) return;
 
     pendingAutoSaveAnswerRef.current = pendingAutoSaveQuestionIdRef.current === questionId
       ? mergeVoiceTranscriptFragments(pendingAutoSaveAnswerRef.current, answer)

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/app/lib/supabaseClient';
 import { useAuth } from '@/app/lib/auth';
 import { FlowSession } from '@/app/types/flows';
@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Loader2, FileEdit, Trash2, PlusCircle, Clock } from 'lucide-react';
 import { format } from 'date-fns';
+import { safeFlowStartRedirect } from '@/app/lib/flowProfileInterview';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,7 +22,12 @@ import {
 export default function FlowStart() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
+  const redirectTo = safeFlowStartRedirect(
+    (location.state as { redirectTo?: unknown } | null)?.redirectTo,
+  );
+  const sessionRouteState = redirectTo ? { redirectTo } : undefined;
 
   const [loading, setLoading] = useState(true);
   const [draftSession, setDraftSession] = useState<FlowSession | null>(null);
@@ -83,7 +89,7 @@ export default function FlowStart() {
           // Empty phantom draft - delete silently and navigate directly
           console.log('[FlowStart] Auto-deleting empty phantom draft:', existingSession.id);
           await supabase.from('flow_sessions').delete().eq('id', existingSession.id);
-          navigate(`/app/flows/session/${slug}`, { replace: true });
+          navigate(`/app/flows/session/${slug}`, { replace: true, state: sessionRouteState });
           return;
         }
         
@@ -92,7 +98,7 @@ export default function FlowStart() {
         setLoading(false);
       } else {
         // No draft - navigate directly, session will be created lazily by useFlowSession
-        navigate(`/app/flows/session/${slug}`, { replace: true });
+        navigate(`/app/flows/session/${slug}`, { replace: true, state: sessionRouteState });
       }
     } catch (err) {
       console.error('Error checking for drafts:', err);
@@ -103,7 +109,7 @@ export default function FlowStart() {
   const handleContinueDraft = () => {
     navigate(`/app/flows/session/${slug}?resume=${encodeURIComponent(draftSession?.id ?? '')}`, {
       replace: true,
-      state: { sessionId: draftSession?.id }
+      state: { sessionId: draftSession?.id, ...sessionRouteState }
     });
   };
 
@@ -120,7 +126,7 @@ export default function FlowStart() {
       setShowDeleteConfirm(false);
       
       // Just navigate - session will be created lazily on first answer
-      navigate(`/app/flows/session/${slug}`, { replace: true });
+      navigate(`/app/flows/session/${slug}`, { replace: true, state: sessionRouteState });
     } catch (err) {
       console.error('Error deleting draft:', err);
     }
@@ -138,7 +144,7 @@ export default function FlowStart() {
     }
     
     // Navigate directly, session will be created lazily by useFlowSession
-    navigate(`/app/flows/session/${slug}`, { replace: true });
+    navigate(`/app/flows/session/${slug}`, { replace: true, state: sessionRouteState });
   };
 
   // Count answered questions

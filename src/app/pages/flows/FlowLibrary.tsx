@@ -23,6 +23,7 @@ import { FlowTypeIcon } from '@/app/components/flows/FlowTypeIcon';
 import { AppIcon } from "@/app/components/icons/appIcons";
 import { useToast } from '@/app/hooks/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
+import { isProfileFlowSlug } from '@/app/lib/flowProfileInterview';
 
 export default function FlowLibrary() {
   const navigate = useNavigate();
@@ -50,7 +51,8 @@ export default function FlowLibrary() {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setSessions((data || []) as unknown as FlowSession[]);
+      setSessions(((data || []) as unknown as FlowSession[])
+        .filter(session => !isProfileFlowSlug(session.flow_template?.slug)));
     } catch (err) {
       console.error('Error fetching sessions:', err);
     } finally {

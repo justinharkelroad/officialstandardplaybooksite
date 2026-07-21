@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useFlowProfile } from '@/app/hooks/useFlowProfile';
 import { useFlowCoachMemory } from '@/app/hooks/useFlowCoachMemory';
+import { supabase } from '@/app/lib/supabaseClient';
+import { useAuth } from '@/app/lib/auth';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,92 +13,125 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select';
 import { ArrowLeft, Brain, Loader2, Save, Sparkles, Trash2 } from 'lucide-react';
 import { useToast } from '@/app/hooks/use-toast';
+import { isProfileFlowSlug, safeFlowStartRedirect } from '@/app/lib/flowProfileInterview';
+import {
+  ACCOUNTABILITY_CODES,
+  ACCOUNTABILITY_STYLES,
+  CORE_VALUES,
+  EMPTY_FORM_DATA,
+  FEEDBACK_CODES,
+  FEEDBACK_PREFERENCES,
+  LIFE_ROLES,
+  type ProfileFormData,
+  toProfileFormData,
+  validProfileArray,
+} from '@/app/lib/flowProfileReview';
 
-const LIFE_ROLES = [
-  'Spouse',
-  'Parent',
-  'Business Owner',
-  'Employee',
-  'Coach',
-  'Student',
-  'Caregiver',
-  'Leader',
-  'Creative',
-  'Athlete',
-];
-
-const CORE_VALUES = [
-  'Faith',
-  'Family',
-  'Growth',
-  'Impact',
-  'Freedom',
-  'Health',
-  'Wealth',
-  'Adventure',
-  'Connection',
-  'Excellence',
-  'Integrity',
-  'Service',
-];
-
-const ACCOUNTABILITY_STYLES = [
-  { value: 'direct_challenge', label: 'Direct challenge - Tell me the hard truth' },
-  { value: 'gentle_nudge', label: 'Gentle nudge - Lead with encouragement' },
-  { value: 'questions_discover', label: 'Questions to discover - Help me figure it out myself' },
-];
-
-const FEEDBACK_PREFERENCES = [
-  { value: 'blunt_truth', label: 'Blunt truth first - Don\'t sugarcoat it' },
-  { value: 'encouragement_then_truth', label: 'Encouragement then truth - Acknowledge before challenging' },
-  { value: 'questions_to_discover', label: 'Questions that let me discover it - Socratic approach' },
-];
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
 
 export default function FlowProfile() {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
-  const { profile, loading, saveProfile, hasProfile } = useFlowProfile();
+  const { user, loading: authLoading } = useAuth();
+  const { profile, loading, saveProfile, refetch, hasProfile } = useFlowProfile();
   const coachMemory = useFlowCoachMemory();
-  
-  const redirectTo = (location.state as { redirectTo?: string })?.redirectTo;
 
-  const [formData, setFormData] = useState({
-    preferred_name: '',
-    life_roles: [] as string[],
-    core_values: [] as string[],
-    current_goals: '',
-    current_challenges: '',
-    spiritual_beliefs: '',
-    background_notes: '',
-    // New fields
-    accountability_style: '',
-    feedback_preference: '',
-    peak_state: '',
-    growth_edge: '',
-    overwhelm_response: '',
-  });
+  const routeState = location.state as { redirectTo?: unknown; sessionId?: unknown } | null;
+  const params = new URLSearchParams(location.search);
+  const redirectTo = safeFlowStartRedirect(routeState?.redirectTo ?? params.get('return_to'));
+  const reviewSessionId = typeof routeState?.sessionId === 'string'
+    ? routeState.sessionId
+    : params.get('session_id');
+  const isReviewMode = Boolean(reviewSessionId);
+
+  const [formData, setFormData] = useState<ProfileFormData>(EMPTY_FORM_DATA);
   const [saving, setSaving] = useState(false);
+  const [loadingReviewDraft, setLoadingReviewDraft] = useState(isReviewMode);
+  const [reviewDraftFallback, setReviewDraftFallback] = useState(false);
+  const [reviewError, setReviewError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (profile) {
-      setFormData({
-        preferred_name: profile.preferred_name || '',
-        life_roles: profile.life_roles || [],
-        core_values: profile.core_values || [],
-        current_goals: profile.current_goals || '',
-        current_challenges: profile.current_challenges || '',
-        spiritual_beliefs: profile.spiritual_beliefs || '',
-        background_notes: profile.background_notes || '',
-        // New fields
-        accountability_style: profile.accountability_style || '',
-        feedback_preference: profile.feedback_preference || '',
-        peak_state: profile.peak_state || '',
-        growth_edge: profile.growth_edge || '',
-        overwhelm_response: profile.overwhelm_response || '',
-      });
+    if (profile && !isReviewMode) {
+      setFormData(toProfileFormData(profile));
     }
-  }, [profile]);
+  }, [isReviewMode, profile]);
+
+  useEffect(() => {
+    if (!reviewSessionId || loading || authLoading) return;
+    if (!user?.id) {
+      setReviewError('Sign in to review this profile interview.');
+      setLoadingReviewDraft(false);
+      return;
+    }
+
+    let cancelled = false;
+    let timeoutId: number | null = null;
+    const wait = (milliseconds: number) => new Promise<void>(resolve => {
+      timeoutId = window.setTimeout(resolve, milliseconds);
+    });
+
+    const loadDraft = async () => {
+      let latestResponses: Record<string, unknown> = {};
+      let preserveExisting = Boolean(profile);
+
+      const failReview = (message: string) => {
+        if (cancelled) return;
+        setReviewError(message);
+        setLoadingReviewDraft(false);
+      };
+
+      for (let attempt = 0; attempt < 45 && !cancelled; attempt += 1) {
+        const { data, error } = await supabase
+          .from('flow_sessions')
+          .select('status,responses_json,agent_metadata,flow_template:flow_templates(slug)')
+          .eq('id', reviewSessionId)
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+        if (cancelled) return;
+        if (error || !data) {
+          failReview('This profile review is unavailable or does not belong to your account.');
+          return;
+        }
+
+        const joinedTemplate = Array.isArray(data.flow_template) ? data.flow_template[0] : data.flow_template;
+        if (!isProfileFlowSlug(joinedTemplate?.slug)) {
+          failReview('This session is not a Flow Profile interview.');
+          return;
+        }
+        if (data.status !== 'completed') {
+          failReview('Finish the profile interview before opening its review.');
+          return;
+        }
+
+        preserveExisting = joinedTemplate.slug === 'profile-reprofile' || Boolean(profile);
+        latestResponses = isRecord(data.responses_json) ? data.responses_json : {};
+        const metadata = isRecord(data.agent_metadata) ? data.agent_metadata : {};
+        if (isRecord(metadata.profile_draft)) {
+          setFormData(toProfileFormData(metadata.profile_draft, latestResponses, profile, preserveExisting));
+          setLoadingReviewDraft(false);
+          return;
+        }
+
+        await wait(1000);
+      }
+
+      if (!cancelled) {
+        setFormData(toProfileFormData({}, latestResponses, profile, preserveExisting));
+        setReviewDraftFallback(true);
+        setLoadingReviewDraft(false);
+      }
+    };
+
+    void loadDraft();
+    return () => {
+      cancelled = true;
+      if (timeoutId !== null) window.clearTimeout(timeoutId);
+    };
+  }, [authLoading, loading, profile, reviewSessionId, user?.id]);
 
   const toggleArrayItem = (field: 'life_roles' | 'core_values', item: string) => {
     setFormData(prev => ({
@@ -119,9 +154,31 @@ export default function FlowProfile() {
       return;
     }
 
+    const profileToSave = {
+      ...formData,
+      life_roles: validProfileArray(formData.life_roles, LIFE_ROLES),
+      core_values: validProfileArray(formData.core_values, CORE_VALUES),
+      accountability_style: ACCOUNTABILITY_CODES.has(formData.accountability_style)
+        ? formData.accountability_style
+        : null,
+      feedback_preference: FEEDBACK_CODES.has(formData.feedback_preference)
+        ? formData.feedback_preference
+        : null,
+    };
+
     setSaving(true);
-    const { error } = await saveProfile(formData);
+    const result = isReviewMode && reviewSessionId
+      ? await (supabase.rpc as unknown as (
+          name: string,
+          args: Record<string, unknown>,
+        ) => Promise<{ data: unknown; error: { message: string } | null }>)(
+          'confirm_my_flow_profile_interview',
+          { p_session_id: reviewSessionId, p_profile: profileToSave },
+        )
+      : await saveProfile(profileToSave);
     setSaving(false);
+
+    const error = result.error;
 
     if (error) {
       toast({
@@ -130,9 +187,12 @@ export default function FlowProfile() {
         variant: 'destructive',
       });
     } else {
+      await refetch();
       toast({
         title: 'Profile saved',
-        description: 'Your Flow profile has been updated.',
+        description: isReviewMode
+          ? 'Your guided conversation is now your Flow profile.'
+          : 'Your Flow profile has been updated.',
       });
       
       if (redirectTo) {
@@ -164,13 +224,36 @@ export default function FlowProfile() {
     });
   };
 
-  if (loading) {
+  if (loading || authLoading || loadingReviewDraft) {
     return (
       <div className="container max-w-2xl py-8">
-        <div className="space-y-6">
-          <div className="h-8 w-48 bg-muted animate-pulse rounded" />
-          <div className="h-64 bg-muted animate-pulse rounded" />
+        <div className="flex min-h-[320px] flex-col items-center justify-center gap-3 text-center">
+          <Loader2 className="h-7 w-7 animate-spin text-primary" />
+          <h1 className="text-xl font-semibold">
+            {isReviewMode ? 'Building your profile draft...' : 'Loading your profile...'}
+          </h1>
+          {isReviewMode && (
+            <p className="max-w-md text-sm text-muted-foreground">
+              Flow is turning the conversation into a clean profile for you to review.
+            </p>
+          )}
         </div>
+      </div>
+    );
+  }
+
+  if (reviewError) {
+    return (
+      <div className="container max-w-2xl py-8">
+        <Card>
+          <CardHeader>
+            <CardTitle>Profile review unavailable</CardTitle>
+            <CardDescription>{reviewError}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button onClick={() => navigate('/app/flows')}>Back to Flows</Button>
+          </CardContent>
+        </Card>
       </div>
     );
   }
@@ -191,11 +274,22 @@ export default function FlowProfile() {
         
         <h1 className="text-3xl font-bold flex items-center gap-3">
           <Sparkles className="h-8 w-8 text-primary" />
-          {hasProfile ? 'Edit Your Profile' : 'Build Your Flow Profile'}
+          {isReviewMode
+            ? 'Review What Flow Heard'
+            : hasProfile
+              ? 'Edit Your Profile'
+              : 'Build Your Flow Profile'}
         </h1>
         <p className="text-muted-foreground mt-2">
-          Help us personalize your experience with AI-powered insights.
+          {isReviewMode
+            ? 'Nothing has been saved yet. Change anything below, then confirm the profile when it feels true.'
+            : 'Help us personalize your experience with AI-powered insights.'}
         </p>
+        {reviewDraftFallback && (
+          <p className="mt-3 rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm text-amber-800 dark:text-amber-200">
+            The polished draft took too long, so Flow recovered the original interview answers. Review each field before saving.
+          </p>
+        )}
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -529,7 +623,7 @@ export default function FlowProfile() {
             ) : (
               <>
                 <Save className="h-4 w-4 mr-2" strokeWidth={1.5} />
-                Save Profile
+                {isReviewMode ? 'Confirm Flow Profile' : 'Save Profile'}
               </>
             )}
           </Button>

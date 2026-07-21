@@ -5,6 +5,7 @@ import {
   jsonResponse,
   requireActiveMember,
 } from '../_shared/memberAuth.ts';
+import { isProfileFlowSlug, joinedFlowTemplateSlug } from '../_shared/profileFlow.ts';
 
 const BUCKET = 'flow-shares';
 const MAX_PDF_BYTES = 10_485_760;
@@ -69,7 +70,7 @@ serve(async (req: Request): Promise<Response> => {
 
     const { data: session, error: sessionError } = await member.supabase
       .from('flow_sessions')
-      .select('id, user_id, status')
+      .select('id, user_id, status, flow_template:flow_templates(slug)')
       .eq('id', body.session_id)
       .maybeSingle();
 
@@ -82,6 +83,9 @@ serve(async (req: Request): Promise<Response> => {
     }
     if (session.status !== 'completed') {
       return jsonResponse({ error: 'Flow is not completed' }, 409);
+    }
+    if (isProfileFlowSlug(joinedFlowTemplateSlug(session.flow_template))) {
+      return jsonResponse({ error: 'Flow Profile interviews are private and cannot be shared' }, 409);
     }
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
