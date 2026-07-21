@@ -102,6 +102,14 @@ export const seoConfig: Record<string, SEOConfig> = {
     ogImage: OG_IMAGE,
     type: 'article',
   },
+  '/thetool': {
+    title: 'The Standard Playbook App | Turn Quarterly Goals Into Daily Action',
+    description: 'See how the Standard Playbook app connects quarterly targets, monthly missions, weekly priorities, daily Core 4 actions, guided Flows, reflection, and weekly Debriefs.',
+    keywords: ['Standard Playbook app', 'daily goal tracker', 'quarterly planning app', 'weekly planning system', 'Core 4', 'personal operating system'],
+    ogImage: 'https://standardplaybook.com/og/thetool.png',
+    canonical: 'https://standardplaybook.com/thetool',
+    type: 'website',
+  },
   '/about': {
     title: 'About The Standard Playbook — Coaching for Insurance Agency Growth | Fort Wayne, IN',
     description: 'Learn about The Standard Playbook: our mission to elevate entrepreneurship through world-class coaching, proven systems, and elite community. 500+ entrepreneurs coached, $500M+ revenue generated.',

@@ -1,6 +1,11 @@
 {
   "_comment": "Source of truth for per-program social share cards (the image + caption shown in iMessage/MMS, Facebook, LinkedIn). 'image' is Justin's designed 1200x630 card under /og/. 'title' is the bold caption iMessage shows beneath the image; 'subhead' is the og:description other platforms show. Used by scripts/og-stamp.mjs to bake the tags into dist/<route>/index.html. Add a route here the moment its card image exists.",
   "routes": {
+    "/thetool": {
+      "title": "The Standard Playbook App",
+      "subhead": "Turn quarterly goals into daily action across Body, Being, Balance, and Business.",
+      "image": "/og/thetool.png"
+    },
     "/ascension": {
       "title": "The Standard Ascension",
       "subhead": "One-on-one private mentorship. Ninety days, one business target, and all four areas of your life on the board.",

@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
 import AppAccess from "./pages/AppAccess";
+import TheTool from "./pages/TheTool";
 
 // Member app (Standard Playbook client portal) — lazy so the marketing
 // bundle is unaffected.
@@ -95,6 +96,7 @@ const App = () => (
           <Route path="/reset-password" element={<Suspense fallback={null}><ResetPassword /></Suspense>} />
           <Route path="/app/*" element={<Suspense fallback={null}><MemberApp /></Suspense>} />
           <Route path="/appinfo" element={<AppAccess />} />
+          <Route path="/thetool" element={<TheTool />} />
           <Route path="/boardroom" element={<BoldBoardroom />} />
           <Route path="/legacy-boardroom" element={<Boardroom />} />
           <Route path="/directive" element={<BoldDirective />} />

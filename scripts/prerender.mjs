@@ -31,6 +31,7 @@ const ROUTES = [
   '/the-challenge',
   // '/app' excluded — AppRedirect immediately navigates to external URL
   '/appinfo',
+  '/thetool',
   '/about',
   '/contact',
   '/decision',
