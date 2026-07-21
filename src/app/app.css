@@ -232,6 +232,18 @@
   border-radius: 0 !important;
 }
 
+/* The shared marketing dialog uses an inline ink-colored close control.
+   Re-invert that control when it is portalled into the member app's dark UI. */
+[data-sp-theme="dark"] [role="dialog"] .sp-dialog-close {
+  color: #f1eee9 !important;
+  border-color: #f1eee9 !important;
+}
+
+[data-sp-theme="dark"] [role="dialog"] .sp-dialog-close:hover {
+  background: #f1eee9 !important;
+  color: #16161a !important;
+}
+
 /* ── Marquee band (the landing's signature rotated brand band) ─────────── */
 .sp-marquee-wrap {
   position: relative;

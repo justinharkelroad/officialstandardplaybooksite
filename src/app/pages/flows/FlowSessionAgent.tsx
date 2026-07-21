@@ -10,6 +10,7 @@ import {
   Loader2,
   Mic,
   MicOff,
+  Pencil,
   Plus,
   Radio,
   RotateCcw,
@@ -560,33 +561,45 @@ function FlowAnswerReviewDialog({
       return;
     }
 
-    if (!editingQuestionId && answeredQuestions[0]) {
-      setEditingQuestionId(answeredQuestions[0].id);
-      setDraftAnswer(answers[answeredQuestions[0].id] ?? '');
+    if (editingQuestionId && !answeredQuestions.some((question) => question.id === editingQuestionId)) {
+      setEditingQuestionId(null);
+      setDraftAnswer('');
     }
-  }, [answeredQuestions, answers, editingQuestionId, open]);
+  }, [answeredQuestions, editingQuestionId, open]);
 
   const startEditing = (question: FlowQuestion) => {
     setEditingQuestionId(question.id);
-    setDraftAnswer(answers[question.id] ?? '');
+    setDraftAnswer(stripAnswerPreview(answers[question.id] ?? ''));
+  };
+
+  const cancelEditing = () => {
+    setEditingQuestionId(null);
+    setDraftAnswer('');
   };
 
   const handleSave = async () => {
     if (!editingQuestion || (editingQuestion.required && !draftAnswer.trim())) return;
     await onSave(editingQuestion.id, draftAnswer);
-    onOpenChange(false);
+    setEditingQuestionId(null);
+    setDraftAnswer('');
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={cn(spScopeClass(), "flex max-h-[88vh] w-[min(calc(100vw-1.5rem),42rem)] flex-col gap-0 overflow-hidden p-0 sm:rounded-lg")}>
-        <DialogHeader className="border-b border-border/60 px-5 py-4">
-          <DialogTitle className="flex items-center gap-2 text-base">
+      <DialogContent className={cn(spScopeClass(), "flex max-h-[88vh] w-[min(calc(100vw-1.5rem),42rem)] flex-col gap-0 overflow-hidden p-0 text-foreground sm:rounded-lg")}>
+        <DialogHeader className="border-b border-border/60 px-5 py-4 pr-14 text-left">
+          <DialogTitle
+            className="flex items-center gap-2 text-base"
+            style={{ color: 'hsl(var(--foreground))' }}
+          >
             <ListChecks className="h-4 w-4" />
             Review Answers
           </DialogTitle>
-          <DialogDescription className="sr-only">
-            Edit saved Flow answers and continue from the recalculated Flow state.
+          <DialogDescription
+            className="text-sm leading-5"
+            style={{ color: 'hsl(var(--muted-foreground))' }}
+          >
+            Fix a mistyped or misheard response, then save it here.
           </DialogDescription>
         </DialogHeader>
 
@@ -594,81 +607,107 @@ function FlowAnswerReviewDialog({
           {answeredQuestions.length === 0 ? (
             <p className="py-8 text-center text-sm text-muted-foreground">No answers saved yet.</p>
           ) : (
-            <div className="space-y-4">
-              <div className="space-y-2">
-                {answeredQuestions.map((question, index) => (
-                  <button
+            <div className="space-y-3">
+              {answeredQuestions.map((question, index) => {
+                const isEditing = editingQuestionId === question.id;
+
+                return (
+                  <section
                     key={question.id}
-                    type="button"
-                    onClick={() => startEditing(question)}
                     className={cn(
-                      'block w-full rounded-md border px-3 py-2 text-left text-sm transition-colors',
-                      editingQuestionId === question.id
-                        ? 'border-primary bg-primary/5'
-                        : 'border-border/70 hover:bg-muted/60',
+                      'rounded-md border px-4 py-3 text-sm',
+                      isEditing ? 'border-primary bg-primary/5' : 'border-border/70',
                     )}
                   >
-                    <span className="block text-xs font-medium uppercase text-muted-foreground">
-                      Question {index + 1}
-                    </span>
-                    <span className="mt-1 block font-medium text-foreground">{promptFor(question)}</span>
-                    <span className="mt-1 line-clamp-2 block text-muted-foreground">
-                      {stripAnswerPreview(answers[question.id] ?? '')}
-                    </span>
-                  </button>
-                ))}
-              </div>
-
-              {editingQuestion && (
-                <div className="space-y-3 border-t border-border/60 pt-4">
-                  <p className="text-sm font-medium">{promptFor(editingQuestion)}</p>
-                  {editingQuestion.type === 'select' && editingQuestion.options?.length ? (
-                    <div className="flex flex-wrap gap-2">
-                      {editingQuestion.options.map((option) => (
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="text-xs font-medium uppercase text-muted-foreground">
+                          Question {index + 1}
+                        </p>
+                        <h3 className="mt-1 text-sm font-medium leading-5 text-foreground">
+                          {promptFor(question)}
+                        </h3>
+                      </div>
+                      {!isEditing && (
                         <Button
-                          key={option}
                           type="button"
-                          variant={draftAnswer === option ? 'default' : 'outline'}
+                          variant="outline"
                           size="sm"
-                          onClick={() => setDraftAnswer(option)}
-                          disabled={saving}
-                          className="rounded-full"
+                          onClick={() => startEditing(question)}
+                          disabled={saving || editingQuestionId !== null}
+                          className="h-8 shrink-0 gap-1.5 px-2.5"
+                          aria-label={`Edit answer ${index + 1}`}
                         >
-                          {option}
+                          <Pencil className="h-3.5 w-3.5" />
+                          Edit
                         </Button>
-                      ))}
+                      )}
                     </div>
-                  ) : (
-                    <Textarea
-                      value={stripAnswerPreview(draftAnswer)}
-                      onChange={(event) => setDraftAnswer(event.target.value)}
-                      disabled={saving}
-                      className="min-h-32 resize-none"
-                    />
-                  )}
-                </div>
-              )}
+
+                    {isEditing ? (
+                      <div className="mt-3 space-y-3 border-t border-border/60 pt-3">
+                        {question.type === 'select' && question.options?.length ? (
+                          <div className="flex flex-wrap gap-2">
+                            {question.options.map((option) => (
+                              <Button
+                                key={option}
+                                type="button"
+                                variant={draftAnswer === option ? 'default' : 'outline'}
+                                size="sm"
+                                onClick={() => setDraftAnswer(option)}
+                                disabled={saving}
+                                className="rounded-full"
+                              >
+                                {option}
+                              </Button>
+                            ))}
+                          </div>
+                        ) : (
+                          <Textarea
+                            value={draftAnswer}
+                            onChange={(event) => setDraftAnswer(event.target.value)}
+                            disabled={saving}
+                            aria-label={`Answer to question ${index + 1}`}
+                            className="min-h-32 resize-y normal-case leading-6"
+                            autoFocus
+                          />
+                        )}
+                        <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                          <Button type="button" variant="outline" size="sm" onClick={cancelEditing} disabled={saving}>
+                            Cancel edit
+                          </Button>
+                          <Button
+                            type="button"
+                            size="sm"
+                            onClick={() => void handleSave()}
+                            disabled={(question.required && !draftAnswer.trim()) || saving}
+                          >
+                            {saving ? (
+                              <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Saving...
+                              </>
+                            ) : (
+                              'Save changes'
+                            )}
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="mt-2 whitespace-pre-wrap break-words normal-case leading-6 text-muted-foreground">
+                        {stripAnswerPreview(answers[question.id] ?? '')}
+                      </p>
+                    )}
+                  </section>
+                );
+              })}
             </div>
           )}
         </div>
 
         <DialogFooter className="border-t border-border/60 px-5 py-4">
-          <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={saving}>
-            Cancel
-          </Button>
-          <Button
-            type="button"
-            onClick={() => void handleSave()}
-            disabled={!editingQuestion || (editingQuestion.required && !draftAnswer.trim()) || saving}
-          >
-            {saving ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Saving...
-              </>
-            ) : (
-              'Save Answer'
-            )}
+          <Button type="button" onClick={() => onOpenChange(false)} disabled={saving}>
+            Done
           </Button>
         </DialogFooter>
       </DialogContent>
