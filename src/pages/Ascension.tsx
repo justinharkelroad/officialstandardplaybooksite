@@ -69,7 +69,7 @@ const Ascension = () => {
             <img src={standardLogo} alt="The Standard Playbook" />
           </Link>
           <button type="button" className="ascension-nav__apply" onClick={openApplication}>
-            Apply now
+            Apply for Ascension
           </button>
         </div>
       </header>
@@ -78,10 +78,9 @@ const Ascension = () => {
         <div className="ascension-shell ascension-hero__grid">
           <div className="ascension-hero__main">
             <p className="ascension-kicker">Private mentorship with Justin Harkelroad</p>
-            <h1>The Standard<br />Ascension</h1>
-            <p className="ascension-hero__subtitle">One-on-one private mentorship</p>
+            <h1><span>The Standard</span><span>Ascension</span></h1>
             <p className="ascension-hero__intro">
-              Ninety days. One business target. All four areas of your life on the board. Coached by Justin, personally, every single day.
+              Ninety days. One business target. Four areas of life. Private mentorship with Justin Harkelroad.
             </p>
             <button type="button" className="ascension-cta" onClick={openApplication}>
               Apply for Ascension
@@ -89,12 +88,35 @@ const Ascension = () => {
             </button>
           </div>
 
-          <aside className="ascension-hero__facts" aria-label="Program facts">
-            <div><strong>90</strong><span>days of private mentorship</span></div>
-            <div><strong>1:1</strong><span>with Justin, never a group</span></div>
-            <div><strong>4</strong><span>areas measured every week</span></div>
-            <p>By application only. Enrollment stays intentionally small.</p>
-          </aside>
+          <div className="ascension-hero__media">
+            <div className="ascension-hero__video">
+              <iframe
+                src="https://player.vimeo.com/video/1211845550?h=03ca2ffa0c&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;dnt=1&amp;title=0&amp;byline=0&amp;portrait=0"
+                title="Watch The Standard Ascension"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="ascension-facts" aria-label="Program facts">
+        <div className="ascension-shell ascension-facts__grid">
+          <div>
+            <strong>90</strong>
+            <span>days of private mentorship</span>
+          </div>
+          <div>
+            <strong>1:1</strong>
+            <span>with Justin, never a group</span>
+          </div>
+          <div>
+            <strong>4</strong>
+            <span>areas measured every week</span>
+          </div>
+          <p>By application only. Enrollment stays intentionally small.</p>
         </div>
       </section>
 
@@ -215,7 +237,7 @@ const Ascension = () => {
               <li><span>03</span>Qualified owners schedule a private call</li>
             </ol>
             <button type="button" className="ascension-cta ascension-cta--dark" onClick={openApplication}>
-              Start your application
+              Apply for Ascension
               <span aria-hidden="true">↗</span>
             </button>
           </aside>
