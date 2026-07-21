@@ -492,6 +492,9 @@ export type Database = {
           feedback_preference: string | null
           full_name: string | null
           growth_edge: string | null
+          guided_interview_confirmed_at: string | null
+          guided_interview_session_id: string | null
+          guided_interview_version: number | null
           id: string
           life_roles: string[] | null
           overwhelm_response: string | null
@@ -514,6 +517,9 @@ export type Database = {
           feedback_preference?: string | null
           full_name?: string | null
           growth_edge?: string | null
+          guided_interview_confirmed_at?: string | null
+          guided_interview_session_id?: string | null
+          guided_interview_version?: number | null
           id?: string
           life_roles?: string[] | null
           overwhelm_response?: string | null
@@ -536,6 +542,9 @@ export type Database = {
           feedback_preference?: string | null
           full_name?: string | null
           growth_edge?: string | null
+          guided_interview_confirmed_at?: string | null
+          guided_interview_session_id?: string | null
+          guided_interview_version?: number | null
           id?: string
           life_roles?: string[] | null
           overwhelm_response?: string | null
@@ -545,7 +554,15 @@ export type Database = {
           updated_at?: string | null
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "flow_profiles_guided_interview_session_id_fkey"
+            columns: ["guided_interview_session_id"]
+            isOneToOne: false
+            referencedRelation: "flow_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       flow_sessions: {
         Row: {
@@ -1507,6 +1524,40 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      confirm_my_flow_profile_interview: {
+        Args: { p_profile: Json; p_session_id: string }
+        Returns: {
+          accountability_style: string | null
+          background_notes: string | null
+          coach_memory_announced_at: string | null
+          coach_memory_paused: boolean
+          core_values: string[] | null
+          created_at: string | null
+          current_challenges: string | null
+          current_goals: string | null
+          faith_tradition: string | null
+          feedback_preference: string | null
+          full_name: string | null
+          growth_edge: string | null
+          guided_interview_confirmed_at: string | null
+          guided_interview_session_id: string | null
+          guided_interview_version: number | null
+          id: string
+          life_roles: string[] | null
+          overwhelm_response: string | null
+          peak_state: string | null
+          preferred_name: string | null
+          spiritual_beliefs: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "flow_profiles"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       delete_my_flow_coach_memory: { Args: never; Returns: undefined }
       delete_my_flow_session: {
         Args: { p_session_id: string }
