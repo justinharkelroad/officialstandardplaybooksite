@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/app/lib/supabaseClient';
 import { useAuth } from '@/app/lib/auth';
@@ -7,14 +7,28 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select';
-import { ArrowLeft, Search, Clock, CheckCircle2, FileEdit, ChevronRight, Sparkles } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { ArrowLeft, Search, Clock, CheckCircle2, FileEdit, ChevronRight, Sparkles, Loader2, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { FlowTypeIcon } from '@/app/components/flows/FlowTypeIcon';
 import { AppIcon } from "@/app/components/icons/appIcons";
+import { useToast } from '@/app/hooks/use-toast';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function FlowLibrary() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   const [sessions, setSessions] = useState<FlowSession[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,20 +36,17 @@ export default function FlowLibrary() {
   const [filterType, setFilterType] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('completed');
   const [activeSessionIconId, setActiveSessionIconId] = useState<string | null>(null);
+  const [sessionToDelete, setSessionToDelete] = useState<FlowSession | null>(null);
+  const [deletingSessionId, setDeletingSessionId] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (user?.id) {
-      fetchSessions();
-    }
-  }, [user?.id]);
-
-  const fetchSessions = async () => {
+  const fetchSessions = useCallback(async () => {
+    if (!user?.id) return;
     setLoading(true);
     try {
       const { data, error } = await supabase
         .from('flow_sessions')
         .select('*, flow_template:flow_templates(id, name, slug, icon)')
-        .eq('user_id', user!.id)
+        .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -45,7 +56,11 @@ export default function FlowLibrary() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user?.id]);
+
+  useEffect(() => {
+    void fetchSessions();
+  }, [fetchSessions]);
 
   // Filter sessions
   const filteredSessions = sessions.filter(session => {
@@ -80,6 +95,40 @@ export default function FlowLibrary() {
       navigate(`/app/flows/view/${session.id}`);
     } else {
       navigate(`/app/flows/session/${session.flow_template?.slug}`);
+    }
+  };
+
+  const handleDeleteSession = async () => {
+    if (!sessionToDelete || deletingSessionId) return;
+
+    const session = sessionToDelete;
+    setDeletingSessionId(session.id);
+    try {
+      const { error } = await supabase.rpc('delete_my_flow_session', {
+        p_session_id: session.id,
+      });
+      if (error) throw error;
+
+      setSessions(current => current.filter(item => item.id !== session.id));
+      setSessionToDelete(null);
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['weekly-flow-reflection'] }),
+        queryClient.invalidateQueries({ queryKey: ['weekly-flow-reflection-history'] }),
+        queryClient.invalidateQueries({ queryKey: ['debrief-stats'] }),
+      ]);
+      toast({
+        title: 'Flow deleted',
+        description: 'The Flow and everything Flowing remembered from it have been removed.',
+      });
+    } catch (error) {
+      console.error('Error deleting flow session:', error);
+      toast({
+        title: 'Unable to delete Flow',
+        description: 'Nothing was removed. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setDeletingSessionId(null);
     }
   };
 
@@ -198,8 +247,8 @@ export default function FlowLibrary() {
               onFocus={() => setActiveSessionIconId(session.id)}
               onBlur={() => setActiveSessionIconId(null)}
             >
-              <CardContent className="p-4 flex items-center justify-between">
-                <div className="flex items-center gap-4">
+              <CardContent className="p-4 flex items-center justify-between gap-3">
+                <div className="flex min-w-0 items-center gap-4">
                   <FlowTypeIcon
                     flowSlug={session.flow_template?.slug}
                     
@@ -207,8 +256,8 @@ export default function FlowLibrary() {
                     active={activeSessionIconId === session.id}
                     className="text-foreground"
                   />
-                  <div>
-                    <h4 className="font-medium">
+                  <div className="min-w-0">
+                    <h4 className="truncate font-medium">
                       {session.title || 'Untitled Flow'}
                     </h4>
                     <div className="flex items-center gap-3 text-sm text-muted-foreground/70">
@@ -227,7 +276,7 @@ export default function FlowLibrary() {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex shrink-0 items-center gap-2 sm:gap-3">
                   {session.status === 'completed' ? (
                     <span className="flex items-center gap-1 text-sm text-[#2997FF]">
                       <CheckCircle2 className="h-4 w-4" />
@@ -239,6 +288,19 @@ export default function FlowLibrary() {
                       Draft
                     </span>
                   )}
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="h-9 w-9 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+                    aria-label={`Delete ${session.title || 'Untitled Flow'}`}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setSessionToDelete(session);
+                    }}
+                  >
+                    <Trash2 className="h-4 w-4" strokeWidth={1.5} />
+                  </Button>
                   <ChevronRight className="h-4 w-4 text-muted-foreground" />
                 </div>
               </CardContent>
@@ -246,6 +308,40 @@ export default function FlowLibrary() {
           ))}
         </div>
       )}
+
+      <AlertDialog
+        open={Boolean(sessionToDelete)}
+        onOpenChange={(open) => {
+          if (!open && !deletingSessionId) setSessionToDelete(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete this Flow permanently?</AlertDialogTitle>
+            <AlertDialogDescription>
+              “{sessionToDelete?.title || 'Untitled Flow'}” will be removed from your history. Its saved answers, coach insights, recalled references, and any Weekly Reflection built from it will also be deleted so Flowing cannot bring it back up. This cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={Boolean(deletingSessionId)}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              disabled={Boolean(deletingSessionId)}
+              onClick={(event) => {
+                event.preventDefault();
+                void handleDeleteSession();
+              }}
+            >
+              {deletingSessionId ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Trash2 className="mr-2 h-4 w-4" />
+              )}
+              {deletingSessionId ? 'Deleting…' : 'Delete Flow'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

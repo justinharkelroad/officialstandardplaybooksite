@@ -14,6 +14,15 @@ interface UseFlowSessionProps {
   sessionId?: string;
 }
 
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) return error.message;
+  if (error && typeof error === 'object' && 'message' in error) {
+    const message = (error as { message?: unknown }).message;
+    if (typeof message === 'string') return message;
+  }
+  return 'An unexpected error occurred.';
+}
+
 export function useFlowSession({ templateSlug, sessionId }: UseFlowSessionProps) {
   const { user } = useAuth();
   
@@ -56,8 +65,8 @@ export function useFlowSession({ templateSlug, sessionId }: UseFlowSessionProps)
       } as FlowTemplate;
       
       setTemplate(templateData);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -88,8 +97,8 @@ export function useFlowSession({ templateSlug, sessionId }: UseFlowSessionProps)
       setSessionLoadedFromDb(true); // Mark as loaded from DB
       
       // We'll set index after computing visible questions
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -188,8 +197,8 @@ export function useFlowSession({ templateSlug, sessionId }: UseFlowSessionProps)
       console.log('[useFlowSession] Created new session:', data.id);
       setSession(data as unknown as FlowSession);
       return data as unknown as FlowSession;
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(getErrorMessage(err));
       return null;
     }
   };
@@ -197,19 +206,20 @@ export function useFlowSession({ templateSlug, sessionId }: UseFlowSessionProps)
   // Track consecutive save failures to avoid spamming toasts
   const saveFailCountRef = useRef(0);
 
-  const saveResponse = async (questionId: string, value: string) => {
+  const saveResponse = async (questionId: string, value: string): Promise<FlowSession | null> => {
     const newResponses = { ...responses, [questionId]: value };
     setResponses(newResponses);
 
     let currentSession = session;
     if (!currentSession) {
       currentSession = await createSession();
-      if (!currentSession) return;
+      if (!currentSession) return null;
     }
 
     setSaving(true);
     try {
-      const updateData: Record<string, any> = {
+      const updateData: Pick<FlowSession, 'responses_json' | 'updated_at'> &
+        Partial<Pick<FlowSession, 'title' | 'domain'>> = {
         responses_json: newResponses,
         updated_at: new Date().toISOString(),
       };
@@ -232,14 +242,17 @@ export function useFlowSession({ templateSlug, sessionId }: UseFlowSessionProps)
       if (error) throw error;
 
       saveFailCountRef.current = 0;
-      setSession(prev => prev ? { ...prev, ...updateData } : prev);
-    } catch (err: any) {
+      const savedSession = { ...currentSession, ...updateData } as FlowSession;
+      setSession(savedSession);
+      return savedSession;
+    } catch (err: unknown) {
       console.error('Error saving response:', err);
       saveFailCountRef.current += 1;
       // Notify user on first failure and every 3rd failure after that
       if (saveFailCountRef.current === 1 || saveFailCountRef.current % 3 === 0) {
         toast.error('Your response may not have saved. Check your connection and try again.');
       }
+      return null;
     } finally {
       setSaving(false);
     }
