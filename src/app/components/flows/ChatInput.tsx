@@ -17,6 +17,28 @@ interface ChatInputProps {
   isLast: boolean;
 }
 
+interface SpeechRecognitionResultLike {
+  isFinal: boolean;
+  [index: number]: { transcript: string };
+}
+
+interface SpeechRecognitionEventLike {
+  resultIndex: number;
+  results: ArrayLike<SpeechRecognitionResultLike>;
+}
+
+interface SpeechRecognitionLike {
+  continuous: boolean;
+  interimResults: boolean;
+  onresult: ((event: SpeechRecognitionEventLike) => void) | null;
+  onerror: (() => void) | null;
+  onend: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+}
+
+type SpeechRecognitionConstructor = new () => SpeechRecognitionLike;
+
 export function ChatInput({
   question,
   value,
@@ -28,7 +50,7 @@ export function ChatInput({
   const [isRecording, setIsRecording] = useState(false);
   const [richEditorOpen, setRichEditorOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey && question.type !== 'textarea') {
@@ -58,7 +80,12 @@ export function ChatInput({
     } else {
       setIsRecording(true);
 
-      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      const speechWindow = window as typeof window & {
+        SpeechRecognition?: SpeechRecognitionConstructor;
+        webkitSpeechRecognition?: SpeechRecognitionConstructor;
+      };
+      const SpeechRecognition = speechWindow.SpeechRecognition || speechWindow.webkitSpeechRecognition;
+      if (!SpeechRecognition) return;
       const recognition = new SpeechRecognition();
       recognitionRef.current = recognition;
 
@@ -67,7 +94,7 @@ export function ChatInput({
 
       let finalTranscript = value;
 
-      recognition.onresult = (event: any) => {
+      recognition.onresult = (event: SpeechRecognitionEventLike) => {
         let interimTranscript = '';
         for (let i = event.resultIndex; i < event.results.length; i++) {
           if (event.results[i].isFinal) {
@@ -125,7 +152,7 @@ export function ChatInput({
   // Select question - show option chips
   if (normalizedType === 'select') {
     // Normalize options - handle string[], object[], or undefined
-    const rawOptions = question.options;
+    const rawOptions: unknown = question.options;
     let options: string[] = [];
 
     if (Array.isArray(rawOptions)) {
@@ -134,7 +161,9 @@ export function ChatInput({
           if (typeof opt === 'string') return opt.trim();
           if (opt && typeof opt === 'object') {
             // Handle legacy object format
-            return (opt as any).option_text || (opt as any).label || (opt as any).value || String(opt);
+            const record = opt as Record<string, unknown>;
+            const label = record.option_text ?? record.label ?? record.value;
+            return typeof label === 'string' ? label.trim() : String(opt);
           }
           return '';
         })
@@ -181,6 +210,18 @@ export function ChatInput({
               {option}
             </Button>
           ))}
+          {!question.required && (
+            <Button
+              type="button"
+              variant="ghost"
+              size="lg"
+              onClick={() => onSubmit('pass')}
+              disabled={disabled}
+              className="rounded-full px-6 py-3 text-base font-medium text-muted-foreground"
+            >
+              Skip
+            </Button>
+          )}
         </div>
         {disabled && (
           <p className="text-xs text-muted-foreground text-center">Please wait...</p>
@@ -254,6 +295,21 @@ export function ChatInput({
           <Send className="h-5 w-5" />
         </Button>
       </div>
+
+      {!question.required && (
+        <div className="mt-2 flex justify-end">
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() => onSubmit('pass')}
+            disabled={disabled}
+            className="text-muted-foreground"
+          >
+            Skip this question
+          </Button>
+        </div>
+      )}
 
       {question.type === 'textarea' && (
         <RichTextEditorDialog

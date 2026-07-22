@@ -288,7 +288,7 @@ serve(async (req) => {
       ? await supabase
         .from("flow_profiles")
         .select(
-          "preferred_name,life_roles,core_values,current_goals,current_challenges,peak_state,growth_edge,overwhelm_response,accountability_style,feedback_preference,spiritual_beliefs,background_notes",
+          "preferred_name,life_roles,life_roles_context,core_values,core_values_context,current_goals,current_challenges,peak_state,growth_edge,overwhelm_response,accountability_style,feedback_preference,spiritual_beliefs,background_notes",
         )
         .eq("user_id", userId)
         .maybeSingle()

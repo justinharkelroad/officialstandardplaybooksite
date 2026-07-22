@@ -485,6 +485,7 @@ export type Database = {
           coach_memory_announced_at: string | null
           coach_memory_paused: boolean
           core_values: string[] | null
+          core_values_context: string | null
           created_at: string | null
           current_challenges: string | null
           current_goals: string | null
@@ -497,6 +498,7 @@ export type Database = {
           guided_interview_version: number | null
           id: string
           life_roles: string[] | null
+          life_roles_context: string | null
           overwhelm_response: string | null
           peak_state: string | null
           preferred_name: string | null
@@ -510,6 +512,7 @@ export type Database = {
           coach_memory_announced_at?: string | null
           coach_memory_paused?: boolean
           core_values?: string[] | null
+          core_values_context?: string | null
           created_at?: string | null
           current_challenges?: string | null
           current_goals?: string | null
@@ -522,6 +525,7 @@ export type Database = {
           guided_interview_version?: number | null
           id?: string
           life_roles?: string[] | null
+          life_roles_context?: string | null
           overwhelm_response?: string | null
           peak_state?: string | null
           preferred_name?: string | null
@@ -535,6 +539,7 @@ export type Database = {
           coach_memory_announced_at?: string | null
           coach_memory_paused?: boolean
           core_values?: string[] | null
+          core_values_context?: string | null
           created_at?: string | null
           current_challenges?: string | null
           current_goals?: string | null
@@ -547,6 +552,7 @@ export type Database = {
           guided_interview_version?: number | null
           id?: string
           life_roles?: string[] | null
+          life_roles_context?: string | null
           overwhelm_response?: string | null
           peak_state?: string | null
           preferred_name?: string | null
@@ -1532,6 +1538,7 @@ export type Database = {
           coach_memory_announced_at: string | null
           coach_memory_paused: boolean
           core_values: string[] | null
+          core_values_context: string | null
           created_at: string | null
           current_challenges: string | null
           current_goals: string | null
@@ -1544,6 +1551,7 @@ export type Database = {
           guided_interview_version: number | null
           id: string
           life_roles: string[] | null
+          life_roles_context: string | null
           overwhelm_response: string | null
           peak_state: string | null
           preferred_name: string | null

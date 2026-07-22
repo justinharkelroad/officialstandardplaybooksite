@@ -21,6 +21,7 @@ import { interpolateFlowPrompt, interpolateFlowQuestionPrompt } from '@/app/lib/
 import { buildFlowVoicePrompt, buildQuestionMap } from '@/app/lib/flowVoicePrompt';
 import { FlowQuestion } from '@/app/types/flows';
 import { isProfileFlowSlug } from '@/app/lib/flowProfileInterview';
+import { withReprofileContext } from '@/app/lib/flowProfilePromptContext';
 
 const REACT_CLIENT_TOOL_EXECUTOR = 'react_client_tools';
 const VOICE_TRANSCRIPT_AUTOSAVE_DELAY_MS = 4000;
@@ -69,6 +70,7 @@ interface UseFlowAgentSessionResult {
   flowSession: StartFlowSessionResponse | null;
   completedAnswers: Record<string, string> | null;
   answers: Record<string, string>;
+  activeInputQuestion: FlowQuestion | null;
   awaitingAgent: boolean;
   lastUserTranscript: string | null;
   lastUserTranscriptAt: number | null;
@@ -119,7 +121,12 @@ function interpolateSessionPrompt(
   prompt: string,
   answers: Record<string, string>,
 ) {
-  return interpolateFlowPrompt(prompt, getSessionQuestions(session), answers);
+  const questionId = getSessionQuestions(session).find((question) => question.prompt === prompt)?.id;
+  return withReprofileContext(
+    session,
+    questionId,
+    interpolateFlowPrompt(prompt, getSessionQuestions(session), answers),
+  );
 }
 
 function interpolateSessionQuestion(
@@ -127,9 +134,12 @@ function interpolateSessionQuestion(
   question: FlowQuestion | null | undefined,
   answers: Record<string, string>,
 ) {
-  return question
-    ? interpolateFlowQuestionPrompt(question, getSessionQuestions(session), answers)
-    : question;
+  if (!question) return question;
+  const interpolated = interpolateFlowQuestionPrompt(question, getSessionQuestions(session), answers);
+  return {
+    ...interpolated,
+    prompt: withReprofileContext(session, question.id, interpolated.prompt),
+  };
 }
 
 function interpolateFlowAgentResultQuestions<T extends {
@@ -374,6 +384,7 @@ export function useFlowAgentSession({
   const [awaitingAgent, setAwaitingAgent] = useState(false);
   const [completedAnswers, setCompletedAnswers] = useState<Record<string, string> | null>(null);
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [pendingCoachProbeActive, setPendingCoachProbeActive] = useState(false);
   const [lastUserTranscript, setLastUserTranscript] = useState<string | null>(null);
   const [lastUserTranscriptAt, setLastUserTranscriptAt] = useState<number | null>(null);
   const connectionStartedRef = useRef(false);
@@ -429,6 +440,7 @@ export function useFlowAgentSession({
         answers: state.answers,
         flowComplete: state.current_question === null,
       };
+      setPendingCoachProbeActive(true);
       const content = [state.coach_probe.reflection, state.coach_probe.probe].filter(Boolean).join('\n\n');
       if (modeRef.current === 'text') {
         setMessages((current) => isDuplicateMessage(current, 'assistant', content)
@@ -443,6 +455,7 @@ export function useFlowAgentSession({
       }
     } else if (state.coach_probe === null) {
       pendingCoachProbeRef.current = null;
+      setPendingCoachProbeActive(false);
     }
   }, []);
 
@@ -1535,6 +1548,7 @@ export function useFlowAgentSession({
             const resolved = await answerFlowCoachProbe(currentSession, pendingProbe.question_id, trimmed);
             if (!resolved.probe_resolved) throw new Error('Flowing could not save that follow-up yet. Please retry.');
             pendingCoachProbeRef.current = null;
+            setPendingCoachProbeActive(false);
             rememberFlowProgress(
               currentSession,
               pendingProbe.nextQuestion,
@@ -1641,6 +1655,7 @@ export function useFlowAgentSession({
               answers: result.answers_so_far,
               flowComplete: result.is_complete,
             };
+            setPendingCoachProbeActive(true);
           }
           rememberFlowProgress(
             currentSession,
@@ -1808,6 +1823,14 @@ export function useFlowAgentSession({
     return 'listening';
   }, [awaitingAgent, conversation.isSpeaking, status]);
 
+  const activeInputQuestion = useMemo(() => {
+    if (!flowSession || pendingCoachProbeActive || status === 'completed') return null;
+    const visibleQuestions = getSessionQuestions(flowSession).filter((question) =>
+      !question.show_if || answers[question.show_if.question_id] === question.show_if.equals
+    );
+    return visibleQuestions.find((question) => !answers[question.id]?.trim()) ?? null;
+  }, [answers, flowSession, pendingCoachProbeActive, status]);
+
   return {
     status,
     voiceState,
@@ -1815,6 +1838,7 @@ export function useFlowAgentSession({
     flowSession,
     completedAnswers,
     answers,
+    activeInputQuestion,
     awaitingAgent,
     lastUserTranscript,
     lastUserTranscriptAt,

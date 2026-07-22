@@ -25,7 +25,9 @@ export const FEEDBACK_PREFERENCES = [
 export type ProfileFormData = {
   preferred_name: string;
   life_roles: string[];
+  life_roles_context: string;
   core_values: string[];
+  core_values_context: string;
   current_goals: string;
   current_challenges: string;
   spiritual_beliefs: string;
@@ -38,7 +40,7 @@ export type ProfileFormData = {
 };
 
 export const EMPTY_FORM_DATA: ProfileFormData = {
-  preferred_name: '', life_roles: [], core_values: [], current_goals: '',
+  preferred_name: '', life_roles: [], life_roles_context: '', core_values: [], core_values_context: '', current_goals: '',
   current_challenges: '', spiritual_beliefs: '', background_notes: '',
   accountability_style: '', feedback_preference: '', peak_state: '',
   growth_edge: '', overwhelm_response: '',
@@ -63,13 +65,16 @@ function cleanText(value: unknown): string {
 }
 
 function normalizedShortAnswer(value: unknown): string {
-  return cleanText(value).toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+  return cleanText(value).toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
 function isNoChangeAnswer(value: unknown): boolean {
-  return /^(yes|yep|yeah|same|same as before|still the same|still fits|that still fits|no change|no changes|unchanged|nothing changed|keep it|keep that|keep it the same|still calling me the same name)$/.test(
-    normalizedShortAnswer(value),
-  );
+  const normalized = normalizedShortAnswer(value);
+  if (!normalized || /\b(?:not|isnt|arent)\s+the\s+same\b/.test(normalized)) return false;
+  if (/^(yes|yep|yeah|same|same as before|still the same|still fits|that still fits|no change|no changes|unchanged|nothing changed|keep it|keep that|keep it the same|keep my current setting|still calling me the same name)$/.test(normalized)) return true;
+  if (/^(?:no\s+)?(?:still\s+)?(?:the\s+)?same(?:\s+as\s+before)?(?:\s+(?:roles?|values?|goal|challenge|answer|thing|ones?))?$/.test(normalized)) return true;
+  if (/^(?:nothing|not much|none of (?:it|that|them))\s+(?:has|have)?\s*changed(?:\s+.+)?$/.test(normalized)) return true;
+  return /^(?:it|that|they|those|these|my .+)\s+(?:hasnt|havent|has not|have not|didnt|did not)\s+changed(?:\s+.+)?$/.test(normalized);
 }
 
 function isSkipAnswer(value: unknown): boolean {
@@ -89,6 +94,14 @@ function valuesMentionedInAnswer(answer: unknown, allowed: string[]): string[] {
     const escaped = value.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     return new RegExp(`(^|[^a-z])${escaped}([^a-z]|$)`).test(normalized);
   });
+}
+
+function valuesExplicitlyRemoved(answer: unknown, allowed: string[]): Set<string> {
+  const normalized = cleanText(answer).toLowerCase();
+  return new Set(allowed.filter(value => {
+    const escaped = value.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return new RegExp(`(?:no longer|not|stopped being|let go of|dropped|removed)\\s+(?:an?\\s+)?${escaped}(?:\\b|$)|${escaped}.{0,24}(?:no longer|not anymore|fell off|dropped off)`, 'i').test(normalized);
+  }));
 }
 
 function codeFromSelection(
@@ -133,6 +146,20 @@ export function toProfileFormData(
   const valuesUnchanged = preserveExisting
     && (isNoChangeAnswer(source.core_values) || isNoChangeAnswer(responses.core_values));
 
+  const context = (field: 'life_roles_context' | 'core_values_context', responseField: 'life_roles' | 'core_values') => {
+    const draftValue = cleanText(source[field]);
+    const responseValue = cleanText(responses[responseField]);
+    const fallbackValue = cleanText(fallback?.[field]);
+    if (preserveExisting && (isNoChangeAnswer(draftValue) || isNoChangeAnswer(responseValue) || isSkipAnswer(responseValue))) {
+      return fallbackValue;
+    }
+    return draftValue || responseValue || (preserveExisting ? fallbackValue : '');
+  };
+  const mergedResponseValues = (response: unknown, fallbackValues: string[], mentionedValues: string[], allowed: string[]) => {
+    const removed = valuesExplicitlyRemoved(response, allowed);
+    return [...new Set([...fallbackValues, ...mentionedValues])].filter(value => !removed.has(value));
+  };
+
   return {
     preferred_name: text('preferred_name'),
     life_roles: rolesUnchanged
@@ -140,15 +167,21 @@ export function toProfileFormData(
       : Array.isArray(source.life_roles)
         ? rolesFromDraft
         : cleanText(responses.life_roles)
-          ? isSkipAnswer(responses.life_roles) ? (preserveExisting ? fallbackRoles : []) : rolesFromResponse
+          ? isSkipAnswer(responses.life_roles) ? (preserveExisting ? fallbackRoles : []) : preserveExisting
+            ? mergedResponseValues(responses.life_roles, fallbackRoles, rolesFromResponse, LIFE_ROLES)
+            : rolesFromResponse
           : preserveExisting ? fallbackRoles : [],
+    life_roles_context: context('life_roles_context', 'life_roles'),
     core_values: valuesUnchanged
       ? fallbackValues
       : Array.isArray(source.core_values)
         ? valuesFromDraft
         : cleanText(responses.core_values)
-          ? isSkipAnswer(responses.core_values) ? (preserveExisting ? fallbackValues : []) : valuesFromResponse
+          ? isSkipAnswer(responses.core_values) ? (preserveExisting ? fallbackValues : []) : preserveExisting
+            ? mergedResponseValues(responses.core_values, fallbackValues, valuesFromResponse, CORE_VALUES)
+            : valuesFromResponse
           : preserveExisting ? fallbackValues : [],
+    core_values_context: context('core_values_context', 'core_values'),
     current_goals: text('current_goals'),
     current_challenges: text('current_challenges'),
     spiritual_beliefs: text('spiritual_beliefs'),

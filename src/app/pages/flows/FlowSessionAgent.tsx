@@ -758,6 +758,7 @@ export function FlowSessionAgentBase({
     flowSession,
     completedAnswers,
     answers,
+    activeInputQuestion,
     awaitingAgent,
     lastUserTranscript,
     lastUserTranscriptAt,
@@ -1462,7 +1463,7 @@ export function FlowSessionAgentBase({
               )
             ) : (
               <ChatInput
-                question={TEXT_INPUT_QUESTION}
+                question={activeInputQuestion ?? TEXT_INPUT_QUESTION}
                 value={inputValue}
                 onChange={setInputValue}
                 onSubmit={handleSubmitText}

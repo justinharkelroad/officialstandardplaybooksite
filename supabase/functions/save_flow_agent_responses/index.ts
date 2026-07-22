@@ -101,7 +101,8 @@ serve(async (req) => {
         );
       }
 
-      if (question.type === "select" && answer) {
+      const skippedOptionalQuestion = !question.required && /^(pass|skip|prefer not to answer)$/i.test(answer);
+      if (question.type === "select" && answer && !skippedOptionalQuestion) {
         const normalizedAnswer = normalizeSelectAnswer(question, answer);
         if (!normalizedAnswer) {
           return errorResponse(

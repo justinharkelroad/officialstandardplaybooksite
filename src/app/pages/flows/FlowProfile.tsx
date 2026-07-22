@@ -328,6 +328,12 @@ export default function FlowProfile() {
                   </Button>
                 ))}
               </div>
+              <Textarea
+                value={formData.life_roles_context}
+                onChange={e => setFormData(prev => ({ ...prev, life_roles_context: e.target.value }))}
+                placeholder="Which role carries the most weight right now? Which one is getting the least of you? Include any role not listed above."
+                className="mt-3 min-h-[88px]"
+              />
             </div>
 
             {/* Core Values */}
@@ -347,6 +353,12 @@ export default function FlowProfile() {
                   </Button>
                 ))}
               </div>
+              <Textarea
+                value={formData.core_values_context}
+                onChange={e => setFormData(prev => ({ ...prev, core_values_context: e.target.value }))}
+                placeholder="When these values collide in real life, which one tends to win? Include any value not listed above."
+                className="mt-3 min-h-[88px]"
+              />
             </div>
           </CardContent>
         </Card>

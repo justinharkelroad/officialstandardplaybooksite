@@ -12,7 +12,7 @@ import {
 } from './profileDraft.ts';
 
 const PROFILE_FIELDS = [
-  'preferred_name', 'life_roles', 'core_values', 'current_goals',
+  'preferred_name', 'life_roles', 'life_roles_context', 'core_values', 'core_values_context', 'current_goals',
   'current_challenges', 'peak_state', 'growth_edge', 'overwhelm_response',
   'accountability_style', 'feedback_preference', 'spiritual_beliefs',
   'background_notes',
@@ -77,7 +77,7 @@ serve(async req => {
     if (data.status !== 'completed') return json(409, { error: 'The profile interview is not complete.' });
 
     const metadata = isRecord(data.agent_metadata) ? data.agent_metadata : {};
-    if (isRecord(metadata.profile_draft) && Number(metadata.profile_draft_version) === 3) {
+    if (isRecord(metadata.profile_draft) && Number(metadata.profile_draft_version) === 4) {
       return json(200, { success: true, profile_draft: metadata.profile_draft, cached: true });
     }
 
@@ -103,7 +103,7 @@ serve(async req => {
           ...metadata,
           profile_interview_version: 2,
           profile_draft: draft,
-          profile_draft_version: 3,
+          profile_draft_version: 4,
           profile_draft_at: extractedAt,
         },
       })
@@ -131,7 +131,9 @@ async function extractWithOpenAi(
   const properties = {
     preferred_name: { type: ['string', 'null'] },
     life_roles: { type: 'array', items: { type: 'string', enum: FLOW_PROFILE_ROLES } },
+    life_roles_context: { type: ['string', 'null'] },
     core_values: { type: 'array', items: { type: 'string', enum: FLOW_PROFILE_VALUES } },
+    core_values_context: { type: ['string', 'null'] },
     current_goals: { type: ['string', 'null'] },
     current_challenges: { type: ['string', 'null'] },
     peak_state: { type: ['string', 'null'] },

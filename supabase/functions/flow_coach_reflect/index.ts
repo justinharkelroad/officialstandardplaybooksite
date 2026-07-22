@@ -51,7 +51,9 @@ const CRISIS_SIGNAL = /\b(suicide|kill myself|end my life|hurt myself|self[- ]?h
 const PROFILE_PROMPT_FIELDS = new Set([
   "preferred_name",
   "life_roles",
+  "life_roles_context",
   "core_values",
+  "core_values_context",
   "current_goals",
   "current_challenges",
   "spiritual_beliefs",

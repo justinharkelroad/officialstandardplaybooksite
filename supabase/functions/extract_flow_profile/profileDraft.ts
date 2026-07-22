@@ -23,7 +23,9 @@ export const FEEDBACK_LABEL_TO_CODE = {
 export type FlowProfileDraft = {
   preferred_name: string | null;
   life_roles: string[];
+  life_roles_context: string | null;
   core_values: string[];
+  core_values_context: string | null;
   current_goals: string | null;
   current_challenges: string | null;
   peak_state: string | null;
@@ -94,13 +96,16 @@ export function narrativeCandidatePreservesDepth(
 
 function normalizedShortAnswer(value: unknown): string {
   const cleaned = cleanText(value, 200)?.toLowerCase() ?? '';
-  return cleaned.replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+  return cleaned.replace(/[’']/g, '').replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
 function isNoChangeAnswer(value: unknown): boolean {
-  return /^(yes|yep|yeah|same|same as before|still the same|still fits|that still fits|no change|no changes|unchanged|nothing changed|keep it|keep that|keep it the same|still calling me the same name)$/.test(
-    normalizedShortAnswer(value),
-  );
+  const normalized = normalizedShortAnswer(value);
+  if (!normalized || /\b(?:not|isnt|arent)\s+the\s+same\b/.test(normalized)) return false;
+  if (/^(yes|yep|yeah|same|same as before|still the same|still fits|that still fits|no change|no changes|unchanged|nothing changed|keep it|keep that|keep it the same|keep my current setting|still calling me the same name)$/.test(normalized)) return true;
+  if (/^(?:no\s+)?(?:still\s+)?(?:the\s+)?same(?:\s+as\s+before)?(?:\s+(?:roles?|values?|goal|challenge|answer|thing|ones?))?$/.test(normalized)) return true;
+  if (/^(?:nothing|not much|none of (?:it|that|them))\s+(?:has|have)?\s*changed(?:\s+.+)?$/.test(normalized)) return true;
+  return /^(?:it|that|they|those|these|my .+)\s+(?:hasnt|havent|has not|have not|didnt|did not)\s+changed(?:\s+.+)?$/.test(normalized);
 }
 
 function isSkipAnswer(value: unknown): boolean {
@@ -119,6 +124,14 @@ function valuesMentionedInAnswer(value: unknown, allowed: readonly string[]): st
     const escaped = item.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     return new RegExp(`(^|[^a-z])${escaped}([^a-z]|$)`).test(normalized);
   });
+}
+
+function valuesExplicitlyRemoved(value: unknown, allowed: readonly string[]): Set<string> {
+  const normalized = cleanText(value)?.toLowerCase() ?? '';
+  return new Set(allowed.filter(item => {
+    const escaped = item.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return new RegExp(`(?:no longer|not|stopped being|let go of|dropped|removed)\\s+(?:an?\\s+)?${escaped}(?:\\b|$)|${escaped}.{0,24}(?:no longer|not anymore|fell off|dropped off)`, 'i').test(normalized);
+  }));
 }
 
 function validCode(value: unknown, allowed: Set<string>): string | null {
@@ -159,11 +172,19 @@ export function normalizeFlowProfileDraft(
     const response = cleanText(responses[field]);
     const existingValues = preserveExisting ? validUniqueStrings(existing?.[field], allowedSet) : [];
     if (!response || isNoChangeAnswer(response) || isSkipAnswer(response)) return existingValues;
-    if (Array.isArray(raw[field])) {
-      const validated = validUniqueStrings(raw[field], allowedSet);
-      if (validated.length > 0 || raw[field].length === 0) return validated;
-    }
-    return valuesMentionedInAnswer(response, allowedValues);
+    const candidateValues = Array.isArray(raw[field]) ? validUniqueStrings(raw[field], allowedSet) : [];
+    const responseValues = valuesMentionedInAnswer(response, allowedValues);
+    if (!preserveExisting) return candidateValues.length > 0 ? candidateValues : responseValues;
+
+    const removedValues = valuesExplicitlyRemoved(response, allowedValues);
+    const explicitlyRestatedList = field === 'life_roles'
+      ? /\b(?:my|the|current)\s+roles?\s+(?:are|include|now)\b/i.test(response)
+      : /\b(?:my|the|current|top five)\s+values?\s+(?:are|include|now)\b/i.test(response);
+    const mergedValues = explicitlyRestatedList && (candidateValues.length > 0 || responseValues.length > 0)
+      ? (candidateValues.length > 0 ? candidateValues : responseValues)
+      : [...new Set([...existingValues, ...candidateValues, ...responseValues])];
+
+    return mergedValues.filter(item => !removedValues.has(item));
   };
 
   const textValue = (field: NarrativeField | 'preferred_name', maxLength = 6000) => {
@@ -181,10 +202,18 @@ export function normalizeFlowProfileDraft(
 
   const accountabilityResponse = cleanText(responses.accountability_style);
   const feedbackResponse = cleanText(responses.feedback_preference);
+  const narrativeContext = (responseField: 'life_roles' | 'core_values', contextField: 'life_roles_context' | 'core_values_context') => {
+    const responseValue = cleanText(responses[responseField]);
+    const existingValue = preserveExisting ? cleanText(existing?.[contextField]) : null;
+    if (!responseValue || isNoChangeAnswer(responseValue) || isSkipAnswer(responseValue)) return existingValue;
+    return responseValue;
+  };
   const draft: FlowProfileDraft = {
     preferred_name: textValue('preferred_name', 120),
     life_roles: listValue('life_roles', FLOW_PROFILE_ROLES, ROLE_SET),
+    life_roles_context: narrativeContext('life_roles', 'life_roles_context'),
     core_values: listValue('core_values', FLOW_PROFILE_VALUES, VALUE_SET),
+    core_values_context: narrativeContext('core_values', 'core_values_context'),
     current_goals: null,
     current_challenges: null,
     peak_state: null,

@@ -4,7 +4,9 @@ export interface FlowProfile {
   full_name: string | null;
   preferred_name: string | null;
   life_roles: string[];
+  life_roles_context?: string | null;
   core_values: string[];
+  core_values_context?: string | null;
   current_goals: string | null;
   current_challenges: string | null;
   spiritual_beliefs: string | null;

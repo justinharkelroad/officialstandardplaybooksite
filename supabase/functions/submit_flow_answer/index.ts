@@ -105,7 +105,8 @@ serve(async (req) => {
       );
     }
 
-    if (currentQuestion.type === "select" && answer) {
+    const skippedOptionalQuestion = !currentQuestion.required && /^(pass|skip|prefer not to answer)$/i.test(answer);
+    if (currentQuestion.type === "select" && answer && !skippedOptionalQuestion) {
       const normalizedAnswer = normalizeSelectAnswer(currentQuestion, answer);
       if (!normalizedAnswer) {
         const retryQuestion = serializeQuestion(currentQuestion);

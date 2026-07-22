@@ -51,7 +51,9 @@ Deno.test('a re-profile no-change answer preserves existing context', () => {
   const existing = {
     preferred_name: 'Karina',
     life_roles: ['Spouse', 'Parent'],
+    life_roles_context: 'Parent carries the most weight; Spouse gets the least of me.',
     core_values: ['Faith', 'Family'],
+    core_values_context: 'Faith wins when the two collide.',
     current_challenges: 'I overcommit, then withdraw when everything collides.',
     accountability_style: 'gentle_nudge',
     feedback_preference: 'questions_to_discover',
@@ -61,9 +63,9 @@ Deno.test('a re-profile no-change answer preserves existing context', () => {
     {},
     {
       preferred_name: 'same as before',
-      life_roles: 'no change',
-      core_values: 'still the same',
-      current_challenges: 'unchanged',
+      life_roles: 'No, same roles.',
+      core_values: 'Nothing has changed with my values.',
+      current_challenges: 'Nothing has changed with my challenge.',
       accountability_style: 'keep it',
       feedback_preference: 'still fits',
     },
@@ -73,8 +75,40 @@ Deno.test('a re-profile no-change answer preserves existing context', () => {
 
   assert(draft.preferred_name === existing.preferred_name, 'name should remain');
   assert(draft.life_roles.join('|') === existing.life_roles.join('|'), 'roles should remain');
+  assert(draft.life_roles_context === existing.life_roles_context, 'role context should remain');
   assert(draft.core_values.join('|') === existing.core_values.join('|'), 'values should remain');
+  assert(draft.core_values_context === existing.core_values_context, 'value context should remain');
   assert(draft.current_challenges === existing.current_challenges, 'challenge should remain');
   assert(draft.accountability_style === existing.accountability_style, 'accountability should remain');
   assert(draft.feedback_preference === existing.feedback_preference, 'feedback should remain');
+});
+
+Deno.test('a partial re-profile answer merges additions and preserves the narrative', () => {
+  const existing = {
+    life_roles: ['Spouse', 'Parent', 'Business Owner'],
+    life_roles_context: 'Business Owner carried the most weight.',
+    core_values: ['Faith', 'Family', 'Growth'],
+    core_values_context: 'Family usually won.',
+  };
+
+  const draft = normalizeFlowProfileDraft(
+    { life_roles: ['Coach'], core_values: ['Health'] },
+    {
+      life_roles: 'Coach is carrying more weight now, and I am no longer an Employee.',
+      core_values: 'Health has moved up this season.',
+    },
+    existing,
+    { preserveExisting: true },
+  );
+
+  assert(
+    draft.life_roles.join('|') === 'Spouse|Parent|Business Owner|Coach',
+    'a partial role update should merge instead of replacing the profile',
+  );
+  assert(
+    draft.core_values.join('|') === 'Faith|Family|Growth|Health',
+    'a partial value update should merge instead of replacing the profile',
+  );
+  assert(draft.life_roles_context?.includes('Coach is carrying more weight'), 'role narrative should be retained');
+  assert(draft.core_values_context?.includes('Health has moved up'), 'value narrative should be retained');
 });
