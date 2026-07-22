@@ -206,6 +206,9 @@
 
 .ascension-hero__media {
   position: relative;
+  width: 100%;
+  max-width: min(620px, calc(100dvh - 230px));
+  justify-self: end;
   padding: 12px 12px 12px 0;
 }
 
@@ -223,7 +226,7 @@
 
 .ascension-hero__video {
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   background: #161618;
   box-shadow: 0 28px 76px rgba(0, 0, 0, 0.42);
@@ -724,6 +727,11 @@
 
   .ascension-hero__grid {
     gap: 46px;
+  }
+
+  .ascension-hero__media {
+    max-width: 620px;
+    justify-self: start;
   }
 
   .ascension-hero h1 {
