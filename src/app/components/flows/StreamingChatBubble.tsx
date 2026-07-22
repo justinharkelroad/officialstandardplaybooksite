@@ -11,6 +11,7 @@ interface StreamingChatBubbleProps {
   avatarUrl?: string | null;
   avatarFallback?: string;
   onContentChange?: () => void;
+  onStreamingComplete?: () => void;
 }
 
 function renderInlineEmphasis(text: string): ReactNode[] {
@@ -64,6 +65,7 @@ export function StreamingChatBubble({
   avatarUrl,
   avatarFallback,
   onContentChange,
+  onStreamingComplete,
 }: StreamingChatBubbleProps) {
   const [visibleCharacters, setVisibleCharacters] = useState(streaming ? 0 : text.length);
 
@@ -90,6 +92,12 @@ export function StreamingChatBubble({
   useEffect(() => {
     onContentChange?.();
   }, [onContentChange, visibleCharacters]);
+
+  useEffect(() => {
+    if (streaming && visibleCharacters >= text.length) {
+      onStreamingComplete?.();
+    }
+  }, [onStreamingComplete, streaming, text.length, visibleCharacters]);
 
   const shouldRenderHtml = !streaming && isHtmlContent(text);
   const visibleText = shouldRenderHtml ? '' : text.slice(0, visibleCharacters);

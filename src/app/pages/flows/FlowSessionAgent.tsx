@@ -41,6 +41,7 @@ import { StreamingChatBubble } from '@/app/components/flows/StreamingChatBubble'
 import { TypingIndicator } from '@/app/components/flows/TypingIndicator';
 import { useFocusItems } from '@/app/hooks/useFocusItems';
 import {
+  FlowAgentMessage,
   FlowAgentMode,
   FlowAgentStatus,
   FlowAgentVoiceState,
@@ -62,6 +63,10 @@ const TEXT_INPUT_QUESTION: FlowQuestion = {
   required: true,
   placeholder: 'Type your response...',
 };
+
+function getStreamingMessageKey(message: Pick<FlowAgentMessage, 'id' | 'timestamp'>) {
+  return `${message.id}:${message.timestamp}`;
+}
 
 const MOBILE_VISUAL_VIEWPORT_QUERY = '(max-width: 767px), (pointer: coarse)';
 
@@ -745,7 +750,12 @@ export function FlowSessionAgentBase({
   const [postFlowStage, setPostFlowStage] = useState<PostFlowStage>('idle');
   const [refiningAction, setRefiningAction] = useState(false);
   const [addingToPlaybook, setAddingToPlaybook] = useState(false);
+  const [completedStreamingMessageIds, setCompletedStreamingMessageIds] = useState<Set<string>>(
+    () => new Set(),
+  );
+  const transcriptRef = useRef<HTMLElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const isTranscriptNearBottomRef = useRef(true);
   const initialPostFlowActionRef = useRef<string | null>(null);
   const addingToPlaybookRef = useRef(false);
   const profileCompletionRedirectedRef = useRef(false);
@@ -821,11 +831,39 @@ export function FlowSessionAgentBase({
 
   const scrollTranscriptToBottom = useCallback((behavior: ScrollBehavior = 'smooth') => {
     if (mode === 'voice' && !isCompleted) return;
+    if (!isTranscriptNearBottomRef.current) return;
 
     window.requestAnimationFrame(() => {
-      bottomRef.current?.scrollIntoView({ behavior, block: 'end' });
+      if (!isTranscriptNearBottomRef.current) return;
+      const transcript = transcriptRef.current;
+      if (!transcript) return;
+      transcript.scrollTo({ top: transcript.scrollHeight, behavior });
     });
   }, [isCompleted, mode]);
+
+  const handleTranscriptScroll = useCallback(() => {
+    const transcript = transcriptRef.current;
+    if (!transcript) return;
+
+    const distanceFromBottom = transcript.scrollHeight - transcript.scrollTop - transcript.clientHeight;
+    isTranscriptNearBottomRef.current = distanceFromBottom < 100;
+  }, []);
+
+  const markStreamingMessageComplete = useCallback((messageId: string) => {
+    setCompletedStreamingMessageIds((current) => {
+      if (current.has(messageId)) return current;
+      const next = new Set(current);
+      next.add(messageId);
+      return next;
+    });
+  }, []);
+
+  const assistantResponseAnimating = messages.some(
+    (message) => message.role === 'assistant'
+      && Boolean(message.streaming)
+      && !completedStreamingMessageIds.has(getStreamingMessageKey(message)),
+  );
+  const inputUnavailable = awaitingAgent || assistantResponseAnimating;
 
   useEffect(() => {
     document.title = flowSession?.flow_name
@@ -1196,7 +1234,11 @@ export function FlowSessionAgentBase({
         </div>
       </header>
 
-      <main className="min-h-0 flex-1 overflow-y-auto overscroll-contain scroll-pb-32">
+      <main
+        ref={transcriptRef}
+        onScroll={handleTranscriptScroll}
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain scroll-pb-32"
+      >
         <div className={cn(
           'mx-auto py-6 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]',
           useVoiceRoom || activeBibleScripture ? 'max-w-6xl' : 'max-w-2xl',
@@ -1244,18 +1286,27 @@ export function FlowSessionAgentBase({
                 getOutputByteFrequencyData={getOutputByteFrequencyData}
               />
             ) : (
-              messages.map((message) => (
-                <StreamingChatBubble
-                  key={message.id}
-                  text={message.content}
-                  variant={message.role === 'assistant' ? 'incoming' : 'outgoing'}
-                  streaming={message.streaming}
-                  icon={message.role === 'assistant' ? (flowIcon as unknown as string) : undefined}
-                  avatarUrl={message.role === 'user' ? avatarUrl : undefined}
-                  avatarFallback={message.role === 'user' ? avatarFallback : undefined}
-                  onContentChange={message.streaming ? () => scrollTranscriptToBottom('auto') : undefined}
-                />
-              ))
+              messages.map((message) => {
+                const streamingMessageKey = getStreamingMessageKey(message);
+                const isStreaming = Boolean(message.streaming)
+                  && !completedStreamingMessageIds.has(streamingMessageKey);
+
+                return (
+                  <StreamingChatBubble
+                    key={message.id}
+                    text={message.content}
+                    variant={message.role === 'assistant' ? 'incoming' : 'outgoing'}
+                    streaming={isStreaming}
+                    icon={message.role === 'assistant' ? (flowIcon as unknown as string) : undefined}
+                    avatarUrl={message.role === 'user' ? avatarUrl : undefined}
+                    avatarFallback={message.role === 'user' ? avatarFallback : undefined}
+                    onContentChange={isStreaming ? () => scrollTranscriptToBottom('auto') : undefined}
+                    onStreamingComplete={isStreaming
+                      ? () => markStreamingMessageComplete(streamingMessageKey)
+                      : undefined}
+                  />
+                );
+              })
             )}
 
             {!useVoiceRoom && isBusy && messages.length === 0 && (
@@ -1462,14 +1513,20 @@ export function FlowSessionAgentBase({
                 </div>
               )
             ) : (
-              <ChatInput
-                question={activeInputQuestion ?? TEXT_INPUT_QUESTION}
-                value={inputValue}
-                onChange={setInputValue}
-                onSubmit={handleSubmitText}
-                disabled={status !== 'active' || awaitingAgent}
-                isLast={false}
-              />
+              inputUnavailable ? (
+                <div className="py-3 text-center text-sm text-muted-foreground" aria-live="polite">
+                  {awaitingAgent ? 'Coach is thinking…' : 'Coach is responding…'}
+                </div>
+              ) : (
+                <ChatInput
+                  question={activeInputQuestion ?? TEXT_INPUT_QUESTION}
+                  value={inputValue}
+                  onChange={setInputValue}
+                  onSubmit={handleSubmitText}
+                  disabled={status !== 'active'}
+                  isLast={false}
+                />
+              )
             )}
           </div>
         </footer>
