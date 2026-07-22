@@ -25,6 +25,13 @@ import { withReprofileContext } from '@/app/lib/flowProfilePromptContext';
 
 const REACT_CLIENT_TOOL_EXECUTOR = 'react_client_tools';
 const VOICE_TRANSCRIPT_AUTOSAVE_DELAY_MS = 4000;
+// Voice audio can briefly report an empty output buffer between chunks. Require
+// a real quiet window before replacing the voice room with post-Flow review.
+const VOICE_COMPLETION_QUIET_PERIOD_MS = 2000;
+const VOICE_COMPLETION_MAX_WAIT_MS = 60000;
+
+type VoiceCompletionPhase = 'idle' | 'awaiting_closing' | 'closing';
+
 async function requestFlowCoachReflection(
   session: StartFlowSessionResponse,
   questionId: string,
@@ -387,6 +394,7 @@ export function useFlowAgentSession({
   const [pendingCoachProbeActive, setPendingCoachProbeActive] = useState(false);
   const [lastUserTranscript, setLastUserTranscript] = useState<string | null>(null);
   const [lastUserTranscriptAt, setLastUserTranscriptAt] = useState<number | null>(null);
+  const [voiceCompletionPhase, setVoiceCompletionPhase] = useState<VoiceCompletionPhase>('idle');
   const connectionStartedRef = useRef(false);
   // Auto-start fires once per enable. `begin` changes identity on most renders,
   // and a failed connect leaves connectionStartedRef false, so without this the
@@ -413,6 +421,7 @@ export function useFlowAgentSession({
   const pendingAutoSaveQuestionIdRef = useRef<string | null>(null);
   const pendingAutoSaveAnswerRef = useRef<string | null>(null);
   const pendingCoachProbeRef = useRef<PendingCoachProbeState | null>(null);
+  const pendingVoiceCompletionRef = useRef(false);
 
   useEffect(() => {
     flowSessionRef.current = flowSession;
@@ -489,21 +498,43 @@ export function useFlowAgentSession({
       session.first_question;
   }, []);
 
-  const completeSubmittedFlow = useCallback(async (
+  const applyCompletedFlow = useCallback((
     session: StartFlowSessionResponse,
-    submittedAnswers: Record<string, string>,
+    finalAnswers: Record<string, string>,
+    deferVoiceHandoff: boolean,
   ) => {
-    const completed = await completeFlowAgentSession(session);
-    const finalAnswers = completed.answers ?? submittedAnswers;
-
     rememberFlowProgress(session, null, finalAnswers, true);
     setCompletedAnswers(finalAnswers);
     setAnswers(finalAnswers);
     setAwaitingAgent(false);
+
+    if (deferVoiceHandoff && modeRef.current === 'voice') {
+      // Completing the database record must not complete the UI yet. The voice
+      // agent still needs the tool result in order to speak its closing thought.
+      pendingVoiceCompletionRef.current = true;
+      setVoiceCompletionPhase((current) => (
+        current === 'idle' ? 'awaiting_closing' : current
+      ));
+      return;
+    }
+
+    pendingVoiceCompletionRef.current = false;
+    setVoiceCompletionPhase('idle');
     setStatus('completed');
+  }, [rememberFlowProgress]);
+
+  const completeSubmittedFlow = useCallback(async (
+    session: StartFlowSessionResponse,
+    submittedAnswers: Record<string, string>,
+    deferVoiceHandoff = modeRef.current === 'voice',
+  ) => {
+    const completed = await completeFlowAgentSession(session);
+    const finalAnswers = completed.answers ?? submittedAnswers;
+
+    applyCompletedFlow(session, finalAnswers, deferVoiceHandoff);
 
     return finalAnswers;
-  }, [rememberFlowProgress]);
+  }, [applyCompletedFlow]);
 
   const recoverToolState = useCallback(async (tool: string) => {
     const currentSession = flowSessionRef.current;
@@ -1035,10 +1066,7 @@ export function useFlowAgentSession({
           if (!currentSession) return flowToolError('Flow session is not ready.', currentSession);
 
           const result = await completeFlowAgentSession(currentSession);
-          setCompletedAnswers(result.answers);
-          setAnswers(result.answers);
-          setAwaitingAgent(false);
-          setStatus('completed');
+          applyCompletedFlow(currentSession, result.answers, true);
           const json = stringifyReactToolResult(result, currentSession);
           logFlowAgentToolReturn('complete_flow_session', withReactToolExecutor(result, currentSession), json);
           return json;
@@ -1065,7 +1093,7 @@ export function useFlowAgentSession({
         }
       },
     }),
-    [getToolAnswer, recoverToolState, rememberFlowProgress, rememberFlowState],
+    [applyCompletedFlow, getToolAnswer, recoverToolState, rememberFlowProgress, rememberFlowState],
   );
 
   const conversation = useConversation({
@@ -1100,6 +1128,12 @@ export function useFlowAgentSession({
       if (switchingRef.current) return;
       if (completionEndRef.current) {
         completionEndRef.current = false;
+        setStatus('completed');
+        return;
+      }
+      if (pendingVoiceCompletionRef.current) {
+        pendingVoiceCompletionRef.current = false;
+        setVoiceCompletionPhase('idle');
         setStatus('completed');
         return;
       }
@@ -1392,7 +1426,7 @@ export function useFlowAgentSession({
           if (state) {
             rememberFlowState(state);
             if (state.is_complete) {
-              await completeSubmittedFlow(nextFlowSession, state.answers);
+              await completeSubmittedFlow(nextFlowSession, state.answers, false);
               return;
             }
 
@@ -1460,7 +1494,7 @@ export function useFlowAgentSession({
 
     const state = await getFlowAgentState(currentSession);
     rememberFlowState(state);
-    if (state.is_complete) {
+    if (state.is_complete && !pendingVoiceCompletionRef.current) {
       await completeSubmittedFlow(currentSession, state.answers);
     }
   }, [completeSubmittedFlow, rememberFlowState]);
@@ -1510,6 +1544,42 @@ export function useFlowAgentSession({
 
     return () => window.clearInterval(intervalId);
   }, [flowSession, refreshFlowState, status]);
+
+  useEffect(() => {
+    if (!pendingVoiceCompletionRef.current || voiceCompletionPhase === 'idle') return;
+
+    if (conversation.isSpeaking) {
+      if (voiceCompletionPhase === 'awaiting_closing') {
+        setVoiceCompletionPhase('closing');
+      }
+      return;
+    }
+
+    if (voiceCompletionPhase !== 'closing') return;
+
+    const quietTimer = window.setTimeout(() => {
+      if (!pendingVoiceCompletionRef.current) return;
+      pendingVoiceCompletionRef.current = false;
+      setVoiceCompletionPhase('idle');
+      setStatus('completed');
+    }, VOICE_COMPLETION_QUIET_PERIOD_MS);
+
+    return () => window.clearTimeout(quietTimer);
+  }, [conversation.isSpeaking, voiceCompletionPhase]);
+
+  useEffect(() => {
+    if (!pendingVoiceCompletionRef.current || voiceCompletionPhase === 'idle') return;
+
+    const maxWaitTimer = window.setTimeout(() => {
+      if (!pendingVoiceCompletionRef.current) return;
+      console.warn('[FlowAgent] Voice closing response timed out; completing the saved Flow.');
+      pendingVoiceCompletionRef.current = false;
+      setVoiceCompletionPhase('idle');
+      setStatus('completed');
+    }, VOICE_COMPLETION_MAX_WAIT_MS);
+
+    return () => window.clearTimeout(maxWaitTimer);
+  }, [voiceCompletionPhase]);
 
   useEffect(() => {
     if (status !== 'completed') return;
@@ -1801,6 +1871,8 @@ export function useFlowAgentSession({
   }, [rememberFlowProgress]);
 
   const endSession = useCallback(async () => {
+    pendingVoiceCompletionRef.current = false;
+    setVoiceCompletionPhase('idle');
     explicitEndRef.current = true;
     await conversation.endSession();
     setStatus('ended');
