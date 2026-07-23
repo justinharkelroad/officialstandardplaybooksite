@@ -10,9 +10,8 @@ type StandardProgressMarkProps = {
   className?: string;
 };
 
-const LOGO_TOP = 31;
-const LOGO_HEIGHT = 138;
 const COMPLETE_SCORE = 4;
+const fillOpacityByScore = [0, 0.32, 0.56, 0.78, 1];
 
 const sparkPositions = [
   { x: 28, y: 55, delay: 0.05 },
@@ -42,14 +41,11 @@ export function StandardProgressMark({
   className,
 }: StandardProgressMarkProps) {
   const safePoints = Math.min(Math.max(points, 0), COMPLETE_SCORE);
-  const progress = safePoints / COMPLETE_SCORE;
-  const fillHeight = LOGO_HEIGHT * progress;
-  const fillY = LOGO_TOP + LOGO_HEIGHT - fillHeight;
   const shouldReduceMotion = useReducedMotion();
   const rawId = useId();
   const svgId = rawId.replace(/:/g, "");
-  const maskId = `standard-progress-mask-${svgId}`;
   const outlineFilterId = `standard-progress-outline-${svgId}`;
+  const blueFilterId = `standard-progress-blue-${svgId}`;
   const previous = useRef({ dateKey, points: safePoints });
   const [celebrationRun, setCelebrationRun] = useState(0);
   const [isCelebrating, setIsCelebrating] = useState(false);
@@ -99,16 +95,6 @@ export function StandardProgressMark({
           style={{ transformOrigin: "50% 50%" }}
         >
           <defs>
-            <mask id={maskId} maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
-              <image
-                href={spIconWhite}
-                x="0"
-                y="0"
-                width="200"
-                height="200"
-                preserveAspectRatio="xMidYMid meet"
-              />
-            </mask>
             <filter
               id={outlineFilterId}
               x="-10%"
@@ -132,9 +118,20 @@ export function StandardProgressMark({
               <feFlood floodColor="currentColor" floodOpacity="0.62" result="outlineColor" />
               <feComposite in="outlineColor" in2="outline" operator="in" />
             </filter>
+            <filter
+              id={blueFilterId}
+              x="0"
+              y="0"
+              width="100%"
+              height="100%"
+              colorInterpolationFilters="sRGB"
+            >
+              <feFlood floodColor="#2997FF" result="blue" />
+              <feComposite in="blue" in2="SourceAlpha" operator="in" />
+            </filter>
           </defs>
 
-          <image
+          <motion.image
             href={spIconWhite}
             x="0"
             y="0"
@@ -142,21 +139,22 @@ export function StandardProgressMark({
             height="200"
             preserveAspectRatio="xMidYMid meet"
             filter={`url(#${outlineFilterId})`}
+            initial={false}
+            animate={{ opacity: isComplete ? 0 : 1 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.18 }}
           />
 
-          <motion.rect
+          <motion.image
+            href={spIconWhite}
             x="0"
+            y="0"
             width="200"
-            rx="1"
-            fill="#2997FF"
-            mask={`url(#${maskId})`}
+            height="200"
+            preserveAspectRatio="xMidYMid meet"
+            filter={`url(#${blueFilterId})`}
             initial={false}
-            animate={{ y: fillY, height: fillHeight }}
-            transition={
-              shouldReduceMotion
-                ? { duration: 0 }
-                : { type: "spring", duration: 0.55, bounce: 0 }
-            }
+            animate={{ opacity: fillOpacityByScore[safePoints] }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.18, ease: [0.22, 1, 0.36, 1] }}
           />
 
           <AnimatePresence>
