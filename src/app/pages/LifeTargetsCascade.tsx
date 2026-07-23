@@ -18,6 +18,8 @@ import { formatQuarterDisplay } from "@/app/lib/quarterUtils";
 import { toast } from "sonner";
 import { exportLifeTargetsPDF } from "@/app/utils/exportLifeTargetsPDF";
 import { AnimatedDownload as Download } from "@/app/components/icons/AnimatedDownload";
+import { CadenceMap } from "@/app/components/CadenceMap";
+import { IconTooltip } from "@/app/components/IconTooltip";
 
 export default function LifeTargetsCascade() {
   const navigate = useNavigate();
@@ -102,22 +104,27 @@ export default function LifeTargetsCascade() {
 
   return (
     <div className="container max-w-7xl mx-auto py-8 px-4 space-y-6">
+      <CadenceMap active="quarterly" compact showHandoffNote />
+
       {/* Header */}
       <div className="flex items-center justify-between gap-4">
         {/* Left: Back Button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleBack}
-          className="shrink-0"
-        >
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
+        <IconTooltip label={isHistoricalView ? "Back to quarterly history" : "Back to daily proof"}>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleBack}
+            className="shrink-0"
+            aria-label={isHistoricalView ? "Back to quarterly history" : "Back to daily proof"}
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+        </IconTooltip>
 
         {/* Center: Title */}
         <div className="flex-1 text-center">
           <div className="flex items-center justify-center gap-4 mb-1">
-            <h1 className="text-3xl font-bold">Cascading Targets View</h1>
+            <h1 className="text-3xl font-bold">Your Full Quarterly Plan</h1>
             {!isHistoricalView && (
               <QuarterDisplay
                 quarter={currentQuarter}
@@ -127,7 +134,7 @@ export default function LifeTargetsCascade() {
             )}
           </div>
           <p className="text-muted-foreground mt-1">
-            Review and edit your complete quarterly plan
+            Review the direction, monthly plan, and daily proof in one place.
           </p>
         </div>
 
@@ -149,7 +156,7 @@ export default function LifeTargetsCascade() {
             className="bg-primary text-primary-foreground hover:bg-primary/90"
           >
             <Save className="mr-2 h-4 w-4" />
-            {saveMutation.isPending ? 'Saving...' : 'Save & Exit'}
+            {saveMutation.isPending ? 'Saving...' : 'Finish & Return to Hub'}
           </Button>
         </div>
       </div>

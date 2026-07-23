@@ -9,14 +9,18 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { 
   Dumbbell, Heart, Briefcase, Flame, ChevronLeft, ChevronRight, 
-  Share2, Loader2, Zap
+  Loader2, Zap
 } from 'lucide-react';
 import { LatinCross } from '@/app/components/icons/LatinCross';
 import { format, addDays, isToday } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { SmartBackButton } from '@/app/components/SmartBackButton';
 import { HelpButton } from '@/app/components/HelpButton';
+import { CadenceMap } from '@/app/components/CadenceMap';
+import { IconTooltip } from '@/app/components/IconTooltip';
 import { AppIcon } from "@/app/components/icons/appIcons";
+import { useQuarterlyTargets } from "@/app/hooks/useQuarterlyTargets";
+import { getCurrentQuarter } from "@/app/lib/quarterUtils";
 
 const domains: { key: Core4Domain; label: string; icon: React.ElementType; color: string }[] = [
   { key: 'body', label: 'BODY', icon: Dumbbell, color: 'from-[#2997FF] to-[#2997FF]' },
@@ -49,6 +53,13 @@ export default function Core4() {
   const flowStats = useFlowStats();
   const playbookStats = usePlaybookStats();
   const { items: playbookItems } = useFocusItems();
+  const { data: quarterlyTargets } = useQuarterlyTargets(getCurrentQuarter());
+  const dailyProofByDomain: Record<Core4Domain, string[]> = {
+    body: Array.isArray(quarterlyTargets?.body_daily_actions) ? quarterlyTargets.body_daily_actions : [],
+    being: Array.isArray(quarterlyTargets?.being_daily_actions) ? quarterlyTargets.being_daily_actions : [],
+    balance: Array.isArray(quarterlyTargets?.balance_daily_actions) ? quarterlyTargets.balance_daily_actions : [],
+    business: Array.isArray(quarterlyTargets?.business_daily_actions) ? quarterlyTargets.business_daily_actions : [],
+  };
 
   const core4EntriesForHistory = useMemo(() => {
     return entries.map(entry => ({
@@ -123,32 +134,44 @@ export default function Core4() {
               <p className="text-sm text-muted-foreground">This Week</p>
               <p className="text-lg font-bold">{combinedWeeklyScore} / {combinedWeeklyGoal}</p>
             </div>
-            <Button variant="ghost" size="icon">
-              <Share2 className="h-5 w-5" />
-            </Button>
           </div>
         </div>
       </div>
 
       <div className="mx-auto max-w-4xl min-w-0 space-y-6 px-0 py-5 sm:space-y-8 sm:px-4 sm:py-6">
+        <CadenceMap active="daily" compact showHandoffNote />
+
         {/* Week Navigator */}
         <Card className="bg-card border-border">
           <CardContent className="p-3 sm:p-4">
             <div className="flex items-center justify-between mb-4">
-              <Button variant="ghost" size="icon" onClick={() => navigateWeek('prev')}>
-                <ChevronLeft className="h-5 w-5" />
-              </Button>
+              <IconTooltip label="View previous week">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => navigateWeek('prev')}
+                  aria-label="View previous week"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </Button>
+              </IconTooltip>
               <span className="min-w-0 px-2 text-center text-sm font-medium sm:text-base">
                 {format(selectedWeekStart, 'MMM d')} - {format(addDays(selectedWeekStart, 6), 'MMM d, yyyy')}
               </span>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={() => navigateWeek('next')}
-                disabled={addDays(selectedWeekStart, 7) > new Date()}
+              <IconTooltip
+                label="View next week"
+                detail="Future weeks stay unavailable until they begin."
               >
-                <ChevronRight className="h-5 w-5" />
-              </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => navigateWeek('next')}
+                  disabled={addDays(selectedWeekStart, 7) > new Date()}
+                  aria-label="View next week"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </Button>
+              </IconTooltip>
             </div>
             
             <div className="grid min-w-0 grid-cols-7 gap-1 sm:gap-2">
@@ -199,28 +222,54 @@ export default function Core4() {
           <div className="grid min-w-0 grid-cols-2 gap-3 sm:gap-4">
             {domains.map(({ key, label, icon: Icon, color }) => {
               const completed = isDomainCompleted(key);
+              const proofIdeas = dailyProofByDomain[key];
+              const primaryProof = proofIdeas[0];
               return (
-                <button
+                <IconTooltip
                   key={key}
-                  onClick={() => handleToggle(key)}
-                  disabled={!canEdit}
-                  className={cn(
-                    "flex min-w-0 flex-col items-center justify-center gap-3 p-4 transition-all duration-300 sm:p-8",
-                    "focus:outline-none focus:ring-2 focus:ring-primary/50",
-                    completed
-                      ? `bg-gradient-to-br ${color} text-white shadow-xl scale-[1.02]`
-                      : "bg-muted text-muted-foreground hover:bg-muted/80",
-                    !canEdit && "opacity-50 cursor-not-allowed"
-                  )}
+                  label={completed ? `${label} is complete` : `Mark ${label} complete`}
+                  detail={
+                    primaryProof
+                      ? `Today's proof: ${primaryProof}`
+                      : "Complete the action you committed to in this domain, then mark it here."
+                  }
                 >
-                  <Icon className={cn("h-10 w-10", completed && "text-white")} />
-                  <span className={cn(
-                    "text-sm font-bold tracking-wider",
-                    completed ? "text-white" : "text-muted-foreground"
-                  )}>
-                    {label}
-                  </span>
-                </button>
+                  <button
+                    onClick={() => handleToggle(key)}
+                    disabled={!canEdit}
+                    aria-pressed={completed}
+                    aria-label={
+                      primaryProof
+                        ? `${completed ? "Mark incomplete" : "Mark complete"}: ${label}. Today's proof: ${primaryProof}`
+                        : `${completed ? "Mark incomplete" : "Mark complete"}: ${label}`
+                    }
+                    className={cn(
+                      "flex min-w-0 flex-col items-center justify-center gap-2 p-4 transition-all duration-300 sm:p-8",
+                      "focus:outline-none focus:ring-2 focus:ring-primary/50",
+                      completed
+                        ? `bg-gradient-to-br ${color} text-white shadow-xl scale-[1.02]`
+                        : "bg-muted text-muted-foreground hover:bg-muted/80",
+                      !canEdit && "opacity-50 cursor-not-allowed"
+                    )}
+                  >
+                    <Icon className={cn("h-10 w-10", completed && "text-white")} />
+                    <span className={cn(
+                      "text-sm font-bold tracking-wider",
+                      completed ? "text-white" : "text-muted-foreground"
+                    )}>
+                      {label}
+                    </span>
+                    <span
+                      className={cn(
+                        "line-clamp-2 min-h-8 text-center text-[11px] font-normal normal-case leading-4 tracking-normal",
+                        completed ? "text-white/80" : "text-muted-foreground",
+                      )}
+                    >
+                      {primaryProof ?? "Complete today's commitment"}
+                      {proofIdeas.length > 1 ? ` +${proofIdeas.length - 1} more` : ""}
+                    </span>
+                  </button>
+                </IconTooltip>
               );
             })}
           </div>

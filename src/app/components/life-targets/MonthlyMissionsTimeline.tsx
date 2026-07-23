@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Calendar, Lightbulb, Check, Loader2, Pencil } from "lucide-react";
 import { toast } from "sonner";
 import type { MonthlyMission, MonthlyMissionsOutput, DomainMissions } from "@/app/hooks/useMonthlyMissions";
+import { IconTooltip } from "@/app/components/IconTooltip";
 
 interface TargetTexts {
   [domain: string]: {
@@ -91,14 +92,20 @@ function MissionCard({
           <Badge variant="outline">{month}</Badge>
         </div>
         {onEdit && !isEditing && (
-          <Button
-            variant="ghost"
-            size="sm"
-            className="opacity-0 group-hover:opacity-100 transition-opacity h-7 w-7 p-0"
-            onClick={() => setIsEditing(true)}
+          <IconTooltip
+            label={`Edit ${month} mission`}
+            detail="This change also updates the generated source. A separately edited live mission in This Month remains protected."
           >
-            <Pencil className="h-3.5 w-3.5" />
-          </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 w-7 p-0 opacity-100 transition-opacity sm:opacity-40 sm:group-hover:opacity-100 sm:focus-visible:opacity-100"
+              onClick={() => setIsEditing(true)}
+              aria-label={`Edit ${month} mission`}
+            >
+              <Pencil className="h-3.5 w-3.5" />
+            </Button>
+          </IconTooltip>
         )}
       </div>
       <div>
@@ -197,10 +204,10 @@ function DomainMissions({
                   {isTarget1Primary ? (
                     <>
                       <Check className="h-4 w-4 mr-2" />
-                      Primary Target
+                      Main Focus
                     </>
                   ) : (
-                    'Set as Primary'
+                    'Use as Main Focus'
                   )}
                 </Button>
               )}
@@ -240,10 +247,10 @@ function DomainMissions({
                   {isTarget2Primary ? (
                     <>
                       <Check className="h-4 w-4 mr-2" />
-                      Primary Target
+                      Main Focus
                     </>
                   ) : (
-                    'Set as Primary'
+                    'Use as Main Focus'
                   )}
                 </Button>
               )}
@@ -295,9 +302,10 @@ export function MonthlyMissionsTimeline({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Quarterly Mission Suggestions</CardTitle>
+        <CardTitle>Three-Month Mission Plan</CardTitle>
         <CardDescription>
-          These suggestions break each quarterly target into monthly steps. Empty Monthly Missions slots can be seeded from here, and generated missions can refresh while missions you edited manually stay untouched.
+          These suggestions break each quarterly target into one focus for each month. The current
+          month can seed an empty This Month slot; a live mission you edited there is never replaced.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-8">

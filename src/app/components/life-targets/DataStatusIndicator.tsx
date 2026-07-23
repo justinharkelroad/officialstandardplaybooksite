@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, CheckCircle2, Loader2 } from "lucide-react";
+import { CheckCircle2, Loader2 } from "lucide-react";
 import { useLifeTargetsStore } from "@/app/lib/lifeTargetsStore";
 import { useQuarterlyTargets } from "@/app/hooks/useQuarterlyTargets";
 import { useSaveDailyActions } from "@/app/hooks/useSaveDailyActions";
@@ -54,29 +54,36 @@ export function DataStatusIndicator() {
     });
   };
 
-  if (!hasUnsavedChanges && !saveDailyActions.isPending) return null;
+  if (!hasUnsavedChanges && !saveDailyActions.isPending) {
+    return (
+      <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground" role="status">
+        <CheckCircle2 className="h-3.5 w-3.5 text-[#2997FF]" />
+        Daily proof saved
+      </div>
+    );
+  }
 
   return (
-    <Alert className={`mb-4 ${hasUnsavedChanges ? 'border-[#2997FF]/50 bg-[#2997FF]/15' : 'border-[#2997FF]/50 bg-[#2997FF]/15'}`}>
-      {hasUnsavedChanges ? (
-        <AlertTriangle className="h-4 w-4 text-[#2997FF] dark:text-[#2997FF]" />
+    <Alert className="mb-4 border-[#2997FF]/50 bg-[#2997FF]/10">
+      {saveDailyActions.isPending ? (
+        <Loader2 className="h-4 w-4 animate-spin text-[#2997FF]" />
       ) : (
-        <CheckCircle2 className="h-4 w-4 text-[#2997FF] dark:text-[#2997FF]" />
+        <CheckCircle2 className="h-4 w-4 text-[#2997FF]" />
       )}
       <AlertDescription className="flex items-center justify-between gap-4">
         <div className="flex-1">
           {saveDailyActions.isPending ? (
             <p className="font-medium text-foreground flex items-center gap-2">
               <Loader2 className="h-3 w-3 animate-spin" />
-              Saving to database...
+              Saving daily proof...
             </p>
           ) : hasUnsavedChanges ? (
             <>
               <p className="font-medium text-foreground mb-1">
-                Unsaved daily actions
+                Saving shortly
               </p>
               <p className="text-sm text-muted-foreground">
-                Your daily actions are only in your browser. Click "Sync to Database" to save them permanently.
+                Daily proof auto-saves after you stop making changes. Save now if you are leaving this page.
               </p>
             </>
           ) : (
@@ -91,7 +98,7 @@ export function DataStatusIndicator() {
             size="sm"
             variant="default"
           >
-            Sync to Database
+            Save now
           </Button>
         )}
       </AlertDescription>

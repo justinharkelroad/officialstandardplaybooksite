@@ -18,6 +18,7 @@ interface QuarterlyTargetsFormProps {
   hasUnsavedChanges?: boolean;
   isLockedIn?: boolean;
   hasAnalysis?: boolean;
+  onDirtyChange?: (dirty: boolean) => void;
 }
 
 const DOMAINS = [
@@ -37,6 +38,7 @@ export function QuarterlyTargetsForm({
   hasUnsavedChanges = false,
   isLockedIn = false,
   hasAnalysis = false,
+  onDirtyChange,
 }: QuarterlyTargetsFormProps) {
   const [formData, setFormData] = useState<QuarterlyTargets>({
     quarter: initialData?.quarter || '',
@@ -91,6 +93,14 @@ export function QuarterlyTargetsForm({
     }
   }, [formData, hasAnyTarget, initialData?.id, onAnalyze]);
 
+  const updateField = useCallback(
+    (key: keyof QuarterlyTargets, value: string) => {
+      setFormData((current) => ({ ...current, [key]: value }));
+      onDirtyChange?.(true);
+    },
+    [onDirtyChange],
+  );
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in" aria-label="Quarterly targets form">
       {hasUnsavedChanges && (
@@ -98,7 +108,7 @@ export function QuarterlyTargetsForm({
           <div className="flex items-center gap-2 text-[#2997FF] dark:text-[#2997FF]">
             <Sparkles className="h-4 w-4" aria-hidden="true" />
             <p className="text-sm font-medium">
-              You have unsaved changes. Click "Save Targets" below to finalize your updates.
+              You have unsaved changes. Save below to carry them into the three-month plan.
             </p>
           </div>
         </div>
@@ -108,10 +118,10 @@ export function QuarterlyTargetsForm({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Target className="h-5 w-5" aria-hidden="true" />
-            Quarterly Life Targets
+            Quarterly Direction
           </CardTitle>
           <CardDescription>
-            Set your goals across the four key life domains
+            Review the targets that will guide Body, Being, Balance, and Business this quarter.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-8">
@@ -140,10 +150,9 @@ export function QuarterlyTargetsForm({
                   <Input
                     id={`${domain.key}_target`}
                     value={(formData[`${domain.key}_target` as keyof QuarterlyTargets] as string) || ''}
-                    onChange={(e) => setFormData({
-                      ...formData,
-                      [`${domain.key}_target`]: e.target.value
-                    })}
+                    onChange={(e) =>
+                      updateField(`${domain.key}_target` as keyof QuarterlyTargets, e.target.value)
+                    }
                     placeholder={`What do you want to achieve in ${domain.label}?`}
                     className="h-11"
                     aria-describedby={`${domain.key}-target-desc`}
@@ -161,10 +170,9 @@ export function QuarterlyTargetsForm({
                   <Textarea
                     id={`${domain.key}_narrative`}
                     value={(formData[`${domain.key}_narrative` as keyof QuarterlyTargets] as string) || ''}
-                    onChange={(e) => setFormData({
-                      ...formData,
-                      [`${domain.key}_narrative`]: e.target.value
-                    })}
+                    onChange={(e) =>
+                      updateField(`${domain.key}_narrative` as keyof QuarterlyTargets, e.target.value)
+                    }
                     placeholder="Why is this important? What's the context?"
                     className="min-h-[80px] resize-none"
                     aria-describedby={`${domain.key}-narrative-desc`}
@@ -188,10 +196,9 @@ export function QuarterlyTargetsForm({
                   <Input
                     id={`${domain.key}_target2`}
                     value={(formData[`${domain.key}_target2` as keyof QuarterlyTargets] as string) || ''}
-                    onChange={(e) => setFormData({
-                      ...formData,
-                      [`${domain.key}_target2`]: e.target.value
-                    })}
+                    onChange={(e) =>
+                      updateField(`${domain.key}_target2` as keyof QuarterlyTargets, e.target.value)
+                    }
                     placeholder={`Second ${domain.label.toLowerCase()} goal for this quarter (optional)`}
                     className="h-11"
                     maxLength={500}
@@ -205,10 +212,9 @@ export function QuarterlyTargetsForm({
                   <Textarea
                     id={`${domain.key}_narrative2`}
                     value={(formData[`${domain.key}_narrative2` as keyof QuarterlyTargets] as string) || ''}
-                    onChange={(e) => setFormData({
-                      ...formData,
-                      [`${domain.key}_narrative2`]: e.target.value
-                    })}
+                    onChange={(e) =>
+                      updateField(`${domain.key}_narrative2` as keyof QuarterlyTargets, e.target.value)
+                    }
                     placeholder="Why is this second target important?"
                     className="min-h-[80px] resize-none"
                     maxLength={2000}
@@ -220,13 +226,13 @@ export function QuarterlyTargetsForm({
         </CardContent>
       </Card>
 
-      <div className="flex gap-3 justify-end">
+      <div className="flex flex-wrap justify-end gap-3">
         {onAnalyze && (
           <Button
             type="button"
             variant="outline"
             onClick={handleAnalyze}
-            disabled={!hasAnyTarget || isAnalyzing || isLockedIn}
+            disabled={!hasAnyTarget || isAnalyzing}
           >
             {isAnalyzing ? (
               <>
@@ -236,7 +242,7 @@ export function QuarterlyTargetsForm({
             ) : (
               <>
                 <Sparkles className="mr-2 h-4 w-4" />
-                Analyze Clarity
+                Check Clarity (Optional)
               </>
             )}
           </Button>
@@ -250,7 +256,7 @@ export function QuarterlyTargetsForm({
             className="hover-scale"
           >
             <CheckCircle className="mr-2 h-4 w-4" />
-            Lock In Targets
+            Approve Suggested Edits
           </Button>
         )}
         
@@ -266,7 +272,7 @@ export function QuarterlyTargetsForm({
               Saving...
             </>
           ) : (
-            'Save Targets'
+            'Save & Plan 3 Months'
           )}
         </Button>
       </div>

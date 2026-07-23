@@ -337,7 +337,7 @@ export function DailyActionsSelector({
               className="w-full"
               size="lg"
             >
-              Continue to Cascade View
+              Review the Full Plan
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>

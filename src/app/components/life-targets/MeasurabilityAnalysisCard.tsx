@@ -128,7 +128,7 @@ export function MeasurabilityAnalysisCard({
       <CardHeader>
         <CardTitle>Measurability Analysis</CardTitle>
         <CardDescription>
-          Apply suggestions below, then click "Save Targets" to finalize your changes
+          Apply any useful suggestions, approve the edits, then save to build the three-month plan.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">

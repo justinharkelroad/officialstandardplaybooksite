@@ -22,13 +22,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/app/components/ui/select';
-import { Dumbbell, Heart, Briefcase, Plus, CheckCircle2, Loader2, Pencil, Trash2 } from 'lucide-react';
+import { Dumbbell, Heart, Briefcase, Plus, CheckCircle2, Loader2, Pencil, Trash2, ListPlus } from 'lucide-react';
 import { LatinCross } from '@/app/components/icons/LatinCross';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { Core4Domain } from '@/app/hooks/useCore4Stats';
 import { AppIcon } from "@/app/components/icons/appIcons";
+import { useFocusItems } from "@/app/hooks/useFocusItems";
 
 interface MissionItem {
   text: string;
@@ -80,6 +81,7 @@ function dedupeActiveMissionsByDomain(rows: Core4Mission[]) {
 
 export function Core4MonthlyMissions() {
   const { user } = useAuth();
+  const { items: focusItems, createItem } = useFocusItems();
   const [missions, setMissions] = useState<Core4Mission[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -275,6 +277,29 @@ export function Core4MonthlyMissions() {
     await updateMissionStatus(missionId, 'archived');
   };
 
+  const isOnWeeklyBench = (missionId: string) =>
+    focusItems.some(
+      (item) =>
+        item.source_type === 'monthly_mission' &&
+        item.source_session_id === missionId &&
+        !item.completed,
+    );
+
+  const sendMissionToWeeklyBench = (mission: Core4Mission) => {
+    if (isOnWeeklyBench(mission.id)) return;
+
+    createItem.mutate({
+      title: mission.title,
+      description: mission.weekly_measurable || undefined,
+      priority_level: 'mid',
+      zone: 'bench',
+      domain: mission.domain,
+      source_type: 'monthly_mission',
+      source_name: `${domainConfig[mission.domain].label} mission · ${format(new Date(), 'MMMM yyyy')}`,
+      source_session_id: mission.id,
+    });
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -287,9 +312,10 @@ export function Core4MonthlyMissions() {
     <div id="monthly-missions" className="space-y-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h3 className="text-lg font-semibold">Monthly Missions</h3>
+          <h3 className="text-lg font-semibold">Current Monthly Missions</h3>
           <p className="text-sm text-muted-foreground">
-            One active mission per domain for this month. Quarterly Targets can fill empty domains and refresh generated missions you have not edited.
+            One live mission per domain. Quarterly can seed empty slots; your edits stay yours.
+            Send a mission to the Weekly Bench when you are ready to schedule the work.
           </p>
         </div>
         <Dialog open={dialogOpen} onOpenChange={(open) => !open && closeDialog()}>
@@ -338,9 +364,9 @@ export function Core4MonthlyMissions() {
               </div>
 
               <div className="space-y-2">
-                <Label>WHY IS THIS IMPORTANT? (optional)</Label>
+                <Label>WEEKLY MEASURABLE (optional)</Label>
                 <Textarea
-                  placeholder="Why does this mission matter this month?"
+                  placeholder="What result would prove progress this week?"
                   value={newMission.weekly_measurable}
                   onChange={(e) => setNewMission(prev => ({ ...prev, weekly_measurable: e.target.value }))}
                 />
@@ -399,11 +425,25 @@ export function Core4MonthlyMissions() {
                       </p>
                     )}
 
-                    <div className="flex items-center justify-between pt-2 border-t border-border">
+                    <div className="flex flex-col gap-2 border-t border-border pt-2 sm:flex-row sm:items-center sm:justify-between">
                       <span className="text-xs text-muted-foreground">
                         {completedCount}/{totalItems} complete
                       </span>
-                      <div className="flex gap-1">
+                      <div className="flex flex-wrap justify-end gap-1">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-7 text-xs"
+                          onClick={() => sendMissionToWeeklyBench(mission)}
+                          disabled={isOnWeeklyBench(mission.id) || createItem.isPending}
+                        >
+                          {isOnWeeklyBench(mission.id) ? (
+                            <CheckCircle2 className="h-3 w-3 mr-1" />
+                          ) : (
+                            <ListPlus className="h-3 w-3 mr-1" />
+                          )}
+                          {isOnWeeklyBench(mission.id) ? 'On Weekly Bench' : 'Send to Weekly'}
+                        </Button>
                         <Button 
                           size="sm" 
                           variant="ghost" 

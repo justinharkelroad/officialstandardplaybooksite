@@ -37,13 +37,22 @@ export default function LifeTargetsQuarterly() {
     navigate(`${lifeTargetsBasePath}/brainstorm`, { replace: true });
   }, [isError, isLoading, lifeTargetsBasePath, navigate, targets]);
 
+  useEffect(() => {
+    if (targets && !localTargets) {
+      // The prior selection step already captured an explicit choice. Clarity
+      // analysis on this review page is optional unless the member requests it.
+      setIsLockedIn(true);
+    }
+  }, [localTargets, targets]);
+
   const handleSave = async (formTargets: QuarterlyTargets) => {
     try {
       await saveTargets.mutateAsync({ 
         data: { ...formTargets, quarter: currentQuarter }, 
         showToast: true 
       });
-      navigate(lifeTargetsBasePath);
+      setHasUnsavedChanges(false);
+      navigate(`${lifeTargetsBasePath}/missions`);
     } catch (error) {
       console.error('Failed to save targets:', error);
     }
@@ -70,7 +79,7 @@ export default function LifeTargetsQuarterly() {
 
   const handleLockIn = () => {
     setIsLockedIn(true);
-    toast.success("✓ Targets locked in! Review your choices, then click 'Save Targets' to finalize.");
+    toast.success("Targets approved. Save them when the wording feels right.");
   };
 
   const handleApplySuggestion = (domain: string, _index: number, rewrittenTarget: string) => {
@@ -114,9 +123,10 @@ export default function LifeTargetsQuarterly() {
         <div className="flex-1">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold">Set Quarterly Targets</h1>
+              <h1 className="text-3xl font-bold">Review Quarterly Direction</h1>
               <p className="text-muted-foreground">
-                Review the targets you chose from Brain Dump, sharpen anything vague, then save them before Monthly Missions unlock.
+                Add context or make final edits. The clarity check is optional; saving moves
+                directly into the three-month mission plan.
               </p>
             </div>
             <QuarterDisplay
@@ -158,6 +168,7 @@ export default function LifeTargetsQuarterly() {
         hasUnsavedChanges={hasUnsavedChanges}
         isLockedIn={isLockedIn}
         hasAnalysis={!!measurabilityResults}
+        onDirtyChange={setHasUnsavedChanges}
       />
 
       {measurabilityResults && (

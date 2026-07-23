@@ -15,6 +15,7 @@ import { CreatePlaybookItemDialog } from "@/app/components/playbook/CreatePlaybo
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import type { PlaybookDomain } from "@/app/hooks/useFocusItems";
+import { CadenceMap } from "@/app/components/CadenceMap";
 
 export default function WeeklyPlaybook() {
   const [weekStart, setWeekStart] = useState(() => startOfWeek(new Date(), { weekStartsOn: 1 }));
@@ -189,6 +190,13 @@ export default function WeeklyPlaybook() {
         <div className="flex items-center gap-2 mb-6">
           <h1 className="text-2xl font-bold">Weekly Playbook</h1>
           <HelpButton videoKey="weekly_playbook" />
+        </div>
+
+        <CadenceMap active="weekly" compact showHandoffNote className="mb-6" />
+
+        <div className="mb-6 border-l-2 border-[#2997FF] bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
+          The Bench is your handoff point. Send a mission from This Month or create an item here,
+          then schedule it onto a day as a Power Play.
         </div>
 
         <div className="grid min-w-0 grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">

@@ -11,11 +11,14 @@ import { format } from "date-fns";
 import { Card, CardContent } from "@/app/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { HelpButton } from "@/app/components/HelpButton";
+import { IconTooltip } from "@/app/components/IconTooltip";
 import { SectionHelpTip } from "@/components/ui/section-help-tip";
 import { cn } from "@/lib/utils";
 import { useCore4Stats, type Core4Domain } from "@/app/hooks/useCore4Stats";
 import { useFlowStats } from "@/app/hooks/useFlowStats";
 import { usePlaybookStats } from "@/app/hooks/usePlaybookStats";
+import { useQuarterlyTargets } from "@/app/hooks/useQuarterlyTargets";
+import { getCurrentQuarter } from "@/app/lib/quarterUtils";
 import {
   DOMAIN_ORDER,
   DOMAIN_TOKENS,
@@ -39,6 +42,21 @@ export function TodayRhythmHero() {
   } = useCore4Stats();
   const flowStats = useFlowStats();
   const playbookStats = usePlaybookStats();
+  const { data: quarterlyTargets } = useQuarterlyTargets(getCurrentQuarter());
+  const dailyProofByDomain: Record<PersonalGrowthDomain, string[]> = {
+    body: Array.isArray(quarterlyTargets?.body_daily_actions)
+      ? quarterlyTargets.body_daily_actions
+      : [],
+    being: Array.isArray(quarterlyTargets?.being_daily_actions)
+      ? quarterlyTargets.being_daily_actions
+      : [],
+    balance: Array.isArray(quarterlyTargets?.balance_daily_actions)
+      ? quarterlyTargets.balance_daily_actions
+      : [],
+    business: Array.isArray(quarterlyTargets?.business_daily_actions)
+      ? quarterlyTargets.business_daily_actions
+      : [],
+  };
 
   const combinedWeeklyPoints =
     weeklyPoints + flowStats.weeklyProgress + playbookStats.weeklyPoints;
@@ -148,35 +166,61 @@ export function TodayRhythmHero() {
               const token = DOMAIN_TOKENS[key];
               const Icon = token.icon;
               const completed = isDomainCompleted(key as Core4Domain);
+              const proofIdeas = dailyProofByDomain[key];
+              const primaryProof = proofIdeas[0];
 
               return (
-                <button
+                <IconTooltip
                   key={key}
-                  type="button"
-                  onClick={() => handleToggle(key as Core4Domain)}
-                  className={cn(
-                    "flex min-w-0 flex-col items-center justify-center gap-3 p-4 transition-all duration-300 sm:p-6",
-                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                    completed
-                      ? cn("scale-[1.02] border-[1.5px] border-transparent", token.solidClass)
-                      : "border-[1.5px] border-foreground/25 bg-card text-foreground/80 hover:border-foreground hover:text-foreground",
-                  )}
+                  label={completed ? `${token.label} is complete` : `Mark ${token.label} complete`}
+                  detail={
+                    primaryProof
+                      ? `Today's proof: ${primaryProof}`
+                      : "Use this after you complete the action you committed to in this domain."
+                  }
                 >
-                  <Icon
+                  <button
+                    type="button"
+                    onClick={() => handleToggle(key as Core4Domain)}
+                    aria-pressed={completed}
+                    aria-label={
+                      primaryProof
+                        ? `${completed ? "Mark incomplete" : "Mark complete"}: ${token.label}. Today's proof: ${primaryProof}`
+                        : `${completed ? "Mark incomplete" : "Mark complete"}: ${token.label}`
+                    }
                     className={cn(
-                      "h-10 w-10",
-                      completed ? "text-white" : "text-current",
-                    )}
-                  />
-                  <span
-                    className={cn(
-                      "text-sm font-bold tracking-wider uppercase",
-                      completed ? "text-white" : "text-current",
+                      "flex min-w-0 flex-col items-center justify-center gap-2 p-4 transition-all duration-300 sm:p-6",
+                      "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                      completed
+                        ? cn("scale-[1.02] border-[1.5px] border-transparent", token.solidClass)
+                        : "border-[1.5px] border-foreground/25 bg-card text-foreground/80 hover:border-foreground hover:text-foreground",
                     )}
                   >
-                    {token.label}
-                  </span>
-                </button>
+                    <Icon
+                      className={cn(
+                        "h-9 w-9",
+                        completed ? "text-white" : "text-current",
+                      )}
+                    />
+                    <span
+                      className={cn(
+                        "text-sm font-bold tracking-wider uppercase",
+                        completed ? "text-white" : "text-current",
+                      )}
+                    >
+                      {token.label}
+                    </span>
+                    <span
+                      className={cn(
+                        "line-clamp-2 min-h-8 text-center text-[11px] font-normal normal-case leading-4 tracking-normal",
+                        completed ? "text-white/80" : "text-muted-foreground",
+                      )}
+                    >
+                      {primaryProof ?? "Complete today's commitment"}
+                      {proofIdeas.length > 1 ? ` +${proofIdeas.length - 1} more` : ""}
+                    </span>
+                  </button>
+                </IconTooltip>
               );
             })}
           </div>

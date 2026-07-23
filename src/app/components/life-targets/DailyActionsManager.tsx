@@ -62,7 +62,7 @@ export function DailyActionsManager({
   return (
     <div>
       <h3 className={`font-semibold text-sm uppercase mb-3 ${textColor}`}>
-        Daily Actions ({dailyActions.length})
+        Daily Proof ({dailyActions.length})
       </h3>
 
       {dailyActions.length === 0 ? (

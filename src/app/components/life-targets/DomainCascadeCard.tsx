@@ -244,7 +244,7 @@ export function DomainCascadeCard({
           </div>
         )}
 
-        {/* Daily Actions */}
+        {/* Daily Proof */}
         <DailyActionsManager
           domainKey={domainKey}
           dailyActions={dailyActions}

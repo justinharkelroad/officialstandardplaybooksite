@@ -20,6 +20,8 @@ import { useSaveDailyActions, useSaveActionPool } from "@/app/hooks/useSaveDaily
 import { formatQuarterDisplay } from "@/app/lib/quarterUtils";
 import { toast } from "sonner";
 import { AnimatedRefresh as RefreshCw } from "@/app/components/icons/AnimatedRefresh";
+import { CadenceMap } from "@/app/components/CadenceMap";
+import { IconTooltip } from "@/app/components/IconTooltip";
 
 export default function LifeTargetsDaily() {
   const navigate = useNavigate();
@@ -260,9 +262,11 @@ export default function LifeTargetsDaily() {
 
   return (
     <div className="container max-w-5xl mx-auto py-8 px-4 space-y-6">
+      <CadenceMap active="quarterly" compact showHandoffNote />
+
       {/* Header */}
-      <div className="flex items-center justify-between">
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+      <div className="flex min-w-0 items-start gap-3 sm:gap-4">
         <Button
           variant="ghost"
           size="icon"
@@ -272,35 +276,42 @@ export default function LifeTargetsDaily() {
         </Button>
         <div>
           <div className="flex items-center gap-4 mb-1">
-            <h1 className="text-3xl font-bold">Daily Actions</h1>
+            <h1 className="text-3xl font-bold">Choose Daily Proof</h1>
             <QuarterDisplay
               quarter={currentQuarter}
               onEditClick={() => setShowChangeDialog(true)}
             />
           </div>
           <p className="text-muted-foreground">
-            Generate optional daily ideas from your quarterly targets. Pick what fits, skip what does not, or add your own.
+            Pick optional actions that can appear in Daily beneath the matching Core Four domain.
+            Choose what fits, skip what does not, or add your own.
           </p>
         </div>
       </div>
 
-        <Button
-          onClick={handleGenerate}
-          disabled={generateActions.isPending || !targets}
-          variant="outline"
+        <IconTooltip
+          label={hasGeneratedActions ? "Generate new proof ideas" : "Generate proof ideas"}
+          detail="Creates a fresh idea pool from your quarterly direction. Your selected proof remains saved until you change the selections."
         >
-          {generateActions.isPending ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Generating...
-            </>
-          ) : (
-            <>
-              <RefreshCw className="mr-2 h-4 w-4" />
-              {hasGeneratedActions ? 'Regenerate' : 'Generate'} Actions
-            </>
-          )}
-        </Button>
+          <Button
+            onClick={handleGenerate}
+            disabled={generateActions.isPending || !targets}
+            variant="outline"
+            className="w-full sm:w-auto"
+          >
+            {generateActions.isPending ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              <>
+                <RefreshCw className="mr-2 h-4 w-4" />
+                {hasGeneratedActions ? 'Refresh' : 'Generate'} Proof Ideas
+              </>
+            )}
+          </Button>
+        </IconTooltip>
       </div>
 
       {/* Data status indicator - shows unsaved changes warning */}
@@ -318,12 +329,12 @@ export default function LifeTargetsDaily() {
       ) : generateActions.isPending ? (
         <div className="text-center py-12 space-y-4">
           <Loader2 className="h-8 w-8 animate-spin mx-auto text-primary" />
-          <p className="text-muted-foreground">Generating your daily actions...</p>
+          <p className="text-muted-foreground">Generating daily proof ideas...</p>
         </div>
       ) : (
         <div className="text-center py-12 space-y-4">
           <p className="text-muted-foreground">
-            Click "Generate Actions" to get optional daily ideas. You can choose none of them and still keep your plan.
+            Generate optional proof ideas, or keep the quarter without choosing any.
           </p>
         </div>
       )}

@@ -1,6 +1,8 @@
 import { forwardRef } from "react";
 import { CircleHelp } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { spScopeClass } from "@/app/lib/theme";
+import { cn } from "@/lib/utils";
 
 interface SectionHelpTipProps {
   title?: string;
@@ -35,7 +37,10 @@ export const SectionHelpTip = forwardRef<HTMLSpanElement, SectionHelpTipProps>(
           side="top"
           align="start"
           collisionPadding={12}
-          className="w-max max-w-[calc(100vw-24px)] p-3 sm:max-w-[320px]"
+          className={cn(
+            spScopeClass(),
+            "w-max max-w-[calc(100vw-24px)] p-3 sm:max-w-[320px]",
+          )}
         >
           {title && <p className="text-xs font-semibold mb-1">{title}</p>}
           <p className="text-xs leading-relaxed">{body}</p>

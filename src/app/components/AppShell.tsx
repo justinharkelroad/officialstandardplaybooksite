@@ -23,18 +23,37 @@ import standardLogo from "@/assets/standard-word-logo.png";
 import spIconBlack from "@/assets/sp-icon-black.png";
 import { useAuth } from "@/app/lib/auth";
 import { useSpTheme } from "@/app/lib/theme";
+import { IconTooltip } from "@/app/components/IconTooltip";
 import { cn } from "@/lib/utils";
 
-const NAV_ITEMS = [
-  { to: "/app", label: "Hub", icon: LayoutGrid, end: true },
-  { to: "/app/core4", label: "Daily", icon: Dumbbell },
-  { to: "/app/weekly-playbook", label: "Weekly", icon: ListChecks },
-  { to: "/app/monthly-missions", label: "Monthly", icon: Rocket },
-  { to: "/app/life-targets", label: "Quarterly", icon: CalendarRange },
-  { to: "/app/flows", label: "Flows", icon: Sparkles },
-  { to: "/app/reflection", label: "Reflection", icon: BookOpenText },
-  { to: "/app/debrief", label: "Debrief", icon: ClipboardEdit },
-  { to: "/app/theta-talk-track", label: "90 Day Audio", icon: AudioLines },
+const NAV_GROUPS = [
+  {
+    label: "Today",
+    items: [
+      { to: "/app", label: "Hub", icon: LayoutGrid, end: true },
+      { to: "/app/core4", label: "Daily", icon: Dumbbell },
+    ],
+  },
+  {
+    label: "Plan",
+    items: [
+      { to: "/app/weekly-playbook", label: "Weekly", icon: ListChecks },
+      { to: "/app/monthly-missions", label: "This Month", icon: Rocket },
+      { to: "/app/life-targets", label: "Quarterly", icon: CalendarRange },
+    ],
+  },
+  {
+    label: "Coach",
+    items: [
+      { to: "/app/flows", label: "Flows", icon: Sparkles },
+      { to: "/app/reflection", label: "Reflection", icon: BookOpenText },
+      { to: "/app/debrief", label: "Debrief", icon: ClipboardEdit },
+    ],
+  },
+  {
+    label: "Reinforce",
+    items: [{ to: "/app/theta-talk-track", label: "90 Day Audio", icon: AudioLines }],
+  },
 ];
 
 const COLLAPSE_KEY = "sp-sidebar-collapsed";
@@ -65,9 +84,15 @@ export default function AppShell() {
     navigate("/login", { replace: true });
   };
 
-  const items = isAdmin
-    ? [...NAV_ITEMS, { to: "/app/admin", label: "Admin", icon: Shield }]
-    : NAV_ITEMS;
+  const groups = isAdmin
+    ? [
+        ...NAV_GROUPS,
+        {
+          label: "Manage",
+          items: [{ to: "/app/admin", label: "Admin", icon: Shield }],
+        },
+      ]
+    : NAV_GROUPS;
 
   const initials = (member?.full_name ?? "")
     .split(" ")
@@ -78,42 +103,65 @@ export default function AppShell() {
     .toUpperCase();
 
   const navList = (onNavigate?: () => void, isCollapsed = false) => (
-    <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto py-4">
-      {items.map((item) => {
-        const Icon = item.icon;
-        return (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            end={"end" in item ? item.end : false}
-            onClick={onNavigate}
-            title={isCollapsed ? item.label : undefined}
-            className={({ isActive }) =>
-              cn(
-                "sp-label relative flex items-center gap-3 px-5 py-3 text-[11px] transition-colors",
-                isCollapsed && "justify-center px-0",
-                isActive
-                  ? "bg-foreground/[0.06] text-[#2997FF]"
-                  : "text-foreground/60 hover:bg-foreground/[0.04] hover:text-foreground",
-              )
-            }
-          >
-            {({ isActive }) => (
-              <>
-                <span
-                  aria-hidden
-                  className={cn(
-                    "absolute left-0 top-0 h-full w-[3px]",
-                    isActive ? "bg-[#2997FF]" : "bg-transparent",
+    <nav className="flex flex-1 flex-col overflow-y-auto py-3" aria-label="Primary navigation">
+      {groups.map((group, groupIndex) => (
+        <div
+          key={group.label}
+          className={cn(
+            "pb-2",
+            groupIndex > 0 && "mt-1 border-t border-foreground/10 pt-3",
+          )}
+        >
+          {!isCollapsed ? (
+            <p className="sp-label px-5 pb-1 text-[8px] text-foreground/35">{group.label}</p>
+          ) : null}
+          <div className="flex flex-col gap-0.5">
+            {group.items.map((item) => {
+              const Icon = item.icon;
+              const link = (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  end={"end" in item ? item.end : false}
+                  onClick={onNavigate}
+                  aria-label={isCollapsed ? item.label : undefined}
+                  className={({ isActive }) =>
+                    cn(
+                      "sp-label relative flex items-center gap-3 px-5 py-2.5 text-[11px] transition-colors",
+                      isCollapsed && "justify-center px-0",
+                      isActive
+                        ? "bg-foreground/[0.06] text-[#2997FF]"
+                        : "text-foreground/60 hover:bg-foreground/[0.04] hover:text-foreground",
+                    )
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      <span
+                        aria-hidden
+                        className={cn(
+                          "absolute left-0 top-0 h-full w-[3px]",
+                          isActive ? "bg-[#2997FF]" : "bg-transparent",
+                        )}
+                      />
+                      <Icon className="h-4 w-4 shrink-0" />
+                      {!isCollapsed && <span>{item.label}</span>}
+                    </>
                   )}
-                />
-                <Icon className="h-4 w-4 shrink-0" />
-                {!isCollapsed && <span>{item.label}</span>}
-              </>
-            )}
-          </NavLink>
-        );
-      })}
+                </NavLink>
+              );
+
+              return isCollapsed ? (
+                <IconTooltip key={item.to} label={item.label} side="right">
+                  {link}
+                </IconTooltip>
+              ) : (
+                link
+              );
+            })}
+          </div>
+        </div>
+      ))}
     </nav>
   );
 
@@ -152,24 +200,30 @@ export default function AppShell() {
         {navList(undefined, collapsed)}
 
         <div className="shrink-0 border-t border-foreground/15 p-3">
-          <button
-            type="button"
-            onClick={() => setCollapsed((v) => !v)}
-            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-            className={cn(
-              "sp-label flex w-full items-center gap-3 px-2 py-2 text-[10px] text-foreground/50 transition-colors hover:text-foreground",
-              collapsed && "justify-center",
-            )}
+          <IconTooltip
+            label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            side="right"
+            disabled={!collapsed}
           >
-            {collapsed ? (
-              <PanelLeft className="h-4 w-4" />
-            ) : (
-              <>
-                <PanelLeftClose className="h-4 w-4" />
-                <span>Collapse</span>
-              </>
-            )}
-          </button>
+            <button
+              type="button"
+              onClick={() => setCollapsed((v) => !v)}
+              aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+              className={cn(
+                "sp-label flex w-full items-center gap-3 px-2 py-2 text-[10px] text-foreground/50 transition-colors hover:text-foreground",
+                collapsed && "justify-center",
+              )}
+            >
+              {collapsed ? (
+                <PanelLeft className="h-4 w-4" />
+              ) : (
+                <>
+                  <PanelLeftClose className="h-4 w-4" />
+                  <span>Collapse</span>
+                </>
+              )}
+            </button>
+          </IconTooltip>
         </div>
       </aside>
 
@@ -222,14 +276,16 @@ export default function AppShell() {
           <div className="hidden lg:block" />
 
           <div className="flex min-w-0 items-center gap-1 sm:gap-3">
-            <button
-              type="button"
-              onClick={toggleTheme}
-              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-              className="flex h-11 w-11 shrink-0 items-center justify-center text-foreground/60 transition-colors hover:text-[#2997FF] lg:h-auto lg:w-auto"
-            >
-              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </button>
+            <IconTooltip label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"} side="bottom">
+              <button
+                type="button"
+                onClick={toggleTheme}
+                aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+                className="flex h-11 w-11 shrink-0 items-center justify-center text-foreground/60 transition-colors hover:text-[#2997FF]"
+              >
+                {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </button>
+            </IconTooltip>
 
             <div className="flex items-center gap-2.5">
               <span
@@ -243,14 +299,16 @@ export default function AppShell() {
               </span>
             </div>
 
-            <button
-              type="button"
-              onClick={handleSignOut}
-              aria-label="Sign out"
-              className="flex h-11 w-11 shrink-0 items-center justify-center text-foreground/60 transition-colors hover:text-[#2997FF] lg:h-auto lg:w-auto"
-            >
-              <LogOut className="h-4 w-4" />
-            </button>
+            <IconTooltip label="Sign out" side="bottom">
+              <button
+                type="button"
+                onClick={handleSignOut}
+                aria-label="Sign out"
+                className="flex h-11 w-11 shrink-0 items-center justify-center text-foreground/60 transition-colors hover:text-[#2997FF]"
+              >
+                <LogOut className="h-4 w-4" />
+              </button>
+            </IconTooltip>
           </div>
         </header>
 

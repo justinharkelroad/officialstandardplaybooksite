@@ -12,6 +12,9 @@ import { Link } from "react-router-dom";
 import { DebriefSundayBanner } from "@/app/components/dashboard/DebriefSundayBanner";
 import { WeeklyReflectionPreview } from "@/app/components/dashboard/WeeklyReflectionPreview";
 import { MarqueeBand } from "@/app/components/MarqueeBand";
+import { CadenceMap } from "@/app/components/CadenceMap";
+import { HelpButton } from "@/app/components/HelpButton";
+import { OnboardingChecklist } from "@/app/components/OnboardingChecklist";
 import { TodaysPowerPlays } from "@/app/components/playbook/TodaysPowerPlays";
 import { TodayRhythmHero } from "@/app/components/personal-growth/TodayRhythmHero";
 import { PersonalGrowthPod } from "@/app/components/personal-growth/PersonalGrowthPod";
@@ -398,7 +401,7 @@ function MonthlyMissionsPod() {
 
   return (
     <PersonalGrowthPod
-      title="Monthly Missions"
+      title="This Month"
       tagline="One mission per domain, built on your quarterly targets."
       icon={Rocket}
       accent="month"
@@ -407,7 +410,7 @@ function MonthlyMissionsPod() {
           {missionRows.length}/4 set
         </Badge>
       }
-      cta={{ to: "/app/monthly-missions", label: "Open Monthly Missions" }}
+      cta={{ to: "/app/monthly-missions", label: "Open This Month" }}
     >
       {isLoading ? (
         <p className="text-sm text-muted-foreground">
@@ -615,6 +618,18 @@ export default function PersonalGrowthDashboard() {
   return (
     <div className="mx-auto min-w-0 max-w-7xl px-0 py-2 sm:px-4 sm:py-6 md:px-6 lg:px-8">
       <div className="space-y-8">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="sp-label text-[9px] text-[#2997FF]">Your operating view</p>
+            <h1 className="mt-1 text-3xl sm:text-4xl">What matters now</h1>
+          </div>
+          <HelpButton videoKey="standard-playbook-overview" label="How it works" />
+        </div>
+
+        <OnboardingChecklist />
+
+        <CadenceMap compact showHandoffNote />
+
         <DebriefSundayBanner />
 
         <TodayRhythmHero />

@@ -6,6 +6,7 @@ import { Brain,
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AnimatedDownload as Download } from "@/app/components/icons/AnimatedDownload";
+import { HelpButton } from "@/app/components/HelpButton";
 
 export default function ThetaTalkTrack() {
   const navigate = useNavigate();
@@ -17,9 +18,12 @@ export default function ThetaTalkTrack() {
         <div className="container mx-auto px-4 py-16 max-w-4xl">
         <div className="text-center mb-12">
           <Brain className="h-16 w-16 mx-auto mb-4 text-primary" />
-          <h2 className="text-4xl font-bold mb-4">
-            Your Personalized 21-Minute Theta Brainwave Track
-          </h2>
+          <div className="flex items-center justify-center gap-2">
+            <h2 className="text-4xl font-bold mb-4">
+              Your Personalized 21-Minute Theta Brainwave Track
+            </h2>
+            <HelpButton videoKey="theta_audio" />
+          </div>
           <p className="text-xl text-muted-foreground">
             Transform your mindset with AI-powered affirmations set to theta brainwave frequencies
           </p>
@@ -34,7 +38,7 @@ export default function ThetaTalkTrack() {
             </CardHeader>
             <CardContent>
               <CardDescription>
-                Scientifically-designed binaural beats at 4-8 Hz to access your subconscious mind
+                Layered binaural audio at 4-8 Hz behind your approved affirmations
               </CardDescription>
             </CardContent>
           </Card>
@@ -100,7 +104,7 @@ export default function ThetaTalkTrack() {
                   4
                 </span>
                 <div>
-                  <strong>Download Your Track:</strong> Get your custom 21-minute theta brainwave audio file so you can manifest them daily.
+                  <strong>Download Your Track:</strong> Save your custom 21-minute audio file and use it as a daily reinforcement practice.
                 </div>
               </li>
             </ol>

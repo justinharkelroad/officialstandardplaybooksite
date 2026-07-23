@@ -38,6 +38,7 @@ import {
 import { formatQuarterDisplay, parseQuarter } from "@/app/lib/quarterUtils";
 import { toast } from "sonner";
 import { AnimatedRefresh as RefreshCw } from "@/app/components/icons/AnimatedRefresh";
+import { CadenceMap } from "@/app/components/CadenceMap";
 
 type MissionDomain = "body" | "being" | "balance" | "business";
 
@@ -412,7 +413,7 @@ export default function LifeTargetsMissions() {
     }
 
     if (!hasAllPrimaryTargets) {
-      toast.error(`Add a quarterly target for ${missingTargetDomains.map((domain) => domain.label).join(", ")} before generating Monthly Missions.`);
+      toast.error(`Add a quarterly target for ${missingTargetDomains.map((domain) => domain.label).join(", ")} before building the three-month plan.`);
       return;
     }
 
@@ -472,7 +473,7 @@ export default function LifeTargetsMissions() {
         );
       } catch (syncError) {
         console.error("Failed to seed standalone Monthly Missions after generation:", syncError);
-        toast.error("Monthly missions were generated, but we couldn't sync them into the standalone Monthly Missions page.");
+        toast.error("The plan was built, but we couldn't seed it into This Month.");
       }
       setCurrentStep('primary');
       
@@ -513,7 +514,7 @@ export default function LifeTargetsMissions() {
         );
       } catch (syncError) {
         console.error('Failed to sync primary-target missions into standalone Monthly Missions:', syncError);
-        toast.error("Primary target was saved, but we couldn't sync that domain into the standalone Monthly Missions page.");
+        toast.error("The main focus was saved, but we couldn't seed that domain into This Month.");
       }
       toast.success('Primary target saved');
     } catch (error) {
@@ -565,7 +566,7 @@ export default function LifeTargetsMissions() {
       );
     } catch (syncError) {
       console.error('Failed to sync edited monthly mission into standalone Monthly Missions:', syncError);
-      toast.error("Mission was saved, but we couldn't sync that edit into the standalone Monthly Missions page.");
+      toast.error("The mission was saved, but we couldn't sync that edit into This Month.");
     }
   };
 
@@ -610,26 +611,42 @@ export default function LifeTargetsMissions() {
 
   return (
     <div className="container max-w-6xl py-8 space-y-8">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
+      <CadenceMap active="quarterly" compact showHandoffNote />
+
+      <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+        <div className="flex min-w-0 items-start gap-3 sm:gap-4">
           <Button variant="ghost" size="icon" onClick={() => navigate(lifeTargetsBasePath)}>
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <div>
             <div className="flex items-center gap-4 mb-1">
-              <h1 className="text-3xl font-bold">Monthly Missions</h1>
+              <h1 className="text-3xl font-bold">Plan the Next 3 Months</h1>
               <QuarterDisplay
                 quarter={currentQuarter}
                 onEditClick={() => setShowChangeDialog(true)}
               />
             </div>
             <p className="text-muted-foreground">
-              Turn your quarterly targets into monthly suggestions. Empty Monthly Missions slots can be filled from here, and untouched generated missions can refresh without replacing missions you've edited yourself.
+              Create one editable suggestion per month for each quarterly target. The current
+              month's suggestion can seed an empty This Month slot; your manual edits remain yours.
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="hidden items-center gap-1.5 text-xs text-muted-foreground md:flex" role="status">
+            {saveTargets.isPending ? (
+              <>
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                Saving…
+              </>
+            ) : (
+              <>
+                <CheckCircle2 className="h-3.5 w-3.5 text-[#2997FF]" />
+                Plan saved
+              </>
+            )}
+          </span>
           <Select value={selectedDomain} onValueChange={setSelectedDomain}>
             <SelectTrigger className="w-40">
               <SelectValue />
@@ -656,7 +673,7 @@ export default function LifeTargetsMissions() {
             ) : (
               <>
                 <RefreshCw className="mr-2 h-4 w-4" />
-                {hasMissionsData(monthlyMissions) ? 'Refresh Suggestions' : 'Generate Suggestions'}
+                {hasMissionsData(monthlyMissions) ? 'Refresh 3-Month Plan' : 'Build 3-Month Plan'}
               </>
             )}
           </Button>
@@ -665,9 +682,9 @@ export default function LifeTargetsMissions() {
 
       {!hasTargets && (
         <div className="text-center py-12 text-muted-foreground">
-          <p className="mb-4">Set your quarterly targets first so we can generate monthly suggestions from them.</p>
+            <p className="mb-4">Approve your quarterly direction first so the three-month plan has something to build from.</p>
           <Button onClick={() => navigate(lifeTargetsBasePath)}>
-            Create Your Targets
+            Build Quarterly Direction
           </Button>
         </div>
       )}
@@ -677,7 +694,7 @@ export default function LifeTargetsMissions() {
           <CardContent className="p-6">
             <p className="font-semibold">Finish all four Core Four targets first.</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Monthly Missions are built one per domain. Add a target for {missingTargetDomains.map((domain) => domain.label).join(", ")} so Standard Playbook does not duplicate another area or leave a gap.
+              The three-month plan needs one direction per domain. Add a target for {missingTargetDomains.map((domain) => domain.label).join(", ")} so Standard Playbook does not duplicate another area or leave a gap.
             </p>
             <Button
               className="mt-4"
@@ -715,7 +732,7 @@ export default function LifeTargetsMissions() {
                       className={canContinue ? "bg-[#2997FF] hover:bg-[#2997FF]" : ""}
                     >
                       {canContinue && <CheckCircle2 className="mr-2 h-4 w-4" />}
-                      Continue to Daily Actions
+                      Continue to Daily Proof
                     </Button>
                   </span>
                 </TooltipTrigger>

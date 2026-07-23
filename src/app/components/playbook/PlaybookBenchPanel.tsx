@@ -7,6 +7,7 @@ import { LatinCross } from "@/app/components/icons/LatinCross";
 import { useDraggable } from "@dnd-kit/core";
 import { cn } from "@/lib/utils";
 import type { FocusItem, PlaybookDomain } from "@/app/hooks/useFocusItems";
+import { IconTooltip } from "@/app/components/IconTooltip";
 
 const domainFilters: { key: PlaybookDomain | "all"; label: string; icon?: React.ElementType; color?: string }[] = [
   { key: "all", label: "All" },
@@ -178,27 +179,34 @@ function BenchItem({
           )}
         </TooltipContent>
       </Tooltip>
-      <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="flex items-center gap-0.5 opacity-100 transition-opacity sm:opacity-40 sm:group-hover:opacity-100 sm:focus-within:opacity-100">
         {!item.completed && (
+          <IconTooltip
+            label="Schedule as a Power Play"
+            detail="Choose the day, domain, and optional time for this Bench item."
+          >
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-7 w-7"
+              onClick={() => onSchedule(item.id)}
+              aria-label={`Schedule ${item.title}`}
+            >
+              <Calendar className="h-3.5 w-3.5" />
+            </Button>
+          </IconTooltip>
+        )}
+        <IconTooltip label="Delete from the Bench" detail="Removes this item from Weekly Playbook.">
           <Button
             variant="ghost"
             size="icon"
-            className="h-6 w-6"
-            onClick={() => onSchedule(item.id)}
-            title="Schedule"
+            className="h-7 w-7 text-muted-foreground hover:text-destructive"
+            onClick={() => onDelete(item.id)}
+            aria-label={`Delete ${item.title}`}
           >
-            <Calendar className="h-3.5 w-3.5" />
+            <Trash2 className="h-3.5 w-3.5" />
           </Button>
-        )}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-6 w-6 text-muted-foreground hover:text-destructive"
-          onClick={() => onDelete(item.id)}
-          title="Delete"
-        >
-          <Trash2 className="h-3.5 w-3.5" />
-        </Button>
+        </IconTooltip>
       </div>
     </div>
   );

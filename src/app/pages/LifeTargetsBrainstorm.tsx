@@ -19,6 +19,7 @@ import {
 import { toast } from "sonner";
 import { isValidUUID } from "@/app/lib/validation";
 import { DomainIcon } from "@/app/components/icons/appIcons";
+import { IconTooltip } from "@/app/components/IconTooltip";
 
 
 const DOMAINS = [
@@ -267,17 +268,23 @@ export default function LifeTargetsBrainstorm() {
                   }}
                   className="flex-1"
                 />
-                <Button 
-                  onClick={() => handleAddTarget(key)}
-                  disabled={!inputs[key].trim() || isSubmitting[key]}
-                  size="icon"
+                <IconTooltip
+                  label={`Add ${label} idea`}
+                  detail="Adds this idea to the current Brain Dump. You can edit or remove it before choosing targets."
                 >
-                  {isSubmitting[key] ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Plus className="h-4 w-4" />
-                  )}
-                </Button>
+                  <Button
+                    onClick={() => handleAddTarget(key)}
+                    disabled={!inputs[key].trim() || isSubmitting[key]}
+                    size="icon"
+                    aria-label={`Add ${label} idea`}
+                  >
+                    {isSubmitting[key] ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Plus className="h-4 w-4" />
+                    )}
+                  </Button>
+                </IconTooltip>
               </div>
 
               {/* Target List */}
@@ -318,21 +325,27 @@ export default function LifeTargetsBrainstorm() {
                       ) : (
                         <>
                           <p className="flex-1 text-sm">{target.target_text}</p>
-                          <Button
-                            size="icon"
-                            variant="ghost"
-                            onClick={() => handleStartEdit(target.id, target.target_text)}
-                          >
-                            <Edit2 className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            size="icon"
-                            variant="ghost"
-                            onClick={() => handleDelete(target.id)}
-                            disabled={deleteMutation.isPending}
-                          >
-                            <Trash2 className="h-4 w-4 text-destructive" />
-                          </Button>
+                          <IconTooltip label="Edit this idea">
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              onClick={() => handleStartEdit(target.id, target.target_text)}
+                              aria-label={`Edit ${target.target_text}`}
+                            >
+                              <Edit2 className="h-4 w-4" />
+                            </Button>
+                          </IconTooltip>
+                          <IconTooltip label="Delete this idea">
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              onClick={() => handleDelete(target.id)}
+                              disabled={deleteMutation.isPending}
+                              aria-label={`Delete ${target.target_text}`}
+                            >
+                              <Trash2 className="h-4 w-4 text-destructive" />
+                            </Button>
+                          </IconTooltip>
                         </>
                       )}
                     </div>

@@ -24,6 +24,7 @@ import type {
   WeeklyReflectionSourceFlow,
 } from "@/app/types/weeklyReflection";
 import { cn } from "@/lib/utils";
+import { HelpButton } from "@/app/components/HelpButton";
 
 function formatGeneratedAt(value: string | null) {
   if (!value) return null;
@@ -460,9 +461,12 @@ export default function WeeklyReflection() {
       <header className="border-b-[1.5px] border-foreground pb-6">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="min-w-0">
-            <h1 className="text-[clamp(38px,7vw,68px)] text-foreground">
-              Weekly Reflection
-            </h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-[clamp(38px,7vw,68px)] text-foreground">
+                Weekly Reflection
+              </h1>
+              <HelpButton videoKey="weekly_reflection" />
+            </div>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
               See how you are showing up, what is becoming clear, and who your words say you are becoming.
             </p>

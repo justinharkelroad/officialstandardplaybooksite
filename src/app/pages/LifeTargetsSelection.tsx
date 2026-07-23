@@ -153,7 +153,7 @@ export default function LifeTargetsSelection() {
         sessionId: currentSessionId!,
       });
       
-      toast.success('Targets locked in. Review and save your quarterly targets next.');
+      toast.success('Targets chosen. Add context or make final edits next.');
       setTimeout(() => {
         navigate('/app/life-targets/quarterly');
       }, 1000);
@@ -213,12 +213,13 @@ export default function LifeTargetsSelection() {
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <Sparkles className="h-8 w-8 text-primary" />
-            <h1 className="text-3xl font-bold">Select Your Top 2</h1>
+            <h1 className="text-3xl font-bold">Choose Your Targets</h1>
           </div>
           <QuarterSelector />
         </div>
         <p className="text-muted-foreground">
-          Review the AI analysis and select your top 1-2 targets per domain. You can apply AI suggestions to improve clarity.
+          Choose the one target that matters most in each domain. Add a second only when both
+          genuinely belong in this quarter.
         </p>
       </div>
 
@@ -322,18 +323,18 @@ export default function LifeTargetsSelection() {
         })}
       </div>
 
-      {/* Lock In Button */}
+      {/* Continue Button */}
       <Card className="border-primary/20 bg-primary/5">
         <CardContent className="pt-6">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
               <h3 className="font-semibold flex items-center gap-2">
                 <Lock className="h-5 w-5 text-primary" />
-                Ready to lock in your selections?
+                Ready to use these targets?
               </h3>
               <p className="text-sm text-muted-foreground">
                 {canLockIn 
-                  ? 'Your selections will be saved as your quarterly targets.'
+                  ? 'These will move into one final review before the three-month plan is built.'
                   : 'Select at least 1 target per domain (max 2) to continue.'
                 }
               </p>
@@ -347,11 +348,11 @@ export default function LifeTargetsSelection() {
               {lockInMutation.isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Locking In...
+                  Saving Choices...
                 </>
               ) : (
                 <>
-                  Lock In Selections
+                  Use These Targets
                   <CheckCircle2 className="h-4 w-4" />
                 </>
               )}

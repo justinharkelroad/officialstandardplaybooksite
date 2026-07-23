@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, Target } from "lucide-react";
 import { format, addDays, isToday, isBefore, startOfDay } from "date-fns";
 import { useDroppable } from "@dnd-kit/core";
 import { cn } from "@/lib/utils";
+import { IconTooltip } from "@/app/components/IconTooltip";
 
 interface PlaybookWeekHeaderProps {
   weekStart: Date;
@@ -128,9 +129,17 @@ export function PlaybookWeekHeader({
     <div className="space-y-3">
       {/* Week navigation + score ring */}
       <div className="flex min-w-0 items-center justify-between gap-1">
-        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onPrevWeek}>
-          <ChevronLeft className="h-4 w-4" />
-        </Button>
+        <IconTooltip label="View previous week">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={onPrevWeek}
+            aria-label="View previous week"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+        </IconTooltip>
 
         <div className="flex min-w-0 items-center gap-2 sm:gap-3">
           {/* Mini progress ring */}
@@ -172,9 +181,17 @@ export function PlaybookWeekHeader({
           </div>
         </div>
 
-        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onNextWeek}>
-          <ChevronRight className="h-4 w-4" />
-        </Button>
+        <IconTooltip label="View next week">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={onNextWeek}
+            aria-label="View next week"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </IconTooltip>
       </div>
 
       {/* Day tabs — each is a drop target */}

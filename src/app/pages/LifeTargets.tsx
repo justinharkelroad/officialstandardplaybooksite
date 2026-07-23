@@ -33,6 +33,7 @@ import { useResetQuarter } from "@/app/hooks/useResetQuarter";
 import { useChangeQuarterLabel } from "@/app/hooks/useChangeQuarterLabel";
 import { MoveQuarterDialog } from "@/app/components/life-targets/MoveQuarterDialog";
 import { HelpButton } from '@/app/components/HelpButton';
+import { CadenceMap } from '@/app/components/CadenceMap';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -196,8 +197,8 @@ export default function LifeTargets() {
     },
     {
       id: 'selection',
-      title: 'Select Top 2',
-      description: 'Review the AI clarity notes, apply suggestions where they help, and choose 1 or 2 targets per Core Four area.',
+      title: 'Choose Your Targets',
+      description: 'Review the clarity notes, apply suggestions where they help, and choose 1 or 2 targets per Core Four area.',
       icon: Target,
       status: targetsSet > 0 ? 'complete' : hasBrainstormTargets ? 'current' : 'locked',
       onClick: () => hasBrainstormTargets && currentSessionId ? navigate(`${lifeTargetsBasePath}/selection?session=${currentSessionId}`) : null,
@@ -206,8 +207,8 @@ export default function LifeTargets() {
     },
     {
       id: 'targets',
-      title: 'Set Quarterly Targets',
-      description: 'Review the targets from Brain Dump, analyze their clarity, and save the quarter before Monthly Missions unlock.',
+      title: 'Review & Approve',
+      description: 'Add context, make any final edits, and approve the targets that will guide this quarter.',
       icon: Target,
       status: targetsSet > 0 ? 'complete' : 'locked',
       onClick: () => navigate(`${lifeTargetsBasePath}/quarterly`),
@@ -215,8 +216,8 @@ export default function LifeTargets() {
     },
     {
       id: 'missions',
-      title: 'Generate Monthly Missions',
-      description: 'Turn each Core Four target into a monthly suggestion. One domain, one mission, no duplicated categories.',
+      title: 'Plan the Next 3 Months',
+      description: 'Turn each Core Four target into one editable mission suggestion for each month in the quarter.',
       icon: Calendar,
       status: hasMissions ? 'complete' : targetsSet > 0 ? 'current' : 'locked',
       onClick: () => targetsSet > 0 && navigate(`${lifeTargetsBasePath}/missions`),
@@ -224,8 +225,8 @@ export default function LifeTargets() {
     },
     {
       id: 'primary',
-      title: 'Select Primary Targets',
-      description: 'Choose which target to focus on for daily habits',
+      title: 'Choose Main Focus',
+      description: 'If a domain has two targets, choose the one that should feed This Month, Daily, and 90 Day Audio.',
       icon: Target,
       status: hasPrimarySelections ? 'complete' : (hasMissions && domainsWithMultipleTargets > 0) ? 'current' : 'locked',
       onClick: () => hasMissions && domainsWithMultipleTargets > 0 && navigate(`${lifeTargetsBasePath}/missions`),
@@ -234,8 +235,8 @@ export default function LifeTargets() {
     },
     {
       id: 'actions',
-      title: 'Get Daily Actions',
-      description: 'Browse optional daily ideas. Pick the ones that fit, skip the rest, or add your own.',
+      title: 'Choose Daily Proof',
+      description: 'Pick optional actions that can appear in Daily so each checkmark has a clear meaning.',
       icon: Zap,
       status: hasHabits > 0 ? 'complete' : (hasMissions && (domainsWithMultipleTargets === 0 || hasPrimarySelections)) ? 'current' : 'locked',
       onClick: () => (hasMissions && (domainsWithMultipleTargets === 0 || hasPrimarySelections)) && navigate(`${lifeTargetsBasePath}/daily`),
@@ -263,13 +264,14 @@ export default function LifeTargets() {
       <div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-2">
           <div className="flex items-center gap-2">
-            <h1 className="text-3xl font-bold">Create Your Targets</h1>
+            <h1 className="text-3xl font-bold">Quarterly Direction</h1>
             <HelpButton videoKey="tool-quarterly-targets" size="md" />
           </div>
           <QuarterSelector />
         </div>
         <p className="text-muted-foreground mb-4">
-          Plan your entire 90 days target action map. Set the big quarterly, choose how to break it down monthly and then select as many daily habits to utilize as you need
+          Build the 90-day direction for Body, Being, Balance, and Business. Quarterly can seed
+          This Month; you decide what moves into Weekly and what counts as Daily proof.
         </p>
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
@@ -279,6 +281,8 @@ export default function LifeTargets() {
           <Progress value={progress} className="h-2" />
         </div>
       </div>
+
+      <CadenceMap active="quarterly" compact showHandoffNote />
 
       {/* Show alert if current quarter has no data but other quarters do */}
       {!targets && !isLoading && availableQuarters.length > 0 && selectionSource !== 'manual' && (
@@ -382,9 +386,10 @@ export default function LifeTargets() {
           <CardContent className="p-6 text-center space-y-4">
             <CheckCircle2 className="h-12 w-12 text-primary mx-auto" />
             <div>
-              <h3 className="text-xl font-semibold mb-2">Quarter Setup Complete!</h3>
+              <h3 className="text-xl font-semibold mb-2">Your Quarter Is Live</h3>
               <p className="text-muted-foreground">
-                You've completed all steps for {formatQuarterDisplay(currentQuarter)}. Keep building your daily habits!
+                You have direction, monthly focus, and optional daily proof for {formatQuarterDisplay(currentQuarter)}.
+                Send the work that matters onto your Weekly Bench when you are ready to schedule it.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center pt-2">

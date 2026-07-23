@@ -1,5 +1,7 @@
 import { SmartBackButton } from '@/app/components/SmartBackButton';
 import { Core4MonthlyMissions } from '@/app/components/core4/Core4MonthlyMissions';
+import { CadenceMap } from '@/app/components/CadenceMap';
+import { HelpButton } from '@/app/components/HelpButton';
 
 export default function MonthlyMissions() {
   return (
@@ -10,16 +12,21 @@ export default function MonthlyMissions() {
             authenticatedPath="/app"
             authenticatedLabel="Hub"
           />
-          <div>
-            <h1 className="text-xl font-bold">Monthly Missions</h1>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2">
+              <h1 className="text-xl font-bold">This Month</h1>
+              <HelpButton videoKey="monthly_missions" />
+            </div>
             <p className="text-sm text-muted-foreground">
-              Set your live monthly missions here. Quarterly Targets can seed empty domains and refresh untouched generated missions, while anything you edit here stays yours.
+              Execute the live mission for each Core Four domain. Quarterly can fill empty slots,
+              while anything you edit here remains yours.
             </p>
           </div>
         </div>
       </div>
 
       <div className="max-w-4xl mx-auto px-4 py-6">
+        <CadenceMap active="monthly" compact showHandoffNote className="mb-6" />
         <Core4MonthlyMissions />
       </div>
     </div>
