@@ -18,7 +18,7 @@ import { SmartBackButton } from '@/app/components/SmartBackButton';
 import { HelpButton } from '@/app/components/HelpButton';
 import { CadenceMap } from '@/app/components/CadenceMap';
 import { IconTooltip } from '@/app/components/IconTooltip';
-import { AppIcon } from "@/app/components/icons/appIcons";
+import { StandardProgressMark } from "@/app/components/core4/StandardProgressMark";
 import { useQuarterlyTargets } from "@/app/hooks/useQuarterlyTargets";
 import { getCurrentQuarter } from "@/app/lib/quarterUtils";
 
@@ -275,17 +275,13 @@ export default function Core4() {
           </div>
 
           {/* Right: Status Display */}
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex min-h-[22rem] flex-col items-center justify-center">
             <div className="text-center space-y-4">
-              <div className="text-8xl">
-                {selectedDatePoints === 4 ? <AppIcon name="streak" className="h-5 w-5" /> : <AppIcon name="reflect" className="h-5 w-5" />}
-              </div>
-              <div>
-                <p className="text-4xl font-bold">{selectedDatePoints}/4</p>
-                <p className="text-muted-foreground">
-                  {isToday(selectedDate) ? "Today's Score" : format(selectedDate, 'MMM d') + ' Score'}
-                </p>
-              </div>
+              <StandardProgressMark
+                points={selectedDatePoints}
+                dateKey={format(selectedDate, 'yyyy-MM-dd')}
+                scoreLabel={isToday(selectedDate) ? "Today's Score" : format(selectedDate, 'MMM d') + ' Score'}
+              />
               {currentStreak > 0 && isToday(selectedDate) && (
                 <div className="flex items-center justify-center gap-2 text-[#2997FF]">
                   <Flame className="h-6 w-6" />
