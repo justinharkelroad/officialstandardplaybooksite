@@ -121,21 +121,10 @@ body:has(.aii-page) {
 
 .aii-hero {
   position: relative;
-  min-height: min(920px, 100dvh);
-  padding: clamp(116px, 10vw, 150px) 0 64px;
+  min-height: min(880px, 100dvh);
+  padding: clamp(96px, 8vw, 118px) 0 54px;
   overflow: hidden;
   background: var(--aii-paper);
-}
-
-.aii-hero__watermark {
-  position: absolute;
-  top: clamp(110px, 12vw, 175px);
-  right: clamp(-120px, -5vw, -50px);
-  width: clamp(280px, 33vw, 560px);
-  height: auto;
-  opacity: 0.11;
-  pointer-events: none;
-  user-select: none;
 }
 
 .aii-hero__inner {
@@ -152,24 +141,26 @@ body:has(.aii-page) {
   margin-bottom: 24px !important;
 }
 
-.aii-hero__title {
-  grid-column: 1 / -1;
+.aii-hero__copy {
+  position: relative;
+  z-index: 2;
+  grid-column: 1 / span 5;
   grid-row: 2;
+  align-self: center;
+}
+
+.aii-hero__title {
   color: var(--aii-ink);
   font-family: var(--aii-display);
-  font-size: clamp(72px, 12.5vw, 192px);
+  font-size: clamp(72px, 7.3vw, 110px);
   font-weight: 400;
   letter-spacing: -0.02em;
-  line-height: 0.84;
+  line-height: 0.86;
   text-transform: uppercase;
 }
 
 .aii-hero__line {
   display: block;
-}
-
-.aii-hero__line--offset {
-  padding-left: clamp(24px, 9vw, 136px);
 }
 
 .aii-hero__line > span,
@@ -180,29 +171,68 @@ body:has(.aii-page) {
 }
 
 .aii-hero__subhead {
-  grid-column: 1 / span 7;
-  grid-row: 3;
-  margin-top: 46px !important;
-  max-width: 780px;
-  font-size: clamp(17px, 1.6vw, 22px);
-  line-height: 1.56;
+  max-width: 470px;
+  margin-top: 30px !important;
+  font-size: clamp(17px, 1.35vw, 20px);
+  line-height: 1.52;
   opacity: 0.82;
 }
 
-.aii-hero > .aii-shell > .aii-cta {
-  grid-column: 9 / -1;
-  grid-row: 3;
-  align-self: start;
-  justify-self: end;
-  margin-top: 46px;
+.aii-hero__copy > .aii-cta {
+  margin-top: 28px;
+}
+
+.aii-hero__visual {
+  position: relative;
+  grid-column: 6 / -1;
+  grid-row: 2;
+  align-self: center;
+  padding: 26px 8px 24px 38px;
+}
+
+.aii-hero__media-mark {
+  position: absolute;
+  top: -15%;
+  right: -8%;
+  width: min(55%, 430px);
+  height: auto;
+  opacity: 0.18;
+  pointer-events: none;
+  user-select: none;
+  transform: rotate(11deg);
+}
+
+.aii-hero__video-frame {
+  position: relative;
+  z-index: 1;
+  padding: 10px;
+  border: 1px solid var(--aii-ink);
+  background: var(--aii-ink);
+  box-shadow: -16px 16px 0 var(--aii-blue);
+}
+
+.aii-hero__video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--aii-ink);
+}
+
+.aii-hero__video iframe {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 .aii-chips {
   grid-column: 1 / -1;
-  grid-row: 4;
+  grid-row: 3;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  margin-top: 52px;
+  margin-top: 48px;
   border-top: 1px solid var(--aii-ink);
   border-bottom: 1px solid var(--aii-ink);
 }
@@ -760,9 +790,13 @@ body:has(.aii-page) {
   }
 
   .aii-hero__subhead,
-  .aii-hero > .aii-shell > .aii-cta,
+  .aii-hero__copy > .aii-cta,
   .aii-chips {
     animation: aii-enter 720ms 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .aii-hero__visual {
+    animation: aii-enter 820ms 210ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }
 
@@ -787,12 +821,17 @@ body:has(.aii-page) {
     min-height: auto;
   }
 
-  .aii-hero__subhead {
-    grid-column: 1 / span 8;
+  .aii-hero__copy {
+    grid-column: 1 / span 5;
   }
 
-  .aii-hero > .aii-shell > .aii-cta {
-    grid-column: 9 / -1;
+  .aii-hero__title {
+    font-size: clamp(66px, 7.3vw, 82px);
+  }
+
+  .aii-hero__visual {
+    grid-column: 6 / -1;
+    padding-left: 24px;
   }
 
   .aii-chips {
@@ -836,14 +875,7 @@ body:has(.aii-page) {
   }
 
   .aii-hero {
-    padding: 104px 0 54px;
-  }
-
-  .aii-hero__watermark {
-    top: 112px;
-    right: -100px;
-    width: 300px;
-    opacity: 0.08;
+    padding: 98px 0 50px;
   }
 
   .aii-hero__inner {
@@ -860,23 +892,36 @@ body:has(.aii-page) {
     line-height: 0.86;
   }
 
-  .aii-hero__line--offset {
-    padding-left: 7vw;
-  }
-
   .aii-hero__subhead {
-    margin-top: 32px !important;
+    margin-top: 26px !important;
     font-size: 17px;
   }
 
-  .aii-hero > .aii-shell > .aii-cta {
+  .aii-hero__copy > .aii-cta {
     width: 100%;
-    margin-top: 28px;
+    margin-top: 24px;
+  }
+
+  .aii-hero__visual {
+    margin-top: 36px;
+    padding: 12px 10px 14px 0;
+  }
+
+  .aii-hero__media-mark {
+    top: -17%;
+    right: -14%;
+    width: 58%;
+    opacity: 0.16;
+  }
+
+  .aii-hero__video-frame {
+    padding: 7px;
+    box-shadow: -9px 9px 0 var(--aii-blue);
   }
 
   .aii-chips {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-top: 36px;
+    margin-top: 42px;
   }
 
   .aii-chip {

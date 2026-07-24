@@ -12,6 +12,8 @@ const PAGE_DESCRIPTION =
   "A live two-day build, August 26-27. Agency owners and managers build their AI co-working brain start to finish with Justin Harkelroad. Claude or Codex. $997 all in.";
 const PAGE_URL = "https://standardplaybook.com/aiinstall";
 const OG_IMAGE = "https://standardplaybook.com/og/ai-install-bold.png";
+const VIMEO_EMBED_URL =
+  "https://player.vimeo.com/video/1212684071?app_id=122963&title=0&byline=0&portrait=0&dnt=1";
 
 function setMetaTag(name: string, content: string, attribute: "name" | "property" = "name") {
   let element = document.querySelector(`meta[${attribute}="${name}"]`) as HTMLMetaElement | null;
@@ -219,26 +221,40 @@ export default function AIInstall() {
 
       <main id="aii-main">
         <section className="aii-hero">
-          <img
-            className="aii-hero__watermark"
-            src={playbookIconBlue}
-            alt=""
-            aria-hidden="true"
-          />
           <div className="aii-shell aii-hero__inner">
             <p className="aii-kicker">LIVE TWO-DAY BUILD &middot; AUGUST 26-27</p>
-            <h1 className="aii-hero__title">
-              <span className="aii-hero__line">The Agency</span>
-              {" "}
-              <span className="aii-hero__line aii-hero__line--offset">
-                AI <span>Install</span>.
-              </span>
-            </h1>
-            <p className="aii-hero__subhead">
-              Two days on Zoom, side by side with Justin, building your agency's AI co-working brain
-              from a blank folder to a running system. Built in Claude or in OpenAI's Codex, your
-              pick, same build. Not a course about AI. A build. You leave with it working.
-            </p>
+            <div className="aii-hero__copy">
+              <h1 className="aii-hero__title">
+                <span className="aii-hero__line">The Agency</span>
+                <span className="aii-hero__line">
+                  AI <span>Install</span>.
+                </span>
+              </h1>
+              <p className="aii-hero__subhead">
+                Build your agency's AI co-working brain live with Justin. Two days, Claude or Codex,
+                and you leave with it working.
+              </p>
+              <EnrollButton />
+            </div>
+            <div className="aii-hero__visual">
+              <img
+                className="aii-hero__media-mark"
+                src={playbookIconBlue}
+                alt=""
+                aria-hidden="true"
+              />
+              <div className="aii-hero__video-frame">
+                <div className="aii-hero__video">
+                  <iframe
+                    src={VIMEO_EMBED_URL}
+                    title="AI Install Workshop video message"
+                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            </div>
             <div className="aii-chips" aria-label="Workshop details">
               {chips.map((chip, index) => (
                 <span className="aii-chip" key={index}>
@@ -246,7 +262,6 @@ export default function AIInstall() {
                 </span>
               ))}
             </div>
-            <EnrollButton />
           </div>
         </section>
 
