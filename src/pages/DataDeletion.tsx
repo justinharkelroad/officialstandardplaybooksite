@@ -100,7 +100,7 @@ const DataDeletion = () => (
               </Link>
               .
             </p>
-            <p className="mt-4">Last updated: July 16, 2026</p>
+            <p className="mt-4">Last updated: July 24, 2026</p>
           </section>
         </div>
       </div>

@@ -14,6 +14,7 @@ import {
   PanelLeft,
   PanelLeftClose,
   Rocket,
+  Settings as SettingsIcon,
   Shield,
   Sparkles,
   Sun,
@@ -53,7 +54,10 @@ const NAV_GROUPS = [
   },
   {
     label: "Reinforce",
-    items: [{ to: "/app/theta-talk-track", label: "90 Day Audio", icon: AudioLines }],
+    items: [
+      { to: "/app/theta-talk-track", label: "90 Day Audio", icon: AudioLines },
+      { to: "/app/settings", label: "Settings", icon: SettingsIcon },
+    ],
   },
 ];
 

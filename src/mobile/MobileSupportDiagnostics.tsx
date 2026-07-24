@@ -35,9 +35,9 @@ export default function MobileSupportDiagnostics() {
       privacy: "No journal answers, transcript text, passwords, or auth tokens are included.",
     };
     await Share.share({
-      title: "Standard Playbook beta diagnostics",
+      title: "Standard Playbook diagnostics",
       text: JSON.stringify(report, null, 2),
-      dialogTitle: "Copy or share beta diagnostics",
+      dialogTitle: "Copy or share app diagnostics",
     });
   };
 
@@ -45,7 +45,7 @@ export default function MobileSupportDiagnostics() {
     <button
       type="button"
       onClick={() => void shareDiagnostics()}
-      aria-label="Share beta support diagnostics"
+      aria-label="Share app support diagnostics"
       title={`Standard Playbook ${info.version} (${info.build})`}
       className="flex h-11 w-11 shrink-0 items-center justify-center text-foreground/60 transition-colors hover:text-[#2997FF] lg:h-auto lg:w-auto"
     >

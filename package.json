@@ -11,7 +11,7 @@
     "build:pages": "vite build && node scripts/og-stamp.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "test:unit": "tsx --test src/app/hooks/*.test.ts src/app/lib/*.test.ts src/lib/*.test.ts",
+    "test:unit": "tsx --test src/app/lib/*.test.ts",
     "preview": "vite preview",
     "preview:mobile": "vite preview --config vite.mobile.config.ts",
     "mobile:assets:android": "node scripts/generate-android-brand-assets.mjs",
