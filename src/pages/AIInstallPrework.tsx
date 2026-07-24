@@ -30,6 +30,7 @@ const PLATFORM_CONFIG: Record<
     label: string;
     pageTitle: string;
     description: string;
+    ogImage: string;
     downloadUrl: string;
     downloadLabel: string;
     officialGuideUrl: string;
@@ -45,6 +46,7 @@ const PLATFORM_CONFIG: Record<
     pageTitle: "Claude Pre-Work | The Agency AI Install",
     description:
       "Get Claude Desktop and your Agency AI Brain folder ready for The Agency AI Install.",
+    ogImage: "/og/ai-install-claude-prework.png",
     downloadUrl: "https://claude.com/download",
     downloadLabel: "Download Claude",
     officialGuideUrl: "https://code.claude.com/docs/en/desktop-quickstart",
@@ -76,6 +78,7 @@ const PLATFORM_CONFIG: Record<
     pageTitle: "Codex Pre-Work | The Agency AI Install",
     description:
       "Get Codex and your Agency AI Brain folder ready for The Agency AI Install.",
+    ogImage: "/og/ai-install-codex-prework.png",
     downloadUrl: "https://chatgpt.com/download/",
     downloadLabel: "Download ChatGPT",
     officialGuideUrl: "https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex",
@@ -203,11 +206,23 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
+    const pageUrl = `https://standardplaybook.com/aiinstall/prework/${selectedPlatform}`;
+    const imageUrl = `https://standardplaybook.com${config.ogImage}`;
+
     document.title = config.pageTitle;
     setMetaTag("description", config.description);
     setMetaTag("robots", "noindex, nofollow");
     setMetaTag("theme-color", "#F4F2EE");
-    setCanonicalUrl(`https://standardplaybook.com/aiinstall/prework/${selectedPlatform}`);
+    setMetaTag("og:title", config.pageTitle, "property");
+    setMetaTag("og:description", config.description, "property");
+    setMetaTag("og:type", "website", "property");
+    setMetaTag("og:url", pageUrl, "property");
+    setMetaTag("og:image", imageUrl, "property");
+    setMetaTag("twitter:card", "summary_large_image");
+    setMetaTag("twitter:title", config.pageTitle);
+    setMetaTag("twitter:description", config.description);
+    setMetaTag("twitter:image", imageUrl);
+    setCanonicalUrl(pageUrl);
 
     try {
       const saved = window.localStorage.getItem(storageKey);
@@ -221,7 +236,7 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
     } catch {
       setCompleted([]);
     }
-  }, [config.description, config.pageTitle, selectedPlatform, storageKey]);
+  }, [config.description, config.ogImage, config.pageTitle, selectedPlatform, storageKey]);
 
   const completedCount = completed.length;
   const totalCount = READINESS_ITEMS.length;
