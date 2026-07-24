@@ -54,6 +54,7 @@ export interface AiInstallPurchase {
 }
 
 export interface AiInstallEmailResources {
+  zoomRegistrationUrl?: string | null;
   zoomUrl?: string | null;
   calendarUrl?: string | null;
   claudePreworkUrl?: string | null;
@@ -176,7 +177,12 @@ export function renderAiInstallPurchaseEmail(
         url: resources.calendarUrl,
       }
       : null,
-    resources.zoomUrl
+    resources.zoomRegistrationUrl
+      ? {
+        label: "Register for the live Zoom workshop",
+        url: resources.zoomRegistrationUrl,
+      }
+      : resources.zoomUrl
       ? { label: "Open the live Zoom room", url: resources.zoomUrl }
       : null,
   ].filter((resource): resource is { label: string; url: string } =>
