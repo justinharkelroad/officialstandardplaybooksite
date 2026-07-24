@@ -210,15 +210,6 @@ export function TodayRhythmHero() {
                     >
                       {token.label}
                     </span>
-                    <span
-                      className={cn(
-                        "line-clamp-2 min-h-8 text-center text-[11px] font-normal normal-case leading-4 tracking-normal",
-                        completed ? "text-white/80" : "text-muted-foreground",
-                      )}
-                    >
-                      {primaryProof ?? "Complete today's commitment"}
-                      {proofIdeas.length > 1 ? ` +${proofIdeas.length - 1} more` : ""}
-                    </span>
                   </button>
                 </IconTooltip>
               );
