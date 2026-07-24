@@ -32,6 +32,7 @@ const ROUTES = [
   // '/app' excluded — AppRedirect immediately navigates to external URL
   '/appinfo',
   '/thetool',
+  '/aiinstall',
   '/about',
   '/contact',
   '/decision',

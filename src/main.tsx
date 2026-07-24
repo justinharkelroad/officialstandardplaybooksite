@@ -1,8 +1,19 @@
 import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
-import { initializeInstalledWebApp } from './pwa.ts'
 
-// Force rebuild
-initializeInstalledWebApp();
-createRoot(document.getElementById("root")!).render(<App />);
+const root = createRoot(document.getElementById("root")!);
+const pathname = window.location.pathname.replace(/\/+$/, "") || "/";
+
+if (pathname === "/aiinstall") {
+  import("./pages/AIInstall.tsx").then(({ default: AIInstall }) => {
+    root.render(<AIInstall />);
+  });
+} else {
+  Promise.all([
+    import("./App.tsx"),
+    import("./index.css"),
+    import("./pwa.ts"),
+  ]).then(([{ default: App }, , { initializeInstalledWebApp }]) => {
+    initializeInstalledWebApp();
+    root.render(<App />);
+  });
+}

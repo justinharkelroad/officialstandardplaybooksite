@@ -13,6 +13,7 @@ import TheTool from "./pages/TheTool";
 const MemberLogin = lazy(() => import("./app/LoginRoute"));
 const ResetPassword = lazy(() => import("./app/pages/ResetPassword"));
 const MemberApp = lazy(() => import("./app/MemberAppRoutes"));
+const AIInstall = lazy(() => import("./pages/AIInstall"));
 import Boardroom from "./pages/Boardroom";
 import Directive from "./pages/Directive";
 import SalesExperience from "./pages/SalesExperience";
@@ -75,7 +76,8 @@ function RouteParticles() {
   const { pathname } = useLocation();
   const isMemberSurface =
     pathname === "/login" || pathname === "/reset-password" || pathname === "/app" || pathname.startsWith("/app/");
-  return isMemberSurface ? null : <Particles />;
+  const isCleanLandingPage = pathname === "/aiinstall";
+  return isMemberSurface || isCleanLandingPage ? null : <Particles />;
 }
 
 const App = () => (
@@ -144,6 +146,7 @@ const App = () => (
           <Route path="/standard90" element={<BoldStandard90 />} />
           <Route path="/standard-90" element={<Navigate to="/standard90" replace />} />
           <Route path="/ascension" element={<Ascension />} />
+          <Route path="/aiinstall" element={<Suspense fallback={null}><AIInstall /></Suspense>} />
           <Route path="/certified-standard" element={<BoldCertifiedStandard />} />
           <Route path="/team-standard" element={<BoldTeamStandard />} />
           <Route path="/teamstandard" element={<Navigate to="/team-standard" replace />} />
