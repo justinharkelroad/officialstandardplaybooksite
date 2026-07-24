@@ -14,6 +14,122 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_install_email_sends: {
+        Row: {
+          attempt_count: number
+          created_at: string
+          error: string | null
+          id: string
+          kind: string
+          last_attempt_at: string | null
+          purchase_id: string
+          recipient_email: string
+          resend_id: string | null
+          sent_at: string | null
+          status: string
+          subject: string
+          updated_at: string
+        }
+        Insert: {
+          attempt_count?: number
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind: string
+          last_attempt_at?: string | null
+          purchase_id: string
+          recipient_email: string
+          resend_id?: string | null
+          sent_at?: string | null
+          status?: string
+          subject: string
+          updated_at?: string
+        }
+        Update: {
+          attempt_count?: number
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind?: string
+          last_attempt_at?: string | null
+          purchase_id?: string
+          recipient_email?: string
+          resend_id?: string | null
+          sent_at?: string | null
+          status?: string
+          subject?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_install_email_sends_purchase_id_fkey"
+            columns: ["purchase_id"]
+            isOneToOne: false
+            referencedRelation: "ai_install_purchases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_install_purchases: {
+        Row: {
+          amount_total: number | null
+          business_name: string | null
+          created_at: string
+          currency: string | null
+          email: string
+          full_name: string | null
+          id: string
+          last_stripe_event_id: string
+          payment_status: string
+          phone: string | null
+          purchased_at: string
+          stripe_checkout_session_id: string
+          stripe_payment_intent_id: string | null
+          stripe_payment_link_id: string
+          tool_choice: string
+          tool_choice_raw: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount_total?: number | null
+          business_name?: string | null
+          created_at?: string
+          currency?: string | null
+          email: string
+          full_name?: string | null
+          id?: string
+          last_stripe_event_id: string
+          payment_status: string
+          phone?: string | null
+          purchased_at: string
+          stripe_checkout_session_id: string
+          stripe_payment_intent_id?: string | null
+          stripe_payment_link_id: string
+          tool_choice?: string
+          tool_choice_raw?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount_total?: number | null
+          business_name?: string | null
+          created_at?: string
+          currency?: string | null
+          email?: string
+          full_name?: string | null
+          id?: string
+          last_stripe_event_id?: string
+          payment_status?: string
+          phone?: string | null
+          purchased_at?: string
+          stripe_checkout_session_id?: string
+          stripe_payment_intent_id?: string | null
+          stripe_payment_link_id?: string
+          tool_choice?: string
+          tool_choice_raw?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       booking_leads: {
         Row: {
           cell_phone: string | null
@@ -485,7 +601,6 @@ export type Database = {
           coach_memory_announced_at: string | null
           coach_memory_paused: boolean
           core_values: string[] | null
-          core_values_context: string | null
           created_at: string | null
           current_challenges: string | null
           current_goals: string | null
@@ -498,7 +613,6 @@ export type Database = {
           guided_interview_version: number | null
           id: string
           life_roles: string[] | null
-          life_roles_context: string | null
           overwhelm_response: string | null
           peak_state: string | null
           preferred_name: string | null
@@ -512,7 +626,6 @@ export type Database = {
           coach_memory_announced_at?: string | null
           coach_memory_paused?: boolean
           core_values?: string[] | null
-          core_values_context?: string | null
           created_at?: string | null
           current_challenges?: string | null
           current_goals?: string | null
@@ -525,7 +638,6 @@ export type Database = {
           guided_interview_version?: number | null
           id?: string
           life_roles?: string[] | null
-          life_roles_context?: string | null
           overwhelm_response?: string | null
           peak_state?: string | null
           preferred_name?: string | null
@@ -539,7 +651,6 @@ export type Database = {
           coach_memory_announced_at?: string | null
           coach_memory_paused?: boolean
           core_values?: string[] | null
-          core_values_context?: string | null
           created_at?: string | null
           current_challenges?: string | null
           current_goals?: string | null
@@ -552,7 +663,6 @@ export type Database = {
           guided_interview_version?: number | null
           id?: string
           life_roles?: string[] | null
-          life_roles_context?: string | null
           overwhelm_response?: string | null
           peak_state?: string | null
           preferred_name?: string | null
@@ -1538,7 +1648,6 @@ export type Database = {
           coach_memory_announced_at: string | null
           coach_memory_paused: boolean
           core_values: string[] | null
-          core_values_context: string | null
           created_at: string | null
           current_challenges: string | null
           current_goals: string | null
@@ -1551,7 +1660,6 @@ export type Database = {
           guided_interview_version: number | null
           id: string
           life_roles: string[] | null
-          life_roles_context: string | null
           overwhelm_response: string | null
           peak_state: string | null
           preferred_name: string | null
