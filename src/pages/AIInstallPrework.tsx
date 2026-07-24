@@ -44,7 +44,7 @@ const PLATFORM_CONFIG: Record<
     label: "Claude",
     pageTitle: "Claude Pre-Work | The Agency AI Install",
     description:
-      "Install Claude Desktop, confirm local folder access, and stage the source files required for The Agency AI Install.",
+      "Get Claude Desktop and your Agency AI Brain folder ready for The Agency AI Install.",
     downloadUrl: "https://claude.com/download",
     downloadLabel: "Download Claude",
     officialGuideUrl: "https://code.claude.com/docs/en/desktop-quickstart",
@@ -52,22 +52,22 @@ const PLATFORM_CONFIG: Record<
     alternatePath: "/aiinstall/prework/codex",
     alternateLabel: "Using Codex instead?",
     requirements:
-      "Claude Code in the desktop app requires a Claude Pro, Max, Team, or Enterprise plan.",
+      "Before you begin: the Code feature in Claude Desktop requires a Claude Pro, Max, Team, or Enterprise plan.",
     setupSteps: [
       {
-        title: "Install Claude Desktop.",
+        title: "Download Claude and sign in.",
         copy:
-          "Download the current desktop app for macOS or Windows. Open it and sign in with the Anthropic account you will use during both workshop days.",
+          "Click Download Claude above. Install the app, open it, and sign in with the account you will use during both workshop days.",
       },
       {
-        title: "Open the Code tab.",
+        title: "Create your workshop folder.",
         copy:
-          "Choose Code at the top of Claude Desktop. If the app asks you to upgrade or sign in again, finish that now and restart the app.",
+          "Open Finder on a Mac or File Explorer on Windows. Open Documents and create a new folder named Agency AI Brain.",
       },
       {
-        title: "Choose Local and select your folder.",
+        title: "Connect Claude to the folder.",
         copy:
-          "Create a folder in Documents named Agency AI Brain. In the Code tab, choose Local, select that folder, and allow Claude to work inside it.",
+          "Open Claude Desktop and click Code at the top. Choose Local, select Documents > Agency AI Brain, and allow access if Claude asks.",
       },
     ],
   },
@@ -75,7 +75,7 @@ const PLATFORM_CONFIG: Record<
     label: "Codex",
     pageTitle: "Codex Pre-Work | The Agency AI Install",
     description:
-      "Install the ChatGPT desktop app, confirm Codex local folder access, and stage the source files required for The Agency AI Install.",
+      "Get Codex and your Agency AI Brain folder ready for The Agency AI Install.",
     downloadUrl: "https://chatgpt.com/download/",
     downloadLabel: "Download ChatGPT",
     officialGuideUrl: "https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex",
@@ -83,22 +83,22 @@ const PLATFORM_CONFIG: Record<
     alternatePath: "/aiinstall/prework/claude",
     alternateLabel: "Using Claude instead?",
     requirements:
-      "Codex is included across ChatGPT plans. A paid plan is recommended so workshop usage is not constrained by lower limits.",
+      "Before you begin: Codex is available with ChatGPT. We recommend a paid plan because free accounts may reach their usage limit during the workshop.",
     setupSteps: [
       {
-        title: "Install the current ChatGPT desktop app.",
+        title: "Download ChatGPT and sign in.",
         copy:
-          "Download the app for macOS or Windows. Open it and sign in with the ChatGPT account you will use during both workshop days.",
+          "Click Download ChatGPT above. Install the app, open it, and sign in with the account you will use during both workshop days.",
       },
       {
-        title: "Switch to Codex.",
+        title: "Create your workshop folder.",
         copy:
-          "Use the menu in the top left of the desktop app and select Codex. Do not use a normal Chat conversation for this setup.",
+          "Open Finder on a Mac or File Explorer on Windows. Open Documents and create a new folder named Agency AI Brain.",
       },
       {
-        title: "Open your local folder.",
+        title: "Connect Codex to the folder.",
         copy:
-          "Create a folder in Documents named Agency AI Brain. Start a local Codex chat, open that folder, and approve access when the app asks.",
+          "Open ChatGPT, use the menu in the top left to select Codex, and choose the Agency AI Brain folder. Allow access if Codex asks.",
       },
     ],
   },
@@ -107,27 +107,27 @@ const PLATFORM_CONFIG: Record<
 const CONTEXT_ITEMS: ChecklistItem[] = [
   {
     id: "writing",
-    title: "Five real writing samples",
+    title: "Five examples of your writing",
     copy:
-      "Bring emails, team messages, SOPs, social posts, or other writing that actually sounds like you. Remove customer information first.",
+      "Add emails, team messages, step-by-step instructions, or social posts that sound like you. Remove names and private customer information first.",
   },
   {
     id: "team",
-    title: "One team roster",
+    title: "A list of your team members",
     copy:
-      "List each person's name, role, responsibilities, reporting line, and the context you wish your AI coworker already understood.",
+      "Include each person's name, job, main responsibilities, and who they report to. Add anything important you want the AI to understand about your team.",
   },
   {
     id: "projects",
-    title: "Your active projects",
+    title: "A list of what you are working on",
     copy:
-      "For each project, note the intended outcome, owner, deadline, current status, and the obstacle slowing it down.",
+      "For each project, include the goal, who is responsible, the deadline, what has been completed, and what is getting in the way.",
   },
   {
     id: "rules",
-    title: "Your operating preferences",
+    title: "How you like work to be done",
     copy:
-      "Write down communication rules, non-negotiables, recurring decisions, and anything you repeatedly explain to your team.",
+      "Write down how you prefer to communicate, rules your team must follow, and anything you find yourself explaining repeatedly.",
   },
 ];
 
@@ -144,23 +144,23 @@ const READINESS_ITEMS: ChecklistItem[] = [
   },
   {
     id: "folder",
-    title: "Agency AI Brain opens as a local folder.",
-    copy: "The app can see the folder in Documents and is allowed to work inside it.",
+    title: "The app can open my Agency AI Brain folder.",
+    copy: "I selected the folder inside Documents and allowed the app to use it.",
   },
   {
     id: "proof",
-    title: "READY.txt exists inside the folder.",
-    copy: "The platform created the test file and I can open it from Finder or File Explorer.",
+    title: "I can see the READY.txt test file.",
+    copy: "The app created the file and I can see it inside my Agency AI Brain folder.",
   },
   {
     id: "context",
-    title: "My source pack is staged.",
-    copy: "Writing samples, team roster, active projects, and operating preferences are ready.",
+    title: "I added information about me and my agency.",
+    copy: "My writing examples, team list, current projects, and work preferences are inside the folder.",
   },
   {
     id: "privacy",
-    title: "Sensitive customer data is removed.",
-    copy: "No passwords, API keys, payment information, SSNs, policy numbers, claim files, or customer PII are included.",
+    title: "I removed private and sensitive information.",
+    copy: "The folder has no passwords, secret access keys, payment details, Social Security numbers, policy numbers, claim files, or private customer information.",
   },
 ];
 
@@ -278,8 +278,8 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
                 <span>{config.label}</span> Pre-Work.
               </h1>
               <p className="aip-hero__subhead">
-                Install the app, prove local folder access, and stage the files we will turn into
-                your agency brain.
+                Get your computer ready for the workshop. We will help you install the app, create
+                one folder, and add the examples we will use to build your AI system.
               </p>
               <div className="aip-hero__actions">
                 <a
@@ -319,7 +319,7 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
           <div className="aii-shell">
             <div className="aip-section__heading">
               <span>01</span>
-              <h2>Install and open the right workspace.</h2>
+              <h2>Install the app and create your workshop folder.</h2>
             </div>
             <p className="aip-requirement">{config.requirements}</p>
             <div className="aip-setup-grid">
@@ -339,11 +339,12 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
             <div>
               <div className="aip-section__heading">
                 <span>02</span>
-                <h2>Prove the folder connection.</h2>
+                <h2>Make sure the app can use your folder.</h2>
               </div>
               <p>
-                Paste this into a local {config.label} session with Agency AI Brain open. Approve
-                the file change, then confirm READY.txt appears in the folder.
+                Open {config.label} with your Agency AI Brain folder selected. Copy the instruction
+                below, paste it into the message box, and send it. If the app asks for permission
+                to create the file, click Allow.
               </p>
             </div>
             <div className="aip-prompt">
@@ -359,11 +360,11 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
           <div className="aii-shell">
             <div className="aip-section__heading">
               <span>03</span>
-              <h2>Stage the raw material.</h2>
+              <h2>Add the information we will use during the workshop.</h2>
             </div>
             <p className="aip-section__intro">
-              Put these inside Agency AI Brain before the workshop. Plain text, PDF, or Word files
-              are fine. Real beats polished.
+              Put these items inside your Agency AI Brain folder. They do not need to look perfect.
+              Notes, Word documents, PDFs, and copied-and-pasted text are all fine.
             </p>
             <div className="aip-materials__grid">
               {CONTEXT_ITEMS.map((item, index) => (
@@ -381,7 +382,7 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
           <div className="aii-shell">
             <div className="aip-section__heading">
               <span>04</span>
-              <h2>Earn the seat.</h2>
+              <h2>Final check: make sure you are ready.</h2>
             </div>
             <p className="aip-section__intro">
               Check each line on the computer you will bring. Your progress stays in this browser.
@@ -432,7 +433,7 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
           </div>
           <p>
             Bring the same computer you used for pre-work. Keep it plugged in, updated, and ready
-            to work inside the local Agency AI Brain folder.
+            to work inside your Agency AI Brain folder.
           </p>
         </div>
       </footer>
