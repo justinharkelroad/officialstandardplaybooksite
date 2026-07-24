@@ -14,6 +14,7 @@ const MemberLogin = lazy(() => import("./app/LoginRoute"));
 const ResetPassword = lazy(() => import("./app/pages/ResetPassword"));
 const MemberApp = lazy(() => import("./app/MemberAppRoutes"));
 const AIInstall = lazy(() => import("./pages/AIInstall"));
+const AIInstallPrework = lazy(() => import("./pages/AIInstallPrework"));
 import Boardroom from "./pages/Boardroom";
 import Directive from "./pages/Directive";
 import SalesExperience from "./pages/SalesExperience";
@@ -76,7 +77,7 @@ function RouteParticles() {
   const { pathname } = useLocation();
   const isMemberSurface =
     pathname === "/login" || pathname === "/reset-password" || pathname === "/app" || pathname.startsWith("/app/");
-  const isCleanLandingPage = pathname === "/aiinstall";
+  const isCleanLandingPage = pathname === "/aiinstall" || pathname.startsWith("/aiinstall/");
   return isMemberSurface || isCleanLandingPage ? null : <Particles />;
 }
 
@@ -147,6 +148,14 @@ const App = () => (
           <Route path="/standard-90" element={<Navigate to="/standard90" replace />} />
           <Route path="/ascension" element={<Ascension />} />
           <Route path="/aiinstall" element={<Suspense fallback={null}><AIInstall /></Suspense>} />
+          <Route
+            path="/aiinstall/prework/claude"
+            element={<Suspense fallback={null}><AIInstallPrework platform="claude" /></Suspense>}
+          />
+          <Route
+            path="/aiinstall/prework/codex"
+            element={<Suspense fallback={null}><AIInstallPrework platform="codex" /></Suspense>}
+          />
           <Route path="/certified-standard" element={<BoldCertifiedStandard />} />
           <Route path="/team-standard" element={<BoldTeamStandard />} />
           <Route path="/teamstandard" element={<Navigate to="/team-standard" replace />} />
