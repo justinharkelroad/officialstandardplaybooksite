@@ -56,7 +56,8 @@ function stamp(template, route, cfg) {
   const desc = cfg.subhead;
 
   let html = template;
-  html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${esc(title)} | The Standard Playbook</title>`);
+  const metaTitle = cfg.metaTitle || `${title} | The Standard Playbook`;
+  html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${esc(metaTitle)}</title>`);
   html = setMeta(html, 'description', desc);
   html = setMeta(html, 'og:title', title);
   html = setMeta(html, 'og:description', desc);

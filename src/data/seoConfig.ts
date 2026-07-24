@@ -54,6 +54,14 @@ export const seoConfig: Record<string, SEOConfig> = {
     canonical: 'https://standardplaybook.com/ascension',
     type: 'article',
   },
+  '/aiinstall': {
+    title: 'The Agency AI Install | Standard Playbook',
+    description: 'A live two-day build, August 26-27. Agency owners and managers build their AI co-working brain start to finish with Justin Harkelroad. Claude or Codex. $997 all in.',
+    keywords: ['insurance agency AI', 'AI workshop', 'Claude for insurance agencies', 'Codex for insurance agencies', 'agency systems'],
+    ogImage: 'https://standardplaybook.com/og/ai-install.png',
+    canonical: 'https://standardplaybook.com/aiinstall',
+    type: 'website',
+  },
   '/partnership': {
     title: 'Partnership Coaching for Insurance Agency Owners | Standard Playbook',
     description: '1:1 coaching plus team training for insurance agency owners ready to scale. Limited enrollment. Built by an operator, not a consultant.',

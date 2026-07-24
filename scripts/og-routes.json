@@ -45,6 +45,12 @@
       "title": "8-Week Sales Management",
       "subhead": "Stop managing chaos. Start running a system.",
       "image": "/og/sales-experience.jpg"
+    },
+    "/aiinstall": {
+      "title": "The Agency AI Install",
+      "metaTitle": "The Agency AI Install | Standard Playbook",
+      "subhead": "A live two-day build, August 26-27. Agency owners and managers build their AI co-working brain start to finish with Justin Harkelroad. Claude or Codex. $997 all in.",
+      "image": "/og/ai-install.png"
     }
   }
 }
