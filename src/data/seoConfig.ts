@@ -58,7 +58,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     title: 'The Agency AI Install | Standard Playbook',
     description: 'A live two-day build, August 26-27. Agency owners and managers build their AI co-working brain start to finish with Justin Harkelroad. Claude or Codex. $997 all in.',
     keywords: ['insurance agency AI', 'AI workshop', 'Claude for insurance agencies', 'Codex for insurance agencies', 'agency systems'],
-    ogImage: 'https://standardplaybook.com/og/ai-install.png',
+    ogImage: 'https://standardplaybook.com/og/ai-install-bold.png',
     canonical: 'https://standardplaybook.com/aiinstall',
     type: 'website',
   },
