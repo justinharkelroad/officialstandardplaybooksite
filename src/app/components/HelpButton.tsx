@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { CircleHelp, Compass, PlayCircle } from "lucide-react";
+import { Compass, Play, PlayCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
@@ -281,14 +281,18 @@ export function HelpButton({
           type="button"
           variant="ghost"
           size={showLabel ? "sm" : "icon"}
-          aria-label={`Help: ${content.title}`}
+          aria-label={`Watch video: ${content.title}`}
           className={cn(
-            showLabel ? "h-9 gap-2" : size === "md" ? "h-9 w-9" : "h-7 w-7",
-            "shrink-0 text-muted-foreground hover:text-[#2997FF]",
+            showLabel
+              ? "h-9 gap-2 rounded-full px-3"
+              : size === "md"
+                ? "h-9 w-9 rounded-full"
+                : "h-8 w-8 rounded-full",
+            "shrink-0 border border-[#2997FF] bg-[#2997FF] text-white shadow-[0_5px_16px_rgba(41,151,255,0.22)] hover:scale-[1.04] hover:bg-[#147BDE] hover:text-white active:scale-[0.97]",
             className,
           )}
         >
-          <CircleHelp className="h-4 w-4" />
+          <Play className="h-3.5 w-3.5 translate-x-px fill-current" />
           {showLabel ? label : null}
         </Button>
       </DialogTrigger>
