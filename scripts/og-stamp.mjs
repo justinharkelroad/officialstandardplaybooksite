@@ -66,6 +66,10 @@ function stamp(template, route, cfg) {
   html = setMeta(html, 'twitter:title', title);
   html = setMeta(html, 'twitter:description', desc);
   html = setMeta(html, 'twitter:image', img);
+  if (cfg.robots) {
+    html = setMeta(html, 'robots', cfg.robots);
+    html = setMeta(html, 'googlebot', cfg.robots);
+  }
   html = html.replace(/(<link\s+rel="canonical"\s+href=")[^"]*(")/i, `$1${url}$2`);
   return html;
 }
