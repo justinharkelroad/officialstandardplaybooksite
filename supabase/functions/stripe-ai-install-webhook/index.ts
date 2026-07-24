@@ -32,10 +32,11 @@ Deno.serve(async (req: Request): Promise<Response> => {
   }
 
   try {
-    const stripeSecretKey = requiredEnv("STRIPE_SECRET_KEY");
     const webhookSecret = Deno.env.get("STRIPE_AI_INSTALL_WEBHOOK_SECRET") ||
       requiredEnv("STRIPE_WEBHOOK_SECRET");
-    const stripe = new Stripe(stripeSecretKey);
+    // Signature verification is local cryptography and does not call Stripe's
+    // API, so this function should not require access to the account secret key.
+    const stripe = new Stripe("sk_webhook_signature_verification_only");
     const cryptoProvider = Stripe.createSubtleCryptoProvider();
     const rawBody = await req.text();
 
