@@ -6,7 +6,7 @@ import playbookIconBlue from "@/assets/sp-icon-blue.png";
 
 import "./AIInstall.css";
 
-const STRIPE_LINK = "[STRIPE LINK]";
+const STRIPE_LINK = "https://buy.stripe.com/cNi9AT3GK8qG9S8fSk4Vy0w";
 const PAGE_TITLE = "The Agency AI Install | Standard Playbook";
 const PAGE_DESCRIPTION =
   "A live two-day build, August 26-27. Agency owners and managers build their AI co-working brain start to finish with Justin Harkelroad. Claude or Codex. $997 all in.";
