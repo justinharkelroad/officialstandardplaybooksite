@@ -54,10 +54,10 @@ export interface AiInstallPurchase {
 }
 
 export interface AiInstallEmailResources {
-  zoomUrl: string;
-  calendarUrl: string;
-  claudePreworkUrl: string;
-  codexPreworkUrl: string;
+  zoomUrl?: string | null;
+  calendarUrl?: string | null;
+  claudePreworkUrl?: string | null;
+  codexPreworkUrl?: string | null;
 }
 
 export interface AiInstallEmail {
@@ -150,19 +150,48 @@ export function renderAiInstallPurchaseEmail(
 ): AiInstallEmail {
   const firstName = purchase.fullName?.split(/\s+/)[0] || "there";
   const selectedPrework = purchase.toolChoice === "claude"
-    ? [{ label: "Open Claude pre-work", url: resources.claudePreworkUrl }]
+    ? resources.claudePreworkUrl
+      ? [{ label: "Open Claude pre-work", url: resources.claudePreworkUrl }]
+      : []
     : purchase.toolChoice === "codex"
-    ? [{ label: "Open Codex pre-work", url: resources.codexPreworkUrl }]
+    ? resources.codexPreworkUrl
+      ? [{ label: "Open Codex pre-work", url: resources.codexPreworkUrl }]
+      : []
     : [
-      { label: "Open Claude pre-work", url: resources.claudePreworkUrl },
-      { label: "Open Codex pre-work", url: resources.codexPreworkUrl },
-    ];
+      resources.claudePreworkUrl
+        ? { label: "Open Claude pre-work", url: resources.claudePreworkUrl }
+        : null,
+      resources.codexPreworkUrl
+        ? { label: "Open Codex pre-work", url: resources.codexPreworkUrl }
+        : null,
+    ].filter((resource): resource is { label: string; url: string } =>
+      resource !== null
+    );
 
   const resourceRows = [
     ...selectedPrework,
-    { label: "Add the workshop to your calendar", url: resources.calendarUrl },
-    { label: "Open the live Zoom room", url: resources.zoomUrl },
-  ].map((resource) => resourceButton(resource.label, resource.url)).join("");
+    resources.calendarUrl
+      ? {
+        label: "Add the workshop to your calendar",
+        url: resources.calendarUrl,
+      }
+      : null,
+    resources.zoomUrl
+      ? { label: "Open the live Zoom room", url: resources.zoomUrl }
+      : null,
+  ].filter((resource): resource is { label: string; url: string } =>
+    resource !== null
+  ).map((resource) => resourceButton(resource.label, resource.url)).join("");
+  const resourceSection = resourceRows
+    ? `<tr>
+              <td style="padding:24px;">
+                ${resourceRows}
+              </td>
+            </tr>`
+    : "";
+  const nextStepCopy = resourceRows
+    ? "Your available workshop links are below."
+    : "We’ll send your workshop access and preparation details separately.";
 
   const subject = "You’re in: The Agency AI Install";
   const toolLabel = purchase.toolChoice === "undecided"
@@ -183,7 +212,7 @@ export function renderAiInstallPurchaseEmail(
   </head>
   <body style="margin:0;background:#f4f2ee;color:#0a0a0b;font-family:Arial,Helvetica,sans-serif;">
     <div style="display:none;max-height:0;overflow:hidden;opacity:0;">
-      Your purchase is confirmed. Save your workshop links and complete the pre-work.
+      Your purchase is confirmed for The Agency AI Install.
     </div>
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f2ee;">
       <tr>
@@ -208,14 +237,10 @@ export function renderAiInstallPurchaseEmail(
                 <p style="margin:0 0 16px;">August 26–27, 1–5 PM Eastern. Your selected build path is <strong>${
       escapeHtml(toolLabel)
     }</strong>.</p>
-                <p style="margin:0;">Save these links now. We can refine the language later without changing the purchase automation.</p>
+                <p style="margin:0;">${escapeHtml(nextStepCopy)}</p>
               </td>
             </tr>
-            <tr>
-              <td style="padding:24px;">
-                ${resourceRows}
-              </td>
-            </tr>
+            ${resourceSection}
             <tr>
               <td style="padding:20px 24px;border-top:1px solid #d6d3cd;color:#686765;font-size:12px;line-height:1.5;">
                 Sent to ${
@@ -236,6 +261,7 @@ export function validateEmailResources(
   resources: AiInstallEmailResources,
 ): void {
   for (const [name, value] of Object.entries(resources)) {
+    if (!value) continue;
     let parsed: URL;
     try {
       parsed = new URL(value);

@@ -272,11 +272,15 @@ Deno.serve(async (req: Request): Promise<Response> => {
 
 function emailResources(): AiInstallEmailResources {
   return {
-    zoomUrl: requiredEnv("AI_INSTALL_ZOOM_URL"),
-    calendarUrl: requiredEnv("AI_INSTALL_CALENDAR_URL"),
-    claudePreworkUrl: requiredEnv("AI_INSTALL_CLAUDE_PREWORK_URL"),
-    codexPreworkUrl: requiredEnv("AI_INSTALL_CODEX_PREWORK_URL"),
+    zoomUrl: optionalEnv("AI_INSTALL_ZOOM_URL"),
+    calendarUrl: optionalEnv("AI_INSTALL_CALENDAR_URL"),
+    claudePreworkUrl: optionalEnv("AI_INSTALL_CLAUDE_PREWORK_URL"),
+    codexPreworkUrl: optionalEnv("AI_INSTALL_CODEX_PREWORK_URL"),
   };
+}
+
+function optionalEnv(name: string): string | null {
+  return Deno.env.get(name)?.trim() || null;
 }
 
 function requiredEnv(name: string): string {

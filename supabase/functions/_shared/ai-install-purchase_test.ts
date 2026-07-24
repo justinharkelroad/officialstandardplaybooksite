@@ -165,3 +165,25 @@ Deno.test("rejects missing or non-HTTPS resource URLs", () => {
   }
   assert(rejected, "HTTP resource URLs should be rejected");
 });
+
+Deno.test("sends a confirmation even when optional resources are not ready", () => {
+  const purchase = extractAiInstallPurchase(session, 1784952001);
+  const resources = {};
+  validateEmailResources(resources);
+  const email = renderAiInstallPurchaseEmail(purchase, resources);
+
+  assert(
+    email.html.includes("your seat is confirmed"),
+    "Confirmation should remain present",
+  );
+  assert(
+    email.html.includes(
+      "send your workshop access and preparation details separately",
+    ),
+    "Email should explain that access details are coming later",
+  );
+  assert(
+    !email.html.includes("<a href="),
+    "No empty or placeholder links should render",
+  );
+});
