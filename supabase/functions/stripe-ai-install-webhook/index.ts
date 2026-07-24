@@ -273,6 +273,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
 
 function emailResources(): AiInstallEmailResources {
   return {
+    zoomRegistrationUrl: optionalEnv("AI_INSTALL_ZOOM_REGISTRATION_URL"),
     zoomUrl: optionalEnv("AI_INSTALL_ZOOM_URL"),
     calendarUrl: optionalEnv("AI_INSTALL_CALENDAR_URL"),
     claudePreworkUrl: optionalEnv("AI_INSTALL_CLAUDE_PREWORK_URL"),

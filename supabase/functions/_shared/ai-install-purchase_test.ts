@@ -130,6 +130,7 @@ Deno.test("renders the functional email with the correct branch and escaped buye
     fullName: "<Alex>",
   };
   const email = renderAiInstallPurchaseEmail(purchase, {
+    zoomRegistrationUrl: "https://example.com/register",
     zoomUrl: "https://example.com/zoom",
     calendarUrl: "https://example.com/calendar",
     claudePreworkUrl: "https://example.com/claude",
@@ -145,6 +146,18 @@ Deno.test("renders the functional email with the correct branch and escaped buye
     "Claude link should be omitted for Codex buyers",
   );
   assert(
+    email.html.includes("https://example.com/register"),
+    "Zoom registration link should be present",
+  );
+  assert(
+    email.html.includes("Register for the live Zoom workshop"),
+    "Zoom registration button should explain the next step",
+  );
+  assert(
+    !email.html.includes("https://example.com/zoom"),
+    "Direct Zoom room should be hidden when registration is available",
+  );
+  assert(
     email.html.includes("&lt;Alex&gt;"),
     "Buyer name must be HTML escaped",
   );
@@ -155,6 +168,7 @@ Deno.test("rejects missing or non-HTTPS resource URLs", () => {
   let rejected = false;
   try {
     validateEmailResources({
+      zoomRegistrationUrl: "http://example.com/register",
       zoomUrl: "http://example.com/zoom",
       calendarUrl: "https://example.com/calendar",
       claudePreworkUrl: "https://example.com/claude",
