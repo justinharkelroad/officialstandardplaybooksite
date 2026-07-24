@@ -2,6 +2,7 @@ import { useEffect, type ReactNode } from "react";
 
 import standardLogo from "@/assets/standard-word-logo.png";
 import playbookIcon from "@/assets/sp-icon-black.png";
+import playbookIconBlue from "@/assets/sp-icon-blue.png";
 
 import "./AIInstall.css";
 
@@ -190,7 +191,7 @@ export default function AIInstall() {
       "keywords",
       "insurance agency AI, AI workshop, Claude for insurance agencies, Codex for insurance agencies, agency systems",
     );
-    setMetaTag("theme-color", "#FFFFFF");
+    setMetaTag("theme-color", "#F4F2EE");
     setMetaTag("og:title", PAGE_TITLE, "property");
     setMetaTag("og:description", PAGE_DESCRIPTION, "property");
     setMetaTag("og:type", "website", "property");
@@ -204,6 +205,9 @@ export default function AIInstall() {
 
   return (
     <div className="aii-page">
+      <a className="aii-skip-link" href="#aii-main">
+        Skip to content
+      </a>
       <header className="aii-header">
         <div className="aii-shell aii-header__inner">
           <a href="/" aria-label="Standard Playbook home">
@@ -213,12 +217,22 @@ export default function AIInstall() {
         </div>
       </header>
 
-      <main>
+      <main id="aii-main">
         <section className="aii-hero">
-          <div className="aii-shell">
+          <img
+            className="aii-hero__watermark"
+            src={playbookIconBlue}
+            alt=""
+            aria-hidden="true"
+          />
+          <div className="aii-shell aii-hero__inner">
             <p className="aii-kicker">LIVE TWO-DAY BUILD &middot; AUGUST 26-27</p>
             <h1 className="aii-hero__title">
-              The Agency AI <span>Install</span>.
+              <span className="aii-hero__line">The Agency</span>
+              {" "}
+              <span className="aii-hero__line aii-hero__line--offset">
+                AI <span>Install</span>.
+              </span>
             </h1>
             <p className="aii-hero__subhead">
               Two days on Zoom, side by side with Justin, building your agency's AI co-working brain
@@ -235,6 +249,21 @@ export default function AIInstall() {
             <EnrollButton />
           </div>
         </section>
+
+        <div className="aii-marquee-wrap" aria-hidden="true">
+          <div className="aii-marquee">
+            {[0, 1].map((group) => (
+              <div className="aii-marquee__group" key={group}>
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <span className="aii-marquee__item" key={index}>
+                    <span>THE AGENCY AI INSTALL</span>
+                    <i />
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
 
         <section className="aii-section">
           <div className="aii-shell aii-problem-grid">
@@ -291,7 +320,7 @@ export default function AIInstall() {
               {buildSteps.map((step) => (
                 <article className="aii-how-card" key={step.number}>
                   <p className="aii-card-label">
-                    {step.number} &middot; {step.title}:
+                    <span>{step.number}</span> &middot; {step.title}:
                   </p>
                   <p>{step.copy}</p>
                 </article>
