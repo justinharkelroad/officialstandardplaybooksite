@@ -14,6 +14,7 @@ import {
   PanelLeft,
   PanelLeftClose,
   Rocket,
+  Settings as SettingsIcon,
   Shield,
   Sparkles,
   Sun,
@@ -25,6 +26,7 @@ import { useAuth } from "@/app/lib/auth";
 import { useSpTheme } from "@/app/lib/theme";
 import { IconTooltip } from "@/app/components/IconTooltip";
 import { cn } from "@/lib/utils";
+import MobileSupportDiagnostics from "@/mobile/MobileSupportDiagnostics";
 
 const NAV_GROUPS = [
   {
@@ -52,7 +54,10 @@ const NAV_GROUPS = [
   },
   {
     label: "Reinforce",
-    items: [{ to: "/app/theta-talk-track", label: "90 Day Audio", icon: AudioLines }],
+    items: [
+      { to: "/app/theta-talk-track", label: "90 Day Audio", icon: AudioLines },
+      { to: "/app/settings", label: "Settings", icon: SettingsIcon },
+    ],
   },
 ];
 
@@ -276,6 +281,7 @@ export default function AppShell() {
           <div className="hidden lg:block" />
 
           <div className="flex min-w-0 items-center gap-1 sm:gap-3">
+            <MobileSupportDiagnostics />
             <IconTooltip label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"} side="bottom">
               <button
                 type="button"

@@ -11,15 +11,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  NativeAwareSelect,
 } from "@/app/components/ui/select";
 import type { PlaybookDomain } from "@/app/hooks/useFocusItems";
 import type { PlaybookTag } from "@/app/hooks/usePlaybookTags";
-import { getStoredSpTheme, spScopeClass } from "@/app/lib/theme";
+import { spScopeClass } from "@/app/lib/theme";
 import { cn } from "@/lib/utils";
 interface CreatePlaybookItemDialogProps {
   open: boolean;
@@ -65,11 +61,11 @@ export function CreatePlaybookItemDialog({
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={cn(spScopeClass(), "sm:max-w-md")}>
+      <DialogContent className={cn(spScopeClass(), "min-w-0 sm:max-w-md")}>
         <DialogHeader>
           <DialogTitle>New Playbook Item</DialogTitle>
         </DialogHeader>
-        <div className="space-y-4">
+        <div className="min-w-0 space-y-4">
           <div className="space-y-2">
             <Label>Title *</Label>
             <Input
@@ -90,36 +86,33 @@ export function CreatePlaybookItemDialog({
           </div>
           <div className="space-y-2">
             <Label>Domain</Label>
-            <Select value={domain} onValueChange={(v) => { setDomain(v as PlaybookDomain); setSubTagId(""); }}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select domain..." />
-              </SelectTrigger>
-              <SelectContent>
-                {domainOptions.map((d) => (
-                  <SelectItem key={d.value} value={d.value}>{d.label}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <NativeAwareSelect
+              ariaLabel="Domain"
+              value={domain}
+              placeholder="Select domain..."
+              options={domainOptions}
+              onValueChange={(value) => {
+                setDomain(value as PlaybookDomain);
+                setSubTagId("");
+              }}
+            />
           </div>
           {availableTags.length > 0 && (
             <div className="space-y-2">
               <Label>Sub-tag</Label>
-              <Select value={subTagId} onValueChange={setSubTagId}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select sub-tag..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {availableTags.map((tag) => (
-                    <SelectItem key={tag.id} value={tag.id}>{tag.name}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <NativeAwareSelect
+                ariaLabel="Sub-tag"
+                value={subTagId}
+                placeholder="Select sub-tag..."
+                options={availableTags.map((tag) => ({ value: tag.id, label: tag.name }))}
+                onValueChange={setSubTagId}
+              />
             </div>
           )}
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
-          <Button onClick={handleSubmit} disabled={!title.trim()}>Create</Button>
+          <Button className="min-h-11 w-full sm:w-auto" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
+          <Button className="min-h-11 w-full sm:w-auto" onClick={handleSubmit} disabled={!title.trim()}>Create</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

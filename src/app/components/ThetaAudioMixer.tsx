@@ -50,7 +50,7 @@ interface ThetaAudioMixerProps {
 }
 
 // Helper to load lamejs UMD build dynamically
-const ensureLameLoaded = (): Promise<any> => {
+const ensureLameLoaded = (): Promise<LameJsGlobal> => {
   return new Promise((resolve, reject) => {
     if (window.lamejs?.Mp3Encoder) {
       console.debug("lamejs already loaded");
@@ -268,9 +268,9 @@ export function ThetaAudioMixer({ segments, backgroundTrackPath, trackId }: Thet
       tempContext.close();
       toast.success('MP3 track ready! Works on all devices (~25 MB)');
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error mixing audio:', error);
-      setErrorMessage(error.message || 'Failed to mix audio');
+      setErrorMessage(error instanceof Error ? error.message : 'Failed to mix audio');
       setStatus('error');
       toast.error('Failed to mix audio track');
     }
@@ -376,17 +376,22 @@ export function ThetaAudioMixer({ segments, backgroundTrackPath, trackId }: Thet
     }
   };
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (!mixedAudioUrl) return;
-
-    const a = document.createElement('a');
-    a.href = mixedAudioUrl;
-    a.download = `theta-track-${trackId}.mp3`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    
-    toast.success("Download started!");
+    try {
+      const response = await fetch(mixedAudioUrl);
+      if (!response.ok) throw new Error("Unable to read the generated audio file.");
+      const { shareOrDownloadFile } = await import("@/mobile/nativeFiles");
+      await shareOrDownloadFile({
+        blob: await response.blob(),
+        fileName: `theta-track-${trackId}.mp3`,
+        title: "Share or save 90 Day Audio",
+      });
+      toast.success("Audio ready to share or save!");
+    } catch (error) {
+      console.error("Theta audio share failed:", error);
+      toast.error("The generated audio could not be shared. Try again.");
+    }
   };
 
   const formatElapsed = (seconds: number) => {

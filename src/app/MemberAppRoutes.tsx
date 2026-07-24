@@ -30,6 +30,7 @@ import FlowComplete from "@/app/pages/flows/FlowComplete";
 import FlowView from "@/app/pages/flows/FlowView";
 import ThetaTalkTrack from "@/app/pages/ThetaTalkTrack";
 import ThetaTalkTrackCreate from "@/app/pages/ThetaTalkTrackCreate";
+import Settings from "@/app/pages/Settings";
 
 export default function MemberAppRoutes() {
   return (
@@ -64,6 +65,7 @@ export default function MemberAppRoutes() {
             <Route path="flows/profile" element={<FlowProfile />} />
             <Route path="theta-talk-track" element={<ThetaTalkTrack />} />
             <Route path="theta-talk-track/create" element={<ThetaTalkTrackCreate />} />
+            <Route path="settings" element={<Settings />} />
             <Route element={<RequireAdmin />}>
               <Route path="admin" element={<AdminPage />} />
             </Route>

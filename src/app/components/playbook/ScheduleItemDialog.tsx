@@ -9,16 +9,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  NativeAwareSelect,
 } from "@/app/components/ui/select";
-import { format, addDays, startOfWeek } from "date-fns";
+import { format, addDays } from "date-fns";
 import type { PlaybookDomain } from "@/app/hooks/useFocusItems";
 import type { PlaybookTag } from "@/app/hooks/usePlaybookTags";
-import { getStoredSpTheme, spScopeClass } from "@/app/lib/theme";
+import { spScopeClass } from "@/app/lib/theme";
 import { cn } from "@/lib/utils";
 interface ScheduleItemDialogProps {
   open: boolean;
@@ -97,11 +93,11 @@ export function ScheduleItemDialog({
   const isFull = selectedDayCount >= 4;
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className={cn(spScopeClass(), "sm:max-w-md")}>
+      <DialogContent className={cn(spScopeClass(), "min-w-0 sm:max-w-md")}>
         <DialogHeader>
           <DialogTitle>Schedule Power Play</DialogTitle>
         </DialogHeader>
-        <div className="space-y-4">
+        <div className="min-w-0 space-y-4">
           <div>
             <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
               &ldquo;{itemTitle}&rdquo;
@@ -110,7 +106,7 @@ export function ScheduleItemDialog({
           {/* Day picker */}
           <div className="space-y-2">
             <Label>Day</Label>
-            <div className="grid grid-cols-7 gap-1.5">
+            <div className="grid grid-cols-4 gap-2 sm:grid-cols-7 sm:gap-1.5">
               {weekDays.map((wd) => (
                 <button
                   key={wd.dateStr}
@@ -144,60 +140,47 @@ export function ScheduleItemDialog({
           {/* Time */}
           <div className="space-y-2">
             <Label>Time (optional)</Label>
-            <Select value={scheduledTime} onValueChange={setScheduledTime}>
-              <SelectTrigger>
-                <SelectValue placeholder="No time set" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="none">No time set</SelectItem>
-                {timeOptions.map((t) => (
-                  <SelectItem key={t.value} value={t.value}>
-                    {t.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <NativeAwareSelect
+              ariaLabel="Scheduled time"
+              value={scheduledTime}
+              placeholder="No time set"
+              options={[{ value: "none", label: "No time set" }, ...timeOptions]}
+              onValueChange={setScheduledTime}
+            />
           </div>
           {/* Domain */}
           <div className="space-y-2">
             <Label>Domain (optional)</Label>
-            <Select value={domain} onValueChange={(v) => { setDomain(v as PlaybookDomain); setSubTagId(""); }}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select domain..." />
-              </SelectTrigger>
-              <SelectContent>
-                {domainOptions.map((d) => (
-                  <SelectItem key={d.value} value={d.value}>
-                    {d.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <NativeAwareSelect
+              ariaLabel="Domain"
+              value={domain}
+              placeholder="Select domain..."
+              options={domainOptions}
+              onValueChange={(value) => {
+                setDomain(value as PlaybookDomain);
+                setSubTagId("");
+              }}
+            />
           </div>
           {/* Sub-tag */}
           {availableTags.length > 0 && (
             <div className="space-y-2">
               <Label>Sub-tag (optional)</Label>
-              <Select value={subTagId} onValueChange={setSubTagId}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select sub-tag..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {availableTags.map((tag) => (
-                    <SelectItem key={tag.id} value={tag.id}>
-                      {tag.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <NativeAwareSelect
+                ariaLabel="Sub-tag"
+                value={subTagId}
+                placeholder="Select sub-tag..."
+                options={availableTags.map((tag) => ({ value: tag.id, label: tag.name }))}
+                onValueChange={setSubTagId}
+              />
             </div>
           )}
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={() => handleOpenChange(false)}>
+          <Button className="min-h-11 w-full sm:w-auto" variant="outline" onClick={() => handleOpenChange(false)}>
             Cancel
           </Button>
-          <Button onClick={handleConfirm} disabled={!selectedDate || isFull}>
+          <Button className="min-h-11 w-full sm:w-auto" onClick={handleConfirm} disabled={!selectedDate || isFull}>
             Schedule
           </Button>
         </DialogFooter>
