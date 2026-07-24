@@ -11,7 +11,7 @@ const PAGE_TITLE = "The Agency AI Install | Standard Playbook";
 const PAGE_DESCRIPTION =
   "A live two-day build, August 26-27. Agency owners and managers build their AI co-working brain start to finish with Justin Harkelroad. Claude or Codex. $997 all in.";
 const PAGE_URL = "https://standardplaybook.com/aiinstall";
-const OG_IMAGE = "https://standardplaybook.com/og/ai-install.png";
+const OG_IMAGE = "https://standardplaybook.com/og/ai-install-bold.png";
 
 function setMetaTag(name: string, content: string, attribute: "name" | "property" = "name") {
   let element = document.querySelector(`meta[${attribute}="${name}"]`) as HTMLMetaElement | null;
