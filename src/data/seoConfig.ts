@@ -79,6 +79,14 @@ export const seoConfig: Record<string, SEOConfig> = {
     type: 'article',
     structuredData: structuredDataByRoute['/sales-experience'],
   },
+  '/salesprocess': {
+    title: 'Agency Sales Process | The Standard Playbook',
+    description: 'Install the sales process in the brain of your business: the process your team runs, the daily metrics they own, and the consequence ladder that protects the standard.',
+    keywords: ['agency sales process', 'insurance sales framework', 'producer activity metrics', 'sales accountability', 'insurance agency sales training'],
+    ogImage: 'https://standardplaybook.com/og/sales-process.png',
+    canonical: 'https://standardplaybook.com/salesprocess',
+    type: 'article',
+  },
   '/producer-power-up': {
     title: 'Producer Power-Up — 6-Week Sales Transformation | The Standard Playbook',
     description: 'Transform your insurance producer from reactive chaos to systematic execution in 42 days. Daily modules, Core 4 tracking, weekly Discovery Stacks, and daily owner reports. $299/producer.',
