@@ -8,11 +8,12 @@ export interface QuarterlyTargets {
   id?: string;
   user_id?: string;
   quarter: string;
+  daily_proof_reviewed_at?: string | null;
   // Target 1 (primary by default)
   body_target: string | null;
   body_narrative: string | null;
   body_daily_habit: string | null;
-  body_monthly_missions: any;
+  body_monthly_missions: Record<string, unknown> | null;
   body_daily_actions?: string[];
   body_action_pool?: string[];
   // Target 2 (secondary)
@@ -23,7 +24,7 @@ export interface QuarterlyTargets {
   being_target: string | null;
   being_narrative: string | null;
   being_daily_habit: string | null;
-  being_monthly_missions: any;
+  being_monthly_missions: Record<string, unknown> | null;
   being_daily_actions?: string[];
   being_action_pool?: string[];
   being_target2?: string | null;
@@ -33,7 +34,7 @@ export interface QuarterlyTargets {
   balance_target: string | null;
   balance_narrative: string | null;
   balance_daily_habit: string | null;
-  balance_monthly_missions: any;
+  balance_monthly_missions: Record<string, unknown> | null;
   balance_daily_actions?: string[];
   balance_action_pool?: string[];
   balance_target2?: string | null;
@@ -43,7 +44,7 @@ export interface QuarterlyTargets {
   business_target: string | null;
   business_narrative: string | null;
   business_daily_habit: string | null;
-  business_monthly_missions: any;
+  business_monthly_missions: Record<string, unknown> | null;
   business_daily_actions?: string[];
   business_action_pool?: string[];
   business_target2?: string | null;

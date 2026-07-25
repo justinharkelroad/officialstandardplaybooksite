@@ -16,13 +16,24 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from '@/app/components/ui/select';
-import { Dumbbell, Heart, Briefcase, Plus, CheckCircle2, Loader2, Pencil, Trash2, ListPlus } from 'lucide-react';
+import { Dumbbell, Heart, Briefcase, Plus, CheckCircle2, Loader2, Pencil, Trash2, ListPlus, RotateCcw } from 'lucide-react';
 import { LatinCross } from '@/app/components/icons/LatinCross';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
@@ -84,6 +95,7 @@ export function Core4MonthlyMissions() {
   const { items: focusItems, createItem } = useFocusItems();
   const [missions, setMissions] = useState<Core4Mission[]>([]);
   const [loading, setLoading] = useState(true);
+  const [resettingMonth, setResettingMonth] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingMission, setEditingMission] = useState<Core4Mission | null>(null);
   const [newMission, setNewMission] = useState({
@@ -277,6 +289,31 @@ export function Core4MonthlyMissions() {
     await updateMissionStatus(missionId, 'archived');
   };
 
+  const resetCurrentMonth = async () => {
+    if (!user?.id || resettingMonth) return;
+
+    setResettingMonth(true);
+    try {
+      const { data, error } = await supabase.rpc('reset_my_core4_month', {
+        p_month_year: currentMonthYear,
+      });
+      if (error) throw error;
+
+      await fetchMissions();
+      const archivedCount = typeof data === 'number' ? data : missions.length;
+      toast.success(
+        archivedCount === 1
+          ? '1 monthly mission archived. Start fresh when you are ready.'
+          : `${archivedCount} monthly missions archived. Start fresh when you are ready.`,
+      );
+    } catch (err) {
+      console.error('Error resetting month:', err);
+      toast.error('This month could not be reset');
+    } finally {
+      setResettingMonth(false);
+    }
+  };
+
   const isOnWeeklyBench = (missionId: string) =>
     focusItems.some(
       (item) =>
@@ -318,14 +355,55 @@ export function Core4MonthlyMissions() {
             Send a mission to the Weekly Bench when you are ready to schedule the work.
           </p>
         </div>
-        <Dialog open={dialogOpen} onOpenChange={(open) => !open && closeDialog()}>
-          <DialogTrigger asChild>
-            <Button size="sm" variant="outline" onClick={() => setEditingMission(null)}>
-              <Plus className="h-4 w-4 mr-1" />
-              Add Mission
-            </Button>
-          </DialogTrigger>
-          <DialogContent className={spScopeClass()}>
+        <div className="flex flex-wrap items-center justify-end gap-2">
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                size="sm"
+                variant="outline"
+                className="text-destructive hover:text-destructive"
+                disabled={missions.length === 0 || resettingMonth}
+              >
+                {resettingMonth ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <RotateCcw className="mr-2 h-4 w-4" />
+                )}
+                Start Over This Month
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  Start Over {format(new Date(), 'MMMM yyyy')}?
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  This archives every active Body, Being, Balance, and Business mission for
+                  this month and opens four blank slots. Anything already moved into Weekly
+                  stays intact. This cannot be undone from this screen.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() => void resetCurrentMonth()}
+                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  disabled={resettingMonth}
+                >
+                  {resettingMonth ? 'Resetting...' : 'Archive and Start Over'}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+
+          <Dialog open={dialogOpen} onOpenChange={(open) => !open && closeDialog()}>
+            <DialogTrigger asChild>
+              <Button size="sm" variant="outline" onClick={() => setEditingMission(null)}>
+                <Plus className="h-4 w-4 mr-1" />
+                Add Mission
+              </Button>
+            </DialogTrigger>
+            <DialogContent className={spScopeClass()}>
             <DialogHeader>
               <div className="flex items-center gap-3">
                 {(() => {
@@ -376,8 +454,9 @@ export function Core4MonthlyMissions() {
                 {editingMission ? 'Save Changes' : 'Create Mission'}
               </Button>
             </div>
-          </DialogContent>
-        </Dialog>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

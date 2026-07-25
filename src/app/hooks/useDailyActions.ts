@@ -10,7 +10,7 @@ export interface DailyActionsOutput {
   business: string[];
 }
 
-interface GenerateDailyActionsParams {
+export interface GenerateDailyActionsParams {
   body?: {
     target?: string;
     monthlyMissions?: Record<string, unknown>;

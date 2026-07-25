@@ -74,7 +74,7 @@ function QuarterCard({ plan }: { plan: QuarterlyTargetsSummary }) {
   };
 
   const handleDelete = () => {
-    deleteMutation.mutate(plan.id);
+    deleteMutation.mutate(plan.quarter);
   };
 
   return (
@@ -143,7 +143,8 @@ function QuarterCard({ plan }: { plan: QuarterlyTargetsSummary }) {
             <AlertDialogHeader>
               <AlertDialogTitle>Delete this quarterly plan?</AlertDialogTitle>
               <AlertDialogDescription>
-                This will permanently delete your {year} Quarter {quarterNum} targets, missions, and daily actions. This action cannot be undone.
+                This permanently deletes your {year} Quarter {quarterNum} plan and every Brain
+                Dump idea for that quarter. This Month and Weekly stay intact. This cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

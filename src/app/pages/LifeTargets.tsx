@@ -46,6 +46,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { AnimatedDownload as Download } from "@/app/components/icons/AnimatedDownload";
+import { getDailyProofProgress } from "@/app/lib/lifeTargetsProgress";
 
 export default function LifeTargets() {
   const navigate = useNavigate();
@@ -80,8 +81,6 @@ export default function LifeTargets() {
   const handleReset = () => {
     resetQuarter.mutate({
       quarter: currentQuarter,
-      quarterlyTargetId: targets?.id || null,
-      sessionId: currentSessionId,
     });
   };
 
@@ -133,14 +132,9 @@ export default function LifeTargets() {
     [targets]
   );
 
-  const hasHabits = useMemo(() => 
-    targets ? [
-      targets.body_daily_actions,
-      targets.being_daily_actions,
-      targets.balance_daily_actions,
-      targets.business_daily_actions,
-    ].filter(arr => Array.isArray(arr) && arr.length > 0).length : 0,
-    [targets]
+  const dailyProofProgress = useMemo(
+    () => getDailyProofProgress(targets),
+    [targets],
   );
 
   const domainsWithMultipleTargets = useMemo(() => 
@@ -175,14 +169,14 @@ export default function LifeTargets() {
   useEffect(() => {
     if (!targets) return;
 
-    if (hasHabits > 0 && currentStep !== 'complete') {
+    if (dailyProofProgress.completed && currentStep !== 'complete') {
       setCurrentStep('complete');
     } else if (domainsWithMultipleTargets > 0 && hasPrimarySelections && currentStep === 'primary') {
       setCurrentStep('actions');
     } else if (hasMissions && currentStep === 'targets') {
       setCurrentStep(domainsWithMultipleTargets > 0 ? 'primary' : 'actions');
     }
-  }, [targets, targetsSet, hasMissions, domainsWithMultipleTargets, hasPrimarySelections, hasHabits, currentStep, setCurrentStep]);
+  }, [targets, targetsSet, hasMissions, domainsWithMultipleTargets, hasPrimarySelections, dailyProofProgress.completed, currentStep, setCurrentStep]);
 
   const steps = [
     {
@@ -238,9 +232,13 @@ export default function LifeTargets() {
       title: 'Choose Daily Proof',
       description: 'Pick optional actions that can appear in Daily so each checkmark has a clear meaning.',
       icon: Zap,
-      status: hasHabits > 0 ? 'complete' : (hasMissions && (domainsWithMultipleTargets === 0 || hasPrimarySelections)) ? 'current' : 'locked',
+      status: dailyProofProgress.completed ? 'complete' : (hasMissions && (domainsWithMultipleTargets === 0 || hasPrimarySelections)) ? 'current' : 'locked',
       onClick: () => (hasMissions && (domainsWithMultipleTargets === 0 || hasPrimarySelections)) && navigate(`${lifeTargetsBasePath}/daily`),
-      badge: hasHabits > 0 ? `${hasHabits} habits set` : undefined,
+      badge: dailyProofProgress.completed
+        ? dailyProofProgress.selectedDomainCount > 0
+          ? `${dailyProofProgress.selectedDomainCount} domains set`
+          : 'Reviewed'
+        : undefined,
     },
   ];
 
@@ -267,7 +265,50 @@ export default function LifeTargets() {
             <h1 className="text-3xl font-bold">Quarterly Direction</h1>
             <HelpButton videoKey="tool-quarterly-targets" size="md" />
           </div>
-          <QuarterSelector />
+          <div className="flex flex-wrap items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => navigate(`${lifeTargetsBasePath}/history`)}
+            >
+              <Archive className="mr-2 h-4 w-4" />
+              History
+            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-destructive hover:text-destructive"
+                  disabled={(!targets && !hasBrainstormTargets) || resetQuarter.isPending}
+                >
+                  <RotateCcw className="mr-2 h-4 w-4" />
+                  Start Over
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Start Over {formatQuarterDisplay(currentQuarter)}?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This permanently deletes this quarterly plan and every Brain Dump idea for
+                    the quarter. This Month and anything already moved into Weekly stay intact.
+                    This cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={handleReset}
+                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                    disabled={resetQuarter.isPending}
+                  >
+                    {resetQuarter.isPending ? 'Resetting...' : 'Yes, Start Over'}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            <QuarterSelector />
+          </div>
         </div>
         <p className="text-muted-foreground mb-4">
           Build the 90-day direction for Body, Being, Balance, and Business. Quarterly can seed
@@ -415,33 +456,6 @@ export default function LifeTargets() {
                 <CalendarIcon className="h-4 w-4 mr-2" />
                 Move to Different Quarter
               </Button>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="outline" className="text-destructive hover:text-destructive">
-                    <RotateCcw className="h-4 w-4 mr-2" />
-                    Start Over This Quarter
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Start Over This Quarter?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This will permanently delete your {formatQuarterDisplay(currentQuarter)} plan 
-                      and all associated data. You'll start with a fresh slate. This cannot be undone.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction 
-                      onClick={handleReset} 
-                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                      disabled={resetQuarter.isPending}
-                    >
-                      {resetQuarter.isPending ? 'Resetting...' : 'Yes, Start Over'}
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
             </div>
           </CardContent>
         </Card>

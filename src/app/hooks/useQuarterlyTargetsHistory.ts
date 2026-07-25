@@ -35,21 +35,19 @@ export function useDeleteQuarterlyTargets() {
   const actorKey = user?.id ? `owner:${user.id}` : 'owner:pending';
 
   return useMutation({
-    mutationFn: async (id: string) => {
+    mutationFn: async (quarter: string) => {
       if (!user) throw new Error('Not authenticated');
 
-      const { error } = await supabase
-        .from('life_targets_quarterly')
-        .delete()
-        .eq('id', id)
-        .eq('user_id', user.id);
+      const { error } = await supabase.rpc('reset_my_life_targets_quarter', {
+        p_quarter: quarter,
+      });
 
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['quarterly-targets', actorKey] });
       queryClient.invalidateQueries({ queryKey: ['quarterly-targets-history', actorKey] });
-      toast.success('Quarterly plan deleted successfully');
+      toast.success('Quarterly plan and Brain Dump deleted');
     },
     onError: (error) => {
       console.error('Delete error:', error);

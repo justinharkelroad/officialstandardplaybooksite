@@ -1032,6 +1032,7 @@ export type Database = {
           business_target: string | null
           business_target2: string | null
           created_at: string
+          daily_proof_reviewed_at: string | null
           id: string
           quarter: string
           raw_session_data: Json | null
@@ -1076,6 +1077,7 @@ export type Database = {
           business_target?: string | null
           business_target2?: string | null
           created_at?: string
+          daily_proof_reviewed_at?: string | null
           id?: string
           quarter: string
           raw_session_data?: Json | null
@@ -1120,6 +1122,7 @@ export type Database = {
           business_target?: string | null
           business_target2?: string | null
           created_at?: string
+          daily_proof_reviewed_at?: string | null
           id?: string
           quarter?: string
           raw_session_data?: Json | null
@@ -1685,6 +1688,14 @@ export type Database = {
       }
       is_active_member: { Args: { uid: string }; Returns: boolean }
       is_admin_member: { Args: { uid: string }; Returns: boolean }
+      reset_my_core4_month: {
+        Args: { p_month_year: string }
+        Returns: number
+      }
+      reset_my_life_targets_quarter: {
+        Args: { p_quarter: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

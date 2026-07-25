@@ -15,7 +15,7 @@ import { ChangeQuarterDialog } from "@/app/components/life-targets/ChangeQuarter
 import { DataStatusIndicator } from "@/app/components/life-targets/DataStatusIndicator";
 import { useLifeTargetsStore } from "@/app/lib/lifeTargetsStore";
 import { useQuarterlyTargets } from "@/app/hooks/useQuarterlyTargets";
-import { useDailyActions } from "@/app/hooks/useDailyActions";
+import { type GenerateDailyActionsParams, useDailyActions } from "@/app/hooks/useDailyActions";
 import { useSaveDailyActions, useSaveActionPool } from "@/app/hooks/useSaveDailyActions";
 import { formatQuarterDisplay } from "@/app/lib/quarterUtils";
 import { toast } from "sonner";
@@ -28,6 +28,7 @@ export default function LifeTargetsDaily() {
   const lifeTargetsBasePath = '/app/life-targets';
   const queryClient = useQueryClient();
   const { 
+    actorScope,
     currentQuarter, 
     dailyActions, 
     selectedDailyActions,
@@ -43,6 +44,16 @@ export default function LifeTargetsDaily() {
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const poolSaveTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const hydratedQuarterRef = useRef<string | null>(null);
+  const latestSelectionsRef = useRef(selectedDailyActions);
+  const latestPoolRef = useRef(dailyActions);
+  const selectionRevisionRef = useRef(0);
+  const poolRevisionRef = useRef(0);
+  const selectionSaveChainRef = useRef<Promise<void>>(Promise.resolve());
+  const poolSaveChainRef = useRef<Promise<void>>(Promise.resolve());
+  const selectionDirtyRef = useRef(false);
+  const poolDirtyRef = useRef(false);
+  const [selectionDirty, setSelectionDirty] = useState(false);
+  const [poolDirty, setPoolDirty] = useState(false);
 
   // Hydrate daily actions from DB once per quarter. Subsequent refetches
   // (e.g. from our own auto-save cache updates) must not overwrite the
@@ -55,7 +66,8 @@ export default function LifeTargetsDaily() {
   // the migration backfills pool = selections, but we also fall back here.
   useEffect(() => {
     if (!targets) return;
-    if (hydratedQuarterRef.current === currentQuarter) return;
+    const hydrationKey = `${actorScope ?? 'pending'}:${currentQuarter}`;
+    if (hydratedQuarterRef.current === hydrationKey) return;
 
     const pickArray = (v: unknown): string[] =>
       Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : [];
@@ -90,15 +102,67 @@ export default function LifeTargetsDaily() {
     // dailyActions/selectedDailyActions to localStorage, so without this the
     // previous quarter's cached pool would leak into a new quarter that has
     // no DB data yet. DB is the source of truth for the current quarter.
-    setDailyActions(hasAnyPool ? (pool as any) : null);
-    setSelectedDailyActions(
-      hasAnySelections
-        ? selections
-        : { body: [], being: [], balance: [], business: [] }
-    );
+    const hydratedPool = hasAnyPool ? pool : null;
+    const hydratedSelections = hasAnySelections
+      ? selections
+      : { body: [], being: [], balance: [], business: [] };
 
-    hydratedQuarterRef.current = currentQuarter;
-  }, [targets, currentQuarter, setDailyActions, setSelectedDailyActions]);
+    setDailyActions(hydratedPool);
+    setSelectedDailyActions(hydratedSelections);
+    latestPoolRef.current = hydratedPool;
+    latestSelectionsRef.current = hydratedSelections;
+    selectionDirtyRef.current = false;
+    poolDirtyRef.current = false;
+    setSelectionDirty(false);
+    setPoolDirty(false);
+
+    hydratedQuarterRef.current = hydrationKey;
+  }, [targets, actorScope, currentQuarter, setDailyActions, setSelectedDailyActions]);
+
+  const persistSelections = useCallback((
+    selections: Record<string, string[]>,
+    revision: number,
+    markReviewed = false,
+  ) => {
+    const operation = selectionSaveChainRef.current
+      .catch(() => undefined)
+      .then(async () => {
+        await saveDailyActions.mutateAsync({
+          quarter: currentQuarter,
+          selectedActions: selections,
+          showToast: false,
+          markReviewed,
+        });
+        if (selectionRevisionRef.current === revision) {
+          selectionDirtyRef.current = false;
+          setSelectionDirty(false);
+        }
+      });
+
+    selectionSaveChainRef.current = operation.catch(() => undefined);
+    return operation;
+  }, [currentQuarter, saveDailyActions]);
+
+  const persistPool = useCallback((
+    pool: NonNullable<typeof dailyActions>,
+    revision: number,
+  ) => {
+    const operation = poolSaveChainRef.current
+      .catch(() => undefined)
+      .then(async () => {
+        await saveActionPool.mutateAsync({
+          quarter: currentQuarter,
+          pool: pool as unknown as Record<string, string[]>,
+        });
+        if (poolRevisionRef.current === revision) {
+          poolDirtyRef.current = false;
+          setPoolDirty(false);
+        }
+      });
+
+    poolSaveChainRef.current = operation.catch(() => undefined);
+    return operation;
+  }, [currentQuarter, saveActionPool]);
 
   const handleGenerate = async () => {
     if (!targets) {
@@ -106,7 +170,7 @@ export default function LifeTargetsDaily() {
       return;
     }
 
-    const params: any = {};
+    const params: GenerateDailyActionsParams = {};
 
     // Use primary target based on selection (default to target1 if not set)
     if (targets.body_target || targets.body_target2) {
@@ -168,26 +232,26 @@ export default function LifeTargetsDaily() {
     try {
       const results = await generateActions.mutateAsync(params);
       setDailyActions(results);
-      // Persist the generated pool so reload/cache-invalidation doesn't
-      // collapse it back to the saved selection subset. Cancel any pending
-      // debounced pool save first so the fresh pool wins.
-      if (poolSaveTimeoutRef.current) {
-        clearTimeout(poolSaveTimeoutRef.current);
-      }
-      saveActionPool.mutate({
-        quarter: currentQuarter,
-        pool: results as unknown as Record<string, string[]>,
-      });
-      toast.success('Daily actions generated successfully!');
+      latestPoolRef.current = results;
+      if (poolSaveTimeoutRef.current) clearTimeout(poolSaveTimeoutRef.current);
+      const revision = ++poolRevisionRef.current;
+      poolDirtyRef.current = true;
+      setPoolDirty(true);
+      await persistPool(results, revision);
+      toast.success('Daily proof ideas generated and saved');
     } catch (error) {
       console.error('Failed to generate daily actions:', error);
-      toast.error('Failed to generate daily actions');
+      toast.error('Daily proof ideas could not be generated and saved');
     }
   };
 
   // Debounced auto-save: save 2 seconds after last change
   const handleSelectionsChange = useCallback((selections: Record<string, string[]>) => {
     setSelectedDailyActions(selections);
+    latestSelectionsRef.current = selections;
+    const revision = ++selectionRevisionRef.current;
+    selectionDirtyRef.current = true;
+    setSelectionDirty(true);
 
     // Clear existing timeout
     if (saveTimeoutRef.current) {
@@ -196,64 +260,99 @@ export default function LifeTargetsDaily() {
 
     // Set new timeout to save after 2 seconds of inactivity
     saveTimeoutRef.current = setTimeout(() => {
-      console.log('Auto-saving daily actions after 2s debounce...');
-      saveDailyActions.mutate({
-        quarter: currentQuarter,
-        selectedActions: selections,
-        showToast: false, // Silent auto-save
-      });
+      void persistSelections(selections, revision).catch(() => undefined);
     }, 2000);
-  }, [currentQuarter, setSelectedDailyActions, saveDailyActions]);
+  }, [persistSelections, setSelectedDailyActions]);
 
-  // Save on page unload
+  // A browser close cannot safely finish an authenticated write. Warn while a
+  // debounce is outstanding instead of silently discarding the user's work.
   useEffect(() => {
-    const handleBeforeUnload = () => {
-      if (saveTimeoutRef.current) {
-        clearTimeout(saveTimeoutRef.current);
-      }
-      if (poolSaveTimeoutRef.current) {
-        clearTimeout(poolSaveTimeoutRef.current);
-      }
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (!selectionDirty && !poolDirty) return;
+      event.preventDefault();
+      event.returnValue = '';
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [selectionDirty, poolDirty]);
+
+  useEffect(() => () => {
       if (saveTimeoutRef.current) {
         clearTimeout(saveTimeoutRef.current);
       }
       if (poolSaveTimeoutRef.current) {
         clearTimeout(poolSaveTimeoutRef.current);
       }
-    };
   }, []);
 
   const handleActionsChange = useCallback((updatedActions: typeof dailyActions) => {
     setDailyActions(updatedActions);
+    latestPoolRef.current = updatedActions;
+    const revision = ++poolRevisionRef.current;
+    poolDirtyRef.current = true;
+    setPoolDirty(true);
 
     // Debounce pool saves triggered by Edit / Add Custom Action. Same 2s
     // window as the selections auto-save so rapid edits coalesce.
     if (poolSaveTimeoutRef.current) {
       clearTimeout(poolSaveTimeoutRef.current);
     }
-    if (!updatedActions) return;
+    if (!updatedActions) {
+      poolDirtyRef.current = false;
+      setPoolDirty(false);
+      return;
+    }
     poolSaveTimeoutRef.current = setTimeout(() => {
-      saveActionPool.mutate({
-        quarter: currentQuarter,
-        pool: updatedActions as unknown as Record<string, string[]>,
-      });
+      void persistPool(updatedActions, revision).catch(() => undefined);
     }, 2000);
-  }, [currentQuarter, setDailyActions, saveActionPool]);
+  }, [persistPool, setDailyActions]);
 
-  const handleContinue = () => {
-    // GATE 3: Navigate to cascade view instead of saving
-    navigate(`${lifeTargetsBasePath}/cascade`);
-  };
+  const flushPendingChanges = useCallback(async (markReviewed = false) => {
+    if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+    if (poolSaveTimeoutRef.current) clearTimeout(poolSaveTimeoutRef.current);
 
-  const handleQuarterChange = (newQuarter: string) => {
-    changeQuarter(newQuarter);
-    queryClient.invalidateQueries({ queryKey: ['quarterly-targets'] });
-    toast.success(`Quarter updated to ${formatQuarterDisplay(newQuarter)}`);
+    const writes: Promise<unknown>[] = [];
+    if (selectionDirtyRef.current || markReviewed) {
+      writes.push(persistSelections(
+        latestSelectionsRef.current,
+        selectionRevisionRef.current,
+        markReviewed,
+      ));
+    }
+    if (poolDirtyRef.current && latestPoolRef.current) {
+      writes.push(persistPool(latestPoolRef.current, poolRevisionRef.current));
+    }
+
+    await Promise.all(writes);
+  }, [persistPool, persistSelections]);
+
+  const navigateAfterFlush = useCallback(async (
+    path: string,
+    markReviewed = false,
+  ) => {
+    try {
+      await flushPendingChanges(markReviewed);
+      navigate(path);
+    } catch {
+      toast.error('Daily Proof could not be saved. Please retry before leaving.');
+    }
+  }, [flushPendingChanges, navigate]);
+
+  const handleContinue = () =>
+    void navigateAfterFlush(`${lifeTargetsBasePath}/cascade`, true);
+
+  const handleQuarterChange = async (newQuarter: string) => {
+    try {
+      await flushPendingChanges();
+      changeQuarter(newQuarter);
+      queryClient.invalidateQueries({ queryKey: ['quarterly-targets'] });
+      toast.success(`Quarter updated to ${formatQuarterDisplay(newQuarter)}`);
+    } catch {
+      toast.error('Daily Proof could not be saved before changing quarters.');
+    }
   };
 
   const hasGeneratedActions = dailyActions && Object.values(dailyActions).some(
@@ -270,7 +369,7 @@ export default function LifeTargetsDaily() {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => navigate(`${lifeTargetsBasePath}/missions`)}
+          onClick={() => void navigateAfterFlush(`${lifeTargetsBasePath}/missions`)}
         >
           <ArrowLeft className="h-5 w-5" />
         </Button>
@@ -315,7 +414,15 @@ export default function LifeTargetsDaily() {
       </div>
 
       {/* Data status indicator - shows unsaved changes warning */}
-      <DataStatusIndicator />
+      <DataStatusIndicator
+        hasUnsavedChanges={selectionDirty || poolDirty}
+        isSaving={saveDailyActions.isPending || saveActionPool.isPending}
+        onSync={() => {
+          void flushPendingChanges().catch(() => {
+            toast.error('Daily Proof could not be saved. Please retry.');
+          });
+        }}
+      />
 
       {/* Actions Selector */}
       {hasGeneratedActions && dailyActions ? (

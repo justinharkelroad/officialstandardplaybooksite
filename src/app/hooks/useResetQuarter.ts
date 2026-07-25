@@ -1,36 +1,25 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useDeleteQuarterlyTargets } from "./useQuarterlyTargetsHistory";
-import { useClearBrainstormSession } from "./useBrainstormTargets";
 import { useLifeTargetsStore } from "@/app/lib/lifeTargetsStore";
 import { generateSessionId } from "@/app/lib/sessionUtils";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ResetQuarterParams {
   quarter: string;
-  quarterlyTargetId: string | null;
-  sessionId: string | null;
 }
 
 export function useResetQuarter() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const deleteQuarterlyTargets = useDeleteQuarterlyTargets();
-  const clearBrainstormSession = useClearBrainstormSession();
   const { reset: resetStore, setCurrentSessionId } = useLifeTargetsStore();
 
   return useMutation({
-    mutationFn: async (params: ResetQuarterParams) => {
-      const { quarterlyTargetId, sessionId, quarter } = params;
-      // Delete saved quarterly targets if they exist
-      if (quarterlyTargetId) {
-        await deleteQuarterlyTargets.mutateAsync(quarterlyTargetId);
-      }
-
-      // Clear the brainstorm session tied to this quarter
-      if (sessionId) {
-        await clearBrainstormSession.mutateAsync({ quarter, sessionId });
-      }
+    mutationFn: async ({ quarter }: ResetQuarterParams) => {
+      const { error } = await supabase.rpc('reset_my_life_targets_quarter', {
+        p_quarter: quarter,
+      });
+      if (error) throw error;
     },
     onSuccess: () => {
       // Reset store state
@@ -45,8 +34,8 @@ export function useResetQuarter() {
       queryClient.invalidateQueries({ queryKey: ['quarterly-targets-history'] });
       queryClient.invalidateQueries({ queryKey: ['brainstorm-targets'] });
 
-      // Navigate to targets page to start fresh
-      navigate('/app/life-targets/quarterly');
+      // Start at Brain Dump with a clean server-backed quarter.
+      navigate('/app/life-targets/brainstorm');
 
       toast.success('Quarter reset. Starting fresh!');
     },

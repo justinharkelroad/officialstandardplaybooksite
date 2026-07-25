@@ -9,6 +9,7 @@ interface SaveDailyActionsParams {
   quarter: string;
   selectedActions: Record<string, string[]>;
   showToast?: boolean;
+  markReviewed?: boolean;
 }
 
 interface SaveActionPoolParams {
@@ -22,11 +23,17 @@ export function useSaveDailyActions() {
   const actorKey = user?.id ? `owner:${user.id}` : 'owner:pending';
 
   return useMutation({
-    mutationFn: async ({ quarter, selectedActions, showToast = true }: SaveDailyActionsParams) => {
+    mutationFn: async ({
+      quarter,
+      selectedActions,
+      showToast = true,
+      markReviewed = false,
+    }: SaveDailyActionsParams) => {
       const normalizedQuarter = migrateOldFormat(quarter);
 
       if (!user) throw new Error('Not authenticated');
 
+      const now = new Date().toISOString();
       const { error } = await supabase
         .from('life_targets_quarterly')
         .update({
@@ -34,7 +41,8 @@ export function useSaveDailyActions() {
           being_daily_actions: selectedActions.being || [],
           balance_daily_actions: selectedActions.balance || [],
           business_daily_actions: selectedActions.business || [],
-          updated_at: new Date().toISOString(),
+          ...(markReviewed ? { daily_proof_reviewed_at: now } : {}),
+          updated_at: now,
         })
         .eq('user_id', user.id)
         .eq('quarter', normalizedQuarter);
@@ -45,7 +53,7 @@ export function useSaveDailyActions() {
         toast.success('Daily actions saved');
       }
 
-      return { quarter: normalizedQuarter, selectedActions };
+      return { quarter: normalizedQuarter, selectedActions, markReviewed };
     },
     onSuccess: ({ quarter }) => {
       queryClient.invalidateQueries({ queryKey: ['quarterly-targets', actorKey, quarter] });
