@@ -1,29 +1,20 @@
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
-import { useSpotlight } from "@/app/hooks/useSpotlight"
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** Opt in to a cursor-following spotlight glow (see .spotlight in index.css). */
-  spotlight?: boolean
-}
+type CardProps = React.HTMLAttributes<HTMLDivElement>
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, spotlight = false, onPointerMove, ...props }, ref) => {
-    const handleSpotlight = useSpotlight<HTMLDivElement>(onPointerMove)
-    return (
-      <div
-        ref={ref}
-        onPointerMove={spotlight ? handleSpotlight : onPointerMove}
-        className={cn(
-          "panel-highlight rounded-xl border border-border bg-card text-card-foreground shadow-card dark:border-border/10 dark:bg-card/50 dark:shadow-none",
-          spotlight && "spotlight relative isolate",
-          className
-        )}
-        {...props}
-      />
-    )
-  }
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(
+        "panel-highlight rounded-xl border border-border bg-card text-card-foreground shadow-card dark:border-border/10 dark:bg-card/50 dark:shadow-none",
+        className
+      )}
+      {...props}
+    />
+  )
 )
 Card.displayName = "Card"
 

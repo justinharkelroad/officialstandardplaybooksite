@@ -85,7 +85,6 @@ export function TodayRhythmHero() {
 
   return (
     <Card
-      spotlight
       className="overflow-hidden border-border bg-card"
     >
       <CardContent className="min-w-0 space-y-6 p-4 sm:p-6 md:p-8">

@@ -70,7 +70,6 @@ export const PersonalGrowthPod = forwardRef<
   return (
     <Card
       ref={ref}
-      spotlight
       className={cn(
         "relative flex h-full flex-col overflow-hidden border-border bg-card",
         "ring-1 ring-inset ring-white/[0.04]",
