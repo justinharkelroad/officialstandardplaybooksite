@@ -106,6 +106,10 @@ const I_AM_CATEGORIES = new Set<IAmCategory>([
   "practice",
 ]);
 
+export function capitalizeIAmPrefix(text: string): string {
+  return text.replace(/^I\s+am\b/i, "I AM");
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
@@ -705,7 +709,7 @@ export function validateWeeklyReflectionModelOutput(
         error: "Every I AM statement needs text and a category.",
       };
     }
-    const text = item.text.trim();
+    const text = capitalizeIAmPrefix(item.text.trim());
     if (
       !/^I am\b/i.test(text) || /^I am not\b/i.test(text) || text.length < 8 ||
       text.length > 180
@@ -801,9 +805,9 @@ Write:
 - exactly ${statementCount} first-person I AM statements.
 
 I AM STATEMENT RULES:
-- Start every statement with "I am" and keep it to 8-18 words.
+- Start every statement with "I AM" in that exact capitalization and keep it to 8-18 words.
 - Build from the direction the person explicitly named, especially answers such as want_for_you, want_for_both, desired_story, lesson, revelation, and actions.
-- Make the identity shift grounded and believable. Do not promise outcomes or write "I am not...".
+- Make the identity shift grounded and believable. Do not promise outcomes or write "I AM not...".
 - Never invent faith, spiritual beliefs, gender, family relationships, job titles, leadership roles, diagnoses, or biographical facts. Use these only when the person explicitly supplied them.
 - Do not imitate Warrior language and do not use "warrior", "creed", "mirror", "king", or "queen".
 

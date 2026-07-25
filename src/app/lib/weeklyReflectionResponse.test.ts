@@ -54,6 +54,10 @@ test("parses a ready reflection and preserves nullable source titles", () => {
   assert.equal(response.reflection?.sourceFlows[0].title, null);
   assert.equal(response.reflection?.sourceVersion, 1);
   assert.equal(response.reflection?.iamStatements.length, 1);
+  assert.equal(
+    response.reflection?.iamStatements[0].text,
+    "I AM a leader who creates order before speed.",
+  );
 });
 
 test("rejects malformed synthesis instead of rendering unchecked data", () => {

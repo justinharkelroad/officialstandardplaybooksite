@@ -7,6 +7,7 @@ import {
   buildEmptyReflectionContent,
   buildSourceFlows,
   buildWeeklyReflectionSystemPrompt,
+  capitalizeIAmPrefix,
   canonicalWeeklyReflectionBounds,
   computeWeeklyReflectionSourceHash,
   type FlowSessionForReflection,
@@ -88,7 +89,7 @@ function publicIAmStatement(statement: unknown) {
     ? statement as Record<string, unknown>
     : {};
   return {
-    text: typeof item.text === "string" ? item.text : "",
+    text: typeof item.text === "string" ? capitalizeIAmPrefix(item.text) : "",
     category: typeof item.category === "string" ? item.category : "identity",
     evidenceSessionIds: Array.isArray(item.evidence_session_ids)
       ? item.evidence_session_ids.filter((id): id is string =>

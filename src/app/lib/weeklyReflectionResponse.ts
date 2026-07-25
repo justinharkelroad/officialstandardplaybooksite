@@ -22,6 +22,10 @@ const sourceFlowSchema = z.object({
   localDate: z.string().default(""),
 });
 
+export function capitalizeIAmPrefix(text: string): string {
+  return text.replace(/^I\s+am\b/i, "I AM");
+}
+
 const reflectionSchema = z.object({
   id: z.string().nullable().default(null),
   weekKey: z.string().min(1),
@@ -41,7 +45,7 @@ const reflectionSchema = z.object({
   iamStatements: z
     .array(
       z.object({
-        text: z.string().min(1),
+        text: z.string().min(1).transform(capitalizeIAmPrefix),
         category: z.string().default("identity"),
         evidenceSessionIds: z.array(z.string()).default([]),
       }),

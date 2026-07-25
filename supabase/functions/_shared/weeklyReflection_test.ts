@@ -254,6 +254,12 @@ Deno.test("validated synthesis accepts only authorized evidence IDs", () => {
     ],
   }, [session()]);
   assert(result.ok);
+  if (result.ok) {
+    assertEquals(
+      result.value.iam_statements[0].text,
+      "I AM creating enough space to choose a clear response.",
+    );
+  }
 
   const unauthorized = validateWeeklyReflectionModelOutput({
     headline: "Calm is becoming a practice",
