@@ -64,34 +64,22 @@ function getEvidenceFlows(
 function EvidenceLinks({
   evidenceSessionIds,
   sourceFlows,
-  inverted = false,
 }: {
   evidenceSessionIds: string[];
   sourceFlows: WeeklyReflectionSourceFlow[];
-  inverted?: boolean;
 }) {
   const evidenceFlows = getEvidenceFlows(evidenceSessionIds, sourceFlows);
   if (evidenceFlows.length === 0) return null;
 
   return (
-    <p
-      className={cn(
-        "mt-2 min-w-0 break-words text-xs leading-5 [overflow-wrap:anywhere]",
-        inverted ? "text-background/60" : "text-muted-foreground",
-      )}
-    >
+    <p className="mt-2 min-w-0 break-words text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]">
       From{" "}
       {evidenceFlows.map((flow, index) => (
         <span key={flow.id}>
           {index > 0 ? ", " : null}
           <Link
             to={`/app/flows/view/${flow.id}`}
-            className={cn(
-              "break-words underline decoration-current/40 underline-offset-4 transition-colors [overflow-wrap:anywhere] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2997FF]",
-              inverted
-                ? "text-background hover:text-[#2997FF]"
-                : "text-foreground hover:text-[#0066CC] dark:hover:text-[#2997FF]",
-            )}
+            className="break-words text-foreground underline decoration-current/40 underline-offset-4 transition-colors [overflow-wrap:anywhere] hover:text-[#0066CC] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2997FF] dark:hover:text-[#2997FF]"
           >
             {flow.title || flow.templateName || "Completed Flow"}
           </Link>
@@ -117,12 +105,12 @@ function ReflectionLoading() {
         <Skeleton className="h-20 w-full" />
         <Skeleton className="h-20 w-full" />
       </section>
-      <section className="bg-foreground p-6 sm:p-8">
-        <Skeleton className="h-7 w-52 bg-background/20" />
+      <section className="border-[1.5px] border-foreground bg-background p-6 sm:p-8">
+        <Skeleton className="h-7 w-52" />
         <div className="mt-6 space-y-4">
-          <Skeleton className="h-14 w-full bg-background/15" />
-          <Skeleton className="h-14 w-full bg-background/15" />
-          <Skeleton className="h-14 w-full bg-background/15" />
+          <Skeleton className="h-14 w-full" />
+          <Skeleton className="h-14 w-full" />
+          <Skeleton className="h-14 w-full" />
         </div>
       </section>
     </div>
@@ -332,30 +320,29 @@ function ReflectionContent({ reflection }: { reflection: WeeklyFlowReflection })
       {reflection.iamStatements.length > 0 ? (
         <section
           aria-labelledby="reflection-iam-heading"
-          className="border-[1.5px] border-foreground bg-foreground p-5 text-background sm:p-8"
+          className="border-[1.5px] border-foreground bg-background p-5 text-foreground sm:p-8"
         >
-          <h2 id="reflection-iam-heading" className="text-3xl text-background">
+          <h2 id="reflection-iam-heading" className="text-3xl text-foreground">
             I AM Statements
           </h2>
-          <p className="mt-2 text-sm leading-6 text-background/65">
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
             Built from this week&apos;s Flows and the direction you said you want to go.
           </p>
-          <ul className="mt-7 border-y border-background/20">
+          <ul className="mt-7 border-y border-foreground/20">
             {reflection.iamStatements.map((statement, index) => (
               <li
                 key={`${statement.text}-${index}`}
-                className="border-b border-background/15 py-5 last:border-b-0"
+                className="border-b border-foreground/15 py-5 last:border-b-0"
               >
                 <div className="flex gap-4">
                   <span aria-hidden="true" className="mt-2.5 h-2 w-2 shrink-0 bg-[#2997FF]" />
                   <div className="min-w-0">
-                    <p className="max-w-[68ch] text-lg font-semibold leading-7 text-background sm:text-xl sm:leading-8">
+                    <p className="max-w-[68ch] text-lg font-semibold leading-7 text-foreground sm:text-xl sm:leading-8">
                       {statement.text}
                     </p>
                     <EvidenceLinks
                       evidenceSessionIds={statement.evidenceSessionIds}
                       sourceFlows={synthesisSources}
-                      inverted
                     />
                   </div>
                 </div>
