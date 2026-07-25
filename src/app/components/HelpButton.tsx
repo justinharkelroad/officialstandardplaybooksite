@@ -299,7 +299,7 @@ export function HelpButton({
       <DialogContent
         className={cn(
           spScopeClass(),
-          "member-app !w-[calc(100%-2rem)] !max-w-3xl max-h-[min(860px,92vh)] overflow-y-auto border-[1.5px] border-foreground bg-background p-0 [&>button]:text-background [&>button]:opacity-100",
+          "member-app !w-[calc(100%-2rem)] !max-w-3xl max-h-[min(860px,92vh)] overflow-y-auto border-[1.5px] border-foreground bg-background p-0",
         )}
       >
         <DialogHeader className="border-b-[1.5px] border-foreground bg-foreground p-6 pr-12 text-background">
