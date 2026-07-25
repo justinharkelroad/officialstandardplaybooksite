@@ -6,6 +6,7 @@ import type {
   CoachModelResult,
   CoachOutputRejectionReason,
   CoachPromptParts,
+  CoachRenderOptions,
   CoachResolutionDraft,
   CoachTurnDraft,
   CoachTurnRendered,
@@ -18,6 +19,7 @@ export type * from "./types.ts";
 const SAFETY_CHARTER = `You are Flowing, the Standard Playbook Flow coach.
 Use the word "flow" only; never call a flow a stack.
 Reflect the member's own meaning with specificity, warmth, and calibrated honesty.
+Always speak directly to the member using "you" and "your." Never narrate the member in third person, refer to them by name as though they are absent, or use "he," "she," or "they" to describe the member.
 Distinguish observation from hypothesis. Never state an unverified motive, diagnosis, spiritual claim, or character judgment as fact.
 When a probe is allowed, ask at most one question and only when its answer could materially deepen or correct the working thesis.
 When a probe is not allowed, use declarative statements only; the structured flow owns the next question.
@@ -31,6 +33,36 @@ const MEMORY_CLAIM_PATTERN = /\b(previously|last time|earlier|(?:in|from) (?:a|y
 
 function dataBlock(label: string, value: unknown): string {
   return `<DATA name="${label}">\n${JSON.stringify(value)}\n</DATA>`;
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function narratesMemberInThirdPerson(value: string, options: CoachRenderOptions): boolean {
+  const directAddressNames = options.directAddressNames ?? [];
+  if (!directAddressNames.length) return false;
+
+  const hasSecondPerson = /\b(?:you|your|yours|yourself|you're|you've|you'll|you'd)\b/i.test(value);
+  const usesDirectVocative = directAddressNames.some((candidate) => {
+    const name = candidate.trim().split(/\s+/)[0];
+    return name.length >= 2 && new RegExp(`^\\s*${escapeRegExp(name)}\\s*,`, "i").test(value);
+  });
+
+  // Profile-interview coaching must unmistakably address the person. A bare
+  // summary such as "Parenting is the heaviest role" still reads like profile
+  // notes even when it avoids a gendered pronoun.
+  if (!hasSecondPerson && !usesDirectVocative) return true;
+
+  return directAddressNames.some((candidate) => {
+    const name = candidate.trim().split(/\s+/)[0];
+    if (!name || name.length < 2) return false;
+    const namedNarration = new RegExp(
+      `\\b${escapeRegExp(name)}(?:'s|’s|\\s+(?:clarified|said|shared|explained|described|identified|named|is|was|has|had|wants|needs|feels|seems|values|believes|knows|recognizes|carries|faces|struggles|avoids|chooses|puts|gets|does|did|can|will|would))\\b`,
+      "i",
+    );
+    return namedNarration.test(value);
+  });
 }
 
 function boundStringRecord(input: Record<string, string>, maxTotal = 30000): Record<string, string> {
@@ -274,7 +306,12 @@ export async function retrieveInsights(
   return [...selected.values()].slice(0, limit);
 }
 
-function renderAuthorizedText(modelOutput: string, authorizedCitations: CoachInsight[], allowQuestion: boolean): {
+function renderAuthorizedText(
+  modelOutput: string,
+  authorizedCitations: CoachInsight[],
+  allowQuestion: boolean,
+  options: CoachRenderOptions = {},
+): {
   reflection: string;
   memoryRefs: Array<{ id: string; flow_slug: string | null; session_title: string | null }>;
   rejectionReason: CoachOutputRejectionReason | null;
@@ -305,6 +342,9 @@ function renderAuthorizedText(modelOutput: string, authorizedCitations: CoachIns
   if (!allowQuestion && outputWithoutAuthorizedTokens.includes("?")) {
     return { reflection: "", memoryRefs: [], rejectionReason: "reflection_contains_question" };
   }
+  if (narratesMemberInThirdPerson(outputWithoutAuthorizedTokens, options)) {
+    return { reflection: "", memoryRefs: [], rejectionReason: "third_person_member_reference" };
+  }
 
   const reflection = modelOutput.replace(tokenPattern, (_match, id: string) => {
     const row = authorized.get(id.toLowerCase());
@@ -327,19 +367,27 @@ function renderAuthorizedText(modelOutput: string, authorizedCitations: CoachIns
   };
 }
 
-export function renderReflection(modelOutput: string, authorizedCitations: CoachInsight[]): {
+export function renderReflection(
+  modelOutput: string,
+  authorizedCitations: CoachInsight[],
+  options: CoachRenderOptions = {},
+): {
   reflection: string;
   memoryRefs: Array<{ id: string; flow_slug: string | null; session_title: string | null }>;
   rejectionReason: CoachOutputRejectionReason | null;
 } {
-  return renderAuthorizedText(modelOutput, authorizedCitations, false);
+  return renderAuthorizedText(modelOutput, authorizedCitations, false, options);
 }
 
-export function renderCoachTurn(modelOutput: string, authorizedCitations: CoachInsight[]): CoachTurnRendered {
+export function renderCoachTurn(
+  modelOutput: string,
+  authorizedCitations: CoachInsight[],
+  options: CoachRenderOptions = {},
+): CoachTurnRendered {
   const draft = parseCoachTurn(modelOutput);
-  const renderedReflection = renderReflection(draft.reflection, authorizedCitations);
+  const renderedReflection = renderReflection(draft.reflection, authorizedCitations, options);
   const renderedProbe = draft.probe
-    ? renderAuthorizedText(draft.probe, authorizedCitations, true)
+    ? renderAuthorizedText(draft.probe, authorizedCitations, true, options)
     : { reflection: "", memoryRefs: [], rejectionReason: null };
   const probe = renderedProbe.reflection.trim() || null;
   const validProbe = probe && probe.endsWith("?") && (probe.match(/\?/g)?.length ?? 0) === 1
@@ -371,14 +419,18 @@ export function serializeSavedCoachTurn(saved: {
   };
 }
 
-export function renderCoachResolution(modelOutput: string, authorizedCitations: CoachInsight[]): {
+export function renderCoachResolution(
+  modelOutput: string,
+  authorizedCitations: CoachInsight[],
+  options: CoachRenderOptions = {},
+): {
   resolution: string;
   thesis: CoachWorkingThesis;
   memoryRefs: Array<{ id: string; flow_slug: string | null; session_title: string | null }>;
   rejectionReason: CoachOutputRejectionReason | null;
 } {
   const draft = parseCoachResolution(modelOutput);
-  const rendered = renderReflection(draft.resolution, authorizedCitations);
+  const rendered = renderReflection(draft.resolution, authorizedCitations, options);
   return {
     resolution: rendered.reflection,
     thesis: draft.thesis,

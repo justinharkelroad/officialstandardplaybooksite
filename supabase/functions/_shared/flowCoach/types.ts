@@ -52,7 +52,16 @@ export type CoachOutputRejectionReason =
   | "empty_reflection"
   | "raw_memory_text"
   | "unverified_memory_claim"
-  | "reflection_contains_question";
+  | "reflection_contains_question"
+  | "third_person_member_reference";
+
+export interface CoachRenderOptions {
+  /**
+   * Names that identify the member receiving the coaching. Generated copy may
+   * address the member directly, but must not narrate them by name.
+   */
+  directAddressNames?: string[];
+}
 
 export interface CoachResolutionDraft {
   resolution: string;

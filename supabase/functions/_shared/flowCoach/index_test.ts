@@ -80,6 +80,46 @@ Deno.test("renderReflection rejects coaching questions", () => {
   assertEquals(rendered.rejectionReason, "reflection_contains_question");
 });
 
+Deno.test("profile coaching rejects third-person narration by member name", () => {
+  const rendered = renderReflection(
+    "Corina clarified that parenting is the heaviest role right now, and her training is getting the least attention.",
+    [],
+    { directAddressNames: ["Corina"] },
+  );
+  assertEquals(rendered.reflection, "");
+  assertEquals(rendered.rejectionReason, "third_person_member_reference");
+});
+
+Deno.test("profile coaching accepts direct second-person reflection", () => {
+  const rendered = renderReflection(
+    "Parenting is carrying the most weight for you right now, while your training is receiving the least attention.",
+    [],
+    { directAddressNames: ["Corina"] },
+  );
+  assertStringIncludes(rendered.reflection, "for you");
+  assertEquals(rendered.rejectionReason, null);
+});
+
+Deno.test("profile coaching rejects gendered narration that never addresses the member", () => {
+  const rendered = renderReflection(
+    "Parenting is the heaviest role right now, and her training is receiving the least attention.",
+    [],
+    { directAddressNames: ["Corina"] },
+  );
+  assertEquals(rendered.reflection, "");
+  assertEquals(rendered.rejectionReason, "third_person_member_reference");
+});
+
+Deno.test("profile coaching rejects detached profile-note narration without pronouns", () => {
+  const rendered = renderReflection(
+    "Parenting is carrying the most weight right now. Athletic training is receiving the least attention.",
+    [],
+    { directAddressNames: ["Corina"] },
+  );
+  assertEquals(rendered.reflection, "");
+  assertEquals(rendered.rejectionReason, "third_person_member_reference");
+});
+
 Deno.test("renderReflection rejects memory text copied without its authorized token", () => {
   const rendered = renderReflection(
     `That still matters: “${memory.content}”`,

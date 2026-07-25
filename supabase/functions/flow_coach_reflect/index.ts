@@ -66,6 +66,19 @@ const PROFILE_PROMPT_FIELDS = new Set([
   "overwhelm_response",
 ]);
 
+function profileDirectAddressNames(
+  templateSlug: unknown,
+  storedAnswers: Record<string, string>,
+  profile: Record<string, unknown> | null,
+): string[] {
+  if (templateSlug !== "profile-builder" && templateSlug !== "profile-reprofile") return [];
+  const names = [
+    storedAnswers.preferred_name,
+    typeof profile?.preferred_name === "string" ? profile.preferred_name : "",
+  ].map((value) => value.trim()).filter(Boolean);
+  return [...new Set(names)];
+}
+
 function sanitizePromptRecord(input: Record<string, unknown> | null, maxTotal = 12000): Record<string, unknown> | null {
   if (!input) return null;
   const output: Record<string, unknown> = {};
@@ -252,6 +265,9 @@ serve(async (req) => {
       const profileResult = await supabase.from("flow_profiles").select("*").eq("user_id", userId).maybeSingle();
       if (profileResult.error) throw profileResult.error;
       const rawProfile = profileResult.data;
+      const renderOptions = {
+        directAddressNames: profileDirectAddressNames(template.slug, storedAnswers, rawProfile),
+      };
       const questionNote = (template.coach_question_notes as Record<string, unknown> | null)?.[question.id] ?? null;
       const themes = typeof questionNote === "object" && questionNote !== null
         ? (Array.isArray((questionNote as Record<string, unknown>).themes)
@@ -285,7 +301,7 @@ serve(async (req) => {
       let outputTokens: number | null = null;
       try {
         providerAttempts += 1;
-        const modelResult = await dispatchModel({
+        let modelResult = await dispatchModel({
           model: configuredModel,
           openaiApiKey: Deno.env.get("OPENAI_API_KEY"),
           anthropicApiKey: Deno.env.get("ANTHROPIC_API_KEY"),
@@ -294,7 +310,23 @@ serve(async (req) => {
           jsonMode: true,
         }, resolutionPrompt);
         attemptModel = modelResult.model;
-        const rendered = renderCoachResolution(modelResult.text, memory);
+        let rendered = renderCoachResolution(modelResult.text, memory, renderOptions);
+        if (!rendered.resolution) {
+          providerAttempts += 1;
+          modelResult = await dispatchModel({
+            model: configuredModel,
+            openaiApiKey: Deno.env.get("OPENAI_API_KEY"),
+            anthropicApiKey: Deno.env.get("ANTHROPIC_API_KEY"),
+            maxTokens: 900,
+            reasoningEffort: "low",
+            jsonMode: true,
+          }, {
+            ...resolutionPrompt,
+            system: `${resolutionPrompt.system}\n\nSERVER VALIDATION REPAIR: The previous draft was rejected (${rendered.rejectionReason ?? "empty_reflection"}). Speak directly to the member using "you" and "your." Never narrate the member by name or in third person. Return fresh valid JSON.`,
+          });
+          attemptModel = modelResult.model;
+          rendered = renderCoachResolution(modelResult.text, memory, renderOptions);
+        }
         resolution = rendered.resolution || null;
         workingThesis = rendered.thesis;
         memoryRefs = [
@@ -366,6 +398,9 @@ serve(async (req) => {
     if (profileResult.error) throw profileResult.error;
     const rawProfile = profileResult.data;
     const profile = sanitizeProfile(rawProfile);
+    const renderOptions = {
+      directAddressNames: profileDirectAddressNames(template.slug, storedAnswers, rawProfile),
+    };
     const questionNote = (template.coach_question_notes as Record<string, unknown> | null)?.[question.id] ?? null;
     const themes = typeof questionNote === "object" && questionNote !== null
       ? (Array.isArray((questionNote as Record<string, unknown>).themes)
@@ -420,16 +455,16 @@ serve(async (req) => {
     providerAttempts += 1;
     let modelResult = await dispatchModel(modelConfig, prompt);
     attemptModel = modelResult.model;
-    let rendered = renderCoachTurn(modelResult.text, memory);
+    let rendered = renderCoachTurn(modelResult.text, memory, renderOptions);
     if (!rendered.reflection) {
       const repairPrompt = {
         ...prompt,
-        system: `${prompt.system}\n\nSERVER VALIDATION REPAIR: The previous draft was rejected (${rendered.rejectionReason ?? "empty_reflection"}). Return a fresh valid JSON response. Reflect the current answer directly; do not use phrases such as "you said," "you wrote," or "you shared." The reflection must contain no question mark. Put an optional question only in the probe field when probes are allowed.`,
+        system: `${prompt.system}\n\nSERVER VALIDATION REPAIR: The previous draft was rejected (${rendered.rejectionReason ?? "empty_reflection"}). Return a fresh valid JSON response. Speak directly to the member using "you" and "your"; never narrate the member by name or in third person. Reflect the current answer directly; do not use phrases such as "you said," "you wrote," or "you shared." The reflection must contain no question mark. Put an optional question only in the probe field when probes are allowed.`,
       };
       providerAttempts += 1;
       modelResult = await dispatchModel(modelConfig, repairPrompt);
       attemptModel = modelResult.model;
-      rendered = renderCoachTurn(modelResult.text, memory);
+      rendered = renderCoachTurn(modelResult.text, memory, renderOptions);
     }
     if (!rendered.reflection) {
       const reason = `output_rejected_${rendered.rejectionReason ?? "empty_reflection"}`;
