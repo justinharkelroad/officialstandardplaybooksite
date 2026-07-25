@@ -44,9 +44,9 @@ export default function PasswordField({
           onClick={() => setIsVisible((visible) => !visible)}
           aria-label={visibilityLabel}
           aria-pressed={isVisible}
-          className="absolute inset-y-0 right-0 flex w-12 touch-manipulation items-center justify-center text-foreground/55 transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-[#2997FF]"
+          className="absolute inset-y-[1.5px] right-[1.5px] flex w-12 touch-manipulation items-center justify-center border-l-[1.5px] border-foreground bg-foreground text-background transition-colors hover:border-[#2997FF] hover:bg-[#2997FF] hover:text-white focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-[#2997FF]"
         >
-          {isVisible ? <EyeOff aria-hidden="true" className="h-5 w-5" /> : <Eye aria-hidden="true" className="h-5 w-5" />}
+          {isVisible ? <EyeOff aria-hidden="true" className="h-5 w-5 stroke-[2.25]" /> : <Eye aria-hidden="true" className="h-5 w-5 stroke-[2.25]" />}
         </button>
       </div>
     </div>
