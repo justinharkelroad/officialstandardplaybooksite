@@ -5,7 +5,6 @@ import {
   ChevronDown,
   Circle,
   Compass,
-  Sparkles,
   X,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -26,21 +25,28 @@ export function OnboardingChecklist() {
   const navigate = useNavigate();
   const core4 = useCore4Stats();
   const flows = useFlowStats();
-  const { items } = useFocusItems();
-  const { data: targets } = useQuarterlyTargets(getCurrentQuarter());
+  const { items, isPending: focusItemsPending } = useFocusItems();
+  const { data: targets, isPending: targetsPending } = useQuarterlyTargets(getCurrentQuarter());
   const [monthlyMissionCount, setMonthlyMissionCount] = useState(0);
-  const [expanded, setExpanded] = useState(true);
-  const [dismissed, setDismissed] = useState(false);
+  const [monthlyMissionsLoading, setMonthlyMissionsLoading] = useState(true);
+  const [expanded, setExpanded] = useState(false);
+  const [forcedOpen, setForcedOpen] = useState(false);
+  const [dismissed, setDismissed] = useState<boolean | null>(null);
+  const [viewInitialized, setViewInitialized] = useState(false);
 
-  const storageKey = `sp-onboarding-dismissed:${user?.id ?? "unknown"}`;
+  const dismissedStorageKey = `sp-onboarding-dismissed:${user?.id ?? "unknown"}`;
+  const expandedStorageKey = `sp-onboarding-expanded:${user?.id ?? "unknown"}`;
 
   useEffect(() => {
+    if (!user?.id) return;
+
+    setViewInitialized(false);
     try {
-      setDismissed(localStorage.getItem(storageKey) === "1");
+      setDismissed(localStorage.getItem(dismissedStorageKey) === "1");
     } catch {
       setDismissed(false);
     }
-  }, [storageKey]);
+  }, [dismissedStorageKey, user?.id]);
 
   useEffect(() => {
     const shouldOpen = new URLSearchParams(location.search).get("setup") === "1";
@@ -48,28 +54,39 @@ export function OnboardingChecklist() {
 
     setDismissed(false);
     setExpanded(true);
+    setForcedOpen(true);
+    setViewInitialized(true);
     try {
-      localStorage.removeItem(storageKey);
+      localStorage.removeItem(dismissedStorageKey);
     } catch {
       // The guide still opens for this session.
     }
     navigate("/app", { replace: true });
-  }, [location.search, navigate, storageKey]);
+  }, [dismissedStorageKey, location.search, navigate]);
 
   useEffect(() => {
     let cancelled = false;
 
     const loadMonthlyMissions = async () => {
-      if (!user?.id) return;
-      const { data } = await supabase
-        .from("core4_monthly_missions")
-        .select("domain")
-        .eq("user_id", user.id)
-        .eq("status", "active")
-        .eq("month_year", format(new Date(), "yyyy-MM"));
+      if (!user?.id) {
+        if (!cancelled) setMonthlyMissionsLoading(false);
+        return;
+      }
 
-      if (!cancelled) {
-        setMonthlyMissionCount(new Set((data ?? []).map((row) => row.domain)).size);
+      setMonthlyMissionsLoading(true);
+      try {
+        const { data } = await supabase
+          .from("core4_monthly_missions")
+          .select("domain")
+          .eq("user_id", user.id)
+          .eq("status", "active")
+          .eq("month_year", format(new Date(), "yyyy-MM"));
+
+        if (!cancelled) {
+          setMonthlyMissionCount(new Set((data ?? []).map((row) => row.domain)).size);
+        }
+      } finally {
+        if (!cancelled) setMonthlyMissionsLoading(false);
       }
     };
 
@@ -130,31 +147,119 @@ export function OnboardingChecklist() {
   const completed = checklist.filter((item) => item.complete).length;
   const progress = (completed / checklist.length) * 100;
   const nextItem = checklist.find((item) => !item.complete);
+  const checklistReady =
+    !core4.loading &&
+    !flows.loading &&
+    !focusItemsPending &&
+    !targetsPending &&
+    !monthlyMissionsLoading;
+
+  useEffect(() => {
+    if (!checklistReady || dismissed !== false || forcedOpen) return;
+
+    if (completed === checklist.length) {
+      setExpanded(false);
+      setViewInitialized(true);
+      return;
+    }
+
+    try {
+      setExpanded(localStorage.getItem(expandedStorageKey) !== "0");
+    } catch {
+      setExpanded(true);
+    }
+    setViewInitialized(true);
+  }, [
+    checklist.length,
+    checklistReady,
+    completed,
+    dismissed,
+    expandedStorageKey,
+    forcedOpen,
+  ]);
 
   const dismiss = useCallback(() => {
     setDismissed(true);
+    setForcedOpen(false);
     try {
-      localStorage.setItem(storageKey, "1");
+      localStorage.setItem(dismissedStorageKey, "1");
     } catch {
       // Dismissal just will not persist in private mode.
     }
-  }, [storageKey]);
+  }, [dismissedStorageKey]);
 
-  if (dismissed) {
+  const toggleExpanded = useCallback(() => {
+    setForcedOpen(false);
+    setExpanded((value) => {
+      const nextValue = !value;
+      try {
+        localStorage.setItem(expandedStorageKey, nextValue ? "1" : "0");
+      } catch {
+        // Expansion state just will not persist in private mode.
+      }
+      return nextValue;
+    });
+  }, [expandedStorageKey]);
+
+  if (dismissed === null || dismissed || !checklistReady || !viewInitialized) return null;
+
+  if (!expanded) {
+    const compactTitle = nextItem?.label ?? "Your operating rhythm is live";
+    const compactLabel = nextItem
+      ? `Next step · ${completed}/${checklist.length}`
+      : `Setup complete · ${completed}/${checklist.length}`;
+
     return (
-      <Button
-        type="button"
-        variant="outline"
-        size="sm"
-        onClick={() => {
-          setDismissed(false);
-          setExpanded(true);
-        }}
-        className="gap-2"
+      <section
+        className="border-[1.5px] border-foreground bg-card"
+        aria-labelledby="setup-guide-title"
       >
-        <Compass className="h-4 w-4" />
-        Open setup guide
-      </Button>
+        <div className="flex min-w-0 flex-col gap-3 p-3 sm:flex-row sm:items-center sm:p-4">
+          <div className="flex min-w-0 flex-1 items-center gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-foreground text-background">
+              {nextItem ? <Compass className="h-4 w-4" /> : <Check className="h-4 w-4" />}
+            </span>
+            <div className="min-w-0">
+              <p className="sp-label text-[9px] text-[#2997FF]">{compactLabel}</p>
+              <h2 id="setup-guide-title" className="mt-1 truncate text-lg">
+                {compactTitle}
+              </h2>
+            </div>
+          </div>
+
+          <div className="flex min-w-0 items-center gap-2 sm:shrink-0">
+            {nextItem ? (
+              <Button asChild size="sm" className="min-h-10 flex-1 sm:flex-none">
+                <Link to={nextItem.to}>{nextItem.action}</Link>
+              </Button>
+            ) : null}
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={toggleExpanded}
+              aria-expanded={false}
+              aria-controls="setup-guide-steps"
+              className="min-h-10 flex-1 gap-2 sm:flex-none"
+            >
+              Review guide
+              <ChevronDown className="h-4 w-4" />
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={dismiss}
+              aria-label="Hide setup guide"
+              title="Hide setup guide. Reopen it from How It Works."
+              className="min-h-10 gap-2 px-3"
+            >
+              <X className="h-4 w-4" />
+              <span className="hidden lg:inline">Hide guide</span>
+            </Button>
+          </div>
+        </div>
+      </section>
     );
   }
 
@@ -181,22 +286,25 @@ export function OnboardingChecklist() {
                 type="button"
                 variant="ghost"
                 size="sm"
-                onClick={() => setExpanded((value) => !value)}
-                aria-expanded={expanded}
+                onClick={toggleExpanded}
+                aria-expanded={true}
+                aria-controls="setup-guide-steps"
                 className="gap-2"
               >
                 {completed}/{checklist.length}
-                <ChevronDown className={cn("h-4 w-4 transition-transform", expanded && "rotate-180")} />
+                <ChevronDown className="h-4 w-4 rotate-180 transition-transform" />
               </Button>
               <Button
                 type="button"
                 variant="ghost"
-                size="icon"
+                size="sm"
                 onClick={dismiss}
-                aria-label="Dismiss setup guide"
-                className="h-9 w-9"
+                aria-label="Hide setup guide"
+                title="Hide setup guide. Reopen it from How It Works."
+                className="gap-2 px-3"
               >
                 <X className="h-4 w-4" />
+                <span className="hidden sm:inline">Hide guide</span>
               </Button>
             </div>
           </div>
@@ -204,52 +312,39 @@ export function OnboardingChecklist() {
         </div>
       </div>
 
-      {expanded ? (
-        <div className="grid gap-px bg-foreground/15 sm:grid-cols-2 lg:grid-cols-5">
-          {checklist.map((item, index) => (
-            <Link
-              key={item.label}
-              to={item.to}
-              className={cn(
-                "group flex min-h-44 flex-col bg-card p-4 transition-colors hover:bg-muted/50",
-                !item.complete && item === nextItem && "ring-2 ring-inset ring-[#2997FF]",
-              )}
-            >
-              <div className="flex items-center justify-between gap-3">
-                <span className="sp-label text-[9px] text-muted-foreground">
-                  Step {index + 1}
-                </span>
-                {item.complete ? (
-                  <span className="flex h-6 w-6 items-center justify-center bg-[#2997FF] text-white">
-                    <Check className="h-3.5 w-3.5" />
-                  </span>
-                ) : (
-                  <Circle className="h-5 w-5 text-foreground/25" />
-                )}
-              </div>
-              <h3 className="mt-4 text-lg">{item.label}</h3>
-              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{item.detail}</p>
-              <span className="mt-auto pt-4 text-xs font-semibold uppercase tracking-[0.08em] text-[#2997FF]">
-                {item.complete ? "Review" : item.action}
+      <div
+        id="setup-guide-steps"
+        className="grid gap-px bg-foreground/15 sm:grid-cols-2 lg:grid-cols-5"
+      >
+        {checklist.map((item, index) => (
+          <Link
+            key={item.label}
+            to={item.to}
+            className={cn(
+              "group flex min-h-44 flex-col bg-card p-4 transition-colors hover:bg-muted/50",
+              !item.complete && item === nextItem && "ring-2 ring-inset ring-[#2997FF]",
+            )}
+          >
+            <div className="flex items-center justify-between gap-3">
+              <span className="sp-label text-[9px] text-muted-foreground">
+                Step {index + 1}
               </span>
-            </Link>
-          ))}
-        </div>
-      ) : nextItem ? (
-        <div className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm">
-            <Sparkles className="mr-2 inline h-4 w-4 text-[#2997FF]" />
-            Next: <span className="font-semibold">{nextItem.label}</span>
-          </p>
-          <Button asChild size="sm">
-            <Link to={nextItem.to}>{nextItem.action}</Link>
-          </Button>
-        </div>
-      ) : (
-        <div className="p-4 text-sm font-medium">
-          Your operating rhythm is live. Keep using the Hub to choose the next useful move.
-        </div>
-      )}
+              {item.complete ? (
+                <span className="flex h-6 w-6 items-center justify-center bg-[#2997FF] text-white">
+                  <Check className="h-3.5 w-3.5" />
+                </span>
+              ) : (
+                <Circle className="h-5 w-5 text-foreground/25" />
+              )}
+            </div>
+            <h3 className="mt-4 text-lg">{item.label}</h3>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{item.detail}</p>
+            <span className="mt-auto pt-4 text-xs font-semibold uppercase tracking-[0.08em] text-[#2997FF]">
+              {item.complete ? "Review" : item.action}
+            </span>
+          </Link>
+        ))}
+      </div>
     </section>
   );
 }

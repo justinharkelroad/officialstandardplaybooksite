@@ -118,6 +118,15 @@ export const seoConfig: Record<string, SEOConfig> = {
     ogImage: OG_IMAGE,
     type: 'article',
   },
+  '/app': {
+    title: 'The Standard Playbook App',
+    description: 'Turn quarterly goals into daily action across Body, Being, Balance, and Business.',
+    keywords: ['Standard Playbook app', 'Core 4', 'quarterly goals', 'daily action', 'member app'],
+    ogImage: 'https://standardplaybook.com/og/app.png',
+    canonical: 'https://standardplaybook.com/app',
+    type: 'website',
+    noindex: true,
+  },
   '/thetool': {
     title: 'The Standard Playbook App | Turn Quarterly Goals Into Daily Action',
     description: 'See how the Standard Playbook app connects quarterly targets, monthly missions, weekly priorities, daily Core 4 actions, guided Flows, reflection, and weekly Debriefs.',
