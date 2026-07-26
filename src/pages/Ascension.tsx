@@ -19,13 +19,13 @@ const rhythm = [
 ];
 
 const deliverables = [
-  'A written 90-day target and operating plan',
+  'A written 12-week target and operating plan',
   'A personal Core 4 practice built around your real life',
   'A weekly evidence scorecard',
   'Private weekly coaching with Justin',
   'Direct accountability between calls',
   'Formal reviews at weeks four and eight',
-  'A final written debrief of the full 90 days',
+  'A final written debrief of the full 12 weeks',
   'A repeatable standard for the next season',
 ];
 
@@ -36,7 +36,7 @@ const process = [
     detail: 'We define the business target, choose the leading actions, establish your Core 4 commitments, and make the scoreboard unambiguous.',
   },
   {
-    label: '90 days',
+    label: '12 weeks',
     title: 'Daily practice. Weekly truth.',
     detail: 'You execute, document the evidence, and meet privately with Justin every week to review the score and confront what is getting in the way.',
   },
@@ -80,7 +80,7 @@ const Ascension = () => {
             <p className="ascension-kicker">Private mentorship with Justin Harkelroad</p>
             <h1><span>The Standard</span><span>Ascension</span></h1>
             <p className="ascension-hero__intro">
-              Ninety days. One business target. Four areas of life. Private mentorship with Justin Harkelroad.
+              Twelve weeks. One business target. Four areas of life. Private mentorship with Justin Harkelroad.
             </p>
             <button type="button" className="ascension-cta" onClick={openApplication}>
               Apply for Ascension
@@ -105,8 +105,8 @@ const Ascension = () => {
       <section className="ascension-facts" aria-label="Program facts">
         <div className="ascension-shell ascension-facts__grid">
           <div>
-            <strong>90</strong>
-            <span>days of private mentorship</span>
+            <strong>12</strong>
+            <span>weeks of private mentorship</span>
           </div>
           <div>
             <strong>1:1</strong>
@@ -152,7 +152,7 @@ const Ascension = () => {
         <div className="ascension-shell ascension-promise__inner">
           <p className="ascension-kicker">The promise</p>
           <blockquote>
-            For 90 days, you will do what you said you would do in all four areas. The work is witnessed daily, scored weekly, and confronted with love when you drift.
+            For 12 weeks, you will do what you said you would do in all four areas. The work is witnessed daily, scored weekly, and confronted with love when you drift.
           </blockquote>
           <p className="ascension-promise__note">No revenue guarantees. We control the standard, then let the evidence stack.</p>
         </div>
@@ -160,7 +160,7 @@ const Ascension = () => {
 
       <section className="ascension-section ascension-process">
         <div className="ascension-shell">
-          <h2>How the 90 days work.</h2>
+          <h2>How the 12 weeks work.</h2>
           <div className="ascension-process__list">
             {process.map((item) => (
               <article key={item.label}>
@@ -229,8 +229,8 @@ const Ascension = () => {
           </div>
           <aside className="ascension-offer__application" aria-label="Ascension application details">
             <p>Application-only mentorship</p>
-            <strong>90</strong>
-            <span>days · private 1:1 · intentionally small roster</span>
+            <strong>12</strong>
+            <span>weeks &middot; private 1:1 &middot; intentionally small roster</span>
             <ol>
               <li><span>01</span>Submit your application</li>
               <li><span>02</span>We review the fit</li>
@@ -248,7 +248,7 @@ const Ascension = () => {
         <div className="ascension-shell ascension-final__inner">
           <img src={standardLogo} alt="" aria-hidden="true" />
           <h2>You versus you.</h2>
-          <p>One-on-one private mentorship for the next 90 days.</p>
+          <p>One-on-one private mentorship for the next 12 weeks.</p>
           <button type="button" className="ascension-cta" onClick={openApplication}>
             Apply for Ascension
             <span aria-hidden="true">↗</span>
