@@ -10,7 +10,7 @@ const BoardroomBusiness = () => {
             ITS NOT JUST BUSINESS...
           </h2>
           <p className="text-lg text-gray-400 max-w-3xl mx-auto">
-            Running a thriving agency isn't just about numbers. The Boardroom isn't like other agency coaching—we help agency owners be spiritually grounded, physically strong, and relationally at rest.
+            Running a thriving agency isn't just about numbers. The Boardroom is different from other agency coaching. We help agency owners be spiritually grounded, physically strong, and relationally at rest.
           </p>
         </div>
 

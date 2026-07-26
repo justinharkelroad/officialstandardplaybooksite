@@ -52,7 +52,7 @@ const coachingPrograms: ProgramRow[] = [
     num: '01',
     name: 'The Directive',
     tier: '1:1 Coaching',
-    description: 'High-touch 1:1 implementation and pressure-tested accountability — the personal coaching tier.',
+    description: 'High-touch 1:1 implementation and pressure-tested accountability, the personal coaching tier.',
     details: [
       'Everything included in Boardroom +',
       'Monthly 2-hour private sessions with Justin',
@@ -68,7 +68,7 @@ const coachingPrograms: ProgramRow[] = [
     num: '02',
     name: 'Partnership',
     tier: '1:1 Coaching',
-    description: 'The highest level — full-access private coaching, custom strategy, and a direct line to Justin.',
+    description: 'The highest level, full-access private coaching, custom strategy, and a direct line to Justin.',
     details: [
       'Everything in Directive +',
       'Unlimited private access to Justin',
@@ -187,7 +187,7 @@ const softwarePrograms: ProgramRow[] = [
     num: '02',
     name: 'Agency Brain',
     tier: 'The Insurance-Agency OS',
-    description: 'The operating system for the modern insurance agency — scorecards, AI call scoring, training, and full team visibility. Research the platform, features, and plans.',
+    description: 'The operating system for the modern insurance agency, scorecards, AI call scoring, training, and full team visibility. Research the platform, features, and plans.',
     details: [
       'Real-time scorecards and KPI rings',
       'AI call scoring + transcripts',
@@ -332,7 +332,7 @@ const ProgramRowItem = ({ p }: { p: ProgramRow }) => {
                   fontFamily: body, fontSize: 13.5, lineHeight: 1.5, color: ink, opacity: 0.78,
                   paddingLeft: 16, position: 'relative',
                 }}>
-                  <span style={{ position: 'absolute', left: 0, color: blue }}>—</span>
+                  <span style={{ position: 'absolute', left: 0, color: blue }}>-</span>
                   {d}
                 </li>
               ))}
@@ -440,7 +440,7 @@ const Links = () => {
             >
               <img
                 src={profileImage}
-                alt="Justin Harkelroad — Insurance Agency Coach"
+                alt="Justin Harkelroad, Insurance Agency Coach"
                 style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
               />
             </motion.div>

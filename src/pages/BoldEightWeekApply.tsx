@@ -133,7 +133,7 @@ const HeroSection = ({ onBookCall }: { onBookCall: () => void }) => (
           fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 21px)', fontWeight: 400, lineHeight: 1.55,
           color: ink, opacity: 0.85, marginTop: 28, maxWidth: 720,
         }}>
-          The 8-Week Sales Management Experience — built for Allstate, Farmers, and State Farm agency owners who are tired of being their own sales manager.
+          The 8-Week Sales Management Experience, built for Allstate, Farmers, and State Farm agency owners who are tired of being their own sales manager.
         </p>
       </Reveal>
 
@@ -300,7 +300,7 @@ const PromiseSection = () => (
 const systems = [
   { num: '01', label: 'Sales Process', body: 'A documented, repeatable call framework. Your entire team follows the same playbook.' },
   { num: '02', label: 'Accountability Framework', body: 'Weekly rhythm, scorecards, clear expectations. No more winging it.' },
-  { num: '03', label: 'Consequence Ladder', body: 'A clear progression for when someone misses the standard — built by you, for your culture. No templates forced on your team.' },
+  { num: '03', label: 'Consequence Ladder', body: 'A clear progression for when someone misses the standard, built by you, for your culture. No templates forced on your team.' },
 ];
 
 const SystemsSection = ({ onBookCall }: { onBookCall: () => void }) => (
@@ -327,7 +327,7 @@ const SystemsSection = ({ onBookCall }: { onBookCall: () => void }) => (
             fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.65,
             color: ink, opacity: 0.7,
           }}>
-            By week eight, all three are running inside your agency — not in a doc, not in your head.
+            By week eight, all three are running inside your agency, not in a doc, not in your head.
           </p>
         </Reveal>
       </div>
@@ -382,7 +382,7 @@ const weekly = [
   { when: 'Every Monday', body: 'A training video drops. Short, tactical, watchable in 20 minutes.' },
   { when: 'Every Wednesday', body: 'A training document lands. Scripts, frameworks, and the exact words to use.' },
   { when: 'Every Friday', body: "Your sales team runs a discovery flow and declares the week's takeaways." },
-  { when: 'Every Week', body: 'A 1:1 Zoom call with Justin — for you, or for your sales manager.' },
+  { when: 'Every Week', body: 'A 1:1 Zoom call with Justin, for you, or for your sales manager.' },
   { when: 'Every Week', body: "You grade 4 of your team's calls. Each rep. Every week. Unlimited reps." },
   { when: 'By Week 8', body: 'Your sales process is documented. Your consequence ladder is installed. Your team is on the system.' },
 ];
@@ -660,7 +660,7 @@ const TestimonialsSection = () => (
             fontFamily: body, fontSize: 13, fontWeight: 600, letterSpacing: '0.16em',
             color: ink, opacity: 0.7, textTransform: 'uppercase', marginTop: 24,
           }}>
-            Dan Westrick — Allstate Agency Owner
+            Dan Westrick, Allstate Agency Owner
           </p>
         </Reveal>
         <Reveal delay={0.1} className="col-span-12 md:col-span-5">
@@ -865,7 +865,7 @@ const GuaranteeSection = () => (
             color: paper, opacity: 0.85, maxWidth: 640,
           }}>
             <p>
-              The program is backed by a full money-back guarantee. Stay in the 8 weeks, do the work, and if you want your money back — ask. You'll get it.
+              The program is backed by a full money-back guarantee. Stay in the 8 weeks, do the work, and if you want your money back, ask. You'll get it.
             </p>
             <p>
               The guarantee isn't there because this is a silver bullet. It's there because what you do inside the 8 weeks determines what you get out of it. The refund is yours either way.
@@ -884,13 +884,13 @@ const GuaranteeSection = () => (
    FAQ
    ══════════════════════════════════════════════════════ */
 const faqs = [
-  { q: 'How much time per week does this take?', a: "The owner or sales manager commits about 2 hours per week — one 45-minute coaching call, plus time reviewing your team's graded calls, walking through the week's processes, and making sure the training content is being adhered to." },
-  { q: 'Do I run the 1:1 calls or does my sales manager?', a: 'Either one. You pick who needs the coaching more — the owner or the manager. Many agencies do both and split the weekly call.' },
+  { q: 'How much time per week does this take?', a: "The owner or sales manager commits about 2 hours per week: one 45-minute coaching call, plus time reviewing your team's graded calls, walking through the week's processes, and making sure the training content is being adhered to." },
+  { q: 'Do I run the 1:1 calls or does my sales manager?', a: 'Either one. You pick who needs the coaching more, the owner or the manager. Many agencies do both and split the weekly call.' },
   { q: "What if I don't have a sales manager yet?", a: 'Then this will help you hire one correctly and install the system before you promote someone. I can tell you on the strategy call if the 8-Week is the right fit for where you are, or if something else makes more sense first.' },
-  { q: 'What size agency does this work for?', a: 'Anywhere from 2-person agencies to 20+ person operations. Bigger teams tend to get more leverage from the weekly accountability rhythm — more producers to grade, more pressure points to work on.' },
+  { q: 'What size agency does this work for?', a: 'Anywhere from 2-person agencies to 20+ person operations. Bigger teams tend to get more leverage from the weekly accountability rhythm because there are more producers to grade and more pressure points to work on.' },
   { q: 'What if my sales manager quits halfway through?', a: 'You keep every document, every process, every training. The system lives inside your agency, not inside one person. If they quit, you onboard the next person onto a process that already exists.' },
-  { q: 'Does this work for State Farm, Farmers, or independent agencies — or just Allstate?', a: "The sales process, accountability framework, and consequence ladder work across any captive or independent. The training examples lean Allstate because that's where I spent 20 years — but the mechanics are the same across carriers. Most of my current clients are Allstate; I'm also actively coaching Farmers and State Farm owners." },
-  { q: 'What does "graded calls" actually mean?', a: 'Four calls per rep per week get scored by Standard against a rubric. Your rep sees exactly where they scored, what they missed, and what to do differently. Unlimited reps — if you have 3 producers or 13, every one of them gets graded calls every week.' },
+  { q: 'Does this work for State Farm, Farmers, or independent agencies, or just Allstate?', a: "The sales process, accountability framework, and consequence ladder work across any captive or independent. The training examples lean Allstate because that's where I spent 20 years, but the mechanics are the same across carriers. Most of my current clients are Allstate; I'm also actively coaching Farmers and State Farm owners." },
+  { q: 'What does "graded calls" actually mean?', a: 'Four calls per rep per week get scored by Standard against a rubric. Your rep sees exactly where they scored, what they missed, and what to do differently. Reps are unlimited. If you have 3 producers or 13, every one of them gets graded calls every week.' },
 ];
 
 const FAQSection = () => {

@@ -124,7 +124,7 @@ const HeroSection = ({ onBookCall }: { onBookCall: () => void }) => (
             marginInline: 'auto',
           }}
         >
-          The 8-Week Sales Management Experience — built for Allstate, Farmers,
+          The 8-Week Sales Management Experience, built for Allstate, Farmers,
           and State Farm agency owners who are tired of being their own sales manager.
         </p>
       </Reveal>
@@ -299,7 +299,7 @@ const systems = [
   },
   {
     title: 'Consequence Ladder',
-    body: "A clear progression for when someone misses the standard — built by you, for your culture. No templates forced on your team.",
+    body: "A clear progression for when someone misses the standard, built by you, for your culture. No templates forced on your team.",
   },
 ];
 
@@ -381,7 +381,7 @@ const weekly = [
   { when: 'Every Monday', body: 'A training video drops. Short, tactical, watchable in 20 minutes.' },
   { when: 'Every Wednesday', body: 'A training document lands. Scripts, frameworks, and the exact words to use.' },
   { when: 'Every Friday', body: "Your sales team runs a discovery flow and declares the week's takeaways." },
-  { when: 'Every week', body: 'A 1:1 Zoom call with Justin — for you, or for your sales manager.' },
+  { when: 'Every week', body: 'A 1:1 Zoom call with Justin, for you, or for your sales manager.' },
   { when: 'Every week', body: "We grade 4 of your team's calls. Each rep. Every week. Unlimited reps." },
   { when: 'By week 8', body: 'Your sales process is documented. Your consequence ladder is installed. Your team is on the system.' },
 ];
@@ -942,11 +942,11 @@ const GuaranteeSection = () => (
 const faqs = [
   {
     q: 'How much time per week does this take?',
-    a: "The owner or sales manager commits about 2 hours per week — one 45-minute coaching call, plus time reviewing your team's graded calls, walking through the week's processes, and making sure the training content is being adhered to.",
+    a: "The owner or sales manager commits about 2 hours per week, one 45-minute coaching call, plus time reviewing your team's graded calls, walking through the week's processes, and making sure the training content is being adhered to.",
   },
   {
     q: 'Do I run the 1:1 calls or does my sales manager?',
-    a: 'Either one. You pick who needs the coaching more — the owner or the manager. Many agencies do both and split the weekly call.',
+    a: 'Either one. You pick who needs the coaching more, the owner or the manager. Many agencies do both and split the weekly call.',
   },
   {
     q: "What if I don't have a sales manager yet?",
@@ -954,19 +954,19 @@ const faqs = [
   },
   {
     q: 'What size agency does this work for?',
-    a: 'Anywhere from 2-person agencies to 20+ person operations. Bigger teams tend to get more leverage from the weekly accountability rhythm — more producers to grade, more pressure points to work on.',
+    a: 'Anywhere from 2-person agencies to 20+ person operations. Bigger teams tend to get more leverage from the weekly accountability rhythm, more producers to grade, more pressure points to work on.',
   },
   {
     q: 'What if my sales manager quits halfway through?',
     a: 'You keep every document, every process, every training. The system lives inside your agency, not inside one person. If they quit, you onboard the next person onto a process that already exists.',
   },
   {
-    q: 'Does this work for State Farm, Farmers, or independent agencies — or just Allstate?',
-    a: "The sales process, accountability framework, and consequence ladder work across any captive or independent. The training examples lean Allstate because that's where I spent 20 years — but the mechanics are the same across carriers. Most of my current clients are Allstate; I'm also actively coaching Farmers and State Farm owners.",
+    q: 'Does this work for State Farm, Farmers, or independent agencies, or just Allstate?',
+    a: "The sales process, accountability framework, and consequence ladder work across any captive or independent. The training examples lean Allstate because that's where I spent 20 years, but the mechanics are the same across carriers. Most of my current clients are Allstate; I'm also actively coaching Farmers and State Farm owners.",
   },
   {
     q: 'What does "graded calls" actually mean?',
-    a: 'Four calls per rep per week get scored by Standard against a rubric. Your rep sees exactly where they scored, what they missed, and what to do differently. Unlimited reps — if you have 3 producers or 13, every one of them gets graded calls every week.',
+    a: 'Four calls per rep per week get scored by Standard against a rubric. Your rep sees exactly where they scored, what they missed, and what to do differently. Unlimited reps, if you have 3 producers or 13, every one of them gets graded calls every week.',
   },
 ];
 

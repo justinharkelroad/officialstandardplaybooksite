@@ -10,7 +10,7 @@ const ChallengeWeeklyBreakdown = () => {
     {
       week: 2,
       title: "Consistency & Cadence",
-      description: "Focus shifts to discipline—locking in personal standards, follow-up structure, and appointment integrity. Producers move from reactive selling to predictable systems that create trust and follow-through."
+      description: "Focus shifts to discipline, locking in personal standards, follow-up structure, and appointment integrity. Producers move from reactive selling to predictable systems that create trust and follow-through."
     },
     {
       week: 3,
@@ -25,7 +25,7 @@ const ChallengeWeeklyBreakdown = () => {
     {
       week: 5,
       title: "Mastery & Momentum",
-      description: "Producers level up to advanced sales strategy—building COI pipelines, reframing price, closing confidently, and handling rejection with grace. It's about professional tone, confidence, and leverage."
+      description: "Producers level up to advanced sales strategy, building COI pipelines, reframing price, closing confidently, and handling rejection with grace. It's about professional tone, confidence, and leverage."
     },
     {
       week: 6,
@@ -67,7 +67,7 @@ const ChallengeWeeklyBreakdown = () => {
                   {/* Content */}
                   <div className="flex-1 space-y-4">
                     <h3 className="font-oswald font-bold text-2xl md:text-3xl uppercase tracking-tight text-primary">
-                      Week {week.week} – {week.title}
+                      Week {week.week} - {week.title}
                     </h3>
                     <p className="text-gray-300 text-lg leading-relaxed">
                       {week.description}

@@ -24,7 +24,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     structuredData: structuredDataByRoute['/'],
   },
   '/boardroom': {
-    title: 'The Boardroom — Elite Mastermind for Insurance Agency Owners | The Standard Playbook',
+    title: 'The Boardroom: Elite Mastermind for Insurance Agency Owners | The Standard Playbook',
     description: 'Join The Boardroom: an exclusive mastermind for insurance agency owners. $299/month for peer accountability, strategy sessions, and proven growth systems from $1M+ agency operators.',
     keywords: ['agency mastermind', 'insurance agency owners', 'business coaching group', 'scaling agencies', 'agency growth', 'mastermind group'],
     ogImage: OG_IMAGE,
@@ -32,7 +32,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     structuredData: structuredDataByRoute['/boardroom'],
   },
   '/directive': {
-    title: 'The Directive — Intensive 1:1 Implementation Coaching | The Standard Playbook',
+    title: 'The Directive: Intensive 1:1 Implementation Coaching | The Standard Playbook',
     description: 'Get intensive 1:1 coaching with direct access to Justin. Monthly private sessions, weekly check-ins, 100 AI-graded calls/month, and custom tech/AI strategy buildouts for your agency.',
     keywords: ['1:1 business coaching', 'intensive coaching', 'implementation coaching', 'agency consulting', 'AI call scoring', 'sales coaching'],
     ogImage: OG_IMAGE,
@@ -88,7 +88,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     type: 'article',
   },
   '/producer-power-up': {
-    title: 'Producer Power-Up — 6-Week Sales Transformation | The Standard Playbook',
+    title: 'Producer Power-Up: 6-Week Sales Transformation | The Standard Playbook',
     description: 'Transform your insurance producer from reactive chaos to systematic execution in 42 days. Daily modules, Core 4 tracking, weekly Discovery Stacks, and daily owner reports. $299/producer.',
     keywords: ['producer training', 'insurance producer development', 'sales transformation', 'Core 4 system', 'producer challenge', 'sales team training'],
     ogImage: OG_IMAGE,
@@ -96,7 +96,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     structuredData: structuredDataByRoute['/producer-power-up'],
   },
   '/callscoring': {
-    title: 'Standard Call Scoring — AI-Powered Call Evaluation for Sales Teams | The Standard Playbook',
+    title: 'Standard Call Scoring: AI-Powered Call Evaluation for Sales Teams | The Standard Playbook',
     description: 'AI-powered call scoring that transforms sales coaching in minutes. Instant insights, consistent feedback, and accelerated team performance for insurance agencies. $299-499/month.',
     keywords: ['call scoring', 'AI call analysis', 'sales coaching', 'call evaluation', 'sales training', 'call grading', 'insurance call scoring'],
     ogImage: OG_IMAGE,
@@ -104,7 +104,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     structuredData: structuredDataByRoute['/callscoring'],
   },
   '/appinfo': {
-    title: 'App Access — Standard Playbook Training Platform',
+    title: 'App Access: Standard Playbook Training Platform',
     description: 'Access the Standard Playbook training and coaching app. Sales training modules, habit tracking, and performance tools for insurance producers and agency owners.',
     keywords: ['app access', 'coaching platform', 'training modules'],
     ogImage: OG_IMAGE,
@@ -128,7 +128,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     type: 'website',
   },
   '/about': {
-    title: 'About The Standard Playbook — Coaching for Insurance Agency Growth | Fort Wayne, IN',
+    title: 'About The Standard Playbook: Coaching for Insurance Agency Growth | Fort Wayne, IN',
     description: 'Learn about The Standard Playbook: our mission to elevate entrepreneurship through world-class coaching, proven systems, and elite community.',
     keywords: ['about standard playbook', 'coaching philosophy', 'insurance coaching team', 'Fort Wayne business coaching', 'agency growth coaching'],
     ogImage: OG_IMAGE,
@@ -144,7 +144,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     structuredData: structuredDataByRoute['/contact'],
   },
   '/decision': {
-    title: 'Find Your Program — Personalized Coaching Recommendation | The Standard Playbook',
+    title: 'Find Your Program: Personalized Coaching Recommendation | The Standard Playbook',
     description: 'Tell us your situation and goals. Get a personalized recommendation for the right Standard Playbook coaching program, from masterminds to 1:1 coaching to producer training.',
     keywords: ['coaching assessment', 'find coaching program', 'personalized recommendation', 'insurance coaching quiz'],
     ogImage: OG_IMAGE,
@@ -176,7 +176,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     structuredData: structuredDataByRoute['/the-challenge'],
   },
   '/formulaai': {
-    title: 'Formula AI — Insurance Agency AI Tools | The Standard Playbook',
+    title: 'Formula AI: Insurance Agency AI Tools | The Standard Playbook',
     description: 'AI-powered tools and prompts for insurance agencies. Leverage artificial intelligence to streamline operations and boost productivity.',
     keywords: ['insurance AI', 'agency AI tools', 'insurance automation'],
     ogImage: OG_IMAGE,

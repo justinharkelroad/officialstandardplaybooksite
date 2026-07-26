@@ -10,7 +10,7 @@ const DirectiveProblem = () => {
           <p className="text-xl text-gray-300 leading-relaxed mb-8">
             You know what to do, but struggle with execution. Between information overload, competing priorities, 
             and the daily grind of running a business, critical strategies fall through the cracks. 
-            You need more than advice—you need implementation support.
+            You need more than advice. You need implementation support.
           </p>
           <p className="text-lg text-gray-400">
             Generic advice doesn't work for your unique situation. You need customized strategies, 

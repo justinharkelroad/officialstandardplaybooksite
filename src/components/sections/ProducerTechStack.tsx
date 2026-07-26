@@ -11,7 +11,7 @@ const ProducerTechStack = () => {
     {
       icon: Target,
       title: "CORE 4 TRACKER",
-      description: "Producers gamify their progress with daily habit-tracking across Body, Being, Balance, and Business—building the foundation for sustained sales success."
+      description: "Producers gamify their progress with daily habit-tracking across Body, Being, Balance, and Business, building the foundation for sustained sales success."
     },
     {
       icon: Layers,

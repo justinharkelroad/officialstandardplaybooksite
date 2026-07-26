@@ -14,13 +14,13 @@ export const blogPosts: BlogPost[] = [
     title: 'Why Insurance Agency Owners Need Coaching to Scale Past $1M',
     description: 'Most insurance agency owners hit a ceiling. Coaching gives you the systems, accountability, and perspective to break through it.',
     content: `
-You built your agency from scratch. You know the grind — the early mornings, the cold calls, the constant pivoting. But somewhere between $500K and $1M in revenue, something shifts.
+You built your agency from scratch. You know the grind, the early mornings, the cold calls, the constant pivoting. But somewhere between $500K and $1M in revenue, something shifts.
 
 The skills that got you here won't get you there.
 
 ## The Ceiling Is Real
 
-Most agency owners hit a growth ceiling not because they lack ambition, but because they're still operating as the best producer in their own shop. You're closing deals, managing staff, handling service issues, and somehow trying to think strategically — all at the same time.
+Most agency owners hit a growth ceiling not because they lack ambition, but because they're still operating as the best producer in their own shop. You're closing deals, managing staff, handling service issues, and somehow trying to think strategically, all at the same time.
 
 That's not leadership. That's survival.
 
@@ -35,7 +35,7 @@ Coaching isn't about motivation. It's about systems. The right coach helps you:
 
 ## Why Operators Coach Better Than Consultants
 
-There's a difference between someone who's read about running an agency and someone who's done it. At The Standard Playbook, our coaching comes from 20+ years of operating Allstate agencies — not from a textbook.
+There's a difference between someone who's read about running an agency and someone who's done it. At The Standard Playbook, our coaching comes from 20+ years of operating Allstate agencies, not from a textbook.
 
 We've made the mistakes. We've found what works. And we've built programs specifically for agency owners who are ready to stop managing chaos and start running a system.
 

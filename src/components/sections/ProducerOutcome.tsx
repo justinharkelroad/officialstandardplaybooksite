@@ -15,7 +15,7 @@ const ProducerOutcome = () => {
     {
       icon: Heart,
       title: "LOYALTY",
-      description: "They see an owner who invests in their total growth—leading to higher staff retention and a culture that attracts other top performers."
+      description: "They see an owner who invests in their total growth, leading to higher staff retention and a culture that attracts other top performers."
     }
   ];
 

@@ -56,14 +56,14 @@ const About = () => {
                     <p>
                       Justin founded The Standard Playbook with a clear mission: to give insurance agency
                       owners and producers the coaching, systems, and accountability they need to build
-                      high-performing agencies — not just survive, but lead.
+                      high-performing agencies, not just survive, but lead.
                     </p>
                     <p>
                       With deep experience in the insurance industry, Justin works directly with
                       agency owners through 1:1 coaching (The Directive), group masterminds
                       (The Boardroom), and technology-powered training platforms. His hands-on
                       approach combines strategic business coaching with AI and technology
-                      implementation — including custom AI agent buildouts and call scoring systems.
+                      implementation, including custom AI agent buildouts and call scoring systems.
                     </p>
                     <p>
                       Based in Fort Wayne, Indiana, Justin and the Standard Playbook team serve
@@ -92,7 +92,7 @@ const About = () => {
             </p>
             <p className="text-lg text-gray-400">
               We believe that ordinary advice produces ordinary results. That's why we've built
-              The Standard Playbook — a comprehensive system designed for extraordinary entrepreneurs
+              The Standard Playbook, a comprehensive system designed for extraordinary entrepreneurs
               who demand extraordinary outcomes. Our coaching integrates the latest in AI and technology
               to give agencies a measurable competitive advantage.
             </p>
@@ -194,20 +194,20 @@ const About = () => {
               </p>
 
               <p>
-                Justin spent years in the trenches — building, coaching, and scaling insurance agencies.
+                Justin spent years in the trenches, building, coaching, and scaling insurance agencies.
                 He experienced firsthand the isolation, challenges, and breakthrough moments that define
                 the entrepreneurial journey. This real-world experience became the foundation for a
-                different kind of coaching company — one built specifically for the insurance industry.
+                different kind of coaching company, one built specifically for the insurance industry.
               </p>
 
               <p>
                 We don't just teach theory; we share battle-tested strategies that have been proven
                 in the marketplace. Our approach combines high-level strategic thinking with
-                practical implementation support — including AI-powered tools like{' '}
+                practical implementation support, including AI-powered tools like{' '}
                 <Link to="/callscoring" className="text-primary hover:text-primary/80 underline">
                   call scoring
                 </Link>{' '}
-                and custom agent buildouts — all delivered within a community of peers who
+                and custom agent buildouts, all delivered within a community of peers who
                 share your ambition and commitment to excellence.
               </p>
 
@@ -221,7 +221,7 @@ const About = () => {
                 >
                   independent insurance agency
                 </a>{' '}
-                model is built for growth — and we help owners realize that potential.
+                model is built for growth, and we help owners realize that potential.
               </p>
             </div>
           </div>
@@ -251,12 +251,12 @@ const About = () => {
                   part of the same company and serve the same mission.
                 </p>
                 <p>
-                  <strong className="text-white">The Standard Playbook</strong> is our coaching and training brand —
+                  <strong className="text-white">The Standard Playbook</strong> is our coaching and training brand,
                   encompassing all our coaching programs (Boardroom, Directive, Partnership),
                   challenges (Producer Power-Up, Owner Challenge), and the Sales Experience training.
                 </p>
                 <p>
-                  <strong className="text-white">Agency Brain</strong> is our technology platform brand —
+                  <strong className="text-white">Agency Brain</strong> is our technology platform brand,
                   powering the training app, AI call scoring, and digital tools that support our coaching programs.
                 </p>
                 <p className="text-gray-400 text-sm">

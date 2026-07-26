@@ -20,7 +20,7 @@ const ProducerChallengeLanding = () => {
   const faqs = [
     {
       question: "When does the challenge start?",
-      answer: "The Producer Challenge runs on a rolling enrollment basis. Sign up any producer by Friday and they will automatically begin the following Monday. There are no fixed cohort dates—the system is always ready."
+      answer: "The Producer Challenge runs on a rolling enrollment basis. Sign up any producer by Friday and they will automatically begin the following Monday. There are no fixed cohort dates, the system is always ready."
     },
     {
       question: "How much time does this require daily?",
@@ -69,7 +69,7 @@ const ProducerChallengeLanding = () => {
         <section className="pt-12 md:pt-20 pb-8 md:pb-12 relative bg-dark">
           <div className="container mx-auto px-4 text-center relative z-10">
             <h1 className="font-oswald font-bold text-2xl md:text-4xl lg:text-5xl uppercase tracking-tight text-white max-w-4xl mx-auto mb-8 animate-fade-up">
-              Transform your producer from reactive chaos to systematic execution—in 42 days. You'll see every step.
+              Transform your producer from reactive chaos to systematic execution, in 42 days. You'll see every step.
             </h1>
           </div>
         </section>
@@ -128,7 +128,7 @@ const ProducerChallengeLanding = () => {
                   THE POSSIBILITY
                 </h3>
                 <p className="text-white text-lg md:text-xl leading-relaxed">
-                  After 6 weeks, they execute based on a daily system. Follow-up becomes predictable. They proactively communicate takeaways and action items—directly to you.
+                  After 6 weeks, they execute based on a daily system. Follow-up becomes predictable. They proactively communicate takeaways and action items, directly to you.
                 </p>
               </div>
             </div>
@@ -165,7 +165,7 @@ const ProducerChallengeLanding = () => {
             </div>
             
             <p className="text-gray-300 text-sm md:text-base leading-relaxed mt-6">
-              Rolling enrollment—sign up by Friday, they start Monday. App access immediately upon checkout.
+              Rolling enrollment, sign up by Friday, they start Monday. App access immediately upon checkout.
             </p>
           </div>
         </section>
@@ -221,7 +221,7 @@ const ProducerChallengeLanding = () => {
         </section>
 
         <ChallengeFAQ 
-          title="Producer Challenge — Frequently Asked Questions"
+          title="Producer Challenge, Frequently Asked Questions"
           faqs={faqs}
         />
         

@@ -19,7 +19,7 @@ const ProducerPowerUp = () => {
   const faqs = [
     {
       question: "When does the challenge start?",
-      answer: "The Producer Challenge runs on a rolling enrollment basis. Sign up any producer by Friday and they will automatically begin the following Monday. There are no fixed cohort dates—the system is always ready."
+      answer: "The Producer Challenge runs on a rolling enrollment basis. Sign up any producer by Friday and they will automatically begin the following Monday. There are no fixed cohort dates, the system is always ready."
     },
     {
       question: "How much time does this require daily?",
@@ -48,7 +48,7 @@ const ProducerPowerUp = () => {
       <Navigation />
       <ChallengeHero
         title="/lovable-uploads/ec2eda85-7cf5-4aa9-8997-cee842066d4b.png"
-        subtitle="Transform your producer from reactive chaos to systematic execution—in 42 days. You'll see every step."
+        subtitle="Transform your producer from reactive chaos to systematic execution, in 42 days. You'll see every step."
         videoId="1UhWckfDqDw"
         showEnrollButton={false}
         onEnrollClick={() => {}}

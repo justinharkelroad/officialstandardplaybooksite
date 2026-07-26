@@ -20,7 +20,7 @@ const SalesProblem = () => {
     {
       icon: Clock,
       title: "Painful Onboarding",
-      description: "Hiring new producers is a gamble. Without a structured playbook for them to follow, they take months to ramp up—if they succeed at all."
+      description: "Hiring new producers is a gamble. Without a structured playbook for them to follow, they take months to ramp up if they succeed at all."
     }
   ];
 
@@ -34,7 +34,7 @@ const SalesProblem = () => {
               The Chaos of Inconsistency
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Every agency owner knows this pain. You've built something real, but your sales team operates like a black box—unpredictable, unaccountable, and impossible to scale.
+              Every agency owner knows this pain. You've built something real, but your sales team operates like a black box: unpredictable, unaccountable, and impossible to scale.
             </p>
           </div>
 

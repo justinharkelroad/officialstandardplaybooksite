@@ -186,7 +186,7 @@ const Hero = ({ autoOpenBooking = false }: { autoOpenBooking?: boolean }) => {
               marginRight: 'auto',
             }}
           >
-            8 weeks. A documented sales process, an accountability framework, and a consequence ladder — installed in your agency.
+            8 weeks. A documented sales process, an accountability framework, and a consequence ladder, installed in your agency.
           </p>
         </Reveal>
         <Reveal delay={0.3}>
@@ -424,7 +424,7 @@ const systems = [
   {
     label: 'Sales Process',
     headline: 'A documented, repeatable call framework.',
-    sub: 'Your entire team follows the same playbook — no more winging it. Every call has a structure, every objection has a response.',
+    sub: 'Your entire team follows the same playbook, no more winging it. Every call has a structure, every objection has a response.',
     img: salesProcessCardImg,
   },
   {
@@ -436,7 +436,7 @@ const systems = [
   {
     label: 'Consequence Ladder',
     headline: 'A clear path when standards aren\'t met.',
-    sub: 'Underperformance is addressed — not ignored. A fair, transparent escalation system your team respects.',
+    sub: 'Underperformance is addressed, not ignored. A fair, transparent escalation system your team respects.',
     img: consequenceLadderCardImg,
   },
 ];
@@ -587,7 +587,7 @@ const ThreeSystems = () => {
    AGENCY BRAIN TOOLS — TABBED SHOWCASE ON BLACK
    ══════════════════════════════════════════════════════ */
 const brainFeatures = [
-  { label: 'Dashboard', headline: 'Total Visibility.', sub: 'Know exactly where your team stands every single day. Premium, policies, activity — one view.', img: salesExpDashImg },
+  { label: 'Dashboard', headline: 'Total Visibility.', sub: 'Know exactly where your team stands every single day. Premium, policies, activity, one view.', img: salesExpDashImg },
   { label: 'Team Hub', headline: 'Team & Meeting Hub.', sub: 'Centralized meeting management, team collaboration, and communication all in one place.', img: teamMeetingImg },
   { label: 'Training', headline: 'Training & Feedback.', sub: 'Structured modules unlocked every Monday and Wednesday. Feedback discovery flow fed back to the manager on Friday.', img: trainingModulesImg },
 ];
@@ -831,7 +831,7 @@ const SuccessStory = () => (
             marginBottom: 40,
           }}
         >
-          Dan Westrick — Allstate Agency Owner
+          Dan Westrick, Allstate Agency Owner
         </p>
       </Reveal>
       <Reveal delay={0.2}>

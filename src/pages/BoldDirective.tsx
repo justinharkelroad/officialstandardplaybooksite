@@ -66,7 +66,7 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
             fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.85, maxWidth: 680,
           }}>
-            Private 1:1 coaching for owners who are done circling the same problem. Strategy, accountability, and a hand in the work — so it actually gets installed, not just discussed.
+            Private 1:1 coaching for owners who are done circling the same problem. Strategy, accountability, and a hand in the work, so it actually gets installed, not just discussed.
           </p>
         </Reveal>
         <Reveal delay={0.3} className="col-span-12 md:col-span-5 flex md:justify-end items-start gap-3 flex-wrap">
@@ -193,7 +193,7 @@ const ProblemSection = () => (
             fontFamily: body, fontSize: 'clamp(17px, 1.6vw, 22px)', fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.85,
           }}>
-            You don't have a knowledge problem. You've read the books, watched the calls, bought the course. The strategy is sitting right there. What you have is a gap between knowing and doing — and it's filled with information overload, twelve competing priorities, and the daily grind of running the whole thing largely alone. That's where the good ideas go to die.
+            You don't have a knowledge problem. You've read the books, watched the calls, bought the course. The strategy is sitting right there. What you have is a gap between knowing and doing, and it's filled with information overload, twelve competing priorities, and the daily grind of running the whole thing largely alone. That's where the good ideas go to die.
           </p>
         </Reveal>
         <Reveal delay={0.2} className="col-span-12 md:col-span-5">
@@ -217,7 +217,7 @@ const pillars = [
     num: '01',
     label: 'Private 1:1 Coaching',
     headline: "Direct line to Justin.",
-    sub: 'Personalized strategy and real-time problem-solving — not a group call where your situation gets a 90-second mention.',
+    sub: 'Personalized strategy and real-time problem-solving, not a group call where your situation gets a 90-second mention.',
     bullets: [
       'One 2-hour private session every month',
       'Custom strategy, built and deployed',
@@ -242,9 +242,9 @@ const pillars = [
     num: '03',
     label: 'Technology & AI',
     headline: <><span style={{ color: blue }}>AI</span> built for your agency.</>,
-    sub: <>Custom agents. Custom reporting. Call scoring on the calls you choose to upload. Built 1:1 with the operator who codes the platform — not handed off as a doc and a "good luck."</>,
+    sub: <>Custom agents. Custom reporting. Call scoring on the calls you choose to upload. Built 1:1 with the operator who codes the platform, not handed off as a doc and a "good luck."</>,
     bullets: [
-      '100 AI-graded calls a month — the calls you pick',
+      '100 AI-graded calls a month, the calls you pick',
       'Custom AI agent buildouts on your calls',
       'Custom reporting buildouts for your agency',
       'Process optimization end to end',
@@ -430,7 +430,7 @@ const ValuesSection = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55,
           color: ink, opacity: 0.7, marginTop: 32, maxWidth: 640, marginInline: 'auto',
         }}>
-          The Directive isn't a coaching program. It's a partnership. The application exists because the work only matters if we're both willing to show up for it — and I don't take on owners who won't.
+          The Directive isn't a coaching program. It's a partnership. The application exists because the work only matters if we're both willing to show up for it, and I don't take on owners who won't.
         </p>
       </Reveal>
       <Reveal delay={0.3}>

@@ -48,7 +48,7 @@ const WebsitesInquiryModal = ({ open, onOpenChange }: WebsitesInquiryModalProps)
       });
       if (error) throw error;
 
-      toast.success("Thanks — we'll be in touch within one business day.");
+      toast.success("Thanks, we'll be in touch within one business day.");
       setForm({ full_name: '', email: '', phone: '', agency_name: '', timeline: '', message: '' });
       onOpenChange(false);
     } catch (err) {

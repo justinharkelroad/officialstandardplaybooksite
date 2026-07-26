@@ -111,7 +111,7 @@ const CertifiedStandardBand = () => (
             margin: '24px 0 0',
           }}
         >
-          One-off AI training for your producers. $399 per seat, one time. No coaching program. No subscription. No application. Buy it today — your producers train this week.
+          One-off AI training for your producers. $399 per seat, one time. No coaching program. No subscription. No application. Buy it today. Your producers train this week.
         </p>
       </Reveal>
 

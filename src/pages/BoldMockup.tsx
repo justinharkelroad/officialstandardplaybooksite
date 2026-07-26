@@ -168,7 +168,7 @@ const HeroSection = () => {
                 maxWidth: 380,
               }}
             >
-              For insurance agency owners who know there's more to this game than the next big number. Coaching, software, and <span style={{ color: blue }}>AI</span> — built by a 20-year operator who built, scaled, and sold three Allstate agencies, and now coaches from outside the same fight.
+              For insurance agency owners who know there's more to this game than the next big number. Coaching, software, and <span style={{ color: blue }}>AI</span>, built by a 20-year operator who built, scaled, and sold three Allstate agencies, and now coaches from outside the same fight.
             </p>
           </Reveal>
 
@@ -339,7 +339,7 @@ const MissionSection = () => (
           fontFamily: body, fontSize: 'clamp(17px, 1.8vw, 24px)', fontWeight: 400, lineHeight: 1.5,
           color: ink, opacity: 0.8, marginTop: 40, maxWidth: 760,
         }}>
-          Average is a choice. So is everything that comes after it — including how long you keep playing a game you've already won and still feel hollow inside of.
+          Average is a choice. So is everything that comes after it, including how long you keep playing a game you've already won and still feel hollow inside of.
         </p>
       </Reveal>
     </div>
@@ -432,7 +432,7 @@ const BuilderSection = () => (
             fontFamily: body, fontSize: 'clamp(17px, 1.6vw, 22px)', fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.85, marginBottom: 24,
           }}>
-            20 years inside Allstate. Three agencies built, scaled, and sold. Agency Brain — the platform every program runs on — I build in code, week after week. Every <span style={{ color: blue }}>AI</span> tool inside it (Call Scoring, the Roleplay Bot, the Voice Trainer, Discovery Coach) is mine to ship.
+            20 years inside Allstate. Three agencies built, scaled, and sold. I build Agency Brain, the platform every program runs on, in code week after week. Every <span style={{ color: blue }}>AI</span> tool inside it (Call Scoring, the Roleplay Bot, the Voice Trainer, Discovery Coach) is mine to ship.
           </p>
           <p style={{
             fontFamily: display, fontSize: 'clamp(20px, 2vw, 28px)', fontWeight: 400, lineHeight: 1.2,
@@ -444,7 +444,7 @@ const BuilderSection = () => (
             fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6,
             color: ink, opacity: 0.75, maxWidth: 620,
           }}>
-            That's not a marketing angle. It's the reason the system actually works in your office on Monday — and the reason I can change it the week your agency needs it to.
+            That's not a marketing angle. It's the reason the system actually works in your office on Monday, and the reason I can change it the week your agency needs it to.
           </p>
         </Reveal>
       </div>
@@ -561,7 +561,7 @@ const AgencyBrainBand = () => (
             fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.65,
             color: paper, opacity: 0.85, marginBottom: 24, maxWidth: 520,
           }}>
-            Pipeline, training, retention, daily habits — out of your head and into one place. Built so the work still happens whether you're in the office or not.
+            Pipeline, training, retention, daily habits: out of your head and into one place. Built so the work still happens whether you're in the office or not.
           </p>
           <a
             href="#programs"
@@ -807,8 +807,8 @@ const coachingPrograms: ProgramRow[] = [
     num: '08',
     name: 'Partnership',
     tier: '1:1 Coaching',
-    price: '—',
-    description: 'The highest level — full-access private coaching, custom strategy, and direct line to Justin.',
+    price: '-',
+    description: 'The highest level: full-access private coaching, custom strategy, and direct line to Justin.',
     details: [
       'Everything in Directive +',
       'Unlimited private access to Justin',
@@ -1772,17 +1772,17 @@ const featureGroups = [
   {
     group: 'Run the day',
     items: [
-      { name: 'Sales Dashboard', line: 'Total visibility — know exactly where your team stands, every single day.' },
-      { name: 'Sales Analytics', line: 'The breakdown — premium, items, policies, points, by date, source, or bundle.' },
-      { name: 'Pipeline Intelligence', line: 'Stop guessing — every lead, every stage, every dollar, in real time.' },
-      { name: 'Marketing ROI', line: 'What each channel actually produces — leads, quotes, premium, commission.' },
+      { name: 'Sales Dashboard', line: 'Total visibility: know exactly where your team stands, every single day.' },
+      { name: 'Sales Analytics', line: 'The breakdown: premium, items, policies, points, by date, source, or bundle.' },
+      { name: 'Pipeline Intelligence', line: 'Stop guessing. See every lead, every stage, every dollar in real time.' },
+      { name: 'Marketing ROI', line: 'What each channel actually produces: leads, quotes, premium, commission.' },
     ],
   },
   {
     group: 'Protect the book',
     items: [
       { name: 'Call Scoring', line: 'AI call audits with execution checklists and talk-to-listen ratios. Also sold standalone as Standard Call Scoring.' },
-      { name: 'Renewal Tracking', line: 'Stay ahead — manage renewals proactively so nothing slips.' },
+      { name: 'Renewal Tracking', line: 'Stay ahead. Manage renewals proactively so nothing slips.' },
       { name: 'Cancel Audit', line: 'Cancellations, at-risk premium, and saved dollars, week by week.' },
       { name: 'Winback HQ', line: 'Catch cancellations before they cost you.' },
     ],
@@ -1792,8 +1792,8 @@ const featureGroups = [
     items: [
       { name: 'Team Training', line: 'A full library with structured tracks, right inside the app.' },
       { name: 'AI Roleplay Trainer', line: 'Producers sharpen the pitch anytime, against an AI that talks back.' },
-      { name: 'Habit Tracking', line: 'Core 4 + Flow — daily practice gamified, 56 points a week, team leaderboards.' },
-      { name: 'Target Setting', line: 'A 90-day action map — quarterly goals broken into daily habits.' },
+      { name: 'Habit Tracking', line: 'Core 4 + Flow: daily practice gamified, 56 points a week, team leaderboards.' },
+      { name: 'Target Setting', line: 'A 90-day action map: quarterly goals broken into daily habits.' },
     ],
   },
 ];
@@ -1823,7 +1823,7 @@ const SoftwareDetail = () => (
             fontFamily: body, fontSize: 'clamp(16px, 1.4vw, 19px)', fontWeight: 400, lineHeight: 1.6,
             color: ink, opacity: 0.8, maxWidth: 680,
           }}>
-            Most agencies run on duct tape and gut feelings. Pipeline in one tab, training in a folder nobody opens, retention tracked in somebody's head. Agency Brain pulls it into one place — pipeline, team, training, retention, daily habits — so the work happens on a system instead of on you.
+            Most agencies run on duct tape and gut feelings. Pipeline in one tab, training in a folder nobody opens, retention tracked in somebody's head. Agency Brain pulls it into one place: pipeline, team, training, retention, and daily habits, so the work happens on a system instead of on you.
           </p>
         </Reveal>
         <Reveal delay={0.15} className="col-span-12 md:col-span-5">
@@ -1837,7 +1837,7 @@ const SoftwareDetail = () => (
             <p style={{
               fontFamily: body, fontSize: 15, fontWeight: 400, lineHeight: 1.6, color: paper, opacity: 0.82, margin: 0,
             }}>
-              I write the code. Every <span style={{ color: blue }}>AI</span> feature inside it is mine to ship — which means it does what an agency actually needs, and it changes the week the work changes.
+              I write the code. Every <span style={{ color: blue }}>AI</span> feature inside it is mine to ship, which means it does what an agency actually needs, and it changes the week the work changes.
             </p>
           </div>
         </Reveal>
@@ -1883,11 +1883,11 @@ const SoftwareDetail = () => (
 const flows = [
   { name: 'War Flow', desc: "When it's not just an idea, it's a fight. Name the enemy, define what winning looks like, map four fronts with their obstacle, the move to beat it, and who's in the foxhole with you. Walk out with a campaign." },
   { name: 'Idea Flow', desc: 'When something lit up and you want to take it seriously before it fades. Force it specific. Four measurable facts. Weigh execute-vs-cost-of-not. Walk out with a real plan.' },
-  { name: 'Discovery Flow', desc: 'Right after you learn something worth keeping — a book, training, podcast, conversation. Capture what landed, pull the one lesson, choose where it applies before tomorrow forgets.' },
+  { name: 'Discovery Flow', desc: 'Right after you learn something worth keeping from a book, training, podcast, or conversation. Capture what landed, pull the one lesson, and choose where it applies before tomorrow forgets.' },
   { name: 'Irritation Flow', desc: "When someone or something is getting to you. Surface the story you're telling yourself, test it against the facts, write a new story that actually serves you. Defuse the charge instead of stewing or reacting." },
-  { name: 'Gratitude Flow', desc: "Don't let a good moment just pass. Break it down — story vs. facts, the lesson underneath — and land on one move in the next 24 hours to honor it." },
-  { name: 'Prayer Flow', desc: "When you're carrying something — a person, a situation, a weight. Name it. Walk out with the lesson and one action that lives it out." },
-  { name: 'Bible Flow', desc: 'Anchored to scripture. Turn what you read into Start, Stop, and Keep commitments — each with a measurement and the belief that holds it.' },
+  { name: 'Gratitude Flow', desc: "Don't let a good moment just pass. Break it down into story vs. facts and the lesson underneath, then land on one move in the next 24 hours to honor it." },
+  { name: 'Prayer Flow', desc: "When you're carrying a person, a situation, or a weight, name it. Walk out with the lesson and one action that lives it out." },
+  { name: 'Bible Flow', desc: 'Anchored to scripture. Turn what you read into Start, Stop, and Keep commitments, each with a measurement and the belief that holds it.' },
 ];
 
 const DailyPracticeSection = () => (
@@ -1914,7 +1914,7 @@ const DailyPracticeSection = () => (
           fontFamily: body, fontSize: 'clamp(16px, 1.4vw, 19px)', fontWeight: 400, lineHeight: 1.6,
           color: paper, opacity: 0.8, marginTop: 28, maxWidth: 820,
         }}>
-          The agency operator's day doesn't fit in one frame. A strategy you have to pressure-test before it fades. A win you want to honor before it slips. A team member you can't stop being irritated at. A customer insight you don't want to lose by Tuesday. Agency Brain ships with seven structured Flows — each one a defined daily practice for a specific reality of running the business. Every Flow ends with an action. That's the bridge.
+          The agency operator's day doesn't fit in one frame. A strategy you have to pressure-test before it fades. A win you want to honor before it slips. A team member you can't stop being irritated at. A customer insight you don't want to lose by Tuesday. Agency Brain ships with seven structured Flows, each one a defined daily practice for a specific reality of running the business. Every Flow ends with an action. That's the bridge.
         </p>
       </Reveal>
 

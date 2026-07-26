@@ -204,10 +204,10 @@ const FounderSection = () => (
             color: ink, opacity: 0.85,
           }}>
             <p>
-              Justin founded The Standard Playbook with a clear mission: to give insurance agency owners and producers the coaching, systems, and accountability they need to build high-performing agencies — not just survive, but lead.
+              Justin founded The Standard Playbook with a clear mission: to give insurance agency owners and producers the coaching, systems, and accountability they need to build high-performing agencies, not just survive, but lead.
             </p>
             <p>
-              With deep experience in the insurance industry, Justin works directly with agency owners through 1:1 coaching (The Directive), group masterminds (The Boardroom), and technology-powered training platforms. His hands-on approach combines strategic business coaching with AI and technology implementation — including custom AI agent buildouts and call scoring systems.
+              With deep experience in the insurance industry, Justin works directly with agency owners through 1:1 coaching (The Directive), group masterminds (The Boardroom), and technology-powered training platforms. His hands-on approach combines strategic business coaching with AI and technology implementation, including custom AI agent buildouts and call scoring systems.
             </p>
             <p>
               Based in Fort Wayne, Indiana, Justin and the Standard Playbook team serve insurance agencies nationwide, helping owners and their teams build systematic approaches to sales, leadership, and growth.
@@ -258,7 +258,7 @@ const MissionSection = () => (
             fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6,
             color: paper, opacity: 0.65, maxWidth: 460,
           }}>
-            Ordinary advice produces ordinary results. The Standard Playbook is a comprehensive system for extraordinary entrepreneurs who demand extraordinary outcomes — built with the latest in AI and technology to give agencies a measurable competitive advantage.
+            Ordinary advice produces ordinary results. The Standard Playbook is a comprehensive system for extraordinary entrepreneurs who demand extraordinary outcomes, built with the latest in AI and technology to give agencies a measurable competitive advantage.
           </p>
         </Reveal>
       </div>
@@ -379,14 +379,14 @@ const StorySection = () => (
               The Standard Playbook was born from a simple observation: most business coaching focuses on tactics without addressing the foundational elements that truly drive success. We saw entrepreneurs struggling not because they lacked knowledge, but because they lacked the right framework, community, and accountability to execute consistently.
             </p>
             <p>
-              Justin spent years in the trenches — building, coaching, and scaling insurance agencies. He experienced firsthand the isolation, challenges, and breakthrough moments that define the entrepreneurial journey. This real-world experience became the foundation for a different kind of coaching company — one built specifically for the insurance industry.
+              Justin spent years in the trenches, building, coaching, and scaling insurance agencies. He experienced firsthand the isolation, challenges, and breakthrough moments that define the entrepreneurial journey. This real-world experience became the foundation for a different kind of coaching company, one built specifically for the insurance industry.
             </p>
             <p>
-              We don't just teach theory; we share battle-tested strategies that have been proven in the marketplace. Our approach combines high-level strategic thinking with practical implementation support — including AI-powered tools like{' '}
+              We don't just teach theory; we share battle-tested strategies that have been proven in the marketplace. Our approach combines high-level strategic thinking with practical implementation support, including AI-powered tools like{' '}
               <Link to="/callscoring" style={{ color: blue, textDecoration: 'underline', fontWeight: 600 }}>
                 call scoring
               </Link>{' '}
-              and custom agent buildouts — all delivered within a community of peers who share your ambition and commitment to excellence.
+              and custom agent buildouts, all delivered within a community of peers who share your ambition and commitment to excellence.
             </p>
             <p>
               Today, The Standard Playbook works directly with insurance agency owners and their teams nationwide. The{' '}
@@ -394,7 +394,7 @@ const StorySection = () => (
                 style={{ color: blue, textDecoration: 'underline', fontWeight: 600 }}>
                 independent insurance agency
               </a>{' '}
-              model is built for growth — and we help owners realize that potential.
+              model is built for growth, and we help owners realize that potential.
             </p>
           </div>
         </Reveal>
@@ -474,7 +474,7 @@ const BrandsSection = () => (
               fontFamily: body, fontSize: 15, fontWeight: 400, lineHeight: 1.6,
               color: paper, opacity: 0.8,
             }}>
-              Our coaching brand — encompassing all coaching programs (Boardroom, Directive, Partnership), challenges (Producer Power-Up, Owner Challenge), and the 8 Week Sales Experience training.
+              Our coaching brand, encompassing all coaching programs (Boardroom, Directive, Partnership), challenges (Producer Power-Up, Owner Challenge), and the 8 Week Sales Experience training.
             </p>
           </div>
         </Reveal>
@@ -497,7 +497,7 @@ const BrandsSection = () => (
               fontFamily: body, fontSize: 15, fontWeight: 400, lineHeight: 1.6,
               color: paper, opacity: 0.8,
             }}>
-              Our technology brand — powering the training app, AI call scoring, AI roleplay, and the digital tools that support every coaching program.
+              Our technology brand, powering the training app, AI call scoring, AI roleplay, and the digital tools that support every coaching program.
             </p>
           </div>
         </Reveal>

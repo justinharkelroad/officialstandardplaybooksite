@@ -175,7 +175,7 @@ const starterIncluded = [
   'Mobile-responsive design, matched to your branding',
   'Fast, secure hosting with automatic SSL',
   'Click-to-call phone numbers on every page',
-  'SEO basics — meta titles, descriptions, schema',
+  'SEO basics, meta titles, descriptions, schema',
   'Google Analytics setup',
 ];
 
@@ -219,7 +219,7 @@ const Pricing = ({ onOpenInquiry }: { onOpenInquiry: () => void }) => (
             </p>
 
             <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.75)', lineHeight: 1.5, marginTop: 28 }}>
-              A professional agency website, live in weeks — with a lead form
+              A professional agency website, live in weeks, with a lead form
               that emails new submissions straight to you.
             </p>
 
@@ -261,7 +261,7 @@ const Pricing = ({ onOpenInquiry }: { onOpenInquiry: () => void }) => (
                   <span>
                     <strong style={{ color: '#fff' }}>Lead-form email process.</strong>{' '}
                     We set up a contact form on your site so every new lead is
-                    emailed directly to you — no portal, no login, just a
+                    emailed directly to you, no portal, no login, just a
                     notification in your inbox.
                   </span>
                 </li>
@@ -513,7 +513,7 @@ const NotIncluded = () => (
           What's not included.
         </h2>
         <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.5)', lineHeight: 1.47, textAlign: 'center', maxWidth: 560, marginLeft: 'auto', marginRight: 'auto', marginBottom: 24 }}>
-          Outside the standard scope — we can quote any of these separately.
+          Outside the standard scope, we can quote any of these separately.
         </p>
       </Reveal>
       <Reveal delay={0.1}>

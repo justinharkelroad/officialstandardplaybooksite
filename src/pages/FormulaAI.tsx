@@ -122,7 +122,7 @@ const FormulaAI = () => {
                 </h2>
                 <div className="text-gray-300 leading-relaxed text-sm md:text-base">
                   <p>
-                    This video breaks down how to craft powerful AI prompts that actually produce useful, high-quality results. Justin explains why simply asking a chatbot for answers isn't enough—you must define its role, goal, audience, inputs, deliverables, format, and quality bar. Using a real insurance marketing example, he shows how specificity turns vague requests into complete, actionable outputs like email sequences, call flows, and KPI dashboards. The key lesson: the more context and detail you give the model, the more value and clarity you'll get back.
+                    This video breaks down how to craft powerful AI prompts that actually produce useful, high-quality results. Justin explains why simply asking a chatbot for answers isn't enough, you must define its role, goal, audience, inputs, deliverables, format, and quality bar. Using a real insurance marketing example, he shows how specificity turns vague requests into complete, actionable outputs like email sequences, call flows, and KPI dashboards. The key lesson: the more context and detail you give the model, the more value and clarity you'll get back.
                   </p>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 const SalesProcess = () => (
   <iframe
     src="/salesprocess.html"
-    title="Agency Sales Process — Standard Playbook"
+    title="Agency Sales Process, Standard Playbook"
     style={{
       position: "fixed",
       inset: 0,

@@ -41,7 +41,7 @@ const SalesHero = () => {
           {/* CTA Section */}
           <div className="animate-fade-up text-center max-w-4xl mx-auto" style={{ animationDelay: '0.2s' }}>
             <p className="text-xl text-gray-300 mb-8">
-              In just 8 weeks, you'll have complete clarity on how to hold your team accountable—to how they sell and what they do. Guaranteed.
+              In just 8 weeks, you'll have complete clarity on how to hold your team accountable for how they sell and what they do. Guaranteed.
             </p>
             <BookingModal
               trigger={

@@ -152,27 +152,27 @@ const pillars = [
   {
     num: '01',
     name: 'Culture & Team',
-    detail: '10 subcategories. The people side — values, role specialization, recognition, recruiting.',
+    detail: '10 subcategories. The people side: values, role specialization, recognition, recruiting.',
   },
   {
     num: '02',
     name: 'Systems & Rhythm',
-    detail: '6 subcategories. The cadence — huddles, scoreboards, 1:1s, monthly recap.',
+    detail: '6 subcategories. The cadence: huddles, scoreboards, 1:1s, monthly recap.',
   },
   {
     num: '03',
     name: 'Training & Scripts',
-    detail: '6 subcategories. The playbook — scripts, scoring calls, ongoing training, video vault.',
+    detail: '6 subcategories. The playbook: scripts, scoring calls, ongoing training, video vault.',
   },
   {
     num: '04',
     name: 'Marketing & Lead Flow',
-    detail: '6 subcategories. The fuel — CRM discipline, marketing plan, lead distribution, follow-up.',
+    detail: '6 subcategories. The fuel: CRM discipline, marketing plan, lead distribution, follow-up.',
   },
   {
     num: '05',
     name: 'Owner Command',
-    detail: '4 subcategories. The dashboard — new sale review, marketing ROI, commissions, cancellations.',
+    detail: '4 subcategories. The dashboard: new sale review, marketing ROI, commissions, cancellations.',
   },
 ];
 
@@ -272,8 +272,8 @@ const WhatYouGet = () => (
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-0" style={{ borderTop: `1px solid ${paper}33` }}>
         {[
-          { num: '01', title: 'Your Tier Score', detail: 'A single number out of 160 — Foundation, Developing, Established, Advanced, or Elite.' },
-          { num: '02', title: 'Weakest Pillar', detail: 'Which of the 5 pillars is dragging your number down — and why.' },
+          { num: '01', title: 'Your Tier Score', detail: 'A single number out of 160: Foundation, Developing, Established, Advanced, or Elite.' },
+          { num: '02', title: 'Weakest Pillar', detail: 'Which of the 5 pillars is dragging your number down, and why.' },
           { num: '03', title: 'Full Mirror PDF', detail: 'The complete 32-subcategory breakdown emailed to you for reference.' },
           { num: '04', title: '7-Day Breakdown', detail: 'A personalized email sequence walking you through your tier × pillar in detail.' },
         ].map((item, i) => (
@@ -359,7 +359,7 @@ const AuthoritySection = () => (
             fontFamily: body, fontSize: 'clamp(16px, 1.4vw, 18px)', fontWeight: 400, lineHeight: 1.6,
             color: ink, opacity: 0.85, maxWidth: 620,
           }}>
-            I spent 20 years inside Allstate building, breaking, and rebuilding agencies. The Mirror is the diagnostic I run on every agency I sit down with — same 32 subcategories, same scoring discipline, same honest number. No coaching pitch. Just the truth about where you're at.
+            I spent 20 years inside Allstate building, breaking, and rebuilding agencies. The Mirror is the diagnostic I run on every agency I sit down with, same 32 subcategories, same scoring discipline, same honest number. No coaching pitch. Just the truth about where you're at.
           </p>
         </Reveal>
       </div>
@@ -396,7 +396,7 @@ const AfterTheScoreBand = () => (
           fontFamily: body, fontSize: 'clamp(16px, 1.4vw, 18px)', fontWeight: 400, lineHeight: 1.6,
           color: paper, opacity: 0.85, maxWidth: 720, marginTop: 40,
         }}>
-          The Mirror tells you where you're at. Standard Playbook is how you climb. Every program (Boardroom, 8-Week, Directive) plugs you into Agency Brain — the <span style={{ color: blue }}>AI</span>-equipped platform I built to make the diagnosis fixable.
+          The Mirror tells you where you're at. Standard Playbook is how you climb. Every program (Boardroom, 8-Week, Directive) plugs you into Agency Brain, the <span style={{ color: blue }}>AI</span>-equipped platform I built to make the diagnosis fixable.
         </p>
       </Reveal>
     </div>

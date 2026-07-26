@@ -246,7 +246,7 @@ export const CallScoringSlide = () => (
       </p>
       <div className="bg-dark-card border border-primary/30 rounded-lg p-8 max-w-2xl mx-auto">
         <p className="text-gray-300 leading-relaxed">
-          Eight categories. Clear criteria. Targeted coaching based on real data—not opinions.
+          Eight categories. Clear criteria. Targeted coaching based on real data, not opinions.
         </p>
       </div>
     </div>

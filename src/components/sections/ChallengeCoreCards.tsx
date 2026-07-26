@@ -40,7 +40,7 @@ const ChallengeCoreCards = () => {
         <ul className="space-y-3">
           <li className="flex items-start">
             <CheckSquare className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
-            <span>30 weekday micro-videos (Mon–Fri) w/ daily commitment to action that will be taken submitted by team member and reported to Agency Owner/Mgr</span>
+            <span>30 weekday micro-videos (Mon to Fri) w/ daily commitment to action that will be taken submitted by team member and reported to Agency Owner/Mgr</span>
           </li>
           <li className="flex items-start">
             <CheckSquare className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />

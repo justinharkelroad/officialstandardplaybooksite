@@ -400,7 +400,7 @@ const BoldMirrorResults = () => {
                 fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.55,
                 color: paper, opacity: 0.7, marginTop: 14, maxWidth: 360,
               }}>
-                {submission.full_name ? `Honest read, ${submission.full_name.trim().split(' ')[0]}.` : 'Honest read.'} The number is what the number is — what matters is the next move.
+                {submission.full_name ? `Honest read, ${submission.full_name.trim().split(' ')[0]}.` : 'Honest read.'} The number is what the number is, what matters is the next move.
               </p>
             </Reveal>
           </div>

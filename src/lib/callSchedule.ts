@@ -169,7 +169,7 @@ export function formatOccurrence(occ: Occurrence): string {
   const end   = formatTime(occ.end);
   // Use EST/EDT abbreviation appropriate to the date
   const tzAbbr = tzAbbreviation(y, m, d);
-  return `${weekday}, ${month} ${d}, ${y} · ${start}–${end} ${tzAbbr}`;
+  return `${weekday}, ${month} ${d}, ${y} · ${start} to ${end} ${tzAbbr}`;
 }
 
 function formatTime(hhmm: string): string {

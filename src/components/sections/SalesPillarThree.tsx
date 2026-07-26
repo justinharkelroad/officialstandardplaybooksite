@@ -18,7 +18,7 @@ const SalesPillarThree = () => {
       day: "Wednesday",
       icon: Users,
       title: "Role-Playing",
-      description: "Live practice sessions on difficult parts of the process—objection handling, closing, liability conversations."
+      description: "Live practice sessions on difficult parts of the process: objection handling, closing, and liability conversations."
     },
     {
       day: "Friday",
@@ -71,7 +71,7 @@ const SalesPillarThree = () => {
           <div className="mt-12 text-center">
             <div className="inline-block bg-dark-card border border-primary/20 rounded-lg p-6 max-w-2xl">
               <p className="text-gray-300">
-                <span className="text-primary font-medium">The result?</span> A team that doesn't just know the process—they live it. 
+                <span className="text-primary font-medium">The result?</span> A team that doesn't just know the process. They live it.
                 Skills are reinforced weekly, accountability is built into the culture, and improvement is constant.
               </p>
             </div>

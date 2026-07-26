@@ -125,7 +125,7 @@ const coachingPrograms: Program[] = [
   {
     label: '1:1 Coaching',
     title: 'Partnership',
-    description: 'The highest level — full-access private coaching, custom strategy, and direct line to Justin.',
+    description: 'The highest level, full-access private coaching, custom strategy, and direct line to Justin.',
     details: [
       'Everything in Directive +',
       'Unlimited private access to Justin',

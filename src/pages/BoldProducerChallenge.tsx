@@ -78,7 +78,7 @@ const Hero = () => (
           fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 22px)', fontWeight: 400, lineHeight: 1.55,
           color: ink, opacity: 0.85, maxWidth: 720, marginTop: 28,
         }}>
-          Transform your producer from reactive chaos to systematic execution — in 42 days. You'll see every step.
+          Transform your producer from reactive chaos to systematic execution, in 42 days. You'll see every step.
         </p>
       </Reveal>
 
@@ -174,7 +174,7 @@ const Hero = () => (
                 fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.55,
                 color: ink, opacity: 0.75, marginTop: 12,
               }}>
-                After 6 weeks, they execute on a daily system. Follow-up becomes predictable. They proactively communicate takeaways and action items — directly to you.
+                After 6 weeks, they execute on a daily system. Follow-up becomes predictable. They proactively communicate takeaways and action items, directly to you.
               </p>
             </div>
           </Reveal>
@@ -221,7 +221,7 @@ const Hero = () => (
               fontFamily: body, fontSize: 12, fontWeight: 500, letterSpacing: '0.04em',
               color: ink, opacity: 0.55, textAlign: 'center', marginTop: 14,
             }}>
-              Rolling enrollment — sign up by Friday, they start Monday. App access immediately upon checkout.
+              Rolling enrollment, sign up by Friday, they start Monday. App access immediately upon checkout.
             </p>
           </Reveal>
         </div>
@@ -387,7 +387,7 @@ const CorePromiseSection = () => {
 const differentiators = [
   { num: '01', title: 'A Daily Action Loop', body: "Producers don't just consume content. They are required to declare a takeaway and a measurable action every single day, training them to deploy what they learn immediately." },
   { num: '02', title: 'Direct Feedback to You', body: 'You are not left in the dark. You receive daily and weekly reports directly from your producer, giving you an unprecedented view into their engagement and application.' },
-  { num: '03', title: 'Holistic Development', body: "Performance isn't just about sales tactics. We build the whole producer through the Core 4: Body, Being, Balance, and Business — ensuring the rest of their life fuels their work, not drains it." },
+  { num: '03', title: 'Holistic Development', body: "Performance isn't just about sales tactics. We build the whole producer through the Core 4: Body, Being, Balance, and Business, ensuring the rest of their life fuels their work, not drains it." },
 ];
 
 const SystemNotCourseSection = () => (
@@ -551,7 +551,7 @@ const AccountabilitySection = () => (
               fontFamily: body, fontSize: 15, fontWeight: 400, lineHeight: 1.6,
               color: ink, opacity: 0.75, marginBottom: 18,
             }}>
-              Every Friday, your producer completes a "Discovery Stack" — a guided reflection on the week's lessons, challenges, and revelations.
+              Every Friday, your producer completes a "Discovery Stack", a guided reflection on the week's lessons, challenges, and revelations.
             </p>
             <div style={{ background: ink, color: paper, padding: 16 }}>
               <p style={{
@@ -752,14 +752,14 @@ const CulturalSection = () => (
           fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.55,
           color: ink, opacity: 0.7, maxWidth: 720, marginBottom: 56,
         }}>
-          The challenge is designed to build a culture of communication and clarity — not just a better salesperson.
+          The challenge is designed to build a culture of communication and clarity, not just a better salesperson.
         </p>
       </Reveal>
 
       <div className="grid grid-cols-12 gap-8">
         {[
           { label: 'Critical Conversations', body: "Modules on follow-up, referrals, and onboarding explicitly instruct the producer to get clarity from leadership on the agency's process. If they're unsure, you'll see it in their daily report." },
-          { label: 'Bridging Leadership Gap', body: "The daily feedback loop opens a new channel of communication. You'll gain insight into their thinking, challenges, and wins — creating a stronger, more authentic connection than typical performance reviews." },
+          { label: 'Bridging Leadership Gap', body: "The daily feedback loop opens a new channel of communication. You'll gain insight into their thinking, challenges, and wins, creating a stronger, more authentic connection than typical performance reviews." },
         ].map((c, i) => (
           <Reveal key={c.label} delay={i * 0.08} className="col-span-12 md:col-span-6">
             <div style={{
@@ -798,7 +798,7 @@ const CulturalSection = () => (
    ══════════════════════════════════════════════════════ */
 const tools = [
   { num: '01', label: 'The Armory', body: 'The central hub for all 30 video training modules. Content is released daily to prevent binging and ensure paced, deliberate learning.' },
-  { num: '02', label: 'Core 4 Tracker', body: 'Producers gamify their progress with daily habit-tracking across Body, Being, Balance, and Business — building the foundation for sustained sales success.' },
+  { num: '02', label: 'Core 4 Tracker', body: 'Producers gamify their progress with daily habit-tracking across Body, Being, Balance, and Business, building the foundation for sustained sales success.' },
   { num: '03', label: 'Stacking', body: 'A guided reflection tool with 19 different frameworks (Gratitude, Irritation, etc). Teaches producers how to process emotions, separate feelings from facts, and find the lesson in any situation.' },
 ];
 
@@ -981,7 +981,7 @@ const ROISection = () => {
 const outcomes = [
   { label: 'Integrity', body: 'They learn to keep their word to themselves and to you.' },
   { label: 'Resilience', body: 'They learn to process challenges constructively rather than emotionally.' },
-  { label: 'Loyalty', body: 'They see an owner who invests in their total growth — leading to higher staff retention and a culture that attracts other top performers.' },
+  { label: 'Loyalty', body: 'They see an owner who invests in their total growth, leading to higher staff retention and a culture that attracts other top performers.' },
 ];
 
 const OutcomeSection = () => (
@@ -1210,7 +1210,7 @@ const FinalCTA = () => (
                 fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.6,
                 color: paper, opacity: 0.85,
               }}>
-                Daily action loop. Weekly Discovery Stack. Direct visibility for you. All enrollments are final — we provide immediate access to the full system.
+                Daily action loop. Weekly Discovery Stack. Direct visibility for you. All enrollments are final, we provide immediate access to the full system.
               </p>
             </div>
           </Reveal>
@@ -1224,7 +1224,7 @@ const FinalCTA = () => (
    FAQ
    ══════════════════════════════════════════════════════ */
 const faqs = [
-  { q: 'When does the challenge start?', a: 'The Producer Challenge runs on a rolling enrollment basis. Sign up any producer by Friday and they will automatically begin the following Monday. There are no fixed cohort dates — the system is always ready.' },
+  { q: 'When does the challenge start?', a: 'The Producer Challenge runs on a rolling enrollment basis. Sign up any producer by Friday and they will automatically begin the following Monday. There are no fixed cohort dates, the system is always ready.' },
   { q: 'How much time does this require daily?', a: 'Each daily module takes approximately 3-5 minutes to watch. Including the action declaration and submission, expect 10-15 minutes per day. The weekly Discovery Stack takes about 20-30 minutes on Fridays.' },
   { q: 'What if my producer misses a day?', a: "All content remains accessible throughout the 6-week period. While daily completion is encouraged for building the habit loop, producers can catch up if needed. You'll see exactly which modules they've completed through the daily reports." },
   { q: 'What access do I get as the owner?', a: "You receive every daily action report via email, plus the full PDF of each weekly Discovery Stack. This gives you unprecedented visibility into your producer's engagement, takeaways, and action commitments." },
@@ -1487,7 +1487,7 @@ const BoldProducerChallenge = () => {
   return (
     <>
       <SEOHead config={{
-        title: 'The Producer Challenge — 6-Week Sales Transformation',
+        title: 'The Producer Challenge, 6-Week Sales Transformation',
         description: 'Transform your producer from reactive chaos to systematic execution in 42 days. Daily accountability, weekly reports, and full visibility into their growth.',
         keywords: ['producer challenge', 'sales training', 'insurance producer', 'accountability', 'team development'],
       }} />

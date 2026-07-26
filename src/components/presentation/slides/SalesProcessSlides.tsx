@@ -126,7 +126,7 @@ export const ThreePartProcessSlide = () => (
         <ul className="space-y-2 text-gray-300 text-sm mb-4">
           <li className="flex items-start gap-2">
             <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-            <span>Ask for business—twice if needed</span>
+            <span>Ask for business, twice if needed</span>
           </li>
           <li className="flex items-start gap-2">
             <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />

@@ -294,7 +294,7 @@ const Partnership = () => {
                   What makes this different from high-end consulting?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-300">
-                  Unlike consulting, Partnership means we have aligned incentives through revenue sharing and joint investments. We're not just advisors—we're invested partners with skin in the game alongside you.
+                  Unlike consulting, Partnership means we have aligned incentives through revenue sharing and joint investments. We're not just advisors, we're invested partners with skin in the game alongside you.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

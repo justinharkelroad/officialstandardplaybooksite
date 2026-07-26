@@ -63,7 +63,7 @@ const CALLS: Call[] = [
     title: 'The Standard',
     titleAccent: 'Boardroom',
     tagline: 'Weekly mastermind. Real numbers, real wins, real accountability.',
-    cadenceLabel: 'Every Monday · 1–1:55 PM ET',
+    cadenceLabel: 'Every Monday · 1 to 1:55 PM ET',
     cadenceWeek: 1,
     meetingId: '849 8063 5452',
     registerUrl: 'https://us06web.zoom.us/meeting/register/SmhhvsDlS0y5dH_e-xAOKQ',
@@ -344,7 +344,7 @@ const Calls = () => {
                 fontFamily: body, fontSize: 'clamp(15px, 1.5vw, 18px)',
                 lineHeight: 1.55, color: paper, opacity: 0.9, maxWidth: 640,
               }}>
-                Register once per Zoom — you'll get a calendar invite and reminders for every future session. Bookmark this page so you can always find your way back.
+                Register once per Zoom, you'll get a calendar invite and reminders for every future session. Bookmark this page so you can always find your way back.
               </p>
             </Reveal>
           </div>
@@ -522,7 +522,7 @@ const Calls = () => {
                   fontFamily: body, fontSize: 14, lineHeight: 1.55,
                   opacity: 0.7, margin: '16px 0 0', maxWidth: 540,
                 }}>
-                  Directive &amp; Partnership clients — book your monthly two-hour working session. One link, every month.
+                  Directive &amp; Partnership clients, book your monthly two-hour working session. One link, every month.
                 </p>
               </div>
 

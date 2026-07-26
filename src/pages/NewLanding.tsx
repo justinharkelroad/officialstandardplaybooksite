@@ -187,7 +187,7 @@ const ScrollytellingHero = () => {
             <p className="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">Introducing</p>
             <img src={agencyBrainLogo} alt="Agency Brain - Insurance Agency Management Platform" className="mx-auto w-[80%] md:w-[600px] lg:w-[720px] mb-6" />
             <p className="text-gray-400 text-lg mt-4 max-w-2xl mx-auto">
-              The operating system that turns chaos into clarity. Your pipeline, your team, your retention — all in one place.
+              The operating system that turns chaos into clarity. Your pipeline, your team, your retention, all in one place.
             </p>
           </div>
         </motion.div>
@@ -200,18 +200,18 @@ const ScrollytellingHero = () => {
    SECTION 3 — THE OPERATING SYSTEM (Agency Brain)
    ══════════════════════════════════════════════════════ */
 const brainCards = [
-  { headline: 'Train Your Team.', sub: 'A full training library with structured bootcamps — accessible right inside the app.', img: teamTrainingImg, label: 'Team Training' },
+  { headline: 'Train Your Team.', sub: 'A full training library with structured bootcamps, accessible right inside the app.', img: teamTrainingImg, label: 'Team Training' },
   { headline: 'Practice Makes Perfect.', sub: 'AI roleplay bot lets your producers sharpen their pitch anytime, anywhere.', img: aiRoleplayImg, label: 'AI Roleplay Trainer' },
   { headline: 'Total Visibility.', sub: 'Know exactly where your team stands every single day.', img: salesDashImg, label: 'Sales Dashboard' },
-  { headline: 'Sales Breakdown.', sub: 'Drill into premium, items, policies, and points — by date, source, or bundle.', img: salesAnalyticsImg, label: 'Sales Analytics' },
-  { headline: 'Stop Guessing.', sub: 'See every lead, every stage, every dollar — in real time.', img: lqsImg, label: 'Pipeline Intelligence' },
-  { headline: 'Track Your ROI.', sub: 'See exactly what your marketing spend is producing — leads, quotes, premium, commission.', img: marketingRoiImg, label: 'Marketing ROI' },
+  { headline: 'Sales Breakdown.', sub: 'Drill into premium, items, policies, and points, by date, source, or bundle.', img: salesAnalyticsImg, label: 'Sales Analytics' },
+  { headline: 'Stop Guessing.', sub: 'See every lead, every stage, every dollar, in real time.', img: lqsImg, label: 'Pipeline Intelligence' },
+  { headline: 'Track Your ROI.', sub: 'See exactly what your marketing spend is producing, leads, quotes, premium, commission.', img: marketingRoiImg, label: 'Marketing ROI' },
   { headline: 'Score Every Call.', sub: 'AI-powered call audits with execution checklists and talk-to-listen ratios.', img: callScoringImg, label: 'Call Scoring' },
   { headline: 'Stay Ahead.', sub: 'Proactively manage renewals so nothing slips.', img: renewalsImg, label: 'Renewal Tracking' },
-  { headline: 'Cancel Audit.', sub: 'Track cancellations, at-risk premium, and saved dollars — week by week.', img: cancelAuditImg, label: 'Cancel Audit' },
+  { headline: 'Cancel Audit.', sub: 'Track cancellations, at-risk premium, and saved dollars, week by week.', img: cancelAuditImg, label: 'Cancel Audit' },
   { headline: 'Stop the Bleed.', sub: 'Catch cancellations before they cost you.', img: winbackImg, label: 'Winback HQ' },
-  { headline: 'Build The Habits.', sub: 'Core 4 + Flow tracking: Body, Being, Balance, Business — with team leaderboards.', img: habitTrackingImg, label: 'Habit Tracking' },
-  { headline: 'Set Your Targets.', sub: 'Plan your 90-day action map — quarterly goals broken into daily habits.', img: targetSettingImg, label: 'Target Setting' },
+  { headline: 'Build The Habits.', sub: 'Core 4 + Flow tracking: Body, Being, Balance, Business, with team leaderboards.', img: habitTrackingImg, label: 'Habit Tracking' },
+  { headline: 'Set Your Targets.', sub: 'Plan your 90-day action map, quarterly goals broken into daily habits.', img: targetSettingImg, label: 'Target Setting' },
 ];
 
 const AgencyBrainSection = () => {

@@ -16,7 +16,7 @@ const ProducerSystemNotCourse = () => {
     {
       icon: Heart,
       title: "HOLISTIC DEVELOPMENT",
-      description: "Performance isn't just about sales tactics. We build the whole producer through the Core 4: Body, Being, Balance, and Business—ensuring the rest of their life fuels their work, not drains it."
+      description: "Performance isn't just about sales tactics. We build the whole producer through the Core 4: Body, Being, Balance, and Business, ensuring the rest of their life fuels their work, not drains it."
     }
   ];
 

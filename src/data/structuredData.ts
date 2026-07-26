@@ -190,7 +190,7 @@ export const structuredDataByRoute: Record<string, object[]> = {
       },
       {
         question: "What makes this different from high-end consulting?",
-        answer: "Unlike consulting, Partnership means we have aligned incentives through revenue sharing and joint investments. We're not just advisors — we're invested partners with skin in the game alongside you.",
+        answer: "Unlike consulting, Partnership means we have aligned incentives through revenue sharing and joint investments. We're not just advisors, we're invested partners with skin in the game alongside you.",
       },
     ]),
   ],
@@ -219,7 +219,7 @@ export const structuredDataByRoute: Record<string, object[]> = {
     faqSchema([
       {
         question: "When does the challenge start?",
-        answer: "The Producer Challenge runs on a rolling enrollment basis. Sign up any producer by Friday and they will automatically begin the following Monday. There are no fixed cohort dates — the system is always ready.",
+        answer: "The Producer Challenge runs on a rolling enrollment basis. Sign up any producer by Friday and they will automatically begin the following Monday. There are no fixed cohort dates, the system is always ready.",
       },
       {
         question: "How much time does this require daily?",

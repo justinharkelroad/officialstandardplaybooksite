@@ -285,10 +285,10 @@ const PillarsSection = () => (
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
         {[
-          { name: 'Business', desc: 'Systems, pipeline, revenue — the engine that drives your agency forward.' },
-          { name: 'Being', desc: 'Mindset, identity, and leadership — God built you to discover your purpose.' },
-          { name: 'Body', desc: 'Physical energy and discipline — your body is the vehicle for everything else.' },
-          { name: 'Balance', desc: 'Family, rest, purpose — success without fulfillment is the ultimate failure.' },
+          { name: 'Business', desc: 'Systems, pipeline, revenue, the engine that drives your agency forward.' },
+          { name: 'Being', desc: 'Mindset, identity, and leadership, God built you to discover your purpose.' },
+          { name: 'Body', desc: 'Physical energy and discipline, your body is the vehicle for everything else.' },
+          { name: 'Balance', desc: 'Family, rest, purpose, success without fulfillment is the ultimate failure.' },
         ].map((pillar, i) => (
           <Reveal key={pillar.name} delay={i * 0.1}>
             <div className="text-center">
@@ -373,7 +373,7 @@ const AgencyBrainHero = () => (
           }}
         >
           The operating system that turns chaos into clarity.
-          Your pipeline, your team, your retention — all in one place.
+          Your pipeline, your team, your retention, all in one place.
         </p>
       </Reveal>
 
@@ -412,15 +412,15 @@ const featureCategories = [
     tab: 'Sales & Pipeline',
     features: [
       { headline: 'Total Visibility.', sub: 'Know exactly where your team stands every single day.', img: salesDashImg, label: 'Dashboard' },
-      { headline: 'Sales Breakdown.', sub: 'Drill into premium, items, policies, and points — by date, source, or bundle.', img: salesAnalyticsImg, label: 'Analytics' },
-      { headline: 'Stop Guessing.', sub: 'See every lead, every stage, every dollar — in real time.', img: lqsImg, label: 'Pipeline' },
-      { headline: 'Track Your ROI.', sub: 'See exactly what your marketing spend is producing — leads, quotes, premium, commission.', img: marketingRoiImg, label: 'Marketing' },
+      { headline: 'Sales Breakdown.', sub: 'Drill into premium, items, policies, and points, by date, source, or bundle.', img: salesAnalyticsImg, label: 'Analytics' },
+      { headline: 'Stop Guessing.', sub: 'See every lead, every stage, every dollar, in real time.', img: lqsImg, label: 'Pipeline' },
+      { headline: 'Track Your ROI.', sub: 'See exactly what your marketing spend is producing, leads, quotes, premium, commission.', img: marketingRoiImg, label: 'Marketing' },
     ],
   },
   {
     tab: 'Team Development',
     features: [
-      { headline: 'Train Your Team.', sub: 'A full training library with structured bootcamps — accessible right inside the app.', img: teamTrainingImg, label: 'Training' },
+      { headline: 'Train Your Team.', sub: 'A full training library with structured bootcamps, accessible right inside the app.', img: teamTrainingImg, label: 'Training' },
       { headline: 'Practice Makes Perfect.', sub: 'AI roleplay bot lets your producers sharpen their pitch anytime, anywhere.', img: aiRoleplayImg, label: 'AI Roleplay' },
       { headline: 'Score Every Call.', sub: 'AI-powered call audits with execution checklists and talk-to-listen ratios.', img: callScoringImg, label: 'Call Scoring' },
     ],
@@ -429,15 +429,15 @@ const featureCategories = [
     tab: 'Retention',
     features: [
       { headline: 'Stay Ahead.', sub: 'Proactively manage renewals so nothing slips through the cracks.', img: renewalsImg, label: 'Renewals' },
-      { headline: 'Cancel Audit.', sub: 'Track cancellations, at-risk premium, and saved dollars — week by week.', img: cancelAuditImg, label: 'Cancellations' },
+      { headline: 'Cancel Audit.', sub: 'Track cancellations, at-risk premium, and saved dollars, week by week.', img: cancelAuditImg, label: 'Cancellations' },
       { headline: 'Stop the Bleed.', sub: 'Catch cancellations before they cost you. Automated winback workflows.', img: winbackImg, label: 'Winback' },
     ],
   },
   {
     tab: 'Habits & Goals',
     features: [
-      { headline: 'Build The Habits.', sub: 'Core 4 + Flow tracking: Body, Being, Balance, Business — with team leaderboards.', img: habitTrackingImg, label: 'Habits' },
-      { headline: 'Set Your Targets.', sub: 'Plan your 90-day action map — quarterly goals broken into daily habits.', img: targetSettingImg, label: 'Targets' },
+      { headline: 'Build The Habits.', sub: 'Core 4 + Flow tracking: Body, Being, Balance, Business, with team leaderboards.', img: habitTrackingImg, label: 'Habits' },
+      { headline: 'Set Your Targets.', sub: 'Plan your 90-day action map, quarterly goals broken into daily habits.', img: targetSettingImg, label: 'Targets' },
     ],
   },
 ];
@@ -662,7 +662,7 @@ const coachingPrograms = [
   {
     label: '1:1 Coaching',
     title: 'Partnership',
-    description: 'The highest level — full-access private coaching, custom strategy, and direct line to Justin.',
+    description: 'The highest level, full-access private coaching, custom strategy, and direct line to Justin.',
     details: [
       'Everything in Directive +',
       'Unlimited private access to Justin',

@@ -205,7 +205,7 @@ export const OFFER_CATALOG: { version: string; currency: string; offers: Offer[]
     },
     {
       slug: "scs-30",
-      name: "Standard Call Scoring — 30",
+      name: "Standard Call Scoring: 30",
       type: "saas",
       price: 299,
       billing_cycle: "monthly",
@@ -216,7 +216,7 @@ export const OFFER_CATALOG: { version: string; currency: string; offers: Offer[]
     },
     {
       slug: "scs-50",
-      name: "Standard Call Scoring — 50",
+      name: "Standard Call Scoring: 50",
       type: "saas",
       price: 399,
       billing_cycle: "monthly",
@@ -227,7 +227,7 @@ export const OFFER_CATALOG: { version: string; currency: string; offers: Offer[]
     },
     {
       slug: "scs-100",
-      name: "Standard Call Scoring — 100",
+      name: "Standard Call Scoring: 100",
       type: "saas",
       price: 499,
       billing_cycle: "monthly",
@@ -333,7 +333,7 @@ export const INTAKE_SCHEMA: {
       id: "urgency",
       label: "Start timeframe",
       type: "select",
-      options: ["ASAP (<30 days)", "Soon (30–60 days)", "Later (>60 days)"],
+      options: ["ASAP (<30 days)", "Soon (30 to 60 days)", "Later (>60 days)"],
       required: true
     },
     { id: "app_usage", label: "Willing to use the app weekly", type: "toggle" }

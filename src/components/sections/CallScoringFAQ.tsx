@@ -25,11 +25,11 @@ const CallScoringFAQ = () => {
     },
     {
       question: "Do you provide training and support?",
-      answer: "Absolutely. Every plan includes implementation support and training. Professional and Enterprise plans include regular coaching calls with our team. We're not just handing you software – we're partnering with you to ensure your team gets maximum value from call scoring."
+      answer: "Absolutely. Every plan includes implementation support and training. Professional and Enterprise plans include regular coaching calls with our team. We're not just handing you software. We're partnering with you to ensure your team gets maximum value from call scoring."
     },
     {
       question: "What types of calls can I score?",
-      answer: "You can score any type of call – discovery calls, closing calls, objection handling, follow-ups, or any custom call type specific to your business. The system is flexible enough to handle any conversation type, and you can create unlimited scoring templates for different scenarios."
+      answer: "You can score any type of call: discovery calls, closing calls, objection handling, follow-ups, or any custom call type specific to your business. The system is flexible enough to handle any conversation type, and you can create unlimited scoring templates for different scenarios."
     },
     {
       question: "How many team members can I have?",

@@ -18,7 +18,7 @@ const TRACKS: Track[] = [
     title: 'Standard Sequence Sales',
     description: "The 6-step call system that runs every quoted-household conversation in Justin's agency.",
     bullets: [
-      'Hooks by lead type — auto, home, win-back, x-date, cross-sell',
+      'Hooks by lead type, auto, home, win-back, x-date, cross-sell',
       'Rapport and trust-building question banks',
       'The coverage conversation: 3-question gap method, umbrella focus',
       'Closing the call with a clean yes or no',
@@ -31,11 +31,11 @@ const TRACKS: Track[] = [
     description:
       'A full library of word tracks for the five objections that kill most calls. Multiple rebuttal options per objection so producers can pick the one that fits their voice.',
     bullets: [
-      '"It\'s too expensive" — 5 rebuttals',
-      '"Just email it to me" — 5 rebuttals',
-      '"I need to talk to my spouse" — 5 rebuttals',
-      '"Coverage is great, price isn\'t" — 4 rebuttals',
-      '"I just paid my insurance" — 4 rebuttals',
+      '"It\'s too expensive", 5 rebuttals',
+      '"Just email it to me", 5 rebuttals',
+      '"I need to talk to my spouse", 5 rebuttals',
+      '"Coverage is great, price isn\'t", 4 rebuttals',
+      '"I just paid my insurance", 4 rebuttals',
     ],
   },
   {
@@ -45,7 +45,7 @@ const TRACKS: Track[] = [
       'The skills layer underneath the sequence. How producers actually communicate, prepare, and close.',
     bullets: [
       'The 10-minute Communication Exercise (sound, vision, text)',
-      'Tone, Tempo, Timing — the TTT framework',
+      'Tone, Tempo, Timing, the TTT framework',
       'The 3-Question Approach for liability conversations',
       'Loom e-proposals that hold the frame',
       '45-day follow-up cadence with selfie-video email touchpoints',
@@ -57,11 +57,11 @@ const TRACKS: Track[] = [
     description:
       'A 5-stage discovery framework that makes the close easy because the prospect closes themselves.',
     bullets: [
-      'Connection — disarm and earn the right to ask',
-      'Engagement — situation, problem awareness, consequence, solution awareness',
-      'Transition — bridge from discovery to quote',
-      'Presentation — quote in their words, three options',
-      'Commitment — soft confirmation, not pressure',
+      'Connection, disarm and earn the right to ask',
+      'Engagement, situation, problem awareness, consequence, solution awareness',
+      'Transition, bridge from discovery to quote',
+      'Presentation, quote in their words, three options',
+      'Commitment, soft confirmation, not pressure',
       'Includes a downloadable Standard Discovery Question Bank PDF',
     ],
   },
@@ -71,7 +71,7 @@ const TRACKS: Track[] = [
     description: "Service isn't order-taking. It's where retention is won or lost.",
     bullets: [
       'Mini reviews that uncover money and protection gaps',
-      'The 8-step review framework — appreciate, position, educate, recommend',
+      'The 8-step review framework, appreciate, position, educate, recommend',
       'Bringing up life insurance without it feeling like a pitch',
       'Communication exercise adapted for service roles',
     ],
@@ -81,26 +81,26 @@ const TRACKS: Track[] = [
     title: 'Agency Management',
     description: 'For owners and managers. The systems that hold the team accountable.',
     bullets: [
-      'Lead Manager — the binary "Sold or Requote" workflow',
-      'Daily Recruiting Ritual — the 15-minute prospecting habit',
+      'Lead Manager, the binary "Sold or Requote" workflow',
+      'Daily Recruiting Ritual, the 15-minute prospecting habit',
       'Documented Sales Process, Requote Process, Winback Process',
-      'Coaching vs. Compliance — why 99% of "coaching problems" are compliance problems',
-      '3 Pillars of Sales Culture — daily activity targets, talk path, assumptive close',
+      'Coaching vs. Compliance, why 99% of "coaching problems" are compliance problems',
+      '3 Pillars of Sales Culture, daily activity targets, talk path, assumptive close',
       'Running team meetings with the Learning Cycle (Teach → Takeaway → Discuss → Teach-Back)',
-      'Knowing the Numbers — marketing ROI benchmarks, contact rate, conversion rate, close rate',
+      'Knowing the Numbers, marketing ROI benchmarks, contact rate, conversion rate, close rate',
     ],
   },
   {
     number: 'TRACK 07',
     title: 'AI & Technology',
-    description: 'How to deploy AI inside the agency — without touching customer PII or carrier systems.',
+    description: 'How to deploy AI inside the agency, without touching customer PII or carrier systems.',
     bullets: [
       'Building a custom AI Sales Roleplay bot in ElevenLabs',
       'Prompting with Advanced Voice Mode',
-      'AI Tips & Tricks — ChatGPT, NotebookLM, Lovable',
-      'Prompting 101 — the role-first framework',
+      'AI Tips & Tricks, ChatGPT, NotebookLM, Lovable',
+      'Prompting 101, the role-first framework',
       'NotebookLM as a 24/7 internal trainer',
-      'Build Your AI Brain — the 8-phase Cowork setup guide for owners',
+      'Build Your AI Brain, the 8-phase Cowork setup guide for owners',
     ],
   },
   {
@@ -108,8 +108,8 @@ const TRACKS: Track[] = [
     title: 'Agency Brain Product Training (Management Access)',
     description: 'Owner and manager training inside the platform itself.',
     bullets: [
-      'Sequencing — building and applying customer workflows',
-      'The Weekly Debrief — the 6-step Sunday reflection wizard',
+      'Sequencing, building and applying customer workflows',
+      'The Weekly Debrief, the 6-step Sunday reflection wizard',
     ],
   },
   {
@@ -117,24 +117,24 @@ const TRACKS: Track[] = [
     title: 'Agency Brain Product Training (Staff Access)',
     description: 'Producer and service training on the tools they use every day.',
     bullets: [
-      'The LQS Roadmap — open leads, quoted households, sold households',
-      'AI Sales Roleplay Trainer — state-specific practice with instant grading',
-      'Sequencing — applying workflows to clients',
-      'Core Four habit tracking — Body, Being, Balance, Business',
-      'The Power of Flowing — daily reflection practice',
+      'The LQS Roadmap, open leads, quoted households, sold households',
+      'AI Sales Roleplay Trainer, state-specific practice with instant grading',
+      'Sequencing, applying workflows to clients',
+      'Core Four habit tracking, Body, Being, Balance, Business',
+      'The Power of Flowing, daily reflection practice',
     ],
   },
   {
     number: 'TRACK 10',
     title: 'Boardroom Recordings',
     description:
-      'A growing library of real coaching session recaps from monthly Boardroom calls — actual client struggles, actual tactics, actual frameworks deployed.',
+      'A growing library of real coaching session recaps from monthly Boardroom calls, actual client struggles, actual tactics, actual frameworks deployed.',
     bullets: [
       'Onboarding systems for prospects, customers, and team members',
       'Modern marketing and personal branding for agents',
       'Marketing ROI breakdowns and break-even formulas',
       'Mortgage referral partnership playbooks',
-      'Sales incentive models — Efficiency Score and Pre-Paid Bonus',
+      'Sales incentive models, Efficiency Score and Pre-Paid Bonus',
       'Quarterly planning frameworks across Body, Being, Balance, Business',
     ],
   },
@@ -151,13 +151,13 @@ const SAMPLE_LESSONS: SampleLesson[] = [
     trackLabel: 'TRACK 01 / STANDARD SEQUENCE SALES',
     title: 'The 3-Question Approach',
     quote:
-      'How much do you think your house is worth? If you flipped your house upside down and shook it, what is all the stuff that falls out worth? If you had to wrap a number around all your financial assets — IRA, 401k, savings — what would that number be?',
+      'How much do you think your house is worth? If you flipped your house upside down and shook it, what is all the stuff that falls out worth? If you had to wrap a number around all your financial assets (IRA, 401k, savings), what would that number be?',
   },
   {
     trackLabel: 'TRACK 02 / OBJECTION LIBRARY',
-    title: '"It\'s too expensive" — Option 3',
+    title: '"It\'s too expensive", Option 3',
     quote:
-      "I hear you on the price, and I don't want to keep you if you're busy. But before we hang up — do you have just one minute for me to show you how we might reduce that cost or uncover any hidden discounts? If it's still not a fit, I completely understand.",
+      "I hear you on the price, and I don't want to keep you if you're busy. But before we hang up, do you have just one minute for me to show you how we might reduce that cost or uncover any hidden discounts? If it's still not a fit, I completely understand.",
   },
   {
     trackLabel: 'TRACK 03 / SALES MASTERY',
@@ -186,7 +186,7 @@ function Kicker({ children, tone = 'dark' }: { children: React.ReactNode; tone?:
 
 const TeamTraining = () => {
   useEffect(() => {
-    document.title = 'Team Training — The Standard Playbook';
+    document.title = 'Team Training, The Standard Playbook';
   }, []);
 
   return (
@@ -207,7 +207,7 @@ const TeamTraining = () => {
             className="mt-8 mx-auto text-white/75"
             style={{ fontSize: '21px', lineHeight: 1.55, maxWidth: '760px' }}
           >
-            A complete on-demand training library — sales, service, management, AI, and the Agency Brain product itself. Plus the only platform that lets you build your own training from any video. All built into every Agency Brain account.
+            A complete on-demand training library, sales, service, management, AI, and the Agency Brain product itself. Plus the only platform that lets you build your own training from any video. All built into every Agency Brain account.
           </p>
         </div>
       </section>
@@ -219,11 +219,11 @@ const TeamTraining = () => {
             {[
               {
                 heading: '10 Tracks + Yours',
-                body: '10 structured tracks out of the box — plus the ability to build your own.',
+                body: '10 structured tracks out of the box, plus the ability to build your own.',
               },
               {
                 heading: 'Built by an operator',
-                body: 'Justin Harkelroad — 20 years in the agency seat. Built and sold three.',
+                body: 'Justin Harkelroad, 20 years in the agency seat. Built and sold three.',
               },
               {
                 heading: 'Real word tracks',
@@ -264,7 +264,7 @@ const TeamTraining = () => {
               Ten tracks. One library.
             </h2>
             <p className="mt-6 text-white/75" style={{ fontSize: '21px', lineHeight: 1.55 }}>
-              Each track is a structured path — not a video dump. Producers, service reps, and managers can each find their lane on day one.
+              Each track is a structured path, not a video dump. Producers, service reps, and managers can each find their lane on day one.
             </p>
           </div>
 
@@ -322,7 +322,7 @@ const TeamTraining = () => {
               className="mt-6 text-[#020817]"
               style={{ fontSize: '21px', lineHeight: 1.55, maxWidth: '720px' }}
             >
-              The Video Training Architect lets you drop in any video — a sales trainer you found, a leadership clip, a 30-second social post, a screen recording — and instantly convert it into a structured, insurance-specific training session. Discussion prompts. Application exercises. Stand-and-deliver execution. All generated for you.
+              The Video Training Architect lets you drop in any video, a sales trainer you found, a leadership clip, a 30-second social post, a screen recording, and instantly convert it into a structured, insurance-specific training session. Discussion prompts. Application exercises. Stand-and-deliver execution. All generated for you.
             </p>
           </div>
 
@@ -331,7 +331,7 @@ const TeamTraining = () => {
               {
                 step: '01',
                 title: 'Upload',
-                body: 'Drop in any MP4, link, or screen recording. Sales content, leadership clip, social post — anything.',
+                body: 'Drop in any MP4, link, or screen recording. Sales content, leadership clip, social post, anything.',
               },
               {
                 step: '02',
@@ -389,7 +389,7 @@ const TeamTraining = () => {
               Your team can't fake their way through it.
             </h2>
             <p className="mt-6 text-white/75" style={{ fontSize: '21px', lineHeight: 1.55 }}>
-              Every quiz includes mandatory reflection questions. Producers and service reps answer in their own words. The AI grades the answer on a four-part rubric — specificity, comprehension, actionability, alignment — and tells you who actually engaged with the lesson and who coasted.
+              Every quiz includes mandatory reflection questions. Producers and service reps answer in their own words. The AI grades the answer on a four-part rubric, specificity, comprehension, actionability, alignment, and tells you who actually engaged with the lesson and who coasted.
             </p>
           </div>
 
@@ -403,7 +403,7 @@ const TeamTraining = () => {
               {
                 step: '02',
                 title: 'Specific feedback, not just a score',
-                body: 'The manager dashboard shows the score plus what was missed — "didn\'t reference the lesson," "too generic," "skipped the framework" — with the specific lesson highlights they should have hit.',
+                body: 'The manager dashboard shows the score plus what was missed, "didn\'t reference the lesson," "too generic," "skipped the framework", with the specific lesson highlights they should have hit.',
               },
               {
                 step: '03',
@@ -456,7 +456,7 @@ const TeamTraining = () => {
               className="mt-6 text-[#020817]"
               style={{ fontSize: '21px', lineHeight: 1.55, maxWidth: '720px' }}
             >
-              Every Agency Brain plan includes the training builder — you can write your own lessons, build your own quizzes, structure your own tracks. Plus and Pro add the AI Content Generator <em>inside</em> the builder. Type a topic and get a full lesson. Upload a lesson and get a quiz. Paste any content and rewrite it clearer, more concise, more actionable, or beginner-friendly in one click.
+              Every Agency Brain plan includes the training builder, you can write your own lessons, build your own quizzes, structure your own tracks. Plus and Pro add the AI Content Generator <em>inside</em> the builder. Type a topic and get a full lesson. Upload a lesson and get a quiz. Paste any content and rewrite it clearer, more concise, more actionable, or beginner-friendly in one click.
             </p>
           </div>
 
@@ -465,7 +465,7 @@ const TeamTraining = () => {
               {
                 step: '01',
                 title: 'Full lessons from a topic',
-                body: 'Type what you want to teach. The AI returns a structured lesson — clear, practical, under 600 words, ready to assign.',
+                body: 'Type what you want to teach. The AI returns a structured lesson, clear, practical, under 600 words, ready to assign.',
               },
               {
                 step: '02',
@@ -559,7 +559,7 @@ const TeamTraining = () => {
                   </svg>
                 ),
                 title: 'Built into the platform you already use',
-                body: 'Training lives next to the workflows, the call scoring, the sequences, and the LQS Roadmap. Watch a lesson on Mini Reviews — then run one in the same window.',
+                body: 'Training lives next to the workflows, the call scoring, the sequences, and the LQS Roadmap. Watch a lesson on Mini Reviews, then run one in the same window.',
               },
             ].map((card) => (
               <div key={card.title} className="bg-white rounded-xl p-8">
@@ -632,7 +632,7 @@ const TeamTraining = () => {
             New lessons added on the regular.
           </h2>
           <p className="mt-6 text-[#020817]" style={{ fontSize: '21px', lineHeight: 1.55 }}>
-            The library grows from real coaching work — every Boardroom session, every objection that surfaces in a 1:1, every product update inside Agency Brain. When the field changes, the training catches up.
+            The library grows from real coaching work, every Boardroom session, every objection that surfaces in a 1:1, every product update inside Agency Brain. When the field changes, the training catches up.
           </p>
           <p className="mt-6 text-[#6B7280]" style={{ fontSize: '14px' }}>
             Latest additions are flagged inside the platform.
@@ -658,8 +658,8 @@ const TeamTraining = () => {
               {
                 name: 'Core',
                 bullets: [
-                  'Full training library — all 10 tracks',
-                  'Training builder — write your own lessons, quizzes, and tracks',
+                  'Full training library, all 10 tracks',
+                  'Training builder, write your own lessons, quizzes, and tracks',
                   'AI comprehension grading on every quiz',
                   'Video Training Architect',
                   'Role-based access for your team',
@@ -671,7 +671,7 @@ const TeamTraining = () => {
                 name: 'Plus',
                 bullets: [
                   'Everything in Core',
-                  '__AI Content Generator inside the builder__ — generate lessons, quizzes, and rewrites with AI instead of starting from a blank page',
+                  '__AI Content Generator inside the builder__, generate lessons, quizzes, and rewrites with AI instead of starting from a blank page',
                   '50 AI calls / month',
                 ],
                 highlighted: true,

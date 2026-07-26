@@ -10,7 +10,7 @@ const ProducerCulturalImpact = () => {
             Beyond Skills: The Cultural Impact
           </h2>
           <p className="text-xl text-gray-300 text-center mb-16 max-w-3xl mx-auto">
-            The challenge is designed to build a culture of communication and clarity—not just a better salesperson.
+            The challenge is designed to build a culture of communication and clarity, not just a better salesperson.
           </p>
           
           <div className="grid md:grid-cols-2 gap-8">
@@ -39,7 +39,7 @@ const ProducerCulturalImpact = () => {
                   Bridging the Leadership Gap
                 </h3>
                 <p className="text-gray-300 leading-relaxed">
-                  The daily feedback loop opens a new channel of communication. You'll gain insight into their thinking, challenges, and wins—creating a stronger, more authentic connection than typical performance reviews.
+                  The daily feedback loop opens a new channel of communication. You'll gain insight into their thinking, challenges, and wins, creating a stronger, more authentic connection than typical performance reviews.
                 </p>
               </CardContent>
             </Card>

@@ -55,7 +55,7 @@ const ProducerAccountability = () => {
                   </div>
                 </div>
                 <p className="text-gray-300 mb-6">
-                  Every Friday, your producer completes a "Discovery Stack"—a guided reflection on the week's lessons, challenges, and revelations.
+                  Every Friday, your producer completes a "Discovery Stack": a guided reflection on the week's lessons, challenges, and revelations.
                 </p>
                 <div className="bg-primary/10 rounded-lg p-4">
                   <p className="text-gray-300">
