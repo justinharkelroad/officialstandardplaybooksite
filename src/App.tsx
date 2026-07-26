@@ -15,22 +15,16 @@ const ResetPassword = lazy(() => import("./app/pages/ResetPassword"));
 const MemberApp = lazy(() => import("./app/MemberAppRoutes"));
 const AIInstall = lazy(() => import("./pages/AIInstall"));
 const AIInstallPrework = lazy(() => import("./pages/AIInstallPrework"));
-import Boardroom from "./pages/Boardroom";
-import Directive from "./pages/Directive";
-import SalesExperience from "./pages/SalesExperience";
 import ProducerPowerUp from "./pages/ProducerPowerUp";
-import TheChallenge from "./pages/TheChallenge";
 import FormulaAI from "./pages/FormulaAI";
 import CallScoring from "./pages/CallScoring";
 import Decision from "./pages/Decision";
-import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import DataDeletion from "./pages/DataDeletion";
 import Terms from "./pages/Terms";
 import ThankYou from "./pages/ThankYou";
 import ChallengeThankYou from "./pages/ChallengeThankYou";
 import Links from "./pages/Links";
-import About from "./pages/About";
 import Partnership from "./pages/Partnership";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -39,10 +33,8 @@ import WelcomeToCoaching from "./pages/WelcomeToCoaching";
 import WelcomeBoardroom from "./pages/WelcomeBoardroom";
 import ProducerChallengeLanding from "./pages/ProducerChallengeLanding";
 import Presentation from "./pages/Presentation";
-import NewLanding from "./pages/NewLanding";
 import StandardFit from "./pages/StandardFit";
 import AIWalkthrough from "./pages/AIWalkthrough";
-import AppleMockup from "./pages/AppleMockup";
 import BoldMockup from "./pages/BoldMockup";
 import BoldSalesExperience from "./pages/BoldSalesExperience";
 import SalesExperienceOnePager from "./pages/SalesExperienceOnePager";
@@ -56,9 +48,7 @@ import BoldContact from "./pages/BoldContact";
 import BoldMirror from "./pages/BoldMirror";
 import BoldMirrorScore from "./pages/BoldMirrorScore";
 import BoldMirrorResults from "./pages/BoldMirrorResults";
-import EightWeekApply from "./pages/EightWeekApply";
 import Websites from "./pages/Websites";
-import TeamTraining from "./pages/TeamTraining";
 import SalesProcess from "./pages/SalesProcess";
 import Calls from "./pages/Calls";
 import ZoomRedirect from "./pages/ZoomRedirect";
@@ -92,34 +82,34 @@ const App = () => (
         <Routes>
           <Route path="/" element={<BoldMockup />} />
           <Route path="/bold" element={<BoldMockup />} />
-          <Route path="/apple" element={<AppleMockup />} />
-          <Route path="/legacy" element={<NewLanding />} />
+          <Route path="/apple" element={<Navigate to="/" replace />} />
+          <Route path="/legacy" element={<Navigate to="/" replace />} />
           <Route path="/login" element={<Suspense fallback={null}><MemberLogin /></Suspense>} />
           <Route path="/reset-password" element={<Suspense fallback={null}><ResetPassword /></Suspense>} />
           <Route path="/app/*" element={<Suspense fallback={null}><MemberApp /></Suspense>} />
           <Route path="/appinfo" element={<AppAccess />} />
           <Route path="/thetool" element={<TheTool />} />
           <Route path="/boardroom" element={<BoldBoardroom />} />
-          <Route path="/legacy-boardroom" element={<Boardroom />} />
+          <Route path="/legacy-boardroom" element={<Navigate to="/boardroom" replace />} />
           <Route path="/directive" element={<BoldDirective />} />
-          <Route path="/legacy-directive" element={<Directive />} />
+          <Route path="/legacy-directive" element={<Navigate to="/directive" replace />} />
           <Route path="/sales-experience" element={<SalesExperienceOnePager />} />
           <Route path="/8-week" element={<BoldSalesExperience autoOpenBooking />} />
-          <Route path="/apple-sales-experience" element={<SalesExperience />} />
+          <Route path="/apple-sales-experience" element={<Navigate to="/8-week" replace />} />
           <Route path="/8-week-apply" element={<BoldEightWeekApply />} />
-          <Route path="/legacy-8-week-apply" element={<EightWeekApply />} />
+          <Route path="/legacy-8-week-apply" element={<Navigate to="/8-week-apply" replace />} />
           <Route path="/producer-power-up" element={<ProducerPowerUp />} />
           <Route path="/the-challenge" element={<BoldProducerChallenge />} />
           <Route path="/thechallenge" element={<Navigate to="/the-challenge" replace />} />
-          <Route path="/legacy-the-challenge" element={<TheChallenge />} />
+          <Route path="/legacy-the-challenge" element={<Navigate to="/the-challenge" replace />} />
           <Route path="/formulaai" element={<FormulaAI />} />
           <Route path="/callscoring" element={<CallScoring />} />
           <Route path="/decision" element={<Decision />} />
           <Route path="/about" element={<BoldAbout />} />
-          <Route path="/legacy-about" element={<About />} />
+          <Route path="/legacy-about" element={<Navigate to="/about" replace />} />
           <Route path="/partnership" element={<Partnership />} />
           <Route path="/contact" element={<BoldContact />} />
-          <Route path="/legacy-contact" element={<Contact />} />
+          <Route path="/legacy-contact" element={<Navigate to="/contact" replace />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/data-deletion" element={<DataDeletion />} />
           <Route path="/terms" element={<Terms />} />
@@ -130,13 +120,13 @@ const App = () => (
           <Route path="/welcomeboardroom" element={<WelcomeBoardroom />} />
           <Route path="/PPUC" element={<ProducerChallengeLanding />} />
           <Route path="/presentation" element={<Presentation />} />
-          <Route path="/new" element={<NewLanding />} />
+          <Route path="/new" element={<Navigate to="/" replace />} />
           <Route path="/fit" element={<StandardFit />} />
           <Route path="/ai-walk-through" element={<AIWalkthrough />} />
           <Route path="/apple-mockup" element={<Navigate to="/" replace />} />
           <Route path="/websites" element={<Websites />} />
           <Route path="/training" element={<BoldTraining />} />
-          <Route path="/legacy-training" element={<TeamTraining />} />
+          <Route path="/legacy-training" element={<Navigate to="/training" replace />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/salesprocess" element={<SalesProcess />} />
