@@ -293,9 +293,6 @@ const Pricing = ({ onOpenInquiry }: { onOpenInquiry: () => void }) => (
                   </li>
                 ))}
               </ul>
-              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', marginTop: 10, lineHeight: 1.5 }}>
-                Additional requests beyond 4/month are billed at $50 each.
-              </p>
             </Disclosure>
 
             <a

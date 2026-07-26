@@ -14,7 +14,6 @@ import ProducerOutcome from '@/components/sections/ProducerOutcome';
 import ProducerLogistics from '@/components/sections/ProducerLogistics';
 import ProducerFinalCTA from '@/components/sections/ProducerFinalCTA';
 import ChallengeFAQ from '@/components/sections/ChallengeFAQ';
-import ChallengeNavigation from '@/components/sections/ChallengeNavigation';
 
 const ProducerPowerUp = () => {
   const faqs = [
@@ -67,13 +66,6 @@ const ProducerPowerUp = () => {
       <ProducerFinalCTA />
       <ChallengeFAQ faqs={faqs} />
       <ContentMeta lastUpdated="March 2026" />
-      <ChallengeNavigation
-        otherChallenge={{
-          title: "Agency Owner Core 4 & Leadership Challenge",
-          description: "6-Week Core 4 & Leadership Challenge designed specifically for agency owners ready to raise their standard.",
-          link: "/owner-challenge"
-        }}
-      />
       <Footer />
     </div>
   );

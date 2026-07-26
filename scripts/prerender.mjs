@@ -26,7 +26,6 @@ const ROUTES = [
   '/partnership',
   '/sales-experience',
   '/producer-power-up',
-  '/owner-challenge',
   '/callscoring',
   '/the-challenge',
   // '/app' excluded — AppRedirect immediately navigates to external URL

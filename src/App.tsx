@@ -19,7 +19,6 @@ import Boardroom from "./pages/Boardroom";
 import Directive from "./pages/Directive";
 import SalesExperience from "./pages/SalesExperience";
 import ProducerPowerUp from "./pages/ProducerPowerUp";
-import OwnerChallenge from "./pages/OwnerChallenge";
 import TheChallenge from "./pages/TheChallenge";
 import FormulaAI from "./pages/FormulaAI";
 import CallScoring from "./pages/CallScoring";
@@ -110,7 +109,6 @@ const App = () => (
           <Route path="/8-week-apply" element={<BoldEightWeekApply />} />
           <Route path="/legacy-8-week-apply" element={<EightWeekApply />} />
           <Route path="/producer-power-up" element={<ProducerPowerUp />} />
-          <Route path="/owner-challenge" element={<OwnerChallenge />} />
           <Route path="/the-challenge" element={<BoldProducerChallenge />} />
           <Route path="/thechallenge" element={<Navigate to="/the-challenge" replace />} />
           <Route path="/legacy-the-challenge" element={<TheChallenge />} />

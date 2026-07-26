@@ -62,16 +62,6 @@ const CallScoringTeam = () => {
                     <p className="text-5xl font-rajdhani font-bold text-white mb-2">100%</p>
                     <p className="text-gray-300 text-lg">Of calls scored</p>
                   </div>
-                  <div className="grid grid-cols-2 gap-4 pt-4">
-                    <div className="bg-dark-card/50 rounded-lg p-4 border border-primary/10">
-                      <p className="text-3xl font-rajdhani font-bold text-primary">4.8</p>
-                      <p className="text-gray-400 text-sm">Avg Score</p>
-                    </div>
-                    <div className="bg-dark-card/50 rounded-lg p-4 border border-primary/10">
-                      <p className="text-3xl font-rajdhani font-bold text-primary-accent">↑32%</p>
-                      <p className="text-gray-400 text-sm">Improvement</p>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>

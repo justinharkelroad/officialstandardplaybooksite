@@ -95,14 +95,6 @@ export const seoConfig: Record<string, SEOConfig> = {
     type: 'article',
     structuredData: structuredDataByRoute['/producer-power-up'],
   },
-  '/owner-challenge': {
-    title: 'Owner Challenge — 6-Week Core 4 & Leadership Transformation | The Standard Playbook',
-    description: '6-week identity-driven leadership challenge for insurance agency owners. Core 4 habit system, micro-lessons, executive templates, and weekly reinforcement. $299.',
-    keywords: ['agency owner challenge', 'leadership development', 'Core 4 system', 'identity transformation', 'agency leadership', 'owner coaching'],
-    ogImage: OG_IMAGE,
-    type: 'article',
-    structuredData: structuredDataByRoute['/owner-challenge'],
-  },
   '/callscoring': {
     title: 'Standard Call Scoring — AI-Powered Call Evaluation for Sales Teams | The Standard Playbook',
     description: 'AI-powered call scoring that transforms sales coaching in minutes. Instant insights, consistent feedback, and accelerated team performance for insurance agencies. $299-499/month.',
@@ -137,7 +129,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
   '/about': {
     title: 'About The Standard Playbook — Coaching for Insurance Agency Growth | Fort Wayne, IN',
-    description: 'Learn about The Standard Playbook: our mission to elevate entrepreneurship through world-class coaching, proven systems, and elite community. 500+ entrepreneurs coached, $500M+ revenue generated.',
+    description: 'Learn about The Standard Playbook: our mission to elevate entrepreneurship through world-class coaching, proven systems, and elite community.',
     keywords: ['about standard playbook', 'coaching philosophy', 'insurance coaching team', 'Fort Wayne business coaching', 'agency growth coaching'],
     ogImage: OG_IMAGE,
     type: 'article',

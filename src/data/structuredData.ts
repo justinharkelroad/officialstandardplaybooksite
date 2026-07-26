@@ -244,41 +244,6 @@ export const structuredDataByRoute: Record<string, object[]> = {
     ]),
   ],
 
-  '/owner-challenge': [
-    serviceSchema({
-      name: "Owner Challenge",
-      url: "/owner-challenge",
-      description: "6-week Core 4 & Leadership Challenge for insurance agency owners. Identity-driven micro-lessons, Core 4 leadership habit system, executive templates, and weekly reinforcement. $299.",
-      serviceType: "Leadership Development Challenge",
-      audience: "Insurance Agency Owners",
-      price: "299",
-    }),
-    courseSchema({
-      name: "Owner Challenge",
-      url: "/owner-challenge",
-      description: "6-week leadership challenge for insurance agency owners",
-    }),
-    breadcrumb("Owner Challenge", "/owner-challenge"),
-    faqSchema([
-      {
-        question: "When does my identity transformation begin?",
-        answer: "Your leadership identity transformation begins every Sunday. You'll receive your app credentials within 48 hours of enrollment to start building your new identity immediately.",
-      },
-      {
-        question: "How much time is required for this identity shift?",
-        answer: "Just 3 minutes daily for the micro-lessons, plus time to implement the identity-reinforcing strategies. Designed specifically for busy agency owners ready to transform their leadership identity.",
-      },
-      {
-        question: "How do I track my identity development?",
-        answer: "The app includes Core 4 tracking, habit stacking features, and progress monitoring specifically designed to reinforce your evolving leadership identity and measure your transformation.",
-      },
-      {
-        question: "What's the investment policy?",
-        answer: "All investments are final. We provide immediate access to identity-transforming content and are confident in the leadership transformation you'll experience through this proven framework.",
-      },
-    ]),
-  ],
-
   '/callscoring': [
     serviceSchema({
       name: "Standard Call Scoring",

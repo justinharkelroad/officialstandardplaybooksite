@@ -14,7 +14,6 @@ const Breadcrumb = () => {
       'partnership': 'Partnership',
       'sales-experience': 'Sales Experience',
       'producer-power-up': 'Producer Power Up',
-      'owner-challenge': 'Owner Challenge',
       'about': 'About',
       'contact': 'Contact',
       'privacy': 'Privacy Policy',

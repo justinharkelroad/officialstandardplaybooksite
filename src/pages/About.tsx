@@ -212,9 +212,7 @@ const About = () => {
               </p>
 
               <p>
-                Today, The Standard Playbook serves hundreds of entrepreneurs across multiple
-                industries. Our members have collectively generated over $500 million
-                in additional revenue since implementing our systems. The{' '}
+                The{' '}
                 <a
                   href="https://www.independentagent.com"
                   target="_blank"
@@ -226,28 +224,6 @@ const About = () => {
                 model is built for growth — and we help owners realize that potential.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-20 relative">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="font-rajdhani font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-6">
-              By The Numbers
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 gap-8 max-w-sm mx-auto">
-            <Card className="bg-dark-card border-primary/20 text-center">
-              <CardContent className="pt-8">
-                <div className="text-4xl font-bold text-primary mb-2">500+</div>
-                <p className="text-white font-rajdhani text-lg uppercase tracking-wide">Entrepreneurs Coached</p>
-                <p className="text-gray-400 mt-2">Across 50+ industries</p>
-              </CardContent>
-            </Card>
-
           </div>
         </div>
       </section>

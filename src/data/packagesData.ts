@@ -184,29 +184,5 @@ export const packages: Package[] = [
       'Priority Support': false,
       'Custom Playbooks': true,
     }
-  },
-  {
-    id: 'owner-challenge',
-    name: 'Owner Challenge',
-    type: 'challenge',
-    price: '$1,497',
-    duration: '6 Weeks',
-    description: 'Owner development intensive',
-    available: true,
-    link: '/owner-challenge',
-    features: {
-      'Monthly Group Coaching': false,
-      'Private Community Access': true,
-      'Accountability Technology': false,
-      'Resource Library': true,
-      '1-on-1 Coaching': false,
-      'Team Transformation': false,
-      'Sales Management Training': false,
-      'Producer Training': false,
-      'Owner Development': true,
-      'Direct Message Access': false,
-      'Priority Support': false,
-      'Custom Playbooks': true,
-    }
   }
 ];

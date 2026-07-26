@@ -232,10 +232,6 @@ const WelcomeToCoaching = () => {
                   <ul className="space-y-3">
                     <li className="flex items-start">
                       <span className="text-primary mr-2">•</span>
-                      <span>You receive the team challenge at a wholesale cost of $50 per team member</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-primary mr-2">•</span>
                       <span>To enroll them, just visit <a href="https://StandardChallenge.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">StandardChallenge.com</a></span>
                     </li>
                   </ul>
