@@ -62,11 +62,33 @@ This project is built with:
 
 ## How can I deploy this project?
 
-**Pushing to `main` deploys.** standardplaybook.com is served by Cloudflare,
-which builds from this repository on push. There is no manual publish step.
+**Pushing to `main` deploys.** There is no manual publish step.
 
-Verified 2026-07-26: pushing `077c3f6` put the new `robots.txt` and `sitemap.xml`
-on the live domain with no further action.
+standardplaybook.com is served by the **Cloudflare Pages** project
+`officialstandardplaybooksite`, connected to `justinharkelroad/officialstandardplaybooksite`.
+Config confirmed in the Cloudflare dashboard 2026-07-26:
+
+| Setting | Value |
+|---|---|
+| Production branch | `main` |
+| Automatic deployments | Enabled |
+| Build command | `npm run build:pages` |
+| Build output directory | `dist` |
+| Root directory | repo root |
+| Build watch paths | `*` |
+| Build system version | 3 |
+| Build env | `BASE_URL=https://standardplaybook.com`, `PUPPETEER_SKIP_DOWNLOAD=true` |
+
+Domains: `standardplaybook.com`, `www.standardplaybook.com`,
+`officialstandardplaybooksite.pages.dev`.
+
+Because the build command is `build:pages`, every deploy runs `scripts/og-stamp.mjs`.
+Per-route OG and meta tags come from `scripts/og-routes.json`, which is a SEPARATE
+source from `src/data/seoConfig.ts` and from the page components. Changing page copy
+does not change what search engines and link previews read. Update all of them.
+
+`public/_headers` and `public/_redirects` are Cloudflare Pages convention files and
+are served as response headers and redirects.
 
 The Lovable "Share then Publish" flow described in the original scaffold README
 does NOT publish this site. Do not rely on it.
