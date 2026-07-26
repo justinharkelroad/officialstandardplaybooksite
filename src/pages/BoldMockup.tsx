@@ -771,11 +771,11 @@ const coachingPrograms: ProgramRow[] = [
   {
     num: '06',
     name: 'The Standard Ascension',
-    tier: '90-Day Private Mentorship · By Application',
+    tier: '12-Week Private Mentorship · By Application',
     price: 'Apply',
-    description: 'Private one-on-one mentorship for the owner ready to put one business target—and all four areas of life—on the board for 90 days.',
+    description: 'Private one-on-one mentorship for the owner ready to put one business target and all four areas of life on the board for 12 weeks.',
     details: [
-      'A written 90-day target and operating plan',
+      'A written 12-week target and operating plan',
       'Private weekly coaching with Justin',
       'Daily accountability across Body, Being, Balance, and Business',
       'A weekly 56-point evidence scorecard',
@@ -1267,7 +1267,7 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
           cta="See Standard 90"
         />
         <DecisionOffer
-          eyebrow="Private 90-day mentorship · By application"
+          eyebrow="Private 12-week mentorship · By application"
           name="The Standard Ascension"
           price="Apply"
           description="One business target and all four areas of life on the board, with private weekly coaching and daily accountability from Justin."
