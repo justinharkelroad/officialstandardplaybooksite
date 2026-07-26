@@ -62,7 +62,14 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/666a4afa-628a-46d0-87e0-db3a92ce6c29) and click on Share -> Publish.
+**Pushing to `main` deploys.** standardplaybook.com is served by Cloudflare,
+which builds from this repository on push. There is no manual publish step.
+
+Verified 2026-07-26: pushing `077c3f6` put the new `robots.txt` and `sitemap.xml`
+on the live domain with no further action.
+
+The Lovable "Share then Publish" flow described in the original scaffold README
+does NOT publish this site. Do not rely on it.
 
 ## Can I connect a custom domain to my Lovable project?
 
