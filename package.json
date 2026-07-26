@@ -9,6 +9,7 @@
     "build:mobile": "vite build --config vite.mobile.config.ts && npm run mobile:check-bundle",
     "build:prerender": "vite build && node scripts/prerender.mjs",
     "build:pages": "vite build && node scripts/og-stamp.mjs",
+    "check:og": "node scripts/check-og-consistency.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "test:unit": "tsx --test src/app/lib/*.test.ts",
