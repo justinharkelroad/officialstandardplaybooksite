@@ -8,7 +8,7 @@
     "build": "vite build",
     "build:mobile": "vite build --config vite.mobile.config.ts && npm run mobile:check-bundle",
     "build:prerender": "vite build && node scripts/prerender.mjs",
-    "build:pages": "vite build && node scripts/og-stamp.mjs",
+    "build:pages": "node scripts/check-og-consistency.mjs && vite build && node scripts/og-stamp.mjs",
     "check:og": "node scripts/check-og-consistency.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",

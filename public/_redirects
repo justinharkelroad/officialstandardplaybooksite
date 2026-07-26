@@ -4,6 +4,28 @@ https://www.standardplaybook.com/* https://standardplaybook.com/:splat 301
 # URL redirects
 /thechallenge /the-challenge 301
 
+# Retired routes and pre-Bold pages. Server-side so crawlers and
+# non-JS clients get a real 301 instead of a 200 with the SPA shell.
+/PPUC /the-challenge 301
+/appinfo /thetool 301
+/apple / 301
+/apple-mockup / 301
+/apple-sales-experience /8-week 301
+/certified /certified-standard 301
+/formulaai /aiinstall 301
+/legacy / 301
+/legacy-8-week-apply /8-week-apply 301
+/legacy-about /about 301
+/legacy-boardroom /boardroom 301
+/legacy-contact /contact 301
+/legacy-directive /directive 301
+/legacy-the-challenge /the-challenge 301
+/legacy-training /training 301
+/new / 301
+/producer-power-up /the-challenge 301
+/standard-90 /standard90 301
+/teamstandard /team-standard 301
+
 # Static files — must come before the SPA catch-all
 /sitemap.xml   /sitemap.xml   200
 /robots.txt    /robots.txt    200
