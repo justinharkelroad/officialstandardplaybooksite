@@ -206,43 +206,6 @@ export const structuredDataByRoute: Record<string, object[]> = {
     breadcrumb("Sales Experience", "/sales-experience"),
   ],
 
-  '/producer-power-up': [
-    serviceSchema({
-      name: "Producer Power-Up",
-      url: "/producer-power-up",
-      description: "6-week sales transformation challenge for insurance producers. Rolling enrollment with daily video modules, Core 4 habit tracking, weekly Discovery Stacks, 60-day app access, and daily owner reports. $299/producer.",
-      serviceType: "Sales Producer Training Program",
-      audience: "Insurance Producers and Agency Owners investing in producer development",
-      price: "299",
-    }),
-    breadcrumb("Producer Power-Up", "/producer-power-up"),
-    faqSchema([
-      {
-        question: "When does the challenge start?",
-        answer: "The Producer Challenge runs on a rolling enrollment basis. Sign up any producer by Friday and they will automatically begin the following Monday. There are no fixed cohort dates, the system is always ready.",
-      },
-      {
-        question: "How much time does this require daily?",
-        answer: "Each daily module takes approximately 3-5 minutes to watch. Including the action declaration and submission, expect 10-15 minutes per day. The weekly Discovery Stack takes about 20-30 minutes on Fridays.",
-      },
-      {
-        question: "What if my producer misses a day?",
-        answer: "All content remains accessible throughout the 6-week period. While daily completion is encouraged for building the habit loop, producers can catch up if needed. You'll see exactly which modules they've completed through the daily reports.",
-      },
-      {
-        question: "What access do I get as the owner?",
-        answer: "You receive every daily action report via email, plus the full PDF of each weekly Discovery Stack. This gives you unprecedented visibility into your producer's engagement, takeaways, and action commitments.",
-      },
-      {
-        question: "What's included in the app access?",
-        answer: "Your producer gets 60 days of full access to The Standard App, including The Armory (30 training modules), Core 4 Tracker (habit gamification), and all 19 Stacking frameworks for emotional processing and reflection.",
-      },
-      {
-        question: "What's the investment policy?",
-        answer: "All enrollments are final. We provide immediate access to the full system. After completion, producers can continue with Standard programs at a 25% lifetime discount.",
-      },
-    ]),
-  ],
 
   '/callscoring': [
     serviceSchema({
@@ -293,19 +256,19 @@ export const structuredDataByRoute: Record<string, object[]> = {
 
   '/the-challenge': [
     serviceSchema({
-      name: "The Owner Challenge",
+      name: "The 6 Week Producer Challenge",
       url: "/the-challenge",
-      description: "6-week intensive for insurance agency owners. Daily accountability, real systems, and measurable results.",
+      description: "A 42-day execution system for one insurance producer. Daily modules, daily accountability, and a weekly Discovery Stack.",
       serviceType: "Insurance Agency Intensive Program",
       audience: "Insurance Agency Owners",
       price: "299",
     }),
     courseSchema({
-      name: "The Owner Challenge",
+      name: "The 6 Week Producer Challenge",
       url: "/the-challenge",
-      description: "6-week intensive for insurance agency owners with daily accountability and real systems",
+      description: "A 42-day producer execution system with daily modules and daily accountability",
     }),
-    breadcrumb("The Owner Challenge", "/the-challenge"),
+    breadcrumb("The 6 Week Producer Challenge", "/the-challenge"),
   ],
 
   '/blog': [

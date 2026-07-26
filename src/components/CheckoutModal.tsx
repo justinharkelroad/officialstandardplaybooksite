@@ -22,7 +22,7 @@ const CheckoutModal = ({ buttonText, buttonClassName }: CheckoutModalProps) => {
           src="https://createthestandard.com/producer-power-up-checkout-page"
           style={{ border: 'none', width: '100%', minHeight: '800px' }}
           allowFullScreen
-          title="Producer Power-Up Checkout"
+          title="Producer Challenge Checkout"
         />
       </DialogContent>
     </Dialog>

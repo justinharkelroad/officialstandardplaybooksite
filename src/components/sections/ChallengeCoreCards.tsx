@@ -8,7 +8,7 @@ const ChallengeCoreCards = () => {
       title: "What is it?",
       content: (
         <p>
-          A <strong>6-Week Producer Power-Up Challenge</strong>: daily 10-minute micro-lessons with app-based Core 4 tracking (Body, Being, Balance, Business), stacking journals, and weekly discovery/planning tools. It turns insurance salespeople into disciplined, habit-driven producers by creating visible proof of progress always reported back in real time to the Agency Owner &/or Manager.
+          A <strong>6 Week Producer Challenge</strong>: daily 10-minute micro-lessons with app-based Core 4 tracking (Body, Being, Balance, Business), stacking journals, and weekly discovery/planning tools. It turns insurance salespeople into disciplined, habit-driven producers by creating visible proof of progress always reported back in real time to the Agency Owner &/or Manager.
         </p>
       ),
       delay: "0s"

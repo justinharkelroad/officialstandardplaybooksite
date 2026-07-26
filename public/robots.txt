@@ -5,7 +5,6 @@ Disallow: /private/
 Disallow: /thechallenge
 Disallow: /welcometocoaching
 Disallow: /welcomeboardroom
-Disallow: /PPUC
 Disallow: /legacy
 Disallow: /presentation
 Disallow: /thank-you
@@ -18,7 +17,6 @@ Disallow: /private/
 Disallow: /thechallenge
 Disallow: /welcometocoaching
 Disallow: /welcomeboardroom
-Disallow: /PPUC
 Disallow: /legacy
 Disallow: /presentation
 Disallow: /thank-you
@@ -31,7 +29,6 @@ Disallow: /private/
 Disallow: /thechallenge
 Disallow: /welcometocoaching
 Disallow: /welcomeboardroom
-Disallow: /PPUC
 Disallow: /legacy
 Disallow: /presentation
 Disallow: /thank-you
@@ -44,7 +41,6 @@ Disallow: /private/
 Disallow: /thechallenge
 Disallow: /welcometocoaching
 Disallow: /welcomeboardroom
-Disallow: /PPUC
 Disallow: /legacy
 Disallow: /presentation
 Disallow: /thank-you
@@ -57,7 +53,6 @@ Disallow: /private/
 Disallow: /thechallenge
 Disallow: /welcometocoaching
 Disallow: /welcomeboardroom
-Disallow: /PPUC
 Disallow: /legacy
 Disallow: /presentation
 Disallow: /thank-you
@@ -70,7 +65,6 @@ Disallow: /private/
 Disallow: /thechallenge
 Disallow: /welcometocoaching
 Disallow: /welcomeboardroom
-Disallow: /PPUC
 Disallow: /legacy
 Disallow: /presentation
 Disallow: /thank-you
@@ -83,7 +77,6 @@ Disallow: /private/
 Disallow: /thechallenge
 Disallow: /welcometocoaching
 Disallow: /welcomeboardroom
-Disallow: /PPUC
 Disallow: /legacy
 Disallow: /presentation
 Disallow: /thank-you
@@ -96,7 +89,6 @@ Disallow: /private/
 Disallow: /thechallenge
 Disallow: /welcometocoaching
 Disallow: /welcomeboardroom
-Disallow: /PPUC
 Disallow: /legacy
 Disallow: /presentation
 Disallow: /thank-you
@@ -109,7 +101,6 @@ Disallow: /private/
 Disallow: /thechallenge
 Disallow: /welcometocoaching
 Disallow: /welcomeboardroom
-Disallow: /PPUC
 Disallow: /legacy
 Disallow: /presentation
 Disallow: /thank-you
@@ -122,7 +113,6 @@ Disallow: /private/
 Disallow: /thechallenge
 Disallow: /welcometocoaching
 Disallow: /welcomeboardroom
-Disallow: /PPUC
 Disallow: /legacy
 Disallow: /presentation
 Disallow: /thank-you
@@ -135,7 +125,6 @@ Disallow: /private/
 Disallow: /thechallenge
 Disallow: /welcometocoaching
 Disallow: /welcomeboardroom
-Disallow: /PPUC
 Disallow: /legacy
 Disallow: /presentation
 Disallow: /thank-you

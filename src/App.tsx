@@ -5,7 +5,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
-import AppAccess from "./pages/AppAccess";
 import TheTool from "./pages/TheTool";
 
 // Member app (Standard Playbook client portal) — lazy so the marketing
@@ -15,8 +14,6 @@ const ResetPassword = lazy(() => import("./app/pages/ResetPassword"));
 const MemberApp = lazy(() => import("./app/MemberAppRoutes"));
 const AIInstall = lazy(() => import("./pages/AIInstall"));
 const AIInstallPrework = lazy(() => import("./pages/AIInstallPrework"));
-import ProducerPowerUp from "./pages/ProducerPowerUp";
-import FormulaAI from "./pages/FormulaAI";
 import CallScoring from "./pages/CallScoring";
 import Decision from "./pages/Decision";
 import Privacy from "./pages/Privacy";
@@ -31,7 +28,6 @@ import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 import WelcomeToCoaching from "./pages/WelcomeToCoaching";
 import WelcomeBoardroom from "./pages/WelcomeBoardroom";
-import ProducerChallengeLanding from "./pages/ProducerChallengeLanding";
 import Presentation from "./pages/Presentation";
 import StandardFit from "./pages/StandardFit";
 import AIWalkthrough from "./pages/AIWalkthrough";
@@ -87,7 +83,7 @@ const App = () => (
           <Route path="/login" element={<Suspense fallback={null}><MemberLogin /></Suspense>} />
           <Route path="/reset-password" element={<Suspense fallback={null}><ResetPassword /></Suspense>} />
           <Route path="/app/*" element={<Suspense fallback={null}><MemberApp /></Suspense>} />
-          <Route path="/appinfo" element={<AppAccess />} />
+          <Route path="/appinfo" element={<Navigate to="/thetool" replace />} />
           <Route path="/thetool" element={<TheTool />} />
           <Route path="/boardroom" element={<BoldBoardroom />} />
           <Route path="/legacy-boardroom" element={<Navigate to="/boardroom" replace />} />
@@ -98,11 +94,11 @@ const App = () => (
           <Route path="/apple-sales-experience" element={<Navigate to="/8-week" replace />} />
           <Route path="/8-week-apply" element={<BoldEightWeekApply />} />
           <Route path="/legacy-8-week-apply" element={<Navigate to="/8-week-apply" replace />} />
-          <Route path="/producer-power-up" element={<ProducerPowerUp />} />
+          <Route path="/producer-power-up" element={<Navigate to="/the-challenge" replace />} />
           <Route path="/the-challenge" element={<BoldProducerChallenge />} />
           <Route path="/thechallenge" element={<Navigate to="/the-challenge" replace />} />
           <Route path="/legacy-the-challenge" element={<Navigate to="/the-challenge" replace />} />
-          <Route path="/formulaai" element={<FormulaAI />} />
+          <Route path="/formulaai" element={<Navigate to="/aiinstall" replace />} />
           <Route path="/callscoring" element={<CallScoring />} />
           <Route path="/decision" element={<Decision />} />
           <Route path="/about" element={<BoldAbout />} />
@@ -118,7 +114,7 @@ const App = () => (
           <Route path="/links" element={<Links />} />
           <Route path="/welcometocoaching" element={<WelcomeToCoaching />} />
           <Route path="/welcomeboardroom" element={<WelcomeBoardroom />} />
-          <Route path="/PPUC" element={<ProducerChallengeLanding />} />
+          <Route path="/PPUC" element={<Navigate to="/the-challenge" replace />} />
           <Route path="/presentation" element={<Presentation />} />
           <Route path="/new" element={<Navigate to="/" replace />} />
           <Route path="/fit" element={<StandardFit />} />

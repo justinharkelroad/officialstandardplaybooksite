@@ -78,6 +78,31 @@
       "subhead": "A step-by-step guide to install Codex, connect your Agency AI Brain folder, and get ready for the live workshop.",
       "image": "/og/ai-install-codex-prework.png",
       "robots": "noindex, nofollow"
+    },
+    "/the-challenge": {
+      "title": "The 6 Week Producer Challenge",
+      "subhead": "Forty-two days of daily execution for one producer. Daily modules, a weekly Discovery Stack, and a report on their commitments in your inbox every day.",
+      "image": "/og-image.png"
+    },
+    "/8-week-apply": {
+      "title": "Apply for the 8-Week Sales Management Experience",
+      "subhead": "Your sales process, your numbers, and your consequences. Authored, signed, and operating by week eight. By application.",
+      "image": "/og/sales-experience-v2.png"
+    },
+    "/callscoring": {
+      "title": "Standard Call Scoring",
+      "subhead": "AI call audits with execution checklists and talk-to-listen ratios. Score the calls your team is actually making.",
+      "image": "/og-image.png"
+    },
+    "/about": {
+      "title": "Justin Harkelroad",
+      "subhead": "Twenty years in insurance. Three agencies built, scaled, and sold. I still build the systems myself.",
+      "image": "/og-image.png"
+    },
+    "/partnership": {
+      "title": "The Partnership",
+      "subhead": "One-on-one coaching plus team coaching, at the top of the ladder. Currently full, with a waitlist.",
+      "image": "/og-image.png"
     }
   }
 }

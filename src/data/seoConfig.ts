@@ -87,14 +87,6 @@ export const seoConfig: Record<string, SEOConfig> = {
     canonical: 'https://standardplaybook.com/salesprocess',
     type: 'article',
   },
-  '/producer-power-up': {
-    title: 'Producer Power-Up: 6-Week Sales Transformation | The Standard Playbook',
-    description: 'Transform your insurance producer from reactive chaos to systematic execution in 42 days. Daily modules, Core 4 tracking, weekly Discovery Stacks, and daily owner reports. $299/producer.',
-    keywords: ['producer training', 'insurance producer development', 'sales transformation', 'Core 4 system', 'producer challenge', 'sales team training'],
-    ogImage: OG_IMAGE,
-    type: 'article',
-    structuredData: structuredDataByRoute['/producer-power-up'],
-  },
   '/callscoring': {
     title: 'Standard Call Scoring: AI-Powered Call Evaluation for Sales Teams | The Standard Playbook',
     description: 'AI-powered call scoring that transforms sales coaching in minutes. Instant insights, consistent feedback, and accelerated team performance for insurance agencies. $299-499/month.',
@@ -102,13 +94,6 @@ export const seoConfig: Record<string, SEOConfig> = {
     ogImage: OG_IMAGE,
     type: 'article',
     structuredData: structuredDataByRoute['/callscoring'],
-  },
-  '/appinfo': {
-    title: 'App Access: Standard Playbook Training Platform',
-    description: 'Access the Standard Playbook training and coaching app. Sales training modules, habit tracking, and performance tools for insurance producers and agency owners.',
-    keywords: ['app access', 'coaching platform', 'training modules'],
-    ogImage: OG_IMAGE,
-    type: 'article',
   },
   '/app': {
     title: 'The Standard Playbook App',
@@ -168,19 +153,12 @@ export const seoConfig: Record<string, SEOConfig> = {
     structuredData: structuredDataByRoute['/terms'],
   },
   '/the-challenge': {
-    title: 'The Owner Challenge | 6-Week Insurance Agency Intensive | Standard Playbook',
-    description: '6-week intensive for insurance agency owners. Daily accountability, real systems, measurable results. Limited spots.',
-    keywords: ['owner challenge', 'insurance agency intensive', '6-week challenge', 'agency accountability', 'agency coaching'],
+    title: 'The 6 Week Producer Challenge | Insurance Producer Execution System | Standard Playbook',
+    description: 'A 42-day execution system for one insurance producer. Daily modules, daily accountability, and a weekly Discovery Stack reported to the owner.',
+    keywords: ['producer challenge', 'insurance producer training', 'producer accountability', 'sales producer development', 'agency coaching'],
     ogImage: OG_IMAGE,
     type: 'article',
     structuredData: structuredDataByRoute['/the-challenge'],
-  },
-  '/formulaai': {
-    title: 'Formula AI: Insurance Agency AI Tools | The Standard Playbook',
-    description: 'AI-powered tools and prompts for insurance agencies. Leverage artificial intelligence to streamline operations and boost productivity.',
-    keywords: ['insurance AI', 'agency AI tools', 'insurance automation'],
-    ogImage: OG_IMAGE,
-    type: 'article',
   },
   '/8-week-apply': {
     title: '8-Week Sales Management Experience | Apply Now | The Standard Playbook',

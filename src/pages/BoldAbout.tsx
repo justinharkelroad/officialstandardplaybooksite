@@ -474,7 +474,7 @@ const BrandsSection = () => (
               fontFamily: body, fontSize: 15, fontWeight: 400, lineHeight: 1.6,
               color: paper, opacity: 0.8,
             }}>
-              Our coaching brand, encompassing all coaching programs (Boardroom, Directive, Partnership), challenges (Producer Power-Up, Owner Challenge), and the 8 Week Sales Experience training.
+              Our coaching brand, encompassing all coaching programs (Boardroom, Directive, Partnership), the 6 Week Producer Challenge, and the 8 Week Sales Experience training.
             </p>
           </div>
         </Reveal>

@@ -160,29 +160,5 @@ export const packages: Package[] = [
       'Priority Support': false,
       'Custom Playbooks': true,
     }
-  },
-  {
-    id: 'producer-power-up',
-    name: 'Producer Power-Up',
-    type: 'challenge',
-    price: '$997',
-    duration: '6 Weeks',
-    description: 'Producer development challenge',
-    available: true,
-    link: '/producer-power-up',
-    features: {
-      'Monthly Group Coaching': false,
-      'Private Community Access': true,
-      'Accountability Technology': false,
-      'Resource Library': true,
-      '1-on-1 Coaching': false,
-      'Team Transformation': false,
-      'Sales Management Training': false,
-      'Producer Training': true,
-      'Owner Development': false,
-      'Direct Message Access': false,
-      'Priority Support': false,
-      'Custom Playbooks': true,
-    }
   }
 ];
