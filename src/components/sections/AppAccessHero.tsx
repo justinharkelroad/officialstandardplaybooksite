@@ -1,13 +1,8 @@
 
-import { Button } from '@/components/ui/button';
-import { Target, ArrowRight } from 'lucide-react';
+import { Target } from 'lucide-react';
 import VideoPlayer from '@/components/VideoPlayer';
 
-interface AppAccessHeroProps {
-  onGetStartedClick: () => void;
-}
-
-const AppAccessHero = ({ onGetStartedClick }: AppAccessHeroProps) => {
+const AppAccessHero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       <div className="absolute inset-0 opacity-20">
@@ -46,15 +41,6 @@ const AppAccessHero = ({ onGetStartedClick }: AppAccessHeroProps) => {
           />
         </div>
 
-        <div className="flex justify-center animate-fade-up" style={{ animationDelay: '0.5s' }}>
-          <Button 
-            className="bg-white text-primary font-bold text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 hover:bg-gray-100 truncate max-w-[90%]"
-            onClick={onGetStartedClick}
-          >
-            CHOOSE YOUR MIRROR
-            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 flex-shrink-0" />
-          </Button>
-        </div>
       </div>
     </section>
   );

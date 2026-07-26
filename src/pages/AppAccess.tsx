@@ -3,23 +3,14 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import AppAccessHero from '@/components/sections/AppAccessHero';
-import AppAccessPricing from '@/components/sections/AppAccessPricing';
 import AppAccessProblem from '@/components/sections/AppAccessProblem';
 
 const AppAccess = () => {
-  const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <div className="min-h-screen">
       <Navigation />
       
-      <AppAccessHero onGetStartedClick={scrollToPricing} />
-      <AppAccessPricing />
+      <AppAccessHero />
       <AppAccessProblem />
 
       {/* Sticky CTA for Mobile */}

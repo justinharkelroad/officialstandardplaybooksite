@@ -537,12 +537,11 @@ const ProofSection = () => (
           Led by Justin and Corina. Built from the patterns that repeat inside real insurance agencies, not from a generic coaching curriculum.
         </p>
       </Reveal>
-      <div className="grid grid-cols-2 lg:grid-cols-4" style={{ borderTop: `1px solid ${paper}44` }}>
+      <div className="grid grid-cols-1 sm:grid-cols-3" style={{ borderTop: `1px solid ${paper}44` }}>
         {[
           ['20 years', 'In insurance'],
           ['$3.6M', 'Agency exit in 2019'],
           ['234', 'Coaching sessions analyzed'],
-          ['73%', 'Of 8-Week graduates continue into Boardroom or Directive'],
         ].map(([value, label], i) => (
           <Reveal key={value} delay={i * 0.05}>
             <div style={{ padding: '30px 20px 10px', borderLeft: i === 0 ? 'none' : `1px solid ${paper}2e`, minHeight: 150 }}>

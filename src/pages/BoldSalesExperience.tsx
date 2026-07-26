@@ -234,14 +234,13 @@ const GuaranteeBand = () => (
             lineHeight: 0.92, letterSpacing: '-0.01em', color: paper,
             textTransform: 'uppercase', margin: 0, fontWeight: 400,
           }}>
-            RESULTS<br />OR YOU<br />DO NOT PAY.
+            THE ONLY<br />GUARANTEE<br />THAT MATTERS.
           </h2>
-          {/* TODO: replace with Justin's exact current guarantee terms */}
           <p style={{
             fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6,
             color: paper, opacity: 0.78, marginTop: 24, maxWidth: 640,
           }}>
-            I am not selling you a course to put on a shelf. If you run the system with me and your team does not move, you do not pay.
+            The program is backed by a full money-back guarantee. Stay in the 8 weeks, do the work, and if you want your money back, ask. You'll get it.
           </p>
 
           <div className="flex flex-wrap gap-3 mt-8">
@@ -661,7 +660,7 @@ const deliverables = [
   { num: '16', title: 'Team Training Assets', sub: 'Eight Monday videos and eight Wednesday workbooks, so the producers move too.' },
   { num: '1', title: 'Sales Process, Authored and Signed', sub: "Your team's call, in writing, with their names on it." },
   { num: '1', title: 'Live Accountability System', sub: 'The daily floor, the monthly line, and the consequence ladder, running.' },
-  { num: 'mark', title: 'The Guarantee', sub: 'Results or you do not pay.' },
+  { num: 'mark', title: 'The Guarantee', sub: 'Full money-back guarantee.' },
 ];
 
 const WhatYouGet = ({ onApply }: { onApply: () => void }) => (
@@ -1062,8 +1061,7 @@ const faqs = [
   },
   {
     q: 'What is the guarantee?',
-    /* TODO: match Justin's exact guarantee terms */
-    a: 'Results or you do not pay.',
+    a: "The program is backed by a full money-back guarantee. Stay in the 8 weeks, do the work, and if you want your money back, ask. You'll get it.",
   },
 ];
 

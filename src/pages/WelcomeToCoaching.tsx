@@ -238,10 +238,6 @@ const WelcomeToCoaching = () => {
                       <span className="text-primary mr-2">•</span>
                       <span>To enroll them, just visit <a href="https://StandardChallenge.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">StandardChallenge.com</a></span>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-primary mr-2">•</span>
-                      <span>Use code STANDARD50 to get $249 off each access pass</span>
-                    </li>
                   </ul>
                 </div>
               </CardContent>
@@ -287,4 +283,3 @@ const WelcomeToCoaching = () => {
 };
 
 export default WelcomeToCoaching;
-

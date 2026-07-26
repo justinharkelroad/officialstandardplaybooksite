@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Check, Download } from 'lucide-react';
 
@@ -115,13 +114,6 @@ const CallScoringPricing = () => {
                     </span>
                     <span className="text-gray-400 text-2xl mb-2">/month</span>
                   </div>
-                </div>
-
-                {/* Promo Code Banner */}
-                <div className="bg-primary/10 border border-primary/30 rounded-lg p-4">
-                  <Badge className="bg-primary text-white px-4 py-2 text-sm font-bold">
-                    USE CODE FORMULA50 FOR 50% OFF FIRST MONTH
-                  </Badge>
                 </div>
 
                 {/* Purchase Button */}

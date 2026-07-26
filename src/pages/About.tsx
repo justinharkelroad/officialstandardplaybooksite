@@ -239,7 +239,7 @@ const About = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 gap-8 max-w-sm mx-auto">
             <Card className="bg-dark-card border-primary/20 text-center">
               <CardContent className="pt-8">
                 <div className="text-4xl font-bold text-primary mb-2">500+</div>
@@ -248,29 +248,6 @@ const About = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-dark-card border-primary/20 text-center">
-              <CardContent className="pt-8">
-                <div className="text-4xl font-bold text-primary mb-2">$500M+</div>
-                <p className="text-white font-rajdhani text-lg uppercase tracking-wide">Revenue Generated</p>
-                <p className="text-gray-400 mt-2">By our community members</p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-dark-card border-primary/20 text-center">
-              <CardContent className="pt-8">
-                <div className="text-4xl font-bold text-primary mb-2">95%</div>
-                <p className="text-white font-rajdhani text-lg uppercase tracking-wide">Success Rate</p>
-                <p className="text-gray-400 mt-2">Members achieving goals</p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-dark-card border-primary/20 text-center">
-              <CardContent className="pt-8">
-                <div className="text-4xl font-bold text-primary mb-2">5</div>
-                <p className="text-white font-rajdhani text-lg uppercase tracking-wide">Years Running</p>
-                <p className="text-gray-400 mt-2">Of proven results</p>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </section>

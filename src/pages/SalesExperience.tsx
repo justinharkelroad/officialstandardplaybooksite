@@ -277,13 +277,13 @@ const GuaranteeBanner = () => (
               fontFamily: sf, fontSize: 'clamp(28px, 5vw, 40px)', fontWeight: 600,
               lineHeight: 1.1, color: '#fff', marginBottom: 12,
             }}>
-              We guarantee results — or you don't pay.
+              The only guarantee that matters.
             </h2>
             <p style={{
               fontFamily: sf, fontSize: 17, fontWeight: 400, lineHeight: 1.47,
               letterSpacing: '-0.374px', color: 'rgba(255,255,255,0.6)', maxWidth: 560, margin: '0 auto',
             }}>
-              After 8 weeks you'll walk away with a documented sales process, an accountability framework, and a consequence ladder installed in your agency. If you don't have a clear path forward, you get every dollar back. No questions, no hoops.
+              The program is backed by a full money-back guarantee. Stay in the 8 weeks, do the work, and if you want your money back, ask. You'll get it.
             </p>
           </div>
 
@@ -867,7 +867,6 @@ const PurchaseSection = () => {
     'Accountability Process document',
     'Consequence Process document',
     '8 1:1 Zoom Calls w/ Agency Owner or Manager',
-    'Stack Access',
   ];
 
   return (

@@ -1232,7 +1232,6 @@ const faqs = [
   { q: 'What is the "Core 4"?', a: 'The Core 4 tracks daily habits that drive performance: Body (health and energy), Being (mindset and spiritual alignment), Balance (relationships and gratitude), and Business (productivity and sales execution). Each checked box equals proof of daily integrity.' },
   { q: 'What is a "Discovery Stack"?', a: 'A guided reflection form completed each Friday. It helps participants process lessons, wins, and challenges for the week, then share the link with leadership for visibility.' },
   { q: 'What topics are covered in the 6 weeks?', a: 'Sales, communication, and leadership skills including: Consistency & Non-Negotiables, Follow-Up Systems, Speed to Contact, The Three-Bucket System, Referrals & Retention, Objection Handling, Closing Confidence, and Setting 90-Day Targets.' },
-  { q: 'What happens after completion?', a: 'At the six-week mark, participants can continue using the app via monthly membership (Stack or Arsenal). Agency Owners can get access to 25% off a Membership Level in Standard for life.' },
   { q: "What's the investment policy?", a: 'All enrollments are final. We provide immediate access to the full system and are confident in the transformation your producer will experience.' },
 ];
 

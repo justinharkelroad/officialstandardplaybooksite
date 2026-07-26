@@ -100,7 +100,7 @@ const deliverables = [
   ['The numbers', 'A daily activity floor and monthly production line.'],
   ['The consequence ladder', 'A written, escalating path understood before it is used.'],
   ['Agency Brain', 'Daily tracking, weekly scorecards, and AI-graded calls.'],
-  ['The guarantee', 'Run the system with Justin. If the team does not move, you do not pay.'],
+  ['The guarantee', 'Stay in the 8 weeks, do the work, and if you want your money back, ask.'],
 ];
 
 const SalesExperienceOnePager = () => {
@@ -360,7 +360,10 @@ const SalesExperienceOnePager = () => {
       <section className="eightweek-guarantee">
         <div className="eightweek-shell eightweek-guarantee__inner">
           <p className="eightweek-kicker">The guarantee</p>
-          <h2>Run the system with Justin. If the team does not move, you do not pay.</h2>
+          <h2>The only guarantee that matters.</h2>
+          <p className="eightweek-guarantee__copy">
+            The program is backed by a full money-back guarantee. Stay in the 8 weeks, do the work, and if you want your money back, ask. You'll get it.
+          </p>
         </div>
       </section>
 

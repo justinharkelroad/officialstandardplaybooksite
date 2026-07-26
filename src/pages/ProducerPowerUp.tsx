@@ -40,7 +40,7 @@ const ProducerPowerUp = () => {
     },
     {
       question: "What's the investment policy?",
-      answer: "All enrollments are final. We provide immediate access to the full system and are confident in the transformation your producer will experience. After completion, producers can continue with Standard programs at a 25% lifetime discount."
+      answer: "All enrollments are final. We provide immediate access to the full system and are confident in the transformation your producer will experience."
     }
   ];
 

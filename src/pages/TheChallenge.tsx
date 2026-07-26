@@ -64,10 +64,6 @@ const TheChallenge = ({ formPosition = 'right' }: TheChallengeProps) => {
       answer: "Sales, communication, and leadership skills including: Consistency & Non-Negotiables, Follow-Up Systems, Speed to Contact, The Three-Bucket System, Referrals & Retention, Objection Handling, Closing Confidence, and Setting 90-Day Targets."
     },
     {
-      question: "What happens after completion?",
-      answer: "At the six-week mark, participants can continue using the app via monthly membership (Stack or Arsenal). Agency Owners can get access to 25% off a Membership Level in Standard for life."
-    },
-    {
       question: "What's the investment policy?",
       answer: "All enrollments are final. We provide immediate access to the full system and are confident in the transformation your producer will experience."
     }
