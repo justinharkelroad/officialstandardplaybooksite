@@ -95,6 +95,14 @@ export const seoConfig: Record<string, SEOConfig> = {
     type: 'article',
     structuredData: structuredDataByRoute['/callscoring'],
   },
+  '/calls': {
+    title: 'The Standard Cadence | Recurring Calls',
+    description: 'Register once for every recurring Standard Playbook session: Boardroom, AgencyBrain, AI, and your private working rooms.',
+    keywords: ['Standard Playbook calls', 'Boardroom calls', 'AgencyBrain calls', 'AI training calls', 'recurring coaching calls'],
+    ogImage: 'https://standardplaybook.com/og/calls.png',
+    canonical: 'https://standardplaybook.com/calls',
+    type: 'website',
+  },
   '/app': {
     title: 'The Standard Playbook App',
     description: 'Turn quarterly goals into daily action across Body, Being, Balance, and Business.',

@@ -94,6 +94,11 @@
       "subhead": "AI call audits with execution checklists and talk-to-listen ratios. Score the calls your team is actually making.",
       "image": "/og-image.png"
     },
+    "/calls": {
+      "title": "The Standard Cadence",
+      "subhead": "Register once for every recurring Standard Playbook session: Boardroom, AgencyBrain, AI, and your private working rooms.",
+      "image": "/og/calls.png"
+    },
     "/about": {
       "title": "Justin Harkelroad",
       "subhead": "Twenty years in insurance. Three agencies built, scaled, and sold. I still build the systems myself.",
