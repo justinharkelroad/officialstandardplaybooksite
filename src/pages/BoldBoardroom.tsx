@@ -20,9 +20,9 @@ const blue = '#2997FF';
 /* ── Stripe links ──────────────────────────────────────── */
 const STRIPE_JOIN = 'https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l';
 
-/* ── Self-hosted square (1:1) videos (Vimeo embeds black out, so served native from /public/video) ── */
-const SUMMARY_VIDEO = '/video/boardroom-summary.mp4';
-const SUMMARY_POSTER = '/video/boardroom-summary-poster.jpg';
+/* ── Hero video ───────────────────────────────────────── */
+const HERO_VIDEO =
+  'https://player.vimeo.com/video/1213715494?autoplay=1&muted=1&loop=1&playsinline=1&title=0&byline=0&portrait=0&dnt=1';
 
 /* ── Reveal helper ─────────────────────────────────────── */
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
@@ -95,7 +95,7 @@ const Hero = () => (
         </Reveal>
       </div>
 
-      {/* Hero video (square 1:1 summary, self-hosted native) */}
+      {/* Hero video (square 1:1 Vimeo embed) */}
       <Reveal delay={0.4}>
         <div className="mt-16">
           <p style={{
@@ -114,7 +114,14 @@ const Hero = () => (
               transform: 'rotate(-1.5deg)',
             }}>
             <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', background: '#000', overflow: 'hidden' }}>
-              <MoveVideo src={SUMMARY_VIDEO} poster={SUMMARY_POSTER} title="The Boardroom In Two Minutes" />
+              <iframe
+                src={HERO_VIDEO}
+                title="The Boardroom In Two Minutes"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full"
+                style={{ border: 0 }}
+              />
             </div>
           </motion.div>
         </div>
