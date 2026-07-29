@@ -13,7 +13,7 @@ const PAGE_DESCRIPTION =
 const PAGE_URL = "https://standardplaybook.com/aiinstall";
 const OG_IMAGE = "https://standardplaybook.com/og/ai-install-bold.png";
 const VIMEO_EMBED_URL =
-  "https://player.vimeo.com/video/1212684071?app_id=122963&title=0&byline=0&portrait=0&dnt=1";
+  "https://player.vimeo.com/video/1213869321?app_id=122963&title=0&byline=0&portrait=0&dnt=1";
 
 function setMetaTag(name: string, content: string, attribute: "name" | "property" = "name") {
   let element = document.querySelector(`meta[${attribute}="${name}"]`) as HTMLMetaElement | null;
