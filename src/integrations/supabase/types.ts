@@ -1688,10 +1688,7 @@ export type Database = {
       }
       is_active_member: { Args: { uid: string }; Returns: boolean }
       is_admin_member: { Args: { uid: string }; Returns: boolean }
-      reset_my_core4_month: {
-        Args: { p_month_year: string }
-        Returns: number
-      }
+      reset_my_core4_month: { Args: { p_month_year: string }; Returns: number }
       reset_my_life_targets_quarter: {
         Args: { p_quarter: string }
         Returns: undefined
