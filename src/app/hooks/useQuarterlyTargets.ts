@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { migrateOldFormat } from "@/app/lib/quarterUtils";
 import { useAuth } from "@/app/lib/auth";
+import type { DomainMissions } from "@/app/hooks/useMonthlyMissions";
 
 export interface QuarterlyTargets {
   id?: string;
@@ -13,7 +14,7 @@ export interface QuarterlyTargets {
   body_target: string | null;
   body_narrative: string | null;
   body_daily_habit: string | null;
-  body_monthly_missions: Record<string, unknown> | null;
+  body_monthly_missions: DomainMissions | null;
   body_daily_actions?: string[];
   body_action_pool?: string[];
   // Target 2 (secondary)
@@ -24,7 +25,7 @@ export interface QuarterlyTargets {
   being_target: string | null;
   being_narrative: string | null;
   being_daily_habit: string | null;
-  being_monthly_missions: Record<string, unknown> | null;
+  being_monthly_missions: DomainMissions | null;
   being_daily_actions?: string[];
   being_action_pool?: string[];
   being_target2?: string | null;
@@ -34,7 +35,7 @@ export interface QuarterlyTargets {
   balance_target: string | null;
   balance_narrative: string | null;
   balance_daily_habit: string | null;
-  balance_monthly_missions: Record<string, unknown> | null;
+  balance_monthly_missions: DomainMissions | null;
   balance_daily_actions?: string[];
   balance_action_pool?: string[];
   balance_target2?: string | null;
@@ -44,7 +45,7 @@ export interface QuarterlyTargets {
   business_target: string | null;
   business_narrative: string | null;
   business_daily_habit: string | null;
-  business_monthly_missions: Record<string, unknown> | null;
+  business_monthly_missions: DomainMissions | null;
   business_daily_actions?: string[];
   business_action_pool?: string[];
   business_target2?: string | null;

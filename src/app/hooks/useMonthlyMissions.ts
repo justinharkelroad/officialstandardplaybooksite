@@ -3,26 +3,26 @@ import { supabase } from "@/integrations/supabase/client";
 import { getSupabaseFunctionErrorMessage } from "@/app/lib/supabaseFunctionErrors";
 import { toast } from "sonner";
 
-export interface MonthlyMission {
+export type MonthlyMission = {
   mission: string;
   why: string;
-}
+};
 
-export interface TargetMissions {
+export type TargetMissions = {
   [month: string]: MonthlyMission;
-}
+};
 
-export interface DomainMissions {
+export type DomainMissions = {
   target1?: TargetMissions;
   target2?: TargetMissions;
-}
+};
 
-export interface MonthlyMissionsOutput {
+export type MonthlyMissionsOutput = {
   body?: DomainMissions;
   being?: DomainMissions;
   balance?: DomainMissions;
   business?: DomainMissions;
-}
+};
 
 export interface GenerateMissionsParams {
   quarter: string;

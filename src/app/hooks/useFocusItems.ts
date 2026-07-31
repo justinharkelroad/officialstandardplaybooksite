@@ -71,7 +71,7 @@ export function useFocusItems(weekKey?: string) {
     staleTime: Infinity,
   });
 
-  const { data: items = [], isLoading } = useQuery({
+  const { data: items = [], isLoading, isPending } = useQuery({
     queryKey: ["focus-items", currentUser?.id, weekKey],
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -439,6 +439,7 @@ export function useFocusItems(weekKey?: string) {
   return {
     items,
     isLoading,
+    isPending,
     createItem,
     updateItem,
     deleteItem,
