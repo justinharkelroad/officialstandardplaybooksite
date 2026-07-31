@@ -83,6 +83,15 @@
   background: var(--aii-blue-dark);
 }
 
+.aip-button--secondary {
+  padding: 0 26px;
+  border: 1px solid var(--aii-ink);
+}
+
+.aip-button--secondary:hover {
+  background: rgb(10 10 11 / 0.08);
+}
+
 .aip-button--text {
   min-height: 44px;
   border-bottom: 1px solid var(--aii-ink);
@@ -457,6 +466,11 @@
 
 .aip-finish .aip-finish__instructions strong {
   font-weight: 800;
+}
+
+.aip-finish .aip-finish__instructions a {
+  border-bottom: 1px solid currentColor;
+  color: var(--aii-paper);
 }
 
 .aip-finish__aside {

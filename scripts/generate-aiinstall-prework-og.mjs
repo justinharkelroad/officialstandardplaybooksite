@@ -69,7 +69,7 @@ function cardSvg({ tool, platform, primary, secondary }) {
       <text x="950" y="518" fill="#F4F2EE" font-family="Arial, sans-serif"
         font-size="24" font-weight="900" letter-spacing="1">AI INSTALL</text>
       <text x="950" y="575" fill="#2997FF" font-family="Arial, sans-serif"
-        font-size="14" font-weight="800" letter-spacing="2.5">AUGUST 26–27</text>
+        font-size="14" font-weight="800" letter-spacing="2.5">AUGUST 26-27</text>
       <text x="950" y="600" fill="#F4F2EE" font-family="Arial, sans-serif"
         font-size="13" font-weight="700" letter-spacing="2">LIVE ON ZOOM</text>
 

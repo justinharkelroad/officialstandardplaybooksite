@@ -153,28 +153,48 @@ Deno.test("renders the functional email with the correct branch and escaped buye
     "Claude link should be omitted for Codex buyers",
   );
   assert(
-    email.html.includes("https://example.com/zoom"),
-    "Direct Zoom room should be present when configured",
+    email.html.includes("https://example.com/register"),
+    "Zoom registration should be present",
   );
   assert(
-    email.html.includes("Open the live Zoom room"),
-    "Zoom button should explain the next step",
+    email.html.includes("Register for the live Zoom workshop"),
+    "Zoom button should use the registration step",
   );
   assert(
-    !email.html.includes("https://example.com/register"),
-    "Registration should be hidden when the direct Zoom room is available",
+    !email.html.includes("https://example.com/zoom"),
+    "Direct Zoom room should not replace the registration URL",
   );
   assert(
     email.html.includes("https://example.com/starter-pack.zip"),
     "Starter pack link should be present",
   );
   assert(
-    email.html.includes("your seat is confirmed when she replies"),
-    "Email should make Mary’s reply the seat-confirmation step",
+    !email.html.includes("Reply to this email with one screenshot") &&
+      !email.html.includes("seat is confirmed when she replies"),
+    "Email should not require READY verification or Mary's reply",
   );
   assert(
     email.html.includes("MY BIZ BRAIN"),
     "Email should use the canonical workshop folder name",
+  );
+  assert(
+    email.html.includes(
+      "All purchases are nonrefundable. Your seat may be transferred to another person before August 24. If your pre-work is incomplete by August 24, your registration moves to a future workshop.",
+    ),
+    "Email should include the approved registration policy verbatim",
+  );
+  assert(
+    email.html.includes("mary@standardplaybook.com") &&
+      email.html.includes("info@standardplaybook.com"),
+    "Email should include both setup support addresses",
+  );
+  assert(
+    email.html.includes("September 24, 2026, 1:00 PM to 2:00 PM EST"),
+    "Email should include the confirmed check-up call",
+  );
+  assert(
+    !/[\u2013\u2014]/.test(email.html),
+    "Rendered email should not contain raw en or em dashes",
   );
   assert(
     email.html.includes("&lt;Alex&gt;"),
@@ -211,12 +231,14 @@ Deno.test("renders the welcome instructions even when optional resources are not
     "Purchase confirmation should remain present",
   );
   assert(
-    email.html.includes("your seat is confirmed when she replies"),
-    "Seat confirmation should still depend on Mary’s reply",
+    email.html.includes(
+      "There is no form, screenshot, email, or separate READY verification",
+    ),
+    "Welcome instructions should make completion self-attested",
   );
   assert(
-    !email.html.includes("<a href="),
-    "No empty or placeholder links should render",
+    !email.html.includes("undefined") && !email.html.includes("[ZOOM LINK]"),
+    "No empty or placeholder resource links should render",
   );
 });
 

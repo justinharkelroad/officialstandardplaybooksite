@@ -25,7 +25,8 @@ interface SetupStep {
   starterPack?: boolean;
 }
 
-const STARTER_PACK_URL = import.meta.env.VITE_AI_INSTALL_STARTER_PACK_URL?.trim() || null;
+const STARTER_PACK_URL =
+  "https://standardplaybook.com/aiinstall/ai-install-starter-pack.zip";
 
 const PLATFORM_CONFIG: Record<
   AIInstallPlatform,
@@ -74,7 +75,7 @@ const PLATFORM_CONFIG: Record<
       {
         title: "Copy in the starter pack.",
         copy:
-          "Download the starter pack from your welcome email and copy its files into MY BIZ BRAIN, keeping the folder structure. The README inside takes 2 minutes and tells you exactly where things go.",
+          "Download the starter pack with the button on this page and copy its files into MY BIZ BRAIN, keeping the folder structure. The README inside takes 2 minutes and tells you exactly where things go.",
         starterPack: true,
       },
       {
@@ -131,7 +132,7 @@ const PLATFORM_CONFIG: Record<
     alternatePath: "/aiinstall/prework/claude",
     alternateLabel: "Using Claude instead?",
     requirements:
-      "Before you begin: Codex is included across ChatGPT plans, but usage limits vary. Any subscription or added credits are billed by OpenAI and are not included in the $997. Open the desktop app and confirm you can see Codex before Monday the 24th. If you cannot, upgrade or write Mary.",
+      "Before you begin: Codex requires a ChatGPT plan that includes it, billed by OpenAI and not included in the $997. Open the desktop app and confirm you can see Codex before Monday, August 24. If you cannot, upgrade or email mary@standardplaybook.com or info@standardplaybook.com.",
     setupSteps: [
       {
         title: "Download ChatGPT and sign in.",
@@ -146,7 +147,7 @@ const PLATFORM_CONFIG: Record<
       {
         title: "Copy in the starter pack.",
         copy:
-          "Download the starter pack from your welcome email and copy its files into MY BIZ BRAIN, keeping the folder structure. The README inside takes 2 minutes and tells you exactly where things go.",
+          "Download the starter pack with the button on this page and copy its files into MY BIZ BRAIN, keeping the folder structure. The README inside takes 2 minutes and tells you exactly where things go.",
         starterPack: true,
       },
       {
@@ -364,8 +365,11 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
                 week, not the night before.
               </p>
               <div className="aip-hero__actions">
+                <a className="aip-button aip-button--primary" href={STARTER_PACK_URL}>
+                  Download starter pack
+                </a>
                 <a
-                  className="aip-button aip-button--primary"
+                  className="aip-button aip-button--secondary"
                   href={config.downloadUrl}
                   target="_blank"
                   rel="noreferrer"
@@ -410,12 +414,10 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
                   <span>0{index + 1}</span>
                   <h3>{step.title}</h3>
                   <p>{step.copy}</p>
-                  {step.starterPack && STARTER_PACK_URL ? (
+                  {step.starterPack ? (
                     <a
                       className="aip-card-link"
                       href={STARTER_PACK_URL}
-                      target="_blank"
-                      rel="noreferrer"
                     >
                       Download the starter pack
                     </a>
@@ -436,8 +438,8 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
               <p>
                 Open {selectedPlatform === "claude" ? "Cowork" : "Codex"} with your MY BIZ BRAIN
                 folder connected. Copy the instruction below, paste it into the chat, and send it.
-                If READY.txt shows up in your folder, your setup works. Leave the file there so Mary
-                can confirm it in your screenshot.
+                If READY.txt shows up in your folder, your setup works. Leave the file there for the
+                workshop.
               </p>
             </div>
             <div className="aip-prompt">
@@ -515,24 +517,30 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
           <div className="aii-shell aip-finish__grid">
             <div>
               <p>{isReady ? "PRE-WORK COMPLETE" : `${totalCount - completedCount} CHECKS LEFT`}</p>
-              <h2>{isReady ? "One last step: prove it to Mary." : "Finish this before day one."}</h2>
+              <h2>{isReady ? "You are ready for the workshop." : "Finish this before day one."}</h2>
               {isReady ? (
                 <div className="aip-finish__instructions">
                   <p>
-                    Take one screenshot: your MY BIZ BRAIN folder open inside{" "}
-                    {selectedPlatform === "claude" ? "Cowork" : "Codex"}, with READY.txt visible.
-                    Reply to your welcome email with it. Mary confirms every seat personally, and
-                    your seat is confirmed when she replies.
+                    You completed all six checks. There is no form, screenshot, email, or separate
+                    READY verification to submit. You are responsible for having this pre-work done
+                    on the computer you will bring.
                   </p>
                   <p>
-                    Deadline: <strong>end of day Monday, August 24.</strong> Pre-work not confirmed
-                    by then means your seat moves to a later date. The room builds; it does not wait.
+                    Deadline: <strong>end of day Monday, August 24.</strong> All purchases are
+                    nonrefundable. Your seat may be transferred to another person before August 24.
+                    If your pre-work is incomplete by August 24, your registration moves to a future
+                    workshop.
+                  </p>
+                  <p>
+                    Need setup help? Email{" "}
+                    <a href="mailto:mary@standardplaybook.com">mary@standardplaybook.com</a> or{" "}
+                    <a href="mailto:info@standardplaybook.com">info@standardplaybook.com</a>.
                   </p>
                 </div>
               ) : null}
             </div>
             <div className="aip-finish__aside">
-              <span>August 26-27 &middot; 1 to 5 PM Eastern</span>
+              <span>August 26-27, 2026 &middot; 1:00 PM to 5:00 PM Eastern</span>
               <a href={config.alternatePath}>{config.alternateLabel}</a>
             </div>
           </div>

@@ -273,10 +273,12 @@ Deno.serve(async (req: Request): Promise<Response> => {
 
 function emailResources(): AiInstallEmailResources {
   return {
-    zoomRegistrationUrl: optionalEnv("AI_INSTALL_ZOOM_REGISTRATION_URL"),
+    zoomRegistrationUrl:
+      "https://us06web.zoom.us/meeting/register/uQGhCsVMSaqigzxgVbCk2w",
     zoomUrl: optionalEnv("AI_INSTALL_ZOOM_URL"),
     calendarUrl: optionalEnv("AI_INSTALL_CALENDAR_URL"),
-    starterPackUrl: optionalEnv("AI_INSTALL_STARTER_PACK_URL"),
+    starterPackUrl:
+      "https://standardplaybook.com/aiinstall/ai-install-starter-pack.zip",
     claudePreworkUrl: optionalEnv("AI_INSTALL_CLAUDE_PREWORK_URL") ||
       "https://standardplaybook.com/aiinstall/prework/claude",
     codexPreworkUrl: optionalEnv("AI_INSTALL_CODEX_PREWORK_URL") ||

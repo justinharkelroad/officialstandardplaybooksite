@@ -7,6 +7,8 @@ import playbookIconBlue from "@/assets/sp-icon-blue.png";
 import "./AIInstall.css";
 
 const STRIPE_LINK = "https://buy.stripe.com/cNi9AT3GK8qG9S8fSk4Vy0w";
+const STARTER_PACK_URL =
+  "https://standardplaybook.com/aiinstall/ai-install-starter-pack.zip";
 const PAGE_TITLE = "The Agency AI Install | Standard Playbook";
 const PAGE_DESCRIPTION =
   "A live two-day build, August 26-27. Agency owners and managers build their AI co-working brain start to finish with Justin Harkelroad. Claude or Codex. $997 all in.";
@@ -41,9 +43,9 @@ function setCanonicalUrl(url: string) {
 
 const chips = [
   "$997 all in",
-  <>August 26-27 &middot; 1 to 5 PM Eastern</>,
+  <>August 26-27, 2026 &middot; 1:00 PM to 5:00 PM Eastern</>,
   "Built in Claude or Codex",
-  "Limited capacity",
+  "50 paid seats",
   "30-day check-up included",
 ];
 
@@ -86,7 +88,7 @@ const buildSteps = [
 const schedule = [
   {
     title: "BEFORE DAY ONE",
-    copy: "The pre-work checklist arrives the day you enroll. Everything staged, tested, and confirmed so we never stop the room to fix a login.",
+    copy: "The pre-work checklist arrives the day you enroll. Everything is staged and tested so we never stop the room to fix a login.",
   },
   {
     title: "DAY ONE",
@@ -100,7 +102,7 @@ const schedule = [
   },
   {
     title: "THE CHECK-UP",
-    copy: "One group check-up call the last week of September. What stuck, what stalled, what to build next. We fix it live and you leave with the upkeep rhythm installed.",
+    copy: "One group check-up call on September 24, 2026, from 1:00 PM to 2:00 PM EST. What stuck, what stalled, what to build next. We fix it live and you leave with the upkeep rhythm installed.",
   },
 ];
 
@@ -131,7 +133,7 @@ const outcomes = [
   },
   {
     title: "The 30-day check-up.",
-    copy: "One live group call the last week of September. Momentum audit, stall repair, next build picked.",
+    copy: "One live group call on September 24, 2026, from 1:00 PM to 2:00 PM EST. Momentum audit, stall repair, next build picked.",
   },
   {
     title: "The handout and the recordings.",
@@ -169,6 +171,16 @@ const faqs = [
     question: "What does the $997 cover?",
     answer:
       "Both live build days, the full written build guide, the 30-day check-up call, and both session recordings sent within 7 days. One price, nothing else to buy from us.",
+  },
+  {
+    question: "How many seats are available?",
+    answer:
+      "Registration is capped at 50 paid attendees. One purchase equals one attendee. After 50 paid seats, registration moves to a waitlist. Free members do not count against the paid-seat cap.",
+  },
+  {
+    question: "What is the registration policy?",
+    answer:
+      "All purchases are nonrefundable. Your seat may be transferred to another person before August 24. If your pre-work is incomplete by August 24, your registration moves to a future workshop.",
   },
 ];
 
@@ -235,6 +247,9 @@ export default function AIInstall() {
                 and you leave with it working.
               </p>
               <EnrollButton />
+              <a className="aii-enrolled-link" href={STARTER_PACK_URL}>
+                Already enrolled? Download the starter pack
+              </a>
             </div>
             <div className="aii-hero__visual">
               <img
@@ -478,7 +493,7 @@ export default function AIInstall() {
             </p>
             <EnrollButton />
             <small>
-              August 26-27 &middot; 1 to 5 PM Eastern &middot; Limited capacity
+              August 26-27, 2026 &middot; 1:00 PM to 5:00 PM Eastern &middot; 50 paid seats
             </small>
           </div>
         </section>
@@ -495,9 +510,12 @@ export default function AIInstall() {
             both session recordings (sent within 7 days of the workshop). Every phase is
             checkpointed live in the room, so if you do the pre-work and show up for both days, you
             leave with the build done. Requires your own AI subscription (Claude Pro, Max, or Team,
-            or a ChatGPT plan that includes Codex; billed by the provider, not included) and the
-            pre-work completed; unfinished pre-work moves your seat to a later date. Seats are
-            limited. No income or sales results are promised or implied.
+            or a ChatGPT plan that includes Codex; billed by the provider, not included). One
+            purchase equals one attendee. Registration is capped at 50 paid seats; free members do
+            not count against the paid-seat cap, and registration moves to a waitlist after 50 paid
+            seats. All purchases are nonrefundable. Your seat may be transferred to another person
+            before August 24. If your pre-work is incomplete by August 24, your registration moves
+            to a future workshop. No income or sales results are promised or implied.
           </p>
         </div>
       </footer>

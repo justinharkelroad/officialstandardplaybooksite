@@ -173,9 +173,7 @@ export function renderAiInstallPurchaseEmail(
   const preworkButtons = selectedPrework
     .map((resource) => resourceButton(resource.label, resource.url))
     .join("");
-  const zoomButton = resources.zoomUrl
-    ? resourceButton("Open the live Zoom room", resources.zoomUrl)
-    : resources.zoomRegistrationUrl
+  const zoomButton = resources.zoomRegistrationUrl
     ? resourceButton(
       "Register for the live Zoom workshop",
       resources.zoomRegistrationUrl,
@@ -215,7 +213,7 @@ export function renderAiInstallPurchaseEmail(
   </head>
   <body style="margin:0;background:#f4f2ee;color:#0a0a0b;font-family:Arial,Helvetica,sans-serif;">
     <div style="display:none;max-height:0;overflow:hidden;opacity:0;">
-      Block August 26–27 and finish your 90-minute pre-work by Monday, August 24.
+      Block August 26-27 and finish your 90-minute pre-work by Monday, August 24.
     </div>
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f2ee;">
       <tr>
@@ -237,17 +235,17 @@ export function renderAiInstallPurchaseEmail(
                 <p style="margin:0 0 16px;">Welcome, ${
       escapeHtml(firstName)
     }.</p>
-                <p style="margin:0 0 16px;">You just bought two afternoons that end with a working AI co-working brain—built by you, in the room with me, and running before you wake up Friday the 28th.</p>
+                <p style="margin:0 0 16px;">You just bought two afternoons that end with a working AI co-working brain, built by you, in the room with me, and running before you wake up Friday the 28th.</p>
                 <p style="margin:0;">Here is everything you need, and the one thing I need from you.</p>
               </td>
             </tr>
             <tr>
               <td style="padding:28px 24px;border-top:1px solid #d6d3cd;font-size:16px;line-height:1.6;">
                 <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">The details</p>
-                <p style="margin:0 0 6px;"><strong>Day one:</strong> Wednesday, August 26, 1–5 PM Eastern</p>
-                <p style="margin:0 0 6px;"><strong>Day two:</strong> Thursday, August 27, 1–5 PM Eastern</p>
-                <p style="margin:0 0 6px;"><strong>Where:</strong> live on Zoom</p>
-                <p style="margin:0 0 6px;"><strong>Check-up call:</strong> one group call the last week of September; we will lock the date together in the room</p>
+                <p style="margin:0 0 6px;"><strong>Day one:</strong> Wednesday, August 26, 2026, 1:00 PM to 5:00 PM Eastern</p>
+                <p style="margin:0 0 6px;"><strong>Day two:</strong> Thursday, August 27, 2026, 1:00 PM to 5:00 PM Eastern</p>
+                <p style="margin:0 0 6px;"><strong>Where:</strong> live on Zoom; register with the button below</p>
+                <p style="margin:0 0 6px;"><strong>Check-up call:</strong> September 24, 2026, 1:00 PM to 2:00 PM EST</p>
                 <p style="margin:0 0 18px;"><strong>Recordings:</strong> both sessions, sent within 7 days after we wrap</p>
                 ${zoomButton}
                 ${calendarButton}
@@ -264,7 +262,7 @@ export function renderAiInstallPurchaseEmail(
             </tr>
             <tr>
               <td style="padding:28px 24px;border-top:1px solid #d6d3cd;font-size:16px;line-height:1.6;">
-                <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">Your pre-work · about 90 minutes · due Monday, August 24</p>
+                <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">Your pre-work | about 90 minutes | due Monday, August 24</p>
                 <p style="margin:0 0 16px;"><strong>No pre-work, no build.</strong> The room moves fast because everyone shows up staged. Do this early in the week, not Sunday night.</p>
                 <p style="margin:0 0 12px;">${
       escapeHtml(preworkInstruction)
@@ -285,17 +283,18 @@ export function renderAiInstallPurchaseEmail(
             </tr>
             <tr>
               <td style="padding:28px 24px;border-top:1px solid #d6d3cd;font-size:16px;line-height:1.6;">
-                <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">Then prove it</p>
-                <p style="margin:0 0 16px;">Reply to this email with one screenshot: your MY BIZ BRAIN folder open inside your tool, with the READY.txt file visible. Mary confirms every seat personally, and your seat is confirmed when she replies.</p>
-                <p style="margin:0;"><strong>If your pre-work is not done by end of day Monday, August 24, your seat moves to a later date.</strong> Still love you. The room builds; it does not wait.</p>
+                <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">Finish by August 24</p>
+                <p style="margin:0 0 16px;">Complete all six checks on your pre-work page. There is no form, screenshot, email, or separate READY verification to submit. You are responsible for finishing the pre-work on the computer you will bring.</p>
+                <p style="margin:0 0 16px;"><strong>All purchases are nonrefundable. Your seat may be transferred to another person before August 24. If your pre-work is incomplete by August 24, your registration moves to a future workshop.</strong></p>
+                <p style="margin:0;">One purchase equals one attendee. Registration is capped at 50 paid seats. After 50 paid seats, registration moves to a waitlist. Free members do not count against the paid-seat cap.</p>
               </td>
             </tr>
             <tr>
               <td style="padding:28px 24px;border-top:1px solid #d6d3cd;font-size:16px;line-height:1.6;">
                 <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">If you get stuck</p>
-                <p style="margin:0 0 16px;">Reply to this email and Mary will get you unstuck—setup, logins, any of it. She will also be in the room both days as live tech help.</p>
+                <p style="margin:0 0 16px;">For setup help, email <a href="mailto:mary@standardplaybook.com">mary@standardplaybook.com</a> or <a href="mailto:info@standardplaybook.com">info@standardplaybook.com</a>. Mary will also be in the room both days as live tech help.</p>
                 <p style="margin:0 0 16px;">Do the pre-work this week, show up Wednesday with your folder open, and two afternoons from now the thing everyone keeps talking about will be running your morning instead of living in a tab.</p>
-                <p style="margin:0 0 22px;">See you on the 26th. Let’s go.</p>
+                <p style="margin:0 0 22px;">See you on the 26th. Let's go.</p>
                 <p style="margin:0;">Your Friend &amp; Potential Coach,<br><strong>Justin E Harkelroad</strong><br>Standardplaybook.com<br>(260) 515-1349</p>
               </td>
             </tr>
@@ -303,7 +302,7 @@ export function renderAiInstallPurchaseEmail(
               <td style="padding:20px 24px;border-top:1px solid #d6d3cd;color:#686765;font-size:12px;line-height:1.5;">
                 Sent to ${
       escapeHtml(purchase.email)
-    } after your Stripe purchase. Reply to this email for setup help or to send your READY.txt screenshot.
+    } after your Stripe purchase. For setup help, email mary@standardplaybook.com or info@standardplaybook.com.
               </td>
             </tr>
           </table>
