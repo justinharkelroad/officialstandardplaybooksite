@@ -68,14 +68,14 @@
     "/aiinstall/prework/claude": {
       "title": "Claude Pre-Work | The Agency AI Install",
       "metaTitle": "Claude Pre-Work | The Agency AI Install",
-      "subhead": "A step-by-step guide to install Claude Desktop, connect your Agency AI Brain folder, and get ready for the live workshop.",
+      "subhead": "Install Claude Desktop, connect your MY BIZ BRAIN folder in Cowork, and get ready for the live workshop.",
       "image": "/og/ai-install-claude-prework.png",
       "robots": "noindex, nofollow"
     },
     "/aiinstall/prework/codex": {
       "title": "Codex Pre-Work | The Agency AI Install",
       "metaTitle": "Codex Pre-Work | The Agency AI Install",
-      "subhead": "A step-by-step guide to install Codex, connect your Agency AI Brain folder, and get ready for the live workshop.",
+      "subhead": "Install ChatGPT, connect your MY BIZ BRAIN folder in Codex, and get ready for the live workshop.",
       "image": "/og/ai-install-codex-prework.png",
       "robots": "noindex, nofollow"
     },

@@ -22,7 +22,10 @@ interface ChecklistItem {
 interface SetupStep {
   title: string;
   copy: string;
+  starterPack?: boolean;
 }
+
+const STARTER_PACK_URL = import.meta.env.VITE_AI_INSTALL_STARTER_PACK_URL?.trim() || null;
 
 const PLATFORM_CONFIG: Record<
   AIInstallPlatform,
@@ -39,37 +42,79 @@ const PLATFORM_CONFIG: Record<
     alternateLabel: string;
     requirements: string;
     setupSteps: SetupStep[];
+    readinessItems: ChecklistItem[];
   }
 > = {
   claude: {
     label: "Claude",
     pageTitle: "Claude Pre-Work | The Agency AI Install",
     description:
-      "Get Claude Desktop and your Agency AI Brain folder ready for The Agency AI Install.",
+      "Install Claude Desktop, connect your MY BIZ BRAIN folder in Cowork, and get ready for The Agency AI Install.",
     ogImage: "/og/ai-install-claude-prework.png",
     downloadUrl: "https://claude.com/download",
     downloadLabel: "Download Claude",
-    officialGuideUrl: "https://code.claude.com/docs/en/desktop-quickstart",
-    officialGuideLabel: "Official Claude guide",
+    officialGuideUrl:
+      "https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork",
+    officialGuideLabel: "Official Cowork guide",
     alternatePath: "/aiinstall/prework/codex",
     alternateLabel: "Using Codex instead?",
     requirements:
-      "Before you begin: the Code feature in Claude Desktop requires a Claude Pro, Max, Team, or Enterprise plan.",
+      "Before you begin: Cowork requires a Claude Pro, Max, Team, or Enterprise subscription, billed by Anthropic (roughly $20 and up per month, not included in the $997). If you can sign in and open Cowork in the desktop app, you are set.",
     setupSteps: [
       {
         title: "Download Claude and sign in.",
         copy:
-          "Click Download Claude above. Install the app, open it, and sign in with the account you will use during both workshop days.",
+          "Click Download Claude above. Install the desktop app, open it, and sign in with the account you will use during the workshop.",
       },
       {
         title: "Create your workshop folder.",
         copy:
-          "Open Finder on a Mac or File Explorer on Windows. Open Documents and create a new folder named Agency AI Brain.",
+          "Open Finder on a Mac or File Explorer on Windows. Open Documents and create a new folder named MY BIZ BRAIN. That is what Justin's is called. One folder, this name, so the room moves together.",
       },
       {
-        title: "Connect Claude to the folder.",
+        title: "Copy in the starter pack.",
         copy:
-          "Open Claude Desktop and click Code at the top. Choose Local, select Documents > Agency AI Brain, and allow access if Claude asks.",
+          "Download the starter pack from your welcome email and copy its files into MY BIZ BRAIN, keeping the folder structure. The README inside takes 2 minutes and tells you exactly where things go.",
+        starterPack: true,
+      },
+      {
+        title: "Open the folder in Cowork.",
+        copy:
+          "Open the Claude desktop app and start a Cowork task. When it asks which folder to work in, connect Documents > MY BIZ BRAIN and allow access. You should see your starter pack files listed.",
+      },
+    ],
+    readinessItems: [
+      {
+        id: "plan",
+        title: "My account and plan are active.",
+        copy: "I can sign in without a password reset, billing issue, or administrator approval.",
+      },
+      {
+        id: "app",
+        title: "The desktop app is installed and updated.",
+        copy: "I opened the app after installation and completed any available update.",
+      },
+      {
+        id: "folder",
+        title: "Cowork can open my MY BIZ BRAIN folder.",
+        copy: "I connected the folder inside Documents and allowed access.",
+      },
+      {
+        id: "proof",
+        title: "I passed the READY.txt test.",
+        copy: "The app created the file and I can see it inside my folder.",
+      },
+      {
+        id: "context",
+        title: "My raw material and the starter pack are in the folder.",
+        copy:
+          "Writing samples, team roster, projects, agency basics, tools list, and the starter pack files are ready.",
+      },
+      {
+        id: "privacy",
+        title: "No passwords or account keys are in the folder.",
+        copy:
+          "Login credentials live in my password manager, not in the brain. That is the only thing to pull out.",
       },
     ],
   },
@@ -77,7 +122,7 @@ const PLATFORM_CONFIG: Record<
     label: "Codex",
     pageTitle: "Codex Pre-Work | The Agency AI Install",
     description:
-      "Get Codex and your Agency AI Brain folder ready for The Agency AI Install.",
+      "Install ChatGPT, connect your MY BIZ BRAIN folder in Codex, and get ready for The Agency AI Install.",
     ogImage: "/og/ai-install-codex-prework.png",
     downloadUrl: "https://chatgpt.com/download/",
     downloadLabel: "Download ChatGPT",
@@ -86,22 +131,62 @@ const PLATFORM_CONFIG: Record<
     alternatePath: "/aiinstall/prework/claude",
     alternateLabel: "Using Claude instead?",
     requirements:
-      "Before you begin: Codex is available with ChatGPT. We recommend a paid plan because free accounts may reach their usage limit during the workshop.",
+      "Before you begin: Codex is included across ChatGPT plans, but usage limits vary. Any subscription or added credits are billed by OpenAI and are not included in the $997. Open the desktop app and confirm you can see Codex before Monday the 24th. If you cannot, upgrade or write Mary.",
     setupSteps: [
       {
         title: "Download ChatGPT and sign in.",
         copy:
-          "Click Download ChatGPT above. Install the app, open it, and sign in with the account you will use during both workshop days.",
+          "Click Download ChatGPT above. Install the desktop app, open it, and sign in with the account you will use during the workshop.",
       },
       {
         title: "Create your workshop folder.",
         copy:
-          "Open Finder on a Mac or File Explorer on Windows. Open Documents and create a new folder named Agency AI Brain.",
+          "Open Finder on a Mac or File Explorer on Windows. Open Documents and create a new folder named MY BIZ BRAIN. That is what Justin's is called. One folder, this name, so the room moves together.",
       },
       {
-        title: "Connect Codex to the folder.",
+        title: "Copy in the starter pack.",
         copy:
-          "Open ChatGPT, use the menu in the top left to select Codex, and choose the Agency AI Brain folder. Allow access if Codex asks.",
+          "Download the starter pack from your welcome email and copy its files into MY BIZ BRAIN, keeping the folder structure. The README inside takes 2 minutes and tells you exactly where things go.",
+        starterPack: true,
+      },
+      {
+        title: "Open the folder in Codex.",
+        copy:
+          "Open ChatGPT, use the menu in the top left to select Codex, and choose Documents > MY BIZ BRAIN. Allow access. You should see your starter pack files listed.",
+      },
+    ],
+    readinessItems: [
+      {
+        id: "plan",
+        title: "My account and plan are active.",
+        copy: "I can sign in, and I can open Codex in the desktop app.",
+      },
+      {
+        id: "app",
+        title: "The desktop app is installed and updated.",
+        copy: "I opened the app after installation and completed any available update.",
+      },
+      {
+        id: "folder",
+        title: "Codex can open my MY BIZ BRAIN folder.",
+        copy: "I selected the folder inside Documents and allowed access.",
+      },
+      {
+        id: "proof",
+        title: "I passed the READY.txt test.",
+        copy: "The app created the file and I can see it inside my folder.",
+      },
+      {
+        id: "context",
+        title: "My raw material and the starter pack are in the folder.",
+        copy:
+          "Writing samples, team roster, projects, agency basics, tools list, and the starter pack files are ready.",
+      },
+      {
+        id: "privacy",
+        title: "No passwords or account keys are in the folder.",
+        copy:
+          "Login credentials live in my password manager, not in the brain. That is the only thing to pull out.",
       },
     ],
   },
@@ -110,65 +195,38 @@ const PLATFORM_CONFIG: Record<
 const CONTEXT_ITEMS: ChecklistItem[] = [
   {
     id: "writing",
-    title: "Five examples of your writing",
+    title: "5 to 10 examples of your writing",
     copy:
-      "Add emails, team messages, step-by-step instructions, or social posts that sound like you. Remove names and private customer information first.",
+      "Team emails, texts to producers, a client email, or a social post. Real ones, not your polished ones. This is how the brain learns your voice.",
   },
   {
     id: "team",
-    title: "A list of your team members",
+    title: "Your team roster",
     copy:
-      "Include each person's name, job, main responsibilities, and who they report to. Add anything important you want the AI to understand about your team.",
+      "For each person: name, role, how long they have been with you, licenses held (P&C, L&H, or not yet), and one honest line about them.",
   },
   {
     id: "projects",
-    title: "A list of what you are working on",
+    title: "Your active projects",
     copy:
-      "For each project, include the goal, who is responsible, the deadline, what has been completed, and what is getting in the way.",
+      "What you are actually working on, and the one number that matters on each.",
   },
   {
-    id: "rules",
-    title: "How you like work to be done",
+    id: "agency",
+    title: "Agency basics",
     copy:
-      "Write down how you prefer to communicate, rules your team must follow, and anything you find yourself explaining repeatedly.",
-  },
-];
-
-const READINESS_ITEMS: ChecklistItem[] = [
-  {
-    id: "plan",
-    title: "My account and plan are active.",
-    copy: "I can sign in without a password reset, billing issue, or administrator approval.",
+      "Your carrier or carriers, rough book size, staff count, and lines of business.",
   },
   {
-    id: "app",
-    title: "The desktop app is installed and updated.",
-    copy: "I opened the app after installation and completed any available update.",
-  },
-  {
-    id: "folder",
-    title: "The app can open my Agency AI Brain folder.",
-    copy: "I selected the folder inside Documents and allowed the app to use it.",
-  },
-  {
-    id: "proof",
-    title: "I can see the READY.txt test file.",
-    copy: "The app created the file and I can see it inside my Agency AI Brain folder.",
-  },
-  {
-    id: "context",
-    title: "I added information about me and my agency.",
-    copy: "My writing examples, team list, current projects, and work preferences are inside the folder.",
-  },
-  {
-    id: "privacy",
-    title: "I removed private and sensitive information.",
-    copy: "The folder has no passwords, secret access keys, payment details, Social Security numbers, policy numbers, claim files, or private customer information.",
+    id: "tools",
+    title: "The tools you pay for",
+    copy:
+      "Every subscription and tool the agency currently pays for. One list. This becomes fuel on day one.",
   },
 ];
 
 const TEST_PROMPT =
-  "Inside the open Agency AI Brain folder, create a file named READY.txt containing exactly: AI Install pre-work connection confirmed.";
+  "Inside the open MY BIZ BRAIN folder, create a file named READY.txt containing exactly: AI Install [FIRST NAME] [LAST NAME] ready for August 26.";
 
 function setMetaTag(name: string, content: string, attribute: "name" | "property" = "name") {
   let element = document.querySelector(`meta[${attribute}="${name}"]`) as HTMLMetaElement | null;
@@ -201,6 +259,7 @@ function inferPlatform(): AIInstallPlatform {
 export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
   const selectedPlatform = platform ?? inferPlatform();
   const config = PLATFORM_CONFIG[selectedPlatform];
+  const readinessItems = config.readinessItems;
   const storageKey = `ai-install-prework:${selectedPlatform}`;
   const [completed, setCompleted] = useState<string[]>([]);
   const [copied, setCopied] = useState(false);
@@ -227,7 +286,7 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
     try {
       const saved = window.localStorage.getItem(storageKey);
       const parsed = saved ? JSON.parse(saved) : [];
-      const validIds = new Set(READINESS_ITEMS.map((item) => item.id));
+      const validIds = new Set(readinessItems.map((item) => item.id));
       setCompleted(
         Array.isArray(parsed)
           ? parsed.filter((item): item is string => typeof item === "string" && validIds.has(item))
@@ -236,10 +295,17 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
     } catch {
       setCompleted([]);
     }
-  }, [config.description, config.ogImage, config.pageTitle, selectedPlatform, storageKey]);
+  }, [
+    config.description,
+    config.ogImage,
+    config.pageTitle,
+    readinessItems,
+    selectedPlatform,
+    storageKey,
+  ]);
 
   const completedCount = completed.length;
-  const totalCount = READINESS_ITEMS.length;
+  const totalCount = readinessItems.length;
   const progress = Math.round((completedCount / totalCount) * 100);
   const isReady = completedCount === totalCount;
 
@@ -293,8 +359,9 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
                 <span>{config.label}</span> Pre-Work.
               </h1>
               <p className="aip-hero__subhead">
-                Get your computer ready for the workshop. We will help you install the app, create
-                one folder, and add the examples we will use to build your AI system.
+                Get your computer ready for the workshop. You will install the app, create one
+                folder, load it with your raw material, and prove it works. Do this early in the
+                week, not the night before.
               </p>
               <div className="aip-hero__actions">
                 <a
@@ -334,7 +401,7 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
           <div className="aii-shell">
             <div className="aip-section__heading">
               <span>01</span>
-              <h2>Install the app and create your workshop folder.</h2>
+              <h2>Install the app and connect your folder.</h2>
             </div>
             <p className="aip-requirement">{config.requirements}</p>
             <div className="aip-setup-grid">
@@ -343,6 +410,16 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
                   <span>0{index + 1}</span>
                   <h3>{step.title}</h3>
                   <p>{step.copy}</p>
+                  {step.starterPack && STARTER_PACK_URL ? (
+                    <a
+                      className="aip-card-link"
+                      href={STARTER_PACK_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Download the starter pack
+                    </a>
+                  ) : null}
                 </article>
               ))}
             </div>
@@ -357,9 +434,10 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
                 <h2>Make sure the app can use your folder.</h2>
               </div>
               <p>
-                Open {config.label} with your Agency AI Brain folder selected. Copy the instruction
-                below, paste it into the message box, and send it. If the app asks for permission
-                to create the file, click Allow.
+                Open {selectedPlatform === "claude" ? "Cowork" : "Codex"} with your MY BIZ BRAIN
+                folder connected. Copy the instruction below, paste it into the chat, and send it.
+                If READY.txt shows up in your folder, your setup works. Leave the file there so Mary
+                can confirm it in your screenshot.
               </p>
             </div>
             <div className="aip-prompt">
@@ -378,8 +456,9 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
               <h2>Add the information we will use during the workshop.</h2>
             </div>
             <p className="aip-section__intro">
-              Put these items inside your Agency AI Brain folder. They do not need to look perfect.
-              Notes, Word documents, PDFs, and copied-and-pasted text are all fine.
+              Put these inside MY BIZ BRAIN. None of it has to look pretty. Notes, Word docs,
+              exported emails, whatever you have. The workshop is where raw material becomes a
+              system.
             </p>
             <div className="aip-materials__grid">
               {CONTEXT_ITEMS.map((item, index) => (
@@ -390,6 +469,12 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
                 </article>
               ))}
             </div>
+            <p className="aip-materials__rule">
+              One rule of craft: the brain runs on context, not databases. Samples, lists, and
+              summaries go in the folder. Raw exports and data dumps stay where they live; during
+              the build, you will point the brain at them when you want something analyzed. Folders
+              full of dumps make a slower, dumber brain.
+            </p>
           </div>
         </section>
 
@@ -403,7 +488,7 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
               Check each line on the computer you will bring. Your progress stays in this browser.
             </p>
             <div className="aip-checklist__items">
-              {READINESS_ITEMS.map((item) => {
+              {readinessItems.map((item) => {
                 const checked = completedSet.has(item.id);
                 return (
                   <label className={`aip-check ${checked ? "is-checked" : ""}`} key={item.id}>
@@ -430,7 +515,21 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
           <div className="aii-shell aip-finish__grid">
             <div>
               <p>{isReady ? "PRE-WORK COMPLETE" : `${totalCount - completedCount} CHECKS LEFT`}</p>
-              <h2>{isReady ? "You are ready to build." : "Finish this before day one."}</h2>
+              <h2>{isReady ? "One last step: prove it to Mary." : "Finish this before day one."}</h2>
+              {isReady ? (
+                <div className="aip-finish__instructions">
+                  <p>
+                    Take one screenshot: your MY BIZ BRAIN folder open inside{" "}
+                    {selectedPlatform === "claude" ? "Cowork" : "Codex"}, with READY.txt visible.
+                    Reply to your welcome email with it. Mary confirms every seat personally, and
+                    your seat is confirmed when she replies.
+                  </p>
+                  <p>
+                    Deadline: <strong>end of day Monday, August 24.</strong> Pre-work not confirmed
+                    by then means your seat moves to a later date. The room builds; it does not wait.
+                  </p>
+                </div>
+              ) : null}
             </div>
             <div className="aip-finish__aside">
               <span>August 26-27 &middot; 1 to 5 PM Eastern</span>
@@ -448,7 +547,7 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
           </div>
           <p>
             Bring the same computer you used for pre-work. Keep it plugged in, updated, and ready
-            to work inside your Agency AI Brain folder.
+            to work inside your MY BIZ BRAIN folder.
           </p>
         </div>
       </footer>

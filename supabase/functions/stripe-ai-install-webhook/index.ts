@@ -276,8 +276,11 @@ function emailResources(): AiInstallEmailResources {
     zoomRegistrationUrl: optionalEnv("AI_INSTALL_ZOOM_REGISTRATION_URL"),
     zoomUrl: optionalEnv("AI_INSTALL_ZOOM_URL"),
     calendarUrl: optionalEnv("AI_INSTALL_CALENDAR_URL"),
-    claudePreworkUrl: optionalEnv("AI_INSTALL_CLAUDE_PREWORK_URL"),
-    codexPreworkUrl: optionalEnv("AI_INSTALL_CODEX_PREWORK_URL"),
+    starterPackUrl: optionalEnv("AI_INSTALL_STARTER_PACK_URL"),
+    claudePreworkUrl: optionalEnv("AI_INSTALL_CLAUDE_PREWORK_URL") ||
+      "https://standardplaybook.com/aiinstall/prework/claude",
+    codexPreworkUrl: optionalEnv("AI_INSTALL_CODEX_PREWORK_URL") ||
+      "https://standardplaybook.com/aiinstall/prework/codex",
   };
 }
 

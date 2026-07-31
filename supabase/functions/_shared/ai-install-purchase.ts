@@ -57,6 +57,7 @@ export interface AiInstallEmailResources {
   zoomRegistrationUrl?: string | null;
   zoomUrl?: string | null;
   calendarUrl?: string | null;
+  starterPackUrl?: string | null;
   claudePreworkUrl?: string | null;
   codexPreworkUrl?: string | null;
 }
@@ -169,37 +170,33 @@ export function renderAiInstallPurchaseEmail(
       resource !== null
     );
 
-  const resourceRows = [
-    ...selectedPrework,
-    resources.calendarUrl
-      ? {
-        label: "Add the workshop to your calendar",
-        url: resources.calendarUrl,
-      }
-      : null,
-    resources.zoomRegistrationUrl
-      ? {
-        label: "Register for the live Zoom workshop",
-        url: resources.zoomRegistrationUrl,
-      }
-      : resources.zoomUrl
-      ? { label: "Open the live Zoom room", url: resources.zoomUrl }
-      : null,
-  ].filter((resource): resource is { label: string; url: string } =>
-    resource !== null
-  ).map((resource) => resourceButton(resource.label, resource.url)).join("");
-  const resourceSection = resourceRows
-    ? `<tr>
-              <td style="padding:24px;">
-                ${resourceRows}
-              </td>
-            </tr>`
+  const preworkButtons = selectedPrework
+    .map((resource) => resourceButton(resource.label, resource.url))
+    .join("");
+  const zoomButton = resources.zoomUrl
+    ? resourceButton("Open the live Zoom room", resources.zoomUrl)
+    : resources.zoomRegistrationUrl
+    ? resourceButton(
+      "Register for the live Zoom workshop",
+      resources.zoomRegistrationUrl,
+    )
     : "";
-  const nextStepCopy = resourceRows
-    ? "Your available workshop links are below."
-    : "We’ll send your workshop access and preparation details separately.";
+  const calendarButton = resources.calendarUrl
+    ? resourceButton("Add both days to your calendar", resources.calendarUrl)
+    : "";
+  const starterPackButton = resources.starterPackUrl
+    ? resourceButton("Download the starter pack", resources.starterPackUrl)
+    : "";
+  const preworkInstruction = purchase.toolChoice === "undecided"
+    ? "Pick the platform you will use in the room and follow that track:"
+    : `You selected ${
+      purchase.toolChoice === "claude" ? "Claude" : "Codex"
+    }. Follow this track:`;
+  const claudeConnectorNote = purchase.toolChoice === "codex"
+    ? ""
+    : `<li style="margin:0 0 8px;">Optional for Claude: connect Google Drive in the app settings. It is not required, but it gives your brain more to work with on day one.</li>`;
 
-  const subject = "You’re in: The Agency AI Install";
+  const subject = "You're in. Here's your pre-work.";
   const toolLabel = purchase.toolChoice === "undecided"
     ? "Claude or Codex"
     : purchase.toolChoice === "claude"
@@ -218,7 +215,7 @@ export function renderAiInstallPurchaseEmail(
   </head>
   <body style="margin:0;background:#f4f2ee;color:#0a0a0b;font-family:Arial,Helvetica,sans-serif;">
     <div style="display:none;max-height:0;overflow:hidden;opacity:0;">
-      Your purchase is confirmed for The Agency AI Install.
+      Block August 26–27 and finish your 90-minute pre-work by Monday, August 24.
     </div>
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f2ee;">
       <tr>
@@ -236,22 +233,77 @@ export function renderAiInstallPurchaseEmail(
               </td>
             </tr>
             <tr>
-              <td style="padding:0 24px 8px;font-size:16px;line-height:1.6;">
-                <p style="margin:0 0 16px;">${
+              <td style="padding:0 24px 28px;font-size:16px;line-height:1.6;">
+                <p style="margin:0 0 16px;">Welcome, ${
       escapeHtml(firstName)
-    }, your seat is confirmed.</p>
-                <p style="margin:0 0 16px;">August 26–27, 1–5 PM Eastern. Your selected build path is <strong>${
-      escapeHtml(toolLabel)
-    }</strong>.</p>
-                <p style="margin:0;">${escapeHtml(nextStepCopy)}</p>
+    }.</p>
+                <p style="margin:0 0 16px;">You just bought two afternoons that end with a working AI co-working brain—built by you, in the room with me, and running before you wake up Friday the 28th.</p>
+                <p style="margin:0;">Here is everything you need, and the one thing I need from you.</p>
               </td>
             </tr>
-            ${resourceSection}
+            <tr>
+              <td style="padding:28px 24px;border-top:1px solid #d6d3cd;font-size:16px;line-height:1.6;">
+                <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">The details</p>
+                <p style="margin:0 0 6px;"><strong>Day one:</strong> Wednesday, August 26, 1–5 PM Eastern</p>
+                <p style="margin:0 0 6px;"><strong>Day two:</strong> Thursday, August 27, 1–5 PM Eastern</p>
+                <p style="margin:0 0 6px;"><strong>Where:</strong> live on Zoom</p>
+                <p style="margin:0 0 6px;"><strong>Check-up call:</strong> one group call the last week of September; we will lock the date together in the room</p>
+                <p style="margin:0 0 18px;"><strong>Recordings:</strong> both sessions, sent within 7 days after we wrap</p>
+                ${zoomButton}
+                ${calendarButton}
+                <p style="margin:18px 0 0;"><strong>Put both days on your calendar right now.</strong> Blocked, not penciled.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:28px 24px;border-top:1px solid #d6d3cd;font-size:16px;line-height:1.6;">
+                <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">What this is</p>
+                <p style="margin:0 0 16px;"><strong>This is a build, not a webinar.</strong> You will work the entire time, in your own folder, on your own business. Camera on, folder open. I build on screen, you build with me, and we checkpoint at every phase so nobody gets left behind.</p>
+                <p style="margin:0 0 16px;">Day one, your brain learns who you are: your story, your voice pulled from your real writing, your rules, your team, and your projects.</p>
+                <p style="margin:0;">Day two, we make it permanent and put it to work: the memory system, your skill library, and your first automations. Before we log off Thursday, your morning brief is scheduled to run Friday morning whether you open your laptop or not.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:28px 24px;border-top:1px solid #d6d3cd;font-size:16px;line-height:1.6;">
+                <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">Your pre-work · about 90 minutes · due Monday, August 24</p>
+                <p style="margin:0 0 16px;"><strong>No pre-work, no build.</strong> The room moves fast because everyone shows up staged. Do this early in the week, not Sunday night.</p>
+                <p style="margin:0 0 12px;">${
+      escapeHtml(preworkInstruction)
+    }</p>
+                ${preworkButtons}
+                <p style="margin:20px 0 10px;">The short version:</p>
+                <ul style="margin:0 0 18px;padding-left:22px;">
+                  <li style="margin:0 0 8px;">Get your subscription live and the desktop app installed for ${
+      escapeHtml(toolLabel)
+    }.</li>
+                  <li style="margin:0 0 8px;">Create one folder called <strong>MY BIZ BRAIN</strong> and copy in the starter pack.</li>
+                  <li style="margin:0 0 8px;">Add 5 to 10 real writing samples, your team roster, active projects, agency basics, and the tools you pay for.</li>
+                  <li style="margin:0 0 8px;">Run the READY.txt test on the page. It takes 30 seconds and proves your setup works.</li>
+                  ${claudeConnectorNote}
+                </ul>
+                ${starterPackButton}
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:28px 24px;border-top:1px solid #d6d3cd;font-size:16px;line-height:1.6;">
+                <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">Then prove it</p>
+                <p style="margin:0 0 16px;">Reply to this email with one screenshot: your MY BIZ BRAIN folder open inside your tool, with the READY.txt file visible. Mary confirms every seat personally, and your seat is confirmed when she replies.</p>
+                <p style="margin:0;"><strong>If your pre-work is not done by end of day Monday, August 24, your seat moves to a later date.</strong> Still love you. The room builds; it does not wait.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:28px 24px;border-top:1px solid #d6d3cd;font-size:16px;line-height:1.6;">
+                <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">If you get stuck</p>
+                <p style="margin:0 0 16px;">Reply to this email and Mary will get you unstuck—setup, logins, any of it. She will also be in the room both days as live tech help.</p>
+                <p style="margin:0 0 16px;">Do the pre-work this week, show up Wednesday with your folder open, and two afternoons from now the thing everyone keeps talking about will be running your morning instead of living in a tab.</p>
+                <p style="margin:0 0 22px;">See you on the 26th. Let’s go.</p>
+                <p style="margin:0;">Your Friend &amp; Potential Coach,<br><strong>Justin E Harkelroad</strong><br>Standardplaybook.com<br>(260) 515-1349</p>
+              </td>
+            </tr>
             <tr>
               <td style="padding:20px 24px;border-top:1px solid #d6d3cd;color:#686765;font-size:12px;line-height:1.5;">
                 Sent to ${
       escapeHtml(purchase.email)
-    } after your Stripe purchase. Reply to this email if you need help.
+    } after your Stripe purchase. Reply to this email for setup help or to send your READY.txt screenshot.
               </td>
             </tr>
           </table>

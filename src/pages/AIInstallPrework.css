@@ -195,7 +195,7 @@
 
 .aip-setup-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: 52px;
   border: 1px solid var(--aii-ink);
 }
@@ -233,6 +233,18 @@
   margin-top: 18px !important;
   line-height: 1.56;
   opacity: 0.72;
+}
+
+.aip-card-link {
+  display: inline-block;
+  margin-top: 22px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid currentColor;
+  color: var(--aii-blue-dark);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .aip-proof {
@@ -315,6 +327,14 @@
 
 .aip-material-card h3 {
   margin-top: 32px !important;
+}
+
+.aip-materials__rule {
+  max-width: 900px;
+  margin: 34px 0 0 108px !important;
+  font-size: 16px;
+  line-height: 1.62;
+  opacity: 0.72;
 }
 
 .aip-checklist__items {
@@ -421,6 +441,24 @@
   text-transform: uppercase;
 }
 
+.aip-finish__instructions {
+  max-width: 780px;
+  margin-top: 26px;
+}
+
+.aip-finish .aip-finish__instructions p {
+  margin-top: 14px !important;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.55;
+  text-transform: none;
+}
+
+.aip-finish .aip-finish__instructions strong {
+  font-weight: 800;
+}
+
 .aip-finish__aside {
   display: flex;
   flex-direction: column;
@@ -486,6 +524,20 @@
 
   .aip-proof__grid {
     gap: 44px;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1120px) {
+  .aip-setup-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .aip-setup-card:nth-child(odd) {
+    border-left: 0;
+  }
+
+  .aip-setup-card:nth-child(n + 3) {
+    border-top: 1px solid var(--aii-ink);
   }
 }
 
@@ -558,7 +610,8 @@
   }
 
   .aip-requirement,
-  .aip-section__intro {
+  .aip-section__intro,
+  .aip-materials__rule {
     margin: 22px 0 0 !important;
     font-size: 16px;
   }

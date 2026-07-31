@@ -133,9 +133,16 @@ Deno.test("renders the functional email with the correct branch and escaped buye
     zoomRegistrationUrl: "https://example.com/register",
     zoomUrl: "https://example.com/zoom",
     calendarUrl: "https://example.com/calendar",
+    starterPackUrl: "https://example.com/starter-pack.zip",
     claudePreworkUrl: "https://example.com/claude",
     codexPreworkUrl: "https://example.com/codex",
   });
+
+  assertEquals(
+    email.subject,
+    "You're in. Here's your pre-work.",
+    "Revised subject line should render",
+  );
 
   assert(
     email.html.includes("https://example.com/codex"),
@@ -146,16 +153,28 @@ Deno.test("renders the functional email with the correct branch and escaped buye
     "Claude link should be omitted for Codex buyers",
   );
   assert(
-    email.html.includes("https://example.com/register"),
-    "Zoom registration link should be present",
+    email.html.includes("https://example.com/zoom"),
+    "Direct Zoom room should be present when configured",
   );
   assert(
-    email.html.includes("Register for the live Zoom workshop"),
-    "Zoom registration button should explain the next step",
+    email.html.includes("Open the live Zoom room"),
+    "Zoom button should explain the next step",
   );
   assert(
-    !email.html.includes("https://example.com/zoom"),
-    "Direct Zoom room should be hidden when registration is available",
+    !email.html.includes("https://example.com/register"),
+    "Registration should be hidden when the direct Zoom room is available",
+  );
+  assert(
+    email.html.includes("https://example.com/starter-pack.zip"),
+    "Starter pack link should be present",
+  );
+  assert(
+    email.html.includes("your seat is confirmed when she replies"),
+    "Email should make Mary’s reply the seat-confirmation step",
+  );
+  assert(
+    email.html.includes("MY BIZ BRAIN"),
+    "Email should use the canonical workshop folder name",
   );
   assert(
     email.html.includes("&lt;Alex&gt;"),
@@ -171,6 +190,7 @@ Deno.test("rejects missing or non-HTTPS resource URLs", () => {
       zoomRegistrationUrl: "http://example.com/register",
       zoomUrl: "http://example.com/zoom",
       calendarUrl: "https://example.com/calendar",
+      starterPackUrl: "https://example.com/starter-pack.zip",
       claudePreworkUrl: "https://example.com/claude",
       codexPreworkUrl: "https://example.com/codex",
     });
@@ -180,24 +200,42 @@ Deno.test("rejects missing or non-HTTPS resource URLs", () => {
   assert(rejected, "HTTP resource URLs should be rejected");
 });
 
-Deno.test("sends a confirmation even when optional resources are not ready", () => {
+Deno.test("renders the welcome instructions even when optional resources are not ready", () => {
   const purchase = extractAiInstallPurchase(session, 1784952001);
   const resources = {};
   validateEmailResources(resources);
   const email = renderAiInstallPurchaseEmail(purchase, resources);
 
   assert(
-    email.html.includes("your seat is confirmed"),
-    "Confirmation should remain present",
+    email.html.includes("Purchase confirmed"),
+    "Purchase confirmation should remain present",
   );
   assert(
-    email.html.includes(
-      "send your workshop access and preparation details separately",
-    ),
-    "Email should explain that access details are coming later",
+    email.html.includes("your seat is confirmed when she replies"),
+    "Seat confirmation should still depend on Mary’s reply",
   );
   assert(
     !email.html.includes("<a href="),
     "No empty or placeholder links should render",
+  );
+});
+
+Deno.test("shows both pre-work tracks when the buyer has not chosen a platform", () => {
+  const purchase = {
+    ...extractAiInstallPurchase(session, 1784952001),
+    toolChoice: "undecided" as const,
+  };
+  const email = renderAiInstallPurchaseEmail(purchase, {
+    claudePreworkUrl: "https://example.com/claude",
+    codexPreworkUrl: "https://example.com/codex",
+  });
+
+  assert(
+    email.html.includes("https://example.com/claude"),
+    "Undecided buyers should get the Claude track",
+  );
+  assert(
+    email.html.includes("https://example.com/codex"),
+    "Undecided buyers should get the Codex track",
   );
 });
