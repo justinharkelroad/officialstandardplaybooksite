@@ -228,7 +228,7 @@ body:has(.aii-page) {
 
 .aii-hero__video {
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   background: var(--aii-ink);
 }
