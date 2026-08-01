@@ -399,6 +399,42 @@ const Links = () => {
           </span>
         </Reveal>
 
+        {/* Temporary AI Install promo. Remove after the August 26-27, 2026 event. */}
+        <div className="flex justify-start md:justify-end" style={{ marginTop: 'clamp(24px, 4vw, 36px)' }}>
+          <Link
+            to="/aiinstall"
+            className="ai-install-sticker"
+            aria-label="Learn about The Agency AI Install, live August 26 and 27, 2026"
+            style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
+              width: 'min(100%, 620px)', padding: '16px 20px',
+              background: blue, color: ink, textDecoration: 'none',
+              border: `2px solid ${ink}`,
+            }}
+          >
+            <span>
+              <span style={{
+                display: 'block', fontFamily: body, fontSize: 10, fontWeight: 800,
+                letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 4,
+              }}>
+                Live August 26-27
+              </span>
+              <span style={{
+                display: 'block', fontFamily: display, fontSize: 'clamp(24px, 4vw, 38px)',
+                lineHeight: 0.95, letterSpacing: '-0.01em', textTransform: 'uppercase',
+              }}>
+                The Agency AI Install
+              </span>
+            </span>
+            <span className="ai-install-sticker__cta" style={{
+              fontFamily: body, fontSize: 11, fontWeight: 800,
+              letterSpacing: '0.12em', textTransform: 'uppercase', whiteSpace: 'nowrap',
+            }}>
+              See the build →
+            </span>
+          </Link>
+        </div>
+
         {/* Header: headline + tilted profile */}
         <div className="grid grid-cols-12 gap-6 items-center" style={{ marginTop: 'clamp(36px, 6vw, 64px)' }}>
           <Reveal className="col-span-12 md:col-span-8">
@@ -539,9 +575,50 @@ const Links = () => {
       </footer>
 
       <style>{`
+        .ai-install-sticker {
+          transform: rotate(-1.25deg);
+          box-shadow: 7px 7px 0 ${ink};
+          transition: transform 180ms ease, box-shadow 180ms ease;
+        }
+
+        .ai-install-sticker:hover {
+          transform: rotate(-0.35deg) translateY(-2px);
+          box-shadow: 9px 10px 0 ${ink};
+        }
+
+        .ai-install-sticker:active {
+          transform: rotate(-0.35deg) translateY(1px);
+          box-shadow: 5px 5px 0 ${ink};
+        }
+
+        .ai-install-sticker:focus-visible {
+          outline: 3px solid ${ink};
+          outline-offset: 5px;
+        }
+
         @keyframes sp-marquee {
           from { transform: translateX(0); }
           to { transform: translateX(-50%); }
+        }
+
+        @media (max-width: 639px) {
+          .ai-install-sticker {
+            align-items: flex-start !important;
+            flex-direction: column;
+            gap: 14px !important;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .ai-install-sticker {
+            transition: none;
+          }
+
+          .ai-install-sticker:hover,
+          .ai-install-sticker:active {
+            transform: rotate(-1.25deg);
+            box-shadow: 7px 7px 0 ${ink};
+          }
         }
       `}</style>
     </div>
