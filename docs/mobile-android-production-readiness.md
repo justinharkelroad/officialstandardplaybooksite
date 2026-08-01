@@ -51,6 +51,7 @@ Last verified: August 1, 2026
 - TypeScript: `npx tsc --noEmit`
 - Unit tests: 15 passed
 - Release-file ESLint: passed
+- Production web build: passed
 - Mobile production build: passed
 - Mobile bundle inspection: passed (4.1 MB)
 - Capacitor Android and iOS sync: passed
