@@ -1,5 +1,14 @@
 # Working Rules
 
+- **The website deploys through Cloudflare from `main`, not through Lovable.**
+  After website changes reach `main`, report that the Cloudflare deployment was
+  triggered (or that the code is on `main`); never tell Justin to publish,
+  update, or republish the website in Lovable.
+- **Lovable is only a human-operated handoff for edge-function work.** If an
+  edge function needs to be deployed or updated, give Justin a concise,
+  copy-paste-ready Lovable instruction naming the exact function, shared files,
+  configuration, and verification steps. Codex and subagents must not click
+  Lovable Publish/Update/Republish or call a Lovable deployment API.
 - **Life Targets state must stay server-authoritative.** Debounced Daily Proof
   selection and idea-pool writes must flush successfully before Back, Continue,
   or quarter-change navigation. A clean/saved indicator must never be inferred
