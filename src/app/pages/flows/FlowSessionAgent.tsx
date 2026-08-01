@@ -1189,7 +1189,7 @@ export function FlowSessionAgentBase({
       <header className="shrink-0 border-b border-border/10 bg-background/95 backdrop-blur">
         <div
           className={cn(
-            'mx-auto py-3 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-[calc(0.75rem+env(safe-area-inset-top))]',
+            'mx-auto py-3 pl-[max(1rem,var(--safe-area-inset-left,env(safe-area-inset-left,0px)))] pr-[max(1rem,var(--safe-area-inset-right,env(safe-area-inset-right,0px)))] pt-[calc(0.75rem+var(--safe-area-inset-top,env(safe-area-inset-top,0px)))]',
             useVoiceRoom ? 'max-w-5xl' : 'max-w-2xl',
           )}
         >
@@ -1240,7 +1240,7 @@ export function FlowSessionAgentBase({
         className="min-h-0 flex-1 overflow-y-auto overscroll-contain scroll-pb-32"
       >
         <div className={cn(
-          'mx-auto py-6 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]',
+          'mx-auto py-6 pl-[max(1rem,var(--safe-area-inset-left,env(safe-area-inset-left,0px)))] pr-[max(1rem,var(--safe-area-inset-right,env(safe-area-inset-right,0px)))]',
           useVoiceRoom || activeBibleScripture ? 'max-w-6xl' : 'max-w-2xl',
         )}>
           {errorMessage && (
@@ -1490,7 +1490,7 @@ export function FlowSessionAgentBase({
 
       {!useVoiceRoom && (
         <footer className="shrink-0 border-t border-border/10 bg-background/95 backdrop-blur">
-          <div className="mx-auto w-full max-w-2xl pb-[calc(0.75rem+env(safe-area-inset-bottom))] pl-[max(0.75rem,env(safe-area-inset-left))] pr-[max(0.75rem,env(safe-area-inset-right))] pt-3">
+          <div className="mx-auto w-full max-w-2xl pb-[calc(0.75rem+var(--safe-area-inset-bottom,env(safe-area-inset-bottom,0px)))] pl-[max(0.75rem,var(--safe-area-inset-left,env(safe-area-inset-left,0px)))] pr-[max(0.75rem,var(--safe-area-inset-right,env(safe-area-inset-right,0px)))] pt-3">
             {isCompleted ? (
               postFlowStage === 'capture_additional' && !refiningAction ? (
                 <ChatInput

@@ -1,8 +1,8 @@
 :root {
-  --sp-safe-top: env(safe-area-inset-top, 0px);
-  --sp-safe-right: env(safe-area-inset-right, 0px);
-  --sp-safe-bottom: env(safe-area-inset-bottom, 0px);
-  --sp-safe-left: env(safe-area-inset-left, 0px);
+  --sp-safe-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+  --sp-safe-right: var(--safe-area-inset-right, env(safe-area-inset-right, 0px));
+  --sp-safe-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+  --sp-safe-left: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
 }
 
 html[data-native-platform="ios"],

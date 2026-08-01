@@ -14,15 +14,16 @@ committed.
 | Support URL | `https://standardplaybook.com/contact` |
 | Privacy-policy URL | `https://standardplaybook.com/privacy` |
 | Account-deletion URL | `https://standardplaybook.com/data-deletion` |
-| Minimum iOS | iOS 14 (Capacitor 7 foundation; revisit against audience before distribution) |
-| Minimum Android | Android 6 / API 23 (Capacitor 7 foundation) |
-| Android release version | `1.0.3` (`versionCode 4`) |
-| Android target | API 35, valid for the initial public submission before Google Play's August 31, 2026 API 36 deadline |
+| Minimum iOS | iOS 15 (Capacitor 8 foundation) |
+| Minimum Android | Android 7 / API 24 (Capacitor 8 foundation) |
+| Android production version | `1.0.3` (`versionCode 4`), full rollout |
+| Android maintenance release | `1.0.4` (`versionCode 5`) |
+| Android compile/target | API 36; required by Google Play for updates after August 31, 2026 |
 | Google Play upload certificate SHA-256 | `B6:C5:C7:0A:10:B7:2D:DD:5F:EF:AE:06:34:D4:85:E8:89:1C:20:A3:3B:0A:8A:6C:F5:65:3D:DC:33:89:F3:D9` |
 | Apple Developer membership | `[USER TO CONFIRM]` |
 | App Store Connect role/agreements | `[USER TO CONFIRM]` |
 | Google Play organization enrollment/agreements | Active organization account: Standard Playbook INC |
-| Google Play current track | Internal testing active with `1.0.2 - Internal Beta 3` (`versionCode 3`); Production unlocked but inactive |
+| Google Play current track | Internal testing `1.0.4 - Android 16 Maintenance` (`versionCode 5`) is available to testers; production `1.0.3 - Android Public Launch` (`versionCode 4`) remains live, with build 5 saved as an unsubmitted production change |
 | Physical iPhone availability | `[USER TO CONFIRM MODEL/OS]` |
 | Physical Android availability | A tester is signed in; confirm one complete install-and-use pass on a physical device before rollout |
 | Reviewer/beta account owner | Standard Playbook admin; credentials stay only in the Play Console/password manager |
