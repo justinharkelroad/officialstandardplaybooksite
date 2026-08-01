@@ -6,15 +6,10 @@ const config: CapacitorConfig = {
   webDir: "dist-mobile",
   backgroundColor: "#F7F5F1",
   plugins: {
-    Keyboard: {
-      resize: "body",
-      resizeOnFullScreen: true,
-    },
-    SplashScreen: {
-      launchAutoHide: true,
-      launchShowDuration: 800,
-      backgroundColor: "#F7F5F1",
-      showSpinner: false,
+    SystemBars: {
+      insetsHandling: "css",
+      style: "DEFAULT",
+      hidden: false,
     },
   },
 };

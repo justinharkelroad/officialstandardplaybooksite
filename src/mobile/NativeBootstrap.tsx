@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { App } from "@capacitor/app";
+import { SystemBars, SystemBarsStyle } from "@capacitor/core";
 import { Network } from "@capacitor/network";
-import { StatusBar, Style } from "@capacitor/status-bar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { isExternalHttpUrl, openExternalUrl } from "@/mobile/nativeLinks";
 import { listenForAppLifecycle } from "@/mobile/nativeLifecycle";
@@ -40,14 +40,7 @@ export default function NativeBootstrap() {
       else handles.push(handle);
     });
 
-    const syncStatusBar = async () => {
-      const dark = document.documentElement.getAttribute("data-sp-theme") === "dark";
-      await StatusBar.setStyle({ style: dark ? Style.Light : Style.Dark });
-      await StatusBar.setBackgroundColor({ color: dark ? "#111111" : "#ffffff" });
-    };
-    void syncStatusBar();
-    const observer = new MutationObserver(() => void syncStatusBar());
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-sp-theme"] });
+    void SystemBars.setStyle({ style: SystemBarsStyle.Default });
 
     const onError = (event: ErrorEvent) => {
       recordMobileDiagnostic("window-error", { name: event.error instanceof Error ? event.error.name : "Error" });
@@ -67,7 +60,6 @@ export default function NativeBootstrap() {
 
     return () => {
       disposed = true;
-      observer.disconnect();
       window.removeEventListener("error", onError);
       window.removeEventListener("unhandledrejection", onUnhandledRejection);
       window.removeEventListener("standard:voice-diagnostic", onVoiceDiagnostic);
