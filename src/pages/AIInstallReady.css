@@ -1,0 +1,308 @@
+/*
+ * READY confirmation form.
+ *
+ * Tokens and base styles come from AIInstall.css, which this page imports
+ * first. Only the form surface is defined here, and it borrows the same
+ * vocabulary: hairline borders in ink, the blue reserved for focus and the
+ * selected state, no shadows, no radii, no gradients.
+ *
+ * Mobile first. This audience opens the link from Telegram, Instagram and
+ * email, so the single-column layout is the default and the two-up name row
+ * only appears once there is room for it.
+ */
+
+.air-page {
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+  overflow: visible;
+}
+
+/* ---------------------------------------------------------------- chrome */
+
+.air-nav {
+  border-bottom: 1px solid var(--aii-ink);
+  background: var(--aii-paper);
+}
+
+.air-nav__inner {
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* The wordmark PNG is white, so it needs the same brightness(0) inversion the
+   main page applies. The .aii-wordmark class from AIInstall.css does that, and
+   is reused directly rather than restated. */
+
+.air-nav__back {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.air-nav__back:hover {
+  color: var(--aii-blue);
+}
+
+.air-main {
+  flex: 1;
+  padding-block: 40px 64px;
+}
+
+/* ----------------------------------------------------------------- intro */
+
+.air-eyebrow {
+  margin: 0 0 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #5a5a5a;
+}
+
+.air-title {
+  margin: 0 0 16px;
+  max-width: 18ch;
+  font-family: var(--aii-display);
+  font-size: clamp(38px, 11vw, 68px);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.air-title span {
+  color: var(--aii-blue);
+}
+
+.air-lede {
+  margin: 0 0 24px;
+  max-width: 54ch;
+  font-size: 16px;
+  line-height: 1.62;
+}
+
+.air-deadline {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 40px;
+  padding: 10px 16px;
+  border: 1px solid var(--aii-ink);
+}
+
+.air-deadline__label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #5a5a5a;
+}
+
+.air-deadline__value {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------------ form */
+
+.air-form {
+  display: flex;
+  max-width: 560px;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.air-row {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.air-field {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.air-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.air-input {
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 16px;
+  border: 1px solid var(--aii-ink);
+  background: #ffffff;
+  color: var(--aii-ink);
+  font-family: var(--aii-body);
+  font-size: 16px; /* 16px or larger stops iOS zooming the page on focus. */
+  line-height: 1.3;
+}
+
+.air-input:focus-visible,
+.air-file:focus-visible {
+  outline: 2px solid var(--aii-blue);
+  outline-offset: 2px;
+}
+
+.air-fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.air-fieldset .air-label {
+  display: block;
+  margin-bottom: 8px;
+  padding: 0;
+}
+
+.air-choices {
+  display: flex;
+  gap: 12px;
+}
+
+.air-choice {
+  display: inline-flex;
+  flex: 1;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border: 1px solid var(--aii-ink);
+  background: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.air-choice input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--aii-blue);
+}
+
+.air-choice--on {
+  border-color: var(--aii-ink);
+  background: var(--aii-ink);
+  color: #ffffff;
+}
+
+.air-choice:focus-within {
+  outline: 2px solid var(--aii-blue);
+  outline-offset: 2px;
+}
+
+.air-file {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px dashed var(--aii-ink);
+  background: #ffffff;
+  font-family: var(--aii-body);
+  font-size: 14px;
+}
+
+.air-file::file-selector-button {
+  margin-right: 12px;
+  padding: 8px 14px;
+  border: 1px solid var(--aii-ink);
+  background: var(--aii-ink);
+  color: #ffffff;
+  font-family: var(--aii-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.air-hint {
+  margin: 0;
+  font-size: 13px;
+  color: #5a5a5a;
+  overflow-wrap: anywhere;
+}
+
+.air-error {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--aii-ink);
+  background: var(--aii-ink);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.air-submit {
+  align-self: flex-start;
+}
+
+.air-submit[disabled] {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+/* ------------------------------------------------------------------ done */
+
+.air-done {
+  max-width: 620px;
+}
+
+.air-done__cta {
+  margin-top: 8px;
+}
+
+.air-deadline--done {
+  margin-bottom: 28px;
+}
+
+/* ---------------------------------------------------------------- footer */
+
+.air-footer {
+  border-top: 1px solid var(--aii-ink);
+  padding-block: 24px;
+}
+
+.air-footer__inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.air-footer__mark {
+  width: auto;
+  height: 16px;
+}
+
+.air-footer p {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------ wide */
+
+@media (min-width: 720px) {
+  .air-main {
+    padding-block: 64px 88px;
+  }
+
+  .air-row {
+    flex-direction: row;
+  }
+}

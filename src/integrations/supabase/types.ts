@@ -70,6 +70,51 @@ export type Database = {
           },
         ]
       }
+      ai_install_ready_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          first_name: string
+          id: string
+          last_name: string
+          notified_at: string | null
+          notify_error: string | null
+          platform: string
+          screenshot_bytes: number | null
+          screenshot_path: string
+          screenshot_type: string | null
+          submitted_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          first_name: string
+          id?: string
+          last_name: string
+          notified_at?: string | null
+          notify_error?: string | null
+          platform: string
+          screenshot_bytes?: number | null
+          screenshot_path: string
+          screenshot_type?: string | null
+          submitted_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: string
+          last_name?: string
+          notified_at?: string | null
+          notify_error?: string | null
+          platform?: string
+          screenshot_bytes?: number | null
+          screenshot_path?: string
+          screenshot_type?: string | null
+          submitted_at?: string
+        }
+        Relationships: []
+      }
       ai_install_purchases: {
         Row: {
           amount_total: number | null

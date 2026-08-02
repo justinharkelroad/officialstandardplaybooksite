@@ -14,6 +14,8 @@ const ResetPassword = lazy(() => import("./app/pages/ResetPassword"));
 const MemberApp = lazy(() => import("./app/MemberAppRoutes"));
 const AIInstall = lazy(() => import("./pages/AIInstall"));
 const AIInstallPrework = lazy(() => import("./pages/AIInstallPrework"));
+const AIInstallReady = lazy(() => import("./pages/AIInstallReady"));
+const AIInstallReadyList = lazy(() => import("./pages/AIInstallReadyList"));
 import CallScoring from "./pages/CallScoring";
 import Decision from "./pages/Decision";
 import Privacy from "./pages/Privacy";
@@ -139,6 +141,14 @@ const App = () => (
           <Route
             path="/aiinstall/prework/codex"
             element={<Suspense fallback={null}><AIInstallPrework platform="codex" /></Suspense>}
+          />
+          <Route
+            path="/aiinstall/ready"
+            element={<Suspense fallback={null}><AIInstallReady /></Suspense>}
+          />
+          <Route
+            path="/aiinstall/ready/list"
+            element={<Suspense fallback={null}><AIInstallReadyList /></Suspense>}
           />
           <Route path="/certified-standard" element={<BoldCertifiedStandard />} />
           <Route path="/team-standard" element={<BoldTeamStandard />} />

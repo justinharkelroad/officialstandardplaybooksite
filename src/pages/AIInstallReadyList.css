@@ -1,0 +1,161 @@
+/*
+ * Admin list for READY submissions. Same vocabulary as the form: hairlines in
+ * ink, blue only for state, no shadows or radii.
+ *
+ * The table is the one piece of genuinely wide content on this surface, so it
+ * scrolls inside its own container. The page body never scrolls sideways.
+ */
+
+.arl-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.arl-count {
+  padding: 8px 14px;
+  border: 1px solid var(--aii-ink);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.arl-count strong {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.arl-count--muted {
+  color: #5a5a5a;
+  border-color: #e3e3e3;
+}
+
+.arl-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.arl-filter {
+  min-height: 40px;
+  padding: 10px 18px;
+  border: 1px solid var(--aii-ink);
+  background: #ffffff;
+  color: var(--aii-ink);
+  font-family: var(--aii-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.arl-filter--on {
+  background: var(--aii-ink);
+  color: #ffffff;
+}
+
+.arl-filter:focus-visible {
+  outline: 2px solid var(--aii-blue);
+  outline-offset: 2px;
+}
+
+.arl-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--aii-ink);
+}
+
+.arl-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.arl-table th,
+.arl-table td {
+  padding: 12px 14px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.arl-table thead th {
+  border-bottom: 1px solid var(--aii-ink);
+  background: var(--aii-ink);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.arl-table tbody tr + tr td {
+  border-top: 1px solid #e3e3e3;
+}
+
+.arl-date {
+  white-space: nowrap;
+  color: #5a5a5a;
+}
+
+.arl-email a {
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+
+.arl-email a:hover {
+  color: var(--aii-blue);
+}
+
+.arl-platform {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px solid var(--aii-ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.arl-platform--codex {
+  background: var(--aii-ink);
+  color: #ffffff;
+}
+
+.arl-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--aii-ink);
+  font-family: var(--aii-body);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.arl-link:hover {
+  color: var(--aii-blue);
+}
+
+.arl-link:focus-visible {
+  outline: 2px solid var(--aii-blue);
+  outline-offset: 2px;
+}
+
+.arl-flag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border: 1px solid #5a5a5a;
+  color: #5a5a5a;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}

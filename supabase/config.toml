@@ -127,3 +127,9 @@ verify_jwt = false
 
 [functions.generate_voice_sample]
 verify_jwt = false
+
+[functions.submit-ai-install-ready]
+# Public READY form on /aiinstall/ready. There is no member session to carry a
+# JWT, so the function validates every field itself and writes with the
+# service role.
+verify_jwt = false
