@@ -1,3 +1,6 @@
+/// <reference lib="dom" />
+// The encoder under test is browser code and touches document, so the DOM lib
+// is pulled in explicitly rather than suppressing type checking with --no-check.
 /**
  * Contract test across the domain boundary.
  *
@@ -6,12 +9,15 @@
  * different runtimes and cannot share a module, so this test imports both and
  * proves they still agree.
  *
- * Run: deno test --allow-env supabase/functions/_shared/meta-capi.test.ts
+ * Run: deno test --allow-env --no-lock tests/meta-capi.test.ts
+ *
+ * Deliberately outside supabase/functions so no bundler can mistake a test for
+ * deployable edge-function source.
  */
 
 import { assert, assertEquals } from "jsr:@std/assert@1";
-import { encodeClientReference } from "../../../src/lib/metaCheckout.ts";
-import { decodeClientReference, sendMetaPurchaseEvent, sha256Hex } from "./meta-capi.ts";
+import { encodeClientReference } from "../src/lib/metaCheckout.ts";
+import { decodeClientReference, sendMetaPurchaseEvent, sha256Hex } from "../supabase/functions/_shared/meta-capi.ts";
 
 const EVENT_ID = "fee525484d014065a74d4ce8519a692a";
 
