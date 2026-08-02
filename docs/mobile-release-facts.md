@@ -24,6 +24,7 @@ committed.
 | App Store Connect role/agreements | `[USER TO CONFIRM]` |
 | Google Play organization enrollment/agreements | Active organization account: Standard Playbook INC |
 | Google Play current track | Internal testing `1.0.4 - Android 16 Maintenance` (`versionCode 5`) is available to testers; production `1.0.3 - Android Public Launch` (`versionCode 4`) remains live, with build 5 saved as an unsubmitted production change |
+| Google Play API 36 policy status | `Violation fixed` on August 1, 2026 at 5:49 PM; production quick checks passed and the saved change is ready to send for review |
 | Physical iPhone availability | `[USER TO CONFIRM MODEL/OS]` |
 | Physical Android availability | A tester is signed in; confirm one complete install-and-use pass on a physical device before rollout |
 | Reviewer/beta account owner | Standard Playbook admin; credentials stay only in the Play Console/password manager |
