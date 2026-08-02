@@ -11,8 +11,9 @@ Last verified: August 1, 2026
 - Production track: `1.0.3 - Android Public Launch` (`versionCode 4`) is at
   full rollout and available on Google Play in one country/region.
 - Maintenance release: `1.0.4` (`versionCode 5`).
-- Production draft: build 5 is saved in Publishing overview at 100% rollout,
-  pending Google Play quick checks and an explicit send-for-review decision.
+- Production draft: build 5 is saved in Publishing overview at 100% rollout.
+  Google Play quick checks passed, and the change is ready for an explicit
+  send-for-review decision.
 - Minimum Android: API 24.
 - Compile and target Android: API 36.
 - Google Play policy action: publish an API 36 production update by August 31,
@@ -75,6 +76,10 @@ Last verified: August 1, 2026
   testers on August 1, 2026.
 - Production: the same build and release notes were promoted into a saved
   production change; it has not been submitted for review.
+- Google Play pre-submission quick checks: passed with the message that the
+  change can now be sent for review.
+- Google Play policy status: `App must target Android 16 (API level 36) or
+  higher` is marked `Violation fixed`, fixed August 1, 2026 at 5:49 PM.
 
 The repository-wide `npm run lint` command remains red on unrelated,
 pre-existing lint debt and generated Android build intermediates. The files
@@ -88,9 +93,8 @@ changed for this release pass scoped ESLint.
    settings/support, and sign out.
 2. Install the Play-delivered internal build on the physical test device and
    repeat the authenticated smoke test.
-3. Review the completed Google Play quick checks and the expected device-
-   support warning caused by Capacitor 8's API 24 minimum. Play currently
-   reports 1,209 fewer supported legacy devices than build 4.
+3. Accept the expected device-support warning caused by Capacitor 8's API 24
+   minimum. Play reports 1,209 fewer supported legacy devices than build 4.
 4. Submit the saved `1.0.4` production change for review only after the
    authenticated physical-device pass is accepted.
 5. After approval, publish with a controlled rollout and monitor crashes,
@@ -103,7 +107,9 @@ changed for this release pass scoped ESLint.
 
 ## Google Play deadline
 
-Google Play reports that the production app's highest non-compliant target is
-API 35 and requires a production update targeting API 36 or higher by August
-31, 2026. Build 5 satisfies the source and bundle requirement; the policy item
-will clear only after the production update is published successfully.
+Google Play previously reported that the production app's highest
+non-compliant target was API 35 and required an API 36 update by August 31,
+2026. After build 5 was accepted on the internal track and saved as a
+production change, Play marked the policy item `Violation fixed` on August 1,
+2026. The production change remains unsubmitted until the final rollout
+decision is confirmed.
