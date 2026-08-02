@@ -13,6 +13,7 @@ import {
   renderAiInstallPurchaseEmail,
   validateEmailResources,
 } from "../_shared/ai-install-purchase.ts";
+import { sendMetaPurchaseEvent } from "../_shared/meta-capi.ts";
 
 const AI_INSTALL_PAYMENT_LINK_ID = Deno.env.get("AI_INSTALL_PAYMENT_LINK_ID") ||
   "plink_1TwibDFB8ViubgHoQZU473el";
@@ -255,10 +256,42 @@ Deno.serve(async (req: Request): Promise<Response> => {
         `purchase=${purchaseRow.id} resend_id=${resendId ?? "unknown"}`,
     );
 
+    // Meta Purchase runs last and cannot affect fulfilment. It is deliberately
+    // placed after the confirmation email is confirmed sent, and its own
+    // try/catch keeps any failure out of the outer handler: a thrown error
+    // there would return 500, Stripe would retry, and the retry would take the
+    // duplicate path. A buyer must never lose their welcome email because a
+    // tracking call timed out.
+    const capi = await sendMetaPurchaseEvent({
+      email: purchase.email,
+      fullName: purchase.fullName,
+      phone: purchase.phone,
+      amountTotalCents: purchase.amountTotal,
+      currency: purchase.currency,
+      clientReferenceId: purchase.clientReferenceId,
+      eventTime: event.created,
+      // Deterministic per session, so Stripe retries cannot double count even
+      // when no browser event id came across.
+      fallbackEventId: `stripe_${purchase.stripeCheckoutSessionId}`,
+    }).catch((error) => ({
+      sent: false,
+      reason: error instanceof Error ? error.message : String(error),
+    }));
+
+    if (capi.sent) {
+      console.log(
+        `ai-install-webhook: meta Purchase sent event_id=${capi.eventId} ` +
+          `fbp=${capi.matchedFbp ? "yes" : "no"} fbc=${capi.matchedFbc ? "yes" : "no"}`,
+      );
+    } else {
+      console.error(`ai-install-webhook: meta Purchase skipped: ${capi.reason}`);
+    }
+
     return Response.json({
       received: true,
       purchase_id: purchaseRow.id,
       resend_id: resendId,
+      meta_purchase_sent: capi.sent,
     });
   } catch (error) {
     console.error(

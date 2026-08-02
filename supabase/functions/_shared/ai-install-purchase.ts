@@ -35,6 +35,12 @@ export interface AiInstallCheckoutSession {
   amount_total?: number | null;
   currency?: string | null;
   created?: number | null;
+  /**
+   * Carries the Meta pixel handoff written by src/lib/metaCheckout.ts:
+   * v1-<eventId>-<fbpTime>-<fbpRand>-<fbcTime>-<fbclid>. Absent for purchases
+   * that did not originate from a tracked click on /aiinstall.
+   */
+  client_reference_id?: string | null;
 }
 
 export interface AiInstallPurchase {
@@ -51,6 +57,8 @@ export interface AiInstallPurchase {
   currency: string | null;
   paymentStatus: string;
   purchasedAt: string;
+  /** Raw Meta pixel handoff, decoded by _shared/meta-capi.ts. */
+  clientReferenceId: string | null;
 }
 
 export interface AiInstallEmailResources {
@@ -143,6 +151,7 @@ export function extractAiInstallPurchase(
     currency: cleanOptional(session.currency)?.toLowerCase() ?? null,
     paymentStatus: String(session.payment_status ?? "paid"),
     purchasedAt: new Date(sessionCreated * 1000).toISOString(),
+    clientReferenceId: cleanOptional(session.client_reference_id),
   };
 }
 
