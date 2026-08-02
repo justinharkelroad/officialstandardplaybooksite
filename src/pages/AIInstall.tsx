@@ -8,8 +8,6 @@ import { buildCheckoutHandoff } from "@/lib/metaCheckout";
 import "./AIInstall.css";
 
 const STRIPE_LINK = "https://buy.stripe.com/cNi9AT3GK8qG9S8fSk4Vy0w";
-const STARTER_PACK_URL =
-  "https://standardplaybook.com/aiinstall/ai-install-starter-pack.zip";
 const PAGE_TITLE = "The Agency AI Install | Standard Playbook";
 const PAGE_DESCRIPTION =
   "A live two-day build, August 26-27. Agency owners and managers build their AI co-working brain start to finish with Justin Harkelroad. Claude or Codex. $997 all in.";
@@ -260,9 +258,6 @@ export default function AIInstall() {
                 and you leave with it working.
               </p>
               <EnrollButton />
-              <a className="aii-enrolled-link" href={STARTER_PACK_URL}>
-                Already enrolled? Download the starter pack
-              </a>
             </div>
             <div className="aii-hero__visual">
               <img
