@@ -1,8 +1,9 @@
-import { useEffect, type ReactNode } from "react";
+import { useEffect, type MouseEvent, type ReactNode } from "react";
 
 import standardLogo from "@/assets/standard-word-logo.png";
 import playbookIcon from "@/assets/sp-icon-black.png";
 import playbookIconBlue from "@/assets/sp-icon-blue.png";
+import { buildCheckoutHandoff } from "@/lib/metaCheckout";
 
 import "./AIInstall.css";
 
@@ -185,8 +186,20 @@ const faqs = [
 ];
 
 function EnrollButton({ inverted = false }: { inverted?: boolean }) {
+  // The href is rewritten in place during the click so the _fbp and _fbc
+  // cookies are read fresh and the event id is unique per click. The default
+  // navigation reads href after this handler returns, so nothing is delayed
+  // and no preventDefault is needed.
+  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.currentTarget.href = buildCheckoutHandoff(STRIPE_LINK);
+  };
+
   return (
-    <a className={`aii-cta${inverted ? " aii-cta--inverted" : ""}`} href={STRIPE_LINK}>
+    <a
+      className={`aii-cta${inverted ? " aii-cta--inverted" : ""}`}
+      href={STRIPE_LINK}
+      onClick={handleClick}
+    >
       Enroll for $997
     </a>
   );
