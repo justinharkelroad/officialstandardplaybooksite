@@ -11,9 +11,9 @@ Last verified: August 1, 2026
 - Production track: `1.0.3 - Android Public Launch` (`versionCode 4`) is at
   full rollout and available on Google Play in one country/region.
 - Maintenance release: `1.0.4` (`versionCode 5`).
-- Production draft: build 5 is saved in Publishing overview at 100% rollout.
-  Google Play quick checks passed, and the change is ready for an explicit
-  send-for-review decision.
+- Production submission: build 5 was submitted for Google Play review at 100%
+  rollout on August 1, 2026. Publishing overview reports `Changes in review`.
+  Managed publishing is off, so an approved change may publish automatically.
 - Minimum Android: API 24.
 - Compile and target Android: API 36.
 - Google Play policy action: publish an API 36 production update by August 31,
@@ -74,10 +74,12 @@ Last verified: August 1, 2026
   target SDK 36, with the ReTrace mapping file attached.
 - Internal testing: `1.0.4 - Android 16 Maintenance` was published to internal
   testers on August 1, 2026.
-- Production: the same build and release notes were promoted into a saved
-  production change; it has not been submitted for review.
+- Production: the same build and release notes were promoted and submitted for
+  review after explicit authorization on August 1, 2026.
 - Google Play pre-submission quick checks: passed with the message that the
   change can now be sent for review.
+- Google Play post-submission checks: passed; Publishing overview reports
+  `Your changes are now in review`.
 - Google Play policy status: `App must target Android 16 (API level 36) or
   higher` is marked `Violation fixed`, fixed August 1, 2026 at 5:49 PM.
 
@@ -95,10 +97,10 @@ changed for this release pass scoped ESLint.
    repeat the authenticated smoke test.
 3. Accept the expected device-support warning caused by Capacitor 8's API 24
    minimum. Play reports 1,209 fewer supported legacy devices than build 4.
-4. Submit the saved `1.0.4` production change for review only after the
-   authenticated physical-device pass is accepted.
-5. After approval, publish with a controlled rollout and monitor crashes,
-   ANRs, sign-in, and support reports before increasing to 100%.
+4. Monitor Google Play review and any reviewer feedback. Because managed
+   publishing is off, an approval can start the configured 100% rollout
+   automatically.
+5. After publication, monitor crashes, ANRs, sign-in, and support reports.
 
 ## Suggested production release notes
 
@@ -111,5 +113,5 @@ Google Play previously reported that the production app's highest
 non-compliant target was API 35 and required an API 36 update by August 31,
 2026. After build 5 was accepted on the internal track and saved as a
 production change, Play marked the policy item `Violation fixed` on August 1,
-2026. The production change remains unsubmitted until the final rollout
-decision is confirmed.
+2026. The production change was submitted for review on August 1, 2026 and is
+now awaiting Google's decision.
