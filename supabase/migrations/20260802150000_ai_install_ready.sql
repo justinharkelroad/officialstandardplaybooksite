@@ -39,6 +39,15 @@ create index if not exists ai_install_ready_email_idx
 create index if not exists ai_install_ready_platform_idx
   on public.ai_install_ready_submissions (platform, submitted_at desc);
 
+-- RLS decides which rows are visible, but PostgREST still needs a table-level
+-- grant before it will attempt the query at all. Without this the admin list
+-- fails with a permission error rather than an empty result, which looks like
+-- a broken page instead of a denied read. The grant is deliberately to
+-- authenticated only: anon is never given select, and the policy below is what
+-- narrows authenticated down to admins.
+grant select on public.ai_install_ready_submissions to authenticated;
+grant all on public.ai_install_ready_submissions to service_role;
+
 -- Admins read the list. Nobody else reads anything, and nothing writes through
 -- the API: inserts happen with the service role inside the edge function.
 drop policy if exists ai_install_ready_admin_select
@@ -51,9 +60,21 @@ create policy ai_install_ready_admin_select
 
 -- Private bucket. Screenshots are proof of setup and often show a buyer's own
 -- machine, so this is never public and is read through signed URLs only.
-insert into storage.buckets (id, name, public)
-values ('ai-install-ready', 'ai-install-ready', false)
-on conflict (id) do nothing;
+--
+-- Hosted Supabase rejects direct SQL writes to storage.buckets, so on a hosted
+-- project this statement is a no-op and the bucket is created through the
+-- storage API instead. It is kept here so a local `supabase start` provisions
+-- the same bucket, and it is written to be safe either way.
+do $$
+begin
+  insert into storage.buckets (id, name, public)
+  values ('ai-install-ready', 'ai-install-ready', false)
+  on conflict (id) do nothing;
+exception
+  when insufficient_privilege then
+    raise notice 'storage.buckets is managed by the platform; create ai-install-ready (private) through the storage API';
+end
+$$;
 
 drop policy if exists ai_install_ready_screens_admin_read on storage.objects;
 
