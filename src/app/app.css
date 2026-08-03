@@ -319,3 +319,73 @@ html[data-installed-app="true"] .member-app :is(button, a) {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
+
+/* Notes editor. Tiptap owns the document structure; these styles keep the
+   writing surface consistent with the member app's editorial system. */
+.member-app .sp-note-editor {
+  color: hsl(var(--foreground));
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.member-app .sp-note-editor > * + * {
+  margin-top: 0.85rem;
+}
+
+.member-app .sp-note-editor :is(h2, h3) {
+  margin-top: 1.75rem;
+  font-family: "Archivo Black", "Anton", Impact, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.member-app .sp-note-editor h2 {
+  font-size: 1.5rem;
+}
+
+.member-app .sp-note-editor h3 {
+  font-size: 1.15rem;
+}
+
+.member-app .sp-note-editor :is(ul, ol) {
+  margin-left: 1.4rem;
+}
+
+.member-app .sp-note-editor ul {
+  list-style: square;
+}
+
+.member-app .sp-note-editor ol {
+  list-style: decimal;
+}
+
+.member-app .sp-note-editor li + li {
+  margin-top: 0.3rem;
+}
+
+.member-app .sp-note-editor blockquote {
+  border-left: 3px solid #2997ff;
+  color: hsl(var(--muted-foreground));
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+}
+
+.member-app .sp-note-editor mark {
+  background: color-mix(in srgb, #2997ff 22%, transparent);
+  color: inherit;
+  padding: 0.08em 0.16em;
+}
+
+.member-app .sp-note-editor p.is-editor-empty:first-child::before {
+  color: hsl(var(--muted-foreground));
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.member-app .sp-note-editor ::selection {
+  background: color-mix(in srgb, #2997ff 28%, transparent);
+}

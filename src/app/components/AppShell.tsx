@@ -11,6 +11,7 @@ import {
   LogOut,
   Menu,
   Moon,
+  NotebookPen,
   PanelLeft,
   PanelLeftClose,
   Rocket,
@@ -34,6 +35,7 @@ const NAV_GROUPS = [
     items: [
       { to: "/app", label: "Hub", icon: LayoutGrid, end: true },
       { to: "/app/core4", label: "Daily", icon: Dumbbell },
+      { to: "/app/notes", label: "Notes", icon: NotebookPen },
     ],
   },
   {

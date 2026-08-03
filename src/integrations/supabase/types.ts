@@ -1387,6 +1387,80 @@ export type Database = {
         }
         Relationships: []
       }
+      note_folders: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          sort_order: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          sort_order?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          sort_order?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notes: {
+        Row: {
+          body: Json
+          body_text: string
+          created_at: string
+          deleted_at: string | null
+          folder_id: string | null
+          id: string
+          is_favorite: boolean
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          body?: Json
+          body_text?: string
+          created_at?: string
+          deleted_at?: string | null
+          folder_id?: string | null
+          id?: string
+          is_favorite?: boolean
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          body?: Json
+          body_text?: string
+          created_at?: string
+          deleted_at?: string | null
+          folder_id?: string | null
+          id?: string
+          is_favorite?: boolean
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notes_folder_id_fkey"
+            columns: ["folder_id"]
+            isOneToOne: false
+            referencedRelation: "note_folders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       playbook_tags: {
         Row: {
           created_at: string
