@@ -35,7 +35,6 @@ const NAV_GROUPS = [
     items: [
       { to: "/app", label: "Hub", icon: LayoutGrid, end: true },
       { to: "/app/core4", label: "Daily", icon: Dumbbell },
-      { to: "/app/notes", label: "Notes", icon: NotebookPen },
     ],
   },
   {
@@ -58,6 +57,7 @@ const NAV_GROUPS = [
     label: "Reinforce",
     items: [
       { to: "/app/theta-talk-track", label: "90 Day Audio", icon: AudioLines },
+      { to: "/app/notes", label: "Notes", icon: NotebookPen },
       { to: "/app/settings", label: "Settings", icon: SettingsIcon },
     ],
   },
