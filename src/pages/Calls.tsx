@@ -41,6 +41,11 @@ interface Call {
   dominant?: boolean;
   requiresMembership?: boolean;
   eligibility?: string;
+  cancelledOccurrence?: {
+    date: string;
+    reason: string;
+    href: string;
+  };
 }
 
 const CALLS: Call[] = [
@@ -85,6 +90,11 @@ const CALLS: Call[] = [
     logoUrl: `${STORAGE}/${encodeURIComponent('Standard Ai Training Logo.png')}`,
     requiresMembership: true,
     eligibility: 'Agency Owners, Key Employees & Managers Only',
+    cancelledOccurrence: {
+      date: '2026-08-26',
+      reason: 'Cancelled for The Agency AI Install',
+      href: '/aiinstall',
+    },
   },
 ];
 
@@ -98,6 +108,9 @@ const PERSONAL_ROOM = {
 const CallCard = ({ call, now }: { call: Call; now: Date }) => {
   const occ = getNextOccurrence(call.id, call.cadenceWeek, now);
   const dateLine = formatOccurrence(occ);
+  const cancellation = call.cancelledOccurrence?.date === occ.date
+    ? call.cancelledOccurrence
+    : undefined;
   const [copied, setCopied] = useState(false);
   const dominant = !!call.dominant;
 
@@ -204,15 +217,32 @@ const CallCard = ({ call, now }: { call: Call; now: Date }) => {
           }}>
             Next Meeting
           </div>
-          <div style={{
-            fontFamily: editorial, fontSize: 16, lineHeight: 1.2,
-            letterSpacing: '-0.005em', textTransform: 'uppercase',
-          }}>
-            {dateLine}
-            {occ.isOverride && (
-              <span style={{ color: blue, marginLeft: 8 }}>· Special</span>
-            )}
-          </div>
+          {cancellation ? (
+            <a
+              href={cancellation.href}
+              className="calls-cancellation-notice"
+              aria-label={`${dateLine}. ${cancellation.reason}. View The Agency AI Install event.`}
+            >
+              <span className="calls-cancellation-date">{dateLine}</span>
+              <span className="calls-cancellation-status">Cancelled</span>
+              <span className="calls-cancellation-reason">
+                <span>{cancellation.reason}</span>
+                <span className="calls-cancellation-link">
+                  View event <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                </span>
+              </span>
+            </a>
+          ) : (
+            <div style={{
+              fontFamily: editorial, fontSize: 16, lineHeight: 1.2,
+              letterSpacing: '-0.005em', textTransform: 'uppercase',
+            }}>
+              {dateLine}
+              {occ.isOverride && (
+                <span style={{ color: blue, marginLeft: 8 }}>· Special</span>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Meeting ID */}
@@ -311,6 +341,93 @@ const Calls = () => {
 
   return (
     <div style={{ background: paper, color: ink, fontFamily: body, minHeight: '100vh' }}>
+      <style>{`
+        .calls-cancellation-notice {
+          color: ${ink};
+          display: grid;
+          gap: 8px 10px;
+          grid-template-columns: 1fr auto;
+          margin: 0 -8px -4px;
+          padding: 8px;
+          text-decoration: none;
+          transition: background-color 180ms ease, color 180ms ease;
+        }
+        .calls-cancellation-date {
+          font-family: ${editorial};
+          font-size: 16px;
+          letter-spacing: -0.005em;
+          line-height: 1.2;
+          text-decoration: line-through;
+          text-decoration-color: ${blue};
+          text-decoration-thickness: 3px;
+          text-transform: uppercase;
+        }
+        .calls-cancellation-status {
+          align-self: start;
+          background: ${ink};
+          color: ${paper};
+          font-family: ${body};
+          font-size: 9px;
+          font-weight: 800;
+          letter-spacing: 0.14em;
+          padding: 4px 6px;
+          text-transform: uppercase;
+          transition: background-color 180ms ease, color 180ms ease;
+        }
+        .calls-cancellation-reason {
+          align-items: center;
+          color: ${ink};
+          display: flex;
+          font-family: ${body};
+          font-size: 11px;
+          font-weight: 700;
+          gap: 8px;
+          grid-column: 1 / -1;
+          justify-content: space-between;
+          letter-spacing: 0.06em;
+          line-height: 1.35;
+          text-transform: uppercase;
+          transition: color 180ms ease;
+        }
+        .calls-cancellation-link {
+          align-items: center;
+          color: ${blue};
+          display: inline-flex;
+          flex: 0 0 auto;
+          gap: 3px;
+        }
+        .calls-cancellation-notice:hover,
+        .calls-cancellation-notice:focus-visible {
+          background: ${ink};
+          color: ${paper};
+          outline: none;
+        }
+        .calls-cancellation-notice:hover .calls-cancellation-status,
+        .calls-cancellation-notice:focus-visible .calls-cancellation-status {
+          background: ${blue};
+          color: ${ink};
+        }
+        .calls-cancellation-notice:hover .calls-cancellation-reason,
+        .calls-cancellation-notice:focus-visible .calls-cancellation-reason {
+          color: ${paper};
+        }
+        .calls-cancellation-notice:focus-visible {
+          box-shadow: 0 0 0 3px ${blue};
+        }
+        @media (max-width: 420px) {
+          .calls-cancellation-reason {
+            align-items: flex-start;
+            flex-direction: column;
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .calls-cancellation-notice,
+          .calls-cancellation-status,
+          .calls-cancellation-reason {
+            transition: none;
+          }
+        }
+      `}</style>
       <BoldNav />
 
       {/* Hero */}
