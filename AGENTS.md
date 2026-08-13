@@ -21,3 +21,12 @@
   Dump rows transactionally. Month reset must derive `auth.uid()` and archive
   only that member's active rows for the validated month. Keep downstream
   Weekly work unless the confirmation explicitly includes it.
+- **AI Install fulfillment must remain platform-specific and require screenshot
+  confirmation.** Codex buyers must receive the Codex pre-work route and a pack
+  containing `AGENTS-STARTER.md`, never `CLAUDE-STARTER.md`; Claude buyers must
+  receive the Claude route and pack. Keep the four starter-pack setup steps
+  distinct from the six readiness checks. After all six checks, require one
+  screenshot showing the open `MY BIZ BRAIN` folder with `READY.txt` visible,
+  submitted through `/aiinstall/ready`. Keep the ZIP README, pre-work pages,
+  purchase email, confirmation form, and fulfillment tests aligned whenever
+  this flow changes.

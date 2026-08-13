@@ -171,8 +171,8 @@ export default function AIInstallReady() {
                 Confirm your<span> pre-work</span>
               </h1>
               <p className="air-lede">
-                No pre-work, no seat. Build time is build time. Send this once your subscription
-                is live, the app is installed, and your folder is created.
+                No pre-work, no seat. Build time is build time. Submit this only after you complete
+                all six readiness checks and can see READY.txt inside your open MY BIZ BRAIN folder.
               </p>
               <div className="air-deadline">
                 <span className="air-deadline__label">Deadline</span>
@@ -256,7 +256,9 @@ export default function AIInstallReady() {
                   required
                 />
                 <p className="air-hint">
-                  {file ? file.name : "PNG, JPG, WEBP or HEIC. Up to 10 MB."}
+                  {file
+                    ? file.name
+                    : "Show MY BIZ BRAIN open in Cowork or Codex with READY.txt visible. PNG, JPG, WEBP or HEIC; up to 10 MB."}
                 </p>
               </div>
 

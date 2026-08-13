@@ -25,9 +25,6 @@ interface SetupStep {
   starterPack?: boolean;
 }
 
-const STARTER_PACK_URL =
-  "https://standardplaybook.com/aiinstall/ai-install-starter-pack.zip";
-
 const PLATFORM_CONFIG: Record<
   AIInstallPlatform,
   {
@@ -35,6 +32,7 @@ const PLATFORM_CONFIG: Record<
     pageTitle: string;
     description: string;
     ogImage: string;
+    starterPackUrl: string;
     downloadUrl: string;
     downloadLabel: string;
     officialGuideUrl: string;
@@ -52,6 +50,8 @@ const PLATFORM_CONFIG: Record<
     description:
       "Install Claude Desktop, connect your MY BIZ BRAIN folder in Cowork, and get ready for The Agency AI Install.",
     ogImage: "/og/ai-install-claude-prework.png",
+    starterPackUrl:
+      "https://standardplaybook.com/aiinstall/ai-install-claude-starter-pack.zip",
     downloadUrl: "https://claude.com/download",
     downloadLabel: "Download Claude",
     officialGuideUrl:
@@ -125,6 +125,8 @@ const PLATFORM_CONFIG: Record<
     description:
       "Install ChatGPT, connect your MY BIZ BRAIN folder in Codex, and get ready for The Agency AI Install.",
     ogImage: "/og/ai-install-codex-prework.png",
+    starterPackUrl:
+      "https://standardplaybook.com/aiinstall/ai-install-codex-starter-pack.zip",
     downloadUrl: "https://chatgpt.com/download/",
     downloadLabel: "Download ChatGPT",
     officialGuideUrl: "https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex",
@@ -361,11 +363,11 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
               </h1>
               <p className="aip-hero__subhead">
                 Get your computer ready for the workshop. You will install the app, create one
-                folder, load it with your raw material, and prove it works. Do this early in the
-                week, not the night before.
+                folder, load it with your raw material, prove it works, and submit one screenshot.
+                Do this early in the week, not the night before.
               </p>
               <div className="aip-hero__actions">
-                <a className="aip-button aip-button--primary" href={STARTER_PACK_URL}>
+                <a className="aip-button aip-button--primary" href={config.starterPackUrl}>
                   Download starter pack
                 </a>
                 <a
@@ -417,7 +419,7 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
                   {step.starterPack ? (
                     <a
                       className="aip-card-link"
-                      href={STARTER_PACK_URL}
+                      href={config.starterPackUrl}
                     >
                       Download the starter pack
                     </a>
@@ -487,7 +489,9 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
               <h2>Final check: make sure you are ready.</h2>
             </div>
             <p className="aip-section__intro">
-              Check each line on the computer you will bring. Your progress stays in this browser.
+              Check each line on the computer you will bring. These are the six readiness checks;
+              the four cards above were setup steps. Your progress stays in this browser. After all
+              six are checked, submit the required screenshot.
             </p>
             <div className="aip-checklist__items">
               {readinessItems.map((item) => {
@@ -521,10 +525,15 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
               {isReady ? (
                 <div className="aip-finish__instructions">
                   <p>
-                    You completed all six checks. There is no form, screenshot, email, or separate
-                    READY verification to submit. You are responsible for having this pre-work done
-                    on the computer you will bring.
+                    You completed all six checks. One final step is required: take a screenshot
+                    showing your MY BIZ BRAIN folder open inside {selectedPlatform === "claude"
+                      ? "Cowork"
+                      : "Codex"} with READY.txt visible, then submit it through the confirmation
+                    form.
                   </p>
+                  <a className="aip-button aip-button--primary" href="/aiinstall/ready">
+                    Submit my screenshot
+                  </a>
                   <p>
                     Deadline: <strong>end of day Monday, August 24.</strong> All purchases are
                     nonrefundable. Your seat may be transferred to another person before August 24.

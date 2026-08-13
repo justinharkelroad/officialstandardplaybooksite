@@ -274,7 +274,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
       // when no browser event id came across.
       fallbackEventId: `stripe_${purchase.stripeCheckoutSessionId}`,
     }).catch((error) => ({
-      sent: false,
+      sent: false as const,
       reason: error instanceof Error ? error.message : String(error),
     }));
 
@@ -310,12 +310,18 @@ function emailResources(): AiInstallEmailResources {
       "https://us06web.zoom.us/meeting/register/uQGhCsVMSaqigzxgVbCk2w",
     zoomUrl: optionalEnv("AI_INSTALL_ZOOM_URL"),
     calendarUrl: optionalEnv("AI_INSTALL_CALENDAR_URL"),
-    starterPackUrl:
-      "https://standardplaybook.com/aiinstall/ai-install-starter-pack.zip",
+    claudeStarterPackUrl:
+      optionalEnv("AI_INSTALL_CLAUDE_STARTER_PACK_URL") ||
+      "https://standardplaybook.com/aiinstall/ai-install-claude-starter-pack.zip",
+    codexStarterPackUrl:
+      optionalEnv("AI_INSTALL_CODEX_STARTER_PACK_URL") ||
+      "https://standardplaybook.com/aiinstall/ai-install-codex-starter-pack.zip",
     claudePreworkUrl: optionalEnv("AI_INSTALL_CLAUDE_PREWORK_URL") ||
       "https://standardplaybook.com/aiinstall/prework/claude",
     codexPreworkUrl: optionalEnv("AI_INSTALL_CODEX_PREWORK_URL") ||
       "https://standardplaybook.com/aiinstall/prework/codex",
+    readyUrl: optionalEnv("AI_INSTALL_READY_URL") ||
+      "https://standardplaybook.com/aiinstall/ready",
   };
 }
 

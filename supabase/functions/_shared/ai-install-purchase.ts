@@ -65,9 +65,11 @@ export interface AiInstallEmailResources {
   zoomRegistrationUrl?: string | null;
   zoomUrl?: string | null;
   calendarUrl?: string | null;
-  starterPackUrl?: string | null;
+  claudeStarterPackUrl?: string | null;
+  codexStarterPackUrl?: string | null;
   claudePreworkUrl?: string | null;
   codexPreworkUrl?: string | null;
+  readyUrl?: string | null;
 }
 
 export interface AiInstallEmail {
@@ -191,8 +193,41 @@ export function renderAiInstallPurchaseEmail(
   const calendarButton = resources.calendarUrl
     ? resourceButton("Add both days to your calendar", resources.calendarUrl)
     : "";
-  const starterPackButton = resources.starterPackUrl
-    ? resourceButton("Download the starter pack", resources.starterPackUrl)
+  const selectedStarterPacks = purchase.toolChoice === "claude"
+    ? resources.claudeStarterPackUrl
+      ? [{
+        label: "Download the Claude starter pack",
+        url: resources.claudeStarterPackUrl,
+      }]
+      : []
+    : purchase.toolChoice === "codex"
+    ? resources.codexStarterPackUrl
+      ? [{
+        label: "Download the Codex starter pack",
+        url: resources.codexStarterPackUrl,
+      }]
+      : []
+    : [
+      resources.claudeStarterPackUrl
+        ? {
+          label: "Download the Claude starter pack",
+          url: resources.claudeStarterPackUrl,
+        }
+        : null,
+      resources.codexStarterPackUrl
+        ? {
+          label: "Download the Codex starter pack",
+          url: resources.codexStarterPackUrl,
+        }
+        : null,
+    ].filter((resource): resource is { label: string; url: string } =>
+      resource !== null
+    );
+  const starterPackButtons = selectedStarterPacks
+    .map((resource) => resourceButton(resource.label, resource.url))
+    .join("");
+  const readyButton = resources.readyUrl
+    ? resourceButton("Submit your required screenshot", resources.readyUrl)
     : "";
   const preworkInstruction = purchase.toolChoice === "undecided"
     ? "Pick the platform you will use in the room and follow that track:"
@@ -287,13 +322,15 @@ export function renderAiInstallPurchaseEmail(
                   <li style="margin:0 0 8px;">Run the READY.txt test on the page. It takes 30 seconds and proves your setup works.</li>
                   ${claudeConnectorNote}
                 </ul>
-                ${starterPackButton}
+                ${starterPackButtons}
               </td>
             </tr>
             <tr>
               <td style="padding:28px 24px;border-top:1px solid #d6d3cd;font-size:16px;line-height:1.6;">
                 <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">Finish by August 24</p>
-                <p style="margin:0 0 16px;">Complete all six checks on your pre-work page. There is no form, screenshot, email, or separate READY verification to submit. You are responsible for finishing the pre-work on the computer you will bring.</p>
+                <p style="margin:0 0 16px;">Complete all six readiness checks on your pre-work page. The four numbered cards near the top are setup steps, not the final checklist.</p>
+                <p style="margin:0 0 16px;"><strong>A screenshot is required.</strong> After all six checks are complete, take one screenshot showing your MY BIZ BRAIN folder open in Cowork or Codex with READY.txt visible. Submit it through the confirmation form; do not email it unless Mary asks you to.</p>
+                ${readyButton}
                 <p style="margin:0 0 16px;"><strong>All purchases are nonrefundable. Your seat may be transferred to another person before August 24. If your pre-work is incomplete by August 24, your registration moves to a future workshop.</strong></p>
                 <p style="margin:0;">One purchase equals one attendee. Registration is capped at 50 paid seats. After 50 paid seats, registration moves to a waitlist. Free members do not count against the paid-seat cap.</p>
               </td>

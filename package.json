@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "build:aiinstall-packs": "bash scripts/build-aiinstall-starter-packs.sh",
     "dev": "vite",
     "build": "vite build",
     "build:mobile": "vite build --config vite.mobile.config.ts && npm run mobile:check-bundle",

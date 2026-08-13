@@ -133,9 +133,11 @@ Deno.test("renders the functional email with the correct branch and escaped buye
     zoomRegistrationUrl: "https://example.com/register",
     zoomUrl: "https://example.com/zoom",
     calendarUrl: "https://example.com/calendar",
-    starterPackUrl: "https://example.com/starter-pack.zip",
+    claudeStarterPackUrl: "https://example.com/claude-starter-pack.zip",
+    codexStarterPackUrl: "https://example.com/codex-starter-pack.zip",
     claudePreworkUrl: "https://example.com/claude",
     codexPreworkUrl: "https://example.com/codex",
+    readyUrl: "https://example.com/ready",
   });
 
   assertEquals(
@@ -165,13 +167,17 @@ Deno.test("renders the functional email with the correct branch and escaped buye
     "Direct Zoom room should not replace the registration URL",
   );
   assert(
-    email.html.includes("https://example.com/starter-pack.zip"),
-    "Starter pack link should be present",
+    email.html.includes("https://example.com/codex-starter-pack.zip"),
+    "Codex starter pack link should be present",
   );
   assert(
-    !email.html.includes("Reply to this email with one screenshot") &&
-      !email.html.includes("seat is confirmed when she replies"),
-    "Email should not require READY verification or Mary's reply",
+    !email.html.includes("https://example.com/claude-starter-pack.zip"),
+    "Claude starter pack should be omitted for Codex buyers",
+  );
+  assert(
+    email.html.includes("https://example.com/ready") &&
+      email.html.includes("A screenshot is required"),
+    "Email should require the screenshot form",
   );
   assert(
     email.html.includes("MY BIZ BRAIN"),
@@ -210,9 +216,11 @@ Deno.test("rejects missing or non-HTTPS resource URLs", () => {
       zoomRegistrationUrl: "http://example.com/register",
       zoomUrl: "http://example.com/zoom",
       calendarUrl: "https://example.com/calendar",
-      starterPackUrl: "https://example.com/starter-pack.zip",
+      claudeStarterPackUrl: "https://example.com/claude-starter-pack.zip",
+      codexStarterPackUrl: "https://example.com/codex-starter-pack.zip",
       claudePreworkUrl: "https://example.com/claude",
       codexPreworkUrl: "https://example.com/codex",
+      readyUrl: "https://example.com/ready",
     });
   } catch {
     rejected = true;
@@ -232,9 +240,9 @@ Deno.test("renders the welcome instructions even when optional resources are not
   );
   assert(
     email.html.includes(
-      "There is no form, screenshot, email, or separate READY verification",
+      "A screenshot is required",
     ),
-    "Welcome instructions should make completion self-attested",
+    "Welcome instructions should keep screenshot confirmation required",
   );
   assert(
     !email.html.includes("undefined") && !email.html.includes("[ZOOM LINK]"),
@@ -250,6 +258,8 @@ Deno.test("shows both pre-work tracks when the buyer has not chosen a platform",
   const email = renderAiInstallPurchaseEmail(purchase, {
     claudePreworkUrl: "https://example.com/claude",
     codexPreworkUrl: "https://example.com/codex",
+    claudeStarterPackUrl: "https://example.com/claude-starter-pack.zip",
+    codexStarterPackUrl: "https://example.com/codex-starter-pack.zip",
   });
 
   assert(
@@ -259,5 +269,13 @@ Deno.test("shows both pre-work tracks when the buyer has not chosen a platform",
   assert(
     email.html.includes("https://example.com/codex"),
     "Undecided buyers should get the Codex track",
+  );
+  assert(
+    email.html.includes("https://example.com/claude-starter-pack.zip"),
+    "Undecided buyers should get the Claude starter pack",
+  );
+  assert(
+    email.html.includes("https://example.com/codex-starter-pack.zip"),
+    "Undecided buyers should get the Codex starter pack",
   );
 });
