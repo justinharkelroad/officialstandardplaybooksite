@@ -1,6 +1,7 @@
 import {
   useState,
   useEffect,
+  useMemo,
   useRef } from 'react';
 import { useParams,
   useNavigate } from 'react-router-dom';
@@ -31,14 +32,13 @@ import { Loader2,
 import { format } from 'date-fns';
 import confetti from 'canvas-confetti';
 import { parseExplicitDeclaredFlowActions } from '@/app/lib/declaredFlowActions';
-import { isHtmlContent } from '@/app/components/flows/ChatBubble';
-import DOMPurify from 'dompurify';
 import { AnimatedDownload as Download } from "@/app/components/icons/AnimatedDownload";
 import { FlowTypeIcon } from '@/app/components/flows/FlowTypeIcon';
 import { DailyFrameReportCard } from '@/app/components/daily-frame/DailyFrameReportCard';
 import { AppIcon } from "@/app/components/icons/appIcons";
-import { useFlowCoach } from '@/app/hooks/useFlowCoach';
-import { FlowTurningPoints } from '@/app/components/flows/FlowTurningPoints';
+import { useCompletedFlowCoach } from '@/app/hooks/useCompletedFlowCoach';
+import { FlowConversationTranscript } from '@/app/components/flows/FlowConversationTranscript';
+import { loadAuthorizedFlowCoachTurns } from '@/app/lib/flowCoachData';
 import { refreshCurrentWeeklyReflection } from "@/app/hooks/useWeeklyFlowReflection";
 import { waitForFlowAnalysis } from "@/app/lib/waitForFlowAnalysis";
 import { useQueryClient } from "@tanstack/react-query";
@@ -51,7 +51,6 @@ export default function FlowComplete() {
   const { profile } = useFlowProfile();
   const stats = useFlowStats();
   const { toast } = useToast();
-  const { reflections: coachReflections } = useFlowCoach(sessionId);
   const queryClient = useQueryClient();
   const celebrationShownRef = useRef(false);
   const reflectionRefreshSessionRef = useRef<string | null>(null);
@@ -63,6 +62,21 @@ export default function FlowComplete() {
   const [analyzing, setAnalyzing] = useState(false);
   const [analysisError, setAnalysisError] = useState<string | null>(null);
   const [generatingPDF, setGeneratingPDF] = useState(false);
+  const questions = useMemo<FlowQuestion[]>(() => {
+    if (!template?.questions_json) return [];
+    return (typeof template.questions_json === 'string'
+      ? JSON.parse(template.questions_json)
+      : template.questions_json) || [];
+  }, [template?.questions_json]);
+  const responses = useMemo<Record<string, string>>(
+    () => (session?.responses_json ?? {}) as Record<string, string>,
+    [session?.responses_json],
+  );
+  const { coachTurns: coachReflections } = useCompletedFlowCoach({
+    sessionId: session?.id,
+    questions,
+    responses,
+  });
 
   // Celebration effect for milestones and streaks
   useEffect(() => {
@@ -210,13 +224,14 @@ export default function FlowComplete() {
     
     setGeneratingPDF(true);
     try {
+      const currentCoachTurns = await loadAuthorizedFlowCoachTurns(session.id, questions, responses);
       await generateFlowPDF({
         session,
         template,
         questions,
         analysis,
         userName: profile?.preferred_name || undefined,
-        coachReflections,
+        coachReflections: currentCoachTurns,
       });
     } catch (err) {
       console.error('PDF generation error:', err);
@@ -255,29 +270,6 @@ export default function FlowComplete() {
   const declaredActions = parseExplicitDeclaredFlowActions(session.responses_json);
   const isDailyFrameFlow = template.slug === 'daily-frame';
   const dailyFrameCard = analysis?.daily_frame_card ?? null;
-  const questions: FlowQuestion[] = (typeof template.questions_json === 'string'
-    ? JSON.parse(template.questions_json)
-    : template.questions_json) || [];
-
-  const interpolatePrompt = (prompt: string): string => {
-    let result = prompt;
-    const matches = prompt.match(/\{([^}]+)\}/g);
-    if (matches && session.responses_json) {
-      matches.forEach((match) => {
-        const key = match.slice(1, -1);
-        const sourceQuestion = questions.find(
-          (q) => q.interpolation_key === key || q.id === key
-        );
-        const responses = session.responses_json as Record<string, string> | null;
-        if (sourceQuestion && responses && responses[sourceQuestion.id]) {
-          result = result.replace(match, responses[sourceQuestion.id]);
-        }
-      });
-    }
-    return result;
-  };
-
-  const responses = (session.responses_json ?? {}) as Record<string, string>;
 
   return (
     <div className="min-h-screen py-12 px-6">
@@ -484,68 +476,17 @@ export default function FlowComplete() {
         </Card>
         )}
 
-        <FlowTurningPoints
-          questions={questions}
-          responses={responses}
-          coachReflections={coachReflections}
-          interpolatePrompt={interpolatePrompt}
-        />
-
-        {/* Full Flow Q&A Section */}
+        {/* Chronological Flow and Coach conversation */}
         {questions.length > 0 && (
           <Card className="mb-6 border-border/10">
             <CardContent className="p-6">
-              <h2 className="font-medium text-lg mb-6">Your Flow Responses</h2>
-              <div className="space-y-6">
-                {questions.map((question) => {
-                  const response = responses[question.id];
-                  const coachTurn = coachReflections[question.id];
-                  const coachReflection = coachTurn?.reflection;
-                  if (!response) return null;
-
-                  return (
-                    <div key={question.id} className="border-b border-border/10 pb-6 last:border-0 last:pb-0">
-                      <p className="text-muted-foreground/70 text-sm mb-2">
-                        {interpolatePrompt(question.prompt)}
-                      </p>
-                      {isHtmlContent(response) ? (
-                        <div
-                          className="text-foreground leading-relaxed prose prose-sm dark:prose-invert max-w-none"
-                          dangerouslySetInnerHTML={{
-                            __html: DOMPurify.sanitize(response),
-                          }}
-                        />
-                      ) : (
-                        <p className="text-foreground leading-relaxed whitespace-pre-wrap">
-                          {response}
-                        </p>
-                      )}
-                      {coachReflection && (
-                        <div className="mt-4 border-l-2 border-[#2997FF] bg-[#2997FF]/5 px-4 py-3">
-                          <div className="mb-1 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-[#2997FF]">
-                            <Sparkles className="h-3.5 w-3.5" strokeWidth={1.5} />
-                            Flowing reflection
-                          </div>
-                          <p className="whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">
-                            {coachReflection}
-                          </p>
-                          {coachTurn?.probe && coachTurn.probe_answer && (
-                            <div className="mt-3 space-y-2 border-t border-[#2997FF]/20 pt-3">
-                              <p className="text-sm font-medium text-foreground">{coachTurn.probe}</p>
-                              <p className="whitespace-pre-wrap text-sm text-foreground/90">{coachTurn.probe_answer}</p>
-                              {coachTurn.resolution && (
-                                <p className="whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">
-                                  {coachTurn.resolution}
-                                </p>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+              <FlowConversationTranscript
+                questions={questions}
+                responses={responses}
+                coachTurns={coachReflections}
+                flowSlug={template.slug}
+                fallbackIcon={template.icon}
+              />
             </CardContent>
           </Card>
         )}

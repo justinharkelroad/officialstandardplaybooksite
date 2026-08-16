@@ -30,3 +30,8 @@
   submitted through `/aiinstall/ready`. Keep the ZIP README, pre-work pages,
   purchase email, confirmation form, and fulfillment tests aligned whenever
   this flow changes.
+- **Completed Flow transcripts must stay question-driven.** Render and export
+  each validated current Coach turn directly beneath the official answer for
+  its stable question ID, in reflection/follow-up/member-response/resolution
+  order. Never add a detached Coach summary loop or export from unvalidated
+  asynchronously cached Coach rows.

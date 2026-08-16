@@ -1,14 +1,9 @@
 import { cn } from '@/lib/utils';
 import { ReactNode } from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import DOMPurify from 'dompurify';
+import { SanitizedRichText } from '@/app/components/flows/SanitizedRichText';
 
-/** Returns true if the string looks like HTML content produced by the rich text editor.
- *  Only matches known block-level HTML tags to avoid false positives on
- *  strings like "<please help>" or "<john@example.com>". */
-export function isHtmlContent(text: string): boolean {
-  return /^<(p|h[1-6]|ul|ol|li|div|blockquote|br|hr)([\s>])/i.test(text.trim());
-}
+export { isHtmlContent } from '@/app/lib/savedRichText';
 
 interface ChatBubbleProps {
   children: ReactNode;
@@ -63,16 +58,11 @@ export function ChatBubble({
         )}
       >
         {html ? (
-          <div
-            className={cn(
-              "max-w-none [&_p]:my-1 [&_h2]:my-2 [&_h3]:my-2 [&_ul]:my-1 [&_ol]:my-1 [&_ul]:pl-5 [&_ol]:pl-5 [&_ul]:list-disc [&_ol]:list-decimal [&_h2]:text-lg [&_h2]:font-semibold [&_h3]:text-base [&_h3]:font-semibold [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:pl-3 [&_blockquote]:italic",
-              isIncoming
-                ? "prose prose-sm dark:prose-invert prose-headings:text-inherit prose-p:text-inherit prose-li:text-inherit prose-strong:text-inherit"
-                : "text-inherit"
-            )}
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(html),
-            }}
+          <SanitizedRichText
+            value={html}
+            className={isIncoming
+              ? 'prose-headings:text-inherit prose-p:text-inherit prose-li:text-inherit prose-strong:text-inherit'
+              : 'text-inherit'}
           />
         ) : (
           children

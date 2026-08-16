@@ -62,6 +62,10 @@ export function useFlowShare() {
         questions: params.questions,
         analysis: params.analysis,
         userName: params.userName,
+        // Public PDF links remain deliberately Coach-free. Direct member
+        // downloads re-read authorized Coach rows, but public sharing must not
+        // broaden the existing private Coach visibility boundary.
+        coachReflections: {},
       });
       const pdfBase64 = await blobToBase64(blob);
       const { data, error: functionError } = await supabase.functions.invoke('create_flow_share', {

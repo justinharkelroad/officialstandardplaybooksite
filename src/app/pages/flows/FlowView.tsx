@@ -9,7 +9,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { FlowReportCard } from '@/app/components/flows/FlowReportCard';
-import { useFlowCoach } from '@/app/hooks/useFlowCoach';
+import { useCompletedFlowCoach } from '@/app/hooks/useCompletedFlowCoach';
+import { loadAuthorizedFlowCoachTurns } from '@/app/lib/flowCoachData';
 import { waitForFlowAnalysis } from '@/app/lib/waitForFlowAnalysis';
 import { FlowShareButton } from '@/app/components/flows/FlowShareButton';
 import { isProfileFlowSlug } from '@/app/lib/flowProfileInterview';
@@ -19,7 +20,6 @@ export default function FlowView() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { profile } = useFlowProfile();
-  const { reflections: coachReflections } = useFlowCoach(sessionId);
   
   const [session, setSession] = useState<FlowSession | null>(null);
   const [template, setTemplate] = useState<FlowTemplate | null>(null);
@@ -28,6 +28,11 @@ export default function FlowView() {
   const [loading, setLoading] = useState(true);
   const [analyzing, setAnalyzing] = useState(false);
   const [generatingPDF, setGeneratingPDF] = useState(false);
+  const { coachTurns: coachReflections } = useCompletedFlowCoach({
+    sessionId: session?.id,
+    questions,
+    responses: session?.responses_json ?? {},
+  });
 
   // Check if current user is the owner of this flow
   const isOwner = session?.user_id === user?.id;
@@ -116,13 +121,18 @@ export default function FlowView() {
     
     setGeneratingPDF(true);
     try {
+      const currentCoachTurns = await loadAuthorizedFlowCoachTurns(
+        session.id,
+        questions,
+        session.responses_json ?? {},
+      );
       await generateFlowPDF({
         session,
         template,
         questions,
         analysis,
         userName: profile?.preferred_name || undefined,
-        coachReflections,
+        coachReflections: currentCoachTurns,
       });
     } catch (err) {
       console.error('PDF generation error:', err);

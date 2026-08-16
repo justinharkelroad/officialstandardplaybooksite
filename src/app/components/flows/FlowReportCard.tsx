@@ -16,12 +16,10 @@ import {
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { FlowSession, FlowTemplate, FlowQuestion, FlowAnalysis } from '@/app/types/flows';
-import { isHtmlContent } from '@/app/components/flows/ChatBubble';
-import DOMPurify from 'dompurify';
 import { parseExplicitDeclaredFlowActions } from '@/app/lib/declaredFlowActions';
 import { FlowTypeIcon } from '@/app/components/flows/FlowTypeIcon';
 import type { FlowCoachReflection } from '@/app/hooks/useFlowCoach';
-import { FlowTurningPoints } from '@/app/components/flows/FlowTurningPoints';
+import { FlowConversationTranscript } from '@/app/components/flows/FlowConversationTranscript';
 
 interface FlowReportCardProps {
   session: FlowSession;
@@ -51,26 +49,6 @@ export function FlowReportCard({
   publicShareButton,
 }: FlowReportCardProps) {
   const declaredActions = parseExplicitDeclaredFlowActions(session.responses_json);
-
-  // Interpolate prompt with responses
-  const interpolatePrompt = (prompt: string): string => {
-    let result = prompt;
-    const matches = prompt.match(/\{([^}]+)\}/g);
-    
-    if (matches && session?.responses_json) {
-      matches.forEach(match => {
-        const key = match.slice(1, -1);
-        const sourceQuestion = questions.find(
-          q => q.interpolation_key === key || q.id === key
-        );
-        if (sourceQuestion && session.responses_json[sourceQuestion.id]) {
-          result = result.replace(match, session.responses_json[sourceQuestion.id]);
-        }
-      });
-    }
-    
-    return result;
-  };
 
   return (
     <div className="space-y-6">
@@ -294,68 +272,13 @@ export function FlowReportCard({
         </Card>
       )}
 
-      <FlowTurningPoints
+      <FlowConversationTranscript
         questions={questions}
         responses={session.responses_json ?? {}}
-        coachReflections={coachReflections}
-        interpolatePrompt={interpolatePrompt}
+        coachTurns={coachReflections}
+        flowSlug={template.slug}
+        fallbackIcon={template.icon}
       />
-
-      {/* Q&A Section */}
-      <div className="space-y-6">
-        <h2 className="font-medium text-lg">
-          {isReadOnly ? 'Responses' : 'Your Responses'}
-        </h2>
-        
-        {questions.map((question) => {
-          const response = session.responses_json?.[question.id];
-          const coachTurn = coachReflections[question.id];
-          const coachReflection = coachTurn?.reflection;
-          if (!response) return null;
-          
-          return (
-            <div key={question.id} className="border-b border-border/10 pb-6 last:border-0">
-              <p className="text-muted-foreground/70 text-sm mb-2">
-                {interpolatePrompt(question.prompt)}
-              </p>
-              {isHtmlContent(response) ? (
-                <div
-                  className="text-foreground leading-relaxed prose prose-sm dark:prose-invert max-w-none"
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(response),
-                  }}
-                />
-              ) : (
-                <p className="text-foreground leading-relaxed whitespace-pre-wrap">
-                  {response}
-                </p>
-              )}
-              {coachReflection && (
-                <div className="mt-4 border-l-2 border-[#2997FF] bg-[#2997FF]/5 px-4 py-3">
-                  <div className="mb-1 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-[#2997FF]">
-                    <Sparkles className="h-3.5 w-3.5" strokeWidth={1.5} />
-                    Flowing reflection
-                  </div>
-                  <p className="whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">
-                    {coachReflection}
-                  </p>
-                  {coachTurn?.probe && coachTurn.probe_answer && (
-                    <div className="mt-3 space-y-2 border-t border-[#2997FF]/20 pt-3">
-                      <p className="text-sm font-medium text-foreground">{coachTurn.probe}</p>
-                      <p className="whitespace-pre-wrap text-sm text-foreground/90">{coachTurn.probe_answer}</p>
-                      {coachTurn.resolution && (
-                        <p className="whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">
-                          {coachTurn.resolution}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
     </div>
   );
 }

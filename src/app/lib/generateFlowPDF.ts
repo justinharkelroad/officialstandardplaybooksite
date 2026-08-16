@@ -1,56 +1,60 @@
 import jsPDF from 'jspdf';
 import { FlowSession, FlowTemplate, FlowQuestion, FlowAnalysis, FlowCoachTurn } from '@/app/types/flows';
 import { format } from 'date-fns';
-import { isHtmlContent } from '@/app/components/flows/ChatBubble';
 import { parseExplicitDeclaredFlowActions } from '@/app/lib/declaredFlowActions';
-import { selectFlowTurningPoints } from '@/app/lib/flowTurningPoints';
+import {
+  buildFlowConversation,
+  flowRichTextToPlainText,
+  formatPastFlowProvenance,
+} from '@/app/lib/flowConversation';
 
-interface GeneratePDFParams {
+export interface GeneratePDFParams {
   session: FlowSession;
   template: FlowTemplate;
   questions: FlowQuestion[];
   analysis: FlowAnalysis | null;
   userName?: string;
-  coachReflections?: Record<string, FlowCoachTurn>;
+  coachReflections: Record<string, FlowCoachTurn>;
 }
 
-// Strip HTML tags and decode common entities for plain-text contexts (e.g. PDF)
-function stripHtml(html: string): string {
-  // Use DOMParser when available (browser), otherwise regex fallback
-  if (typeof DOMParser !== 'undefined') {
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    // textContent alone smashes paragraphs together — walk block elements
-    // and insert newlines between them for readable plain text.
-    const blocks = doc.body.querySelectorAll('p, h1, h2, h3, h4, h5, h6, li, br, tr');
-    if (blocks.length > 0) {
-      const parts: string[] = [];
-      blocks.forEach((el) => {
-        const text = (el.textContent || '').trim();
-        if (el.tagName === 'BR') {
-          parts.push('');
-        } else if (text) {
-          parts.push(text);
-        }
-      });
-      return parts.join('\n').replace(/\n{3,}/g, '\n\n').trim();
-    }
-    // No block elements — fall through to textContent
-    return (doc.body.textContent || '').trim();
-  }
-  // Fallback: strip tags, then decode entities
-  return html
-    .replace(/<br\s*\/?>/gi, '\n')
-    .replace(/<\/p>/gi, '\n')
-    .replace(/<\/li>/gi, '\n')
-    .replace(/<[^>]*>/g, '')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&nbsp;/g, ' ')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim();
+interface FlowPDFConversationEntry {
+  prompt: string;
+  officialAnswer: string;
+  coachReflection: string | null;
+  coachFollowUp: string | null;
+  memberFollowUp: string | null;
+  coachResolution: string | null;
+  pastFlowProvenance: string[];
+}
+
+function buildFlowPDFConversationEntries({
+  session,
+  questions,
+  coachReflections,
+}: Pick<GeneratePDFParams, 'session' | 'questions' | 'coachReflections'>): FlowPDFConversationEntry[] {
+  return buildFlowConversation(
+    questions,
+    session.responses_json ?? {},
+    coachReflections,
+  ).map((turn) => ({
+    prompt: turn.prompt,
+    officialAnswer: flowRichTextToPlainText(turn.memberAnswer),
+    coachReflection: turn.coach?.reflection
+      ? flowRichTextToPlainText(turn.coach.reflection)
+      : null,
+    coachFollowUp: turn.coach?.probe
+      ? flowRichTextToPlainText(turn.coach.probe)
+      : null,
+    memberFollowUp: turn.coach?.probe_answer
+      ? flowRichTextToPlainText(turn.coach.probe_answer)
+      : null,
+    coachResolution: turn.coach?.resolution
+      ? flowRichTextToPlainText(turn.coach.resolution)
+      : null,
+    pastFlowProvenance: turn.coach
+      ? formatPastFlowProvenance(turn.coach.memory_refs).map(flowRichTextToPlainText)
+      : [],
+  }));
 }
 
 // Strip emojis from text since jsPDF doesn't support them
@@ -128,10 +132,10 @@ async function buildFlowPDFDoc({
   questions,
   analysis,
   userName,
-  coachReflections = {},
+  coachReflections,
 }: GeneratePDFParams): Promise<jsPDF> {
   const declaredActions = parseExplicitDeclaredFlowActions(session.responses_json);
-  const turningPoints = selectFlowTurningPoints(questions, session.responses_json ?? {}, coachReflections);
+  const conversation = buildFlowPDFConversationEntries({ session, questions, coachReflections });
   const doc = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
@@ -190,28 +194,6 @@ async function buildFlowPDFDoc({
     });
     
     return currentY;
-  };
-
-  // Interpolate prompt with responses
-  const interpolatePrompt = (prompt: string): string => {
-    let result = prompt;
-    const matches = prompt.match(/\{([^}]+)\}/g);
-    
-    if (matches && session.responses_json) {
-      matches.forEach(match => {
-        const key = match.slice(1, -1);
-        const sourceQuestion = questions.find(
-          q => q.interpolation_key === key || q.id === key
-        );
-        if (sourceQuestion && session.responses_json[sourceQuestion.id]) {
-          const val = session.responses_json[sourceQuestion.id];
-          // Strip HTML if the interpolated value is rich text
-          result = result.replace(match, isHtmlContent(val) ? stripHtml(val) : val);
-        }
-      });
-    }
-    
-    return result;
   };
 
   // ==================
@@ -493,56 +475,9 @@ async function buildFlowPDFDoc({
     yPosition += 6;
   }
 
-  if (turningPoints.length > 0) {
-    checkPageBreak(22);
-    doc.setFillColor(lightBg);
-    doc.roundedRect(margin, yPosition, contentWidth, 8, 2, 2, 'F');
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(textColor);
-    doc.text('Turning Points', margin + 4, yPosition + 5.5);
-    yPosition += 15;
-
-    turningPoints.forEach((turningPoint) => {
-      checkPageBreak(32);
-      yPosition = addWrappedText(
-        interpolatePrompt(turningPoint.prompt),
-        margin,
-        yPosition,
-        contentWidth,
-        4.5,
-        9,
-        'bold',
-        mutedColor,
-      );
-      yPosition += 1;
-      yPosition = addWrappedText(turningPoint.answer, margin, yPosition, contentWidth, 5, 9, 'normal', textColor);
-      yPosition += 2;
-      yPosition = addWrappedText(
-        `Flowing: ${turningPoint.coach.reflection}`,
-        margin + 3,
-        yPosition,
-        contentWidth - 3,
-        5,
-        9,
-        'normal',
-        mutedColor,
-      );
-      if (turningPoint.coach.probe && turningPoint.coach.probe_answer) {
-        yPosition += 2;
-        yPosition = addWrappedText(`Probe: ${turningPoint.coach.probe}`, margin + 3, yPosition, contentWidth - 3, 5, 9, 'bold', textColor);
-        yPosition = addWrappedText(`Answer: ${turningPoint.coach.probe_answer}`, margin + 3, yPosition, contentWidth - 3, 5, 9, 'normal', textColor);
-        if (turningPoint.coach.resolution) {
-          yPosition = addWrappedText(`Resolution: ${turningPoint.coach.resolution}`, margin + 3, yPosition, contentWidth - 3, 5, 9, 'normal', mutedColor);
-        }
-      }
-      yPosition += 8;
-    });
-  }
-
-  // ==================
-  // Q&A RESPONSES
-  // ==================
+  // ==========================
+  // FLOW + COACH CONVERSATION
+  // ==========================
   
   // Section header
   checkPageBreak(20);
@@ -551,49 +486,104 @@ async function buildFlowPDFDoc({
   doc.setFontSize(11);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(textColor);
-  doc.text('Your Responses', margin + 4, yPosition + 5.5);
+  doc.text('Your Flow Conversation', margin + 4, yPosition + 5.5);
   yPosition += 15;
 
-  // Questions and Answers
-  let questionNumber = 0;
-  questions.forEach((question) => {
-    const response = session.responses_json?.[question.id];
-    if (!response) return;
-    
-    questionNumber++;
-    checkPageBreak(30);
-
-    // Question
-    const interpolatedPrompt = interpolatePrompt(question.prompt);
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(mutedColor);
-    
-    const questionText = `${questionNumber}. ${stripEmojis(interpolatedPrompt)}`;
-    const questionLines = doc.splitTextToSize(questionText, contentWidth);
-    questionLines.forEach((line: string) => {
-      if (yPosition > pageHeight - 25) {
-        doc.addPage();
-        yPosition = margin;
-      }
-      doc.text(line, margin, yPosition);
-      yPosition += 4.5;
-    });
-    yPosition += 2;
-
-    // Answer — convert HTML to plain text for PDF rendering
-    const plainResponse = isHtmlContent(response) ? stripHtml(response) : response;
+  conversation.forEach((turn, index) => {
+    checkPageBreak(36);
     yPosition = addWrappedText(
-      plainResponse,
+      `${index + 1}. ${turn.prompt}`,
+      margin,
+      yPosition,
+      contentWidth,
+      4.5,
+      9,
+      'bold',
+      mutedColor,
+    );
+    yPosition += 2;
+    yPosition = addWrappedText(
+      `Official answer: ${turn.officialAnswer}`,
       margin,
       yPosition,
       contentWidth,
       5,
-      10,
+      9,
       'normal',
-      textColor
+      textColor,
     );
-    yPosition += 10;
+    yPosition += 3;
+
+    if (turn.coachReflection) {
+      yPosition = addWrappedText(
+        `Coach reflection: ${turn.coachReflection}`,
+        margin + 3,
+        yPosition,
+        contentWidth - 3,
+        5,
+        9,
+        'normal',
+        mutedColor,
+      );
+
+      if (turn.coachFollowUp && turn.memberFollowUp) {
+        yPosition += 2;
+        yPosition = addWrappedText(
+          `Coach follow-up: ${turn.coachFollowUp}`,
+          margin + 3,
+          yPosition,
+          contentWidth - 3,
+          5,
+          9,
+          'bold',
+          textColor,
+        );
+        yPosition = addWrappedText(
+          `Member follow-up: ${turn.memberFollowUp}`,
+          margin + 3,
+          yPosition,
+          contentWidth - 3,
+          5,
+          9,
+          'normal',
+          textColor,
+        );
+        if (turn.coachResolution) {
+          yPosition = addWrappedText(
+            `Coach resolution: ${turn.coachResolution}`,
+            margin + 3,
+            yPosition,
+            contentWidth - 3,
+            5,
+            9,
+            'normal',
+            mutedColor,
+          );
+        }
+      }
+
+      if (turn.pastFlowProvenance.length) {
+        yPosition = addWrappedText(
+          `Past-Flow provenance: ${turn.pastFlowProvenance.join(', ')}`,
+          margin + 3,
+          yPosition,
+          contentWidth - 3,
+          4.5,
+          8,
+          'normal',
+          mutedColor,
+        );
+      }
+    }
+
+    yPosition += 6;
+    if (index < conversation.length - 1) {
+      checkPageBreak(4);
+      doc.setDrawColor('#e5e7eb');
+      doc.setLineWidth(0.2);
+      doc.line(margin, yPosition, pageWidth - margin, yPosition);
+      yPosition += 7;
+    }
   });
 
   // ==================
@@ -623,6 +613,37 @@ async function buildFlowPDFDoc({
   }
 
   return doc;
+}
+
+export function buildFlowPDFConversationTextStream({
+  session,
+  questions,
+  coachReflections,
+}: Pick<GeneratePDFParams, 'session' | 'questions' | 'coachReflections'>): string[] {
+  const conversation = buildFlowPDFConversationEntries({ session, questions, coachReflections });
+
+  return [
+    'Your Flow Conversation',
+    ...conversation.flatMap((turn, index) => {
+      const lines = [
+        `${index + 1}. ${turn.prompt}`,
+        `Official answer: ${turn.officialAnswer}`,
+      ];
+      if (!turn.coachReflection) return lines;
+      lines.push(`Coach reflection: ${turn.coachReflection}`);
+      if (turn.coachFollowUp && turn.memberFollowUp) {
+        lines.push(`Coach follow-up: ${turn.coachFollowUp}`);
+        lines.push(`Member follow-up: ${turn.memberFollowUp}`);
+        if (turn.coachResolution) {
+          lines.push(`Coach resolution: ${turn.coachResolution}`);
+        }
+      }
+      if (turn.pastFlowProvenance.length) {
+        lines.push(`Past-Flow provenance: ${turn.pastFlowProvenance.join(', ')}`);
+      }
+      return lines;
+    }),
+  ];
 }
 
 // Build a safe download filename for a flow PDF.
