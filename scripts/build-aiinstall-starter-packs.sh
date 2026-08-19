@@ -43,6 +43,10 @@ cp "$source_root/codex/AGENTS-STARTER.md" "$legacy_stage/AGENTS-STARTER.md"
   zip -X -q -r "$output_root/ai-install-starter-pack.zip" .
 )
 
+# Keep the legacy shared pack at the short public URL for existing links.
+# The platform pre-work pages use the track-specific packs above.
+cp "$output_root/ai-install-starter-pack.zip" "$output_root/starter-pack.zip"
+
 claude_pack="$output_root/ai-install-claude-starter-pack.zip"
 codex_pack="$output_root/ai-install-codex-starter-pack.zip"
 

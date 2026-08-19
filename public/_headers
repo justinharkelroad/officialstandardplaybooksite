@@ -10,6 +10,15 @@
 /llms-full.txt
   Content-Type: text/plain; charset=utf-8
 
+/aiinstall/starter-pack.zip
+  Content-Type: application/zip
+
+/aiinstall/ai-install-claude-starter-pack.zip
+  Content-Type: application/zip
+
+/aiinstall/ai-install-codex-starter-pack.zip
+  Content-Type: application/zip
+
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff

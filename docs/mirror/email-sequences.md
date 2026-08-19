@@ -1072,4 +1072,4 @@ Before any of this gets loaded into Brevo, read through each tier's sequence end
 4. **The Established split (Email 6)** — comfortable with the conditional rendering by weakest_pillar, or want it as two separate sequences in Brevo?
 5. **Elite at 5 emails vs 7** — fine to keep Elite shorter, or would you rather match the 7-email arc across all tiers for consistency?
 
-Once approved, the email content + Brevo merge tag spec is shippable to whoever wires up the Brevo automation (you, or as a side task for Claude Code).
+Once approved, the email content + Brevo merge tag spec is shippable to whoever wires up the Brevo automation (you, or as a side task for Cowork).

@@ -418,5 +418,5 @@ This audit evaluates Generative Engine Optimization (GEO) readiness — how well
 
 ---
 
-*Report generated March 10, 2026 by Claude Code GEO Audit Tool*
+*Report generated March 10, 2026 by Cowork GEO Audit Tool*
 *The Standard Playbook — https://standardplaybook.com*

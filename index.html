@@ -62,6 +62,7 @@
 
     <!-- Meta Pixel Code -->
     <script>
+    if (!window.location.pathname.startsWith('/aiinstall/prework/')) {
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -72,6 +73,7 @@
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1543875540296120');
     fbq('track', 'PageView');
+    }
     </script>
 
     <!-- Structured Data: ProfessionalService -->
@@ -258,7 +260,14 @@
     /></noscript>
     <div id="root"></div>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script type="module">
+      if (!window.location.pathname.startsWith('/aiinstall/prework/')) {
+        const gptEngineer = document.createElement('script');
+        gptEngineer.src = 'https://cdn.gpteng.co/gptengineer.js';
+        gptEngineer.type = 'module';
+        document.body.appendChild(gptEngineer);
+      }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

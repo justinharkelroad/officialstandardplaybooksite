@@ -2,7 +2,7 @@
 
 **To:** [Design lead / agency on the rebrand]
 **From:** Justin Harkelroad
-**Purpose:** Lock the V2 brand guide as operational by pulling exact specs from the design source. Everything below is currently estimated from screenshot analysis and needs canonical confirmation before the guide can be used to brief Claude Code, build lead magnet pages, or hand to vendors.
+**Purpose:** Lock the V2 brand guide as operational by pulling exact specs from the design source. Everything below is currently estimated from screenshot analysis and needs canonical confirmation before the guide can be used to brief Cowork, build lead magnet pages, or hand to vendors.
 
 **How to respond:** Fill in the blanks inline, attach source files where requested, send back as a single doc or thread. Don't worry about re-organizing — the structure here is just to make it easy to fill in.
 

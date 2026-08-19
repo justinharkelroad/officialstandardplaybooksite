@@ -1,6 +1,6 @@
 # GEO Compliance Implementation Prompt
 
-> Paste this prompt into Claude Code from inside your project directory (with GEO-AUDIT-REPORT.md present).
+> Paste this prompt into Cowork from inside your project directory (with GEO-AUDIT-REPORT.md present).
 
 ---
 
@@ -341,4 +341,4 @@ These require logging into external platforms. Do them in parallel with Phase 2-
 - [ ] **Reddit** — Begin genuine participation in r/entrepreneur, r/insurance, r/sales
 - [ ] **Collect from clients:** 8-12 testimonials with full names, companies, and specific measurable outcomes
 
-Once you create LinkedIn, YouTube, Facebook, etc. — give the URLs to Claude Code so it can update the sameAs schema array and llms.txt.
+Once you create LinkedIn, YouTube, Facebook, etc. — give the URLs to Cowork so it can update the sameAs schema array and llms.txt.

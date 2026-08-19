@@ -1,6 +1,6 @@
 # /mirror Lead Magnet — Build Spec
 
-**Status:** Spec locked from strategy conversation, May 2026. Ready to hand to Claude Code.
+**Status:** Spec locked from strategy conversation, May 2026. Ready to hand to Cowork.
 **Repo:** `/Users/standardmacbook/officialstandardplaybooksite`
 **Reference page for visual pattern:** `src/pages/BoldMockup.tsx` (homepage) and `src/pages/BoldDirective.tsx` (single-program landing template)
 **Brand reference:** `brand-guide-v2.md` (paper / ink / blue / red bold editorial system)
@@ -403,7 +403,7 @@ The results page CTA + the email sequence branch route based on tier × weakest 
 
 ## Open Items Before Build
 
-These are still owed before Claude Code can build cleanly:
+These are still owed before Cowork can build cleanly:
 
 1. **Newsletter capture infrastructure decision** — Supabase confirmed as the destination? Or external (GHL, Mailchimp, Beehiiv)?
 2. **Diagnostic matrix copy** — 25 cells (5 tiers × 5 pillars) of interpretive paragraph for the results page weakest-pillar callout.

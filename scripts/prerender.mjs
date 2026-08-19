@@ -17,7 +17,7 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = join(__dirname, '..', 'dist');
 
-// Routes to prerender — all public-facing pages
+// Routes to prerender: all public-facing pages
 const ROUTES = [
   '/',
   '/boardroom',
@@ -29,10 +29,12 @@ const ROUTES = [
   '/callscoring',
   '/calls',
   '/the-challenge',
-  // '/app' excluded — AppRedirect immediately navigates to external URL
+  // '/app' excluded: AppRedirect immediately navigates to external URL
   '/appinfo',
   '/thetool',
   '/aiinstall',
+  '/aiinstall/prework/claude',
+  '/aiinstall/prework/codex',
   '/about',
   '/contact',
   '/decision',
@@ -62,9 +64,14 @@ const MIME_TYPES = {
   '.ttf': 'font/ttf',
   '.txt': 'text/plain',
   '.xml': 'application/xml',
+  '.zip': 'application/zip',
 };
 
 function createStaticServer(dir) {
+  // Keep one raw app shell for every client-side route. Otherwise a route
+  // rendered earlier in this same run can become the shell for later routes.
+  const appShell = readFileSync(join(dir, 'index.html'));
+
   return createServer((req, res) => {
     const urlPath = req.url.split('?')[0];
     let filePath = join(dir, urlPath);
@@ -78,19 +85,11 @@ function createStaticServer(dir) {
       return;
     }
 
-    // Try path/index.html
-    const indexPath = join(filePath, 'index.html');
-    if (existsSync(indexPath)) {
+    // Client-side routes always receive the raw app shell. This also avoids
+    // serving stale nested index files left by an earlier prerender run.
+    if (!extname(urlPath)) {
       res.writeHead(200, { 'Content-Type': 'text/html' });
-      res.end(readFileSync(indexPath));
-      return;
-    }
-
-    // SPA fallback — serve root index.html
-    const rootIndex = join(dir, 'index.html');
-    if (existsSync(rootIndex)) {
-      res.writeHead(200, { 'Content-Type': 'text/html' });
-      res.end(readFileSync(rootIndex));
+      res.end(appShell);
       return;
     }
 
@@ -160,8 +159,20 @@ async function prerender() {
         mkdirSync(outputDir, { recursive: true });
       }
 
-      writeFileSync(outputPath, html);
-      console.log(`  [OK] ${route} → ${outputPath.replace(DIST, 'dist')}`);
+      const outputHtml = route.startsWith('/aiinstall/prework/')
+        ? html
+          .replace(
+            /<script\b[^>]*src="https:\/\/connect\.facebook\.net\/[^\"]*"[^>]*><\/script>/g,
+            '',
+          )
+          .replace(
+            /<script\b[^>]*src="https:\/\/cdn\.gpteng\.co\/[^\"]*"[^>]*><\/script>/g,
+            '',
+          )
+          .replace(/\u00b7/g, '&middot;')
+        : html;
+      writeFileSync(outputPath, outputHtml);
+      console.log(`  [OK] ${route} -> ${outputPath.replace(DIST, 'dist')}`);
       success++;
 
       await page.close();
