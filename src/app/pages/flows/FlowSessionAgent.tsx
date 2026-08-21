@@ -54,6 +54,7 @@ import { DeclaredFlowAction, getDeclaredFlowActionKey } from '@/app/lib/declared
 import { BibleScriptureContext, saveFlowAgentResponses } from '@/app/lib/flowAgentApi';
 import { isProfileFlowSlug } from '@/app/lib/flowProfileInterview';
 import { interpolateFlowPrompt } from '@/app/lib/flowPromptInterpolation';
+import { shouldFollowFlowTranscript } from '@/app/lib/flowTranscriptScroll';
 import { toast } from 'sonner';
 
 const TEXT_INPUT_QUESTION: FlowQuestion = {
@@ -755,7 +756,10 @@ export function FlowSessionAgentBase({
   );
   const transcriptRef = useRef<HTMLElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
-  const isTranscriptNearBottomRef = useRef(true);
+  const shouldAutoFollowTranscriptRef = useRef(true);
+  const previousTranscriptScrollTopRef = useRef(0);
+  const transcriptScrollFrameRef = useRef<number | null>(null);
+  const transcriptTouchYRef = useRef<number | null>(null);
   const initialPostFlowActionRef = useRef<string | null>(null);
   const addingToPlaybookRef = useRef(false);
   const profileCompletionRedirectedRef = useRef(false);
@@ -831,22 +835,70 @@ export function FlowSessionAgentBase({
 
   const scrollTranscriptToBottom = useCallback((behavior: ScrollBehavior = 'smooth') => {
     if (mode === 'voice' && !isCompleted) return;
-    if (!isTranscriptNearBottomRef.current) return;
+    if (!shouldAutoFollowTranscriptRef.current) return;
 
-    window.requestAnimationFrame(() => {
-      if (!isTranscriptNearBottomRef.current) return;
+    if (transcriptScrollFrameRef.current !== null) {
+      window.cancelAnimationFrame(transcriptScrollFrameRef.current);
+    }
+
+    transcriptScrollFrameRef.current = window.requestAnimationFrame(() => {
+      transcriptScrollFrameRef.current = null;
+      if (!shouldAutoFollowTranscriptRef.current) return;
       const transcript = transcriptRef.current;
       if (!transcript) return;
       transcript.scrollTo({ top: transcript.scrollHeight, behavior });
     });
   }, [isCompleted, mode]);
 
+  const pauseTranscriptAutoFollow = useCallback(() => {
+    shouldAutoFollowTranscriptRef.current = false;
+    if (transcriptScrollFrameRef.current !== null) {
+      window.cancelAnimationFrame(transcriptScrollFrameRef.current);
+      transcriptScrollFrameRef.current = null;
+    }
+  }, []);
+
   const handleTranscriptScroll = useCallback(() => {
     const transcript = transcriptRef.current;
     if (!transcript) return;
 
-    const distanceFromBottom = transcript.scrollHeight - transcript.scrollTop - transcript.clientHeight;
-    isTranscriptNearBottomRef.current = distanceFromBottom < 100;
+    shouldAutoFollowTranscriptRef.current = shouldFollowFlowTranscript({
+      following: shouldAutoFollowTranscriptRef.current,
+      previousScrollTop: previousTranscriptScrollTopRef.current,
+      scrollTop: transcript.scrollTop,
+      scrollHeight: transcript.scrollHeight,
+      clientHeight: transcript.clientHeight,
+    });
+    previousTranscriptScrollTopRef.current = transcript.scrollTop;
+  }, []);
+
+  const handleTranscriptWheel = useCallback((event: React.WheelEvent<HTMLElement>) => {
+    if (event.deltaY < 0) pauseTranscriptAutoFollow();
+  }, [pauseTranscriptAutoFollow]);
+
+  const handleTranscriptTouchStart = useCallback((event: React.TouchEvent<HTMLElement>) => {
+    transcriptTouchYRef.current = event.touches[0]?.clientY ?? null;
+  }, []);
+
+  const handleTranscriptTouchMove = useCallback((event: React.TouchEvent<HTMLElement>) => {
+    const nextTouchY = event.touches[0]?.clientY;
+    const previousTouchY = transcriptTouchYRef.current;
+    if (nextTouchY === undefined) return;
+
+    if (previousTouchY !== null && nextTouchY > previousTouchY + 2) {
+      pauseTranscriptAutoFollow();
+    }
+    transcriptTouchYRef.current = nextTouchY;
+  }, [pauseTranscriptAutoFollow]);
+
+  const handleTranscriptTouchEnd = useCallback(() => {
+    transcriptTouchYRef.current = null;
+  }, []);
+
+  useEffect(() => () => {
+    if (transcriptScrollFrameRef.current !== null) {
+      window.cancelAnimationFrame(transcriptScrollFrameRef.current);
+    }
   }, []);
 
   const markStreamingMessageComplete = useCallback((messageId: string) => {
@@ -1237,6 +1289,11 @@ export function FlowSessionAgentBase({
       <main
         ref={transcriptRef}
         onScroll={handleTranscriptScroll}
+        onWheel={handleTranscriptWheel}
+        onTouchStart={handleTranscriptTouchStart}
+        onTouchMove={handleTranscriptTouchMove}
+        onTouchEnd={handleTranscriptTouchEnd}
+        onTouchCancel={handleTranscriptTouchEnd}
         className="min-h-0 flex-1 overflow-y-auto overscroll-contain scroll-pb-32"
       >
         <div className={cn(
