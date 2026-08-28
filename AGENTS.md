@@ -34,6 +34,8 @@
   put the consumable Supabase Auth action link directly in an attendee email.
   Route the generated hashed token to `/aiinstall/portal` in the URL fragment
   and require an explicit human confirmation before calling `verifyOtp`.
+  Password sign-in must remain the primary portal path; verified email is only
+  for first-time password setup and password recovery.
 - **Completed Flow transcripts must stay question-driven.** Render and export
   each validated current Coach turn directly beneath the official answer for
   its stable question ID, in reflection/follow-up/member-response/resolution

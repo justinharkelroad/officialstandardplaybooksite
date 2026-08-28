@@ -233,20 +233,20 @@ function buildPortalMagicLinkHtml(
 ): string {
   const firstName = access.full_name?.trim().split(/\s+/)[0] || "there";
   return buildEmailHtml({
-    title: "Your Agency AI Install access",
+    title: "Set up your Agency AI Install password",
     eyebrow: "PRIVATE WORKSHOP PORTAL",
     footerName: BRAND.name,
     bodyContent: `
       ${EmailComponents.paragraph(`${escapeHtml(firstName)},`)}
       ${
       EmailComponents.paragraph(
-        "Use the secure link below to open both workshop replays and your AI Install resources.",
+        "Use the secure link below to create or reset the password for your private workshop portal.",
       )
     }
-      ${EmailComponents.button("Open the portal", verificationUrl)}
+      ${EmailComponents.button("Set up portal password", verificationUrl)}
       ${
       EmailComponents.infoText(
-        "On the next screen, select Confirm and open portal. This extra step prevents automated email security checks from using your one-time access.",
+        "On the next screen, select Confirm email, then create your password. This extra step prevents automated email security checks from using your one-time setup.",
       )
     }
     `,
@@ -288,7 +288,7 @@ export async function sendPortalMagicLink(
       body: JSON.stringify({
         from: BRAND.fromEmail,
         to: access.email,
-        subject: "Your Agency AI Install sign-in link",
+        subject: "Set up your Agency AI Install portal password",
         html: buildPortalMagicLinkHtml(access, verificationUrl),
       }),
     });

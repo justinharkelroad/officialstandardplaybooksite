@@ -38,7 +38,11 @@ import {
   type AiInstallPortalPreworkResource,
   type AiInstallPortalResource,
 } from "@/lib/aiInstallPortalResources";
-import { parseAiInstallPortalToken } from "@/lib/aiInstallPortalAuth";
+import {
+  AI_INSTALL_PORTAL_MIN_PASSWORD_LENGTH,
+  parseAiInstallPortalToken,
+  validateAiInstallPortalPassword,
+} from "@/lib/aiInstallPortalAuth";
 
 import "./AIInstallPortal.css";
 
@@ -109,6 +113,10 @@ export default function AIInstallPortal() {
 
 function PortalVerification({ token }: { token: string }) {
   const [verifying, setVerifying] = useState(false);
+  const [verified, setVerified] = useState(false);
+  const [password, setPassword] = useState("");
+  const [confirmation, setConfirmation] = useState("");
+  const [updating, setUpdating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const verify = async (event: FormEvent) => {
@@ -123,14 +131,37 @@ function PortalVerification({ token }: { token: string }) {
       });
       if (verifyError) throw verifyError;
       if (!data.session) throw new Error("The secure sign-in did not create a session.");
-      window.location.replace("/aiinstall/portal");
+      window.history.replaceState({}, "", "/aiinstall/portal");
+      setVerified(true);
+      setVerifying(false);
     } catch (verifyError) {
       setError(
         verifyError instanceof Error
           ? verifyError.message
-          : "This sign-in link is no longer valid. Request a fresh email below.",
+          : "This setup link is no longer valid. Request a fresh email below.",
       );
       setVerifying(false);
+    }
+  };
+
+  const createPassword = async (event: FormEvent) => {
+    event.preventDefault();
+    setError(null);
+
+    const validationError = validateAiInstallPortalPassword(password, confirmation);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setUpdating(true);
+    try {
+      const { error: updateError } = await supabase.auth.updateUser({ password });
+      if (updateError) throw updateError;
+      window.location.replace("/aiinstall/portal");
+    } catch (updateError) {
+      setError(updateError instanceof Error ? updateError.message : "Could not save your password.");
+      setUpdating(false);
     }
   };
 
@@ -147,31 +178,74 @@ function PortalVerification({ token }: { token: string }) {
         <section className="aip-access-dialog" aria-labelledby="portal-verify-title">
           <div className="aip-access-mark"><ShieldCheck size={22} strokeWidth={1.8} /></div>
           <p className="aip-label">Secure attendee access</p>
-          <h1 id="portal-verify-title">One last step.<br /><em>Open your portal.</em></h1>
+          <h1 id="portal-verify-title">
+            {verified ? <>Create your<br /><em>password.</em></> : <>Confirm your<br /><em>email.</em></>}
+          </h1>
 
-          <form className="aip-confirm" onSubmit={verify}>
-            <p>
-              Confirm below to finish signing in. This extra step keeps automated email security checks from using your one-time access.
-            </p>
-            <button type="submit" disabled={verifying}>
-              {verifying ? "Opening portal" : "Confirm and open portal"}
-              {!verifying && <ChevronRight size={18} />}
-            </button>
-            {error && <p className="aip-form-error" role="alert">{error}</p>}
-            {error && (
-              <button
-                type="button"
-                className="aip-text-button"
-                onClick={() => window.location.replace("/aiinstall/portal")}
-              >
-                Request a fresh email <ChevronRight size={15} />
+          {verified ? (
+            <form className="aip-access-form" onSubmit={createPassword}>
+              <p className="aip-form-intro">
+                Use this password for quick portal access from now on. The email setup link also works if you ever forget it.
+              </p>
+              <div className="aip-field">
+                <label htmlFor="portal-new-password">Create password</label>
+                <input
+                  id="portal-new-password"
+                  type="password"
+                  autoComplete="new-password"
+                  minLength={AI_INSTALL_PORTAL_MIN_PASSWORD_LENGTH}
+                  required
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+              </div>
+              <div className="aip-field">
+                <label htmlFor="portal-confirm-password">Confirm password</label>
+                <input
+                  id="portal-confirm-password"
+                  type="password"
+                  autoComplete="new-password"
+                  minLength={AI_INSTALL_PORTAL_MIN_PASSWORD_LENGTH}
+                  required
+                  value={confirmation}
+                  onChange={(event) => setConfirmation(event.target.value)}
+                />
+              </div>
+              <button type="submit" className="aip-primary-button" disabled={updating}>
+                {updating ? "Saving password" : "Save password and open portal"}
+                {!updating && <ChevronRight size={18} />}
               </button>
-            )}
-          </form>
+              {error && <p className="aip-form-error" role="alert">{error}</p>}
+            </form>
+          ) : (
+            <form className="aip-confirm" onSubmit={verify}>
+              <p>
+                Confirm below before creating your password. This extra step keeps automated email security checks from using your one-time setup link.
+              </p>
+              <button type="submit" disabled={verifying}>
+                {verifying ? "Confirming email" : "Confirm email"}
+                {!verifying && <ChevronRight size={18} />}
+              </button>
+              {error && <p className="aip-form-error" role="alert">{error}</p>}
+              {error && (
+                <button
+                  type="button"
+                  className="aip-text-button"
+                  onClick={() => window.location.replace("/aiinstall/portal")}
+                >
+                  Request a fresh email <ChevronRight size={15} />
+                </button>
+              )}
+            </form>
+          )}
 
           <div className="aip-access-foot">
             <ShieldCheck size={17} />
-            <span>Your one-time access is verified only after you select the button above.</span>
+            <span>
+              {verified
+                ? "Your verified email is used only for first-time setup and password recovery."
+                : "Your one-time setup is verified only after you select the button above."}
+            </span>
           </div>
         </section>
       </main>
@@ -192,12 +266,38 @@ function PortalLoading() {
 }
 
 function PortalGate({ signedInButDenied, error }: { signedInButDenied: boolean; error: string | null }) {
+  const [mode, setMode] = useState<"password" | "email">("password");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
-  const submit = async (event: FormEvent) => {
+  const signIn = async (event: FormEvent) => {
+    event.preventDefault();
+    setSubmitting(true);
+    setFormError(null);
+    try {
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password,
+      });
+      if (signInError || !data.session) {
+        throw new Error(
+          "Email or password not recognized. If this is your first visit, use email setup below.",
+        );
+      }
+    } catch (signInError) {
+      setFormError(
+        signInError instanceof Error ? signInError.message : "Could not sign in with that email and password.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const requestSetupEmail = async (event: FormEvent) => {
     event.preventDefault();
     setSending(true);
     setFormError(null);
@@ -209,6 +309,12 @@ function PortalGate({ signedInButDenied, error }: { signedInButDenied: boolean; 
     } finally {
       setSending(false);
     }
+  };
+
+  const switchMode = (nextMode: "password" | "email") => {
+    setMode(nextMode);
+    setSent(false);
+    setFormError(null);
   };
 
   const signOut = async () => {
@@ -238,21 +344,24 @@ function PortalGate({ signedInButDenied, error }: { signedInButDenied: boolean; 
                 Use a different email <ChevronRight size={15} />
               </button>
             </div>
-          ) : sent ? (
+          ) : mode === "email" && sent ? (
             <div className="aip-sent" role="status">
               <span><Check size={18} /></span>
               <div>
                 <strong>Check your inbox.</strong>
-                <p>If {email.trim()} has access, your secure sign-in link is on the way.</p>
+                <p>If {email.trim()} has access, your secure password setup link is on the way.</p>
               </div>
               <button type="button" className="aip-text-button" onClick={() => setSent(false)}>
                 Try another email
               </button>
             </div>
           ) : (
-            <form className="aip-access-form" onSubmit={submit}>
-              <label htmlFor="portal-email">Email used for your AI Install seat</label>
-              <div className="aip-input-row">
+            <form
+              className="aip-access-form"
+              onSubmit={mode === "password" ? signIn : requestSetupEmail}
+            >
+              <div className="aip-field">
+                <label htmlFor="portal-email">Email used for your AI Install seat</label>
                 <input
                   id="portal-email"
                   type="email"
@@ -262,18 +371,47 @@ function PortalGate({ signedInButDenied, error }: { signedInButDenied: boolean; 
                   onChange={(event) => setEmail(event.target.value)}
                   placeholder="you@youragency.com"
                 />
-                <button type="submit" disabled={sending}>
-                  {sending ? "Sending" : "Email my access"}
-                  {!sending && <ChevronRight size={18} />}
-                </button>
               </div>
+              {mode === "password" && (
+                <div className="aip-field">
+                  <label htmlFor="portal-password">Password</label>
+                  <input
+                    id="portal-password"
+                    type="password"
+                    autoComplete="current-password"
+                    required
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                  />
+                </div>
+              )}
+              <button
+                type="submit"
+                className="aip-primary-button"
+                disabled={mode === "password" ? submitting : sending}
+              >
+                {mode === "password"
+                  ? (submitting ? "Signing in" : "Sign in")
+                  : (sending ? "Sending" : "Email setup link")}
+                {!(mode === "password" ? submitting : sending) && <ChevronRight size={18} />}
+              </button>
               {formError && <p className="aip-form-error" role="alert">{formError}</p>}
+              <button
+                type="button"
+                className="aip-text-button aip-mode-switch"
+                onClick={() => switchMode(mode === "password" ? "email" : "password")}
+              >
+                {mode === "password"
+                  ? "First visit or forgot your password? Email setup"
+                  : "Back to password sign in"}
+                <ChevronRight size={15} />
+              </button>
             </form>
           )}
 
           <div className="aip-access-foot">
             <ShieldCheck size={17} />
-            <span>No password. Access is tied to an approved email address.</span>
+            <span>Password sign-in is standard. Verified email is only for setup and recovery.</span>
           </div>
         </section>
       </main>

@@ -13,7 +13,7 @@ import {
 
 const GENERIC_RESPONSE = {
   ok: true,
-  message: "If that email has access, a secure sign-in link is on the way.",
+  message: "If that email has access, a secure password setup link is on the way.",
 };
 
 const LINK_COOLDOWN_MS = 60_000;

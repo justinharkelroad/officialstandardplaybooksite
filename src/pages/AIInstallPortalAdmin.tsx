@@ -161,7 +161,7 @@ function AdminWorkspace() {
       } else if (action === "resend") {
         const result = await resendAiInstallPortalLink(row.id);
         if (result.magic_link?.status === "sent") setNotice(`A fresh link was sent to ${row.email}.`);
-        else throw new Error(result.magic_link?.error ?? "The sign-in link was not sent.");
+        else throw new Error(result.magic_link?.error ?? "The password setup link was not sent.");
       } else {
         await resetAiInstallPortalActivity(row.id);
         setNotice(`${row.email} activity reset.`);
@@ -250,7 +250,7 @@ function AdminWorkspace() {
                       <td>{row.testimonial ? <button type="button" className="aipa-review-video" disabled={busyId !== null} onClick={() => void reviewTestimonial(row)}><Video size={14} />{busyId === `${row.id}:testimonial` ? "Opening" : "Review"}<small>{formatDate(row.testimonial.submitted_at)}</small></button> : <span className="aipa-muted">Not submitted</span>}</td>
                       <td>
                         <div className="aipa-row-actions">
-                          <button type="button" disabled={!row.is_active || busyId !== null} onClick={() => void mutate(row, "resend")} title="Resend sign-in link"><Mail size={15} />{busyId === `${row.id}:resend` ? "Sending" : "Resend"}</button>
+                          <button type="button" disabled={!row.is_active || busyId !== null} onClick={() => void mutate(row, "resend")} title="Resend password setup link"><Mail size={15} />{busyId === `${row.id}:resend` ? "Sending" : "Resend"}</button>
                           <button type="button" disabled={busyId !== null} onClick={() => void mutate(row, "reset")} className="is-reset" title="Clear tracked activity"><RotateCcw size={15} />{busyId === `${row.id}:reset` ? "Clearing" : "Reset"}</button>
                           <button type="button" disabled={busyId !== null} onClick={() => void mutate(row, "toggle")} className={row.is_active ? "is-danger" : ""} title={row.is_active ? "Revoke access" : "Reactivate access"}>{row.is_active ? <ShieldOff size={15} /> : <Link2 size={15} />}{busyId === `${row.id}:toggle` ? "Saving" : row.is_active ? "Revoke" : "Activate"}</button>
                         </div>
@@ -343,7 +343,7 @@ function BulkInviteForm({ onCompleted }: { onCompleted: (message: string) => Pro
       try {
         const result = await sendBulkInvite(invite);
         if (result.magic_link?.status !== "sent") {
-          throw new Error(result.magic_link?.error ?? "The sign-in link was not sent.");
+          throw new Error(result.magic_link?.error ?? "The password setup link was not sent.");
         }
         outcome = { email: invite.email, status: "sent" };
       } catch (sendError) {
@@ -477,7 +477,7 @@ function GrantAccessForm({ onGranted, onError }: { onGranted: (message: string) 
       if (result.magic_link?.status !== "sent") throw new Error(result.magic_link?.error ?? "Access was created, but the email was not sent.");
       const grantedEmail = email.trim();
       setEmail(""); setFullName(""); setExpiresAt("");
-      await onGranted(`Access granted and sign-in link sent to ${grantedEmail}.`);
+      await onGranted(`Access granted and password setup link sent to ${grantedEmail}.`);
     } catch (grantError) {
       onError(grantError instanceof Error ? grantError.message : "Could not grant access.");
     } finally {
