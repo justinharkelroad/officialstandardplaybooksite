@@ -8,6 +8,7 @@ import {
   LockKeyhole,
   Mail,
   RefreshCcw,
+  RotateCcw,
   Send,
   ShieldOff,
   Square,
@@ -24,6 +25,7 @@ import {
   grantAiInstallPortalAccess,
   loadAiInstallPortalAdminRows,
   resendAiInstallPortalLink,
+  resetAiInstallPortalActivity,
   setAiInstallPortalAccessActive,
   type AiInstallPortalAdminRow,
   type AiInstallPortalPlatform,
@@ -102,7 +104,11 @@ function AdminWorkspace() {
   const loggedInCount = (rows ?? []).filter((row) => row.first_login_at).length;
   const readyCount = (rows ?? []).filter((row) => row.ready_submitted_at).length;
 
-  const mutate = async (row: AiInstallPortalAdminRow, action: "toggle" | "resend") => {
+  const mutate = async (row: AiInstallPortalAdminRow, action: "toggle" | "resend" | "reset") => {
+    if (action === "reset" && !window.confirm(
+      `Clear all tracked activity for ${row.email}? This removes portal sessions, video progress, downloads, and readiness status. Their access and invite history will remain.`,
+    )) return;
+
     setBusyId(`${row.id}:${action}`);
     setError(null);
     setNotice(null);
@@ -110,10 +116,13 @@ function AdminWorkspace() {
       if (action === "toggle") {
         await setAiInstallPortalAccessActive(row.id, !row.is_active);
         setNotice(`${row.email} ${row.is_active ? "revoked" : "reactivated"}.`);
-      } else {
+      } else if (action === "resend") {
         const result = await resendAiInstallPortalLink(row.id);
         if (result.magic_link?.status === "sent") setNotice(`A fresh link was sent to ${row.email}.`);
         else throw new Error(result.magic_link?.error ?? "The sign-in link was not sent.");
+      } else {
+        await resetAiInstallPortalActivity(row.id);
+        setNotice(`${row.email} activity reset.`);
       }
       await refresh();
     } catch (actionError) {
@@ -183,7 +192,7 @@ function AdminWorkspace() {
                     <tr key={row.id} className={!row.is_active ? "is-revoked" : ""}>
                       <td><strong>{row.full_name || "Name not added"}</strong><a href={`mailto:${row.email}`}>{row.email}</a></td>
                       <td><span className={`aipa-status ${row.is_active ? "is-on" : "is-off"}`}>{row.is_active ? "Active" : "Revoked"}</span><small>{platformName(row.platform)}</small></td>
-                      <td><strong>{row.first_login_at ? `${row.login_count} visit${row.login_count === 1 ? "" : "s"}` : "Never opened"}</strong><small>{row.last_login_at ? formatDate(row.last_login_at) : linkDelivery(row)}</small></td>
+                      <td><strong>{row.first_login_at ? `${row.login_count} session${row.login_count === 1 ? "" : "s"}` : "Never opened"}</strong><small>{row.last_login_at ? formatDate(row.last_login_at) : linkDelivery(row)}</small></td>
                       <td><ProgressCell value={row.progress["day-1"]?.max_progress ?? 0} complete={Boolean(row.progress["day-1"]?.completed_at)} /></td>
                       <td><ProgressCell value={row.progress["day-2"]?.max_progress ?? 0} complete={Boolean(row.progress["day-2"]?.completed_at)} /></td>
                       <td><strong>{row.downloads.count}</strong><small>{row.downloads.last_at ? formatDate(row.downloads.last_at) : "No downloads"}</small></td>
@@ -191,6 +200,7 @@ function AdminWorkspace() {
                       <td>
                         <div className="aipa-row-actions">
                           <button type="button" disabled={!row.is_active || busyId !== null} onClick={() => void mutate(row, "resend")} title="Resend sign-in link"><Mail size={15} />{busyId === `${row.id}:resend` ? "Sending" : "Resend"}</button>
+                          <button type="button" disabled={busyId !== null} onClick={() => void mutate(row, "reset")} className="is-reset" title="Clear tracked activity"><RotateCcw size={15} />{busyId === `${row.id}:reset` ? "Clearing" : "Reset"}</button>
                           <button type="button" disabled={busyId !== null} onClick={() => void mutate(row, "toggle")} className={row.is_active ? "is-danger" : ""} title={row.is_active ? "Revoke access" : "Reactivate access"}>{row.is_active ? <ShieldOff size={15} /> : <Link2 size={15} />}{busyId === `${row.id}:toggle` ? "Saving" : row.is_active ? "Revoke" : "Activate"}</button>
                         </div>
                       </td>

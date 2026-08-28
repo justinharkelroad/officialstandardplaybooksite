@@ -42,6 +42,8 @@ export const PORTAL_URL =
   Deno.env.get("AI_INSTALL_PORTAL_URL") ??
   "https://standardplaybook.com/aiinstall/portal";
 
+export const PORTAL_SESSION_WINDOW_MS = 30 * 60 * 1000;
+
 const ACCESS_COLUMNS = [
   "id",
   "user_id",
@@ -92,6 +94,16 @@ export function isPortalAccessCurrent(
   if (!access.expires_at) return true;
   const expiry = new Date(access.expires_at);
   return !Number.isNaN(expiry.getTime()) && expiry.getTime() > now.getTime();
+}
+
+export function shouldCountPortalSession(
+  lastLoginAt: string | null,
+  now = new Date(),
+): boolean {
+  if (!lastLoginAt) return true;
+  const lastLogin = new Date(lastLoginAt);
+  if (Number.isNaN(lastLogin.getTime())) return true;
+  return now.getTime() - lastLogin.getTime() >= PORTAL_SESSION_WINDOW_MS;
 }
 
 export async function getPortalAccessByEmail(

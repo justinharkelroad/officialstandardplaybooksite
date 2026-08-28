@@ -92,9 +92,10 @@
 .aipa-progress-cell strong { font-size: 11px; }
 .aipa-progress-cell > span { display: block; width: 100%; height: 3px; margin-top: 6px; background: var(--aip-line); }
 .aipa-progress-cell i { display: block; height: 100%; background: var(--aip-blue); }
-.aipa-row-actions { display: flex; gap: 6px; }
+.aipa-row-actions { display: flex; flex-wrap: wrap; gap: 6px; }
 .aipa-row-actions button { display: flex; align-items: center; gap: 5px; min-height: 32px; border: 1px solid var(--aip-ink); padding: 0 9px; background: transparent; color: inherit; font-size: 9px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; cursor: pointer; }
 .aipa-row-actions button.is-danger { border-color: #b83232; color: #b83232; }
+.aipa-row-actions button.is-reset { border-color: #8a6418; color: #8a6418; }
 .aipa-row-actions button:disabled { opacity: .35; cursor: not-allowed; }
 .aipa-empty { min-height: 190px; display: grid; place-content: center; justify-items: center; gap: 12px; border: 1px solid var(--aip-ink); color: var(--aip-muted); font-size: 13px; }
 .aipa-spin { animation: aipa-spin .8s linear infinite; }

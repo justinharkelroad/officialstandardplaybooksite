@@ -127,6 +127,17 @@ export async function resendAiInstallPortalLink(
   });
 }
 
+export async function resetAiInstallPortalActivity(
+  accessId: string,
+  includeReady = true,
+): Promise<void> {
+  await invokeFunction("ai-install-portal-admin", {
+    action: "reset_activity",
+    access_id: accessId,
+    include_ready: includeReady,
+  });
+}
+
 async function invokeFunction<T = Record<string, unknown>>(
   name: string,
   body: Record<string, unknown>,

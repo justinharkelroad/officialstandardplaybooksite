@@ -7,6 +7,7 @@ import {
 import {
   canAccessPortalAsset,
   requirePortalAccess,
+  shouldCountPortalSession,
   type AiInstallPlatform,
 } from "../_shared/ai-install-portal.ts";
 
@@ -89,26 +90,29 @@ Deno.serve(async (req) => {
 
   try {
     if (action === "status") {
-      const now = new Date().toISOString();
-      const { error: visitUpdateError } = await supabase
-        .from("ai_install_portal_access")
-        .update({
-          first_login_at: access.first_login_at ?? now,
-          last_login_at: now,
-          login_count: access.login_count + 1,
-          updated_at: now,
-        })
-        .eq("id", access.id);
-      if (visitUpdateError) throw visitUpdateError;
+      const nowDate = new Date();
+      if (shouldCountPortalSession(access.last_login_at, nowDate)) {
+        const now = nowDate.toISOString();
+        const { error: sessionUpdateError } = await supabase
+          .from("ai_install_portal_access")
+          .update({
+            first_login_at: access.first_login_at ?? now,
+            last_login_at: now,
+            login_count: access.login_count + 1,
+            updated_at: now,
+          })
+          .eq("id", access.id);
+        if (sessionUpdateError) throw sessionUpdateError;
 
-      const { error: visitEventError } = await supabase
-        .from("ai_install_portal_events")
-        .insert({
-          access_id: access.id,
-          user_id: userId,
-          event_type: "portal_visit",
-        });
-      if (visitEventError) throw visitEventError;
+        const { error: sessionEventError } = await supabase
+          .from("ai_install_portal_events")
+          .insert({
+            access_id: access.id,
+            user_id: userId,
+            event_type: "portal_visit",
+          });
+        if (sessionEventError) throw sessionEventError;
+      }
 
       const { data: progress, error: progressError } = await supabase
         .from("ai_install_portal_progress")

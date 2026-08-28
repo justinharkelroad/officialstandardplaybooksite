@@ -159,6 +159,52 @@ Deno.serve(async (req) => {
       return jsonResponse({ ok: true, access: data });
     }
 
+    if (action === "reset_activity") {
+      const accessId = typeof body.access_id === "string" ? body.access_id : "";
+      if (!accessId) return errorResponse("access_id is required", 400);
+
+      const { data: access, error: accessError } = await supabase
+        .from("ai_install_portal_access")
+        .select("id, email")
+        .eq("id", accessId)
+        .maybeSingle();
+      if (accessError) throw accessError;
+      if (!access) return errorResponse("Portal access not found", 404);
+
+      const { error: progressError } = await supabase
+        .from("ai_install_portal_progress")
+        .delete()
+        .eq("access_id", accessId);
+      if (progressError) throw progressError;
+
+      const { error: eventError } = await supabase
+        .from("ai_install_portal_events")
+        .delete()
+        .eq("access_id", accessId);
+      if (eventError) throw eventError;
+
+      const { error: resetError } = await supabase
+        .from("ai_install_portal_access")
+        .update({
+          first_login_at: null,
+          last_login_at: null,
+          login_count: 0,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", accessId);
+      if (resetError) throw resetError;
+
+      if (body.include_ready === true) {
+        const { error: readyError } = await supabase
+          .from("ai_install_ready_submissions")
+          .delete()
+          .ilike("email", access.email);
+        if (readyError) throw readyError;
+      }
+
+      return jsonResponse({ ok: true });
+    }
+
     if (action === "resend") {
       const accessId = typeof body.access_id === "string" ? body.access_id : "";
       if (!accessId) return errorResponse("access_id is required", 400);

@@ -52,6 +52,7 @@ export default function AIInstallPortal() {
   const [checkingSession, setCheckingSession] = useState(true);
   const [status, setStatus] = useState<AiInstallPortalStatus | null>(null);
   const [accessError, setAccessError] = useState<string | null>(null);
+  const loadedSessionRef = useRef<string | null>(null);
 
   useEffect(() => {
     document.title = "Agency AI Install Portal | Standard Playbook";
@@ -64,11 +65,14 @@ export default function AIInstallPortal() {
     robots.content = "noindex, nofollow, noarchive";
   }, []);
 
-  const loadPortal = useCallback(async () => {
+  const loadPortal = useCallback(async (accessToken: string) => {
+    if (loadedSessionRef.current === accessToken) return;
+    loadedSessionRef.current = accessToken;
     setAccessError(null);
     try {
       setStatus(await loadAiInstallPortalStatus());
     } catch (error) {
+      loadedSessionRef.current = null;
       setStatus(null);
       setAccessError(error instanceof Error ? error.message : "We could not open your portal.");
     } finally {
@@ -81,14 +85,15 @@ export default function AIInstallPortal() {
 
     void supabase.auth.getSession().then(({ data }) => {
       if (!active) return;
-      if (data.session) void loadPortal();
+      if (data.session) void loadPortal(data.session.access_token);
       else setCheckingSession(false);
     });
 
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
       if (!active) return;
-      if (event === "SIGNED_IN" && session) void loadPortal();
+      if (event === "SIGNED_IN" && session) void loadPortal(session.access_token);
       if (event === "SIGNED_OUT") {
+        loadedSessionRef.current = null;
         setStatus(null);
         setAccessError(null);
         setCheckingSession(false);
