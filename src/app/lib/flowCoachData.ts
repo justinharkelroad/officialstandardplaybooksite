@@ -17,7 +17,9 @@ export async function loadAuthorizedFlowCoachTurns(
     .order('created_at', { ascending: false });
 
   if (error) {
-    throw new Error('Unable to load the authorized Coach conversation for this Flow.', { cause: error });
+    const loadError = new Error('Unable to load the authorized Coach conversation for this Flow.');
+    (loadError as Error & { cause?: unknown }).cause = error;
+    throw loadError;
   }
 
   return validateFlowCoachRows((data ?? []) as FlowCoachRow[], questions, responses);
