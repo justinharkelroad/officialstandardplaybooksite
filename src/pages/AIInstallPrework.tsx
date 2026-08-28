@@ -36,7 +36,7 @@ const PLATFORM_CONFIG: Record<
     officialGuideLabel: string;
     alternatePath: string;
     alternateLabel: string;
-    requirements: string;
+    requirements: ReactNode;
     setupSteps: SetupStep[];
     readinessItems: ChecklistItem[];
   }

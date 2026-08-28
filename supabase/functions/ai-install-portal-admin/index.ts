@@ -6,13 +6,13 @@ import {
   requireAdminMember,
 } from "../_shared/memberAuth.ts";
 import {
+  type AiInstallPortalAccess,
   ensurePortalAuthUser,
   getPortalAccessByEmail,
   isPortalEmail,
   normalizePortalEmail,
   normalizePortalPlatform,
   sendPortalMagicLink,
-  type AiInstallPortalAccess,
 } from "../_shared/ai-install-portal.ts";
 
 Deno.serve(async (req) => {
@@ -34,14 +34,23 @@ Deno.serve(async (req) => {
 
   try {
     if (action === "list") {
-      const [accessResult, progressResult, eventResult, readyResult] = await Promise.all([
+      const [
+        accessResult,
+        progressResult,
+        eventResult,
+        readyResult,
+        settingsResult,
+        testimonialResult,
+      ] = await Promise.all([
         supabase
           .from("ai_install_portal_access")
           .select("*")
           .order("created_at", { ascending: false }),
         supabase
           .from("ai_install_portal_progress")
-          .select("access_id, content_id, max_progress, completed_at, last_viewed_at"),
+          .select(
+            "access_id, content_id, max_progress, completed_at, last_viewed_at",
+          ),
         supabase
           .from("ai_install_portal_events")
           .select("access_id, event_type, content_id, occurred_at")
@@ -51,10 +60,21 @@ Deno.serve(async (req) => {
           .from("ai_install_ready_submissions")
           .select("email, submitted_at")
           .order("submitted_at", { ascending: false }),
+        supabase
+          .from("ai_install_portal_settings")
+          .select("testimonial_prompt_enabled")
+          .eq("id", "default")
+          .maybeSingle(),
+        supabase
+          .from("ai_install_portal_testimonials")
+          .select("id, access_id, original_filename, size_bytes, submitted_at")
+          .eq("status", "uploaded")
+          .order("submitted_at", { ascending: false }),
       ]);
 
       const firstError = accessResult.error ?? progressResult.error ??
-        eventResult.error ?? readyResult.error;
+        eventResult.error ?? readyResult.error ?? settingsResult.error ??
+        testimonialResult.error;
       if (firstError) throw firstError;
 
       const progressByAccess = new Map<string, Record<string, unknown>>();
@@ -68,9 +88,13 @@ Deno.serve(async (req) => {
         progressByAccess.set(item.access_id, current);
       }
 
-      const downloadsByAccess = new Map<string, { count: number; last_at: string | null }>();
+      const downloadsByAccess = new Map<
+        string,
+        { count: number; last_at: string | null }
+      >();
       for (const event of eventResult.data ?? []) {
-        const current = downloadsByAccess.get(event.access_id) ?? { count: 0, last_at: null };
+        const current = downloadsByAccess.get(event.access_id) ??
+          { count: 0, last_at: null };
         current.count += 1;
         current.last_at = current.last_at ?? event.occurred_at;
         downloadsByAccess.set(event.access_id, current);
@@ -84,23 +108,100 @@ Deno.serve(async (req) => {
         }
       }
 
-      const rows = ((accessResult.data ?? []) as AiInstallPortalAccess[]).map((access) => ({
+      const testimonialByAccess = new Map<string, Record<string, unknown>>();
+      for (const testimonial of testimonialResult.data ?? []) {
+        if (!testimonialByAccess.has(testimonial.access_id)) {
+          testimonialByAccess.set(testimonial.access_id, {
+            id: testimonial.id,
+            original_filename: testimonial.original_filename,
+            size_bytes: testimonial.size_bytes,
+            submitted_at: testimonial.submitted_at,
+          });
+        }
+      }
+
+      const rows = ((accessResult.data ?? []) as AiInstallPortalAccess[]).map((
+        access,
+      ) => ({
         ...access,
         progress: progressByAccess.get(access.id) ?? {},
-        downloads: downloadsByAccess.get(access.id) ?? { count: 0, last_at: null },
-        ready_submitted_at: readyByEmail.get(normalizePortalEmail(access.email)) ?? null,
+        downloads: downloadsByAccess.get(access.id) ??
+          { count: 0, last_at: null },
+        ready_submitted_at:
+          readyByEmail.get(normalizePortalEmail(access.email)) ?? null,
+        testimonial: testimonialByAccess.get(access.id) ?? null,
       }));
 
-      return jsonResponse({ ok: true, rows });
+      return jsonResponse({
+        ok: true,
+        rows,
+        testimonial_prompt_enabled:
+          settingsResult.data?.testimonial_prompt_enabled ?? true,
+      });
+    }
+
+    if (action === "set_testimonial_prompt") {
+      if (typeof body.enabled !== "boolean") {
+        return errorResponse("enabled is required", 400);
+      }
+      const { error } = await supabase.from("ai_install_portal_settings")
+        .upsert({
+          id: "default",
+          testimonial_prompt_enabled: body.enabled,
+          updated_at: new Date().toISOString(),
+        });
+      if (error) throw error;
+      return jsonResponse({
+        ok: true,
+        testimonial_prompt_enabled: body.enabled,
+      });
+    }
+
+    if (action === "testimonial_download") {
+      const testimonialId = typeof body.testimonial_id === "string"
+        ? body.testimonial_id
+        : "";
+      if (!testimonialId) {
+        return errorResponse("testimonial_id is required", 400);
+      }
+      const { data: testimonial, error } = await supabase
+        .from("ai_install_portal_testimonials")
+        .select("storage_path, original_filename")
+        .eq("id", testimonialId)
+        .eq("status", "uploaded")
+        .maybeSingle();
+      if (error) throw error;
+      if (!testimonial) return errorResponse("Testimonial not found", 404);
+
+      const { data: signed, error: signError } = await supabase.storage
+        .from("ai-install-testimonials")
+        .createSignedUrl(testimonial.storage_path, 60 * 10);
+      if (signError || !signed?.signedUrl) {
+        return errorResponse(
+          signError?.message ?? "Could not prepare the private video",
+          500,
+        );
+      }
+      return jsonResponse({
+        ok: true,
+        url: signed.signedUrl,
+        filename: testimonial.original_filename,
+      });
     }
 
     if (action === "grant") {
       const email = normalizePortalEmail(body.email);
-      const fullName = typeof body.full_name === "string" ? body.full_name.trim() : "";
+      const fullName = typeof body.full_name === "string"
+        ? body.full_name.trim()
+        : "";
       const platform = normalizePortalPlatform(body.platform);
       const expiresAt = normalizeExpiry(body.expires_at);
-      if (!isPortalEmail(email)) return errorResponse("A valid email is required", 400);
-      if (expiresAt === undefined) return errorResponse("Expiration date is invalid", 400);
+      if (!isPortalEmail(email)) {
+        return errorResponse("A valid email is required", 400);
+      }
+      if (expiresAt === undefined) {
+        return errorResponse("Expiration date is invalid", 400);
+      }
 
       const authUser = await ensurePortalAuthUser(supabase, email);
       const existing = await getPortalAccessByEmail(supabase, email);
@@ -121,18 +222,19 @@ Deno.serve(async (req) => {
           .eq("id", existing.id);
         if (error) throw error;
       } else {
-        const { error } = await supabase.from("ai_install_portal_access").insert({
-          user_id: authUser.id,
-          email,
-          full_name: fullName || null,
-          platform,
-          source: "manual",
-          is_active: true,
-          expires_at: expiresAt,
-          created_by: userId,
-          created_at: now,
-          updated_at: now,
-        });
+        const { error } = await supabase.from("ai_install_portal_access")
+          .insert({
+            user_id: authUser.id,
+            email,
+            full_name: fullName || null,
+            platform,
+            source: "manual",
+            is_active: true,
+            expires_at: expiresAt,
+            created_by: userId,
+            created_at: now,
+            updated_at: now,
+          });
         if (error) throw error;
       }
 
@@ -159,6 +261,52 @@ Deno.serve(async (req) => {
       return jsonResponse({ ok: true, access: data });
     }
 
+    if (action === "reset_activity") {
+      const accessId = typeof body.access_id === "string" ? body.access_id : "";
+      if (!accessId) return errorResponse("access_id is required", 400);
+
+      const { data: access, error: accessError } = await supabase
+        .from("ai_install_portal_access")
+        .select("id, email")
+        .eq("id", accessId)
+        .maybeSingle();
+      if (accessError) throw accessError;
+      if (!access) return errorResponse("Portal access not found", 404);
+
+      const { error: progressError } = await supabase
+        .from("ai_install_portal_progress")
+        .delete()
+        .eq("access_id", accessId);
+      if (progressError) throw progressError;
+
+      const { error: eventError } = await supabase
+        .from("ai_install_portal_events")
+        .delete()
+        .eq("access_id", accessId);
+      if (eventError) throw eventError;
+
+      const { error: resetError } = await supabase
+        .from("ai_install_portal_access")
+        .update({
+          first_login_at: null,
+          last_login_at: null,
+          login_count: 0,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", accessId);
+      if (resetError) throw resetError;
+
+      if (body.include_ready === true) {
+        const { error: readyError } = await supabase
+          .from("ai_install_ready_submissions")
+          .delete()
+          .ilike("email", access.email);
+        if (readyError) throw readyError;
+      }
+
+      return jsonResponse({ ok: true });
+    }
+
     if (action === "resend") {
       const accessId = typeof body.access_id === "string" ? body.access_id : "";
       if (!accessId) return errorResponse("access_id is required", 400);
@@ -170,7 +318,9 @@ Deno.serve(async (req) => {
         .maybeSingle();
       if (error) throw error;
       if (!data) return errorResponse("Portal access not found", 404);
-      if (!data.is_active) return errorResponse("Reactivate access before sending a link", 400);
+      if (!data.is_active) {
+        return errorResponse("Reactivate access before sending a link", 400);
+      }
 
       const result = await sendPortalMagicLink(
         supabase,
@@ -182,7 +332,9 @@ Deno.serve(async (req) => {
     return errorResponse(`Unknown action: ${action}`, 400);
   } catch (error) {
     console.error(`ai-install-portal-admin: action=${action} failed`, error);
-    const message = error instanceof Error ? error.message : "Admin request failed";
+    const message = error instanceof Error
+      ? error.message
+      : "Admin request failed";
     return errorResponse(message, 500);
   }
 });

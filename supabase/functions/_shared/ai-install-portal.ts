@@ -1,9 +1,9 @@
-import type { SupabaseClient, User } from "https://esm.sh/@supabase/supabase-js@2";
+import type {
+  SupabaseClient,
+  User,
+} from "https://esm.sh/@supabase/supabase-js@2";
 
-import {
-  createServiceClient,
-  errorResponse,
-} from "./memberAuth.ts";
+import { createServiceClient, errorResponse } from "./memberAuth.ts";
 import {
   BRAND,
   buildEmailHtml,
@@ -28,6 +28,8 @@ export interface AiInstallPortalAccess {
   last_magic_link_sent_at: string | null;
   magic_link_send_count: number;
   last_magic_link_error: string | null;
+  testimonial_prompt_dismissed_at: string | null;
+  testimonial_submitted_at: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -38,9 +40,10 @@ export interface VerifiedPortalAccess {
   supabase: SupabaseClient;
 }
 
-export const PORTAL_URL =
-  Deno.env.get("AI_INSTALL_PORTAL_URL") ??
+export const PORTAL_URL = Deno.env.get("AI_INSTALL_PORTAL_URL") ??
   "https://standardplaybook.com/aiinstall/portal";
+
+export const PORTAL_SESSION_WINDOW_MS = 30 * 60 * 1000;
 
 const ACCESS_COLUMNS = [
   "id",
@@ -57,6 +60,8 @@ const ACCESS_COLUMNS = [
   "last_magic_link_sent_at",
   "magic_link_send_count",
   "last_magic_link_error",
+  "testimonial_prompt_dismissed_at",
+  "testimonial_submitted_at",
   "created_at",
   "updated_at",
 ].join(",");
@@ -92,6 +97,16 @@ export function isPortalAccessCurrent(
   if (!access.expires_at) return true;
   const expiry = new Date(access.expires_at);
   return !Number.isNaN(expiry.getTime()) && expiry.getTime() > now.getTime();
+}
+
+export function shouldCountPortalSession(
+  lastLoginAt: string | null,
+  now = new Date(),
+): boolean {
+  if (!lastLoginAt) return true;
+  const lastLogin = new Date(lastLoginAt);
+  if (Number.isNaN(lastLogin.getTime())) return true;
+  return now.getTime() - lastLogin.getTime() >= PORTAL_SESSION_WINDOW_MS;
 }
 
 export async function getPortalAccessByEmail(
@@ -203,9 +218,18 @@ export interface PortalMagicLinkResult {
   error?: string;
 }
 
+export function buildPortalVerificationUrl(
+  hashedToken: string,
+  portalUrl = PORTAL_URL,
+): string {
+  const url = new URL(portalUrl);
+  url.hash = new URLSearchParams({ portal_token: hashedToken }).toString();
+  return url.toString();
+}
+
 function buildPortalMagicLinkHtml(
   access: AiInstallPortalAccess,
-  actionLink: string,
+  verificationUrl: string,
 ): string {
   const firstName = access.full_name?.trim().split(/\s+/)[0] || "there";
   return buildEmailHtml({
@@ -214,13 +238,17 @@ function buildPortalMagicLinkHtml(
     footerName: BRAND.name,
     bodyContent: `
       ${EmailComponents.paragraph(`${escapeHtml(firstName)},`)}
-      ${EmailComponents.paragraph(
+      ${
+      EmailComponents.paragraph(
         "Use the secure link below to open both workshop replays and your AI Install resources.",
-      )}
-      ${EmailComponents.button("Open the portal", actionLink)}
-      ${EmailComponents.infoText(
-        "This sign-in link is for your email only. If you did not request it, you can ignore this message.",
-      )}
+      )
+    }
+      ${EmailComponents.button("Open the portal", verificationUrl)}
+      ${
+      EmailComponents.infoText(
+        "On the next screen, select Confirm and open portal. This extra step prevents automated email security checks from using your one-time access.",
+      )
+    }
     `,
   });
 }
@@ -235,12 +263,13 @@ export async function sendPortalMagicLink(
     options: { redirectTo: PORTAL_URL },
   });
 
-  const actionLink = data?.properties?.action_link;
-  if (linkError || !actionLink) {
+  const hashedToken = data?.properties?.hashed_token;
+  if (linkError || !hashedToken) {
     const error = linkError?.message ?? "Magic link generation failed";
     await recordMagicLinkResult(supabase, access, null, error);
     return { status: "failed", error };
   }
+  const verificationUrl = buildPortalVerificationUrl(hashedToken);
 
   const resendKey = Deno.env.get("RESEND_API_KEY");
   if (!resendKey) {
@@ -260,7 +289,7 @@ export async function sendPortalMagicLink(
         from: BRAND.fromEmail,
         to: access.email,
         subject: "Your Agency AI Install sign-in link",
-        html: buildPortalMagicLinkHtml(access, actionLink),
+        html: buildPortalMagicLinkHtml(access, verificationUrl),
       }),
     });
 
@@ -275,7 +304,9 @@ export async function sendPortalMagicLink(
     await recordMagicLinkResult(supabase, access, sentAt, null);
     return { status: "sent" };
   } catch (sendError) {
-    const error = sendError instanceof Error ? sendError.message : String(sendError);
+    const error = sendError instanceof Error
+      ? sendError.message
+      : String(sendError);
     await recordMagicLinkResult(supabase, access, null, error);
     return { status: "failed", error };
   }
@@ -299,6 +330,9 @@ async function recordMagicLinkResult(
     .update(fields)
     .eq("id", access.id);
   if (updateError) {
-    console.error("ai-install-portal: magic link ledger update failed", updateError.message);
+    console.error(
+      "ai-install-portal: magic link ledger update failed",
+      updateError.message,
+    );
   }
 }

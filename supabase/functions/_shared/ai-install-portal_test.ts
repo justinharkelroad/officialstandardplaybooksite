@@ -1,9 +1,11 @@
 import {
+  buildPortalVerificationUrl,
   canAccessPortalAsset,
   isPortalAccessCurrent,
   isPortalEmail,
   normalizePortalEmail,
   normalizePortalPlatform,
+  shouldCountPortalSession,
 } from "./ai-install-portal.ts";
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -39,4 +41,39 @@ Deno.test("keeps Claude and Codex downloads platform-specific", () => {
   assert(!canAccessPortalAsset("claude", "codex"), "Claude should not receive Codex files");
   assert(canAccessPortalAsset("both", "claude"), "Both access should receive Claude files");
   assert(canAccessPortalAsset("both", "codex"), "Both access should receive Codex files");
+});
+
+Deno.test("counts one portal session per 30-minute activity window", () => {
+  const now = new Date("2026-08-28T12:00:00.000Z");
+  assert(
+    shouldCountPortalSession(null, now),
+    "A first portal open should count",
+  );
+  assert(
+    shouldCountPortalSession("not-a-date", now),
+    "Invalid historical data should not suppress a session",
+  );
+  assert(
+    !shouldCountPortalSession("2026-08-28T11:45:00.000Z", now),
+    "A repeated status request inside the window should not count",
+  );
+  assert(
+    shouldCountPortalSession("2026-08-28T11:30:00.000Z", now),
+    "A portal open at the boundary should start a new session",
+  );
+});
+
+Deno.test("routes one-time access through a scanner-safe portal confirmation", () => {
+  const hashedToken = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
+  const url = buildPortalVerificationUrl(
+    hashedToken,
+    "https://standardplaybook.com/aiinstall/portal",
+  );
+
+  assertEquals(
+    url,
+    `https://standardplaybook.com/aiinstall/portal#portal_token=${hashedToken}`,
+    "Email should open the portal without consuming the Supabase one-time token",
+  );
+  assert(!url.includes("/auth/v1/verify"), "The email URL must not be the consumable Auth action link");
 });
