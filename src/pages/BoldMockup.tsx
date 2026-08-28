@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Facebook, Linkedin } from 'lucide-react';
+import { Facebook, Linkedin } from 'lucide-react';
 import BoldNav from '@/components/BoldNav';
 import CertifiedStandardBand from '@/components/CertifiedStandardBand';
 import StandardFitModal from '@/components/StandardFitModal';
@@ -128,85 +128,8 @@ const HeroSection = () => {
             </h1>
           </Reveal>
 
-          {/* Compact event banner and portrait share one visual column. */}
+          {/* Tilted image card bursting into the headline. */}
           <Reveal delay={0.15} className="order-4 md:order-2 col-span-12 md:col-span-3 relative z-10">
-            <Link
-              to="/aiinstall"
-              aria-label="View The Agency AI Install workshop details and enrollment"
-              onClick={() => trackHomepageEvent('ai_install_banner_clicked', { source: 'home_hero' })}
-              className="group block hover:-translate-y-0.5 active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black"
-              style={{
-                background: blue,
-                color: ink,
-                padding: '14px 16px 15px',
-                marginBottom: 18,
-                border: `1.5px solid ${ink}`,
-                boxShadow: `5px 5px 0 ${ink}`,
-                textDecoration: 'none',
-                transition: 'transform 180ms ease, box-shadow 180ms ease',
-              }}
-            >
-              <div className="flex items-center justify-between gap-4">
-                <span
-                  style={{
-                    fontFamily: body,
-                    fontSize: 10,
-                    fontWeight: 800,
-                    letterSpacing: '0.15em',
-                    lineHeight: 1.2,
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  Live AI Workshop
-                </span>
-                <span className="flex shrink-0 items-center gap-1.5">
-                  <span
-                    style={{
-                      fontFamily: body,
-                      fontSize: 9,
-                      fontWeight: 800,
-                      letterSpacing: '0.1em',
-                      lineHeight: 1.2,
-                      textTransform: 'uppercase',
-                    }}
-                  >
-                    View + Enroll
-                  </span>
-                  <ArrowRight
-                    aria-hidden="true"
-                    className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1"
-                    strokeWidth={2}
-                  />
-                </span>
-              </div>
-              <p
-                style={{
-                  fontFamily: editorial,
-                  fontSize: 'clamp(21px, 2.1vw, 31px)',
-                  fontWeight: 400,
-                  letterSpacing: '0.01em',
-                  lineHeight: 0.98,
-                  margin: '8px 0 5px',
-                  textTransform: 'uppercase',
-                }}
-              >
-                The Agency AI Install
-              </p>
-              <span
-                style={{
-                  fontFamily: body,
-                  fontSize: 11,
-                  fontWeight: 700,
-                  letterSpacing: '0.08em',
-                  lineHeight: 1.3,
-                  textTransform: 'uppercase',
-                }}
-              >
-                August 26-27, 2026 | 1-5 PM Eastern
-              </span>
-            </Link>
-
-            {/* Tilted image card bursting into the headline. */}
             <motion.div
               initial={{ rotate: -8, y: 20 }}
               animate={{ rotate: -8 }}
