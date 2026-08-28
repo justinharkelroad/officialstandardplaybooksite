@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.1"
+    PostgrestVersion: "14.17"
   }
   public: {
     Tables: {
@@ -66,6 +66,142 @@ export type Database = {
             columns: ["purchase_id"]
             isOneToOne: false
             referencedRelation: "ai_install_purchases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_install_portal_access: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          email: string
+          expires_at: string | null
+          first_login_at: string | null
+          full_name: string | null
+          id: string
+          is_active: boolean
+          last_login_at: string | null
+          last_magic_link_error: string | null
+          last_magic_link_sent_at: string | null
+          login_count: number
+          magic_link_send_count: number
+          platform: string
+          source: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          email: string
+          expires_at?: string | null
+          first_login_at?: string | null
+          full_name?: string | null
+          id?: string
+          is_active?: boolean
+          last_login_at?: string | null
+          last_magic_link_error?: string | null
+          last_magic_link_sent_at?: string | null
+          login_count?: number
+          magic_link_send_count?: number
+          platform?: string
+          source?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          email?: string
+          expires_at?: string | null
+          first_login_at?: string | null
+          full_name?: string | null
+          id?: string
+          is_active?: boolean
+          last_login_at?: string | null
+          last_magic_link_error?: string | null
+          last_magic_link_sent_at?: string | null
+          login_count?: number
+          magic_link_send_count?: number
+          platform?: string
+          source?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      ai_install_portal_events: {
+        Row: {
+          access_id: string
+          content_id: string | null
+          event_type: string
+          id: string
+          occurred_at: string
+          progress_percent: number | null
+          user_id: string
+        }
+        Insert: {
+          access_id: string
+          content_id?: string | null
+          event_type: string
+          id?: string
+          occurred_at?: string
+          progress_percent?: number | null
+          user_id: string
+        }
+        Update: {
+          access_id?: string
+          content_id?: string | null
+          event_type?: string
+          id?: string
+          occurred_at?: string
+          progress_percent?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_install_portal_events_access_id_fkey"
+            columns: ["access_id"]
+            isOneToOne: false
+            referencedRelation: "ai_install_portal_access"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_install_portal_progress: {
+        Row: {
+          access_id: string
+          completed_at: string | null
+          content_id: string
+          last_viewed_at: string
+          max_progress: number
+          started_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          access_id: string
+          completed_at?: string | null
+          content_id: string
+          last_viewed_at?: string
+          max_progress?: number
+          started_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          access_id?: string
+          completed_at?: string | null
+          content_id?: string
+          last_viewed_at?: string
+          max_progress?: number
+          started_at?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_install_portal_progress_access_id_fkey"
+            columns: ["access_id"]
+            isOneToOne: false
+            referencedRelation: "ai_install_portal_access"
             referencedColumns: ["id"]
           },
         ]
