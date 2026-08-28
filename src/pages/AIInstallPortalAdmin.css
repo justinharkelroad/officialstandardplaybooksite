@@ -18,6 +18,52 @@
 .aipa-grant select { color-scheme: dark; }
 .aipa-grant form button { height: 43px; display: flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid var(--aip-blue); padding: 0 16px; background: var(--aip-blue); color: #fff; font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
 .aipa-grant form button:disabled { opacity: .6; cursor: wait; }
+.aipa-bulk { margin-top: 28px; border: 1px solid var(--aip-ink); background: var(--aip-paper); }
+.aipa-bulk-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 28px; padding: 24px 28px; border-bottom: 1px solid var(--aip-ink); }
+.aipa-bulk-title { display: flex; align-items: flex-start; gap: 13px; }
+.aipa-bulk-title p { font-size: 10px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+.aipa-bulk-title h2 { margin-top: 3px; font-size: 20px; }
+.aipa-bulk-help { max-width: 420px; color: var(--aip-muted); font-size: 12px; line-height: 1.55; }
+.aipa-bulk-grid { display: grid; grid-template-columns: minmax(300px, 1.3fr) minmax(210px, .7fr) minmax(300px, 1fr); }
+.aipa-bulk-grid > div { min-width: 0; padding: 24px 28px; }
+.aipa-bulk-grid > div + div { border-left: 1px solid var(--aip-ink); }
+.aipa-bulk-source > label, .aipa-bulk-settings label span { display: block; margin-bottom: 8px; color: var(--aip-muted); font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.aipa-bulk-source textarea { width: 100%; min-height: 170px; resize: vertical; border: 1px solid var(--aip-ink); border-radius: 0; padding: 12px; background: var(--aip-panel); color: var(--aip-ink); font: inherit; font-size: 12px; line-height: 1.55; }
+.aipa-bulk-source textarea::placeholder { color: color-mix(in srgb, var(--aip-muted) 80%, transparent); opacity: 1; }
+.aipa-bulk-source textarea:focus, .aipa-bulk-settings select:focus, .aipa-bulk-settings input:focus { outline: 3px solid color-mix(in srgb, var(--aip-blue) 35%, transparent); outline-offset: 1px; }
+.aipa-bulk-file-row { display: flex; align-items: center; gap: 10px; min-height: 36px; margin-top: 10px; }
+.aipa-bulk-file-row input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.aipa-file-button, .aipa-bulk-file-row button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--aip-ink); padding: 7px 9px; background: transparent; color: var(--aip-ink); font-size: 9px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
+.aipa-file-button:focus-within { outline: 3px solid color-mix(in srgb, var(--aip-blue) 35%, transparent); outline-offset: 1px; }
+.aipa-bulk-file-row span { min-width: 0; flex: 1; overflow: hidden; color: var(--aip-muted); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.aipa-bulk-file-row button { border: 0; padding-inline: 4px; color: var(--aip-blue-deep); }
+.aipa-bulk-settings label + label { display: block; margin-top: 18px; }
+.aipa-bulk-settings select, .aipa-bulk-settings input { width: 100%; height: 42px; border: 1px solid var(--aip-ink); border-radius: 0; padding: 0 10px; background: var(--aip-paper); color: var(--aip-ink); }
+.aipa-bulk-settings > p { margin-top: 14px; color: var(--aip-muted); font-size: 10px; line-height: 1.5; }
+.aipa-bulk-preview { display: flex; flex-direction: column; align-items: stretch; background: var(--aip-panel); }
+.aipa-preview-count { display: flex; align-items: end; gap: 10px; }
+.aipa-preview-count strong { font-family: var(--aip-display); font-size: 44px; font-weight: 400; line-height: .9; }
+.aipa-preview-count span { color: var(--aip-muted); font-size: 11px; font-weight: 750; }
+.aipa-preview-meta { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 12px; color: var(--aip-muted); font-size: 10px; }
+.aipa-preview-list { display: grid; gap: 6px; margin-top: 16px; }
+.aipa-preview-list > span { display: flex; justify-content: space-between; gap: 12px; padding: 7px 9px; border-left: 2px solid var(--aip-blue); background: var(--aip-paper); font-size: 10px; font-weight: 750; }
+.aipa-preview-list small { overflow: hidden; color: var(--aip-muted); font-size: 9px; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+.aipa-preview-list .aipa-preview-more { border-left-color: var(--aip-line); color: var(--aip-muted); }
+.aipa-bulk-issues { margin-top: 14px; color: #9b2d2d; font-size: 10px; }
+.aipa-bulk-issues summary { font-weight: 800; cursor: pointer; }
+.aipa-bulk-issues p { margin-top: 7px; line-height: 1.4; }
+.aipa-bulk-issues small { display: block; overflow: hidden; color: var(--aip-muted); text-overflow: ellipsis; white-space: nowrap; }
+.aipa-inline-error { margin-top: 10px !important; color: #9b2d2d; font-size: 10px; line-height: 1.45; }
+.aipa-bulk-send { width: 100%; min-height: 43px; display: flex; align-items: center; justify-content: center; gap: 7px; margin-top: auto; border: 1px solid var(--aip-blue); padding: 10px 16px; background: var(--aip-blue); color: #fff; font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
+.aipa-bulk-send:disabled { border-color: var(--aip-line); background: var(--aip-line); color: var(--aip-muted); cursor: not-allowed; }
+.aipa-bulk-progress { margin-top: auto; padding-top: 18px; }
+.aipa-bulk-progress > div { display: flex; align-items: flex-start; gap: 9px; font-size: 11px; font-weight: 800; }
+.aipa-bulk-progress small { display: block; margin-top: 3px; color: var(--aip-muted); font-weight: 500; }
+.aipa-bulk-progress button { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; border: 1px solid #9b2d2d; padding: 7px 9px; background: transparent; color: #9b2d2d; font-size: 9px; font-weight: 800; text-transform: uppercase; cursor: pointer; }
+.aipa-bulk-results { display: flex; flex-wrap: wrap; gap: 5px 14px; margin-top: 14px; padding: 10px 12px; border: 1px solid var(--aip-ink); background: var(--aip-paper); font-size: 10px; }
+.aipa-bulk-results strong { color: #237b4b; }
+.aipa-bulk-results > span { color: #9b2d2d; }
+.aipa-bulk-results p { width: 100%; color: #9b2d2d; line-height: 1.4; }
 .aipa-access-section { margin-top: 48px; }
 .aipa-section-bar { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 18px; }
 .aipa-section-bar h2 { margin-top: 5px; font-size: clamp(25px, 3vw, 38px); letter-spacing: -.035em; }
@@ -62,6 +108,9 @@
 @media (max-width: 1160px) {
   .aipa-grant { grid-template-columns: 1fr; }
   .aipa-grant form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .aipa-bulk-grid { grid-template-columns: 1.15fr .85fr; }
+  .aipa-bulk-preview { grid-column: 1 / -1; min-height: 260px; border-top: 1px solid var(--aip-ink); }
+  .aipa-bulk-preview.aipa-bulk-preview { border-left: 0; }
 }
 
 @media (max-width: 720px) {
@@ -72,6 +121,13 @@
   .aipa-summary div:nth-child(4) { border-top: 1px solid var(--aip-ink); }
   .aipa-grant { padding: 22px 16px; }
   .aipa-grant form { grid-template-columns: 1fr; }
+  .aipa-bulk-head { flex-direction: column; padding: 22px 16px; }
+  .aipa-bulk-grid { grid-template-columns: 1fr; }
+  .aipa-bulk-grid > div { padding: 20px 16px; }
+  .aipa-bulk-grid > div + div { border-top: 1px solid var(--aip-ink); border-left: 0; }
+  .aipa-bulk-file-row { flex-wrap: wrap; }
+  .aipa-bulk-file-row span { flex-basis: 100%; order: 3; }
+  .aipa-bulk-preview { min-height: 0; }
   .aipa-filters { width: 100%; }
   .aipa-filters button { flex: 1; }
 }
