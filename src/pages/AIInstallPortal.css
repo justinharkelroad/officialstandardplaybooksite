@@ -80,6 +80,48 @@ body:has(.aip-page) { margin: 0; background: #f0efe9; }
 .aip-hero-rail dt { color: var(--aip-muted); }
 .aip-hero-rail dd { font-weight: 750; text-align: right; }
 .aip-inline-link { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 18px; color: var(--aip-blue-deep); font-size: 12px; font-weight: 800; text-decoration: underline; }
+.aip-testimonial-cta { width: 100%; min-height: 47px; display: flex; align-items: center; justify-content: center; gap: 9px; margin-top: 14px; border: 1px solid var(--aip-ink); padding: 0 14px; background: var(--aip-ink); color: var(--aip-paper); font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; cursor: pointer; }
+.aip-testimonial-received { display: flex; align-items: center; gap: 7px; margin-top: 16px !important; color: var(--aip-blue-deep); font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+
+.aip-testimonial-overlay { position: fixed; z-index: 1000; inset: 0; overflow-y: auto; padding: clamp(18px, 4vw, 56px); background: #07080a; color: #f5f4ef; }
+.aip-testimonial-close { position: fixed; z-index: 3; top: 18px; right: 18px; width: 43px; height: 43px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.48); border-radius: 50%; background: rgba(7,8,10,.72); color: #fff; cursor: pointer; backdrop-filter: blur(12px); }
+.aip-testimonial-close:disabled { opacity: .4; cursor: wait; }
+.aip-testimonial-layout { width: min(100%, 1120px); min-height: calc(100dvh - clamp(36px, 8vw, 112px)); display: grid; grid-template-columns: minmax(280px, .82fr) minmax(430px, 1.18fr); align-items: center; gap: clamp(42px, 8vw, 112px); margin: auto; }
+.aip-phone-stage { display: grid; justify-items: center; }
+.aip-phone { position: relative; width: min(100%, 338px); aspect-ratio: 9 / 18.8; overflow: hidden; border: 8px solid #22252b; border-radius: 44px; background: #000; box-shadow: 0 36px 80px rgba(0,0,0,.58), inset 0 0 0 1px rgba(255,255,255,.12); }
+.aip-phone::after { content: ""; pointer-events: none; position: absolute; inset: 0; border-radius: 34px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.11); }
+.aip-phone-speaker { position: absolute; z-index: 2; top: 9px; left: 50%; width: 78px; height: 20px; transform: translateX(-50%); border-radius: 18px; background: #090a0c; }
+.aip-phone iframe { width: 100%; height: 100%; border: 0; }
+.aip-sound-button { display: flex; align-items: center; gap: 7px; margin-top: 15px; border: 0; padding: 8px 12px; background: transparent; color: rgba(255,255,255,.72); font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+.aip-testimonial-panel { max-width: 610px; }
+.aip-testimonial-panel .aip-label { color: #69adff; }
+.aip-testimonial-panel h2 { margin-top: 16px; font-family: var(--aip-display); font-size: clamp(56px, 6.5vw, 92px); font-weight: 400; letter-spacing: -.03em; line-height: .84; text-transform: uppercase; }
+.aip-testimonial-panel h2 em { color: #459dff; font-style: normal; }
+.aip-testimonial-panel h2:focus { outline: none; }
+.aip-testimonial-lede { max-width: 570px; margin-top: 25px !important; color: rgba(245,244,239,.68); font-size: clamp(15px, 1.5vw, 19px); line-height: 1.55; }
+.aip-testimonial-prompt { margin-top: 23px; padding: 15px 17px; border-left: 3px solid #459dff; background: #121419; }
+.aip-testimonial-prompt span { color: #69adff; font-size: 9px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.aip-testimonial-prompt p { margin-top: 5px; font-size: 13px; font-weight: 700; line-height: 1.45; }
+.aip-testimonial-file-input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.aip-device-upload { width: 100%; display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto auto; align-items: center; column-gap: 15px; margin-top: 19px; border: 1px solid rgba(255,255,255,.38); padding: 16px; background: transparent; color: #fff; text-align: left; cursor: pointer; }
+.aip-device-upload > span { position: relative; grid-row: 1 / 3; width: 50px; height: 50px; display: grid; place-items: center; border: 1px solid #459dff; color: #69adff; }
+.aip-device-upload > span svg:last-child { position: absolute; right: -5px; bottom: -5px; padding: 3px; background: #459dff; color: #07080a; }
+.aip-device-upload strong { overflow: hidden; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.aip-device-upload small { margin-top: 4px; color: rgba(255,255,255,.53); font-size: 10px; }
+.aip-device-upload:disabled { opacity: .55; cursor: wait; }
+.aip-testimonial-consent { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start; margin-top: 15px; color: rgba(255,255,255,.62); font-size: 10px; line-height: 1.5; cursor: pointer; }
+.aip-testimonial-consent input { width: 17px; height: 17px; margin: 0; accent-color: #459dff; }
+.aip-upload-progress { margin-top: 17px; }
+.aip-upload-progress > div { display: flex; justify-content: space-between; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.aip-upload-progress > span { display: block; height: 4px; margin-top: 8px; background: rgba(255,255,255,.18); }
+.aip-upload-progress i { display: block; height: 100%; background: #459dff; transition: width .25s ease; }
+.aip-upload-progress small { display: block; margin-top: 7px; color: rgba(255,255,255,.5); font-size: 10px; }
+.aip-testimonial-error { margin-top: 12px !important; color: #ff9b92; font-size: 12px; line-height: 1.45; }
+.aip-testimonial-actions { display: grid; grid-template-columns: 1fr auto; gap: 9px; margin-top: 19px; }
+.aip-testimonial-actions button { min-height: 49px; border: 1px solid rgba(255,255,255,.45); padding: 0 17px; background: transparent; color: #fff; font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; }
+.aip-testimonial-actions button.is-primary { border-color: #459dff; background: #459dff; color: #07080a; }
+.aip-testimonial-actions button:disabled { opacity: .42; cursor: not-allowed; }
+.aip-testimonial-private { display: flex; align-items: center; gap: 7px; margin-top: 13px !important; color: rgba(255,255,255,.45); font-size: 9px; line-height: 1.4; }
 
 .aip-start { padding: clamp(70px, 8vw, 110px) 0; scroll-margin-top: 24px; background: #08090b; color: #f3f2ed; }
 .aip-start-head { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: end; }
@@ -169,6 +211,8 @@ body:has(.aip-page) { margin: 0; background: #f0efe9; }
   .aip-video-card:nth-child(even) .aip-video-meta { grid-row: auto; border-right: 0; }
   .aip-video-meta { min-height: 280px; border-top: 1px solid var(--aip-ink); border-left: 0; }
   .aip-video-meta h3 { margin-top: 28px; }
+  .aip-testimonial-layout { grid-template-columns: minmax(220px, .65fr) minmax(360px, 1.35fr); gap: 42px; }
+  .aip-phone { width: min(100%, 280px); }
 }
 
 @media (max-width: 620px) {
@@ -189,6 +233,13 @@ body:has(.aip-page) { margin: 0; background: #f0efe9; }
   .aip-day-resource { grid-template-columns: 25px minmax(0, 1fr) auto; padding: 10px 9px; }
   .aip-day-resource-action { font-size: 0; }
   .aip-footer .aip-shell { align-items: flex-start; flex-direction: column; }
+  .aip-testimonial-overlay { padding: 64px 16px 30px; }
+  .aip-testimonial-close { top: 12px; right: 12px; }
+  .aip-testimonial-layout { min-height: 0; grid-template-columns: 1fr; gap: 36px; }
+  .aip-phone { width: min(78vw, 310px); }
+  .aip-testimonial-panel h2 { font-size: clamp(55px, 18vw, 80px); }
+  .aip-testimonial-actions { grid-template-columns: 1fr; }
+  .aip-testimonial-actions button { width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

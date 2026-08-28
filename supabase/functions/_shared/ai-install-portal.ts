@@ -1,9 +1,9 @@
-import type { SupabaseClient, User } from "https://esm.sh/@supabase/supabase-js@2";
+import type {
+  SupabaseClient,
+  User,
+} from "https://esm.sh/@supabase/supabase-js@2";
 
-import {
-  createServiceClient,
-  errorResponse,
-} from "./memberAuth.ts";
+import { createServiceClient, errorResponse } from "./memberAuth.ts";
 import {
   BRAND,
   buildEmailHtml,
@@ -28,6 +28,8 @@ export interface AiInstallPortalAccess {
   last_magic_link_sent_at: string | null;
   magic_link_send_count: number;
   last_magic_link_error: string | null;
+  testimonial_prompt_dismissed_at: string | null;
+  testimonial_submitted_at: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -38,8 +40,7 @@ export interface VerifiedPortalAccess {
   supabase: SupabaseClient;
 }
 
-export const PORTAL_URL =
-  Deno.env.get("AI_INSTALL_PORTAL_URL") ??
+export const PORTAL_URL = Deno.env.get("AI_INSTALL_PORTAL_URL") ??
   "https://standardplaybook.com/aiinstall/portal";
 
 export const PORTAL_SESSION_WINDOW_MS = 30 * 60 * 1000;
@@ -59,6 +60,8 @@ const ACCESS_COLUMNS = [
   "last_magic_link_sent_at",
   "magic_link_send_count",
   "last_magic_link_error",
+  "testimonial_prompt_dismissed_at",
+  "testimonial_submitted_at",
   "created_at",
   "updated_at",
 ].join(",");
@@ -226,13 +229,17 @@ function buildPortalMagicLinkHtml(
     footerName: BRAND.name,
     bodyContent: `
       ${EmailComponents.paragraph(`${escapeHtml(firstName)},`)}
-      ${EmailComponents.paragraph(
+      ${
+      EmailComponents.paragraph(
         "Use the secure link below to open both workshop replays and your AI Install resources.",
-      )}
+      )
+    }
       ${EmailComponents.button("Open the portal", actionLink)}
-      ${EmailComponents.infoText(
+      ${
+      EmailComponents.infoText(
         "This sign-in link is for your email only. If you did not request it, you can ignore this message.",
-      )}
+      )
+    }
     `,
   });
 }
@@ -287,7 +294,9 @@ export async function sendPortalMagicLink(
     await recordMagicLinkResult(supabase, access, sentAt, null);
     return { status: "sent" };
   } catch (sendError) {
-    const error = sendError instanceof Error ? sendError.message : String(sendError);
+    const error = sendError instanceof Error
+      ? sendError.message
+      : String(sendError);
     await recordMagicLinkResult(supabase, access, null, error);
     return { status: "failed", error };
   }
@@ -311,6 +320,9 @@ async function recordMagicLinkResult(
     .update(fields)
     .eq("id", access.id);
   if (updateError) {
-    console.error("ai-install-portal: magic link ledger update failed", updateError.message);
+    console.error(
+      "ai-install-portal: magic link ledger update failed",
+      updateError.message,
+    );
   }
 }

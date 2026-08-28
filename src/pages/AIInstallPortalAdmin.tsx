@@ -12,7 +12,10 @@ import {
   Send,
   ShieldOff,
   Square,
+  ToggleLeft,
+  ToggleRight,
   UserPlus,
+  Video,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from "react";
 
@@ -23,10 +26,12 @@ import {
 } from "@/lib/aiInstallBulkInvites";
 import {
   grantAiInstallPortalAccess,
+  getAiInstallTestimonialReviewUrl,
   loadAiInstallPortalAdminRows,
   resendAiInstallPortalLink,
   resetAiInstallPortalActivity,
   setAiInstallPortalAccessActive,
+  setAiInstallTestimonialPromptEnabled,
   type AiInstallPortalAdminRow,
   type AiInstallPortalPlatform,
 } from "@/lib/aiInstallPortal";
@@ -80,12 +85,15 @@ function AdminWorkspace() {
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [testimonialPromptEnabled, setTestimonialPromptEnabled] = useState(true);
   const [filter, setFilter] = useState<"all" | "active" | "revoked">("all");
 
   const refresh = useCallback(async () => {
     setError(null);
     try {
-      setRows(await loadAiInstallPortalAdminRows());
+      const result = await loadAiInstallPortalAdminRows();
+      setRows(result.rows);
+      setTestimonialPromptEnabled(result.testimonialPromptEnabled);
     } catch (readError) {
       setError(readError instanceof Error ? readError.message : "Could not load portal access.");
       setRows([]);
@@ -102,7 +110,41 @@ function AdminWorkspace() {
 
   const activeCount = (rows ?? []).filter((row) => row.is_active).length;
   const loggedInCount = (rows ?? []).filter((row) => row.first_login_at).length;
-  const readyCount = (rows ?? []).filter((row) => row.ready_submitted_at).length;
+  const testimonialCount = (rows ?? []).filter((row) => row.testimonial).length;
+
+  const toggleTestimonialPrompt = async () => {
+    const next = !testimonialPromptEnabled;
+    setBusyId("testimonial-prompt");
+    setError(null);
+    setNotice(null);
+    try {
+      await setAiInstallTestimonialPromptEnabled(next);
+      setTestimonialPromptEnabled(next);
+      setNotice(`The testimonial request is now ${next ? "on" : "off"}.`);
+    } catch (toggleError) {
+      setError(toggleError instanceof Error ? toggleError.message : "Could not update the testimonial request.");
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const reviewTestimonial = async (row: AiInstallPortalAdminRow) => {
+    if (!row.testimonial) return;
+    const reviewWindow = window.open("about:blank", "_blank");
+    if (reviewWindow) reviewWindow.opener = null;
+    setBusyId(`${row.id}:testimonial`);
+    setError(null);
+    try {
+      const url = await getAiInstallTestimonialReviewUrl(row.testimonial.id);
+      if (!reviewWindow) throw new Error("Your browser blocked the review window. Allow pop-ups and try again.");
+      reviewWindow.location.replace(url);
+    } catch (reviewError) {
+      reviewWindow?.close();
+      setError(reviewError instanceof Error ? reviewError.message : "Could not open the private video.");
+    } finally {
+      setBusyId(null);
+    }
+  };
 
   const mutate = async (row: AiInstallPortalAdminRow, action: "toggle" | "resend" | "reset") => {
     if (action === "reset" && !window.confirm(
@@ -147,7 +189,15 @@ function AdminWorkspace() {
           <div><span>Total access</span><strong>{rows?.length ?? 0}</strong></div>
           <div><span>Active</span><strong>{activeCount}</strong></div>
           <div><span>Opened portal</span><strong>{loggedInCount}</strong></div>
-          <div><span>Ready confirmed</span><strong>{readyCount}</strong></div>
+          <div><span>Testimonials</span><strong>{testimonialCount}</strong></div>
+        </section>
+
+        <section className="aipa-testimonial-control" aria-label="Testimonial request setting">
+          <div><Video size={23} /><span><strong>Video testimonial request</strong><small>{testimonialPromptEnabled ? "Shown after first sign-in and available from the portal." : "Hidden from attendee portals. Existing videos remain private and available."}</small></span></div>
+          <button type="button" className={testimonialPromptEnabled ? "is-on" : ""} disabled={busyId !== null} onClick={() => void toggleTestimonialPrompt()} aria-pressed={testimonialPromptEnabled}>
+            {testimonialPromptEnabled ? <ToggleRight size={24} /> : <ToggleLeft size={24} />}
+            {busyId === "testimonial-prompt" ? "Saving" : testimonialPromptEnabled ? "Request on" : "Request off"}
+          </button>
         </section>
 
         <GrantAccessForm
@@ -186,7 +236,7 @@ function AdminWorkspace() {
           ) : (
             <div className="aipa-table-wrap">
               <table className="aipa-table">
-                <thead><tr><th>Attendee</th><th>Access</th><th>Activity</th><th>Day 1</th><th>Day 2</th><th>Files</th><th>Ready</th><th><span className="sr-only">Actions</span></th></tr></thead>
+                <thead><tr><th>Attendee</th><th>Access</th><th>Activity</th><th>Day 1</th><th>Day 2</th><th>Files</th><th>Ready</th><th>Testimonial</th><th><span className="sr-only">Actions</span></th></tr></thead>
                 <tbody>
                   {visible.map((row) => (
                     <tr key={row.id} className={!row.is_active ? "is-revoked" : ""}>
@@ -197,6 +247,7 @@ function AdminWorkspace() {
                       <td><ProgressCell value={row.progress["day-2"]?.max_progress ?? 0} complete={Boolean(row.progress["day-2"]?.completed_at)} /></td>
                       <td><strong>{row.downloads.count}</strong><small>{row.downloads.last_at ? formatDate(row.downloads.last_at) : "No downloads"}</small></td>
                       <td>{row.ready_submitted_at ? <span className="aipa-ready"><Check size={14} />Yes</span> : <span className="aipa-muted">No</span>}</td>
+                      <td>{row.testimonial ? <button type="button" className="aipa-review-video" disabled={busyId !== null} onClick={() => void reviewTestimonial(row)}><Video size={14} />{busyId === `${row.id}:testimonial` ? "Opening" : "Review"}<small>{formatDate(row.testimonial.submitted_at)}</small></button> : <span className="aipa-muted">Not submitted</span>}</td>
                       <td>
                         <div className="aipa-row-actions">
                           <button type="button" disabled={!row.is_active || busyId !== null} onClick={() => void mutate(row, "resend")} title="Resend sign-in link"><Mail size={15} />{busyId === `${row.id}:resend` ? "Sending" : "Resend"}</button>

@@ -11,8 +11,13 @@ import {
   LogOut,
   Play,
   ShieldCheck,
+  Smartphone,
+  Upload,
+  Video,
+  Volume2,
+  X,
 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from "react";
 
 import standardLogo from "@/assets/standard-word-logo.png";
 import { supabase } from "@/integrations/supabase/client";
@@ -22,6 +27,8 @@ import {
   recordAiInstallPortalSignOut,
   recordAiInstallVideoEvent,
   requestAiInstallPortalLink,
+  skipAiInstallTestimonial,
+  uploadAiInstallTestimonial,
   type AiInstallPortalProgress,
   type AiInstallPortalStatus,
   type AiInstallVideoId,
@@ -200,6 +207,12 @@ function PortalGate({ signedInButDenied, error }: { signedInButDenied: boolean; 
 }
 
 function PortalWorkspace({ status }: { status: AiInstallPortalStatus }) {
+  const initialTestimonial = status.testimonial ?? {
+    enabled: false,
+    intro_vimeo_id: "1222084782",
+    prompt_dismissed_at: null,
+    submitted_at: null,
+  };
   const progressById = useMemo(
     () => new Map(status.progress.map((item) => [item.content_id, item])),
     [status.progress],
@@ -209,6 +222,11 @@ function PortalWorkspace({ status }: { status: AiInstallPortalStatus }) {
   );
   const [downloadId, setDownloadId] = useState<string | null>(null);
   const [downloadError, setDownloadError] = useState<{ resourceId: string; message: string } | null>(null);
+  const [testimonial, setTestimonial] = useState(initialTestimonial);
+  const [testimonialOpen, setTestimonialOpen] = useState(
+    initialTestimonial.enabled && !initialTestimonial.submitted_at &&
+      !initialTestimonial.prompt_dismissed_at,
+  );
 
   const resourcePlan = useMemo(() => {
     return getAiInstallPortalResourcePlan(status.access.platform);
@@ -246,6 +264,21 @@ function PortalWorkspace({ status }: { status: AiInstallPortalStatus }) {
   return (
     <div className="aip-page">
       <PortalHeader email={status.access.email} onSignOut={signOut} />
+      {testimonialOpen && (
+        <TestimonialExperience
+          vimeoId={testimonial.intro_vimeo_id}
+          fullName={status.access.full_name}
+          onSkip={async () => {
+            const dismissedAt = await skipAiInstallTestimonial();
+            setTestimonial((current) => ({ ...current, prompt_dismissed_at: dismissedAt }));
+            setTestimonialOpen(false);
+          }}
+          onSubmitted={(submittedAt) => {
+            setTestimonial((current) => ({ ...current, submitted_at: submittedAt }));
+            setTestimonialOpen(false);
+          }}
+        />
+      )}
       <main>
         <section className="aip-hero">
           <div className="aip-shell aip-hero-grid">
@@ -267,6 +300,14 @@ function PortalWorkspace({ status }: { status: AiInstallPortalStatus }) {
                 <div><dt>Resource files</dt><dd>{resourcePlan.resourceCount}</dd></div>
               </dl>
               <a href="#start-here" className="aip-inline-link">Go to Start Here <ChevronRight size={16} /></a>
+              {testimonial.enabled && !testimonial.submitted_at && (
+                <button type="button" className="aip-testimonial-cta" onClick={() => setTestimonialOpen(true)}>
+                  <Video size={17} /> Upload a video testimonial
+                </button>
+              )}
+              {testimonial.submitted_at && (
+                <p className="aip-testimonial-received"><Check size={15} /> Testimonial received</p>
+              )}
             </div>
           </div>
         </section>
@@ -338,6 +379,176 @@ function PortalWorkspace({ status }: { status: AiInstallPortalStatus }) {
       </main>
     </div>
   );
+}
+
+function TestimonialExperience({
+  vimeoId,
+  fullName,
+  onSkip,
+  onSubmitted,
+}: {
+  vimeoId: string;
+  fullName: string | null;
+  onSkip: () => Promise<void>;
+  onSubmitted: (submittedAt: string) => void;
+}) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [consent, setConsent] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [skipping, setSkipping] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [soundOn, setSoundOn] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    titleRef.current?.focus();
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, []);
+
+  useEffect(() => {
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && !uploading && !skipping) void skip();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  });
+
+  const skip = async () => {
+    setSkipping(true);
+    setError(null);
+    try {
+      await onSkip();
+    } catch (skipError) {
+      setError(skipError instanceof Error ? skipError.message : "Could not save that choice. Try again.");
+      setSkipping(false);
+    }
+  };
+
+  const enableSound = async () => {
+    if (!iframeRef.current) return;
+    try {
+      const player = new Player(iframeRef.current);
+      await player.setMuted(false);
+      await player.play();
+      setSoundOn(true);
+    } catch {
+      setError("Tap the video once, then try sound again.");
+    }
+  };
+
+  const chooseFile = (event: ChangeEvent<HTMLInputElement>) => {
+    const selected = event.target.files?.[0] ?? null;
+    setError(null);
+    if (selected && selected.size > 500 * 1024 * 1024) {
+      setFile(null);
+      setError("That video is over 500 MB. Choose a shorter or smaller file.");
+      return;
+    }
+    setFile(selected);
+  };
+
+  const upload = async () => {
+    if (!file || !consent) return;
+    setUploading(true);
+    setProgress(0);
+    setError(null);
+    try {
+      const result = await uploadAiInstallTestimonial(file, setProgress);
+      onSubmitted(result.submittedAt);
+    } catch (uploadError) {
+      setError(uploadError instanceof Error ? uploadError.message : "The upload did not finish. Try again.");
+      setUploading(false);
+    }
+  };
+
+  const firstName = fullName?.trim().split(/\s+/)[0];
+
+  return (
+    <div className="aip-testimonial-overlay" role="dialog" aria-modal="true" aria-labelledby="testimonial-title">
+      <button type="button" className="aip-testimonial-close" disabled={uploading || skipping} onClick={() => void skip()} aria-label="Skip testimonial for now">
+        <X size={20} />
+      </button>
+      <div className="aip-testimonial-layout">
+        <div className="aip-phone-stage">
+          <div className="aip-phone" aria-label="A short message from Justin">
+            <div className="aip-phone-speaker" aria-hidden="true" />
+            <iframe
+              ref={iframeRef}
+              src={`https://player.vimeo.com/video/${vimeoId}?autoplay=1&muted=1&title=0&byline=0&portrait=0&dnt=1&playsinline=1`}
+              title="A message about sharing your AI Install experience"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+          <button type="button" className="aip-sound-button" onClick={() => void enableSound()}>
+            <Volume2 size={16} /> {soundOn ? "Sound on" : "Tap for sound"}
+          </button>
+        </div>
+
+        <section className="aip-testimonial-panel">
+          <p className="aip-label">One quick thing before the workshop</p>
+          <h2 id="testimonial-title" ref={titleRef} tabIndex={-1}>
+            {firstName ? `${firstName}, tell us` : "Tell us"}<br /><em>what changed.</em>
+          </h2>
+          <p className="aip-testimonial-lede">Record a quick vertical video about what the AI Install helped you build, understand, or finally get moving.</p>
+
+          <div className="aip-testimonial-prompt">
+            <span>Keep it simple</span>
+            <p>What felt stuck before—and what feels possible now?</p>
+          </div>
+
+          <input
+            ref={inputRef}
+            className="aip-testimonial-file-input"
+            type="file"
+            accept="video/mp4,video/quicktime,video/webm,video/x-m4v,video/*"
+            capture="user"
+            disabled={uploading}
+            onChange={chooseFile}
+          />
+          <button type="button" className="aip-device-upload" disabled={uploading} onClick={() => inputRef.current?.click()}>
+            <span><Smartphone size={27} /><Upload size={17} /></span>
+            <strong>{file ? file.name : "Record or choose a video"}</strong>
+            <small>{file ? formatFileSize(file.size) : "MP4, MOV, M4V, or WEBM · up to 500 MB"}</small>
+          </button>
+
+          <label className="aip-testimonial-consent">
+            <input type="checkbox" checked={consent} disabled={uploading} onChange={(event) => setConsent(event.target.checked)} />
+            <span>I give The Standard Playbook permission to review and use this testimonial in marketing. I have not included private client information.</span>
+          </label>
+
+          {uploading && (
+            <div className="aip-upload-progress" role="status" aria-live="polite">
+              <div><span>Uploading privately</span><strong>{progress}%</strong></div>
+              <span><i style={{ width: `${progress}%` }} /></span>
+              <small>Keep this page open until the upload is complete.</small>
+            </div>
+          )}
+          {error && <p className="aip-testimonial-error" role="alert">{error}</p>}
+
+          <div className="aip-testimonial-actions">
+            <button type="button" className="is-primary" disabled={!file || !consent || uploading || skipping} onClick={() => void upload()}>
+              {uploading ? `Uploading ${progress}%` : "Upload video testimonial"}
+            </button>
+            <button type="button" disabled={uploading || skipping} onClick={() => void skip()}>
+              {skipping ? "Saving" : "Skip for now"}
+            </button>
+          </div>
+          <p className="aip-testimonial-private"><LockKeyhole size={14} /> Stored privately. Only Standard Playbook admins can open the original file.</p>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+function formatFileSize(bytes: number): string {
+  if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+  return `${(bytes / 1024 / 1024).toFixed(bytes < 10 * 1024 * 1024 ? 1 : 0)} MB`;
 }
 
 function PreworkCard({

@@ -18,6 +18,7 @@ test("portal activity reset clears engagement while preserving access and invite
   assert.match(adminFunction, /first_login_at: null,[\s\S]*?last_login_at: null,[\s\S]*?login_count: 0/);
   assert.match(adminFunction, /body\.include_ready === true[\s\S]*?from\("ai_install_ready_submissions"\)[\s\S]*?\.ilike\("email", access\.email\)/);
   assert.doesNotMatch(resetBranch, /from\("ai_install_portal_access"\)\s*\.delete\(\)/);
+  assert.doesNotMatch(resetBranch, /from\("ai_install_portal_testimonials"\)[\s\S]*?\.delete\(\)/);
 });
 
 test("admin Reset control invokes the protected activity reset action", () => {
