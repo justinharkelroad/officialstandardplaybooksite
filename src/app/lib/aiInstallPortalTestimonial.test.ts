@@ -38,6 +38,7 @@ test("testimonial request is optional, persistent, consented, and can be disable
   assert.match(portalClient, /uploadToSignedUrl/);
   assert.match(portalFunction, /body\.consent_granted !== true/);
   assert.match(portalFunction, /AI_INSTALL_TESTIMONIAL_NOTIFY_EMAIL/);
+  assert.match(portalFunction, /justin@hfiagencies\.com/);
   assert.match(adminPage, /setAiInstallTestimonialPromptEnabled/);
 });
 

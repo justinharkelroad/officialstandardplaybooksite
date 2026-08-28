@@ -487,13 +487,8 @@ async function sendTestimonialNotification(
 ): Promise<{ ok: boolean; error?: string }> {
   const key = Deno.env.get("RESEND_API_KEY");
   if (!key) return { ok: false, error: "RESEND_API_KEY is not configured" };
-  const notifyTo = Deno.env.get("AI_INSTALL_TESTIMONIAL_NOTIFY_EMAIL");
-  if (!notifyTo) {
-    return {
-      ok: false,
-      error: "AI_INSTALL_TESTIMONIAL_NOTIFY_EMAIL is not configured",
-    };
-  }
+  const notifyTo = Deno.env.get("AI_INSTALL_TESTIMONIAL_NOTIFY_EMAIL") ||
+    "justin@hfiagencies.com";
 
   const from = Deno.env.get("AI_INSTALL_FROM_EMAIL") ||
     "Standard Playbook <info@standardplaybook.com>";
