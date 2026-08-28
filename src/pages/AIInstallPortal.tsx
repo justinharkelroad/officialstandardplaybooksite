@@ -38,10 +38,12 @@ import {
   type AiInstallPortalPreworkResource,
   type AiInstallPortalResource,
 } from "@/lib/aiInstallPortalResources";
+import { parseAiInstallPortalToken } from "@/lib/aiInstallPortalAuth";
 
 import "./AIInstallPortal.css";
 
 export default function AIInstallPortal() {
+  const portalToken = useMemo(() => parseAiInstallPortalToken(window.location.hash), []);
   const [checkingSession, setCheckingSession] = useState(true);
   const [status, setStatus] = useState<AiInstallPortalStatus | null>(null);
   const [accessError, setAccessError] = useState<string | null>(null);
@@ -99,9 +101,82 @@ export default function AIInstallPortal() {
     };
   }, [loadPortal]);
 
+  if (portalToken) return <PortalVerification token={portalToken} />;
   if (checkingSession) return <PortalLoading />;
   if (!status) return <PortalGate signedInButDenied={Boolean(accessError)} error={accessError} />;
   return <PortalWorkspace status={status} />;
+}
+
+function PortalVerification({ token }: { token: string }) {
+  const [verifying, setVerifying] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const verify = async (event: FormEvent) => {
+    event.preventDefault();
+    setVerifying(true);
+    setError(null);
+
+    try {
+      const { data, error: verifyError } = await supabase.auth.verifyOtp({
+        token_hash: token,
+        type: "email",
+      });
+      if (verifyError) throw verifyError;
+      if (!data.session) throw new Error("The secure sign-in did not create a session.");
+      window.location.replace("/aiinstall/portal");
+    } catch (verifyError) {
+      setError(
+        verifyError instanceof Error
+          ? verifyError.message
+          : "This sign-in link is no longer valid. Request a fresh email below.",
+      );
+      setVerifying(false);
+    }
+  };
+
+  return (
+    <div className="aip-page aip-gate-page">
+      <PortalHeader />
+      <main className="aip-gate-stage">
+        <div className="aip-gate-backdrop" aria-hidden="true">
+          <span>DAY 01</span>
+          <span>DAY 02</span>
+          <span>FILES</span>
+        </div>
+
+        <section className="aip-access-dialog" aria-labelledby="portal-verify-title">
+          <div className="aip-access-mark"><ShieldCheck size={22} strokeWidth={1.8} /></div>
+          <p className="aip-label">Secure attendee access</p>
+          <h1 id="portal-verify-title">One last step.<br /><em>Open your portal.</em></h1>
+
+          <form className="aip-confirm" onSubmit={verify}>
+            <p>
+              Confirm below to finish signing in. This extra step keeps automated email security checks from using your one-time access.
+            </p>
+            <button type="submit" disabled={verifying}>
+              {verifying ? "Opening portal" : "Confirm and open portal"}
+              {!verifying && <ChevronRight size={18} />}
+            </button>
+            {error && <p className="aip-form-error" role="alert">{error}</p>}
+            {error && (
+              <button
+                type="button"
+                className="aip-text-button"
+                onClick={() => window.location.replace("/aiinstall/portal")}
+              >
+                Request a fresh email <ChevronRight size={15} />
+              </button>
+            )}
+          </form>
+
+          <div className="aip-access-foot">
+            <ShieldCheck size={17} />
+            <span>Your one-time access is verified only after you select the button above.</span>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
 }
 
 function PortalLoading() {

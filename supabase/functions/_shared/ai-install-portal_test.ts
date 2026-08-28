@@ -1,4 +1,5 @@
 import {
+  buildPortalVerificationUrl,
   canAccessPortalAsset,
   isPortalAccessCurrent,
   isPortalEmail,
@@ -60,4 +61,19 @@ Deno.test("counts one portal session per 30-minute activity window", () => {
     shouldCountPortalSession("2026-08-28T11:30:00.000Z", now),
     "A portal open at the boundary should start a new session",
   );
+});
+
+Deno.test("routes one-time access through a scanner-safe portal confirmation", () => {
+  const hashedToken = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
+  const url = buildPortalVerificationUrl(
+    hashedToken,
+    "https://standardplaybook.com/aiinstall/portal",
+  );
+
+  assertEquals(
+    url,
+    `https://standardplaybook.com/aiinstall/portal#portal_token=${hashedToken}`,
+    "Email should open the portal without consuming the Supabase one-time token",
+  );
+  assert(!url.includes("/auth/v1/verify"), "The email URL must not be the consumable Auth action link");
 });

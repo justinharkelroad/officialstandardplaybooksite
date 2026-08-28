@@ -218,9 +218,18 @@ export interface PortalMagicLinkResult {
   error?: string;
 }
 
+export function buildPortalVerificationUrl(
+  hashedToken: string,
+  portalUrl = PORTAL_URL,
+): string {
+  const url = new URL(portalUrl);
+  url.hash = new URLSearchParams({ portal_token: hashedToken }).toString();
+  return url.toString();
+}
+
 function buildPortalMagicLinkHtml(
   access: AiInstallPortalAccess,
-  actionLink: string,
+  verificationUrl: string,
 ): string {
   const firstName = access.full_name?.trim().split(/\s+/)[0] || "there";
   return buildEmailHtml({
@@ -234,10 +243,10 @@ function buildPortalMagicLinkHtml(
         "Use the secure link below to open both workshop replays and your AI Install resources.",
       )
     }
-      ${EmailComponents.button("Open the portal", actionLink)}
+      ${EmailComponents.button("Open the portal", verificationUrl)}
       ${
       EmailComponents.infoText(
-        "This sign-in link is for your email only. If you did not request it, you can ignore this message.",
+        "On the next screen, select Confirm and open portal. This extra step prevents automated email security checks from using your one-time access.",
       )
     }
     `,
@@ -254,12 +263,13 @@ export async function sendPortalMagicLink(
     options: { redirectTo: PORTAL_URL },
   });
 
-  const actionLink = data?.properties?.action_link;
-  if (linkError || !actionLink) {
+  const hashedToken = data?.properties?.hashed_token;
+  if (linkError || !hashedToken) {
     const error = linkError?.message ?? "Magic link generation failed";
     await recordMagicLinkResult(supabase, access, null, error);
     return { status: "failed", error };
   }
+  const verificationUrl = buildPortalVerificationUrl(hashedToken);
 
   const resendKey = Deno.env.get("RESEND_API_KEY");
   if (!resendKey) {
@@ -279,7 +289,7 @@ export async function sendPortalMagicLink(
         from: BRAND.fromEmail,
         to: access.email,
         subject: "Your Agency AI Install sign-in link",
-        html: buildPortalMagicLinkHtml(access, actionLink),
+        html: buildPortalMagicLinkHtml(access, verificationUrl),
       }),
     });
 

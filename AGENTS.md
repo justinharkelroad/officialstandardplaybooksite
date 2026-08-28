@@ -30,6 +30,10 @@
   submitted through `/aiinstall/ready`. Keep the ZIP README, pre-work pages,
   purchase email, confirmation form, and fulfillment tests aligned whenever
   this flow changes.
+- **AI Install portal email access must be resistant to link scanners.** Never
+  put the consumable Supabase Auth action link directly in an attendee email.
+  Route the generated hashed token to `/aiinstall/portal` in the URL fragment
+  and require an explicit human confirmation before calling `verifyOtp`.
 - **Completed Flow transcripts must stay question-driven.** Render and export
   each validated current Coach turn directly beneath the official answer for
   its stable question ID, in reflection/follow-up/member-response/resolution
