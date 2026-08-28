@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build:aiinstall-packs": "bash scripts/build-aiinstall-starter-packs.sh",
+    "sync:aiinstall-portal-assets": "node scripts/sync-aiinstall-portal-assets.mjs",
     "dev": "vite",
     "build": "vite build",
     "build:mobile": "vite build --config vite.mobile.config.ts && npm run mobile:check-bundle",
@@ -71,6 +72,7 @@
     "@tiptap/extension-text-style": "^3.20.0",
     "@tiptap/react": "^3.19.0",
     "@tiptap/starter-kit": "^3.19.0",
+    "@vimeo/player": "2.30.4",
     "canvas-confetti": "^1.9.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

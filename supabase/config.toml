@@ -133,3 +133,16 @@ verify_jwt = false
 # JWT, so the function validates every field itself and writes with the
 # service role.
 verify_jwt = false
+
+# Public email form. The function always returns a generic response and sends
+# only when the normalized email has active portal access.
+[functions.ai-install-request-link]
+verify_jwt = false
+
+# Attendee and admin portal endpoints both verify the caller's Supabase JWT in
+# addition to their route-specific access checks.
+[functions.ai-install-portal]
+verify_jwt = true
+
+[functions.ai-install-portal-admin]
+verify_jwt = true

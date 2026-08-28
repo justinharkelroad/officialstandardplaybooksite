@@ -16,6 +16,8 @@ const AIInstall = lazy(() => import("./pages/AIInstall"));
 const AIInstallPrework = lazy(() => import("./pages/AIInstallPrework"));
 const AIInstallReady = lazy(() => import("./pages/AIInstallReady"));
 const AIInstallReadyList = lazy(() => import("./pages/AIInstallReadyList"));
+const AIInstallPortal = lazy(() => import("./pages/AIInstallPortal"));
+const AIInstallPortalAdmin = lazy(() => import("./pages/AIInstallPortalAdmin"));
 import CallScoring from "./pages/CallScoring";
 import Decision from "./pages/Decision";
 import Privacy from "./pages/Privacy";
@@ -149,6 +151,14 @@ const App = () => (
           <Route
             path="/aiinstall/ready/list"
             element={<Suspense fallback={null}><AIInstallReadyList /></Suspense>}
+          />
+          <Route
+            path="/aiinstall/portal"
+            element={<Suspense fallback={null}><AIInstallPortal /></Suspense>}
+          />
+          <Route
+            path="/aiinstall/portal/admin"
+            element={<Suspense fallback={null}><AIInstallPortalAdmin /></Suspense>}
           />
           <Route path="/certified-standard" element={<BoldCertifiedStandard />} />
           <Route path="/team-standard" element={<BoldTeamStandard />} />
