@@ -87,6 +87,8 @@ export type Database = {
           magic_link_send_count: number
           platform: string
           source: string
+          testimonial_prompt_dismissed_at: string | null
+          testimonial_submitted_at: string | null
           updated_at: string
           user_id: string
         }
@@ -106,6 +108,8 @@ export type Database = {
           magic_link_send_count?: number
           platform?: string
           source?: string
+          testimonial_prompt_dismissed_at?: string | null
+          testimonial_submitted_at?: string | null
           updated_at?: string
           user_id: string
         }
@@ -125,6 +129,8 @@ export type Database = {
           magic_link_send_count?: number
           platform?: string
           source?: string
+          testimonial_prompt_dismissed_at?: string | null
+          testimonial_submitted_at?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -199,6 +205,89 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "ai_install_portal_progress_access_id_fkey"
+            columns: ["access_id"]
+            isOneToOne: false
+            referencedRelation: "ai_install_portal_access"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_install_portal_settings: {
+        Row: {
+          created_at: string
+          id: string
+          testimonial_prompt_enabled: boolean
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          testimonial_prompt_enabled?: boolean
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          testimonial_prompt_enabled?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      ai_install_portal_testimonials: {
+        Row: {
+          access_id: string
+          consent_granted_at: string
+          consent_text_version: string
+          content_type: string
+          created_at: string
+          id: string
+          notification_error: string | null
+          notification_sent_at: string | null
+          original_filename: string
+          size_bytes: number
+          status: string
+          storage_path: string
+          submitted_at: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          access_id: string
+          consent_granted_at: string
+          consent_text_version?: string
+          content_type: string
+          created_at?: string
+          id?: string
+          notification_error?: string | null
+          notification_sent_at?: string | null
+          original_filename: string
+          size_bytes: number
+          status?: string
+          storage_path: string
+          submitted_at?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          access_id?: string
+          consent_granted_at?: string
+          consent_text_version?: string
+          content_type?: string
+          created_at?: string
+          id?: string
+          notification_error?: string | null
+          notification_sent_at?: string | null
+          original_filename?: string
+          size_bytes?: number
+          status?: string
+          storage_path?: string
+          submitted_at?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_install_portal_testimonials_access_id_fkey"
             columns: ["access_id"]
             isOneToOne: false
             referencedRelation: "ai_install_portal_access"
