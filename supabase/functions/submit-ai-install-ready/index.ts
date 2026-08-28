@@ -149,8 +149,21 @@ Deno.serve(async (req: Request): Promise<Response> => {
   }
 });
 
+// Minimal structural type: two supabase-js copies in the graph make
+// ReturnType<typeof createClient> incompatible with the client instance.
+type SignedUrlClient = {
+  storage: {
+    from: (bucket: string) => {
+      createSignedUrl: (
+        path: string,
+        expiresIn: number,
+      ) => Promise<{ data: { signedUrl: string } | null }>;
+    };
+  };
+};
+
 async function sendNotification(
-  supabase: ReturnType<typeof createClient>,
+  supabase: SignedUrlClient,
   input: {
     id: string;
     firstName: string;
