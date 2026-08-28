@@ -7,7 +7,7 @@ alter table public.ai_install_portal_access
   add column if not exists testimonial_prompt_dismissed_at timestamptz,
   add column if not exists testimonial_submitted_at timestamptz;
 
-create table public.ai_install_portal_settings (
+create table if not exists public.ai_install_portal_settings (
   id                          text primary key default 'default'
                               check (id = 'default'),
   testimonial_prompt_enabled boolean not null default true,
@@ -23,7 +23,7 @@ alter table public.ai_install_portal_settings enable row level security;
 revoke all on public.ai_install_portal_settings from anon, authenticated;
 grant all on public.ai_install_portal_settings to service_role;
 
-create table public.ai_install_portal_testimonials (
+create table if not exists public.ai_install_portal_testimonials (
   id                    uuid primary key default gen_random_uuid(),
   access_id             uuid not null references public.ai_install_portal_access(id) on delete cascade,
   user_id               uuid not null references auth.users(id) on delete cascade,
@@ -42,10 +42,10 @@ create table public.ai_install_portal_testimonials (
   updated_at            timestamptz not null default now()
 );
 
-create index ai_install_portal_testimonials_access_idx
+create index if not exists ai_install_portal_testimonials_access_idx
   on public.ai_install_portal_testimonials (access_id, created_at desc);
 
-create index ai_install_portal_testimonials_submitted_idx
+create index if not exists ai_install_portal_testimonials_submitted_idx
   on public.ai_install_portal_testimonials (submitted_at desc)
   where status = 'uploaded';
 
