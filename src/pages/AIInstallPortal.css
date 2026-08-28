@@ -12,6 +12,9 @@ body:has(.aip-page) { margin: 0; background: #f0efe9; }
   --aip-blue: #1677ff;
   --aip-blue-deep: #0057d9;
   --aip-muted: #63666b;
+  --aip-input-bg: #ffffff;
+  --aip-input-ink: #15171b;
+  --aip-input-placeholder: #6a6d72;
   --aip-display: "Anton", "Archivo Black", Impact, sans-serif;
   --aip-body: Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   min-height: 100dvh;
@@ -36,7 +39,7 @@ body:has(.aip-page) { margin: 0; background: #f0efe9; }
 .aip-signout { max-width: 340px; border: 0; padding: 8px 0; background: transparent; color: inherit; cursor: pointer; }
 .aip-signout span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-.aip-gate-page { overflow: hidden; }
+.aip-gate-page { overflow-x: hidden; }
 .aip-gate-stage { position: relative; min-height: calc(100dvh - 62px); display: grid; place-items: center; padding: 48px 24px; background: var(--aip-ink); color: #fff; }
 .aip-gate-backdrop { position: absolute; inset: 0; display: grid; grid-template-columns: 1.2fr .8fr; grid-template-rows: 1fr 1fr; opacity: .16; overflow: hidden; }
 .aip-gate-backdrop::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 68% 48%, transparent 0, rgba(11,12,14,.08) 30%, rgba(11,12,14,.85) 75%); }
@@ -50,8 +53,9 @@ body:has(.aip-page) { margin: 0; background: #f0efe9; }
 .aip-access-form { margin-top: 38px; }
 .aip-access-form label { display: block; margin-bottom: 9px; color: rgba(255,255,255,.7); font-size: 12px; font-weight: 650; }
 .aip-input-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
-.aip-input-row input { min-width: 0; height: 56px; border: 1px solid #fff; border-right: 0; border-radius: 0; padding: 0 17px; background: #fff; color: var(--aip-ink); }
-.aip-input-row button { height: 56px; display: flex; align-items: center; gap: 8px; border: 1px solid var(--aip-blue); padding: 0 20px; background: var(--aip-blue); color: #fff; font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; }
+.aip-input-row input { min-width: 0; height: 56px; border: 1px solid var(--aip-input-bg); border-right: 0; border-radius: 0; padding: 0 17px; background: var(--aip-input-bg); color: var(--aip-input-ink); caret-color: var(--aip-input-ink); color-scheme: light; -webkit-text-fill-color: var(--aip-input-ink); }
+.aip-input-row input::placeholder { color: var(--aip-input-placeholder); opacity: 1; -webkit-text-fill-color: var(--aip-input-placeholder); }
+.aip-input-row button { min-width: 0; height: 56px; display: flex; align-items: center; gap: 8px; border: 1px solid var(--aip-blue); padding: 0 20px; background: var(--aip-blue); color: #fff; font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
 .aip-input-row button:hover { background: var(--aip-blue-deep); }
 .aip-input-row button:disabled { opacity: .62; cursor: wait; }
 .aip-form-error { margin-top: 12px !important; color: #ff9b92; font-size: 13px; }
@@ -147,6 +151,12 @@ body:has(.aip-page) { margin: 0; background: #f0efe9; }
   .aip-resources-intro { position: static; }
 }
 
+@media (max-width: 760px) {
+  .aip-input-row { grid-template-columns: 1fr; gap: 8px; }
+  .aip-input-row input { border-right: 1px solid var(--aip-input-bg); }
+  .aip-input-row button { justify-content: center; }
+}
+
 @media (max-width: 620px) {
   .aip-header { height: 56px; }
   .aip-header img { height: 17px; }
@@ -154,9 +164,6 @@ body:has(.aip-page) { margin: 0; background: #f0efe9; }
   .aip-gate-stage { min-height: calc(100dvh - 56px); padding: 20px 12px; }
   .aip-access-dialog { padding: 28px 22px; }
   .aip-access-mark { margin-bottom: 23px; }
-  .aip-input-row { grid-template-columns: 1fr; gap: 8px; }
-  .aip-input-row input { border-right: 1px solid #fff; }
-  .aip-input-row button { justify-content: center; }
   .aip-hero { padding-top: 56px; }
   .aip-hero-copy h1 { font-size: clamp(68px, 21vw, 98px); }
   .aip-section-head { gap: 20px; }
@@ -164,6 +171,10 @@ body:has(.aip-page) { margin: 0; background: #f0efe9; }
   .aip-resource-kind { display: none; }
   .aip-download-action { font-size: 0; }
   .aip-footer .aip-shell { align-items: flex-start; flex-direction: column; }
+}
+
+@media (max-height: 680px) {
+  .aip-gate-stage { align-items: start; }
 }
 
 @media (prefers-reduced-motion: reduce) {
