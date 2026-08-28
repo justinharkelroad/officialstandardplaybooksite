@@ -26,27 +26,13 @@ import {
   type AiInstallPortalStatus,
   type AiInstallVideoId,
 } from "@/lib/aiInstallPortal";
+import {
+  getAiInstallPortalResourcePlan,
+  type AiInstallPortalPreworkResource,
+  type AiInstallPortalResource,
+} from "@/lib/aiInstallPortalResources";
 
 import "./AIInstallPortal.css";
-
-const COMMON_RESOURCES = [
-  { id: "day-1-guide", title: "Day 1 Build Guide", detail: "20-page workshop guide", kind: "PDF" },
-  { id: "day-2-guide", title: "Day 2 Build Guide", detail: "27-page workshop guide", kind: "PDF" },
-  { id: "skills-guide", title: "Standard Playbook Skills", detail: "Skills reference guide", kind: "PDF" },
-] as const;
-
-const PLATFORM_RESOURCES = {
-  claude: [
-    { id: "claude-prework", title: "Claude Pre-work Pack", detail: "Folder setup and starter files", kind: "ZIP" },
-    { id: "claude-skills", title: "Claude Skills Library", detail: "Complete skill files for Claude", kind: "ZIP" },
-  ],
-  codex: [
-    { id: "codex-prework", title: "Codex Pre-work Pack", detail: "Includes AGENTS-STARTER.md", kind: "ZIP" },
-    { id: "codex-skills", title: "Codex Skills Library", detail: "Complete skill files for Codex", kind: "ZIP" },
-  ],
-} as const;
-
-type Resource = (typeof COMMON_RESOURCES)[number] | (typeof PLATFORM_RESOURCES.claude)[number] | (typeof PLATFORM_RESOURCES.codex)[number];
 
 export default function AIInstallPortal() {
   const [checkingSession, setCheckingSession] = useState(true);
@@ -222,24 +208,23 @@ function PortalWorkspace({ status }: { status: AiInstallPortalStatus }) {
     Object.fromEntries(status.progress.map((item) => [item.content_id, item.max_progress])),
   );
   const [downloadId, setDownloadId] = useState<string | null>(null);
-  const [downloadError, setDownloadError] = useState<string | null>(null);
+  const [downloadError, setDownloadError] = useState<{ resourceId: string; message: string } | null>(null);
 
-  const resources = useMemo<Resource[]>(() => {
-    const platform = status.access.platform;
-    const specific = platform === "both"
-      ? [...PLATFORM_RESOURCES.claude, ...PLATFORM_RESOURCES.codex]
-      : [...PLATFORM_RESOURCES[platform]];
-    return [...COMMON_RESOURCES, ...specific];
+  const resourcePlan = useMemo(() => {
+    return getAiInstallPortalResourcePlan(status.access.platform);
   }, [status.access.platform]);
 
-  const download = async (resource: Resource) => {
+  const download = async (resource: AiInstallPortalResource) => {
     setDownloadId(resource.id);
     setDownloadError(null);
     try {
       const url = await getAiInstallPortalDownload(resource.id);
       window.location.assign(url);
     } catch (error) {
-      setDownloadError(error instanceof Error ? error.message : "Could not prepare that download.");
+      setDownloadError({
+        resourceId: resource.id,
+        message: error instanceof Error ? error.message : "Could not prepare that download.",
+      });
     } finally {
       setDownloadId(null);
     }
@@ -258,10 +243,6 @@ function PortalWorkspace({ status }: { status: AiInstallPortalStatus }) {
   const platformLabel = status.access.platform === "both"
     ? "Claude + Codex"
     : status.access.platform === "claude" ? "Claude" : "Codex";
-  const preworkHref = status.access.platform === "claude"
-    ? "/aiinstall/prework/claude"
-    : "/aiinstall/prework/codex";
-
   return (
     <div className="aip-page">
       <PortalHeader email={status.access.email} onSignOut={signOut} />
@@ -272,7 +253,7 @@ function PortalWorkspace({ status }: { status: AiInstallPortalStatus }) {
               <p className="aip-label">Agency AI Install / private replay</p>
               <h1>Build it.<br />Train it.<br /><em>Use it.</em></h1>
               <p className="aip-hero-lede">
-                Your two workshop days, build guides, pre-work files, and Standard skills are organized below.
+                Start with your pre-work. Then move through Day 1 and Day 2 in order, with every file placed beside the lesson where you need it.
               </p>
             </div>
             <div className="aip-hero-rail">
@@ -283,61 +264,67 @@ function PortalWorkspace({ status }: { status: AiInstallPortalStatus }) {
               <dl>
                 <div><dt>Build platform</dt><dd>{platformLabel}</dd></div>
                 <div><dt>Workshop</dt><dd>2 days</dd></div>
-                <div><dt>Resource files</dt><dd>{resources.length}</dd></div>
+                <div><dt>Resource files</dt><dd>{resourcePlan.resourceCount}</dd></div>
               </dl>
-              <a href={preworkHref} className="aip-inline-link">Open the pre-work checklist <ChevronRight size={16} /></a>
+              <a href="#start-here" className="aip-inline-link">Go to Start Here <ChevronRight size={16} /></a>
             </div>
+          </div>
+        </section>
+
+        <section className="aip-start" id="start-here" aria-labelledby="start-title">
+          <div className="aip-shell">
+            <div className="aip-start-head">
+              <div>
+                <p className="aip-index">00 / Start here</p>
+                <h2 id="start-title">Before you watch anything.</h2>
+              </div>
+              <p>Open the checklist for your assigned platform, download its pre-work pack, and finish the setup before Day 1.</p>
+            </div>
+
+            <div className={`aip-prework-grid${resourcePlan.prework.length === 1 ? " is-single" : ""}`}>
+              {resourcePlan.prework.map((resource) => (
+                <PreworkCard
+                  key={resource.id}
+                  resource={resource}
+                  downloading={downloadId === resource.id}
+                  error={downloadError?.resourceId === resource.id ? downloadError.message : null}
+                  onDownload={() => void download(resource)}
+                />
+              ))}
+            </div>
+            <a href="#day-1" className="aip-start-next">Pre-work complete? Continue to Day 1 <ChevronRight size={17} /></a>
           </div>
         </section>
 
         <section className="aip-replays" aria-labelledby="replays-title">
           <div className="aip-shell">
             <div className="aip-section-head">
-              <div><p className="aip-index">01 / Replays</p><h2 id="replays-title">The two-day build</h2></div>
-              <p>Watch in order. Your furthest viewing point is saved to this email.</p>
+              <div><p className="aip-index">01–02 / Workshop</p><h2 id="replays-title">Follow the build in order.</h2></div>
+              <p>Each replay now includes the exact guide and skill files used during that day. Your furthest viewing point is saved.</p>
             </div>
 
             <div className="aip-video-stack">
-              {status.videos.map((video, index) => (
-                <WorkshopVideo
-                  key={video.id}
-                  video={video}
-                  index={index + 1}
-                  saved={progressById.get(video.id)}
-                  localPercent={localProgress[video.id] ?? 0}
-                  onProgress={(percent) => setLocalProgress((current) => ({ ...current, [video.id]: percent }))}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
+              {status.videos.map((video, index) => {
+                const resources = video.id === "day-1" ? resourcePlan.dayOne : resourcePlan.dayTwo;
+                const resourceError = resources.find((resource) => resource.id === downloadError?.resourceId)
+                  ? downloadError?.message ?? null
+                  : null;
 
-        <section className="aip-resources" aria-labelledby="resources-title">
-          <div className="aip-shell aip-resources-grid">
-            <div className="aip-resources-intro">
-              <p className="aip-index">02 / Build files</p>
-              <h2 id="resources-title">Everything<br />within reach.</h2>
-              <p>Downloads expire after five minutes. Requesting one creates a private, single-purpose link.</p>
-            </div>
-            <div className="aip-resource-list">
-              {resources.map((resource, index) => (
-                <button
-                  type="button"
-                  className="aip-resource-row"
-                  key={resource.id}
-                  disabled={downloadId === resource.id}
-                  onClick={() => void download(resource)}
-                >
-                  <span className="aip-resource-number">{String(index + 1).padStart(2, "0")}</span>
-                  <span className="aip-resource-icon">{resource.kind === "PDF" ? <FileText /> : <FileArchive />}</span>
-                  <span className="aip-resource-copy"><strong>{resource.title}</strong><small>{resource.detail}</small></span>
-                  <span className="aip-resource-kind">{resource.kind}</span>
-                  <span className="aip-download-action">
-                    {downloadId === resource.id ? "Preparing" : "Download"}<ArrowDownToLine size={17} />
-                  </span>
-                </button>
-              ))}
-              {downloadError && <p className="aip-form-error" role="alert">{downloadError}</p>}
+                return (
+                  <WorkshopVideo
+                    key={video.id}
+                    video={video}
+                    index={index + 1}
+                    saved={progressById.get(video.id)}
+                    localPercent={localProgress[video.id] ?? 0}
+                    resources={resources}
+                    downloadId={downloadId}
+                    downloadError={resourceError}
+                    onDownload={(resource) => void download(resource)}
+                    onProgress={(percent) => setLocalProgress((current) => ({ ...current, [video.id]: percent }))}
+                  />
+                );
+              })}
             </div>
           </div>
         </section>
@@ -353,17 +340,58 @@ function PortalWorkspace({ status }: { status: AiInstallPortalStatus }) {
   );
 }
 
+function PreworkCard({
+  resource,
+  downloading,
+  error,
+  onDownload,
+}: {
+  resource: AiInstallPortalPreworkResource;
+  downloading: boolean;
+  error: string | null;
+  onDownload: () => void;
+}) {
+  const platformName = resource.platform === "claude" ? "Claude" : "Codex";
+
+  return (
+    <article className="aip-prework-card">
+      <div className="aip-prework-card-top">
+        <span>Your starting files</span>
+        <strong>{platformName}</strong>
+      </div>
+      <FileArchive className="aip-prework-icon" aria-hidden="true" />
+      <h3>{resource.title}</h3>
+      <p>{resource.detail}</p>
+      <div className="aip-prework-actions">
+        <a href={resource.checklistHref}>1. Open {platformName} checklist <ChevronRight size={16} /></a>
+        <button type="button" disabled={downloading} onClick={onDownload}>
+          2. {downloading ? "Preparing pack" : "Download pre-work pack"}<ArrowDownToLine size={17} />
+        </button>
+      </div>
+      {error && <p className="aip-download-error" role="alert">{error}</p>}
+    </article>
+  );
+}
+
 function WorkshopVideo({
   video,
   index,
   saved,
   localPercent,
+  resources,
+  downloadId,
+  downloadError,
+  onDownload,
   onProgress,
 }: {
   video: AiInstallPortalStatus["videos"][number];
   index: number;
   saved?: AiInstallPortalProgress;
   localPercent: number;
+  resources: AiInstallPortalResource[];
+  downloadId: string | null;
+  downloadError: string | null;
+  onDownload: (resource: AiInstallPortalResource) => void;
   onProgress: (percent: number) => void;
 }) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -415,7 +443,7 @@ function WorkshopVideo({
   const isComplete = Boolean(saved?.completed_at) || percent >= 100;
 
   return (
-    <article className="aip-video-card">
+    <article className="aip-video-card" id={video.id}>
       <div className="aip-video-frame">
         <iframe
           ref={iframeRef}
@@ -431,12 +459,42 @@ function WorkshopVideo({
           <h3>{index === 1 ? "Build the brain" : "Make it run"}</h3>
           <p>{index === 1 ? "Foundation, voice, rules, content, team, and active projects." : "Memory, master file, skills, and your working operating rhythm."}</p>
         </div>
+        <div className="aip-day-resources">
+          <span className="aip-day-resources-label">Use with Day {index}</span>
+          {resources.map((resource) => (
+            <ResourceDownloadButton
+              key={resource.id}
+              resource={resource}
+              downloading={downloadId === resource.id}
+              onDownload={() => onDownload(resource)}
+            />
+          ))}
+          {downloadError && <p className="aip-download-error" role="alert">{downloadError}</p>}
+        </div>
         <div className={`aip-progress${isComplete ? " aip-progress-complete" : ""}`}>
           <div className="aip-progress-label"><span>{isComplete ? <><Check size={14} /> Complete</> : <><Play size={13} fill="currentColor" /> {percent}% watched</>}</span><Clock3 size={15} /></div>
           <div className="aip-progress-track"><span style={{ width: `${percent}%` }} /></div>
         </div>
       </div>
     </article>
+  );
+}
+
+function ResourceDownloadButton({
+  resource,
+  downloading,
+  onDownload,
+}: {
+  resource: AiInstallPortalResource;
+  downloading: boolean;
+  onDownload: () => void;
+}) {
+  return (
+    <button type="button" className="aip-day-resource" disabled={downloading} onClick={onDownload}>
+      <span className="aip-day-resource-icon">{resource.kind === "PDF" ? <FileText /> : <FileArchive />}</span>
+      <span><strong>{resource.title}</strong><small>{resource.detail}</small></span>
+      <span className="aip-day-resource-action">{downloading ? "Preparing" : resource.kind}<ArrowDownToLine size={15} /></span>
+    </button>
   );
 }
 
