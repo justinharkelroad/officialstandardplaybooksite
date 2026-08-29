@@ -60,25 +60,10 @@ body:has(.aip-page) { margin: 0; background: #f0efe9; }
 .aip-primary-button { width: 100%; min-height: 56px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 18px; border: 1px solid var(--aip-blue); padding: 0 20px; background: var(--aip-blue); color: #fff; font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; }
 .aip-primary-button:hover { background: var(--aip-blue-deep); }
 .aip-primary-button:disabled { opacity: .62; cursor: wait; }
-.aip-input-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
-.aip-input-row input { min-width: 0; height: 56px; border: 1px solid var(--aip-input-bg); border-right: 0; border-radius: 0; padding: 0 17px; background: var(--aip-input-bg); color: var(--aip-input-ink); caret-color: var(--aip-input-ink); color-scheme: light; -webkit-text-fill-color: var(--aip-input-ink); }
-.aip-input-row input::placeholder { color: var(--aip-input-placeholder); opacity: 1; -webkit-text-fill-color: var(--aip-input-placeholder); }
-.aip-input-row button { min-width: 0; height: 56px; display: flex; align-items: center; gap: 8px; border: 1px solid var(--aip-blue); padding: 0 20px; background: var(--aip-blue); color: #fff; font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
-.aip-input-row button:hover { background: var(--aip-blue-deep); }
-.aip-input-row button:disabled { opacity: .62; cursor: wait; }
 .aip-form-error { margin-top: 12px !important; color: #ff9b92; font-size: 13px; }
-.aip-confirm { margin-top: 38px; }
-.aip-confirm > p:first-child { color: rgba(255,255,255,.7); font-size: 13px; line-height: 1.6; }
-.aip-confirm > button[type="submit"] { width: 100%; min-height: 56px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 18px; border: 1px solid var(--aip-blue); padding: 0 20px; background: var(--aip-blue); color: #fff; font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; }
-.aip-confirm > button[type="submit"]:hover { background: var(--aip-blue-deep); }
-.aip-confirm > button[type="submit"]:disabled { opacity: .62; cursor: wait; }
-.aip-confirm .aip-text-button { margin-top: 16px; }
 .aip-access-foot { display: flex; align-items: center; gap: 10px; margin-top: 25px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.17); color: rgba(255,255,255,.55); font-size: 12px; }
-.aip-sent, .aip-denied { margin-top: 38px; padding: 20px; border: 1px solid rgba(255,255,255,.25); }
-.aip-sent { display: grid; grid-template-columns: auto 1fr; gap: 14px; }
-.aip-sent > span { width: 30px; height: 30px; display: grid; place-items: center; background: var(--aip-blue); }
-.aip-sent strong { font-size: 15px; }
-.aip-sent p, .aip-denied p { margin-top: 5px; color: rgba(255,255,255,.68); font-size: 13px; line-height: 1.55; overflow-wrap: anywhere; }
+.aip-denied { margin-top: 38px; padding: 20px; border: 1px solid rgba(255,255,255,.25); }
+.aip-denied p { margin-top: 5px; color: rgba(255,255,255,.68); font-size: 13px; line-height: 1.55; overflow-wrap: anywhere; }
 .aip-text-button { grid-column: 2; justify-self: start; display: flex; align-items: center; gap: 3px; margin-top: 6px; border: 0; padding: 0; background: transparent; color: #fff; font-size: 12px; font-weight: 800; text-decoration: underline; cursor: pointer; }
 .aip-mode-switch { grid-column: auto; justify-self: auto; margin-top: 16px; }
 .aip-denied .aip-text-button { margin-top: 16px; }
@@ -232,18 +217,6 @@ body:has(.aip-page) { margin: 0; background: #f0efe9; }
   .aip-video-meta h3 { margin-top: 28px; }
   .aip-testimonial-layout { grid-template-columns: minmax(220px, .65fr) minmax(360px, 1.35fr); gap: 42px; }
   .aip-phone { width: min(100%, 280px); }
-}
-
-@media (max-width: 760px) {
-  .aip-input-row { grid-template-columns: 1fr; gap: 8px; }
-  .aip-input-row input { border-right: 1px solid var(--aip-input-bg); }
-  .aip-input-row button { justify-content: center; }
-}
-
-@media (max-width: 760px) {
-  .aip-input-row { grid-template-columns: 1fr; gap: 8px; }
-  .aip-input-row input { border-right: 1px solid var(--aip-input-bg); }
-  .aip-input-row button { justify-content: center; }
 }
 
 @media (max-width: 620px) {

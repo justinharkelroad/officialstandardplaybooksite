@@ -26,7 +26,6 @@ import {
   loadAiInstallPortalStatus,
   recordAiInstallPortalSignOut,
   recordAiInstallVideoEvent,
-  requestAiInstallPortalLink,
   skipAiInstallTestimonial,
   uploadAiInstallTestimonial,
   type AiInstallPortalProgress,
@@ -40,14 +39,12 @@ import {
 } from "@/lib/aiInstallPortalResources";
 import {
   AI_INSTALL_PORTAL_MIN_PASSWORD_LENGTH,
-  parseAiInstallPortalToken,
   validateAiInstallPortalPassword,
 } from "@/lib/aiInstallPortalAuth";
 
 import "./AIInstallPortal.css";
 
 export default function AIInstallPortal() {
-  const portalToken = useMemo(() => parseAiInstallPortalToken(window.location.hash), []);
   const [checkingSession, setCheckingSession] = useState(true);
   const [status, setStatus] = useState<AiInstallPortalStatus | null>(null);
   const [accessError, setAccessError] = useState<string | null>(null);
@@ -88,9 +85,8 @@ export default function AIInstallPortal() {
       else setCheckingSession(false);
     });
 
-    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: listener } = supabase.auth.onAuthStateChange((event) => {
       if (!active) return;
-      if (event === "SIGNED_IN" && session) void loadPortal(session.access_token);
       if (event === "SIGNED_OUT") {
         loadedSessionRef.current = null;
         setStatus(null);
@@ -105,152 +101,9 @@ export default function AIInstallPortal() {
     };
   }, [loadPortal]);
 
-  if (portalToken) return <PortalVerification token={portalToken} />;
   if (checkingSession) return <PortalLoading />;
   if (!status) return <PortalGate signedInButDenied={Boolean(accessError)} error={accessError} />;
   return <PortalWorkspace status={status} />;
-}
-
-function PortalVerification({ token }: { token: string }) {
-  const [verifying, setVerifying] = useState(false);
-  const [verified, setVerified] = useState(false);
-  const [password, setPassword] = useState("");
-  const [confirmation, setConfirmation] = useState("");
-  const [updating, setUpdating] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const verify = async (event: FormEvent) => {
-    event.preventDefault();
-    setVerifying(true);
-    setError(null);
-
-    try {
-      const { data, error: verifyError } = await supabase.auth.verifyOtp({
-        token_hash: token,
-        type: "email",
-      });
-      if (verifyError) throw verifyError;
-      if (!data.session) throw new Error("The secure sign-in did not create a session.");
-      window.history.replaceState({}, "", "/aiinstall/portal");
-      setVerified(true);
-      setVerifying(false);
-    } catch (verifyError) {
-      setError(
-        verifyError instanceof Error
-          ? verifyError.message
-          : "This setup link is no longer valid. Request a fresh email below.",
-      );
-      setVerifying(false);
-    }
-  };
-
-  const createPassword = async (event: FormEvent) => {
-    event.preventDefault();
-    setError(null);
-
-    const validationError = validateAiInstallPortalPassword(password, confirmation);
-    if (validationError) {
-      setError(validationError);
-      return;
-    }
-
-    setUpdating(true);
-    try {
-      const { error: updateError } = await supabase.auth.updateUser({ password });
-      if (updateError) throw updateError;
-      window.location.replace("/aiinstall/portal");
-    } catch (updateError) {
-      setError(updateError instanceof Error ? updateError.message : "Could not save your password.");
-      setUpdating(false);
-    }
-  };
-
-  return (
-    <div className="aip-page aip-gate-page">
-      <PortalHeader />
-      <main className="aip-gate-stage">
-        <div className="aip-gate-backdrop" aria-hidden="true">
-          <span>DAY 01</span>
-          <span>DAY 02</span>
-          <span>FILES</span>
-        </div>
-
-        <section className="aip-access-dialog" aria-labelledby="portal-verify-title">
-          <div className="aip-access-mark"><ShieldCheck size={22} strokeWidth={1.8} /></div>
-          <p className="aip-label">Secure attendee access</p>
-          <h1 id="portal-verify-title">
-            {verified ? <>Create your<br /><em>password.</em></> : <>Confirm your<br /><em>email.</em></>}
-          </h1>
-
-          {verified ? (
-            <form className="aip-access-form" onSubmit={createPassword}>
-              <p className="aip-form-intro">
-                Use this password for quick portal access from now on. The email setup link also works if you ever forget it.
-              </p>
-              <div className="aip-field">
-                <label htmlFor="portal-new-password">Create password</label>
-                <input
-                  id="portal-new-password"
-                  type="password"
-                  autoComplete="new-password"
-                  minLength={AI_INSTALL_PORTAL_MIN_PASSWORD_LENGTH}
-                  required
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                />
-              </div>
-              <div className="aip-field">
-                <label htmlFor="portal-confirm-password">Confirm password</label>
-                <input
-                  id="portal-confirm-password"
-                  type="password"
-                  autoComplete="new-password"
-                  minLength={AI_INSTALL_PORTAL_MIN_PASSWORD_LENGTH}
-                  required
-                  value={confirmation}
-                  onChange={(event) => setConfirmation(event.target.value)}
-                />
-              </div>
-              <button type="submit" className="aip-primary-button" disabled={updating}>
-                {updating ? "Saving password" : "Save password and open portal"}
-                {!updating && <ChevronRight size={18} />}
-              </button>
-              {error && <p className="aip-form-error" role="alert">{error}</p>}
-            </form>
-          ) : (
-            <form className="aip-confirm" onSubmit={verify}>
-              <p>
-                Confirm below before creating your password. This extra step keeps automated email security checks from using your one-time setup link.
-              </p>
-              <button type="submit" disabled={verifying}>
-                {verifying ? "Confirming email" : "Confirm email"}
-                {!verifying && <ChevronRight size={18} />}
-              </button>
-              {error && <p className="aip-form-error" role="alert">{error}</p>}
-              {error && (
-                <button
-                  type="button"
-                  className="aip-text-button"
-                  onClick={() => window.location.replace("/aiinstall/portal")}
-                >
-                  Request a fresh email <ChevronRight size={15} />
-                </button>
-              )}
-            </form>
-          )}
-
-          <div className="aip-access-foot">
-            <ShieldCheck size={17} />
-            <span>
-              {verified
-                ? "Your verified email is used only for first-time setup and password recovery."
-                : "Your one-time setup is verified only after you select the button above."}
-            </span>
-          </div>
-        </section>
-      </main>
-    </div>
-  );
 }
 
 function PortalLoading() {
@@ -266,12 +119,13 @@ function PortalLoading() {
 }
 
 function PortalGate({ signedInButDenied, error }: { signedInButDenied: boolean; error: string | null }) {
-  const [mode, setMode] = useState<"password" | "email">("password");
+  const [mode, setMode] = useState<"password" | "activation">("password");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [activationCode, setActivationCode] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmation, setConfirmation] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
   const signIn = async (event: FormEvent) => {
@@ -284,36 +138,55 @@ function PortalGate({ signedInButDenied, error }: { signedInButDenied: boolean; 
         password,
       });
       if (signInError || !data.session) {
-        throw new Error(
-          "Email or password not recognized. If this is your first visit, use email setup below.",
-        );
+        throw new Error("Email or password not recognized.");
       }
+      window.location.replace("/aiinstall/portal");
     } catch (signInError) {
       setFormError(
         signInError instanceof Error ? signInError.message : "Could not sign in with that email and password.",
       );
-    } finally {
       setSubmitting(false);
     }
   };
 
-  const requestSetupEmail = async (event: FormEvent) => {
+  const activate = async (event: FormEvent) => {
     event.preventDefault();
-    setSending(true);
     setFormError(null);
+
+    const validationError = validateAiInstallPortalPassword(newPassword, confirmation);
+    if (validationError) {
+      setFormError(validationError);
+      return;
+    }
+
+    setSubmitting(true);
+    let signedInWithCode = false;
     try {
-      await requestAiInstallPortalLink(email);
-      setSent(true);
-    } catch (requestError) {
-      setFormError(requestError instanceof Error ? requestError.message : "Could not request a link.");
-    } finally {
-      setSending(false);
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password: activationCode.trim(),
+      });
+      if (signInError || !data.session) {
+        throw new Error(
+          "That email and activation code were not accepted. Ask your workshop host for a fresh code.",
+        );
+      }
+      signedInWithCode = true;
+
+      const { error: updateError } = await supabase.auth.updateUser({ password: newPassword });
+      if (updateError) throw new Error(updateError.message);
+      window.location.replace("/aiinstall/portal");
+    } catch (activationError) {
+      if (signedInWithCode) await supabase.auth.signOut();
+      setFormError(
+        activationError instanceof Error ? activationError.message : "Could not create your password.",
+      );
+      setSubmitting(false);
     }
   };
 
-  const switchMode = (nextMode: "password" | "email") => {
+  const switchMode = (nextMode: "password" | "activation") => {
     setMode(nextMode);
-    setSent(false);
     setFormError(null);
   };
 
@@ -344,22 +217,16 @@ function PortalGate({ signedInButDenied, error }: { signedInButDenied: boolean; 
                 Use a different email <ChevronRight size={15} />
               </button>
             </div>
-          ) : mode === "email" && sent ? (
-            <div className="aip-sent" role="status">
-              <span><Check size={18} /></span>
-              <div>
-                <strong>Check your inbox.</strong>
-                <p>If {email.trim()} has access, your secure password setup link is on the way.</p>
-              </div>
-              <button type="button" className="aip-text-button" onClick={() => setSent(false)}>
-                Try another email
-              </button>
-            </div>
           ) : (
             <form
               className="aip-access-form"
-              onSubmit={mode === "password" ? signIn : requestSetupEmail}
+              onSubmit={mode === "password" ? signIn : activate}
             >
+              {mode === "activation" && (
+                <p className="aip-form-intro">
+                  Enter the one-time code provided by your workshop host, then create your password. No email is sent.
+                </p>
+              )}
               <div className="aip-field">
                 <label htmlFor="portal-email">Email used for your AI Install seat</label>
                 <input
@@ -385,24 +252,63 @@ function PortalGate({ signedInButDenied, error }: { signedInButDenied: boolean; 
                   />
                 </div>
               )}
+              {mode === "activation" && (
+                <>
+                  <div className="aip-field">
+                    <label htmlFor="portal-activation-code">One-time activation code</label>
+                    <input
+                      id="portal-activation-code"
+                      type="password"
+                      autoComplete="one-time-code"
+                      required
+                      value={activationCode}
+                      onChange={(event) => setActivationCode(event.target.value)}
+                    />
+                  </div>
+                  <div className="aip-field">
+                    <label htmlFor="portal-new-password">Create password</label>
+                    <input
+                      id="portal-new-password"
+                      type="password"
+                      autoComplete="new-password"
+                      minLength={AI_INSTALL_PORTAL_MIN_PASSWORD_LENGTH}
+                      required
+                      value={newPassword}
+                      onChange={(event) => setNewPassword(event.target.value)}
+                    />
+                  </div>
+                  <div className="aip-field">
+                    <label htmlFor="portal-confirm-password">Confirm password</label>
+                    <input
+                      id="portal-confirm-password"
+                      type="password"
+                      autoComplete="new-password"
+                      minLength={AI_INSTALL_PORTAL_MIN_PASSWORD_LENGTH}
+                      required
+                      value={confirmation}
+                      onChange={(event) => setConfirmation(event.target.value)}
+                    />
+                  </div>
+                </>
+              )}
               <button
                 type="submit"
                 className="aip-primary-button"
-                disabled={mode === "password" ? submitting : sending}
+                disabled={submitting}
               >
                 {mode === "password"
                   ? (submitting ? "Signing in" : "Sign in")
-                  : (sending ? "Sending" : "Email setup link")}
-                {!(mode === "password" ? submitting : sending) && <ChevronRight size={18} />}
+                  : (submitting ? "Creating password" : "Create password and open portal")}
+                {!submitting && <ChevronRight size={18} />}
               </button>
               {formError && <p className="aip-form-error" role="alert">{formError}</p>}
               <button
                 type="button"
                 className="aip-text-button aip-mode-switch"
-                onClick={() => switchMode(mode === "password" ? "email" : "password")}
+                onClick={() => switchMode(mode === "password" ? "activation" : "password")}
               >
                 {mode === "password"
-                  ? "First visit or forgot your password? Email setup"
+                  ? "First visit or forgot your password? Use activation code"
                   : "Back to password sign in"}
                 <ChevronRight size={15} />
               </button>
@@ -411,7 +317,7 @@ function PortalGate({ signedInButDenied, error }: { signedInButDenied: boolean; 
 
           <div className="aip-access-foot">
             <ShieldCheck size={17} />
-            <span>Password sign-in is standard. Verified email is only for setup and recovery.</span>
+            <span>No access emails. Your approved email identifies the seat; your password protects it.</span>
           </div>
         </section>
       </main>

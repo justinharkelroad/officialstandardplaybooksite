@@ -8,11 +8,11 @@ import {
 import {
   type AiInstallPortalAccess,
   ensurePortalAuthUser,
+  generatePortalActivationCode,
   getPortalAccessByEmail,
   isPortalEmail,
   normalizePortalEmail,
   normalizePortalPlatform,
-  sendPortalMagicLink,
 } from "../_shared/ai-install-portal.ts";
 
 Deno.serve(async (req) => {
@@ -203,7 +203,8 @@ Deno.serve(async (req) => {
         return errorResponse("Expiration date is invalid", 400);
       }
 
-      const authUser = await ensurePortalAuthUser(supabase, email);
+      const ensuredAuth = await ensurePortalAuthUser(supabase, email);
+      const authUser = ensuredAuth.user;
       const existing = await getPortalAccessByEmail(supabase, email);
       const now = new Date().toISOString();
 
@@ -216,7 +217,6 @@ Deno.serve(async (req) => {
             platform,
             is_active: true,
             expires_at: expiresAt,
-            last_magic_link_error: null,
             updated_at: now,
           })
           .eq("id", existing.id);
@@ -240,9 +240,13 @@ Deno.serve(async (req) => {
 
       const access = await getPortalAccessByEmail(supabase, email);
       if (!access) throw new Error("Portal access was not created");
-      const magicLink = await sendPortalMagicLink(supabase, access);
 
-      return jsonResponse({ ok: true, access, magic_link: magicLink });
+      return jsonResponse({
+        ok: true,
+        access,
+        activation_code: ensuredAuth.activationCode,
+        existing_user: ensuredAuth.activationCode === null,
+      });
     }
 
     if (action === "set_active") {
@@ -259,6 +263,35 @@ Deno.serve(async (req) => {
       if (error) throw error;
       if (!data) return errorResponse("Portal access not found", 404);
       return jsonResponse({ ok: true, access: data });
+    }
+
+    if (action === "issue_activation_code") {
+      const accessId = typeof body.access_id === "string" ? body.access_id : "";
+      if (!accessId) return errorResponse("access_id is required", 400);
+
+      const { data: access, error: accessError } = await supabase
+        .from("ai_install_portal_access")
+        .select("id, user_id, email, is_active")
+        .eq("id", accessId)
+        .maybeSingle();
+      if (accessError) throw accessError;
+      if (!access) return errorResponse("Portal access not found", 404);
+      if (!access.is_active) {
+        return errorResponse("Reactivate access before issuing a code", 400);
+      }
+
+      const activationCode = generatePortalActivationCode();
+      const { error: passwordError } = await supabase.auth.admin.updateUserById(
+        access.user_id,
+        { password: activationCode },
+      );
+      if (passwordError) throw passwordError;
+
+      return jsonResponse({
+        ok: true,
+        email: access.email,
+        activation_code: activationCode,
+      });
     }
 
     if (action === "reset_activity") {
@@ -305,28 +338,6 @@ Deno.serve(async (req) => {
       }
 
       return jsonResponse({ ok: true });
-    }
-
-    if (action === "resend") {
-      const accessId = typeof body.access_id === "string" ? body.access_id : "";
-      if (!accessId) return errorResponse("access_id is required", 400);
-
-      const { data, error } = await supabase
-        .from("ai_install_portal_access")
-        .select("*")
-        .eq("id", accessId)
-        .maybeSingle();
-      if (error) throw error;
-      if (!data) return errorResponse("Portal access not found", 404);
-      if (!data.is_active) {
-        return errorResponse("Reactivate access before sending a link", 400);
-      }
-
-      const result = await sendPortalMagicLink(
-        supabase,
-        data as AiInstallPortalAccess,
-      );
-      return jsonResponse({ ok: true, magic_link: result });
     }
 
     return errorResponse(`Unknown action: ${action}`, 400);

@@ -52,9 +52,6 @@ export interface AiInstallPortalAdminRow {
   first_login_at: string | null;
   last_login_at: string | null;
   login_count: number;
-  last_magic_link_sent_at: string | null;
-  magic_link_send_count: number;
-  last_magic_link_error: string | null;
   created_at: string;
   progress: Partial<Record<AiInstallVideoId, {
     max_progress: number;
@@ -69,10 +66,6 @@ export interface AiInstallPortalAdminRow {
 export interface AiInstallPortalAdminData {
   rows: AiInstallPortalAdminRow[];
   testimonialPromptEnabled: boolean;
-}
-
-export async function requestAiInstallPortalLink(email: string): Promise<void> {
-  await invokeFunction("ai-install-request-link", { email });
 }
 
 export async function loadAiInstallPortalStatus(): Promise<AiInstallPortalStatus> {
@@ -179,7 +172,7 @@ export async function grantAiInstallPortalAccess(input: {
   fullName: string;
   platform: AiInstallPortalPlatform;
   expiresAt: string | null;
-}): Promise<{ magic_link?: { status?: string; error?: string } }> {
+}): Promise<{ activation_code: string | null; existing_user: boolean }> {
   return invokeFunction("ai-install-portal-admin", {
     action: "grant",
     email: input.email,
@@ -200,11 +193,11 @@ export async function setAiInstallPortalAccessActive(
   });
 }
 
-export async function resendAiInstallPortalLink(
+export async function issueAiInstallPortalActivationCode(
   accessId: string,
-): Promise<{ magic_link?: { status?: string; error?: string } }> {
+): Promise<{ email: string; activation_code: string }> {
   return invokeFunction("ai-install-portal-admin", {
-    action: "resend",
+    action: "issue_activation_code",
     access_id: accessId,
   });
 }

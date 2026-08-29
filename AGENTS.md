@@ -30,12 +30,12 @@
   submitted through `/aiinstall/ready`. Keep the ZIP README, pre-work pages,
   purchase email, confirmation form, and fulfillment tests aligned whenever
   this flow changes.
-- **AI Install portal email access must be resistant to link scanners.** Never
-  put the consumable Supabase Auth action link directly in an attendee email.
-  Route the generated hashed token to `/aiinstall/portal` in the URL fragment
-  and require an explicit human confirmation before calling `verifyOtp`.
-  Password sign-in must remain the primary portal path; verified email is only
-  for first-time password setup and password recovery.
+- **AI Install portal access must not depend on email delivery.** Approved email
+  is an account identifier, not proof of identity. Password sign-in is the
+  primary path. First-time setup and password recovery must use a one-time code
+  issued by an authenticated admin and shared outside the portal email system.
+  Never store, log, or email that temporary credential; return it only in the
+  protected admin response so the admin can copy it once.
 - **Completed Flow transcripts must stay question-driven.** Render and export
   each validated current Coach turn directly beneath the official answer for
   its stable question ID, in reflection/follow-up/member-response/resolution

@@ -1,6 +1,6 @@
 import {
-  buildPortalVerificationUrl,
   canAccessPortalAsset,
+  generatePortalActivationCode,
   isPortalAccessCurrent,
   isPortalEmail,
   normalizePortalEmail,
@@ -63,17 +63,14 @@ Deno.test("counts one portal session per 30-minute activity window", () => {
   );
 });
 
-Deno.test("routes one-time access through a scanner-safe portal confirmation", () => {
-  const hashedToken = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
-  const url = buildPortalVerificationUrl(
-    hashedToken,
-    "https://standardplaybook.com/aiinstall/portal",
+Deno.test("creates a strong one-time activation code without email delivery", () => {
+  const code = generatePortalActivationCode(
+    new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]),
   );
 
-  assertEquals(
-    url,
-    `https://standardplaybook.com/aiinstall/portal#portal_token=${hashedToken}`,
-    "Email should open the portal without consuming the Supabase one-time token",
-  );
-  assert(!url.includes("/auth/v1/verify"), "The email URL must not be the consumable Auth action link");
+  assertEquals(code.length, 17, "Activation code should be long enough for temporary access");
+  assert(/[A-Z]/.test(code), "Activation code should contain uppercase characters");
+  assert(/[a-z]/.test(code), "Activation code should contain lowercase characters");
+  assert(/[0-9]/.test(code), "Activation code should contain a number");
+  assert(code.endsWith("-Aa7!"), "Activation code should satisfy strong password character rules");
 });

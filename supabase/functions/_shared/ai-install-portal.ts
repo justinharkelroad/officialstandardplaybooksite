@@ -4,12 +4,6 @@ import type {
 } from "https://esm.sh/@supabase/supabase-js@2";
 
 import { createServiceClient, errorResponse } from "./memberAuth.ts";
-import {
-  BRAND,
-  buildEmailHtml,
-  EmailComponents,
-  escapeHtml,
-} from "./email-template.ts";
 
 export type AiInstallPlatform = "claude" | "codex" | "both";
 
@@ -25,9 +19,6 @@ export interface AiInstallPortalAccess {
   first_login_at: string | null;
   last_login_at: string | null;
   login_count: number;
-  last_magic_link_sent_at: string | null;
-  magic_link_send_count: number;
-  last_magic_link_error: string | null;
   testimonial_prompt_dismissed_at: string | null;
   testimonial_submitted_at: string | null;
   created_at: string;
@@ -40,10 +31,11 @@ export interface VerifiedPortalAccess {
   supabase: SupabaseClient;
 }
 
-export const PORTAL_URL = Deno.env.get("AI_INSTALL_PORTAL_URL") ??
-  "https://standardplaybook.com/aiinstall/portal";
-
 export const PORTAL_SESSION_WINDOW_MS = 30 * 60 * 1000;
+export const PORTAL_ACTIVATION_CODE_RANDOM_LENGTH = 12;
+
+const PORTAL_ACTIVATION_ALPHABET =
+  "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";
 
 const ACCESS_COLUMNS = [
   "id",
@@ -57,9 +49,6 @@ const ACCESS_COLUMNS = [
   "first_login_at",
   "last_login_at",
   "login_count",
-  "last_magic_link_sent_at",
-  "magic_link_send_count",
-  "last_magic_link_error",
   "testimonial_prompt_dismissed_at",
   "testimonial_submitted_at",
   "created_at",
@@ -78,6 +67,20 @@ export function normalizePortalPlatform(value: unknown): AiInstallPlatform {
   return value === "claude" || value === "codex" || value === "both"
     ? value
     : "both";
+}
+
+export function generatePortalActivationCode(randomBytes?: Uint8Array): string {
+  const bytes = randomBytes ?? crypto.getRandomValues(
+    new Uint8Array(PORTAL_ACTIVATION_CODE_RANDOM_LENGTH),
+  );
+  if (bytes.length < PORTAL_ACTIVATION_CODE_RANDOM_LENGTH) {
+    throw new Error("Activation code entropy is incomplete");
+  }
+  const randomPart = Array.from(
+    bytes.slice(0, PORTAL_ACTIVATION_CODE_RANDOM_LENGTH),
+    (value) => PORTAL_ACTIVATION_ALPHABET[value % PORTAL_ACTIVATION_ALPHABET.length],
+  ).join("");
+  return `${randomPart}-Aa7!`;
 }
 
 export function canAccessPortalAsset(
@@ -169,20 +172,20 @@ async function findExistingAuthUser(
 export async function ensurePortalAuthUser(
   supabase: SupabaseClient,
   email: string,
-): Promise<User> {
+): Promise<{ user: User; activationCode: string | null }> {
   const existing = await findExistingAuthUser(supabase, email);
-  if (existing) return existing;
+  if (existing) return { user: existing, activationCode: null };
 
-  const generatedPassword = `${crypto.randomUUID()}aA7!`;
+  const activationCode = generatePortalActivationCode();
   const { data, error } = await supabase.auth.admin.createUser({
     email,
-    password: generatedPassword,
+    password: activationCode,
     email_confirm: true,
   });
   if (error || !data.user) {
     throw new Error(error?.message ?? "Auth user creation failed");
   }
-  return data.user;
+  return { user: data.user, activationCode };
 }
 
 export async function requirePortalAccess(
@@ -211,128 +214,4 @@ export async function requirePortalAccess(
   }
 
   return { userId: data.user.id, access, supabase };
-}
-
-export interface PortalMagicLinkResult {
-  status: "sent" | "failed" | "skipped_no_key";
-  error?: string;
-}
-
-export function buildPortalVerificationUrl(
-  hashedToken: string,
-  portalUrl = PORTAL_URL,
-): string {
-  const url = new URL(portalUrl);
-  url.hash = new URLSearchParams({ portal_token: hashedToken }).toString();
-  return url.toString();
-}
-
-function buildPortalMagicLinkHtml(
-  access: AiInstallPortalAccess,
-  verificationUrl: string,
-): string {
-  const firstName = access.full_name?.trim().split(/\s+/)[0] || "there";
-  return buildEmailHtml({
-    title: "Set up your Agency AI Install password",
-    eyebrow: "PRIVATE WORKSHOP PORTAL",
-    footerName: BRAND.name,
-    bodyContent: `
-      ${EmailComponents.paragraph(`${escapeHtml(firstName)},`)}
-      ${
-      EmailComponents.paragraph(
-        "Use the secure link below to create or reset the password for your private workshop portal.",
-      )
-    }
-      ${EmailComponents.button("Set up portal password", verificationUrl)}
-      ${
-      EmailComponents.infoText(
-        "On the next screen, select Confirm email, then create your password. This extra step prevents automated email security checks from using your one-time setup.",
-      )
-    }
-    `,
-  });
-}
-
-export async function sendPortalMagicLink(
-  supabase: SupabaseClient,
-  access: AiInstallPortalAccess,
-): Promise<PortalMagicLinkResult> {
-  const { data, error: linkError } = await supabase.auth.admin.generateLink({
-    type: "magiclink",
-    email: access.email,
-    options: { redirectTo: PORTAL_URL },
-  });
-
-  const hashedToken = data?.properties?.hashed_token;
-  if (linkError || !hashedToken) {
-    const error = linkError?.message ?? "Magic link generation failed";
-    await recordMagicLinkResult(supabase, access, null, error);
-    return { status: "failed", error };
-  }
-  const verificationUrl = buildPortalVerificationUrl(hashedToken);
-
-  const resendKey = Deno.env.get("RESEND_API_KEY");
-  if (!resendKey) {
-    const error = "RESEND_API_KEY is not set";
-    await recordMagicLinkResult(supabase, access, null, error);
-    return { status: "skipped_no_key", error };
-  }
-
-  try {
-    const response = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${resendKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: BRAND.fromEmail,
-        to: access.email,
-        subject: "Set up your Agency AI Install portal password",
-        html: buildPortalMagicLinkHtml(access, verificationUrl),
-      }),
-    });
-
-    const responseText = await response.text();
-    if (!response.ok) {
-      const error = `Resend ${response.status}: ${responseText.slice(0, 500)}`;
-      await recordMagicLinkResult(supabase, access, null, error);
-      return { status: "failed", error };
-    }
-
-    const sentAt = new Date().toISOString();
-    await recordMagicLinkResult(supabase, access, sentAt, null);
-    return { status: "sent" };
-  } catch (sendError) {
-    const error = sendError instanceof Error
-      ? sendError.message
-      : String(sendError);
-    await recordMagicLinkResult(supabase, access, null, error);
-    return { status: "failed", error };
-  }
-}
-
-async function recordMagicLinkResult(
-  supabase: SupabaseClient,
-  access: AiInstallPortalAccess,
-  sentAt: string | null,
-  error: string | null,
-): Promise<void> {
-  const fields: Record<string, unknown> = {
-    magic_link_send_count: access.magic_link_send_count + 1,
-    last_magic_link_error: error,
-    updated_at: new Date().toISOString(),
-  };
-  if (sentAt) fields.last_magic_link_sent_at = sentAt;
-
-  const { error: updateError } = await supabase
-    .from("ai_install_portal_access")
-    .update(fields)
-    .eq("id", access.id);
-  if (updateError) {
-    console.error(
-      "ai-install-portal: magic link ledger update failed",
-      updateError.message,
-    );
-  }
 }

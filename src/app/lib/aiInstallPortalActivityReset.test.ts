@@ -9,7 +9,7 @@ test("portal activity reset clears engagement while preserving access and invite
   const adminFunction = readSource("supabase/functions/ai-install-portal-admin/index.ts");
   const resetBranch = adminFunction.slice(
     adminFunction.indexOf('if (action === "reset_activity")'),
-    adminFunction.indexOf('if (action === "resend")'),
+    adminFunction.indexOf('return errorResponse(`Unknown action:'),
   );
 
   assert.match(adminFunction, /action === "reset_activity"/);
@@ -19,6 +19,22 @@ test("portal activity reset clears engagement while preserving access and invite
   assert.match(adminFunction, /body\.include_ready === true[\s\S]*?from\("ai_install_ready_submissions"\)[\s\S]*?\.ilike\("email", access\.email\)/);
   assert.doesNotMatch(resetBranch, /from\("ai_install_portal_access"\)\s*\.delete\(\)/);
   assert.doesNotMatch(resetBranch, /from\("ai_install_portal_testimonials"\)[\s\S]*?\.delete\(\)/);
+});
+
+test("admin issues one-time activation codes without sending portal email", () => {
+  const adminFunction = readSource("supabase/functions/ai-install-portal-admin/index.ts");
+  const disabledEmailFunction = readSource("supabase/functions/ai-install-request-link/index.ts");
+  const client = readSource("src/lib/aiInstallPortal.ts");
+  const adminPage = readSource("src/pages/AIInstallPortalAdmin.tsx");
+
+  assert.match(adminFunction, /action === "issue_activation_code"/);
+  assert.match(adminFunction, /auth\.admin\.updateUserById\([\s\S]*?password: activationCode/);
+  assert.match(client, /issueAiInstallPortalActivationCode[\s\S]*?action: "issue_activation_code"/);
+  assert.match(adminPage, /title="Issue one-time activation code"/);
+  assert.match(adminPage, /> Copy code/);
+  assert.doesNotMatch(adminFunction, /sendPortalMagicLink|generateLink\(/);
+  assert.match(disabledEmailFunction, /EMAIL_ACCESS_DISABLED_RESPONSE[\s\S]*?410/);
+  assert.doesNotMatch(disabledEmailFunction, /sendPortalMagicLink|generateLink\(|RESEND_API_KEY/);
 });
 
 test("admin Reset control invokes the protected activity reset action", () => {
