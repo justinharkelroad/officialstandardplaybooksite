@@ -44,6 +44,34 @@ import {
 
 import "./AIInstallPortal.css";
 
+const PORTAL_TITLE = "Agency AI Install Portal | Standard Playbook";
+const PORTAL_DESCRIPTION =
+  "The private Agency AI Install attendee hub for workshop replays, pre-work, and downloadable resources.";
+const PORTAL_URL = "https://standardplaybook.com/aiinstall/portal";
+const PORTAL_OG_IMAGE = "https://standardplaybook.com/og/ai-install-portal.png";
+const PORTAL_OG_ALT =
+  "The Agency AI Install private attendee portal for replays, pre-work, and downloads.";
+
+function setMetaTag(key: string, content: string, attribute: "name" | "property" = "name") {
+  let tag = document.querySelector(`meta[${attribute}="${key}"]`) as HTMLMetaElement | null;
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.setAttribute(attribute, key);
+    document.head.appendChild(tag);
+  }
+  tag.content = content;
+}
+
+function setCanonicalUrl(url: string) {
+  let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+  if (!canonical) {
+    canonical = document.createElement("link");
+    canonical.rel = "canonical";
+    document.head.appendChild(canonical);
+  }
+  canonical.href = url;
+}
+
 export default function AIInstallPortal() {
   const [checkingSession, setCheckingSession] = useState(true);
   const [status, setStatus] = useState<AiInstallPortalStatus | null>(null);
@@ -51,14 +79,27 @@ export default function AIInstallPortal() {
   const loadedSessionRef = useRef<string | null>(null);
 
   useEffect(() => {
-    document.title = "Agency AI Install Portal | Standard Playbook";
-    let robots = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null;
-    if (!robots) {
-      robots = document.createElement("meta");
-      robots.name = "robots";
-      document.head.appendChild(robots);
-    }
-    robots.content = "noindex, nofollow, noarchive";
+    document.title = PORTAL_TITLE;
+    setMetaTag("description", PORTAL_DESCRIPTION);
+    setMetaTag("robots", "noindex, nofollow, noarchive");
+    setMetaTag("theme-color", "#0B0C0E");
+    setMetaTag("og:title", PORTAL_TITLE, "property");
+    setMetaTag("og:description", PORTAL_DESCRIPTION, "property");
+    setMetaTag("og:type", "website", "property");
+    setMetaTag("og:url", PORTAL_URL, "property");
+    setMetaTag("og:site_name", "The Standard Playbook", "property");
+    setMetaTag("og:image", PORTAL_OG_IMAGE, "property");
+    setMetaTag("og:image:secure_url", PORTAL_OG_IMAGE, "property");
+    setMetaTag("og:image:type", "image/png", "property");
+    setMetaTag("og:image:width", "1200", "property");
+    setMetaTag("og:image:height", "630", "property");
+    setMetaTag("og:image:alt", PORTAL_OG_ALT, "property");
+    setMetaTag("twitter:card", "summary_large_image");
+    setMetaTag("twitter:title", PORTAL_TITLE);
+    setMetaTag("twitter:description", PORTAL_DESCRIPTION);
+    setMetaTag("twitter:image", PORTAL_OG_IMAGE);
+    setMetaTag("twitter:image:alt", PORTAL_OG_ALT);
+    setCanonicalUrl(PORTAL_URL);
   }, []);
 
   const loadPortal = useCallback(async (accessToken: string) => {

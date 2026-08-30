@@ -65,6 +65,13 @@
       "subhead": "A live two-day build, August 26-27. Agency owners and managers build their AI co-working brain start to finish with Justin Harkelroad. Claude or Codex. $997 all in.",
       "image": "/og/ai-install-bold.png"
     },
+    "/aiinstall/portal": {
+      "title": "Agency AI Install Portal",
+      "metaTitle": "Agency AI Install Portal | Standard Playbook",
+      "subhead": "The private Agency AI Install attendee hub for workshop replays, pre-work, and downloadable resources.",
+      "image": "/og/ai-install-portal.png",
+      "robots": "noindex, nofollow, noarchive"
+    },
     "/aiinstall/prework/claude": {
       "title": "Claude Pre-Work | The Agency AI Install",
       "metaTitle": "Claude Pre-Work | The Agency AI Install",
