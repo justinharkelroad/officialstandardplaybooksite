@@ -46,11 +46,11 @@ import "./AIInstallPortal.css";
 
 const PORTAL_TITLE = "Agency AI Install Portal | Standard Playbook";
 const PORTAL_DESCRIPTION =
-  "The private Agency AI Install attendee hub for workshop replays, pre-work, and downloadable resources.";
+  "The Agency AI Install hub for workshop replays, pre-work, and downloadable resources.";
 const PORTAL_URL = "https://standardplaybook.com/aiinstall/portal";
 const PORTAL_OG_IMAGE = "https://standardplaybook.com/og/ai-install-portal.png";
 const PORTAL_OG_ALT =
-  "The Agency AI Install private attendee portal for replays, pre-work, and downloads.";
+  "The Agency AI Install portal for replays, pre-work, and downloads.";
 
 function setMetaTag(key: string, content: string, attribute: "name" | "property" = "name") {
   let tag = document.querySelector(`meta[${attribute}="${key}"]`) as HTMLMetaElement | null;

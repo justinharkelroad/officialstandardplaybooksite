@@ -1,23 +1,187 @@
-import { useEffect, type MouseEvent, type ReactNode } from "react";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 
 import standardLogo from "@/assets/standard-word-logo.png";
 import playbookIcon from "@/assets/sp-icon-black.png";
 import playbookIconBlue from "@/assets/sp-icon-blue.png";
-import { buildCheckoutHandoff } from "@/lib/metaCheckout";
+import { supabase } from "@/integrations/supabase/client";
 
 import "./AIInstall.css";
 
-const STRIPE_LINK = "https://buy.stripe.com/cNi9AT3GK8qG9S8fSk4Vy0w";
-const PAGE_TITLE = "The Agency AI Install | Standard Playbook";
+const PAGE_TITLE = "Agency AI Install Waitlist | Standard Playbook";
 const PAGE_DESCRIPTION =
-  "A live two-day build, August 26-27. Agency owners and managers build their AI co-working brain start to finish with Justin Harkelroad. Claude or Codex. $997 all in.";
+  "Join the waitlist for the next Agency AI Install: a live two-day build for insurance agency owners using Claude or Codex, with an ongoing replay and resource portal.";
 const PAGE_URL = "https://standardplaybook.com/aiinstall";
-const OG_IMAGE = "https://standardplaybook.com/og/ai-install-bold.png";
-const VIMEO_EMBED_URL =
-  "https://player.vimeo.com/video/1214748146?autoplay=1&muted=1&playsinline=1&title=0&byline=0&portrait=0&dnt=1";
+const OG_IMAGE = "https://standardplaybook.com/og/ai-install-portal.png";
+
+const chips = [
+  "First live build complete",
+  "Next date announced to the waitlist first",
+  "Built in Claude or Codex",
+  "Two live working days",
+  "Replay and resource portal included",
+];
+
+const firstBuildWins = [
+  {
+    title: "A real business brain folder.",
+    copy: "About, voice, preferences, team, active projects, memory, and skills—organized as files the owner controls.",
+  },
+  {
+    title: "Voice that came from real writing.",
+    copy: "The system learned from emails, posts, and messages instead of a vague prompt asking AI to sound more human.",
+  },
+  {
+    title: "The agency loaded into context.",
+    copy: "People, roles, current work, priorities, and operating rules stopped living only in the owner's head.",
+  },
+  {
+    title: "Memory that can be maintained.",
+    copy: "The build included a master file and a repeatable rhythm for keeping the brain current as the business changes.",
+  },
+  {
+    title: "A morning brief and live dashboard.",
+    copy: "The room moved beyond chat and put AI to work on recurring priorities, project status, and the next right actions.",
+  },
+  {
+    title: "Reusable agency skills.",
+    copy: "Participants installed a working skill library and learned how to build a skill for work specific to their agency.",
+  },
+];
+
+const buildSteps = [
+  {
+    number: "CARD 1",
+    title: "PREP THE BRAIN",
+    copy: (
+      <>
+        <strong>Pre-work before the room.</strong> Install Claude or Codex, create the folder, bring
+        real writing samples, and stage the business context the build needs.
+      </>
+    ),
+  },
+  {
+    number: "CARD 2",
+    title: "BUILD THE FOUNDATION",
+    copy: (
+      <>
+        <strong>Day one is context.</strong> Who you are, how you sound, how you work, who is on the
+        team, and which projects matter now. Every phase lands in your own folder.
+      </>
+    ),
+  },
+  {
+    number: "CARD 3",
+    title: "MAKE IT WORK",
+    copy: (
+      <>
+        <strong>Day two is leverage.</strong> Memory, the master file, reusable skills, scheduled
+        work, and a live dashboard you can reopen when the week gets noisy.
+      </>
+    ),
+  },
+];
+
+const nextSteps = [
+  {
+    title: "JOIN THE WAITLIST",
+    copy: "Add your name and email. There is no payment and no date commitment yet.",
+  },
+  {
+    title: "GET THE DATE FIRST",
+    copy: "The waitlist receives the next schedule, format, price, and seat release before public registration.",
+  },
+  {
+    title: "CLAIM YOUR SEAT",
+    copy: "When registration opens, choose Claude or Codex and decide whether the live build fits your calendar.",
+  },
+  {
+    title: "BUILD, THEN KEEP IT",
+    copy: "Complete the pre-work, build live for two days, and keep the guides, recordings, and files in your attendee portal.",
+  },
+];
+
+const outcomes = [
+  {
+    title: "The files on your computer.",
+    copy: "The brain lives in a folder you control. It is portable, inspectable, and not trapped inside another dashboard.",
+  },
+  {
+    title: "The complete build path.",
+    copy: "A written sequence takes you from raw business material to a working context, memory, and skill system.",
+  },
+  {
+    title: "Work that starts before you ask.",
+    copy: "The goal is not a better answer in a chat window. It is recurring work that arrives with the right context already attached.",
+  },
+  {
+    title: "A system your team can understand.",
+    copy: "Roles, projects, language, and operating rules become visible files instead of invisible owner knowledge.",
+  },
+  {
+    title: "Replays beside the right files.",
+    copy: "Day one and day two recordings live in the portal with the exact guides and downloads used during each build.",
+  },
+  {
+    title: "A place to come back to.",
+    copy: "Sign in later to review a lesson, download a platform-specific file again, or rebuild a part that changed.",
+  },
+];
+
+const portalFeatures = [
+  "Day 1 and Day 2 workshop replays",
+  "Claude- or Codex-specific pre-work",
+  "The exact Day 1 and Day 2 build guides",
+  "Platform-specific skills libraries",
+  "Saved viewing progress and repeat access",
+];
+
+const faqs = [
+  {
+    question: "When is the next Agency AI Install?",
+    answer:
+      "The next date is being planned now. Join the waitlist and you will receive the date, schedule, price, and registration link before the event is released publicly.",
+  },
+  {
+    question: "Does joining the waitlist reserve a seat?",
+    answer:
+      "No. The waitlist gives you first notice and the first registration opportunity. You will be able to review the full details before deciding.",
+  },
+  {
+    question: "Do I need to be technical?",
+    answer:
+      "No. If you can create a folder and move a file, you can do the build. The pre-work handles setup before day one, and the live room uses checkpoints so problems get caught early.",
+  },
+  {
+    question: "Can I use Claude or Codex?",
+    answer:
+      "Yes. The foundation is the same: your folder, your context, your memory, and your skills. The setup files and some workflow details are tailored to the platform you choose.",
+  },
+  {
+    question: "Is this a course or a live build?",
+    answer:
+      "It is a live working event. You build in your own folder while Justin builds with you. The recordings are there for review afterward, not as a substitute for doing the work in the room.",
+  },
+  {
+    question: "What happens after the live event?",
+    answer:
+      "Your files stay on your computer, and you receive secure portal access for the replays, pre-work, build guides, and platform-specific downloads so you can come back whenever you need them.",
+  },
+  {
+    question: "Is my business information safe?",
+    answer:
+      "Your business brain is built as files on your computer. Other attendees do not see your folder, and the portal holds workshop resources rather than your private agency files.",
+  },
+  {
+    question: "What will the next event cost?",
+    answer:
+      "Pricing has not been announced for the next build. The waitlist will receive the full offer details before registration opens. Joining the waitlist is free.",
+  },
+];
 
 function setMetaTag(name: string, content: string, attribute: "name" | "property" = "name") {
-  let element = document.querySelector(`meta[${attribute}="${name}"]`) as HTMLMetaElement | null;
+  let element = document.querySelector(
+    "meta[" + attribute + '="' + name + '"]',
+  ) as HTMLMetaElement | null;
 
   if (!element) {
     element = document.createElement("meta");
@@ -40,166 +204,146 @@ function setCanonicalUrl(url: string) {
   element.href = url;
 }
 
-const chips = [
-  "$997 all in",
-  <>August 26-27, 2026 &middot; 1:00 PM to 5:00 PM Eastern</>,
-  "Built in Claude or Codex",
-  "50 paid seats",
-  "30-day check-up included",
-];
+function WaitlistLink({
+  inverted = false,
+  children = "Get the next date first",
+}: {
+  inverted?: boolean;
+  children?: ReactNode;
+}) {
+  return (
+    <a className={"aii-cta" + (inverted ? " aii-cta--inverted" : "")} href="#waitlist">
+      {children}
+    </a>
+  );
+}
 
-const buildSteps = [
-  {
-    number: "CARD 1",
-    title: "EARN THE SEAT",
-    copy: (
-      <>
-        <strong>Pre-work, gated.</strong> Before day one: subscription live, app installed, folder
-        created, real writing samples and team roster gathered. About 90 minutes on your own. No
-        pre-work, no seat. Build time is build time.
-      </>
-    ),
-  },
-  {
-    number: "CARD 2",
-    title: "DAY ONE",
-    copy: (
-      <>
-        <strong>Build the brain.</strong> Phases 1 through 6, live: who you are, your voice, your
-        rules, your content system, your team, your active projects. Every file lands in your
-        folder before you log off.
-      </>
-    ),
-  },
-  {
-    number: "CARD 3",
-    title: "DAY TWO",
-    copy: (
-      <>
-        <strong>Make it run.</strong> Phases 7 and 8: the memory system and master file, then your
-        skill library. Then the part nobody else teaches: your first scheduled task, a live
-        dashboard, and a brain that updates itself.
-      </>
-    ),
-  },
-];
+function WaitlistForm() {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState("");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
 
-const schedule = [
-  {
-    title: "BEFORE DAY ONE",
-    copy: "The pre-work checklist arrives the day you enroll. Everything is staged and tested so we never stop the room to fix a login.",
-  },
-  {
-    title: "DAY ONE",
-    date: "AUG 26",
-    copy: "Four hours live on Zoom, 1 to 5 PM Eastern. Phases 1 to 6. You build in your own folder the whole time, with checkpoints at every phase so nobody gets left.",
-  },
-  {
-    title: "DAY TWO",
-    date: "AUG 27",
-    copy: "Four hours live, 1 to 5 PM Eastern. Memory, master file, skills, then automation: your morning brief runs before you wake up the next day.",
-  },
-  {
-    title: "THE CHECK-UP",
-    copy: "One group check-up call on September 24, 2026, from 1:00 PM to 2:00 PM EST. What stuck, what stalled, what to build next. We fix it live and you leave with the upkeep rhythm installed.",
-  },
-];
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setMessage("");
 
-const outcomes = [
-  {
-    title: "A working co-working brain.",
-    copy: "Your folder, your files: about-me, voice, preferences, team, projects, memory, master file. Permanent, portable, yours.",
-  },
-  {
-    title: "Your voice, extracted.",
-    copy: "Pulled from your real writing, not a description of you. Drafts that sound like you wrote them, because it learned from what you wrote.",
-  },
-  {
-    title: "A morning brief that runs itself.",
-    copy: "Your first scheduled task goes live in the room. Priorities pulled from your projects and calendar, waiting when you wake up.",
-  },
-  {
-    title: "One live dashboard.",
-    copy: "A page you reopen any time that pulls fresh status on your week instead of a stale answer.",
-  },
-  {
-    title: "Your team, loaded.",
-    copy: 'Every person, role, and context in the system, so "draft a message for Sarah" comes out right the first time.',
-  },
-  {
-    title: "The skill library.",
-    copy: "Pre-built skills installed, plus your first custom skill file written for something only your agency does.",
-  },
-  {
-    title: "The 30-day check-up.",
-    copy: "One live group call on September 24, 2026, from 1:00 PM to 2:00 PM EST. Momentum audit, stall repair, next build picked.",
-  },
-  {
-    title: "The handout and the recordings.",
-    copy: "The full written build guide, plus both session recordings sent within 7 days of the workshop, so your manager can rebuild any piece of it.",
-  },
-];
+    if (website) {
+      setStatus("success");
+      return;
+    }
 
-const faqs = [
-  {
-    question: "Do I need to be technical?",
-    answer:
-      "No. If you can make a folder and copy a file, you can do this build. The pre-work checklist walks you through every setup step before day one, and there is live tech help in the room both days.",
-  },
-  {
-    question: "Claude or Codex, which one?",
-    answer:
-      "Your pick. You declare it when you enroll. The build is identical: same folder, same files, same phases. Justin demos in Claude and names the Codex difference at every checkpoint.",
-  },
-  {
-    question: "What do I need before day one?",
-    answer:
-      "Your own AI subscription (Claude Pro, Max, or Team, or a ChatGPT plan that includes Codex; billed by the provider, roughly $20 and up per month, not included in the $997), a computer, and the completed pre-work. That is it.",
-  },
-  {
-    question: "What if I cannot attend live?",
-    answer:
-      "Come live. This is a build, not a broadcast, and the checkpoints only work if you are in the room. Both recordings are sent within 7 days, but they are for review and rebuilding, not a substitute for the seats.",
-  },
-  {
-    question: "Is my business information safe?",
-    answer:
-      "The brain is a folder of files on YOUR computer. Nothing is uploaded to Justin, and nobody in the room sees your files. What you build is yours, before, during, and after.",
-  },
-  {
-    question: "What does the $997 cover?",
-    answer:
-      "Both live build days, the full written build guide, the 30-day check-up call, and both session recordings sent within 7 days. One price, nothing else to buy from us.",
-  },
-  {
-    question: "How many seats are available?",
-    answer:
-      "Registration is capped at 50 paid attendees. One purchase equals one attendee. After 50 paid seats, registration moves to a waitlist. Free members do not count against the paid-seat cap.",
-  },
-  {
-    question: "What is the registration policy?",
-    answer:
-      "All purchases are nonrefundable. Your seat may be transferred to another person before August 24. If your pre-work is incomplete by August 24, your registration moves to a future workshop.",
-  },
-];
+    const normalizedName = fullName.trim();
+    const normalizedEmail = email.trim().toLowerCase();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function EnrollButton({ inverted = false }: { inverted?: boolean }) {
-  // The href is rewritten in place during the click so the _fbp and _fbc
-  // cookies are read fresh and the event id is unique per click. The default
-  // navigation reads href after this handler returns, so nothing is delayed
-  // and no preventDefault is needed.
-  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    event.currentTarget.href = buildCheckoutHandoff(STRIPE_LINK);
+    if (!normalizedName || !emailPattern.test(normalizedEmail)) {
+      setStatus("error");
+      setMessage("Enter your name and a valid email address.");
+      return;
+    }
+
+    setStatus("submitting");
+
+    try {
+      const sessionId =
+        "ai-install-waitlist-" +
+        Date.now().toString(36) +
+        "-" +
+        Math.random().toString(36).slice(2, 10);
+      const { error } = await supabase.from("booking_leads").insert({
+        session_id: sessionId,
+        source: "ai-install-waitlist",
+        full_name: normalizedName,
+        email: normalizedEmail,
+        completed: true,
+        desired_outcome: "Join the next Agency AI Install live build.",
+      });
+
+      if (error) throw error;
+
+      const trackedWindow = window as typeof window & {
+        fbq?: (...args: unknown[]) => void;
+      };
+      trackedWindow.fbq?.("track", "Lead", {
+        content_name: "Agency AI Install Waitlist",
+        source: "ai-install-waitlist",
+      });
+
+      setFullName("");
+      setEmail("");
+      setStatus("success");
+    } catch (error) {
+      console.error("AI Install waitlist submission failed", error);
+      setStatus("error");
+      setMessage("We could not save your spot on the list. Try again in a moment.");
+    }
   };
 
+  if (status === "success") {
+    return (
+      <div className="aii-waitlist__success" role="status" aria-live="polite">
+        <span>YOU'RE ON THE LIST.</span>
+        <p>When the next dates are set, you will hear about them before public registration opens.</p>
+      </div>
+    );
+  }
+
   return (
-    <a
-      className={`aii-cta${inverted ? " aii-cta--inverted" : ""}`}
-      href={STRIPE_LINK}
-      onClick={handleClick}
-    >
-      Enroll for $997
-    </a>
+    <form className="aii-waitlist__form" onSubmit={handleSubmit} noValidate>
+      <div className="aii-waitlist__field">
+        <label htmlFor="ai-install-waitlist-name">Full name</label>
+        <input
+          id="ai-install-waitlist-name"
+          name="full_name"
+          type="text"
+          autoComplete="name"
+          required
+          value={fullName}
+          onChange={(event) => setFullName(event.target.value)}
+          placeholder="Your name"
+        />
+      </div>
+      <div className="aii-waitlist__field">
+        <label htmlFor="ai-install-waitlist-email">Email</label>
+        <input
+          id="ai-install-waitlist-email"
+          name="email"
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          required
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          placeholder="you@youragency.com"
+        />
+      </div>
+      <div className="aii-honeypot" aria-hidden="true">
+        <label htmlFor="ai-install-waitlist-website">Website</label>
+        <input
+          id="ai-install-waitlist-website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={website}
+          onChange={(event) => setWebsite(event.target.value)}
+        />
+      </div>
+      <button className="aii-cta aii-cta--inverted" type="submit" disabled={status === "submitting"}>
+        {status === "submitting" ? "Adding you to the list" : "Join the next build waitlist"}
+      </button>
+      {status === "error" && (
+        <p className="aii-waitlist__error" role="alert">
+          {message}
+        </p>
+      )}
+      <p className="aii-waitlist__privacy">
+        No payment. No date commitment. We will only use this to contact you about the next Agency
+        AI Install.
+      </p>
+    </form>
   );
 }
 
@@ -214,7 +358,7 @@ export default function AIInstall() {
     setMetaTag("robots", "index, follow");
     setMetaTag(
       "keywords",
-      "insurance agency AI, AI workshop, Claude for insurance agencies, Codex for insurance agencies, agency systems",
+      "insurance agency AI, AI workshop waitlist, Claude for insurance agencies, Codex for insurance agencies, agency systems",
     );
     setMetaTag("theme-color", "#F4F2EE");
     setMetaTag("og:title", PAGE_TITLE, "property");
@@ -222,6 +366,7 @@ export default function AIInstall() {
     setMetaTag("og:type", "website", "property");
     setMetaTag("og:url", PAGE_URL, "property");
     setMetaTag("og:image", OG_IMAGE, "property");
+    setMetaTag("twitter:card", "summary_large_image");
     setMetaTag("twitter:title", PAGE_TITLE);
     setMetaTag("twitter:description", PAGE_DESCRIPTION);
     setMetaTag("twitter:image", OG_IMAGE);
@@ -239,13 +384,16 @@ export default function AIInstall() {
             <img className="aii-wordmark" src={standardLogo} alt="STANDARD" />
           </a>
           <span className="aii-header__tag">STANDARD PLAYBOOK</span>
+          <a className="aii-header__cta" href="#waitlist">
+            Join the waitlist
+          </a>
         </div>
       </header>
 
       <main id="aii-main">
         <section className="aii-hero">
           <div className="aii-shell aii-hero__inner">
-            <p className="aii-kicker">LIVE TWO-DAY BUILD &middot; AUGUST 26-27</p>
+            <p className="aii-kicker">FIRST BUILD COMPLETE &middot; NEXT LIVE DATE COMING</p>
             <div className="aii-hero__copy">
               <h1 className="aii-hero__title">
                 <span className="aii-hero__line">The Agency</span>
@@ -254,10 +402,11 @@ export default function AIInstall() {
                 </span>
               </h1>
               <p className="aii-hero__subhead">
-                Build your agency's AI co-working brain live with Justin. Two days, Claude or Codex,
-                and you leave with it working.
+                The first room built working agency brains instead of collecting another stack of
+                prompts. The next two-day live build is being planned now.
               </p>
-              <EnrollButton />
+              <WaitlistLink />
+              <p className="aii-hero__note">No date or payment yet. The waitlist hears first.</p>
             </div>
             <div className="aii-hero__visual">
               <img
@@ -267,20 +416,18 @@ export default function AIInstall() {
                 aria-hidden="true"
               />
               <div className="aii-hero__video-frame">
-                <div className="aii-hero__video">
-                  <iframe
-                    src={VIMEO_EMBED_URL}
-                    title="AI Install Workshop video message"
-                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
+                <div className="aii-hero__poster-wrap">
+                  <img
+                    className="aii-hero__poster"
+                    src="/og/ai-install-portal.png"
+                    alt="The Agency AI Install—replays, pre-work, and downloads"
                   />
                 </div>
               </div>
             </div>
-            <div className="aii-chips" aria-label="Workshop details">
-              {chips.map((chip, index) => (
-                <span className="aii-chip" key={index}>
+            <div className="aii-chips" aria-label="Next workshop details">
+              {chips.map((chip) => (
+                <span className="aii-chip" key={chip}>
                   {chip}
                 </span>
               ))}
@@ -303,6 +450,29 @@ export default function AIInstall() {
           </div>
         </div>
 
+        <section className="aii-section aii-first-build">
+          <div className="aii-shell">
+            <div className="aii-proof-intro">
+              <SectionTitle>
+                THE FIRST ROOM <span>BUILT THIS</span>.
+              </SectionTitle>
+              <p>
+                In the first Agency AI Install, we moved from blank folders to working systems. The
+                room built the eight-part foundation Justin uses, then connected it to recurring
+                work people could use the next morning.
+              </p>
+            </div>
+            <div className="aii-outcomes">
+              {firstBuildWins.map((outcome) => (
+                <article className="aii-outcome" key={outcome.title}>
+                  <h3>{outcome.title}</h3>
+                  <p>{outcome.copy}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="aii-section">
           <div className="aii-shell aii-problem-grid">
             <article>
@@ -310,13 +480,12 @@ export default function AIInstall() {
                 THE <span>PROBLEM</span>.
               </h2>
               <p>
-                You bought the tools. ChatGPT is open in a tab right now. You have watched the
-                demos, saved the prompts, told your team "we need to use AI more." And your agency
-                still runs out of your head.
+                ChatGPT is open in a tab. You have saved prompts and watched demos. But the agency
+                still runs out of your head because the tool has no durable context underneath it.
               </p>
               <p>
-                Every AI tip you have tried died the same way: no system underneath it. The tool
-                answered a question and forgot you existed.
+                Every useful answer starts over. It does not know your people, your voice, your
+                projects, or the rules you actually operate by.
               </p>
               <p className="aii-strong-line">
                 You do not have an AI problem. You have an install problem.
@@ -324,17 +493,17 @@ export default function AIInstall() {
             </article>
             <article>
               <h2 className="aii-split-title">
-                THE <span>PROMISE</span>.
+                THE <span>NEXT ROOM</span>.
               </h2>
               <p>
-                Two working days, building live. Day one your brain learns who you are, how you
-                talk, who your people are, and what you are working on. Day two it starts working
-                while you sleep: a morning brief, a live dashboard, memory that keeps itself
-                current.
+                The next event will use the same live build format: pre-work before the room, two
+                focused working days, and checkpoints that keep everyone moving through the same
+                eight phases.
               </p>
               <p>
-                This is the exact 8-phase build Justin runs his own businesses on. Done with you,
-                not taught at you. Fall behind a step and we catch you in the room, not in a replay.
+                You leave with files on your computer, not a promise to watch modules later. Then
+                the replays, guides, and platform-specific downloads stay available in your secure
+                attendee portal.
               </p>
             </article>
           </div>
@@ -352,7 +521,7 @@ export default function AIInstall() {
         <section className="aii-section">
           <div className="aii-shell">
             <SectionTitle>
-              HOW IT <span>WORKS</span>.
+              HOW THE LIVE <span>BUILD WORKS</span>.
             </SectionTitle>
             <div className="aii-how-grid">
               {buildSteps.map((step) => (
@@ -370,20 +539,12 @@ export default function AIInstall() {
         <section className="aii-section">
           <div className="aii-shell">
             <SectionTitle>
-              THE <span>BUILD</span> SCHEDULE.
+              WHAT HAPPENS <span>NEXT</span>.
             </SectionTitle>
             <div className="aii-schedule">
-              {schedule.map((item) => (
+              {nextSteps.map((item) => (
                 <article className="aii-schedule__item" key={item.title}>
-                  <h3>
-                    {item.title}
-                    {item.date && (
-                      <>
-                        {" "}
-                        &middot; {item.date}
-                      </>
-                    )}
-                  </h3>
+                  <h3>{item.title}</h3>
                   <p>{item.copy}</p>
                 </article>
               ))}
@@ -399,18 +560,17 @@ export default function AIInstall() {
             </div>
             <p className="aii-phases__copy">
               About you. Your voice. Your rules. Your content. Your team. Your projects. Your
-              memory. Your skills. The same eight phases behind the brain that runs Justin's
-              coaching practice, his software company, and his conference. Compressed into two
-              working days, built in your folder, for your agency.
+              memory. Your skills. The same foundation behind the brain that runs Justin's coaching
+              practice, software company, and conference—built in your folder for your agency.
             </p>
-            <EnrollButton />
+            <WaitlistLink />
           </div>
         </section>
 
         <section className="aii-section">
           <div className="aii-shell">
             <SectionTitle>
-              WHAT YOU WALK <span>AWAY</span> WITH.
+              WHAT YOU <span>KEEP</span>.
             </SectionTitle>
             <div className="aii-outcomes">
               {outcomes.map((outcome) => (
@@ -423,6 +583,33 @@ export default function AIInstall() {
           </div>
         </section>
 
+        <section className="aii-portal-proof">
+          <div className="aii-shell aii-portal-grid">
+            <div>
+              <p className="aii-kicker">AFTER THE LIVE ROOM</p>
+              <h2>
+                YOUR BUILD DOESN'T DISAPPEAR AFTER <span>DAY TWO</span>.
+              </h2>
+              <p className="aii-portal-copy">
+                Attendees keep the business brain files on their own computer and receive a secure
+                portal for the workshop material. Sign back in to review a lesson, download a guide
+                again, or pick the build back up months later.
+              </p>
+              <a className="aii-portal-link" href="/aiinstall/portal">
+                Already attended? Open the portal
+              </a>
+            </div>
+            <ol className="aii-portal-list">
+              {portalFeatures.map((feature, index) => (
+                <li key={feature}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <strong>{feature}</strong>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
         <section className="aii-section">
           <div className="aii-shell aii-fit-grid">
             <article>
@@ -430,10 +617,9 @@ export default function AIInstall() {
                 THIS IS FOR <span>YOU</span> IF.
               </h2>
               <p>
-                You own or manage an insurance agency and the whole operation still lives in your
-                head. You are willing to do 90 minutes of pre-work and show up live for two
-                afternoons. You want a system you own on your own computer, not another subscription
-                dashboard you will stop opening in a month.
+                You own or manage an insurance agency, too much of the operation still lives in
+                your head, and you are willing to do the pre-work and build live instead of watching
+                from the sidelines.
               </p>
             </article>
             <article>
@@ -441,10 +627,9 @@ export default function AIInstall() {
                 THIS IS <span>NOT</span> FOR YOU IF.
               </h2>
               <p>
-                You want to watch and decide later. This room builds; it does not watch. If the
-                pre-work is not done, you do not build, and your seat moves to a later date. And if
-                you are looking for someone to promise your revenue goes up because you bought AI,
-                that promise does not exist here.
+                You want a bag of prompts, a passive course, or a promise that buying AI guarantees
+                revenue. The install only works when you bring the real business context and do the
+                build.
               </p>
             </article>
           </div>
@@ -456,21 +641,27 @@ export default function AIInstall() {
               WHO IS <span>BUILDING</span> WITH YOU.
             </SectionTitle>
             <p>
-              Justin Harkelroad has spent 20 years inside of the insurance business. He coaches
-              agency owners nationwide, builds his own software, and runs an annual conference. All
-              three run on the co-working brain he built for himself, the same 8-phase build you are
-              installing in this room. He is not teaching a theory. He is handing you the thing he
-              uses every morning.
+              Justin Harkelroad has spent 20 years inside the insurance business. He coaches agency
+              owners, builds his own software, and runs his businesses on the co-working brain he
+              installs in this room. He is not teaching a theory. He is building the same system
+              beside you.
             </p>
           </div>
         </section>
 
-        <section className="aii-statement aii-statement--cta">
-          <div className="aii-shell">
-            <p>
-              Two afternoons. One system, <span>built</span>. Running the morning after.
-            </p>
-            <EnrollButton inverted />
+        <section className="aii-waitlist" id="waitlist" aria-labelledby="aii-waitlist-title">
+          <div className="aii-shell aii-waitlist__grid">
+            <div className="aii-waitlist__copy">
+              <p className="aii-kicker">NEXT LIVE BUILD</p>
+              <h2 id="aii-waitlist-title">
+                GET THE DATE BEFORE THE ROOM <span>OPENS</span>.
+              </h2>
+              <p>
+                The next Agency AI Install is being planned now. Join the list and we will send you
+                the date, format, price, and registration link before it is announced publicly.
+              </p>
+            </div>
+            <WaitlistForm />
           </div>
         </section>
 
@@ -493,16 +684,14 @@ export default function AIInstall() {
         <section className="aii-final">
           <div className="aii-shell">
             <h2>
-              Nobody is coming to install this for <span>you</span>.
+              THE NEXT ROOM IS COMING. <span>HEAR FIRST</span>.
             </h2>
             <p>
-              You have known AI matters for two years. The install has been the missing piece the
-              whole time. Two afternoons, and it is done.
+              No stale event date. No checkout for an event that already happened. Just the first
+              chance to see the next build and decide if you want in.
             </p>
-            <EnrollButton />
-            <small>
-              August 26-27, 2026 &middot; 1:00 PM to 5:00 PM Eastern &middot; 50 paid seats
-            </small>
+            <WaitlistLink>Join the waitlist</WaitlistLink>
+            <small>Free to join &middot; No payment &middot; No seat reserved until registration opens</small>
           </div>
         </section>
       </main>
@@ -514,16 +703,10 @@ export default function AIInstall() {
             <span>YOU VERSUS YOU.</span>
           </div>
           <p>
-            $997 covers both live build days, the written build guide, the 30-day check-up call, and
-            both session recordings (sent within 7 days of the workshop). Every phase is
-            checkpointed live in the room, so if you do the pre-work and show up for both days, you
-            leave with the build done. Requires your own AI subscription (Claude Pro, Max, or Team,
-            or a ChatGPT plan that includes Codex; billed by the provider, not included). One
-            purchase equals one attendee. Registration is capped at 50 paid seats; free members do
-            not count against the paid-seat cap, and registration moves to a waitlist after 50 paid
-            seats. All purchases are nonrefundable. Your seat may be transferred to another person
-            before August 24. If your pre-work is incomplete by August 24, your registration moves
-            to a future workshop. No income or sales results are promised or implied.
+            Joining the waitlist does not purchase or reserve a seat. Dates, capacity, schedule,
+            pricing, platform requirements, and registration policies will be provided before the
+            next event opens. Participation requires your own eligible Claude or ChatGPT
+            subscription. No income or sales results are promised or implied.
           </p>
         </div>
       </footer>
