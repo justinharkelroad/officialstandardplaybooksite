@@ -871,6 +871,7 @@ export type Database = {
           coach_memory_announced_at: string | null
           coach_memory_paused: boolean
           core_values: string[] | null
+          core_values_context: string | null
           created_at: string | null
           current_challenges: string | null
           current_goals: string | null
@@ -883,6 +884,7 @@ export type Database = {
           guided_interview_version: number | null
           id: string
           life_roles: string[] | null
+          life_roles_context: string | null
           overwhelm_response: string | null
           peak_state: string | null
           preferred_name: string | null
@@ -896,6 +898,7 @@ export type Database = {
           coach_memory_announced_at?: string | null
           coach_memory_paused?: boolean
           core_values?: string[] | null
+          core_values_context?: string | null
           created_at?: string | null
           current_challenges?: string | null
           current_goals?: string | null
@@ -908,6 +911,7 @@ export type Database = {
           guided_interview_version?: number | null
           id?: string
           life_roles?: string[] | null
+          life_roles_context?: string | null
           overwhelm_response?: string | null
           peak_state?: string | null
           preferred_name?: string | null
@@ -921,6 +925,7 @@ export type Database = {
           coach_memory_announced_at?: string | null
           coach_memory_paused?: boolean
           core_values?: string[] | null
+          core_values_context?: string | null
           created_at?: string | null
           current_challenges?: string | null
           current_goals?: string | null
@@ -933,6 +938,7 @@ export type Database = {
           guided_interview_version?: number | null
           id?: string
           life_roles?: string[] | null
+          life_roles_context?: string | null
           overwhelm_response?: string | null
           peak_state?: string | null
           preferred_name?: string | null
@@ -1995,6 +2001,7 @@ export type Database = {
           coach_memory_announced_at: string | null
           coach_memory_paused: boolean
           core_values: string[] | null
+          core_values_context: string | null
           created_at: string | null
           current_challenges: string | null
           current_goals: string | null
@@ -2007,6 +2014,7 @@ export type Database = {
           guided_interview_version: number | null
           id: string
           life_roles: string[] | null
+          life_roles_context: string | null
           overwhelm_response: string | null
           peak_state: string | null
           preferred_name: string | null
@@ -2055,12 +2063,12 @@ export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -2084,11 +2092,11 @@ export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -2109,11 +2117,11 @@ export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -2134,11 +2142,11 @@ export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
     | { schema: keyof DatabaseWithoutInternals },
-  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+  EnumName extends (DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaEnumNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -2151,11 +2159,11 @@ export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof DatabaseWithoutInternals },
-  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+  CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
-    : never = never,
+    : never) = never,
 > = PublicCompositeTypeNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
