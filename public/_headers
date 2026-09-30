@@ -25,3 +25,13 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(self), geolocation=()
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://connect.facebook.net https://cdn.gpteng.co https://www.youtube.com https://s.ytimg.com https://www.googletagmanager.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.elevenlabs.io wss://api.elevenlabs.io https://*.livekit.cloud wss://*.livekit.cloud https://www.facebook.com https://www.google-analytics.com; frame-src https://www.youtube.com https://youtube.com https://player.vimeo.com https://AGENCYCOACHING.as.me https://link.fastpaydirect.com https://buy.stripe.com https://api.leadconnectorhq.com; media-src 'self' blob: data: https://api.elevenlabs.io https://storage.googleapis.com;
+
+/paag
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self' blob: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' 'unsafe-inline' blob: https://fonts.googleapis.com; font-src 'self' blob: data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' blob: data:; frame-src 'self' blob:; worker-src 'self' blob:
+  X-Robots-Tag: noindex, nofollow
+
+/paag/*
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self' blob: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' 'unsafe-inline' blob: https://fonts.googleapis.com; font-src 'self' blob: data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' blob: data:; frame-src 'self' blob:; worker-src 'self' blob:
+  X-Robots-Tag: noindex, nofollow

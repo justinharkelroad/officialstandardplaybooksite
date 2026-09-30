@@ -36,6 +36,8 @@ https://www.standardplaybook.com/* https://standardplaybook.com/:splat 301
 /aiinstall/ai-install-codex-starter-pack.zip /aiinstall/ai-install-codex-starter-pack.zip 200
 /aiinstall/prework/claude /aiinstall/prework/claude/index.html 200
 /aiinstall/prework/codex /aiinstall/prework/codex/index.html 200
+/paag /paag/index.html 200
+/paag/ /paag/index.html 200
 
 # SPA fallback - serves index.html for all other routes
 /*    /index.html   200
