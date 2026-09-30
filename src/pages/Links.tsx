@@ -456,6 +456,8 @@ const Links = () => {
           <Reveal className="mb-7 flex justify-center md:mb-9">
             <Button
               type="button"
+              aria-label="Book a free Standard Fit call"
+              data-cta="standard-fit-call"
               onClick={() => setFitModalOpen(true)}
               className="h-auto w-full rounded-none border-2 border-[hsl(var(--links-cta))] bg-black px-6 py-5 font-oswald text-lg font-bold uppercase text-[hsl(var(--links-cta))] shadow-[6px_6px_0_hsl(var(--links-cta))] transition-transform hover:translate-x-0.5 hover:translate-y-0.5 hover:bg-[hsl(var(--links-cta))] hover:text-black hover:shadow-[3px_3px_0_hsl(var(--links-cta))] focus-visible:ring-[hsl(var(--links-cta))] sm:w-auto sm:min-w-[420px] sm:px-12 sm:text-xl"
             >
