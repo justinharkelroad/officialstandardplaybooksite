@@ -53,6 +53,7 @@ import SalesProcess from "./pages/SalesProcess";
 import Calls from "./pages/Calls";
 import ZoomRedirect from "./pages/ZoomRedirect";
 import BoldStandard90 from "./pages/BoldStandard90";
+import BoldMove from "./pages/BoldMove";
 import BoldCertifiedStandard from "./pages/BoldCertifiedStandard";
 import BoldTeamStandard from "./pages/BoldTeamStandard";
 import Ascension from "./pages/Ascension";
@@ -116,6 +117,7 @@ const App = () => (
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/challenge-thank-you" element={<ChallengeThankYou />} />
           <Route path="/links" element={<Links />} />
+          <Route path="/move" element={<BoldMove />} />
           <Route path="/welcometocoaching" element={<WelcomeToCoaching />} />
           <Route path="/welcomeboardroom" element={<WelcomeBoardroom />} />
           <Route path="/PPUC" element={<Navigate to="/the-challenge" replace />} />

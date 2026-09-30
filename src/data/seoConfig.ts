@@ -39,6 +39,13 @@ export const seoConfig: Record<string, SEOConfig> = {
     type: 'article',
     structuredData: structuredDataByRoute['/directive'],
   },
+  '/move': {
+    title: 'Pick Your Next Move | Standard Playbook, Agency Brain, Live Call Coach',
+    description: 'Coaching, software, and AI for insurance agency owners. Watch the 30 second film, then pick your next move: Standard Playbook, Agency Brain, or Live Call Coach.',
+    keywords: ['insurance agency coaching', 'agency brain', 'live call coach', 'insurance agency software', 'standard playbook'],
+    ogImage: 'https://standardplaybook.com/og/move.jpg',
+    type: 'website',
+  },
   '/standard90': {
     title: 'The Standard 90 | The Standard Playbook',
     description: 'A 90 day action map for the agency owner who is done being the operating system. Customized and personally coached one on one all the way through. By application.',
