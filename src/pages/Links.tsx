@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
 
 import standardLogo from '@/assets/standard-word-logo.png';
+import StandardFitModal from '@/components/StandardFitModal';
+import { Button } from '@/components/ui/button';
 
 const profileImage = '/LINK%20PAGE.jpg';
 
@@ -382,6 +384,8 @@ const Marquee = ({ rotate = -3, bg = ink, color = paper, dot = blue, phrase = 'S
    LINKS — editorial program hub in the bold house style
    ══════════════════════════════════════════════════════ */
 const Links = () => {
+  const [fitModalOpen, setFitModalOpen] = useState(false);
+
   return (
     <div style={{ background: paper, minHeight: '100vh', position: 'relative', overflow: 'hidden' }}>
       <div className="px-6 md:px-10 max-w-[920px] mx-auto" style={{ paddingTop: 'clamp(40px, 8vw, 80px)', paddingBottom: 60 }}>
@@ -449,6 +453,15 @@ const Links = () => {
 
         {/* COACHING */}
         <div style={{ marginTop: 'clamp(48px, 8vw, 88px)' }}>
+          <Reveal className="mb-7 flex justify-center md:mb-9">
+            <Button
+              type="button"
+              onClick={() => setFitModalOpen(true)}
+              className="h-auto w-full rounded-none border-2 border-[hsl(var(--links-cta))] bg-black px-6 py-5 font-oswald text-lg font-bold uppercase text-[hsl(var(--links-cta))] shadow-[6px_6px_0_hsl(var(--links-cta))] transition-transform hover:translate-x-0.5 hover:translate-y-0.5 hover:bg-[hsl(var(--links-cta))] hover:text-black hover:shadow-[3px_3px_0_hsl(var(--links-cta))] focus-visible:ring-[hsl(var(--links-cta))] sm:w-auto sm:min-w-[420px] sm:px-12 sm:text-xl"
+            >
+              Book a Free Call
+            </Button>
+          </Reveal>
           <SectionHeader label="Coaching" />
           <Reveal delay={0.05}>
             <ul style={{ listStyle: 'none', margin: '24px 0 0', padding: 0, borderTop: `1px solid ${ink}` }}>
@@ -458,6 +471,8 @@ const Links = () => {
             </ul>
           </Reveal>
         </div>
+
+        <StandardFitModal open={fitModalOpen} onOpenChange={setFitModalOpen} />
 
         {/* SOFTWARE / AI */}
         <div style={{ marginTop: 'clamp(56px, 9vw, 96px)' }}>
