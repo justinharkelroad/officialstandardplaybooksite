@@ -48,7 +48,7 @@ What's included:
 - Custom strategy development and deployment
 - Weekly check-in protocols for accountability
 - Monthly mission check-ins with course correction
-- One 2-hour group Boardroom call per month
+- Weekly Monday live group Boardroom calls (1:00 PM ET)
 - 100 AI-graded calls per month (call scoring technology)
 - Custom AI agent buildouts during sessions
 - Custom reporting buildouts for your agency

@@ -234,7 +234,7 @@ const pillars = [
       'Weekly check-in protocol',
       'Monthly mission check-in',
       'Course-correction when you drift',
-      'One 2-hour group Boardroom call',
+      'Weekly Monday live Boardroom calls',
       'Strategy deployed, not filed away',
     ],
   },

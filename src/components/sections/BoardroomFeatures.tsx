@@ -80,7 +80,7 @@ const BoardroomFeatures = () => {
             <CardContent>
               <ul className="text-gray-300 space-y-2 text-left">
                 <li>• Hardcover. Because PDFs are for people who don't implement.</li>
-                <li>• Monthly Reality Checks from Justin</li>
+                <li>• Weekly Monday Reality Checks from Justin &amp; Corina</li>
                 <li>• He's not your friend. He's your mirror.</li>
                 <li>• You can't hide from exposing gamification numbers.</li>
               </ul>

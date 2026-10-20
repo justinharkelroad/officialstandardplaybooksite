@@ -15,7 +15,7 @@ const OffersGrid = () => {
     {
       title: 'THE BOARDROOM',
       description: 'Isolation is where good agencies go to die.',
-      copy: 'Every month, you sit across from owners who\'ve already been where you\'re trying to go. They see through your excuses. They call out your blind spots. They refuse to let you hide.',
+      copy: 'Every Monday, you sit across from owners who\'ve already been where you\'re trying to go. They see through your excuses. They call out your blind spots. They refuse to let you hide.',
       emphasis: 'This isn\'t networking. It\'s chemotherapy for your comfort zone.',
       italic: 'Your competition hopes you\'ll stay comfortable.',
       icon: Users,

@@ -94,7 +94,7 @@ export const OFFER_CATALOG: { version: string; currency: string; offers: Offer[]
       slug: "boardroom",
       name: "Boardroom",
       type: "membership",
-      price: 299,
+      price: 399,
       billing_cycle: "monthly",
       status: "open",
       inclusions: {
@@ -107,7 +107,7 @@ export const OFFER_CATALOG: { version: string; currency: string; offers: Offer[]
       },
       notes: ["Month-to-month. No contract."],
       links: {
-        checkout: "URL_PLACEHOLDER",
+        checkout: "https://buy.stripe.com/cNi6oH2CGeP4aWcbC44Vy0z",
         details: "https://standardplaybook.com/boardroom"
       },
       display_order: 10

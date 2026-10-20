@@ -3,15 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const BoardroomIncludes = () => {
   const includedItems = [
-    "2 Hour Group Boardroom Call",
-    "Boardroom Level Access To Standard App",
-    "AgencyBrain Access",
-    "The Standard Playbook Hardcover",
-    "I AM THE STANDARD T Shirt",
-    "I AM THE STANDARD wristband",
-    "Standard Playbook Pen",
-    "1v1 Video Coaching 24/7 w/ Justin",
-    "20 Ai Calls Scored Per Month In Standard Call Scoring"
+    "Weekly Live Monday Boardroom Call (1:00 PM ET) with Justin & Corina",
+    "30-Minute Pre-Call Domino & Mirror Accountability Loop",
+    "Full Agency Brain Core Access ($299/mo Standalone Value Included)",
+    "The 160-Point Agency Mirror & 8-Week Mirror Challenge",
+    "Unlimited Staff Portal Logins + Standard Playbook Training",
+    "20 AI Calls Scored Per Month in Standard Call Scoring",
+    "Daily Active Telegram Room + Direct Voice/Video Line to Justin",
+    "5 Agency HQs + 5 ROI Forecasters + All 7 Daily Flows",
+    "Key Leader Boardroom Grants Inside Agency Brain"
   ];
 
   return (

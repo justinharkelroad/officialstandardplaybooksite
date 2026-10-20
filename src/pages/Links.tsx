@@ -4,8 +4,6 @@ import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
 
 import standardLogo from '@/assets/standard-word-logo.png';
-import StandardFitModal from '@/components/StandardFitModal';
-import { Button } from '@/components/ui/button';
 
 const profileImage = '/LINK%20PAGE.jpg';
 
@@ -85,15 +83,16 @@ const coachingPrograms: ProgramRow[] = [
   {
     num: '03',
     name: 'The Boardroom',
-    tier: 'Membership',
-    description: 'The room for owners who want steady momentum and real accountability between calls.',
+    tier: 'Weekly Membership + Agency Brain Core',
+    price: '$399/mo',
+    description: 'Weekly Monday live coaching, software-gated Domino accountability, The Mirror experience, and full Agency Brain Core access included.',
     details: [
-      'Live monthly group coaching with Justin & Corina',
-      'Hot-seat problem-solving with other owners',
-      'Agency Brain Core access',
-      'Team training library + scripts',
-      'Daily Flow library + leaderboards',
-      'Private Boardroom community',
+      'Weekly live Monday coaching (1:00 PM ET) with Justin & Corina',
+      '30-minute pre-call loop: Return & Report, Domino Builder, Domino Flow',
+      'Full Agency Brain Core access ($299/mo standalone value) + 20 AI Call Scores/mo',
+      'The 160-Point Agency Mirror + 8-Week Mirror Challenge',
+      'Unlimited Staff Portal seats + training library & scripts',
+      'Daily Telegram room + direct voice/video line to Justin',
     ],
     href: '/boardroom',
     cta: 'Learn More →',
@@ -384,8 +383,6 @@ const Marquee = ({ rotate = -3, bg = ink, color = paper, dot = blue, phrase = 'S
    LINKS — editorial program hub in the bold house style
    ══════════════════════════════════════════════════════ */
 const Links = () => {
-  const [fitModalOpen, setFitModalOpen] = useState(false);
-
   return (
     <div style={{ background: paper, minHeight: '100vh', position: 'relative', overflow: 'hidden' }}>
       <div className="px-6 md:px-10 max-w-[920px] mx-auto" style={{ paddingTop: 'clamp(40px, 8vw, 80px)', paddingBottom: 60 }}>
@@ -453,17 +450,6 @@ const Links = () => {
 
         {/* COACHING */}
         <div style={{ marginTop: 'clamp(48px, 8vw, 88px)' }}>
-          <Reveal className="mb-7 flex justify-center md:mb-9">
-            <Button
-              type="button"
-              aria-label="Book a free Standard Fit call"
-              data-cta="standard-fit-call"
-              onClick={() => setFitModalOpen(true)}
-              className="h-auto w-full rounded-none border-2 border-[hsl(var(--links-cta))] bg-black px-6 py-5 font-oswald text-lg font-bold uppercase text-[hsl(var(--links-cta))] shadow-[6px_6px_0_hsl(var(--links-cta))] transition-transform hover:translate-x-0.5 hover:translate-y-0.5 hover:bg-[hsl(var(--links-cta))] hover:text-black hover:shadow-[3px_3px_0_hsl(var(--links-cta))] focus-visible:ring-[hsl(var(--links-cta))] sm:w-auto sm:min-w-[420px] sm:px-12 sm:text-xl"
-            >
-              Book a Free Call
-            </Button>
-          </Reveal>
           <SectionHeader label="Coaching" />
           <Reveal delay={0.05}>
             <ul style={{ listStyle: 'none', margin: '24px 0 0', padding: 0, borderTop: `1px solid ${ink}` }}>
@@ -473,8 +459,6 @@ const Links = () => {
             </ul>
           </Reveal>
         </div>
-
-        <StandardFitModal open={fitModalOpen} onOpenChange={setFitModalOpen} />
 
         {/* SOFTWARE / AI */}
         <div style={{ marginTop: 'clamp(56px, 9vw, 96px)' }}>

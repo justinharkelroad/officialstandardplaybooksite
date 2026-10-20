@@ -13,7 +13,7 @@ const WelcomeToCoaching = () => {
     },
     {
       question: "When do the Boardroom calls happen?",
-      answer: "Boardroom calls are held every Tuesday at 2 PM EST. You'll receive calendar invitations with Zoom links automatically."
+      answer: "Boardroom calls are held every Monday at 1:00 PM ET. Your weekly Return & Report and Domino window opens every Sunday at 12:00 AM ET inside Agency Brain."
     },
     {
       question: "What if I need 1-on-1 support?",

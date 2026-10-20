@@ -211,7 +211,7 @@ const CATEGORIES = [
   { name: 'Agency Management', description: 'Lead manager, recruiting ritual, requote and winback process, coaching vs. compliance, knowing your numbers.' },
   { name: 'AI & Technology', description: 'ElevenLabs voice bots, advanced voice prompting, NotebookLM training, building your own AI brain.' },
   { name: 'Product Training', description: 'Agency Brain for managers (Sequencing, Weekly Debrief). Agency Brain for staff (LQS Roadmap, AI Sales Roleplay Trainer, Flowing).' },
-  { name: 'Boardroom Recordings', description: 'Monthly coaching call recaps, real client struggles, tactics, accountability frameworks.' },
+  { name: 'Boardroom Recordings', description: 'Weekly coaching call recaps, real client struggles, tactics, accountability frameworks.' },
   { name: '+ More on the way', description: "New tracks ship as the work surfaces them. Boardroom calls. New objections. New AI workflows. The library doesn't sit still." },
 ];
 

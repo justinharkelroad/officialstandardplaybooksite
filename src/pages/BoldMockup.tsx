@@ -1251,10 +1251,10 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
     return (
       <div className="decision-details-grid decision-details-grid--two">
         <DecisionOffer
-          eyebrow="Recurring group coaching"
+          eyebrow="Weekly group coaching + Agency Brain Core"
           name="The Boardroom"
-          price="$299/month"
-          description="Monthly coaching, operator accountability, and a room of owners committed to moving the work forward."
+          price="$399/month"
+          description="Weekly Monday live coaching, the 30-minute Domino accountability loop, the 160-Point Mirror experience, and full Agency Brain Core access ($299/mo value) included."
           href="/boardroom"
           cta="See The Boardroom"
         />

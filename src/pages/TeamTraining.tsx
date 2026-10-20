@@ -128,7 +128,7 @@ const TRACKS: Track[] = [
     number: 'TRACK 10',
     title: 'Boardroom Recordings',
     description:
-      'A growing library of real coaching session recaps from monthly Boardroom calls, actual client struggles, actual tactics, actual frameworks deployed.',
+      'A growing library of real coaching session recaps from weekly Boardroom calls, actual client struggles, actual tactics, actual frameworks deployed.',
     bullets: [
       'Onboarding systems for prospects, customers, and team members',
       'Modern marketing and personal branding for agents',

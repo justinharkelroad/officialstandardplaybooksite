@@ -30,39 +30,39 @@ const PricingSection = () => {
                 The Boardroom
               </CardTitle>
               <div className="mb-4">
-                <span className="text-5xl font-bold text-white">$299</span>
+                <span className="text-5xl font-bold text-white">$399</span>
                 <span className="text-gray-400">/month</span>
               </div>
               <CardDescription className="text-gray-400">
-                The Standard Membership. Monthly group Zoom calls. Private Network. Core AgencyBrain Access for you and your team.
+                The Standard Membership. Weekly Monday live coaching, the 30-minute Domino accountability loop, The Mirror experience, and full Agency Brain Core access for you and your team.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center text-gray-300">
                   <Shield className="w-5 h-5 text-primary mr-3" />
-                  Monthly 2 Hour Group Zoom Call
+                  Weekly Live Monday Boardroom Call (1:00 PM ET)
                 </li>
                 <li className="flex items-center text-gray-300">
                   <Shield className="w-5 h-5 text-primary mr-3" />
-                  Stack Level Access Inside The App
+                  30-Minute Pre-Call Domino &amp; Mirror Loop
                 </li>
                 <li className="flex items-center text-gray-300">
                   <Shield className="w-5 h-5 text-primary mr-3" />
-                  Standard Playbook Hardcover + Swag
+                  Full Agency Brain Core Access ($299/mo Value Included)
                 </li>
                 <li className="flex items-center text-gray-300">
                   <Shield className="w-5 h-5 text-primary mr-3" />
-                  24/7 1v1 Video Messaging w/ Justin
+                  160-Point Agency Mirror + 8-Week Mirror Challenge
                 </li>
                 <li className="flex items-center text-gray-300">
                   <Shield className="w-5 h-5 text-primary mr-3" />
-                  + More
+                  Daily Telegram Room + Direct Line to Justin
                 </li>
               </ul>
-              <a href="https://link.fastpaydirect.com/payment-link/68371b280a5741f8835218c8" target="_blank" rel="noopener noreferrer">
+              <a href="https://buy.stripe.com/cNi6oH2CGeP4aWcbC44Vy0z" target="_blank" rel="noopener noreferrer">
                 <Button className="btn-primary w-full">
-                  LEARN MORE
+                  JOIN THE BOARDROOM
                 </Button>
               </a>
             </CardContent>
