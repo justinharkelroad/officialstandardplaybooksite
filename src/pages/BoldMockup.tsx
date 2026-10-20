@@ -688,7 +688,7 @@ const coachingPrograms: ProgramRow[] = [
     num: '01',
     name: 'The Boardroom',
     tier: 'Weekly Membership + Agency Brain Core',
-    price: '$299/mo',
+    price: '$399/mo',
     description: 'Weekly Monday live coaching, software-gated Domino accountability, The Mirror experience, and full Agency Brain Core access included.',
     details: [
       'Weekly live Monday coaching (1:00 PM ET) with Justin & Corina',

@@ -4,7 +4,7 @@ import VideoPlayer from '@/components/VideoPlayer';
 
 const BoardroomHero = () => {
   const handleJoinNow = () => {
-    window.open('https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l', '_blank');
+    window.open('https://buy.stripe.com/cNi6oH2CGeP4aWcbC44Vy0z', '_blank');
   };
 
   return (
@@ -17,7 +17,7 @@ const BoardroomHero = () => {
         </h1>
 
         <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-          Where Agency Owners Stop Guessing and Start Leading. $299/month for Direct Access to Proven Operators Who've Built What You're Trying to Build.
+          Where Agency Owners Stop Guessing and Start Leading. $399/month for Direct Access to Proven Operators Who've Built What You're Trying to Build.
         </p>
 
         <div className="relative max-w-4xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>

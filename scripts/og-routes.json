@@ -35,7 +35,7 @@
     },
     "/boardroom": {
       "title": "The Boardroom",
-      "subhead": "The $299/mo mastermind for insurance agency owners who want more.",
+      "subhead": "The $399/mo mastermind for insurance agency owners who want more.",
       "image": "/og/boardroom.jpg"
     },
     "/certified-standard": {
@@ -115,11 +115,6 @@
       "title": "The Partnership",
       "subhead": "One-on-one coaching plus team coaching, at the top of the ladder. Currently full, with a waitlist.",
       "image": "/og-image.png"
-    },
-    "/move": {
-      "title": "Pick Your Next Move",
-      "subhead": "Coaching, software, and AI for insurance agency owners. Standard Playbook, Agency Brain, and Live Call Coach.",
-      "image": "/og/move.jpg"
     }
   }
 }

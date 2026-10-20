@@ -13,7 +13,7 @@ const StickyCTA = () => {
       case '/boardroom':
         return {
           text: 'JOIN THE BOARDROOM',
-          link: 'https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l',
+          link: 'https://buy.stripe.com/cNi6oH2CGeP4aWcbC44Vy0z',
         };
       case '/directive':
       case '/sales-experience':

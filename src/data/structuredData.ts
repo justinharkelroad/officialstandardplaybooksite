@@ -124,10 +124,10 @@ export const structuredDataByRoute: Record<string, object[]> = {
     serviceSchema({
       name: "The Boardroom",
       url: "/boardroom",
-      description: "Weekly group coaching and software-enforced accountability for insurance agency owners. Live Monday calls at 1:00 PM ET, the 30-minute Domino & Mirror accountability loop, daily Telegram access, the 8-Week Mirror Challenge, and full Agency Brain Core access ($299/mo standalone value) included for $299/month.",
+      description: "Weekly group coaching and software-enforced accountability for insurance agency owners. Live Monday calls at 1:00 PM ET, the 30-minute Domino & Mirror accountability loop, daily Telegram access, the 8-Week Mirror Challenge, and full Agency Brain Core access ($299/mo standalone value) included for $399/month.",
       serviceType: "Business Coaching Mastermind & Agency Operating Software",
       audience: "Insurance Agency Owners, Principal Agents, and Key Leaders",
-      price: "299",
+      price: "399",
     }),
     courseSchema({
       name: "The Boardroom",
@@ -138,7 +138,7 @@ export const structuredDataByRoute: Record<string, object[]> = {
     faqSchema([
       {
         question: "Who is The Boardroom for (and how do key leaders work)?",
-        answer: "The Boardroom is built for insurance agency owners who want peer pressure, direct access to Justin and Corina, and a weekly execution rhythm. Your $299/mo membership includes unlimited Agency Brain Staff Portal logins for your producers and team, and you can also grant designated key leaders access to the Boardroom loop inside the platform.",
+        answer: "The Boardroom is built for insurance agency owners who want peer pressure, direct access to Justin and Corina, and a weekly execution rhythm. Your $399/mo membership includes unlimited Agency Brain Staff Portal logins for your producers and team, and you can also grant designated key leaders access to the Boardroom loop inside the platform.",
       },
       {
         question: "How does the 30-minute pre-call software loop work?",
@@ -150,7 +150,7 @@ export const structuredDataByRoute: Record<string, object[]> = {
       },
       {
         question: "Is the full $299/month Agency Brain Core platform really included?",
-        answer: "Yes. Standalone Agency Brain Core is $299/month. Your $299/month Boardroom membership includes full Agency Brain Core access at no extra cost: 20 AI-scored calls per month, unlimited Staff Portal seats, Scorecards, Leaderboards, LQS Roadmap, 5 Agency HQs, Standard Playbook Training, Core 4, all 7 Daily Flows, and 5 ROI Forecasters.",
+        answer: "Yes. Standalone Agency Brain Core is $299/month. Your $399/month Boardroom membership includes full Agency Brain Core access plus weekly live Monday coaching ($100/mo — $25/week): 20 AI-scored calls per month, unlimited Staff Portal seats, Scorecards, Leaderboards, LQS Roadmap, 5 Agency HQs, Standard Playbook Training, Core 4, all 7 Daily Flows, and 5 ROI Forecasters.",
       },
     ]),
   ],

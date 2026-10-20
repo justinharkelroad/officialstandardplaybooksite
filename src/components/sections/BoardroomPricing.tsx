@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const BoardroomPricing = () => {
   const handleJoinNow = () => {
-    window.open('https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l', '_blank');
+    window.open('https://buy.stripe.com/cNi6oH2CGeP4aWcbC44Vy0z', '_blank');
   };
 
   return (
@@ -20,7 +20,7 @@ const BoardroomPricing = () => {
                 Join fellow agency owners/principal agents. Make valuable face-to-face contacts. Build a mastermind so extreme no one else can.
               </p>
               <div className="mb-4">
-                <span className="text-6xl font-bold text-white">$299</span>
+                <span className="text-6xl font-bold text-white">$399</span>
                 <span className="text-gray-400 text-xl">/month</span>
               </div>
             </CardHeader>

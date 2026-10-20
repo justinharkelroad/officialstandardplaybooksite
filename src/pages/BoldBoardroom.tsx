@@ -17,7 +17,7 @@ const paper = '#F4F2EE';
 const blue = '#2997FF';
 
 /* ── Stripe links ──────────────────────────────────────── */
-const STRIPE_JOIN = 'https://buy.stripe.com/aFa9AT4KOayO0hycG84Vy0l';
+const STRIPE_JOIN = 'https://buy.stripe.com/cNi6oH2CGeP4aWcbC44Vy0z';
 
 /* ── Hero video (9:16 vertical Vimeo embed) ───────────── */
 const HERO_VIDEO =
@@ -108,7 +108,7 @@ const Hero = () => {
               marginBottom: 24,
             }}
           >
-            The Boardroom / Weekly Owner Accountability + Agency Brain Core / $299 Monthly
+            The Boardroom / Weekly Owner Accountability + Agency Brain Core / $399 Monthly
           </p>
         </Reveal>
 
@@ -196,7 +196,7 @@ const Hero = () => {
               }}
               className="hover:bg-[#2997FF] hover:border-[#2997FF]"
             >
-              Claim Your Seat — $299/Mo &rarr;
+              Claim Your Seat — $399/Mo &rarr;
             </a>
           </Reveal>
         </div>
@@ -560,7 +560,7 @@ const Hero = () => {
                       margin: '4px 0 0',
                     }}
                   >
-                    $299/Mo &middot; No Contract
+                    $399/Mo &middot; No Contract
                   </p>
                 </div>
               </div>
@@ -583,7 +583,7 @@ const OfferFacts = () => (
         ['30-Min Pre-Work', 'Gated software loop before call'],
         ['Streak-Tracked', 'Coach-verified attendance'],
         ['Core Included', 'Full $299/mo Agency Brain OS'],
-        ['$299 / Month', 'Month-to-month · No contract'],
+        ['$399 / Month', 'Core ($299) + $25/wk coaching'],
       ].map(([value, label], i) => (
         <div
           key={value}
@@ -2485,8 +2485,10 @@ const IncludesSection = () => {
             }}
           >
             Standalone <strong style={{ fontWeight: 700 }}>Agency Brain Core</strong> costs $299/month on its own. When
-            you join The Boardroom for $299/month, your full Agency Brain Core subscription—including unlimited Staff
-            Portal seats for your team and 20 AI-scored calls every month—is included at zero extra cost.
+            you join The Boardroom for $399/month, your full $299/month Agency Brain Core subscription—including
+            unlimited Staff Portal seats for your team and 20 AI-scored calls every month—is included, meaning you add
+            weekly live Monday coaching, the Domino accountability loop, the 8-Week Mirror Challenge, and the daily
+            Telegram room for just <strong style={{ fontWeight: 700 }}>$100/month ($25 per Monday call)</strong>.
           </p>
         </Reveal>
 
@@ -2682,7 +2684,7 @@ const IncludesSection = () => {
               </div>
               <div className="col-span-12 lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {[
-                  ['Boardroom + Core', '$299/mo', 'Included · 20 AI Calls/mo + Full Core OS', true],
+                  ['Boardroom + Core', '$399/mo', 'Includes $299/mo Core OS + Weekly Live Coaching', true],
                   ['Add Plus Tier', '+$150/mo', '50 AI Calls/mo · Training AI Builder · Comp Assistant', false],
                   ['Add Pro Tier', '+$300/mo', '100 AI Calls/mo · AI Roleplay Bot · Full HR Suite', false],
                 ].map(([tier, price, desc, active]) => (
@@ -2908,7 +2910,7 @@ const PricingSection = () => (
                 fontWeight: 400,
               }}
             >
-              $299
+              $399
             </h2>
             <p
               style={{
@@ -2938,10 +2940,10 @@ const PricingSection = () => (
               maxWidth: 560,
             }}
           >
-            One live hour every Monday at 1:00 PM ET, the 30-minute software accountability loop, daily Telegram access
-            to Justin and the room, the 8-Week Mirror Challenge, and your full{' '}
-            <strong style={{ fontWeight: 700 }}>Agency Brain Core ($299/mo value)</strong> subscription included. Cancel
-            anytime in Stripe.
+            Your full <strong style={{ fontWeight: 700 }}>Agency Brain Core ($299/mo standalone value)</strong>{' '}
+            subscription plus weekly live Monday coaching at 1:00 PM ET, the 30-minute software accountability loop,
+            daily Telegram access to Justin and the room, and the 8-Week Mirror Challenge—for just{' '}
+            <strong style={{ fontWeight: 700 }}>$100/mo ($25/week) above standalone Core</strong>.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -3002,14 +3004,14 @@ const PricingSection = () => (
                 margin: '0 0 14px',
               }}
             >
-              Everything Included At $299/Mo
+              Everything Included At $399/Mo
             </p>
             <ul style={{ listStyle: 'none', margin: 0, padding: 0 }} className="space-y-3">
               {[
-                ['Weekly Monday Live Coaching Call', '1:00 PM ET · 60 Min'],
+                ['Agency Brain Core Platform', '$299/mo Standalone Value'],
+                ['Weekly Monday Live Coaching Call', '1:00 PM ET · $25/wk Delta'],
                 ['30-Min Pre-Call Software Loop', 'Return · Domino · Flow'],
                 ['Daily Telegram Room + Direct Line', 'Voice & Video Access'],
-                ['Agency Brain Core Platform', '$299/mo Standalone Value'],
                 ['Unlimited Staff Portal Logins', 'Whole Team Included'],
                 ['20 AI Call Scores Per Month', 'Standard Call Scoring'],
                 ['160-Pt Mirror + 8-Week Challenge', 'Boardroom Exclusive'],
@@ -3210,7 +3212,7 @@ const ProofSection = () => (
 const faq = [
   {
     q: 'Who is The Boardroom for (and how do key leaders work)?',
-    a: 'The Boardroom is built for insurance agency owners who want peer pressure, direct access to Justin and Corina, and a weekly execution rhythm. Your $299/mo membership includes unlimited Agency Brain Staff Portal logins for your producers and team, and you can also grant designated key leaders access to the Boardroom loop inside the platform.',
+    a: 'The Boardroom is built for insurance agency owners who want peer pressure, direct access to Justin and Corina, and a weekly execution rhythm. Your $399/mo membership includes unlimited Agency Brain Staff Portal logins for your producers and team, and you can also grant designated key leaders access to the Boardroom loop inside the platform.',
   },
   {
     q: 'How does the 30-minute pre-call software loop work?',
@@ -3230,7 +3232,7 @@ const faq = [
   },
   {
     q: 'Is the full $299/month Agency Brain Core platform really included?',
-    a: 'Yes. Standalone Agency Brain Core is $299/month. Your $299/month Boardroom membership includes full Agency Brain Core access at no extra cost: 20 AI-scored calls per month, unlimited Staff Portal seats, real-time Scorecards and KPI rings, Leaderboards, LQS Roadmap, 5 Agency HQs (Renewal, Cancel Audit, Winback, Cross-Sale, Life Referral), the Standard Playbook Training Platform, Core 4, all 7 Daily Flows, and 5 ROI Forecasters. If you ever want Plus (+$150/mo) or Pro (+$300/mo), you only pay the software difference.',
+    a: 'Yes. Standalone Agency Brain Core is $299/month. For $399/month ($100/mo more than standalone software—$25 per Monday call), your Boardroom membership includes full Agency Brain Core access: 20 AI-scored calls per month, unlimited Staff Portal seats, real-time Scorecards and KPI rings, Leaderboards, LQS Roadmap, 5 Agency HQs (Renewal, Cancel Audit, Winback, Cross-Sale, Life Referral), the Standard Playbook Training Platform, Core 4, all 7 Daily Flows, and 5 ROI Forecasters. If you ever want Plus (+$150/mo) or Pro (+$300/mo), you only pay the software difference.',
   },
   {
     q: 'What happens between Monday calls?',
@@ -3238,7 +3240,7 @@ const faq = [
   },
   {
     q: 'Is there a contract?',
-    a: 'No. Membership is $299 a month, billed month-to-month. You can cancel anytime directly through Stripe.',
+    a: 'No. Membership is $399 a month, billed month-to-month. If you ever need to make a change, our team handles it personally.',
   },
 ];
 
@@ -3453,7 +3455,7 @@ const GiantCTA = () => (
             textTransform: 'uppercase',
           }}
         >
-          Claim Your Seat at $299/mo (Includes Agency Brain Core) &nbsp;&rarr;
+          Claim Your Seat at $399/mo (Includes $299/mo Agency Brain Core) &nbsp;&rarr;
         </p>
       </Reveal>
     </div>
