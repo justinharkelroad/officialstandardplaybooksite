@@ -24,9 +24,9 @@ export const seoConfig: Record<string, SEOConfig> = {
     structuredData: structuredDataByRoute['/'],
   },
   '/boardroom': {
-    title: 'The Boardroom: Elite Mastermind for Insurance Agency Owners | The Standard Playbook',
-    description: 'Join The Boardroom: an exclusive mastermind for insurance agency owners. $299/month for peer accountability, strategy sessions, and proven growth systems from $1M+ agency operators.',
-    keywords: ['agency mastermind', 'insurance agency owners', 'business coaching group', 'scaling agencies', 'agency growth', 'mastermind group'],
+    title: 'The Boardroom: Weekly Owner Accountability + Agency Brain Core | The Standard Playbook',
+    description: 'Weekly Monday live coaching, the 30-minute Domino accountability loop, the 160-point Mirror & 8-Week Mirror Challenge, and full Agency Brain Core access ($299/mo value) included for $299/month.',
+    keywords: ['agency mastermind', 'insurance agency owners', 'weekly agency coaching', 'agency brain core', 'the mirror diagnostic', 'domino accountability', 'standard playbook boardroom'],
     ogImage: OG_IMAGE,
     type: 'article',
     structuredData: structuredDataByRoute['/boardroom'],
