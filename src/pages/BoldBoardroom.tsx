@@ -3608,7 +3608,7 @@ const MobileStickyCTA = () => (
         textDecoration: 'none',
       }}
     >
-      Claim Your Seat — $299/Mo &rarr;
+      Claim Your Seat — $399/Mo &rarr;
     </a>
   </div>
 );
