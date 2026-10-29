@@ -118,7 +118,7 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
             {[
               ['By application', 'Personally run'],
               ['Handful of teams', 'Limited capacity'],
-              ['12-week cycle, billed monthly', ''],
+              ['12-week cycle, billed monthly', 'Monthly owner check-in'],
               ['$2,500 or $4,000', 'Biweekly or weekly'],
             ].map(([value, label]) => (
               <div key={value}>
@@ -306,6 +306,7 @@ const ThirtyDaysIn = ({ onApply }: { onApply: () => void }) => (
         'Before every call with me, those numbers hit the board. They earn the call by doing the work first.',
         'Then we get on, without you, and we put the board up, and we talk straight about what is really going on behind those numbers. The things they would never say with you in the room finally come out. That is where the miscommunication has been hiding the whole time.',
         'And you get the report every cycle. Who moved. Who slipped. Who is pulling weight and who is not.',
+        'Then once a month, you and I sit down for forty-five minutes and decide what to do with it.',
       ].map((p, i) => (
         <Reveal key={i} delay={0.08 + i * 0.04}>
           <p style={{ fontFamily: body, fontSize: 'clamp(17px, 1.7vw, 22px)', fontWeight: 400, lineHeight: 1.55, color: ink, opacity: 0.92, marginBottom: 26 }}>
@@ -380,7 +381,7 @@ const howBlocks = [
     body: [
       'A private channel for your team, just them and me. We run on voice notes, not text, because a voice note carries tone and conviction a typed message never will.',
       'Your sales manager may sit in that channel, and on the calls, if I decide it serves the team. That is my call to make.',
-      'You step back from this room on purpose. A team that tells the truth without the boss watching is the strongest team you can build, and the day you are in the room is the day the truth leaves it. You are not shut out. I am your man on the inside, and everything I see comes straight back to you.',
+      'You step back from this room on purpose. A team that tells the truth without the boss watching is the strongest team you can build, and the day you are in the room is the day the truth leaves it. You are not shut out. I am your man on the inside. Everything I see comes straight back to you, and once a month, you and I sit down and decide what to do with it.',
     ],
   },
   {
@@ -393,7 +394,15 @@ const howBlocks = [
   },
   {
     label: 'The call and report',
-    body: 'Fifty minutes, owner-free, and run the same way every time. The board goes up. We read it, open the floor on the gaps, and everyone owns their week. After the cycle, you get the truth: who moved, who slipped, and what needs your leadership.',
+    body: 'Fifty minutes, owner-free, and run the same way every time. The board goes up. We read it, open the floor on the gaps, and everyone owns their week. After the cycle, you get the report: who moved, who slipped, and what needs your leadership. That report is where your monthly check-in with me starts.',
+  },
+  {
+    label: 'The owner check-in',
+    body: [
+      'Once a month, you and I get forty-five minutes, just us. You book it on your schedule. Same length on either plan.',
+      'We read the month on the board, the trend, not a recap of every report. Who moved, who slipped, and whether the consequences you own got applied. Then we set the bar for next month, raise it, hold it, or change a metric, and pick the one move only you can make.',
+      'You get the work, not the words. The floor stays the team\'s. The call is yours.',
+    ],
   },
 ];
 
@@ -427,7 +436,7 @@ const HowItWorks = () => (
                     fontFamily: editorial, fontSize: 18, color: ink, opacity: 0.35,
                     letterSpacing: '-0.01em', display: 'inline-block', marginBottom: 12,
                   }}>
-                    {`0${i + 1}`} / 05
+                    {String(i + 1).padStart(2, '0')} / {String(howBlocks.length).padStart(2, '0')}
                   </span>
                   <h3 style={{
                     fontFamily: display, fontSize: 'clamp(26px, 3.2vw, 44px)', lineHeight: 0.98,
@@ -508,7 +517,7 @@ const TwoWaysIn = ({ onApply }: { onApply: () => void }) => (
       </Reveal>
       <Reveal delay={0.08}>
         <p style={{ fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55, color: ink, opacity: 0.8, maxWidth: 680, marginBottom: 56 }}>
-          Both include target-setting, daily check-ins, and ongoing conversation in the private channel all month. The only difference is the call and report cadence.
+          Both include target-setting, daily check-ins, ongoing conversation in the private channel all month, and a forty-five-minute owner check-in with me every month, booked on your schedule. The only difference is the team call and report cadence.
         </p>
       </Reveal>
 
@@ -520,7 +529,7 @@ const TwoWaysIn = ({ onApply }: { onApply: () => void }) => (
               Weekly
             </p>
             <p style={{ fontFamily: body, fontSize: 17, fontWeight: 400, lineHeight: 1.55, color: ink, opacity: 0.85, marginBottom: 28 }}>
-              Four fifty-minute calls a month, with a report every week. Between calls, your team sets targets, checks in daily, and talks with me inside the private channel.
+              Four fifty-minute team calls a month, with a report every week. Between calls, your team sets targets, checks in daily, and talks with me inside the private channel. Once a month, you get a forty-five-minute owner check-in with me.
             </p>
             <p style={{
               fontFamily: display, fontSize: 'clamp(40px, 6vw, 72px)', lineHeight: 0.9,
@@ -537,7 +546,7 @@ const TwoWaysIn = ({ onApply }: { onApply: () => void }) => (
               Biweekly
             </p>
             <p style={{ fontFamily: body, fontSize: 17, fontWeight: 400, lineHeight: 1.55, color: ink, opacity: 0.85, marginBottom: 28 }}>
-              Two fifty-minute calls a month, with a report every two weeks. The calls are biweekly. The accountability is not. Your team still sets targets, checks in daily, and talks with me throughout the month.
+              Two fifty-minute team calls a month, with a report every two weeks. The calls are biweekly. The accountability is not. Your team still sets targets, checks in daily, and talks with me throughout the month. Once a month, you get a forty-five-minute owner check-in with me.
             </p>
             <p style={{
               fontFamily: display, fontSize: 'clamp(40px, 6vw, 72px)', lineHeight: 0.9,
@@ -570,7 +579,7 @@ const principles = [
   { lead: 'They report to earn the call.', rest: 'The work comes first. The call is the reward, not the obligation.' },
   { lead: 'The floor is theirs.', rest: 'No owner in the room, and no owner in the channel. You cannot get the truth out of people who are performing for the boss.' },
   { lead: 'Protect the words, report the work.', rest: 'What gets said on the floor stays on the floor. What gets done, the numbers, the misses, the wins, goes straight to you.' },
-  { lead: 'The consequence is yours.', rest: 'They are not my employees. I bring the truth and the standard. You bring the teeth. Truth without a consequence is just a conversation.' },
+  { lead: 'The consequence is yours.', rest: 'They are not my employees. I bring the truth and the standard. You bring the teeth, and every month on our owner check-in, I ask whether you used them. Truth without a consequence is just a conversation.' },
 ];
 
 const Principles = () => (
@@ -706,7 +715,11 @@ const OfferAndFilter = ({ onApply }: { onApply: () => void }) => (
 const faq = [
   {
     q: 'Why am I not in the room?',
-    a: 'Because the day you are in it is the day they go back to performing. This is a leadership move, not a demotion. You put a man on the inside, and you see more than you ever did from inside the room: who moved, who slipped, who is pulling weight, all of it comes straight back to you.',
+    a: 'Because the day you are in it is the day they go back to performing. This is a leadership move, not a demotion. You put a man on the inside, and you see more than you ever did from inside the room: who moved, who slipped, who is pulling weight, all of it comes straight back to you. And once a month, you get your own room with me.',
+  },
+  {
+    q: 'Do I ever get time with you?',
+    a: 'Yes. Once a month, forty-five minutes, just you and me, on both plans. You book it when it fits your calendar. That is where we turn the report into decisions.',
   },
   {
     q: 'Will bringing in a third party undermine me with my team?',

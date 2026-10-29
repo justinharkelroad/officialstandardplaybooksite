@@ -748,6 +748,7 @@ const coachingPrograms: ProgramRow[] = [
       'Three drops a week: Monday declare, Wednesday check, Friday verdict',
       'The scoreboard: every number in front of each other',
       'Your report every cycle: who moved, who slipped, who is pulling weight',
+      'A monthly 45-minute owner check-in, booked on your schedule',
       'You set the bar. They own the chase.',
     ],
     href: '/team-standard',
