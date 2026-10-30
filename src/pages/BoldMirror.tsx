@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
 import standardLogo from '@/assets/standard-word-logo.png';
 import { captureMirrorAttribution } from '@/lib/mirrorAttribution';
+import { MIRROR_CHALLENGE_CHECKOUT_URL } from '@/data/offerLinks';
 
 const display = '"Anton", "Archivo Black", "Oswald", Impact, sans-serif';
 const editorial = '"Archivo Black", "Anton", Impact, sans-serif';
@@ -368,6 +369,76 @@ const AuthoritySection = () => (
 );
 
 /* ══════════════════════════════════════════════════════
+   THE MIRROR CHALLENGE — paid standalone, free for members
+   ══════════════════════════════════════════════════════ */
+const MirrorChallengeSection = () => (
+  <section id="mirror-challenge" style={{ background: paper, padding: '120px 24px', borderTop: `1px solid ${ink}` }}>
+    <div className="max-w-[1280px] mx-auto grid grid-cols-12 gap-8 items-end">
+      <div className="col-span-12 md:col-span-7">
+        <Reveal>
+          <p style={{
+            fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+            color: ink, textTransform: 'uppercase', marginBottom: 28,
+          }}>
+            / The Mirror Challenge
+          </p>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <h2 style={{
+            fontFamily: display, fontSize: 'clamp(40px, 7vw, 100px)',
+            lineHeight: 0.95, letterSpacing: '-0.01em', color: ink,
+            textTransform: 'uppercase', margin: 0, fontWeight: 400,
+          }}>
+            8 WEEKS.<br />
+            <span style={{ color: blue }}>32 FUNDAMENTALS.</span>
+          </h2>
+        </Reveal>
+        <Reveal delay={0.2}>
+          <p style={{
+            fontFamily: body, fontSize: 'clamp(16px, 1.4vw, 18px)', fontWeight: 400, lineHeight: 1.6,
+            color: ink, opacity: 0.8, maxWidth: 620, marginTop: 32,
+          }}>
+            The score shows you the gaps. The 8-Week / 32-Day Mirror Challenge works them: instead of trying to fix 32 fundamentals at once, Agency Brain paces you through 4 per week for 8 weeks, paired with a private, managed Telegram Challenge Room.
+          </p>
+        </Reveal>
+      </div>
+      <Reveal delay={0.25} className="col-span-12 md:col-span-5">
+        <div style={{ borderTop: `4px solid ${ink}`, paddingTop: 24 }}>
+          <p style={{
+            fontFamily: display, fontSize: 'clamp(64px, 9vw, 120px)', lineHeight: 0.85,
+            letterSpacing: '-0.02em', color: ink, margin: 0, fontWeight: 400,
+          }}>
+            $197
+          </p>
+          <p style={{
+            fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.14em',
+            color: ink, opacity: 0.6, textTransform: 'uppercase', margin: '12px 0 0',
+          }}>
+            One time
+          </p>
+          <p style={{
+            fontFamily: body, fontSize: 15, fontWeight: 600, lineHeight: 1.5,
+            color: ink, margin: '20px 0 24px',
+          }}>
+            Free with Agency Brain or any Standard Playbook program.
+          </p>
+          <a href={MIRROR_CHALLENGE_CHECKOUT_URL} target="_blank" rel="noopener noreferrer"
+            style={{
+              display: 'inline-block',
+              fontFamily: body, fontSize: 13, fontWeight: 700, letterSpacing: '0.14em',
+              color: '#fff', background: ink, textTransform: 'uppercase', textDecoration: 'none',
+              padding: '16px 30px', border: `1.5px solid ${ink}`, transition: 'all .25s',
+            }}
+            className="hover:bg-[#2997FF] hover:border-[#2997FF]">
+            Buy The Challenge →
+          </a>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+);
+
+/* ══════════════════════════════════════════════════════
    AFTER THE SCORE — diagnosis → climb band
    ══════════════════════════════════════════════════════ */
 const AfterTheScoreBand = () => (
@@ -396,7 +467,7 @@ const AfterTheScoreBand = () => (
           fontFamily: body, fontSize: 'clamp(16px, 1.4vw, 18px)', fontWeight: 400, lineHeight: 1.6,
           color: paper, opacity: 0.85, maxWidth: 720, marginTop: 40,
         }}>
-          The Mirror tells you where you're at. Standard Playbook is how you climb. Every program (Boardroom, 8-Week, Directive) plugs you into Agency Brain, the <span style={{ color: blue }}>AI</span>-equipped platform I built to make the diagnosis fixable.
+          The Mirror tells you where you're at. Standard Playbook is how you climb. Every program (Boardroom, Momentum, 8-Week) plugs you into Agency Brain, the <span style={{ color: blue }}>AI</span>-equipped platform I built to make the diagnosis fixable.
         </p>
       </Reveal>
     </div>
@@ -563,6 +634,7 @@ const BoldMirror = () => {
       <AuthoritySection />
       <MarqueeBands phrase="MOST AGENCIES SCORE UNDER 100 · WHERE WILL YOU LAND" />
       <GiantCTA onStart={onStart} />
+      <MirrorChallengeSection />
       <AfterTheScoreBand />
       <BoldFooter />
       <MobileStickyCTA onStart={onStart} />

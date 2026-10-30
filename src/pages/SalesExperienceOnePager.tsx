@@ -327,7 +327,7 @@ const SalesExperienceOnePager = () => {
           </div>
           <div className="eightweek-offer__price">
             <p>Eight-week experience</p>
-            <strong>$4,500</strong>
+            <strong>$4.5k</strong>
             <span>or $625 per week</span>
             <button type="button" className="eightweek-cta" onClick={openApplication}>
               Apply for the 8-Week

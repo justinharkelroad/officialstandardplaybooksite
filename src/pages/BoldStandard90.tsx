@@ -182,7 +182,7 @@ const OfferFacts = () => (
         ['One agency', 'A dedicated build'],
         ['Owner + manager + team', 'Built together'],
         ['90 days', 'Author, sign, live'],
-        ['By application', 'Personal and hands-on'],
+        ['$15k', '$5k/mo × 3 · By application'],
       ].map(([value, label], i) => (
         <div key={value} style={{ padding: '24px 16px', borderLeft: i === 0 ? 'none' : `1px solid ${ink}22` }}>
           <p style={{ fontFamily: editorial, fontSize: 'clamp(16px, 1.5vw, 21px)', lineHeight: 1.05, color: i === 2 ? blue : ink, textTransform: 'uppercase', margin: 0 }}>{value}</p>
@@ -954,6 +954,50 @@ const OfferSection = ({ onApply }: { onApply: () => void }) => (
         }}>
           This is not a course. Not a coaching package. Not another playbook to send your team and watch die.
         </p>
+      </Reveal>
+
+      <Reveal delay={0.18}>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8" style={{
+          borderTop: `1px solid ${paper}33`, borderBottom: `1px solid ${paper}33`,
+          padding: '40px 0', marginBottom: 48,
+        }}>
+          <div className="md:col-span-5">
+            <p style={{
+              fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.18em',
+              color: blue, textTransform: 'uppercase', marginBottom: 14,
+            }}>
+              The Investment
+            </p>
+            <p style={{
+              fontFamily: display, fontSize: 'clamp(56px, 8vw, 104px)', lineHeight: 0.9,
+              letterSpacing: '-0.02em', color: paper, margin: 0, fontWeight: 400,
+            }}>
+              $15k
+            </p>
+            <p style={{
+              fontFamily: editorial, fontSize: 'clamp(16px, 1.8vw, 22px)', lineHeight: 1.1,
+              color: paper, opacity: 0.75, textTransform: 'uppercase', margin: '12px 0 0', fontWeight: 400,
+            }}>
+              $5k a month × 3
+            </p>
+          </div>
+          <ul className="md:col-span-7" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+            {[
+              'Daily 1:1 work for 90 days with you, your manager if you have one, and your team',
+              'Two calls every week: one with you and your manager, one with your team',
+              'The guarantee: the framework is live by day 90, or I keep working for free',
+            ].map((item) => (
+              <li key={item} style={{
+                fontFamily: body, fontSize: 16, lineHeight: 1.55, color: paper,
+                padding: '14px 0', borderBottom: `1px solid ${paper}1a`,
+                display: 'flex', alignItems: 'flex-start', gap: 12,
+              }}>
+                <span style={{ color: blue, fontSize: 14, lineHeight: '24px', flexShrink: 0, fontWeight: 700 }}>✓</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
       </Reveal>
 
       <Reveal delay={0.2}>

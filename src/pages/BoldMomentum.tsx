@@ -386,7 +386,7 @@ const InvestmentSection = ({ onApply }: { onApply: () => void }) => (
           lineHeight: 0.92, letterSpacing: '-0.01em', color: ink,
           textTransform: 'uppercase', margin: 0, fontWeight: 400,
         }}>
-          $2.5K<br />
+          $2.5k<br />
           <span style={{ color: blue }}>A MONTH.</span>
         </h2>
       </Reveal>

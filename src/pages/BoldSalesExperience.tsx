@@ -962,7 +962,7 @@ const InvestmentSection = ({ onApply }: { onApply: () => void }) => (
               lineHeight: 0.85, letterSpacing: '-0.04em', color: ink,
               margin: 0, fontWeight: 400,
             }}>
-              $4,500
+              $4.5k
             </h3>
             <p style={{
               fontFamily: editorial, fontSize: 'clamp(22px, 2.8vw, 40px)',
