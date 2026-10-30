@@ -26,7 +26,7 @@ import Terms from "./pages/Terms";
 import ThankYou from "./pages/ThankYou";
 import ChallengeThankYou from "./pages/ChallengeThankYou";
 import Links from "./pages/Links";
-import Partnership from "./pages/Partnership";
+import BoldMomentum from "./pages/BoldMomentum";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
@@ -94,6 +94,7 @@ const App = () => (
           <Route path="/legacy-boardroom" element={<Navigate to="/boardroom" replace />} />
           <Route path="/directive" element={<BoldDirective />} />
           <Route path="/legacy-directive" element={<Navigate to="/directive" replace />} />
+          <Route path="/momentum" element={<BoldMomentum />} />
           <Route path="/sales-experience" element={<SalesExperienceOnePager />} />
           <Route path="/8-week" element={<BoldSalesExperience autoOpenBooking />} />
           <Route path="/apple-sales-experience" element={<Navigate to="/8-week" replace />} />
@@ -108,7 +109,7 @@ const App = () => (
           <Route path="/decision" element={<Decision />} />
           <Route path="/about" element={<BoldAbout />} />
           <Route path="/legacy-about" element={<Navigate to="/about" replace />} />
-          <Route path="/partnership" element={<Partnership />} />
+          <Route path="/partnership" element={<Navigate to="/directive" replace />} />
           <Route path="/contact" element={<BoldContact />} />
           <Route path="/legacy-contact" element={<Navigate to="/contact" replace />} />
           <Route path="/privacy" element={<Privacy />} />

@@ -93,7 +93,7 @@ const DirectiveApplicationModal = ({ open, onOpenChange }: DirectiveApplicationM
         },
       });
 
-      toast.success("Application submitted! We'll be in touch soon.");
+      toast.success("You're on the waitlist. We'll be in touch when a seat opens.");
       setForm({ full_name: '', email: '', cell_phone: '', agency_name: '', message: '' });
       onOpenChange(false);
     } catch (err) {
@@ -118,7 +118,7 @@ const DirectiveApplicationModal = ({ open, onOpenChange }: DirectiveApplicationM
           gap: 0,
         }}
       >
-        <DialogTitle className="sr-only">Apply for The Directive</DialogTitle>
+        <DialogTitle className="sr-only">Join The Directive waitlist</DialogTitle>
 
         <div style={{ padding: '32px 28px 28px' }}>
           <style>{`
@@ -147,7 +147,7 @@ const DirectiveApplicationModal = ({ open, onOpenChange }: DirectiveApplicationM
               fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.16em',
               color: ink, opacity: 0.55, textTransform: 'uppercase',
             }}>
-              Application
+              Waitlist
             </span>
           </div>
 
@@ -168,13 +168,13 @@ const DirectiveApplicationModal = ({ open, onOpenChange }: DirectiveApplicationM
             margin: 0,
             fontWeight: 400,
           }}>
-            Apply for{'\n'}1:1 Coaching.
+            Join the{'\n'}waitlist.
           </h2>
           <p style={{
             fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.7, marginTop: 12, maxWidth: 380,
           }}>
-            Submit your application and we'll reach out personally. Limited slots.
+            The Directive is full right now. Join the waitlist and we'll reach out personally when a seat opens. Want in now? Momentum is open.
           </p>
 
           <div style={{ height: 1, background: ink, opacity: 0.15, margin: '24px 0 20px' }} />
@@ -236,7 +236,7 @@ const DirectiveApplicationModal = ({ open, onOpenChange }: DirectiveApplicationM
               }}
               className={!submitting ? 'hover:bg-[#2997FF] hover:border-[#2997FF]' : ''}
             >
-              {submitting ? 'Submitting…' : 'Submit Application →'}
+              {submitting ? 'Submitting…' : 'Join the Waitlist →'}
             </button>
           </form>
         </div>
