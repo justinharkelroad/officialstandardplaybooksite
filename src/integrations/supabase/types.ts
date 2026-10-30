@@ -410,6 +410,7 @@ export type Database = {
           email: string | null
           full_name: string | null
           id: string
+          investment_ready: boolean | null
           primary_carrier: string | null
           session_id: string
           source: string | null
@@ -426,6 +427,7 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
+          investment_ready?: boolean | null
           primary_carrier?: string | null
           session_id: string
           source?: string | null
@@ -442,6 +444,7 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
+          investment_ready?: boolean | null
           primary_carrier?: string | null
           session_id?: string
           source?: string | null
