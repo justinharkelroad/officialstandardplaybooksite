@@ -7,6 +7,7 @@ import CertifiedStandardBand from '@/components/CertifiedStandardBand';
 import StandardFitModal from '@/components/StandardFitModal';
 
 import standardLogo from '@/assets/standard-word-logo.png';
+import { MIRROR_CHALLENGE_CHECKOUT_URL } from '@/data/offerLinks';
 import spIconWhite from '@/assets/sp-icon-white.png';
 import spIconBlue from '@/assets/sp-icon-blue.png';
 import salesDashImg from '@/assets/sales-dashboard.png';
@@ -666,525 +667,6 @@ const PolaroidGrid = () => (
   </section>
 );
 
-/* ══════════════════════════════════════════════════════
-   PROGRAMS — bold list / index format with expandable
-   feature bullets per row
-   ══════════════════════════════════════════════════════ */
-type ProgramRow = {
-  num: string;
-  name: string;
-  tier: string;
-  price: string;
-  description: string;
-  details: string[];
-  href?: string;
-  cta?: string;
-  soldOut?: boolean;
-  featured?: boolean;
-};
-
-const coachingPrograms: ProgramRow[] = [
-  {
-    num: '01',
-    name: 'The Boardroom',
-    tier: 'Weekly Membership + Agency Brain Core',
-    price: '$399/mo',
-    description: 'Weekly Monday live coaching, software-gated Domino accountability, The Mirror experience, and full Agency Brain Core access included.',
-    details: [
-      'Weekly live Monday coaching (1:00 PM ET) with Justin & Corina',
-      '30-minute pre-call loop: Return & Report, Domino Builder, Domino Flow',
-      'Full Agency Brain Core access ($299/mo standalone value) + 20 AI Call Scores/mo',
-      'The 160-Point Agency Mirror + 8-Week Mirror Challenge',
-      'Unlimited Staff Portal seats + training library & scripts',
-      'Daily Telegram room + direct voice/video line to Justin',
-    ],
-    href: '/boardroom',
-    cta: 'Learn More →',
-  },
-  {
-    num: '02',
-    name: '8 Week Experience',
-    tier: 'Manager Training',
-    price: 'Apply',
-    description: 'For teams stuck in "great month / bad month" cycles.',
-    details: [
-      '8 live coaching calls over 8 weeks',
-      'Complete sales management system install',
-      'Accountability + consequence ladder framework',
-      'Full Agency Brain access for your team',
-      'Team training library + scripts',
-      'Manager playbook + scripts',
-      'Post-program strategy session',
-    ],
-    href: '/sales-experience',
-    cta: 'Learn More →',
-  },
-  {
-    num: '03',
-    name: '6 Week Producer Challenge',
-    tier: 'Team Sprint',
-    price: '$299/producer',
-    description: 'For owners who need producers executing now, not "eventually."',
-    details: [
-      '30 Training Modules',
-      '7 Sunday Target Setting Modules',
-      'Direct Reflection & Action Item Takeaways',
-      'Agency Owner/Mgr have full view of takeaways',
-      'Sales Process Training',
-      'Daily Habit Training',
-    ],
-    href: 'https://myagencybrain.com/six-week-challenge',
-    cta: 'Start →',
-  },
-  {
-    num: '04',
-    name: 'The Team Standard',
-    tier: 'Sales Team Accountability · By Application',
-    price: 'From $2,500/mo',
-    description: 'An accountability system for your sales team, run personally by Justin, with you out of the room. Weekly or biweekly.',
-    details: [
-      'A private channel for your team, voice notes with Justin',
-      'Owner-free 50 minute accountability calls',
-      'Three drops a week: Monday declare, Wednesday check, Friday verdict',
-      'The scoreboard: every number in front of each other',
-      'Your report every cycle: who moved, who slipped, who is pulling weight',
-      'A monthly 45-minute owner check-in, booked on your schedule',
-      'You set the bar. They own the chase.',
-    ],
-    href: '/team-standard',
-    cta: 'See The Standard →',
-  },
-  {
-    num: '05',
-    name: 'Standard 90',
-    tier: '90-Day 1:1 Coaching · By Application',
-    price: 'Fit Call',
-    description: 'A 90 day action map for the agency owner who is done being the operating system. Customized and personally coached one on one all the way through.',
-    details: [
-      'A custom 90 day action map for your agency',
-      'One on one coaching the whole way through',
-      'Built for the owner ready to step out of the operating system',
-      'Personal accountability and weekly course correction',
-    ],
-    href: '/standard90',
-    cta: 'Learn More →',
-  },
-  {
-    num: '06',
-    name: 'The Standard Ascension',
-    tier: '12-Week Private Mentorship · By Application',
-    price: 'Apply',
-    description: 'Private one-on-one mentorship for the owner ready to put one business target and all four areas of life on the board for 12 weeks.',
-    details: [
-      'A written 12-week target and operating plan',
-      'Private weekly coaching with Justin',
-      'Daily accountability across Body, Being, Balance, and Business',
-      'A weekly 56-point evidence scorecard',
-      'Direct accountability between calls',
-      'Formal reviews at weeks four and eight',
-    ],
-    href: '/ascension',
-    cta: 'Explore Ascension →',
-  },
-  {
-    num: '07',
-    name: 'The Directive',
-    tier: '1:1 Coaching',
-    price: 'Application Only',
-    description: 'High-touch 1:1 implementation and pressure-tested accountability.',
-    details: [
-      'Everything included in Boardroom +',
-      'Monthly 2-hour private sessions with Justin',
-      'Custom Agency Brain buildout for your agency',
-      'Direct access between sessions',
-      'Custom strategy + accountability plan',
-      'Priority support for your entire team',
-    ],
-    href: '/directive',
-    cta: 'Apply →',
-    soldOut: true,
-  },
-  {
-    num: '08',
-    name: 'Partnership',
-    tier: '1:1 Coaching',
-    price: '-',
-    description: 'The highest level: full-access private coaching, custom strategy, and direct line to Justin.',
-    details: [
-      'Everything in Directive +',
-      'Unlimited private access to Justin',
-      'Custom agency growth roadmap',
-      'Full Agency Brain Pro buildout',
-      'On-call support for your entire team',
-      'Priority scheduling, no waitlist',
-    ],
-    soldOut: true,
-  },
-];
-
-const softwarePlans: ProgramRow[] = [
-  {
-    num: '09',
-    name: 'Certified Standard',
-    tier: 'AI Training · One-Time',
-    price: '$399/seat',
-    description: 'Certify your producers on the full Hello-to-Bind sales call. One-off purchase, no coaching commitment.',
-    details: [
-      '24 training modules across the whole call',
-      '18 live AI voice-roleplay scenarios',
-      '85 AI quiz prompts · 17 scored quizzes',
-      '80% certification threshold per module',
-      'Saved transcripts + scores for every producer',
-      'Hello-to-Bind script + Closers Playbook included',
-    ],
-    href: '/certified-standard?src=home-programs',
-    cta: 'Get Certified →',
-  },
-  {
-    num: '10',
-    name: 'Agency Brain Core',
-    tier: 'Software-Only Foundation',
-    price: '$299/mo',
-    description: 'Scorecards, training, team visibility, daily Flow library, and the core operating loop.',
-    details: [
-      '20 AI call scoring credits / month',
-      'Real-time scorecards and KPI rings',
-      'Team leaderboards and performance visibility',
-      'Standard Playbook Training Platform',
-      'Daily Flow library (all 7 Flows)',
-      'Limited AI feature set',
-    ],
-    href: 'https://myagencybrain.com/info#pricing',
-    cta: 'Choose Core →',
-  },
-  {
-    num: '11',
-    name: 'Agency Brain Plus',
-    tier: 'Full Software Access',
-    price: '$449/mo',
-    description: 'Everything in Core plus the full AI tool set. No Roleplay Bot or HR Suite.',
-    details: [
-      '50 AI call scoring credits / month',
-      'Full AI tool set',
-      'Growth Center and The Mirror analysis',
-      'Comp Plan Assistant',
-      'Training AI Builder and Theta Audio',
-      'Standard Playbook Training Platform',
-      'Standard support',
-    ],
-    href: 'https://myagencybrain.com/info#pricing',
-    cta: 'Choose Plus →',
-    featured: true,
-  },
-  {
-    num: '12',
-    name: 'Agency Brain Pro',
-    tier: 'Top Tier',
-    price: '$599/mo',
-    description: 'Plus, with AI Sales Roleplay, the HR Suite, and priority support.',
-    details: [
-      '100 AI call scoring credits / month',
-      'AI Sales Roleplay Bot',
-      'HR Suite',
-      'Priority support',
-      'Standard Playbook Training Platform',
-      'Everything in Plus',
-    ],
-    href: 'https://myagencybrain.com/info#pricing',
-    cta: 'Choose Pro →',
-  },
-];
-
-const ProgramRowItem = ({ p, expanded, onToggle }: { p: ProgramRow; expanded: boolean; onToggle: () => void }) => {
-  const isSoldOut = !!p.soldOut;
-  return (
-    <li
-      style={{
-        borderBottom: `1px solid ${ink}`,
-        cursor: 'pointer',
-      }}
-      onClick={onToggle}
-      className="group hover:bg-black/[0.03] transition-colors"
-    >
-      <div
-        className="grid grid-cols-[36px_minmax(0,1fr)_36px] gap-x-3 gap-y-4 px-1 py-6 sm:grid-cols-[60px_minmax(0,1fr)_auto_auto_auto] sm:gap-5 sm:px-2 sm:py-7"
-        style={{
-          alignItems: 'center',
-          position: 'relative',
-          overflow: 'clip',
-        }}
-      >
-        <span style={{
-          fontFamily: editorial, fontSize: 22, color: ink, opacity: 0.4, letterSpacing: '-0.01em',
-        }}>
-          {p.num}
-        </span>
-        <div>
-          <div className="flex items-center gap-2 flex-wrap" style={{ marginBottom: 4 }}>
-            <p style={{
-              fontFamily: body, fontSize: 11, fontWeight: 600, letterSpacing: '0.16em',
-              color: ink, opacity: 0.5, textTransform: 'uppercase',
-            }}>
-              {p.tier}
-            </p>
-            {p.featured && (
-              <span style={{
-                fontFamily: body, fontSize: 10, fontWeight: 700, letterSpacing: '0.16em',
-                color: '#fff', background: blue, textTransform: 'uppercase',
-                padding: '3px 8px', lineHeight: 1.4,
-              }}>
-                Most Popular
-              </span>
-            )}
-          </div>
-          <h4 style={{
-            fontFamily: display,
-            fontSize: 'clamp(24px, 3.2vw, 42px)',
-            lineHeight: 1, letterSpacing: '-0.01em',
-            color: ink, textTransform: 'uppercase', margin: 0, fontWeight: 400,
-          }}>
-            {p.name}
-          </h4>
-          <p style={{
-            fontFamily: body, fontSize: 13, fontWeight: 600, color: ink,
-            opacity: isSoldOut ? 0.4 : 1, marginTop: 6, marginBottom: 0,
-          }} className="sm:hidden">
-            {p.price}
-          </p>
-        </div>
-        <span style={{
-          fontFamily: body, fontSize: 14, fontWeight: 600, color: ink,
-          opacity: isSoldOut ? 0.4 : 1, whiteSpace: 'nowrap',
-        }} className="hidden sm:inline">
-          {p.price}
-        </span>
-        {isSoldOut ? (
-          <span className="col-start-2 row-start-2 justify-self-start sm:col-auto sm:row-auto" style={{
-            fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.14em',
-            color: ink, textTransform: 'uppercase', padding: '10px 18px',
-            border: `1.5px solid ${ink}`, whiteSpace: 'nowrap', opacity: 0.3,
-          }}>
-            {p.cta || 'Apply →'}
-          </span>
-        ) : (
-          <a
-            href={p.href}
-            onClick={(e) => e.stopPropagation()}
-            {...(p.href?.startsWith('/') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
-            style={{
-              fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.14em',
-              color: ink, textTransform: 'uppercase', textDecoration: 'none',
-              padding: '10px 18px', border: `1.5px solid ${ink}`, transition: 'all .25s',
-              whiteSpace: 'nowrap',
-            }}
-            className="col-start-2 row-start-2 justify-self-start hover:bg-black hover:text-white sm:col-auto sm:row-auto"
-          >
-            {p.cta || 'Apply →'}
-          </a>
-        )}
-        <span
-          aria-hidden
-          className="col-start-3 row-start-1 sm:col-auto sm:row-auto"
-          style={{
-            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-            width: 36, height: 36, border: `1.5px solid ${ink}`,
-            fontFamily: body, fontSize: 18, fontWeight: 400,
-            transition: 'transform .35s ease, background .25s, color .25s',
-            transform: expanded ? 'rotate(45deg)' : 'rotate(0deg)',
-            background: expanded ? ink : 'transparent',
-            color: expanded ? paper : ink,
-            flexShrink: 0,
-          }}
-        >
-          +
-        </span>
-
-        {isSoldOut && (
-          <motion.div
-            aria-hidden
-            initial={{ scale: 3.4, opacity: 0, rotate: -16 }}
-            whileInView={{ scale: 1, opacity: 1, rotate: -7 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ type: 'spring', stiffness: 300, damping: 13, mass: 0.9, delay: 0.1 }}
-            style={{
-              position: 'absolute', inset: 0, zIndex: 5,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              pointerEvents: 'none',
-            }}
-          >
-            <span style={{
-              fontFamily: display, fontSize: 'clamp(26px, 4.5vw, 46px)',
-              color: '#D4332A', letterSpacing: '0.04em', textTransform: 'uppercase',
-              padding: '4px 22px', lineHeight: 1, whiteSpace: 'nowrap',
-              border: '4px solid #D4332A', outline: '2px solid #D4332A', outlineOffset: '4px',
-              borderRadius: 6, background: 'rgba(212,51,42,0.06)',
-              boxShadow: '0 8px 22px rgba(0,0,0,0.22)', opacity: 0.95,
-            }}>
-              Sold Out
-            </span>
-          </motion.div>
-        )}
-      </div>
-
-      <motion.div
-        initial={false}
-        animate={{ height: expanded ? 'auto' : 0, opacity: expanded ? 1 : 0 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        style={{ overflow: 'hidden' }}
-      >
-        <div
-          className="grid grid-cols-1 gap-5 px-1 pb-9 pt-2 sm:grid-cols-[60px_1fr] sm:px-2"
-        >
-          <div className="hidden sm:block" /> {/* spacer to align with number column */}
-          <div>
-            <p style={{
-              fontFamily: body, fontSize: 15, fontWeight: 400, lineHeight: 1.6,
-              color: ink, opacity: 0.7, maxWidth: 640, marginBottom: 20,
-            }}>
-              {p.description}
-            </p>
-            <ul style={{
-              margin: 0, padding: 0, listStyle: 'none',
-              display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-              gap: '8px 32px',
-            }}>
-              {p.details.map((d) => (
-                <li
-                  key={d}
-                  style={{
-                    fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.5,
-                    color: ink, padding: '6px 0', display: 'flex', alignItems: 'flex-start', gap: 10,
-                    borderBottom: `1px solid ${ink}1a`,
-                  }}
-                >
-                  <span style={{
-                    color: blue, fontSize: 14, lineHeight: '21px', flexShrink: 0, fontWeight: 700,
-                  }}>
-                    ✓
-                  </span>
-                  {d}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </motion.div>
-    </li>
-  );
-};
-
-const ProgramsSection = () => {
-  const [expanded, setExpanded] = useState<string | null>(null);
-  const toggle = (num: string) => setExpanded((cur) => (cur === num ? null : num));
-
-  return (
-    <section id="programs" style={{ background: paper, padding: '80px 24px 120px', borderTop: `1px solid ${ink}` }}>
-      <div className="max-w-[1280px] mx-auto">
-        <div className="grid grid-cols-12 gap-6 items-end mb-12">
-          <Reveal className="col-span-12 md:col-span-8">
-            <p style={{
-              fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-              color: ink, textTransform: 'uppercase', marginBottom: 12,
-            }}>
-              / Programs
-            </p>
-            <h2 style={{
-              fontFamily: display,
-              fontSize: 'clamp(44px, 7vw, 100px)',
-              lineHeight: 0.95,
-              letterSpacing: '-0.01em',
-              color: ink,
-              textTransform: 'uppercase',
-              margin: 0,
-              fontWeight: 400,
-            }}>
-              PICK YOUR PATH.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.1} className="col-span-12 md:col-span-4">
-            <p style={{
-              fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.65,
-              color: ink, opacity: 0.7, marginBottom: 8,
-            }}>
-              Every program ships with a level of Agency Brain access. Tap any row to see exactly what's inside.
-            </p>
-          </Reveal>
-        </div>
-
-        {/* COACHING */}
-        <div className="flex items-baseline justify-between mb-3">
-          <p style={{
-            fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.18em',
-            color: ink, textTransform: 'uppercase',
-          }}>
-            // Coaching Programs
-          </p>
-          <p style={{
-            fontFamily: body, fontSize: 11, fontWeight: 500, letterSpacing: '0.14em',
-            color: ink, opacity: 0.45, textTransform: 'uppercase',
-          }}>
-            Tap a row to expand
-          </p>
-        </div>
-        <ul style={{ listStyle: 'none', margin: 0, padding: 0, borderTop: `1px solid ${ink}` }}>
-          {coachingPrograms.map((p) => (
-            <ProgramRowItem
-              key={p.num}
-              p={p}
-              expanded={expanded === p.num}
-              onToggle={() => toggle(p.num)}
-            />
-          ))}
-        </ul>
-
-        {/* Inter-section CTA — AgencyBrain Info */}
-        <div className="flex justify-center" style={{ marginTop: 48 }}>
-          <a
-            href="https://myagencybrain.com/info"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              fontFamily: body, fontSize: 13, fontWeight: 700, letterSpacing: '0.14em',
-              color: '#fff', background: ink, textTransform: 'uppercase', textDecoration: 'none',
-              padding: '16px 32px', border: `1.5px solid ${ink}`, transition: 'all .25s',
-              display: 'inline-block',
-            }}
-            className="hover:bg-[#2997FF] hover:border-[#2997FF]"
-          >
-            AgencyBrain Info →
-          </a>
-        </div>
-
-        {/* SOFTWARE */}
-        <div className="flex items-baseline justify-between mt-16 mb-3">
-          <p style={{
-            fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.18em',
-            color: ink, textTransform: 'uppercase',
-          }}>
-            // Software Only
-          </p>
-          <p style={{
-            fontFamily: body, fontSize: 11, fontWeight: 500, letterSpacing: '0.14em',
-            color: ink, opacity: 0.45, textTransform: 'uppercase',
-          }}>
-            Just the platform
-          </p>
-        </div>
-        <ul style={{ listStyle: 'none', margin: 0, padding: 0, borderTop: `1px solid ${ink}` }}>
-          {softwarePlans.map((p) => (
-            <ProgramRowItem
-              key={p.num}
-              p={p}
-              expanded={expanded === p.num}
-              onToggle={() => toggle(p.num)}
-            />
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-};
-
 type DecisionPathId = 'owner_coaching' | 'team_programs' | 'agency_brain';
 
 type DecisionPath = {
@@ -1247,51 +729,90 @@ const DecisionOffer = ({ eyebrow, name, price, description, href, cta, external 
   </article>
 );
 
+const agencyBrainTiers = [
+  {
+    name: 'Core',
+    price: '$299/mo',
+    summary: 'Dashboards, scorecards, sales and service tools, Standard Playbook training, Core 4, and Flows. 20 AI-scored sales calls a month.',
+  },
+  {
+    name: 'Plus',
+    price: '$449/mo',
+    summary: 'Everything in Core, 50 AI-scored calls a month, AI Training Studio roleplay, the AI builders, Life Targets, and 90 Day Audio.',
+  },
+  {
+    name: 'Pro',
+    price: '$599/mo',
+    summary: 'Everything in Plus, 100 AI-scored calls a month, the HR Suite, and priority support.',
+  },
+];
+
 const PathDetails = ({ path }: { path: DecisionPathId }) => {
   if (path === 'owner_coaching') {
     return (
-      <div className="decision-details-grid decision-details-grid--two">
-        <DecisionOffer
-          eyebrow="Weekly group coaching + Agency Brain Core"
-          name="The Boardroom"
-          price="$399/month"
-          description="Weekly Monday live coaching, the 30-minute Domino accountability loop, the 160-Point Mirror experience, and full Agency Brain Core access ($299/mo value) included."
-          href="/boardroom"
-          cta="See The Boardroom"
-        />
-        <DecisionOffer
-          eyebrow="Focused 90-day one-on-one path"
-          name="Standard 90"
-          price="Fit Call"
-          description="A custom 90-day action map with personal coaching, accountability, and weekly course correction."
-          href="/standard90"
-          cta="See Standard 90"
-        />
-        <DecisionOffer
-          eyebrow="Private 12-week mentorship · By application"
-          name="The Standard Ascension"
-          price="Apply"
-          description="One business target and all four areas of life on the board, with private weekly coaching and daily accountability from Justin."
-          href="/ascension"
-          cta="Explore Ascension"
-        />
-        <section className="decision-sold-out" aria-labelledby="private-coaching-heading">
-          <p id="private-coaching-heading">Private long-term coaching</p>
-          <div className="decision-sold-out-list">
-            <article>
-              <div>
-                <span>Private 1:1 coaching</span>
-                <h5>The Directive</h5>
-              </div>
-              <span className="decision-sold-out-stamp" aria-label="Sold out">Sold Out</span>
-            </article>
-            <article>
-              <div>
-                <span>Highest-access coaching</span>
-                <h5>Partnership</h5>
-              </div>
-              <span className="decision-sold-out-stamp" aria-label="Sold out">Sold Out</span>
-            </article>
+      <div className="decision-team-groups">
+        <section aria-labelledby="owner-start-here">
+          <h4 id="owner-start-here">Start here</h4>
+          <div className="decision-details-grid decision-details-grid--two">
+            <DecisionOffer
+              eyebrow="8-week agency challenge · One-time"
+              name="Mirror Challenge"
+              price="$197 · Free with Agency Brain or any program"
+              description="Score your agency on the 160-point Mirror, then work 4 fundamentals a week for 8 weeks with a private Telegram Challenge Room."
+              href={MIRROR_CHALLENGE_CHECKOUT_URL}
+              cta="Buy the Challenge"
+              external
+            />
+            <DecisionOffer
+              eyebrow="Weekly group coaching + Agency Brain Core"
+              name="The Boardroom"
+              price="$399/month"
+              description="Weekly Monday group coaching, Boardroom tools inside Agency Brain, Agency Brain Core, Telegram, both Fort Wayne member events, and the Mirror Challenge free."
+              href="/boardroom"
+              cta="See The Boardroom"
+            />
+          </div>
+        </section>
+        <section aria-labelledby="owner-one-on-one">
+          <h4 id="owner-one-on-one">One-on-one coaching</h4>
+          <div className="decision-details-grid decision-details-grid--two">
+            <DecisionOffer
+              eyebrow="Two 1:1 calls a month + Agency Brain Pro"
+              name="Momentum"
+              price="$2.5k/month"
+              description="Directive-level work, twice the conversation. Problems get caught in two weeks, not four."
+              href="/momentum"
+              cta="See Momentum"
+            />
+            <DecisionOffer
+              eyebrow="Focused 90-day one-on-one path"
+              name="Standard 90"
+              price="$15k"
+              description="Daily 1:1 work for 90 days with you, your manager, and your team. Framework live by day 90 or Justin keeps working free."
+              href="/standard90"
+              cta="See Standard 90"
+            />
+          </div>
+        </section>
+        <section aria-labelledby="owner-private-mentorship">
+          <h4 id="owner-private-mentorship">Private mentorship</h4>
+          <div className="decision-details-grid decision-details-grid--two">
+            <DecisionOffer
+              eyebrow="Private 12-week mentorship · By application"
+              name="The Standard Ascension"
+              price="Apply to see the investment"
+              description="One business target and all four areas of life on the board, with a private call every week and daily interaction with Justin."
+              href="/ascension"
+              cta="Explore Ascension"
+            />
+            <DecisionOffer
+              eyebrow="Private 1:1 coaching · Waitlist"
+              name="The Directive"
+              price="$1.5k/month · Waitlist"
+              description="Monthly 2-hour private sessions with Justin. Currently waitlist only. Want in now? Momentum is open."
+              href="/directive"
+              cta="Join the waitlist"
+            />
           </div>
         </section>
       </div>
@@ -1329,7 +850,7 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
             <DecisionOffer
               eyebrow="Manager training"
               name="8 Week Experience"
-              price="Apply"
+              price="$4.5k or $625/week"
               description="Install a complete sales-management system through eight live coaching calls and a manager playbook."
               href="/sales-experience"
               cta="See the Experience"
@@ -1337,8 +858,8 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
             <DecisionOffer
               eyebrow="Sales team accountability · By application"
               name="The Team Standard"
-              price="From $2,500/mo"
-              description="Owner-free team accountability calls, weekly scoreboard rhythms, and direct reporting to the owner."
+              price="2X $2.5k/mo · 4X $4k/mo"
+              description="Two or four fifty-minute team accountability calls a month, Weekly Return & Reports to the owner, and Agency Brain Pro."
               href="/team-standard"
               cta="See The Standard"
             />
@@ -1363,7 +884,18 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
       >
         See Agency Brain <span aria-hidden>→</span>
       </a>
-      <p className="decision-agency-brain-secondary">Compare Core, Plus, and Pro on Agency Brain.</p>
+      <ul className="decision-agency-brain-tiers">
+        {agencyBrainTiers.map((tier) => (
+          <li key={tier.name}>
+            <p className="decision-offer-eyebrow">{tier.name}</p>
+            <p className="decision-offer-price">{tier.price}</p>
+            <p className="decision-offer-copy">{tier.summary}</p>
+          </li>
+        ))}
+      </ul>
+      <p className="decision-agency-brain-secondary">
+        Live Call Coach: $129 per rep a month, an add-on on any tier. Mirror Challenge free on every tier.
+      </p>
     </div>
   );
 };
@@ -1705,6 +1237,25 @@ const DecisionProgramsSection = () => {
         }
         .decision-agency-brain h4 { margin-bottom: 16px; }
         .decision-agency-brain > a { display: inline-block; margin-top: 22px; }
+        .decision-agency-brain-tiers {
+          list-style: none;
+          margin: 26px 0 0;
+          padding: 0;
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          border-top: 1px solid rgba(244,242,238,.25);
+        }
+        .decision-agency-brain-tiers li {
+          display: grid;
+          gap: 10px;
+          align-content: start;
+          min-width: 0;
+          padding: 20px 20px 0 0;
+        }
+        .decision-agency-brain-tiers li + li {
+          border-left: 1px solid rgba(244,242,238,.25);
+          padding-left: 20px;
+        }
         .decision-agency-brain-secondary {
           font: 500 12px/1.5 ${body};
           opacity: .55;
@@ -1749,6 +1300,13 @@ const DecisionProgramsSection = () => {
             border-left: 0;
             border-top: 1px solid rgba(244,242,238,.25);
             padding-left: 0;
+          }
+          .decision-agency-brain-tiers { grid-template-columns: minmax(0, 1fr); }
+          .decision-agency-brain-tiers li + li {
+            border-left: 0;
+            border-top: 1px solid rgba(244,242,238,.25);
+            padding-left: 0;
+            margin-top: 20px;
           }
           .decision-sold-out { margin-top: 0; }
           .decision-sold-out-list { grid-template-columns: minmax(0, 1fr); gap: 8px; }

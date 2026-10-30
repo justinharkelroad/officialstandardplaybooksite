@@ -124,24 +124,23 @@ interface Program {
 const coachingPrograms: Program[] = [
   {
     label: '1:1 Coaching',
-    title: 'Partnership',
-    description: 'The highest level, full-access private coaching, custom strategy, and direct line to Justin.',
+    title: 'Momentum',
+    description: 'Directive-level work, twice the conversation. Problems get caught in two weeks, not four.',
     details: [
-      'Everything in Directive +',
-      'Unlimited private access to Justin',
-      'Custom agency growth roadmap',
-      'Full Agency Brain Pro buildout',
-      'On-call support for your entire team',
-      'Priority scheduling, no waitlist',
+      'Two 90-minute 1:1 coaching and implementation calls per month',
+      'Weekly group coaching call, Monday 1pm EST',
+      'Boardroom tool access inside Agency Brain',
+      'Agency Brain Pro',
+      'Telegram access',
     ],
-    price: '$2,000/mo',
-    soldOut: true,
-    action: { kind: 'sold-out' },
+    price: '$2.5k/mo',
+    soldOut: false,
+    action: { kind: 'link', cta: 'Apply', href: '/momentum' },
   },
   {
-    label: '1:1 Coaching',
+    label: '1:1 Coaching · Waitlist',
     title: 'The Directive',
-    description: 'High-touch 1:1 implementation and pressure-tested accountability.',
+    description: 'High-touch 1:1 implementation and pressure-tested accountability. Want in now? Momentum is open.',
     details: [
       'Everything included in Boardroom +',
       'Monthly 2-hour private sessions with Justin',
@@ -150,9 +149,9 @@ const coachingPrograms: Program[] = [
       'Custom strategy + accountability plan',
       'Priority support for your entire team',
     ],
-    price: '$1,500/mo',
-    soldOut: true,
-    action: { kind: 'sold-out' },
+    price: '$1.5k/mo · Waitlist',
+    soldOut: false,
+    action: { kind: 'directive' },
   },
   {
     label: 'Membership',
@@ -183,7 +182,7 @@ const coachingPrograms: Program[] = [
       'Manager playbook + scripts',
       'Post-program strategy session',
     ],
-    price: '$4,500 PIF  /  $625 weekly',
+    price: '$4.5k PIF  /  $625 weekly',
     soldOut: false,
     action: {
       kind: 'dual',
@@ -285,7 +284,7 @@ const CoachingCard = ({ program, onDirectiveClick }: { program: Program; onDirec
             fontFamily: sf, fontSize: 17, fontWeight: 400, color: '#fff', background: '#0071e3',
             border: '1px solid transparent', borderRadius: 8, padding: '8px 20px', cursor: 'pointer',
           }} className="hover:brightness-110 transition-all">
-            Apply Now
+            Join the waitlist
           </button>
         ) : program.action.kind === 'dual' ? (
           <>
@@ -600,7 +599,7 @@ const ProgramsSection = () => {
           </div>
         </Reveal>
 
-        {/* Top row: Partnership + Directive (1:1 tiers) */}
+        {/* Top row: Momentum + Directive waitlist (1:1 tiers) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           {coachingPrograms.slice(0, 2).map((program) => (
             <CoachingCard key={program.title} program={program} onDirectiveClick={() => setDirectiveModalOpen(true)} />
@@ -627,235 +626,6 @@ const ProgramsSection = () => {
       </div>
 
       <DirectiveApplicationModal open={directiveModalOpen} onOpenChange={setDirectiveModalOpen} />
-    </section>
-  );
-};
-
-/* ══════════════════════════════════════════════════════
-   CALL SCORING — BLACK SECTION
-   ══════════════════════════════════════════════════════ */
-const callScoringTiers = {
-  '30': {
-    calls: '30 Calls Per Month',
-    price: '$299',
-    link: 'https://buy.stripe.com/6oU5kDelodL0d4k5dG4Vy09',
-  },
-  '50': {
-    calls: '50 Calls Per Month',
-    price: '$399',
-    link: 'https://buy.stripe.com/6oU7sLb9c7mC9S8cG84Vy0a',
-  },
-  '100': {
-    calls: '100 Calls Per Month',
-    price: '$499',
-    link: 'https://buy.stripe.com/aFacN59147mC7K035y4Vy0b',
-  },
-} as const;
-
-type TierKey = keyof typeof callScoringTiers;
-
-const universalBenefits = [
-  'Fully customize the scoring',
-  'Add team members & managers',
-  'No contract',
-  'No commitment',
-];
-
-const CallScoringSection = () => {
-  const [tier, setTier] = useState<TierKey>('50');
-  const active = callScoringTiers[tier];
-
-  const handleDownload = () => {
-    const link = document.createElement('a');
-    link.href = '/Example_Sales_Call_Result.pdf';
-    link.download = 'Example_Sales_Call_Result.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  return (
-    <section style={{ background: '#000', padding: '120px 24px' }}>
-      <div className="max-w-[980px] mx-auto">
-        <Reveal>
-          <div className="text-center mb-16">
-            <p style={{
-              fontFamily: sf, fontSize: 14, fontWeight: 600, lineHeight: 1.29,
-              letterSpacing: '-0.224px', color: 'rgba(255,255,255,0.48)',
-              textTransform: 'uppercase', marginBottom: 12,
-            }}>
-              AI Software
-            </p>
-            <h2 style={{
-              fontFamily: sf, fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 600,
-              lineHeight: 1.07, letterSpacing: '-0.28px', color: '#fff',
-            }}>
-              Standard Call Scoring.
-            </h2>
-            <p style={{
-              fontFamily: sf, fontSize: 17, fontWeight: 400, lineHeight: 1.47,
-              letterSpacing: '-0.374px', color: 'rgba(255,255,255,0.6)', marginTop: 8,
-            }}>
-              Replace long call reviews with fast, AI-powered scoring.
-            </p>
-
-            <button
-              onClick={handleDownload}
-              style={{
-                fontFamily: sf, fontSize: 14, fontWeight: 400, color: '#2997ff',
-                background: 'transparent', border: '1px solid #2997ff', borderRadius: 980,
-                padding: '8px 20px', cursor: 'pointer', marginTop: 24,
-              }}
-              className="hover:bg-[#2997ff]/10 transition-all"
-            >
-              See example call score result &#8594;
-            </button>
-          </div>
-        </Reveal>
-
-        {/* Benefits row */}
-        <Reveal delay={0.1}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16 max-w-[720px] mx-auto">
-            {universalBenefits.map((benefit) => (
-              <div
-                key={benefit}
-                style={{
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  borderRadius: 12,
-                  padding: '16px 12px',
-                  textAlign: 'center',
-                }}
-              >
-                <span style={{
-                  fontFamily: sf, fontSize: 14, fontWeight: 400, lineHeight: 1.43,
-                  letterSpacing: '-0.224px', color: 'rgba(255,255,255,0.8)',
-                }}>
-                  {benefit}
-                </span>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-
-        {/* Pricing selector */}
-        <Reveal delay={0.2}>
-          <div
-            style={{
-              background: 'rgba(255,255,255,0.04)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255,255,255,0.06)',
-              borderRadius: 16,
-              padding: 40,
-              maxWidth: 560,
-              margin: '0 auto',
-            }}
-          >
-            <div className="text-center">
-              <p style={{
-                fontFamily: sf, fontSize: 14, fontWeight: 600, lineHeight: 1.29,
-                letterSpacing: '-0.224px', color: 'rgba(255,255,255,0.48)',
-                textTransform: 'uppercase', marginBottom: 20,
-              }}>
-                Choose your volume
-              </p>
-
-              {/* Segmented control */}
-              <div
-                className="flex items-center justify-center gap-1 mb-10"
-                style={{
-                  background: 'rgba(255,255,255,0.06)',
-                  borderRadius: 980,
-                  padding: 4,
-                  width: 'fit-content',
-                  margin: '0 auto 32px',
-                }}
-                role="tablist"
-              >
-                {(Object.keys(callScoringTiers) as TierKey[]).map((key) => (
-                  <button
-                    key={key}
-                    role="tab"
-                    aria-selected={key === tier}
-                    onClick={() => setTier(key)}
-                    style={{
-                      fontFamily: sf, fontSize: 14,
-                      fontWeight: key === tier ? 600 : 400,
-                      letterSpacing: '-0.224px',
-                      color: key === tier ? '#1d1d1f' : 'rgba(255,255,255,0.6)',
-                      background: key === tier ? '#fff' : 'transparent',
-                      border: 'none',
-                      borderRadius: 980,
-                      padding: '8px 20px',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s',
-                    }}
-                  >
-                    {key} calls
-                  </button>
-                ))}
-              </div>
-
-              <motion.div
-                key={tier}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-              >
-                <p style={{
-                  fontFamily: sf, fontSize: 14, fontWeight: 400,
-                  letterSpacing: '-0.224px', color: 'rgba(255,255,255,0.48)',
-                  marginBottom: 8,
-                }}>
-                  {active.calls}
-                </p>
-                <div className="flex items-end justify-center" style={{ marginBottom: 32 }}>
-                  <span style={{
-                    fontFamily: sf, fontSize: 72, fontWeight: 600,
-                    lineHeight: 1, letterSpacing: '-0.5px', color: '#fff',
-                  }}>
-                    {active.price}
-                  </span>
-                  <span style={{
-                    fontFamily: sf, fontSize: 21, fontWeight: 400,
-                    letterSpacing: '0.231px', color: 'rgba(255,255,255,0.48)',
-                    marginLeft: 4, marginBottom: 12,
-                  }}>
-                    /month
-                  </span>
-                </div>
-              </motion.div>
-
-              <a
-                href={active.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  fontFamily: sf, fontSize: 17, fontWeight: 400,
-                  color: '#fff', background: '#0071e3',
-                  border: '1px solid transparent', borderRadius: 980,
-                  padding: '12px 28px', textDecoration: 'none',
-                  display: 'block',
-                  width: 'fit-content',
-                  margin: '0 auto',
-                }}
-                className="hover:brightness-110 transition-all"
-              >
-                Secure Now
-              </a>
-
-              <p style={{
-                fontFamily: sf, fontSize: 12, fontWeight: 400,
-                letterSpacing: '-0.12px', color: 'rgba(255,255,255,0.36)',
-                marginTop: 20,
-              }}>
-                Month-to-month. No contract.
-              </p>
-            </div>
-          </div>
-        </Reveal>
-      </div>
     </section>
   );
 };
@@ -950,7 +720,6 @@ const Decision = () => (
     <HeroSection />
     <ProgramsSection />
     <SoftwarePlansSection />
-    <CallScoringSection />
     <NotSureSection />
     <AppleFooter />
   </div>
