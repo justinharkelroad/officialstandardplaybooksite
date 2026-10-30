@@ -1096,7 +1096,8 @@ const PLANS: Plan[] = [
       { node: 'AI comprehension grading on every quiz', emphasis: false },
       { node: 'Video Training Architect', emphasis: false },
       { node: 'Role-based access for your team', emphasis: false },
-      { node: 'Daily Flow library', emphasis: false },
+      { node: 'Dashboards, scorecards, sales and service tools, Core 4, and Flows', emphasis: false },
+      { node: 'Mirror Challenge free', emphasis: false },
       { node: '20 AI calls / month', emphasis: false },
     ],
   },
@@ -1105,6 +1106,9 @@ const PLANS: Plan[] = [
     items: [
       { node: 'Everything in Core', emphasis: false },
       { node: <><strong>AI Content Generator inside the builder</strong>, generate lessons, quizzes, and rewrites with AI instead of starting from a blank page</>, emphasis: true },
+      { node: 'AI Training Studio (roleplay)', emphasis: true },
+      { node: 'AI builders: Sales Process, Training, Comp Plan, Growth Center, Mirror AI analysis, Stan briefing', emphasis: false },
+      { node: 'Life Targets and 90 Day Audio', emphasis: false },
       { node: '50 AI calls / month', emphasis: false },
     ],
   },
@@ -1112,7 +1116,6 @@ const PLANS: Plan[] = [
     name: 'Pro', price: '$599', eyebrow: 'Top Tier', highlighted: false,
     items: [
       { node: 'Everything in Plus', emphasis: false },
-      { node: 'AI Sales Roleplay Bot', emphasis: true },
       { node: 'HR Suite', emphasis: true },
       { node: '2-hour 1:1 onboarding (recorded for your team)', emphasis: true },
       { node: 'Priority support', emphasis: false },
@@ -1278,6 +1281,12 @@ const PlansSection = () => {
             </div>
           ))}
         </motion.div>
+        <p style={{
+          fontFamily: body, fontSize: 14, fontWeight: 500, lineHeight: 1.6,
+          color: paper, opacity: 0.75, marginTop: 32,
+        }}>
+          <strong style={{ fontWeight: 700, opacity: 1 }}>Live Call Coach</strong>, $129 per rep a month, is an add-on on any tier.
+        </p>
       </div>
     </section>
   );

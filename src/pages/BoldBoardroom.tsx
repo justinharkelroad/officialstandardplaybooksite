@@ -2021,7 +2021,7 @@ const MirrorExperienceSection = () => (
                     textTransform: 'uppercase',
                   }}
                 >
-                  Layer 03 &middot; Exclusive To Boardroom &amp; 1:1 Owners
+                  Layer 03 &middot; Free For Boardroom &amp; 1:1 Owners
                 </span>
                 <ShieldCheck className="w-4 h-4" style={{ color: blue }} />
               </div>
@@ -2327,11 +2327,15 @@ const softwareCategories: SoftwareCategory[] = [
       },
       {
         title: 'The 160-Point Mirror & 8-Week Challenge',
-        detail: 'Full 32-item agency diagnostic, workbook reflections, and the Boardroom-exclusive 32-Day Telegram Challenge.',
+        detail: 'Full 32-item agency diagnostic, workbook reflections, and the 32-Day Telegram Challenge, free with your seat ($197 on its own).',
       },
       {
         title: 'Key Leader Boardroom Grants',
         detail: 'Grant trusted managers or key leaders access to /staff/boardroom when you bring them into the work.',
+      },
+      {
+        title: 'Both Fort Wayne Member Events',
+        detail: 'Two in-person Boardroom member events in Fort Wayne, included with your seat.',
       },
     ],
   },
@@ -3014,7 +3018,7 @@ const PricingSection = () => (
                 ['Daily Telegram Room + Direct Line', 'Voice & Video Access'],
                 ['Unlimited Staff Portal Logins', 'Whole Team Included'],
                 ['20 AI Call Scores Per Month', 'Standard Call Scoring'],
-                ['160-Pt Mirror + 8-Week Challenge', 'Boardroom Exclusive'],
+                ['160-Pt Mirror + 8-Week Challenge', 'Free ($197 Value)'],
               ].map(([item, tag]) => (
                 <li
                   key={item}

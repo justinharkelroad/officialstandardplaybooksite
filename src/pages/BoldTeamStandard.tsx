@@ -86,7 +86,7 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          Weekly or Biweekly. One Team, One Standard. By Application.
+          2X or 4X. One Team, One Standard. By Application.
         </p>
       </Reveal>
 
@@ -119,7 +119,7 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
               ['By application', 'Personally run'],
               ['Handful of teams', 'Limited capacity'],
               ['12-week cycle, billed monthly', 'Monthly owner check-in'],
-              ['$2,500 or $4,000', 'Biweekly or weekly'],
+              ['$2.5k or $4k', 'Team Standard 2X or 4X'],
             ].map(([value, label]) => (
               <div key={value}>
                 <p style={{ fontFamily: editorial, fontSize: 'clamp(16px, 1.5vw, 20px)', lineHeight: 1.05, color: ink, textTransform: 'uppercase', margin: 0 }}>
@@ -517,42 +517,66 @@ const TwoWaysIn = ({ onApply }: { onApply: () => void }) => (
       </Reveal>
       <Reveal delay={0.08}>
         <p style={{ fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55, color: ink, opacity: 0.8, maxWidth: 680, marginBottom: 56 }}>
-          Both include target-setting, daily check-ins, ongoing conversation in the private channel all month, and a forty-five-minute owner check-in with me every month, booked on your schedule. The only difference is the team call and report cadence.
+          Both include target-setting, daily check-ins, ongoing conversation in the private channel all month, and a forty-five-minute owner check-in with me every month, booked on your schedule. The only difference is how many team calls you get.
         </p>
+      </Reveal>
+      <Reveal delay={0.1}>
+        <ul style={{
+          listStyle: 'none', margin: '0 0 56px', padding: 0, maxWidth: 820,
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0 32px',
+        }}>
+          {[
+            'One 45-minute agency owner coaching call a month',
+            'Private messaging channel between Justin and your team',
+            'Weekly Return & Reports to the agency owner',
+            'Agency Brain Pro',
+            'The owner gets the Monday Boardroom call and all live events',
+            'Mirror Challenge free',
+          ].map((item) => (
+            <li key={item} style={{
+              fontFamily: body, fontSize: 15, lineHeight: 1.5, color: ink,
+              padding: '12px 0', borderBottom: `1px solid ${ink}1a`,
+              display: 'flex', alignItems: 'flex-start', gap: 12,
+            }}>
+              <span style={{ color: blue, fontSize: 14, lineHeight: '22px', flexShrink: 0, fontWeight: 700 }}>✓</span>
+              {item}
+            </li>
+          ))}
+        </ul>
       </Reveal>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-0" style={{ border: `1px solid ${ink}` }}>
-        {/* Weekly */}
+        {/* 4X */}
         <Reveal>
           <div style={{ padding: '48px 36px', borderBottom: `1px solid ${ink}`, height: '100%' }} className="md:!border-b-0 md:!border-r border-b" >
             <p style={{ fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.18em', color: blue, textTransform: 'uppercase', marginBottom: 18 }}>
-              Weekly
+              Team Standard 4X
             </p>
             <p style={{ fontFamily: body, fontSize: 17, fontWeight: 400, lineHeight: 1.55, color: ink, opacity: 0.85, marginBottom: 28 }}>
-              Four fifty-minute team calls a month, with a report every week. Between calls, your team sets targets, checks in daily, and talks with me inside the private channel. Once a month, you get a forty-five-minute owner check-in with me.
+              Four fifty-minute team coaching and accountability calls a month. Between calls, your team sets targets, checks in daily, and talks with me inside the private channel. Once a month, you get a forty-five-minute owner check-in with me.
             </p>
             <p style={{
               fontFamily: display, fontSize: 'clamp(40px, 6vw, 72px)', lineHeight: 0.9,
               letterSpacing: '-0.02em', color: ink, textTransform: 'uppercase', margin: 0, fontWeight: 400,
             }}>
-              $4,000<span style={{ fontFamily: editorial, fontSize: 'clamp(16px, 2vw, 22px)', opacity: 0.6, marginLeft: 10 }}>a month</span>
+              $4k<span style={{ fontFamily: editorial, fontSize: 'clamp(16px, 2vw, 22px)', opacity: 0.6, marginLeft: 10 }}>a month</span>
             </p>
           </div>
         </Reveal>
-        {/* Biweekly */}
+        {/* 2X */}
         <Reveal delay={0.08}>
           <div style={{ padding: '48px 36px', height: '100%' }}>
             <p style={{ fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.18em', color: blue, textTransform: 'uppercase', marginBottom: 18 }}>
-              Biweekly
+              Team Standard 2X
             </p>
             <p style={{ fontFamily: body, fontSize: 17, fontWeight: 400, lineHeight: 1.55, color: ink, opacity: 0.85, marginBottom: 28 }}>
-              Two fifty-minute team calls a month, with a report every two weeks. The calls are biweekly. The accountability is not. Your team still sets targets, checks in daily, and talks with me throughout the month. Once a month, you get a forty-five-minute owner check-in with me.
+              Two fifty-minute team coaching and accountability calls a month. Fewer calls, same accountability. Your team still sets targets, checks in daily, and talks with me throughout the month. Once a month, you get a forty-five-minute owner check-in with me.
             </p>
             <p style={{
               fontFamily: display, fontSize: 'clamp(40px, 6vw, 72px)', lineHeight: 0.9,
               letterSpacing: '-0.02em', color: ink, textTransform: 'uppercase', margin: 0, fontWeight: 400,
             }}>
-              $2,500<span style={{ fontFamily: editorial, fontSize: 'clamp(16px, 2vw, 22px)', opacity: 0.6, marginLeft: 10 }}>a month</span>
+              $2.5k<span style={{ fontFamily: editorial, fontSize: 'clamp(16px, 2vw, 22px)', opacity: 0.6, marginLeft: 10 }}>a month</span>
             </p>
           </div>
         </Reveal>
