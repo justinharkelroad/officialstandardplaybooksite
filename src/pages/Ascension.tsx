@@ -23,6 +23,7 @@ const deliverables = [
   'A personal Core 4 practice built around your real life',
   'A weekly evidence scorecard',
   'Private weekly coaching with Justin',
+  'Required daily interaction with Justin in your private messaging channel, plus a private call every week',
   'Direct accountability between calls',
   'Formal reviews at weeks four and eight',
   'A final written debrief of the full 12 weeks',
@@ -231,6 +232,7 @@ const Ascension = () => {
             <p>Application-only mentorship</p>
             <strong>12</strong>
             <span>weeks &middot; private 1:1 &middot; intentionally small roster</span>
+            <p style={{ marginTop: 16 }}>Apply to see the investment.</p>
             <ol>
               <li><span>01</span>Submit your application</li>
               <li><span>02</span>We review the fit</li>

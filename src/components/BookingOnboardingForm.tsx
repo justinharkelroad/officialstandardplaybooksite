@@ -33,9 +33,13 @@ interface FormData {
   whats_not_working: string;
   desired_outcome: string;
   committed: boolean | null;
+  investment_ready: boolean | null;
 }
 
 const SESSION_KEY_PREFIX = 'booking-session-id';
+
+/** Only the Ascension application asks the investment question. */
+const INVESTMENT_QUESTION_SOURCE = 'ascension';
 
 const generateSessionId = () =>
   `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -104,6 +108,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [sessionId] = useState(() => getOrCreateSessionId(source));
+  const asksInvestment = source === INVESTMENT_QUESTION_SOURCE;
   const [formData, setFormData] = useState<FormData>({
     full_name: '',
     email: '',
@@ -113,6 +118,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
     whats_not_working: '',
     desired_outcome: '',
     committed: null,
+    investment_ready: null,
   });
 
   useEffect(() => {
@@ -134,6 +140,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
             whats_not_working: data.whats_not_working || '',
             desired_outcome: data.desired_outcome || '',
             committed: data.committed,
+            investment_ready: data.investment_ready,
           });
         }
       } catch (error) {
@@ -145,8 +152,11 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
     loadExistingSession();
   }, [sessionId]);
 
-  const saveToDatabase = useCallback(async (data: FormData) => {
+  const saveToDatabase = useCallback(async (formValues: FormData) => {
     setIsSaving(true);
+    // Other programs never send investment_ready, so their rows are unchanged.
+    const { investment_ready, ...rest } = formValues;
+    const data = asksInvestment ? { ...rest, investment_ready } : rest;
     try {
       const { data: existing } = await supabase
         .from('booking_leads')
@@ -163,7 +173,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
     } finally {
       setIsSaving(false);
     }
-  }, [sessionId, source]);
+  }, [sessionId, source, asksInvestment]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -205,7 +215,8 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
     formData.whats_working.trim() !== '' &&
     formData.whats_not_working.trim() !== '' &&
     formData.desired_outcome.trim() !== '' &&
-    formData.committed === true
+    formData.committed === true &&
+    (!asksInvestment || formData.investment_ready === true)
   );
 
   const handleNext = () => { if (isStep1Valid()) setStep(2); };
@@ -460,6 +471,38 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
               </p>
             )}
           </div>
+          {asksInvestment && (
+            <div>
+              <label style={labelStyle}>
+                Ascension is a five-figure investment. I'm prepared to invest at that level. *
+              </label>
+              <select
+                value={formData.investment_ready === null ? '' : formData.investment_ready ? 'yes' : 'no'}
+                onChange={(e) => updateField('investment_ready', e.target.value === 'yes')}
+                style={{
+                  ...inputStyle,
+                  appearance: 'none',
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230A0A0B' d='M6 8L1 3h10z'/%3E%3C/svg%3E")`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'right 16px center',
+                  paddingRight: 40,
+                }}
+                onFocus={handleFocus} onBlur={handleBlur}
+              >
+                <option value="" disabled>Select an option</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+              {formData.investment_ready === false && (
+                <p style={{
+                  fontFamily: body, fontSize: 11, fontWeight: 600, letterSpacing: '0.1em',
+                  color: '#C8102E', textTransform: 'uppercase', marginTop: 8,
+                }}>
+                  Ascension is only a fit for owners prepared to invest at that level.
+                </p>
+              )}
+            </div>
+          )}
           <div style={{ display: 'flex', gap: 12, marginTop: 12 }}>
             <button onClick={handleBack} style={secondaryButtonStyle} className="hover:bg-black hover:text-white">
               ← Back
