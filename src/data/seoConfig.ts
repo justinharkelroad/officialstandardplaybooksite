@@ -107,7 +107,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
   '/callscoring': {
     title: 'Standard Call Scoring: AI-Powered Call Evaluation for Sales Teams | The Standard Playbook',
-    description: 'AI-powered call scoring that transforms sales coaching in minutes. Instant insights, consistent feedback, and accelerated team performance for insurance agencies. $299-499/month.',
+    description: 'AI-powered call scoring that transforms sales coaching in minutes. Instant insights, consistent feedback, and accelerated team performance for insurance agencies. Included in every Agency Brain plan.',
     keywords: ['call scoring', 'AI call analysis', 'sales coaching', 'call evaluation', 'sales training', 'call grading', 'insurance call scoring'],
     ogImage: OG_IMAGE,
     type: 'article',

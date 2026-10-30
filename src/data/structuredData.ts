@@ -193,7 +193,7 @@ export const structuredDataByRoute: Record<string, object[]> = {
     serviceSchema({
       name: "Standard Call Scoring",
       url: "/callscoring",
-      description: "AI-powered call evaluation tool for insurance agency sales teams. Provides instant insights, consistent feedback, and performance acceleration. $299-499/month.",
+      description: "AI-powered call evaluation tool for insurance agency sales teams. Provides instant insights, consistent feedback, and performance acceleration. Included in every Agency Brain plan.",
       serviceType: "AI Sales Coaching Tool",
       audience: "Insurance Agency Owners and Sales Managers",
       price: "299",
