@@ -166,33 +166,15 @@ export const structuredDataByRoute: Record<string, object[]> = {
     breadcrumb("The Directive", "/directive"),
   ],
 
-  '/partnership': [
+  '/momentum': [
     serviceSchema({
-      name: "Partnership",
-      url: "/partnership",
-      description: "White-glove business partnership for elite entrepreneurs generating $1M+ annually. Includes 24/7 direct phone access, revenue-sharing, joint ventures, and dedicated account management. Limited to 12 clients.",
-      serviceType: "Executive Business Partnership",
-      audience: "Elite Entrepreneurs generating $1M+ annually",
+      name: "Momentum",
+      url: "/momentum",
+      description: "Directive-level work, twice the conversation. Two 90-minute 1:1 coaching and implementation calls per month, the weekly Monday group coaching call, Boardroom tool access inside Agency Brain, Agency Brain Pro, and Telegram access.",
+      serviceType: "One-on-One Business Coaching",
+      audience: "Insurance Agency Owners",
     }),
-    breadcrumb("Partnership", "/partnership"),
-    faqSchema([
-      {
-        question: "What are the requirements for Partnership consideration?",
-        answer: "Partnership candidates typically generate $1M+ annually, have a proven track record of success, and are committed to significant growth. We look for entrepreneurs who value true partnership over traditional service relationships.",
-      },
-      {
-        question: "How is Partnership pricing structured?",
-        answer: "Partnership agreements are custom-designed based on your business, goals, and growth potential. Pricing typically includes a base fee plus performance-based components aligned with your success metrics.",
-      },
-      {
-        question: "How many Partnership spots are available?",
-        answer: "We limit Partnerships to ensure quality and attention. Currently, we accept no more than 12 Partnership clients at any time to maintain the highest level of service and collaboration.",
-      },
-      {
-        question: "What makes this different from high-end consulting?",
-        answer: "Unlike consulting, Partnership means we have aligned incentives through revenue sharing and joint investments. We're not just advisors, we're invested partners with skin in the game alongside you.",
-      },
-    ]),
+    breadcrumb("Momentum", "/momentum"),
   ],
 
   '/sales-experience': [

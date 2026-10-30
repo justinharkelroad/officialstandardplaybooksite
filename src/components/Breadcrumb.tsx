@@ -11,7 +11,7 @@ const Breadcrumb = () => {
       'app': 'App Access',
       'boardroom': 'The Boardroom',
       'directive': 'Directive',
-      'partnership': 'Partnership',
+      'momentum': 'Momentum',
       'sales-experience': 'Sales Experience',
       'producer-power-up': 'Producer Power Up',
       'about': 'About',

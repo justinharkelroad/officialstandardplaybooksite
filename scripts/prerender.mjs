@@ -23,7 +23,7 @@ const ROUTES = [
   '/boardroom',
   '/directive',
   '/ascension',
-  '/partnership',
+  '/momentum',
   '/sales-experience',
   '/producer-power-up',
   '/callscoring',

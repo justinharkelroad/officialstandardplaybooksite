@@ -115,6 +115,9 @@ const RETIRED_OFFERS = [
   'Arsenal Level',
   'FORMULA50',
   'STANDARD50',
+  // Retired 2026-10-30; /partnership redirects to /directive. Case-sensitive,
+  // so lowercase prose ("it's a partnership") is not flagged.
+  'Partnership',
 ];
 
 const PUBLISHING_SURFACES = [

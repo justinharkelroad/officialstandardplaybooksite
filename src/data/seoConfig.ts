@@ -17,7 +17,7 @@ const OG_IMAGE = 'https://standardplaybook.com/og-image.png';
 export const seoConfig: Record<string, SEOConfig> = {
   '/': {
     title: 'Insurance Agency Coaching for Owners Who Want More | The Standard Playbook',
-    description: 'High-performance coaching for insurance agency owners. Boardroom, Directive, and Partnership programs built by a 20-year Allstate operator.',
+    description: 'High-performance coaching for insurance agency owners. Boardroom, Momentum, Team Standard, and Ascension programs built by a 20-year Allstate operator.',
     keywords: ['insurance agency coaching', 'business coaching', 'elite entrepreneurs', 'agency mastermind', 'sales training', 'producer development', 'standard playbook', 'Fort Wayne coaching'],
     ogImage: OG_IMAGE,
     type: 'website',
@@ -80,13 +80,13 @@ export const seoConfig: Record<string, SEOConfig> = {
     type: 'website',
     noindex: true,
   },
-  '/partnership': {
-    title: 'Partnership Coaching for Insurance Agency Owners | Standard Playbook',
-    description: '1:1 coaching plus team training for insurance agency owners ready to scale. Limited enrollment. Built by an operator, not a consultant.',
-    keywords: ['business partnership', 'executive coaching', 'white-glove service', 'revenue sharing', 'elite coaching'],
+  '/momentum': {
+    title: 'Momentum: 1:1 Coaching Twice a Month | The Standard Playbook',
+    description: 'Directive-level work, twice the conversation. Two 90-minute 1:1 coaching and implementation calls a month with Justin, the Monday group call, and Agency Brain Pro. $2.5k/month.',
+    keywords: ['1:1 business coaching', 'insurance agency coaching', 'implementation coaching', 'agency owner coaching', 'Agency Brain Pro'],
     ogImage: OG_IMAGE,
     type: 'article',
-    structuredData: structuredDataByRoute['/partnership'],
+    structuredData: structuredDataByRoute['/momentum'],
   },
   '/sales-experience': {
     title: 'The 8-Week Sales Management Experience | The Standard Playbook',

@@ -599,7 +599,7 @@ const Calls = () => {
         </div>
       </section>
 
-      {/* Directive & Partnership — monthly 2-hour sit-down */}
+      {/* Directive: monthly 2-hour sit-down */}
       <section style={{ background: paper, padding: '0 24px 120px' }}>
         <div className="max-w-[1280px] mx-auto">
           <Reveal>
@@ -607,7 +607,7 @@ const Calls = () => {
               fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
               color: ink, textTransform: 'uppercase', marginBottom: 24,
             }}>
-              / Directive &amp; Partnership · Monthly 2-Hour
+              / Directive · Monthly 2-Hour
             </p>
           </Reveal>
 
@@ -639,7 +639,7 @@ const Calls = () => {
                   fontFamily: body, fontSize: 14, lineHeight: 1.55,
                   opacity: 0.7, margin: '16px 0 0', maxWidth: 540,
                 }}>
-                  Directive &amp; Partnership clients, book your monthly two-hour working session. One link, every month.
+                  Directive clients, book your monthly two-hour working session. One link, every month.
                 </p>
               </div>
 
@@ -673,7 +673,7 @@ const Calls = () => {
               textAlign: 'center', marginTop: 16, marginBottom: 0,
               opacity: 0.6, color: ink,
             }}>
-              Directive &amp; Partnership Clients Only
+              Directive Clients Only
             </p>
           </Reveal>
         </div>
