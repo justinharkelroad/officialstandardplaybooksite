@@ -48,9 +48,24 @@ type ProgramRow = {
   soldOut?: boolean;
 };
 
-const coachingPrograms: ProgramRow[] = [
+const ownerPrograms: ProgramRow[] = [
   {
     num: '01',
+    name: 'Mirror Challenge',
+    tier: '8-Week Agency Challenge · One-Time',
+    price: '$197',
+    description: 'The 8-Week / 32-Day Mirror Challenge on its own, $197 one time. Free with Agency Brain or any Standard Playbook program.',
+    details: [
+      'Score your agency on the 160-point Agency Mirror',
+      'Agency Brain paces you through 4 fundamentals per week for 8 weeks',
+      'A private, managed Telegram Challenge Room',
+      'Free with Agency Brain or any Standard Playbook program',
+    ],
+    href: MIRROR_CHALLENGE_CHECKOUT_URL,
+    cta: 'Buy →',
+  },
+  {
+    num: '02',
     name: 'The Boardroom',
     tier: 'Weekly Membership + Agency Brain Core',
     price: '$399/mo',
@@ -67,7 +82,7 @@ const coachingPrograms: ProgramRow[] = [
     cta: 'Learn More →',
   },
   {
-    num: '02',
+    num: '03',
     name: 'Momentum',
     tier: '1:1 Coaching + Agency Brain Pro',
     price: '$2.5k/mo',
@@ -82,25 +97,6 @@ const coachingPrograms: ProgramRow[] = [
     ],
     href: '/momentum',
     cta: 'Apply →',
-  },
-  {
-    num: '03',
-    name: 'The Team Standard',
-    tier: 'Sales Team Accountability · By Application',
-    price: '2X $2.5k/mo · 4X $4k/mo',
-    description: 'An accountability system for your sales team, run personally by Justin, with you out of the room. Team Standard 2X or 4X.',
-    details: [
-      '2X: two fifty-minute team coaching and accountability calls a month',
-      '4X: four fifty-minute team coaching and accountability calls a month',
-      'One 45-minute agency owner coaching call a month',
-      'Private messaging channel between Justin and your team',
-      'Weekly Return & Reports to the agency owner',
-      'Agency Brain Pro',
-      'Owner gets the Monday Boardroom call and all live events',
-      'Mirror Challenge free',
-    ],
-    href: '/team-standard',
-    cta: 'See The Standard →',
   },
   {
     num: '04',
@@ -119,40 +115,6 @@ const coachingPrograms: ProgramRow[] = [
   },
   {
     num: '05',
-    name: '8 Week Experience',
-    tier: 'Sales Management Training',
-    price: '$4.5k or $625/week',
-    description: 'For teams stuck in "great month / bad month" cycles. A full sales management system install in 8 weeks.',
-    details: [
-      '8 live coaching calls over 8 weeks',
-      'Complete sales management system install',
-      'Accountability + consequence ladder framework',
-      'Full Agency Brain access for your team',
-      'Manager playbook + scripts',
-      'Full money back: stay in the 8 weeks, do the work, and if you want your money back, ask',
-    ],
-    href: '/sales-experience',
-    cta: 'Learn More →',
-  },
-  {
-    num: '06',
-    name: '6 Week Producer Challenge',
-    tier: 'Team Sprint',
-    price: '$299/producer',
-    description: 'For owners who need producers executing now, not "eventually."',
-    details: [
-      '30 Training Modules',
-      '7 Sunday Target Setting Modules',
-      'Direct Reflection & Action Item Takeaways',
-      'Agency Owner/Mgr have full view of takeaways',
-      'Sales Process Training',
-      'Daily Habit Training',
-    ],
-    href: 'https://myagencybrain.com/six-week-challenge',
-    cta: 'Learn More →',
-  },
-  {
-    num: '07',
     name: 'The Standard Ascension',
     tier: '12-Week Private Mentorship · By Application',
     price: 'Apply to see the investment',
@@ -167,7 +129,7 @@ const coachingPrograms: ProgramRow[] = [
     cta: 'Apply →',
   },
   {
-    num: '08',
+    num: '06',
     name: 'The Directive',
     tier: '1:1 Coaching · Waitlist',
     price: '$1.5k/mo · Waitlist',
@@ -183,24 +145,9 @@ const coachingPrograms: ProgramRow[] = [
   },
 ];
 
-const softwarePrograms: ProgramRow[] = [
+const teamPrograms: ProgramRow[] = [
   {
     num: '01',
-    name: 'Mirror Challenge',
-    tier: '8-Week Agency Challenge · One-Time',
-    price: '$197',
-    description: 'The 8-Week / 32-Day Mirror Challenge on its own, $197 one time. Free with Agency Brain or any Standard Playbook program.',
-    details: [
-      'Score your agency on the 160-point Agency Mirror',
-      'Agency Brain paces you through 4 fundamentals per week for 8 weeks',
-      'A private, managed Telegram Challenge Room',
-      'Free with Agency Brain or any Standard Playbook program',
-    ],
-    href: MIRROR_CHALLENGE_CHECKOUT_URL,
-    cta: 'Buy →',
-  },
-  {
-    num: '02',
     name: 'Certified Standard',
     tier: 'AI Training · One-Time',
     price: '$399/seat',
@@ -217,7 +164,63 @@ const softwarePrograms: ProgramRow[] = [
     cta: 'Get Certified →',
   },
   {
+    num: '02',
+    name: '6 Week Producer Challenge',
+    tier: 'Team Sprint',
+    price: '$299/producer',
+    description: 'For owners who need producers executing now, not "eventually."',
+    details: [
+      '30 Training Modules',
+      '7 Sunday Target Setting Modules',
+      'Direct Reflection & Action Item Takeaways',
+      'Agency Owner/Mgr have full view of takeaways',
+      'Sales Process Training',
+      'Daily Habit Training',
+    ],
+    href: 'https://myagencybrain.com/six-week-challenge',
+    cta: 'Learn More →',
+  },
+  {
     num: '03',
+    name: '8 Week Experience',
+    tier: 'Sales Management Training',
+    price: '$4.5k or $625/week',
+    description: 'For teams stuck in "great month / bad month" cycles. A full sales management system install in 8 weeks.',
+    details: [
+      '8 live coaching calls over 8 weeks',
+      'Complete sales management system install',
+      'Accountability + consequence ladder framework',
+      'Full Agency Brain access for your team',
+      'Manager playbook + scripts',
+      'Full money back: stay in the 8 weeks, do the work, and if you want your money back, ask',
+    ],
+    href: '/sales-experience',
+    cta: 'Learn More →',
+  },
+  {
+    num: '04',
+    name: 'The Team Standard',
+    tier: 'Sales Team Accountability · By Application',
+    price: '2X $2.5k/mo · 4X $4k/mo',
+    description: 'An accountability system for your sales team, run personally by Justin, with you out of the room. Team Standard 2X or 4X.',
+    details: [
+      '2X: two fifty-minute team coaching and accountability calls a month',
+      '4X: four fifty-minute team coaching and accountability calls a month',
+      'One 45-minute agency owner coaching call a month',
+      'Private messaging channel between Justin and your team',
+      'Weekly Return & Reports to the agency owner',
+      'Agency Brain Pro',
+      'Owner gets the Monday Boardroom call and all live events',
+      'Mirror Challenge free',
+    ],
+    href: '/team-standard',
+    cta: 'See The Standard →',
+  },
+];
+
+const softwarePrograms: ProgramRow[] = [
+  {
+    num: '01',
     name: 'Agency Brain',
     tier: 'The Insurance-Agency OS',
     description: 'The operating system for the modern insurance agency: Core $299, Plus $449, Pro $599 a month. Add Live Call Coach for $129 per rep a month on any tier.',
@@ -231,6 +234,12 @@ const softwarePrograms: ProgramRow[] = [
     href: 'https://myagencybrain.com/info',
     cta: 'Explore →',
   },
+];
+
+const programGroups = [
+  { label: 'Agency owner coaching and training', programs: ownerPrograms },
+  { label: 'Team-focused accountability and coaching', programs: teamPrograms },
+  { label: 'AI-driven software', programs: softwarePrograms },
 ];
 
 /* ══════════════════════════════════════════════════════
@@ -376,12 +385,12 @@ const ProgramRowItem = ({ p }: { p: ProgramRow }) => {
   );
 };
 
-/* ── Section header (COACHING / SOFTWARE-AI) ───────────── */
+/* ── Section header (one per homepage path) ────────────── */
 const SectionHeader = ({ label }: { label: string }) => (
   <Reveal>
     <h2 style={{
       fontFamily: display,
-      fontSize: 'clamp(40px, 8vw, 80px)',
+      fontSize: 'clamp(34px, 7vw, 64px)',
       lineHeight: 1, letterSpacing: '-0.01em',
       color: ink, textTransform: 'uppercase', textAlign: 'center',
       margin: '0 0 8px', fontWeight: 400,
@@ -479,29 +488,19 @@ const Links = () => {
           </Reveal>
         </div>
 
-        {/* COACHING */}
-        <div style={{ marginTop: 'clamp(48px, 8vw, 88px)' }}>
-          <SectionHeader label="Coaching" />
-          <Reveal delay={0.05}>
-            <ul style={{ listStyle: 'none', margin: '24px 0 0', padding: 0, borderTop: `1px solid ${ink}` }}>
-              {coachingPrograms.map((p) => (
-                <ProgramRowItem key={p.name} p={p} />
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-
-        {/* SOFTWARE / AI */}
-        <div style={{ marginTop: 'clamp(56px, 9vw, 96px)' }}>
-          <SectionHeader label="Software / AI" />
-          <Reveal delay={0.05}>
-            <ul style={{ listStyle: 'none', margin: '24px 0 0', padding: 0, borderTop: `1px solid ${ink}` }}>
-              {softwarePrograms.map((p) => (
-                <ProgramRowItem key={p.name} p={p} />
-              ))}
-            </ul>
-          </Reveal>
-        </div>
+        {/* Same three paths as the homepage program board */}
+        {programGroups.map((group, i) => (
+          <div key={group.label} style={{ marginTop: i === 0 ? 'clamp(48px, 8vw, 88px)' : 'clamp(56px, 9vw, 96px)' }}>
+            <SectionHeader label={group.label} />
+            <Reveal delay={0.05}>
+              <ul style={{ listStyle: 'none', margin: '24px 0 0', padding: 0, borderTop: `1px solid ${ink}` }}>
+                {group.programs.map((p) => (
+                  <ProgramRowItem key={p.name} p={p} />
+                ))}
+              </ul>
+            </Reveal>
+          </div>
+        ))}
 
         {/* LIVE EVENT FOR FORMULA */}
         <Reveal delay={0.05} style={{ marginTop: 'clamp(48px, 8vw, 80px)' }}>
