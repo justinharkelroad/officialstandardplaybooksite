@@ -19,14 +19,23 @@ function showError(message){$('error').textContent=message;$('error').hidden=!me
 function scroll(){const box=$('messages');box.scrollTop=box.scrollHeight;}
 function bubble(text,role){const p=document.createElement('p');p.className='bubble '+role;p.textContent=text;$('messages').append(p);scroll();}
 const allowedHosts=new Set(['standardplaybook.com','myagencybrain.com','livecallcoach.ai','agencycoaching.as.me']);
-function actions(items=[]){if(!items.length)return;const group=document.createElement('div');group.className='actions';for(const item of items){try{const url=new URL(item.url);if(url.protocol!=='https:'||!allowedHosts.has(url.hostname))continue;const a=document.createElement('a');a.href=url.href;a.target='_blank';a.rel='noopener noreferrer';a.textContent=item.label;group.append(a);}catch{/* Only validated catalog links are usable. */}}$('messages').append(group);scroll();}
-function render(){ $('messages').replaceChildren();if(!session?.messages.length){bubble(config.hello,'assistant');return;}for(const m of session.messages){for(const text of m.role==='assistant'?replyBubbles(m.text):[m.text])bubble(text,m.role);actions(m.actions);}}
+function actions(items=[],messageId){if(!items.length)return;const group=document.createElement('div');group.className='actions';for(const [actionIndex,item] of items.entries()){try{const url=new URL(item.url);if(url.protocol!=='https:'||!allowedHosts.has(url.hostname))continue;const a=document.createElement('a');a.href=url.href;a.target='_blank';a.rel='noopener noreferrer';a.textContent=item.label;a.addEventListener('click',()=>recordClick(messageId,actionIndex));group.append(a);}catch{/* Only validated catalog links are usable. */}}$('messages').append(group);scroll();}
+function recordClick(messageId,actionIndex){
+ if(!token||!messageId)return;
+ const headers={'Content-Type':'application/json',Authorization:'Bearer '+token};
+ const body=JSON.stringify({messageId,actionIndex,eventId:crypto.randomUUID()});
+ // Do not delay navigation. Retry the same receipt once; server deduplicates it.
+ const send=()=>fetch('/api/click',{method:'POST',headers,body,keepalive:true});
+ void send().then(r=>{if(!r.ok&&r.status>=500)return send();}).catch(()=>send().catch(()=>{}));
+}
+$('fallback').addEventListener('click',()=>recordClick('fallback',0));
+function render(){ $('messages').replaceChildren();if(!session?.messages.length){bubble(config.hello,'assistant');return;}for(const m of session.messages){for(const text of m.role==='assistant'?replyBubbles(m.text):[m.text])bubble(text,m.role);actions(m.actions,m.id);}}
 async function api(path,method='GET',data){const response=await fetch(path,{method,headers:{...(data?{'Content-Type':'application/json'}:{}),...(token?{Authorization:'Bearer '+token}:{})},body:data?JSON.stringify(data):undefined,signal:AbortSignal.timeout(65000)});const result=await response.json();if(!response.ok){if(response.status===410||response.status===401){remember(null);session=null;pending=null;}throw new Error(result.error||'Chat is unavailable. Please try again.');}return result;}
-async function ensureSession(){if(session)return;if(token){try{session=await api('/api/session');if(session.brand!==brand){remember(null);session=null;}else return;}catch(e){if(token)throw e;}}const result=await api('/api/session','POST',{brand});remember(result.token);session=result.session;}
+async function ensureSession(){if(session)return;if(token){try{session=await api('/api/session');if(session.brand!==brand){remember(null);session=null;}else return;}catch(e){if(token)throw e;}}const result=await api('/api/session','POST',{brand,reviewPolicy:'2026-10-31-review-v1'});remember(result.token);session=result.session;}
 $('skip').onclick=()=>playback?.abort();
 $('fresh').onclick=async()=>{if(busy)return;lock(true);showError('');try{if(token)await api('/api/session','DELETE');remember(null);session=null;pending=null;$('message').value='';render();}catch(e){showError(e.message);}finally{lock(false);$('message').focus();}};
 $('composer').onsubmit=async event=>{event.preventDefault();if(busy)return;const text=$('message').value.trim();if(!text)return;lock(true);showError('');$('typing').hidden=false;
- try{await ensureSession();if(!pending||pending.text!==text)pending={text,requestId:crypto.randomUUID()};render();bubble(text,'user');session=await api('/api/message','POST',pending);pending=null;$('message').value='';const response=session.messages.at(-1);playback=new AbortController();$('skip').hidden=false;const parts=replyBubbles(response.text);for(let i=0;i<parts.length;i++){if(i)await waitForBubble(bubblePause(parts[i-1]),playback.signal);bubble(parts[i],'assistant');}actions(response.actions);
+ try{await ensureSession();if(!pending||pending.text!==text)pending={text,requestId:crypto.randomUUID()};render();bubble(text,'user');session=await api('/api/message','POST',pending);pending=null;$('message').value='';const response=session.messages.at(-1);playback=new AbortController();$('skip').hidden=false;const parts=replyBubbles(response.text);for(let i=0;i<parts.length;i++){if(i)await waitForBubble(bubblePause(parts[i-1]),playback.signal);bubble(parts[i],'assistant');}actions(response.actions,response.id);
  }catch(e){showError(e.name==='TimeoutError'?'That reply is taking longer than expected. Send again to retrieve it.':e.message);render();}
  finally{playback=null;$('typing').hidden=true;$('skip').hidden=true;lock(false);$('message').focus();}
 };
