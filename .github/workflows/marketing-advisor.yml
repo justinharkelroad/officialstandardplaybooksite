@@ -1,0 +1,25 @@
+name: Marketing advisor checks
+on:
+  pull_request:
+    paths: ['infra/marketing-advisor/**', '.github/workflows/marketing-advisor.yml']
+  push:
+    branches: [main]
+    paths: ['infra/marketing-advisor/**', '.github/workflows/marketing-advisor.yml']
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: infra/marketing-advisor/package-lock.json
+      - run: npm ci --no-audit --no-fund
+        working-directory: infra/marketing-advisor
+      - run: npm test
+        working-directory: infra/marketing-advisor
+      - run: npx wrangler deploy --dry-run
+        working-directory: infra/marketing-advisor
