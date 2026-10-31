@@ -1,0 +1,278 @@
+[
+  {
+    "id": "unenforced-standards",
+    "patternId": "unenforced-standards",
+    "opening": "My team misses their numbers and nothing changes.",
+    "answers": [
+      "The standards and management process are written and understood. I need outside coaching delivered directly to my team.",
+      "I want recurring team coaching and accountability, not a course or owner-only group."
+    ],
+    "expectedTarget": "team-standard"
+  },
+  {
+    "id": "leaking-leads",
+    "patternId": "leaking-leads",
+    "opening": "We quote households and the follow-up disappears.",
+    "answers": [
+      "Our follow-up process is documented and the manager enforces it. Our tracking is scattered and we need operational software.",
+      "I do not own Core or Boardroom. I want standalone software for visibility and tracking, not coaching."
+    ],
+    "expectedTarget": "agency-brain"
+  },
+  {
+    "id": "tool-sprawl",
+    "patternId": "tool-sprawl",
+    "opening": "I enter the same data twice and cross-check three systems every day.",
+    "answers": [
+      "I am looking for operational software to reduce scattered tracking. We already have a management process.",
+      "I want software only and do not own Core or Boardroom. I know specific replacement and integration features need verification."
+    ],
+    "expectedTarget": "agency-brain"
+  },
+  {
+    "id": "no-daily-numbers",
+    "patternId": "no-daily-numbers",
+    "opening": "I do not know the numbers until the month ends.",
+    "answers": [
+      "My manager has a daily review habit, but the numbers are in separate spreadsheets. We need a daily software view.",
+      "We need operational software only, not coaching. We do not have Agency Brain or Boardroom."
+    ],
+    "expectedTarget": "agency-brain"
+  },
+  {
+    "id": "inflated-activity",
+    "patternId": "inflated-activity",
+    "opening": "The quoted-household report looks great, but email quotes and repeat calls inflate it.",
+    "answers": [
+      "We have clear counting definitions and a manager enforcing them. I want software visibility into the activity.",
+      "I want standalone operational tools, not leadership coaching or a sales course. We do not have Core."
+    ],
+    "expectedTarget": "agency-brain"
+  },
+  {
+    "id": "avoided-conversations",
+    "patternId": "avoided-conversations",
+    "opening": "I avoid hard conversations because I am worried people will leave.",
+    "answers": [
+      "The expectations and management system are clear. I am the one avoiding follow-through.",
+      "I want ongoing group owner coaching with weekly accountability. I do not need a new management system."
+    ],
+    "expectedTarget": "boardroom"
+  },
+  {
+    "id": "bonus-money-math",
+    "patternId": "bonus-money-math",
+    "opening": "I chase the carrier bonus and keep changing marketing spend without a plan.",
+    "answers": [
+      "I have accurate numbers and can calculate my costs. My problem is following a consistent decision rhythm as owner.",
+      "I want weekly group owner coaching and accountability, not software or carrier-specific financial advice."
+    ],
+    "expectedTarget": "boardroom"
+  },
+  {
+    "id": "scattered-priorities",
+    "patternId": "scattered-priorities",
+    "opening": "I keep chasing new ideas and my priorities change every week.",
+    "answers": [
+      "My team has a workable process. I need to choose and stick with my own priorities.",
+      "I want ongoing weekly group coaching and accountability for me as the owner."
+    ],
+    "expectedTarget": "boardroom"
+  },
+  {
+    "id": "untrained-new-hires",
+    "patternId": "untrained-new-hires",
+    "opening": "New hires get an old binder and nobody has accessible training for them.",
+    "answers": [
+      "My manager has an onboarding plan and will coach application. We just need accessible self-paced learning material.",
+      "A training library is enough. I am not seeking certification or direct recurring team coaching. We do not own Core or Boardroom."
+    ],
+    "expectedTarget": "training"
+  },
+  {
+    "id": "owner-bottleneck",
+    "patternId": "owner-bottleneck",
+    "opening": "I delegate work but then take it back and do it myself.",
+    "answers": [
+      "The roles are clear and the team can do the work. It is my own leadership habit that gets in the way.",
+      "I want a weekly group owner coaching rhythm to help me follow through and stop taking work back."
+    ],
+    "expectedTarget": "boardroom"
+  },
+  {
+    "id": "reactive-service",
+    "patternId": "reactive-service",
+    "opening": "Renewal outreach and cross-sell fall through while service reacts all day.",
+    "answers": [
+      "The service standard is documented and my manager enforces it. We are missing visibility and tracking across the work.",
+      "I want to explore standalone operational software, not coaching. We do not have Core or Boardroom. Specific features need checking."
+    ],
+    "expectedTarget": "agency-brain"
+  },
+  {
+    "id": "unwritten-sales-process",
+    "patternId": "unwritten-sales-process",
+    "opening": "The entire sales process lives in my head and nobody can repeat it.",
+    "answers": [
+      "We need to build a documented sales-management process, standards and review cadence. My manager and I will implement it.",
+      "I want a structured short implementation program to build the system ourselves, not ongoing group accountability or producer-only training."
+    ],
+    "expectedTarget": "eight-week"
+  },
+  {
+    "id": "unsupported-manager",
+    "patternId": "unsupported-manager",
+    "opening": "Our sales manager cannot lead because I keep overruling them.",
+    "answers": [
+      "The issue crosses my leadership, manager authority and producer execution. We need coordinated implementation with all three involved.",
+      "I want an agency-wide engagement across owner, manager and producers together, not just a short process build or recurring team coaching."
+    ],
+    "expectedTarget": "standard90"
+  },
+  {
+    "id": "reactive-hiring",
+    "patternId": "reactive-hiring",
+    "opening": "I hire in a panic and reshape the job to fit whoever will take it.",
+    "answers": [
+      "I know what the role should produce. I need to stop abandoning my own standards under pressure.",
+      "I want ongoing weekly group owner coaching and accountability, not recruiting services or a software tool."
+    ],
+    "expectedTarget": "boardroom"
+  },
+  {
+    "id": "commission-complexity",
+    "patternId": "commission-complexity",
+    "opening": "Commission and chargeback spreadsheets become a mess every time we add a producer.",
+    "answers": [
+      "The compensation plan is agreed and documented. I want to explore operational software for tracking rather than redesign the plan.",
+      "Software only. We do not own Core or Boardroom. I understand specific calculation and import capabilities must be verified."
+    ],
+    "expectedTarget": "agency-brain"
+  },
+  {
+    "id": "price-led-selling",
+    "patternId": "price-led-selling",
+    "opening": "My producers sell on price and stall when someone says they need to think about it.",
+    "answers": [
+      "They need to learn and practice consistent sales conversations. Our management process is already in place.",
+      "I want a structured individual producer training and certification path with manager-supported practice, not live call software or ongoing direct team coaching."
+    ],
+    "expectedTarget": "certified"
+  },
+  {
+    "id": "unclear-roles",
+    "patternId": "unclear-roles",
+    "opening": "Service work keeps landing on producers and one person holds the office together.",
+    "answers": [
+      "Roles, owner delegation, manager authority and producer execution all need coordinated implementation. This is broader than one sales process.",
+      "I want owner, manager and producers working together in an agency-wide engagement, not just my weekly accountability or software."
+    ],
+    "expectedTarget": "standard90"
+  },
+  {
+    "id": "unreviewed-calls",
+    "patternId": "unreviewed-calls",
+    "opening": "Nobody has time to listen to calls consistently and I want AI to help.",
+    "answers": [
+      "I want feedback on completed recordings to identify what happened. I do not need prompts during live calls.",
+      "We want call-review tools, not direct coaching. We do not own Core or Boardroom."
+    ],
+    "expectedTarget": "call-scoring"
+  },
+  {
+    "id": "unused-ai",
+    "patternId": "unused-ai",
+    "opening": "I pay for AI but just ask random questions and never apply it.",
+    "answers": [
+      "I want to build an agency business brain with business context and repeatable workflows. This is not about sales-call tools.",
+      "I am willing to participate in the build, not looking for done-for-you delivery, and can join a waitlist for the next opportunity."
+    ],
+    "expectedTarget": "ai-install"
+  },
+  {
+    "id": "owner-overload",
+    "patternId": "owner-overload",
+    "opening": "The agency follows me home and I am worn out by being always on.",
+    "answers": [
+      "I mean business boundaries and my leadership habits. The team has a working process; I am not seeking medical or mental-health treatment.",
+      "I want a weekly group owner coaching rhythm and accountability around how I lead, not private one-to-one coaching."
+    ],
+    "expectedTarget": "boardroom"
+  },
+  {
+    "id": "leads-process-contrast",
+    "patternId": "leaking-leads",
+    "opening": "We quote households and follow-up never happens.",
+    "answers": [
+      "There is no consistent follow-up or management process. Everyone makes it up.",
+      "My manager and I want a short structured program to build and implement our sales-management system ourselves."
+    ],
+    "expectedTarget": "eight-week"
+  },
+  {
+    "id": "standards-owner-contrast",
+    "patternId": "unenforced-standards",
+    "opening": "My team misses the numbers and nothing happens.",
+    "answers": [
+      "The standard and management system exist. I avoid the conversations; I am the one who needs accountability.",
+      "I want ongoing weekly group owner coaching, not direct coaching for my team."
+    ],
+    "expectedTarget": "boardroom"
+  },
+  {
+    "id": "new-hire-certification-contrast",
+    "patternId": "untrained-new-hires",
+    "opening": "New hires are thrown in untrained.",
+    "answers": [
+      "They need a structured path for learning and practicing sales conversations, not just a library.",
+      "I want an individual producer certification path with manager-supported practice. We already have a management system."
+    ],
+    "expectedTarget": "certified"
+  },
+  {
+    "id": "live-call-contrast",
+    "patternId": "unreviewed-calls",
+    "opening": "The reps need help with what happens on their calls.",
+    "answers": [
+      "I need software prompts during live calls, not scoring of completed recordings or a training course.",
+      "Every rep uses RingCentral browser calling in desktop Chrome. We want live call guidance with that setup."
+    ],
+    "expectedTarget": "live-call-coach"
+  },
+  {
+    "id": "private-owner-unavailable",
+    "patternId": "owner-overload",
+    "opening": "The agency follows me home and I need help with my leadership boundaries.",
+    "answers": [
+      "I want private individualized one-to-one business coaching with Justin, not a group or a course.",
+      "Only direct private owner work fits what I am seeking. I understand availability must be checked."
+    ],
+    "expectedTarget": "fit"
+  },
+  {
+    "id": "unclear-four-question-handoff",
+    "patternId": null,
+    "opening": "Something is off in my agency, but I cannot locate it.",
+    "answers": [
+      "I cannot identify the problem yet.",
+      "I do not know what kind of help would fit.",
+      "I still cannot narrow it down.",
+      "I have no additional details."
+    ],
+    "expectedTarget": "fit",
+    "expectedQuestions": 4
+  },
+  {
+    "id": "clarity-on-fourth-answer",
+    "patternId": null,
+    "opening": "Something in the agency is not working and I need help finding the right path.",
+    "answers": [
+      "I cannot tell what is missing yet.",
+      "I do not know what kind of help I need.",
+      "I still have no details to narrow it down.",
+      "Now I can be specific: my manager and I need a short structured program to build and implement a missing sales-management system ourselves. We want implementation help, not ongoing accountability or software."
+    ],
+    "expectedTarget": "eight-week",
+    "expectedQuestions": 4
+  }
+]

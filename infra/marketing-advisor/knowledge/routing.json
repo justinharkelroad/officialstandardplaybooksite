@@ -1,0 +1,344 @@
+{
+  "version": "standard-discovery-v3-observable-questions",
+  "minQuestions": 2,
+  "maxQuestions": 4,
+  "rules": [
+    {
+      "need": "owner-accountability",
+      "offer": "boardroom",
+      "criteria": "The owner wants an ongoing group coaching/accountability rhythm. Distinguish this from building a missing sales-management system."
+    },
+    {
+      "need": "build-management-system",
+      "offer": "eight-week",
+      "criteria": "The owner or manager needs to build and implement the sales-management process, ownership, standards and review cadence."
+    },
+    {
+      "need": "whole-agency-implementation",
+      "offer": "standard90",
+      "criteria": "Coordinated implementation is needed across owner, sales manager and producers together; not just one missing process."
+    },
+    {
+      "need": "ongoing-team-coaching",
+      "offer": "team-standard",
+      "criteria": "The owner wants sustained direct coaching and accountability delivered to the team."
+    },
+    {
+      "need": "producer-sales-skills",
+      "offer": "certified",
+      "criteria": "Producers need a structured sales-conversation learning and practice path; not a management-system replacement."
+    },
+    {
+      "need": "self-paced-training",
+      "offer": "training",
+      "criteria": "The visitor specifically needs accessible learning resources/library material, with their manager helping apply it."
+    },
+    {
+      "need": "agency-operations",
+      "offer": "agency-brain",
+      "criteria": "Operational software for visibility, scorecards, workflows or tracking, rather than coaching. Check existing Core/Boardroom ownership."
+    },
+    {
+      "need": "completed-call-review",
+      "offer": "call-scoring",
+      "criteria": "Review completed calls to identify coaching opportunities and understand what is happening."
+    },
+    {
+      "need": "live-call-help",
+      "offer": "live-call-coach",
+      "criteria": "Help during calls. A recommendation requires confirmed RingCentral or Ricochet browser calling on desktop Chrome or Edge. Provider name alone is insufficient."
+    },
+    {
+      "need": "ai-workflows",
+      "offer": "ai-install",
+      "criteria": "The owner wants to build an agency business brain and AI workflows. Only a waitlist is available."
+    },
+    {
+      "need": "private-owner-coaching",
+      "offer": "directive",
+      "criteria": "Private, individualized owner work with Justin. Currently unavailable: explain this and offer a fit conversation, never enroll."
+    }
+  ],
+  "exceptions": [
+    "Answer direct factual questions immediately without mandatory discovery or an extra qualifying question.",
+    "A visitor explicitly requesting a destination may receive it immediately; this is not evidence that their setup or suitability has been verified.",
+    "Respect refusal and stop requests. No pitch is required.",
+    "A healthy agency with no unmet need can receive a no-purchase recommendation immediately.",
+    "Once routed, answer follow-up questions or revise the recommendation from corrections; do not restart discovery. A new conversation starts a new budget."
+  ],
+  "patternGuidance": "Anonymous paraphrases of coaching research, not testimonials, verified product features or automatic product assignments. Ask about observable events and current behavior: what happened last time, what the manager did, what is written, who owns it, and what happens without owner intervention. One short question per turn. Use the answer to choose the next unanswered fact. If they say unsure, ask for a small recent example; do not restate the same abstract choice. Never ask visitors to choose coaching versus a system, software versus implementation, or a program category. Infer fit yourself from their facts, respecting preferences they volunteer. Do not manufacture a failure, missing org chart, fear, or cause. All patterns share the same total 2\u20134 question budget. If the fourth answer still leaves material uncertainty, book a fit call instead of guessing. Existing ownership, catalog boundaries and professional-care limits still apply.",
+  "problemPatterns": [
+    {
+      "id": "unenforced-standards",
+      "title": "My team misses the numbers and nothing happens.",
+      "distinguishingQuestions": [
+        "The last time someone missed the number, what did their manager do?",
+        "What is supposed to happen when they miss it again?"
+      ],
+      "candidateNeeds": [
+        "owner-accountability",
+        "build-management-system",
+        "ongoing-team-coaching"
+      ],
+      "guardrail": "A dashboard can expose a miss; it cannot enforce consequences. Do not label staff lazy or prescribe firing."
+    },
+    {
+      "id": "leaking-leads",
+      "title": "We quote people and never follow up.",
+      "distinguishingQuestions": [
+        "What happens after someone gets a quote and does not buy?",
+        "How does your manager know which households still need a follow-up?"
+      ],
+      "candidateNeeds": [
+        "agency-operations",
+        "build-management-system",
+        "owner-accountability"
+      ],
+      "guardrail": "Do not promise software will make staff follow up or automatically replace the current CRM."
+    },
+    {
+      "id": "tool-sprawl",
+      "title": "I enter everything twice and still cross-check all my tools.",
+      "distinguishingQuestions": [
+        "Where are you entering the same information twice?",
+        "What do you have to cross-check before you trust the number?"
+      ],
+      "candidateNeeds": [
+        "agency-operations",
+        "build-management-system"
+      ],
+      "guardrail": "Do not claim any named tool, integration or import can be replaced without verification."
+    },
+    {
+      "id": "no-daily-numbers",
+      "title": "I find out how we did at the end of the month.",
+      "distinguishingQuestions": [
+        "What numbers can you see before the team starts work today?",
+        "What happens when one of those numbers is off?"
+      ],
+      "candidateNeeds": [
+        "agency-operations",
+        "owner-accountability"
+      ],
+      "guardrail": "Visibility and management action are distinct. Do not invent live account data."
+    },
+    {
+      "id": "inflated-activity",
+      "title": "The activity report looks good but the real conversations are not there.",
+      "distinguishingQuestions": [
+        "What has to happen before your team counts a household as quoted?",
+        "How does your manager check that it actually happened?"
+      ],
+      "candidateNeeds": [
+        "agency-operations",
+        "build-management-system",
+        "owner-accountability"
+      ],
+      "guardrail": "Do not infer dishonesty or promise automatic fraud detection or carrier verification."
+    },
+    {
+      "id": "avoided-conversations",
+      "title": "I put off the hard conversation because I am afraid people will leave.",
+      "distinguishingQuestions": [
+        "What happened the last time someone missed a standard?",
+        "What are you worried will happen if you address it?"
+      ],
+      "candidateNeeds": [
+        "owner-accountability",
+        "build-management-system"
+      ],
+      "guardrail": "Software cannot have the difficult conversation for the owner. Avoid legal or disciplinary prescriptions."
+    },
+    {
+      "id": "bonus-money-math",
+      "title": "I keep chasing the bonus and cannot tell what my marketing is returning.",
+      "distinguishingQuestions": [
+        "How are you deciding whether the marketing spend is paying off?",
+        "What changes in your decisions when you get close to a bonus deadline?"
+      ],
+      "candidateNeeds": [
+        "agency-operations",
+        "owner-accountability"
+      ],
+      "guardrail": "Do not invent carrier bonus tiers, compensation formulas, ROI or promised financial outcomes."
+    },
+    {
+      "id": "scattered-priorities",
+      "title": "I stay busy but keep changing priorities.",
+      "distinguishingQuestions": [
+        "What was the one thing you meant to finish this week?",
+        "What pulled you away from it?"
+      ],
+      "candidateNeeds": [
+        "owner-accountability",
+        "whole-agency-implementation"
+      ],
+      "guardrail": "Do not diagnose a medical or psychological condition from distraction."
+    },
+    {
+      "id": "untrained-new-hires",
+      "title": "New hires get a binder and are expected to figure it out.",
+      "distinguishingQuestions": [
+        "What does a new hire actually do in their first week?",
+        "Who listens to them practice before they start taking calls?"
+      ],
+      "candidateNeeds": [
+        "self-paced-training",
+        "producer-sales-skills",
+        "ongoing-team-coaching"
+      ],
+      "guardrail": "Library access is not certification, paid coaching or a complete onboarding installation. Do not claim roleplay entitlements absent from the catalog."
+    },
+    {
+      "id": "owner-bottleneck",
+      "title": "I delegate something and then end up doing it myself.",
+      "distinguishingQuestions": [
+        "What is the last thing you had to step back in and handle?",
+        "What happened when you left that responsibility with them?"
+      ],
+      "candidateNeeds": [
+        "owner-accountability",
+        "whole-agency-implementation"
+      ],
+      "guardrail": "Do not recommend software as a replacement for delegation and leadership."
+    },
+    {
+      "id": "reactive-service",
+      "title": "Service only reacts; renewal outreach and cross-sell do not happen.",
+      "distinguishingQuestions": [
+        "What does your service team do before a policy renews?",
+        "How does the manager check whether that outreach happened?"
+      ],
+      "candidateNeeds": [
+        "agency-operations",
+        "build-management-system",
+        "ongoing-team-coaching"
+      ],
+      "guardrail": "Do not promise specific cancel-audit, at-risk or automation features or results absent from the catalog."
+    },
+    {
+      "id": "unwritten-sales-process",
+      "title": "Our sales process lives in my head.",
+      "distinguishingQuestions": [
+        "What does a producer follow on a sales call today?",
+        "How does the manager check that everyone is following it?"
+      ],
+      "candidateNeeds": [
+        "build-management-system",
+        "producer-sales-skills",
+        "whole-agency-implementation"
+      ],
+      "guardrail": "A course alone does not install a management system. Distinguish the short implementation experience from whole-agency work."
+    },
+    {
+      "id": "unsupported-manager",
+      "title": "My sales manager is not leading and I keep stepping in.",
+      "distinguishingQuestions": [
+        "When someone misses a standard, what does your manager actually do?",
+        "What have you told your managers they can do without checking with you?"
+      ],
+      "candidateNeeds": [
+        "owner-accountability",
+        "build-management-system",
+        "whole-agency-implementation"
+      ],
+      "guardrail": "Do not assume the manager is the wrong person or promise a personnel decision."
+    },
+    {
+      "id": "reactive-hiring",
+      "title": "I hire in a panic and reshape the job around whoever applies.",
+      "distinguishingQuestions": [
+        "What did you need your last hire to accomplish?",
+        "What changed about the role after you chose that person?"
+      ],
+      "candidateNeeds": [
+        "owner-accountability",
+        "whole-agency-implementation"
+      ],
+      "guardrail": "Do not claim recruiting services, a hiring module or employment-law advice is included."
+    },
+    {
+      "id": "commission-complexity",
+      "title": "Commission and chargeback spreadsheets get worse every time I hire.",
+      "distinguishingQuestions": [
+        "Where does the commission or chargeback tracking break down?",
+        "Is the compensation formula already agreed and written down?"
+      ],
+      "candidateNeeds": [
+        "agency-operations",
+        "owner-accountability"
+      ],
+      "guardrail": "Do not promise report imports, commission calculations, carrier compatibility or chargeback automation not verified in the catalog. Route to product exploration for feature verification."
+    },
+    {
+      "id": "price-led-selling",
+      "title": "They quote a price and lose the conversation at I need to think about it.",
+      "distinguishingQuestions": [
+        "What do your producers say when someone tells them the price is too high?",
+        "How are they practicing that conversation today?"
+      ],
+      "candidateNeeds": [
+        "producer-sales-skills",
+        "ongoing-team-coaching",
+        "live-call-help"
+      ],
+      "guardrail": "Do not invent insurance coverage advice or claim guaranteed close rates. Live help requires confirmed compatibility."
+    },
+    {
+      "id": "unclear-roles",
+      "title": "Service work lands on producers and everything depends on one person.",
+      "distinguishingQuestions": [
+        "What service task most often lands back on a producer?",
+        "Who is supposed to own it, and do they know that?"
+      ],
+      "candidateNeeds": [
+        "owner-accountability",
+        "whole-agency-implementation",
+        "build-management-system"
+      ],
+      "guardrail": "Do not automatically equate role confusion with a software gap or promise HR consulting."
+    },
+    {
+      "id": "unreviewed-calls",
+      "title": "Nobody has time to listen to calls consistently.",
+      "distinguishingQuestions": [
+        "What happens to a recording after the call ends?",
+        "Who reviews the feedback with the rep?"
+      ],
+      "candidateNeeds": [
+        "completed-call-review",
+        "live-call-help",
+        "ongoing-team-coaching"
+      ],
+      "guardrail": "Check existing Core or Boardroom benefits. Call scoring is not live coaching and is not guaranteed accurate."
+    },
+    {
+      "id": "unused-ai",
+      "title": "I pay for AI but only use it for random one-off questions.",
+      "distinguishingQuestions": [
+        "What was the last thing you used AI for in the agency?",
+        "What recurring task are you still doing from scratch?"
+      ],
+      "candidateNeeds": [
+        "ai-workflows",
+        "completed-call-review",
+        "live-call-help"
+      ],
+      "guardrail": "AI Install is waitlist only, not a booked event or done-for-you service. No announced date or price."
+    },
+    {
+      "id": "owner-overload",
+      "title": "The agency follows me home and I am worn out.",
+      "distinguishingQuestions": [
+        "What keeps pulling you back into work when you are home?",
+        "What happens at the agency when you leave that alone?"
+      ],
+      "candidateNeeds": [
+        "owner-accountability",
+        "whole-agency-implementation",
+        "private-owner-coaching"
+      ],
+      "guardrail": "Do not diagnose or promise to treat burnout, health, relationship or mental-health conditions. Distinguish business coaching from professional personal care; do not turn a request for medical help into a sales pitch. Private Directive is unavailable."
+    }
+  ]
+}

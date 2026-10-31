@@ -1,0 +1,10 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+const read=name=>readFile(new URL(`knowledge/${name}`,import.meta.url),'utf8');
+const [p,v,e,r]=await Promise.all(['pack.json','voice.md','examples.json','routing.json'].map(read));
+const pack=JSON.parse(p);delete pack.sources;delete pack.openQuestions;
+pack.status='Public marketing guide';pack.scope='Public offer guidance, no client account access';
+for(const row of [...pack.offers,...pack.principles])delete row.sourceRefs;
+const hash=createHash('sha256').update(p+v+e+r).digest('hex');
+const source={pack,voice:v,examples:JSON.parse(e),routing:JSON.parse(r),hash,ids:[...pack.principles,...pack.offers].map(x=>x.id)};
+await writeFile(new URL('knowledge.generated.mjs',import.meta.url),`// Generated anonymous server-only knowledge. Never serve this file.\nexport default ${JSON.stringify(source)};\n`);
