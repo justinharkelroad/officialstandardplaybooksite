@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><title>Your AI guide</title><link rel="stylesheet" href="/chat.css"><script type="module" src="/chat.js"></script></head><body>
+<header><img id="portrait" alt=""><div><strong id="name">AI guide</strong><span id="subtitle">Let’s find your next move.</span></div><button id="fresh" type="button" title="Delete this conversation and start fresh">New chat</button></header>
+<main id="messages" aria-label="Conversation" aria-live="polite" aria-relevant="additions"></main>
+<div id="typing" role="status" hidden><i></i><i></i><i></i><span class="sr-only">Reply on its way</span><button id="skip" type="button" hidden>Show reply</button></div>
+<p id="error" role="alert" hidden></p>
+<form id="composer"><label for="message" class="sr-only">Your message</label><textarea id="message" maxlength="3000" rows="2" placeholder="What’s happening in your agency?" required></textarea><button id="send" type="submit" aria-label="Send message">↑</button></form>
+<footer><span id="disclosure"></span> Chat is processed by OpenAI and expires here after 24 hours. Please leave out client details. <a id="fallback" target="_blank" rel="noopener noreferrer">Book a fit call</a> · <a id="privacy" target="_blank" rel="noopener noreferrer">Privacy</a></footer>
+</body></html>

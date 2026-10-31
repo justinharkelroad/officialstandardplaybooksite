@@ -1,0 +1,420 @@
+{
+  "version": "standard-private-v5-2026-10-31",
+  "status": "Curated for private testing. Justin's approval is pending until recorded in the review panel.",
+  "scope": "Standard Playbook discovery only. No raw transcripts, client identities, private operating records, or account access.",
+  "sources": [
+    {
+      "id": "voice",
+      "title": "Brand voice",
+      "path": "MY BIZ BRAIN/brand-voice.md",
+      "use": "Tone and anti-hype principles; no biography or commercial terms copied."
+    },
+    {
+      "id": "coaching",
+      "title": "Coaching voice",
+      "path": "MY BIZ BRAIN/coaching-voice.md",
+      "use": "Question-led diagnosis and concrete next actions."
+    },
+    {
+      "id": "fit-patterns",
+      "title": "Distilled fit-call patterns",
+      "path": "MY BIZ BRAIN/coaching-ip-distilled/",
+      "use": "Anonymized principles only; historical prices and client records excluded."
+    },
+    {
+      "id": "standard-pages",
+      "title": "Standard local marketing source",
+      "path": "officialstandardplaybooksite/src/pages/",
+      "use": "Descriptions, availability, informational routes. Pending edits are not proof of deployed billing."
+    },
+    {
+      "id": "agency-catalog",
+      "title": "Agency Brain public feature catalog",
+      "path": "agencybrain/src/components/marketing/explorer/catalog.ts",
+      "use": "Public feature distinctions only."
+    },
+    {
+      "id": "lcc-faq",
+      "title": "Live Call Coach public FAQ",
+      "path": "agencybrain/src/components/marketing/live-call-coach/data.ts",
+      "use": "Public compatibility and separate-subscription rules; mock results excluded."
+    },
+    {
+      "id": "founder-2026-10-31",
+      "title": "Justin’s direct pricing and capacity confirmation",
+      "path": "Current prototype conversation, October 31, 2026",
+      "use": "Authoritative Boardroom and eight-week pricing; owner-set capacity snapshot for Standard 90, Team Standard and Certified Standard. Supersedes conflicting historical copy. Does not verify billing or approve public release."
+    }
+  ],
+  "principles": [
+    {
+      "id": "diagnose",
+      "title": "Find the actual breakdown",
+      "text": "Separate activity, skill, follow-up, visibility and leadership before prescribing a product. A symptom is a starting point, not a diagnosis.",
+      "source": "coaching"
+    },
+    {
+      "id": "numbers",
+      "title": "Use their numbers",
+      "text": "Ask for real inputs when arithmetic can clarify a problem. Define the unit and time period. Distinguish assumptions from observed facts.",
+      "source": "fit-patterns"
+    },
+    {
+      "id": "unit",
+      "title": "Define the standard",
+      "text": "A count of quotes can mean different things. Define the unit of work, owner and deadline before judging whether someone met the standard.",
+      "source": "fit-patterns"
+    },
+    {
+      "id": "evidence",
+      "title": "Verify the behavior",
+      "text": "A checked box is not evidence that the underlying work happened. Use appropriate work evidence without treating staff as guilty by default.",
+      "source": "fit-patterns"
+    },
+    {
+      "id": "friction",
+      "title": "Remove the obstacle",
+      "text": "Check whether unclear expectations, tooling, workload or lack of practice explain a behavior before escalating accountability.",
+      "source": "fit-patterns"
+    },
+    {
+      "id": "conversation",
+      "title": "Have the conversation",
+      "text": "Dashboards and software can reveal a gap. A manager still needs to explain the standard, understand the obstacle and follow through.",
+      "source": "fit-patterns"
+    },
+    {
+      "id": "followup",
+      "title": "Fix follow-up before buying more leads",
+      "text": "More volume can hide an existing follow-up problem. Review ownership and the next action on current opportunities before recommending increased lead spend.",
+      "source": "fit-patterns"
+    },
+    {
+      "id": "daily",
+      "title": "Bring the target into the day",
+      "text": "Break a goal into a daily pace using the visitor's workdays, team and assumptions. Show the arithmetic instead of promising the result.",
+      "source": "fit-patterns"
+    },
+    {
+      "id": "owner",
+      "title": "Notice dependence on owner attention",
+      "text": "If a process only runs while the owner watches, examine responsibility, visibility and review cadence. Do not call that an automated system.",
+      "source": "fit-patterns"
+    },
+    {
+      "id": "no-purchase",
+      "title": "Be willing to recommend no purchase",
+      "text": "Give an immediately useful action. Do not sell unnecessary tools or push an offer the visitor cannot or does not want to implement.",
+      "source": "fit-patterns"
+    },
+    {
+      "id": "choice",
+      "title": "Explain choices without pressure",
+      "text": "Different needs deserve different paths. Present the relevant tradeoff; don't automatically steer toward the most expensive service.",
+      "source": "fit-patterns"
+    },
+    {
+      "id": "human",
+      "title": "Person first, producer second",
+      "text": "Treat the owner and team as people. Warmth and clear standards coexist. Core 4 is Body, Being, Balance and Business; use it only when relevant.",
+      "source": "voice"
+    }
+  ],
+  "offers": [
+    {
+      "id": "boardroom",
+      "name": "The Boardroom",
+      "summary": "Weekly owner coaching and an execution rhythm built around a concrete Domino commitment, Return & Report, and the Boardroom loop. Agency Brain Core is included.",
+      "fits": "An owner who wants group accountability, a weekly rhythm and a place to work through leadership and execution.",
+      "notFor": "Someone seeking only software, private 1:1 time, or an entirely outsourced manager.",
+      "price": "$399 per month, month-to-month. Justin directly confirmed the $399 monthly price on October 31, 2026.",
+      "availability": "Available in current local page copy; never invent seat counts.",
+      "includes": [
+        "Agency Brain Core, including 20 AI-scored calls per month and unlimited Staff Portal logins",
+        "Weekly Monday live coaching cadence; holiday exceptions may apply",
+        "Domino accountability loop"
+      ],
+      "excludes": [
+        "Directive 1:1 sessions",
+        "Agency Brain Plus and Pro upgrades",
+        "Live Call Coach subscription"
+      ],
+      "sourceRefs": [
+        "src/pages/BoldBoardroom.tsx",
+        "src/pages/Decision.tsx",
+        "Justin’s direct confirmation · October 31, 2026"
+      ],
+      "review": "Founder-confirmed $399 monthly price supersedes legacy $299 copy. This is a direct founder confirmation, not a live billing audit.",
+      "actionId": "boardroom"
+    },
+    {
+      "id": "directive",
+      "name": "The Directive",
+      "summary": "Private 1:1 owner coaching focused on strategy, accountability and implementation.",
+      "fits": "An owner wanting direct, individualized work with Justin.",
+      "notFor": "A recommendation to enroll immediately: this offer is sold out.",
+      "price": "Withheld. Do not quote a price for an unavailable offer.",
+      "availability": "Sold out. Applications closed in current local page copy. No promised reopen date or waitlist.",
+      "includes": [],
+      "excludes": [],
+      "sourceRefs": [
+        "src/pages/BoldDirective.tsx",
+        "src/pages/Decision.tsx"
+      ],
+      "review": "Sold-out state overrides older catalog entries marked open.",
+      "actionId": null
+    },
+    {
+      "id": "eight-week",
+      "name": "8-Week Sales Management Experience",
+      "summary": "A time-bounded implementation process to build a sales management system: a defined sales process, accountability and consequence frameworks, with owner or manager participation.",
+      "fits": "An agency missing a clear, implemented sales management process and willing to do the building work.",
+      "notFor": "Someone wanting a passive course or a producer-only quick skills drill.",
+      "price": "$4,500 paid in full for the complete eight-week experience, or eight weekly payments of $625 ($5,000 total). Paying in full saves $500 compared with weekly payments.",
+      "availability": "Program information is available; current openings must be confirmed through the program page or fit conversation.",
+      "includes": [],
+      "excludes": [
+        "An assumed ongoing private coaching membership"
+      ],
+      "sourceRefs": [
+        "src/pages/Decision.tsx",
+        "src/pages/BoldSalesExperience.tsx",
+        "src/data/packagesData.ts",
+        "Justin’s direct confirmation · October 31, 2026"
+      ],
+      "review": "Justin confirmed pricing and the weekly payment total on October 31, 2026. Precise entitlements and current openings remain to be confirmed. Do not invent refund, cancellation, tax or payment-start terms.",
+      "actionId": "eight-week",
+      "paymentOptions": {
+        "currency": "USD",
+        "durationWeeks": 8,
+        "payInFull": 4500,
+        "weeklyAmount": 625,
+        "weeklyPayments": 8,
+        "weeklyTotal": 5000,
+        "payInFullSavings": 500
+      }
+    },
+    {
+      "id": "standard90",
+      "name": "The Standard 90",
+      "summary": "A ninety-day engagement working with the owner, sales manager and team at the same time. By application.",
+      "fits": "An agency needing coordinated implementation across leadership, management and producers.",
+      "notFor": "Someone who only needs one software feature or a self-paced training seat.",
+      "price": "Not confirmed in this pack. Do not invent a quote.",
+      "availability": "Justin’s latest capacity update, October 31, 2026: one spot. Capacity is set by Justin and can change; this is not live inventory or a reservation. By application; acceptance is not guaranteed.",
+      "includes": [],
+      "excludes": [],
+      "sourceRefs": [
+        "src/pages/BoldStandard90.tsx",
+        "Justin’s direct confirmation · October 31, 2026"
+      ],
+      "review": "One spot confirmed by Justin on October 31, 2026. Price and detailed commercial terms remain unconfirmed. Do not create urgency or guarantee an opening is still available.",
+      "actionId": "standard90",
+      "capacity": {
+        "type": "owner-set",
+        "spots": 1,
+        "confirmedOn": "2026-10-31",
+        "source": "founder-2026-10-31"
+      }
+    },
+    {
+      "id": "team-standard",
+      "name": "Team Standard",
+      "summary": "Justin works directly with the team through recurring calls, target-setting, daily check-ins and a private channel. Weekly and biweekly cadences are described.",
+      "fits": "An owner seeking sustained direct coaching and accountability for the team.",
+      "notFor": "A software-only purchase or someone expecting the owner to stop leading.",
+      "price": "Price and payment terms remain unconfirmed in this pack. Capacity has been confirmed separately.",
+      "availability": "Justin’s latest capacity update, October 31, 2026: four spots. Capacity is set by Justin and can change; this is not live inventory or a reservation. Discuss fit and confirm availability before enrollment.",
+      "includes": [],
+      "excludes": [],
+      "sourceRefs": [
+        "src/pages/BoldTeamStandard.tsx",
+        "Justin’s direct confirmation · October 31, 2026"
+      ],
+      "review": "Four spots confirmed by Justin on October 31, 2026. Cadence-specific prices and commercial terms remain unconfirmed; do not infer them from capacity.",
+      "actionId": "team-standard",
+      "capacity": {
+        "type": "owner-set",
+        "spots": 4,
+        "confirmedOn": "2026-10-31",
+        "source": "founder-2026-10-31"
+      }
+    },
+    {
+      "id": "certified",
+      "name": "Certified Standard",
+      "summary": "Online, already-built individual sales training and practice with a certification path. Seats are per person; enrollment capacity is not limited.",
+      "fits": "A producer who needs to learn and practice a consistent approach to sales conversations.",
+      "notFor": "A replacement for the agency's management system or a guarantee of production.",
+      "price": "Withheld pending commercial verification.",
+      "availability": "Justin confirmed no enrollment-capacity limit on October 31, 2026 because the program is online and already built. This does not mean a purchase includes unlimited participant seats. Do not claim professional licensing or carrier accreditation.",
+      "includes": [],
+      "excludes": [
+        "A full Agency Brain software subscription unless separately confirmed"
+      ],
+      "sourceRefs": [
+        "src/pages/BoldCertifiedStandard.tsx",
+        "Justin’s direct confirmation · October 31, 2026"
+      ],
+      "review": "No enrollment-capacity limit, confirmed by Justin. Price, access duration and included participant seats still need confirmation. Training certification is distinct from insurance licensing.",
+      "actionId": "certified",
+      "capacity": {
+        "type": "unlimited",
+        "spots": null,
+        "confirmedOn": "2026-10-31",
+        "source": "founder-2026-10-31"
+      }
+    },
+    {
+      "id": "training",
+      "name": "Standard Playbook Training",
+      "summary": "A training library covering agency sales, service and leadership work, included within Agency Brain software plans as described in the public catalog.",
+      "fits": "A team that needs accessible learning material and a manager who will help apply it.",
+      "notFor": "A promise that watching videos installs a management process.",
+      "price": "Do not invent a standalone library price.",
+      "availability": "Explore the library and verify the relevant plan.",
+      "includes": [],
+      "excludes": [],
+      "sourceRefs": [
+        "src/pages/BoldTraining.tsx",
+        "agencybrain/src/components/marketing/AgencyBrainPricing.tsx"
+      ],
+      "review": "Do not equate library access with paid coaching or certification seats.",
+      "actionId": "training"
+    },
+    {
+      "id": "ai-install",
+      "name": "Agency AI Install",
+      "summary": "A live working build of an agency business brain using Claude or Codex, with platform-specific setup materials and a replay/resource portal.",
+      "fits": "An owner who wants to put business context, memory and repeatable AI workflows into practice.",
+      "notFor": "Someone expecting an installed system without participating in the build.",
+      "price": "The next event's price has not been announced. Joining the waitlist is free.",
+      "availability": "Waitlist only. Next date, schedule and registration are unannounced. Joining does not reserve or purchase a seat.",
+      "includes": [],
+      "excludes": [],
+      "sourceRefs": [
+        "src/pages/AIInstall.tsx"
+      ],
+      "review": "Do not reuse previous event dates or prices. Codex and Claude setups are distinct.",
+      "actionId": "ai-install"
+    },
+    {
+      "id": "agency-brain",
+      "name": "Agency Brain",
+      "summary": "Standalone agency software for scorecards, performance visibility, sales/service workflows, training and call scoring. Core, Plus and Pro serve different needs. Boardroom includes Core.",
+      "fits": "An agency that wants operational tools; coaching is not a requirement for a software-only buyer.",
+      "notFor": "A replacement for a manager or a promise that every AI feature is included in Core.",
+      "price": "Software pricing is outside this Standard-only prototype's approved price scope. Use current plan comparison.",
+      "availability": "Software can be purchased standalone.",
+      "includes": [],
+      "excludes": [
+        "Live Call Coach is a separate subscription",
+        "Private Justin coaching is not included in a software-only plan"
+      ],
+      "sourceRefs": [
+        "agencybrain/src/components/marketing/AgencyBrainPricing.tsx"
+      ],
+      "review": "Do not repeat older biography claims that software cannot be purchased alone.",
+      "actionId": "agency-brain"
+    },
+    {
+      "id": "call-scoring",
+      "name": "Call scoring",
+      "summary": "Review completed calls to see the team's sales conversation patterns and focus coaching. It differs from live prompts during the conversation.",
+      "fits": "An owner who needs evidence of what happens on calls without listening to every full recording.",
+      "notFor": "A claim of real-time guidance or guaranteed scoring accuracy.",
+      "price": "Do not quote legacy standalone tier prices. Boardroom includes Core's 20 monthly scoring credits.",
+      "availability": "Check the current product page and relevant plan; do not duplicate included credits.",
+      "includes": [],
+      "excludes": [],
+      "sourceRefs": [
+        "src/pages/BoldBoardroom.tsx",
+        "agencybrain/src/components/marketing/explorer/catalog.ts"
+      ],
+      "review": "Legacy standalone scoring prices are not approved for this prototype.",
+      "actionId": "call-scoring"
+    },
+    {
+      "id": "live-call-coach",
+      "name": "Live Call Coach",
+      "summary": "Guidance during a supported call plus a separate after-call review. Managers set the standard. It can be purchased standalone with its own workspace.",
+      "fits": "A team needing help executing during a call, with a compatible browser calling setup.",
+      "notFor": "Desk phones, mobile dialers or desktop phone apps. Do not assume compatibility from a provider name alone.",
+      "price": "Outside this Standard prototype's verified price scope. See the current product page.",
+      "availability": "Separate subscription. Supported setup in reviewed source: RingCentral or Ricochet browser calling in desktop Chrome or Edge, with the extension and each rep's login.",
+      "includes": [],
+      "excludes": [
+        "Included automatically with Boardroom or an Agency Brain software plan"
+      ],
+      "sourceRefs": [
+        "agencybrain/src/components/marketing/live-call-coach/data.ts"
+      ],
+      "review": "Check browser versus desktop app before recommending adoption. Illustrative mockup metrics are not customer proof.",
+      "actionId": "live-call-coach"
+    }
+  ],
+  "actions": [
+    {
+      "id": "boardroom",
+      "label": "Explore the Boardroom",
+      "url": "https://standardplaybook.com/boardroom"
+    },
+    {
+      "id": "eight-week",
+      "label": "Explore the 8-Week Experience",
+      "url": "https://standardplaybook.com/8-week"
+    },
+    {
+      "id": "standard90",
+      "label": "Explore the Standard 90",
+      "url": "https://standardplaybook.com/standard90"
+    },
+    {
+      "id": "team-standard",
+      "label": "Explore Team Standard",
+      "url": "https://standardplaybook.com/team-standard"
+    },
+    {
+      "id": "certified",
+      "label": "Explore Certified Standard",
+      "url": "https://standardplaybook.com/certified-standard"
+    },
+    {
+      "id": "training",
+      "label": "Explore the training library",
+      "url": "https://standardplaybook.com/training"
+    },
+    {
+      "id": "ai-install",
+      "label": "See the AI Install waitlist",
+      "url": "https://standardplaybook.com/aiinstall"
+    },
+    {
+      "id": "agency-brain",
+      "label": "Explore Agency Brain",
+      "url": "https://myagencybrain.com/info"
+    },
+    {
+      "id": "call-scoring",
+      "label": "Explore call scoring",
+      "url": "https://standardplaybook.com/callscoring"
+    },
+    {
+      "id": "live-call-coach",
+      "label": "Explore Live Call Coach",
+      "url": "https://livecallcoach.ai"
+    },
+    {
+      "id": "fit",
+      "label": "Book a fit call with Justin",
+      "url": "https://agencycoaching.as.me/standardfit"
+    }
+  ],
+  "openQuestions": [
+    "Confirm the eight-week experience’s precise entitlements and current openings. Pricing is confirmed: $4,500 paid in full or 8 × $625 ($5,000 total).",
+    "Confirm pricing and detailed commercial terms for Standard 90, Team Standard and Certified Standard. Capacity is confirmed separately.",
+    "Keep owner-set capacity current: Standard 90 has 1 spot and Team Standard has 4 as of October 31, 2026; these are snapshots, not live inventory. Certified Standard has no enrollment-capacity limit.",
+    "Confirm which phrases and sample responses Justin would actually use in a first conversation.",
+    "Founder approval in this prototype applies only to this exact knowledge-pack hash, not a public launch."
+  ]
+}

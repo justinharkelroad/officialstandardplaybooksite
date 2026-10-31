@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { MarketingAdvisor } from '@/components/marketing/MarketingAdvisor';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
@@ -1692,6 +1693,7 @@ const BoldMockup = () => (
     <DecisionProgramsSection />
     <GiantCTA />
     <BoldFooter />
+    <MarketingAdvisor brand="standard" />
   </div>
 );
 

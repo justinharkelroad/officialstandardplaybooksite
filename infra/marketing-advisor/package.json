@@ -1,0 +1,1 @@
+{"name":"standard-marketing-advisor","private":true,"type":"module","scripts":{"test":"node --test *.test.mjs","knowledge":"node build-knowledge.mjs","dev":"wrangler dev","deploy":"wrangler deploy"},"dependencies":{"zod":"3.25.76"},"devDependencies":{"wrangler":"4.135.0"}}
