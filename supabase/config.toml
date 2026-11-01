@@ -151,3 +151,8 @@ verify_jwt = true
 # every field is validated in the function. Writes use the service role.
 [functions.funnel-track]
 verify_jwt = false
+
+# 8-Week purchase and cancel-reminder emails. Stripe calls this directly;
+# every request is checked against the Stripe webhook signature.
+[functions.eight-week-billing]
+verify_jwt = false
