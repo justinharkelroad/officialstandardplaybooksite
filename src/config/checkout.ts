@@ -4,9 +4,9 @@ import { CERTIFIED_STANDARD_CHECKOUT_URL } from '@/data/certifiedStandard';
 /*
  * Every buy link the funnel uses, in one place.
  *
- * FOR MARY: paste the Stripe payment link for each key. A `null` link shows
- * a "Talk to Mary" button in place of checkout, so the page still works while
- * a link is missing. Don't change Stripe products or prices from here.
+ * Paste the Stripe payment link for each key. A `null` link sends the button
+ * to the offer's own page instead, so nothing breaks while a link is missing.
+ * Don't change Stripe products or prices from here.
  */
 export type CheckoutKey =
   | 'boardroom'

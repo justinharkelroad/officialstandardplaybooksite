@@ -13,7 +13,6 @@ export interface LeadSummary {
 
 const ROUTE_LABELS: Record<OfferRoute, (offer: string) => string> = {
   buy: (offer) => `Booking form: shown checkout for ${offer}, no call needed`,
-  mary: (offer) => `Booking form: sent to Mary's 15-minute calendar about ${offer}`,
   apply: (offer) => `Booking form: sent to the ${offer} application and Justin's calendar`,
   waitlist: (offer) => `Booking form: sent to the ${offer} waitlist`,
 };
