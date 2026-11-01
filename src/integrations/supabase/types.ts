@@ -1227,6 +1227,69 @@ export type Database = {
           },
         ]
       }
+      funnel_leads: {
+        Row: {
+          agency: string | null
+          alternative: string | null
+          answers: Json
+          created_at: string
+          email: string
+          event_id: string | null
+          ghl_status: string | null
+          id: string
+          kind: string
+          name: string | null
+          offer: string | null
+          phone: string | null
+          prescription: string | null
+          route: string | null
+          rule: string | null
+          url: string | null
+          utm: Json
+          visitor_id: string
+        }
+        Insert: {
+          agency?: string | null
+          alternative?: string | null
+          answers?: Json
+          created_at?: string
+          email: string
+          event_id?: string | null
+          ghl_status?: string | null
+          id?: string
+          kind: string
+          name?: string | null
+          offer?: string | null
+          phone?: string | null
+          prescription?: string | null
+          route?: string | null
+          rule?: string | null
+          url?: string | null
+          utm?: Json
+          visitor_id: string
+        }
+        Update: {
+          agency?: string | null
+          alternative?: string | null
+          answers?: Json
+          created_at?: string
+          email?: string
+          event_id?: string | null
+          ghl_status?: string | null
+          id?: string
+          kind?: string
+          name?: string | null
+          offer?: string | null
+          phone?: string | null
+          prescription?: string | null
+          route?: string | null
+          rule?: string | null
+          url?: string | null
+          utm?: Json
+          visitor_id?: string
+        }
+        Relationships: []
+      }
       life_targets_brainstorm: {
         Row: {
           clarity_score: number | null
@@ -1847,6 +1910,72 @@ export type Database = {
           status?: string
           user_id?: string
           voice_id?: string
+        }
+        Relationships: []
+      }
+      vsl_events: {
+        Row: {
+          created_at: string
+          email: string | null
+          event: string
+          event_id: string
+          fbclid: string | null
+          gclid: string | null
+          id: number
+          landing_path: string | null
+          offer: string | null
+          referrer: string | null
+          url: string | null
+          user_agent: string | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          value: string | null
+          video_id: string | null
+          visitor_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          event: string
+          event_id: string
+          fbclid?: string | null
+          gclid?: string | null
+          id?: never
+          landing_path?: string | null
+          offer?: string | null
+          referrer?: string | null
+          url?: string | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          value?: string | null
+          video_id?: string | null
+          visitor_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          event?: string
+          event_id?: string
+          fbclid?: string | null
+          gclid?: string | null
+          id?: never
+          landing_path?: string | null
+          offer?: string | null
+          referrer?: string | null
+          url?: string | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          value?: string | null
+          video_id?: string | null
+          visitor_id?: string
         }
         Relationships: []
       }
