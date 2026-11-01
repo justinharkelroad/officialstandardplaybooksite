@@ -21,12 +21,11 @@ export type CheckoutKey =
 export const CHECKOUT_LINKS: Record<CheckoutKey, string | null> = {
   // Live Boardroom link used site-wide since the $399 change (2026-10-20).
   boardroom: 'https://buy.stripe.com/cNi6oH2CGeP4aWcbC44Vy0z',
-  // PLACEHOLDER: Team Standard is booked by application today; no link exists yet.
-  teamStandard2x: null,
-  teamStandard4x: null,
-  // From /decision as of 2026-10-30 ($4,500 PIF / $625 weekly). Confirm the amounts before launch.
-  eightWeekPif: 'https://link.fastpaydirect.com/payment-link/67b9e4c1020837472ed0b709',
-  eightWeekWeekly: 'https://link.fastpaydirect.com/payment-link/67b9e53c156a771b286e2ca6',
+  // Stripe payment links from Justin, checked 2026-11-01 (product and amount on each page).
+  teamStandard2x: 'https://buy.stripe.com/14AbJ14KO7mC6FWay04Vy0t', // TEAMSTANDARD 2X, $2,500/month
+  teamStandard4x: 'https://buy.stripe.com/8x2dR9dhk8qG8O4dKc4Vy0s', // TEAMSTANDARD 4X, $4,000/month
+  eightWeekPif: 'https://buy.stripe.com/5kQ6oHcdggXc6FWfSk4Vy0E', // 8 Week Sales Experience, $4,500 once
+  eightWeekWeekly: 'https://buy.stripe.com/00w6oH3GKgXcd4k5dG4Vy0F', // 8 Week Sales Experience, $625/week subscription
   // Agency Brain's challenge page owns email capture, Stripe and provisioning (2026-11-01).
   mirror: MIRROR_CHALLENGE_CHECKOUT_URL,
   certifiedStandard: CERTIFIED_STANDARD_CHECKOUT_URL,
