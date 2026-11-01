@@ -113,10 +113,10 @@ ROUTING RULES:
   let result, parsed;
   for(let attempt=0;attempt<2;attempt++) {
     result=await requestModel(request,options); usages.push(result.data.usage);
-    try { parsed=validateRoutedReply(validateReply(result.value,knowledge),decision,messages); break; }
+    try { parsed=validateRoutedReply(validateReply(result.value,knowledge),decision,[...messages,{role:'user',text}]); break; }
     catch {
       if(attempt===1) throw new Error('The reply did not pass the routing checks. Please try again.');
-      request.instructions+='\nYour previous output failed the routing contract. Follow the server decision strictly: no question marks in reply; exactly one question in question only for discovery, otherwise empty. Use only allowed action IDs. During discovery ask one new concrete question about what happened or what someone does. No service-category choice, consultant jargon (including leadership rhythm/cadence), or repeated question. For a handoff simply say which facts remain unclear and offer the booking button. Do not continue interviewing after routing.';
+      request.instructions+='\nYour previous output failed the routing contract. Follow the server decision strictly: no question marks in reply; exactly one question in question only for discovery, otherwise empty. Use only allowed action IDs. During discovery ask one new concrete question about what happened or what someone does. No service-category choice, consultant jargon (including leadership rhythm/cadence), or repeated question. VC is an agency-level requirement, never an individual quota. Do not presume a manager. For a handoff simply say which facts remain unclear and offer the booking button. Do not continue interviewing after routing.';
     }
   }
   const actionIds=['recommend','handoff','destination'].includes(decision.mode) ? decision.actionIds : parsed.actionIds;
