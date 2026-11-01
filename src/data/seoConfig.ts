@@ -23,6 +23,14 @@ export const seoConfig: Record<string, SEOConfig> = {
     type: 'website',
     structuredData: structuredDataByRoute['/'],
   },
+  '/certified-standard': {
+    title: 'Certified Standard | Producer Readiness & Owner Confirmation | The Standard Playbook',
+    description: '17 conversation modules, scored checks, practical producer guides, and The Confirmation owner handoff. $399 per learner seat, one time, delivered through Agency Brain.',
+    keywords: ['Certified Standard', 'insurance producer training', 'producer readiness', 'AI sales roleplay', 'The Confirmation', 'agency owner coaching'],
+    ogImage: 'https://standardplaybook.com/og/certified-standard.jpg',
+    canonical: 'https://standardplaybook.com/certified-standard',
+    type: 'website',
+  },
   '/boardroom': {
     title: 'The Boardroom: Weekly Owner Accountability + Agency Brain Core | The Standard Playbook',
     description: 'Weekly Monday live coaching, the 30-minute Domino accountability loop, the 160-point Mirror & 8-Week Mirror Challenge, and full Agency Brain Core access included for $399/month.',

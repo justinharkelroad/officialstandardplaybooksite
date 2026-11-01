@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import { Facebook, Linkedin } from 'lucide-react';
 import BoldNav from '@/components/BoldNav';
 import ContentMeta from '@/components/ContentMeta';
-import { CERTIFIED_STANDARD_CHECKOUT_URL } from '@/data/certifiedStandard';
+import { getCertifiedStandardHandoff } from '@/data/certifiedStandard';
+import './BoldCertifiedStandard.css';
 
 import standardLogo from '@/assets/standard-word-logo.png';
 
@@ -17,25 +17,16 @@ const ink = '#0A0A0B';
 const paper = '#F4F2EE';
 const blue = '#2997FF';
 
-/*
- * CTA DESTINATION.
- * Certified Standard is a single $399 offer, sold one seat per person.
- * One action: purchase. Placeholder until checkout is wired.
- */
-const CHECKOUT_URL = CERTIFIED_STANDARD_CHECKOUT_URL;
-const CHECKOUT_LABEL = 'Get Certified';
+const CHECKOUT_LABEL = 'Choose certification seats';
 
-/* ── Reveal helper ─────────────────────────────────────── */
-const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 24 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: '-80px' }}
-    transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-    className={className}
-  >
-    {children}
-  </motion.div>
+// The offer is purchased and delivered in Agency Brain. Carry only campaign data.
+const PurchaseLink = ({ children, ...props }: Omit<React.ComponentProps<'a'>, 'href'>) => {
+  const { search } = useLocation();
+  return <a {...props} href={getCertifiedStandardHandoff(search)}>{children}</a>;
+};
+
+const Reveal = ({ children, className = '' }: { children: React.ReactNode; className?: string; delay?: number }) => (
+  <div className={className}>{children}</div>
 );
 
 /* ── Eyebrow ───────────────────────────────────────────── */
@@ -60,12 +51,10 @@ const CTAGroup = ({
   const fontSize = size === 'lg' ? 15 : 13;
   return (
     <div style={{
-      display: 'flex', flexWrap: 'wrap', gap: 14, marginTop: 8,
+      display: 'flex', flexDirection: 'column', alignItems: align === 'center' ? 'center' : 'flex-start', gap: 12, marginTop: 8,
       justifyContent: align === 'center' ? 'center' : 'flex-start',
     }}>
-      {/* TODO: wire to checkout */}
-      <a
-        href={CHECKOUT_URL}
+      <PurchaseLink
         style={{
           fontFamily: body, fontSize, fontWeight: 700, letterSpacing: '0.12em',
           color: fillText, background: fill, textTransform: 'uppercase',
@@ -74,8 +63,9 @@ const CTAGroup = ({
         }}
         className="hover:bg-[#2997FF] hover:border-[#2997FF] hover:text-white"
       >
-        {CHECKOUT_LABEL} · $399
-      </a>
+        {CHECKOUT_LABEL} →
+      </PurchaseLink>
+      <p style={{ fontFamily: body, fontSize: 13, lineHeight: 1.5, color: fill, maxWidth: 420 }}>$399 per learner seat · one time · through Agency Brain</p>
     </div>
   );
 };
@@ -87,7 +77,7 @@ const Hero = () => (
   <section style={{ background: paper, paddingTop: 56 + 36, paddingBottom: 80, position: 'relative', overflow: 'hidden' }}>
     <div className="px-6 md:px-10 max-w-[1440px] mx-auto relative">
       <Reveal>
-        <Eyebrow>/ This Is For Sales Producers And Team Members</Eyebrow>
+        <Eyebrow>/ For agency owners and sales managers developing producers</Eyebrow>
       </Reveal>
 
       <Reveal className="relative z-20">
@@ -110,7 +100,7 @@ const Hero = () => (
             fontFamily: body, fontSize: 'clamp(17px, 1.7vw, 22px)', fontWeight: 400, lineHeight: 1.55,
             color: ink, opacity: 0.85, maxWidth: 680,
           }}>
-            Certified Standard trains your producers on the full Hello-to-Bind sales conversation with live AI customer roleplay, memory reps, and quiz gates, then hands you the transcripts, scores, and completion data to coach from.
+            Give your producers a repeatable process from the first hello through coverage, the close, and the follow-up. They rehearse with AI customers and complete scored checks. You get saved work to coach from—and The Confirmation playbook to verify it on real calls.
           </p>
         </Reveal>
         <Reveal delay={0.3} className="col-span-12 md:col-span-5 flex md:justify-end items-start">
@@ -118,10 +108,12 @@ const Hero = () => (
             <CTAGroup align="left" />
             <p style={{
               fontFamily: body, fontSize: 13, fontWeight: 400, lineHeight: 1.5,
-              color: ink, opacity: 0.6, marginTop: 16, maxWidth: 420,
+              color: ink, opacity: 0.8, marginTop: 16, maxWidth: 420,
             }}>
-              Practice-first, not video-only. Built specifically for the Hello-to-Bind producer call.
+              Purchase and training are delivered through Agency Brain.
             </p>
+            <p className="cs-note" style={{ marginTop: 12 }}>Managing your team uses no seat. Explicitly enroll yourself only if you want to take the course.</p>
+            <a href="#guides" className="cs-text-link">See the included guides ↓</a>
           </div>
         </Reveal>
       </div>
@@ -133,7 +125,7 @@ const Hero = () => (
    MARQUEE
    ══════════════════════════════════════════════════════ */
 const Marquee = ({ rotate = -3, bg = ink, color = paper, dot = blue, phrase = 'CERTIFIED STANDARD' }: { rotate?: number; bg?: string; color?: string; dot?: string; phrase?: string }) => (
-  <div style={{
+  <div aria-hidden="true" style={{
     background: bg, color, transform: `rotate(${rotate}deg)`,
     padding: '14px 0', whiteSpace: 'nowrap', overflow: 'hidden',
     width: '120%', marginLeft: '-10%',
@@ -154,7 +146,7 @@ const MarqueeBands = () => (
   <div style={{ background: paper, padding: '40px 0', position: 'relative', overflow: 'hidden' }}>
     <Marquee rotate={-3} bg={ink} color={paper} dot={blue} phrase="CERTIFIED STANDARD" />
     <div style={{ marginTop: -24 }}>
-      <Marquee rotate={2.5} bg={paper} color={ink} dot={ink} phrase="HELLO TO BIND" />
+      <Marquee rotate={2.5} bg={paper} color={ink} dot={ink} phrase="PRACTICE. PROVE. CONFIRM." />
     </div>
     <style>{`
       @keyframes cs-marquee {
@@ -166,75 +158,24 @@ const MarqueeBands = () => (
 );
 
 /* ══════════════════════════════════════════════════════
-   2 - BY THE NUMBERS (product facts only - no social proof)
-   ══════════════════════════════════════════════════════ */
-const heroStats = [
-  { n: '24', label: 'active modules' },
-  { n: '18', label: 'live AI voice-roleplay scenarios' },
-  { n: '85', label: 'AI quiz prompts across 17 scored quizzes' },
-  { n: '80%', label: 'default certification threshold' },
-];
-
-const StatStrip = () => (
-  <section style={{ background: ink, color: paper, padding: '64px 24px' }}>
-    <div className="max-w-[1280px] mx-auto">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-8" style={{ borderTop: `1px solid ${paper}1a` }}>
-        {heroStats.map((s, i) => (
-          <Reveal key={s.label} delay={i * 0.06}>
-            <div style={{ paddingTop: 36 }}>
-              <div style={{
-                fontFamily: display, fontSize: 'clamp(48px, 7vw, 92px)', lineHeight: 0.9,
-                letterSpacing: '-0.02em', color: blue, fontWeight: 400,
-              }}>
-                {s.n}
-              </div>
-              <p style={{ fontFamily: body, fontSize: 15, lineHeight: 1.45, color: paper, opacity: 0.7, marginTop: 14, maxWidth: 220 }}>
-                {s.label}
-              </p>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-      <Reveal delay={0.1}>
-        <p style={{ fontFamily: body, fontSize: 13, color: paper, opacity: 0.4, marginTop: 40, letterSpacing: '0.02em' }}>
-          Product facts about what is in the course, not claims of results.
-        </p>
-      </Reveal>
-    </div>
-  </section>
-);
-
-/* ══════════════════════════════════════════════════════
    3 - THE PROBLEM (agitate inconsistency)
    ══════════════════════════════════════════════════════ */
 const pains = [
-  {
-    num: '01',
-    label: 'Inconsistent calls',
-    body: 'Every rep improvises the hook, the discovery, the coverage walk, and the close. Prospects get a different experience depending on who picks up.',
-  },
-  {
-    num: '02',
-    label: 'Slow, expensive ramp',
-    body: 'New hires learn by listening and burn real leads while they figure out what to say in the moments that decide the sale.',
-  },
-  {
-    num: '03',
-    label: 'Coaching with no evidence',
-    body: 'You cannot be on every call. Feedback is from memory, one-off, and impossible to repeat across the team.',
-  },
+  { num: '01', label: '“I didn’t request a quote.”', body: 'The opening is already off-script. Rehearse the hook, handle resistance, and earn the next minute.' },
+  { num: '02', label: '“Your price is too high.”', body: 'Give producers a way to explain the protection, find the real concern, and ask for a decision.' },
+  { num: '03', label: '“Just email it to me.”', body: 'Work the hesitation, agree on a real next step, and follow through after the quote and the sale.' },
 ];
 
 const ProblemSection = () => (
   <section style={{ background: paper, padding: '120px 24px', borderTop: `1px solid ${ink}` }}>
     <div className="max-w-[1280px] mx-auto">
-      <Reveal><Eyebrow>/ The Problem</Eyebrow></Reveal>
+      <Reveal><Eyebrow>/ The Calls You Recognize</Eyebrow></Reveal>
       <Reveal delay={0.05}>
         <h2 style={{
           fontFamily: display, fontSize: 'clamp(40px, 7vw, 100px)', lineHeight: 0.95,
           letterSpacing: '-0.01em', color: ink, textTransform: 'uppercase', margin: 0, fontWeight: 400, maxWidth: 1100,
         }}>
-          Your best producer&apos;s call and your newest hire&apos;s call are <span style={{ color: blue }}>two different products.</span>
+          The next tough call is coming. <span style={{ color: blue }}>Give them a process for it.</span>
         </h2>
       </Reveal>
 
@@ -266,10 +207,10 @@ const ProblemSection = () => (
    4 - HOW IT WORKS (the 4-activity loop)
    ══════════════════════════════════════════════════════ */
 const loop = [
-  { name: 'Teach', tag: 'Step 1', body: 'Learn the standard and the frame for the call moment.', saved: false, gate: false },
-  { name: 'Scripted Practice', tag: 'Step 2', body: 'Run a live AI customer roleplay with the full script visible. Build cadence, order, and confidence.', saved: true, gate: false },
-  { name: 'Off-Script Practice', tag: 'Step 3', body: 'Run the same call again with the script hidden. Perform from memory, not by reading.', saved: true, gate: false },
-  { name: 'AI Quiz', tag: 'Step 4', body: 'The scored gate, set to an 80% default. Pass it to advance.', saved: false, gate: true },
+  { name: 'Learn the frame', tag: 'Teaching · unscored', body: 'Learn the purpose, sequence, and language for the conversation.', gate: false },
+  { name: 'Rehearse the call', tag: 'Scripted practice · unscored', body: 'Speak with an AI customer while the script is visible. Build the rhythm before working from memory.', gate: false },
+  { name: 'Take the script away', tag: 'Off-script practice & skill checks', body: 'The five hook activities are unscored practice. The other 12 off-script activities are scored skill checks. Use the language without reading it.', gate: true },
+  { name: 'Explain what you know', tag: '17 scored knowledge checks', body: 'Answer by voice or typing. Review the captured answers, then submit for assessment. Every conversation module has a scored knowledge check.', gate: true },
 ];
 
 const HowSection = () => (
@@ -281,12 +222,12 @@ const HowSection = () => (
           fontFamily: display, fontSize: 'clamp(32px, 4.6vw, 68px)', lineHeight: 0.98,
           letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 24, maxWidth: 1100,
         }}>
-          A repeatable loop that ends in a real certification, <span style={{ color: blue }}>earned through practice and a scored gate.</span>
+          Learn it. Say it. <span style={{ color: blue }}>Show you can use it.</span>
         </h2>
       </Reveal>
       <Reveal delay={0.1}>
         <p style={{ fontFamily: body, fontSize: 'clamp(17px, 1.6vw, 22px)', fontWeight: 400, lineHeight: 1.55, color: paper, opacity: 0.8, marginBottom: 56, maxWidth: 720 }}>
-          For each skill, producers run the full loop:
+          17 conversation modules and four knowledge commitments. Teaching and practice build the skill; scored checks assess it.
         </p>
       </Reveal>
 
@@ -294,14 +235,14 @@ const HowSection = () => (
         {loop.map((s, i) => (
           <Reveal key={s.name} delay={i * 0.08}>
             <div style={{ borderBottom: `1px solid ${paper}33`, padding: '48px 0' }}>
-              <div className="grid grid-cols-12 gap-8 items-start">
+              <div className="grid grid-cols-12 gap-x-0 gap-y-8 md:gap-8 items-start">
                 <div className="col-span-12 md:col-span-4">
-                  <span style={{ fontFamily: editorial, fontSize: 18, color: paper, opacity: 0.4, letterSpacing: '0.04em', display: 'inline-block', marginBottom: 14, textTransform: 'uppercase' }}>
+                  <span style={{ fontFamily: editorial, fontSize: 18, color: paper, opacity: 0.75, letterSpacing: '0.04em', display: 'inline-block', marginBottom: 14, textTransform: 'uppercase' }}>
                     {s.tag}
                   </span>
                   <h3 style={{
                     fontFamily: display, fontSize: 'clamp(34px, 5vw, 72px)', lineHeight: 0.9,
-                    letterSpacing: '-0.02em', color: s.gate ? blue : paper, textTransform: 'uppercase', margin: 0, fontWeight: 400,
+                    letterSpacing: '-0.02em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400,
                   }}>
                     {s.name}
                   </h3>
@@ -310,15 +251,8 @@ const HowSection = () => (
                   <p style={{ fontFamily: body, fontSize: 'clamp(17px, 1.5vw, 20px)', fontWeight: 400, lineHeight: 1.6, color: paper, opacity: 0.88 }}>
                     {s.body}
                   </p>
-                  {s.saved && (
-                    <span style={{ display: 'inline-block', marginTop: 16, fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: blue, border: `1px solid ${blue}`, padding: '6px 12px' }}>
-                      The call is saved
-                    </span>
-                  )}
                   {s.gate && (
-                    <span style={{ display: 'inline-block', marginTop: 16, fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: ink, background: blue, padding: '6px 12px' }}>
-                      This is the gate
-                    </span>
+                    <span className="cs-check-label">80% to pass scored checks</span>
                   )}
                 </div>
               </div>
@@ -329,7 +263,7 @@ const HowSection = () => (
 
       <Reveal delay={0.1}>
         <p style={{ fontFamily: body, fontSize: 'clamp(18px, 1.7vw, 24px)', fontWeight: 500, lineHeight: 1.55, color: paper, marginTop: 48, maxWidth: 900 }}>
-          Producers move from scripts to memory, so they can perform live, <span style={{ color: blue }}>before they ever take the call with a real prospect.</span>
+          A missed knowledge check leads to saved feedback and recovery practice before a retry. After three unsuccessful quiz attempts, <span style={{ color: blue }}>manager coaching and an unlock are required.</span>
         </p>
       </Reveal>
     </div>
@@ -340,45 +274,45 @@ const HowSection = () => (
    5 - MANAGER PAYOFF (evidence & visibility - the money section)
    ══════════════════════════════════════════════════════ */
 const benefits = [
-  { label: 'Saved transcripts', body: 'Every scripted and off-script practice call is recorded as coaching evidence.' },
-  { label: 'Quiz scores per producer', body: 'See exactly which standards each producer has actually passed, not just attempted.' },
-  { label: 'Completion and stall tracking', body: "Track who's certified, who's mid-path, and who's stalled." },
-  { label: 'One consistent standard', body: 'Every rep certifies on the same talk tracks and the same scenarios.' },
+  { label: 'Know who needs you', body: 'Review required progress, current and next activities, and who has not started, is progressing, needs coaching, or has completed the path.' },
+  { label: 'Open the work', body: 'See saved answers, scored results, feedback, and available practice transcripts and roleplay reports. Coach the gap behind the result.' },
+  { label: 'Guide the next attempt', body: 'Use the missed concepts to guide recovery practice and manage coaching unlocks when a learner needs help.' },
+  { label: 'Manage seats and voice time', body: 'Assign purchased seats and review used and remaining voice time. Managing the team does not enroll you in the course.' },
 ];
 
 const PayoffSection = () => (
-  <section style={{ background: `linear-gradient(180deg, ${blue} 0%, #1F7FE0 100%)`, color: '#fff', padding: '130px 24px' }}>
+  <section style={{ background: blue, color: ink, padding: '130px 24px' }}>
     <div className="max-w-[1280px] mx-auto">
       <Reveal>
-        <p style={{ fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em', color: '#fff', opacity: 0.8, textTransform: 'uppercase', marginBottom: 24 }}>
-          / For The Buyer
+        <p style={{ fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em', color: ink, opacity: 0.9, textTransform: 'uppercase', marginBottom: 24 }}>
+          / The Owner’s View
         </p>
       </Reveal>
       <Reveal delay={0.05}>
         <h2 style={{
           fontFamily: display, fontSize: 'clamp(44px, 8vw, 120px)', lineHeight: 0.92,
-          letterSpacing: '-0.01em', color: '#fff', textTransform: 'uppercase', margin: 0, fontWeight: 400,
+          letterSpacing: '-0.01em', color: ink, textTransform: 'uppercase', margin: 0, fontWeight: 400,
         }}>
           A STANDARD YOU CAN<br /><span style={{ color: ink }}>SEE AND PROVE.</span>
         </h2>
       </Reveal>
       <Reveal delay={0.12}>
-        <p style={{ fontFamily: body, fontSize: 'clamp(18px, 1.7vw, 22px)', fontWeight: 400, lineHeight: 1.6, color: '#fff', opacity: 0.95, marginTop: 32, maxWidth: 820 }}>
-          Every practice call and quiz is saved as certification evidence. Instead of one-off coaching notes, you get a consistent record across every producer.
+        <p style={{ fontFamily: body, fontSize: 'clamp(18px, 1.7vw, 22px)', fontWeight: 400, lineHeight: 1.6, color: ink, opacity: 0.95, marginTop: 32, maxWidth: 820 }}>
+          Stop asking how training is going. Open the submitted work, see where a producer needs coaching, and make the next conversation specific.
         </p>
       </Reveal>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 mt-20" style={{ borderTop: `1px solid #ffffff33`, borderLeft: `1px solid #ffffff33` }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 mt-20" style={{ borderTop: `1px solid #0a0a0b55`, borderLeft: `1px solid #0a0a0b55` }}>
         {benefits.map((b, i) => (
           <Reveal key={b.label} delay={(i % 2) * 0.08}>
-            <div style={{ borderRight: `1px solid #ffffff33`, borderBottom: `1px solid #ffffff33`, padding: '40px 32px 48px', height: '100%' }}>
-              <span style={{ fontFamily: editorial, fontSize: 18, color: '#fff', opacity: 0.6, letterSpacing: '0.04em', display: 'inline-block', marginBottom: 16 }}>
+            <div style={{ borderRight: `1px solid #0a0a0b55`, borderBottom: `1px solid #0a0a0b55`, padding: '40px 32px 48px', height: '100%' }}>
+              <span style={{ fontFamily: editorial, fontSize: 18, color: ink, opacity: 0.9, letterSpacing: '0.04em', display: 'inline-block', marginBottom: 16 }}>
                 {String(i + 1).padStart(2, '0')} / 04
               </span>
-              <h3 style={{ fontFamily: display, fontSize: 'clamp(24px, 2.4vw, 36px)', lineHeight: 0.98, letterSpacing: '-0.01em', color: '#fff', textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 14 }}>
+              <h3 style={{ fontFamily: display, fontSize: 'clamp(24px, 2.4vw, 36px)', lineHeight: 0.98, letterSpacing: '-0.01em', color: ink, textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 14 }}>
                 {b.label}
               </h3>
-              <p style={{ fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6, color: '#fff', opacity: 0.9 }}>
+              <p style={{ fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6, color: ink, opacity: 0.9 }}>
                 {b.body}
               </p>
             </div>
@@ -389,7 +323,7 @@ const PayoffSection = () => (
       <Reveal delay={0.1}>
         <div style={{ marginTop: 56, background: ink, color: paper, padding: '48px 36px' }}>
           <p style={{ fontFamily: body, fontSize: 'clamp(18px, 1.8vw, 26px)', fontWeight: 400, lineHeight: 1.5, color: paper, margin: 0, maxWidth: 920 }}>
-            <span style={{ color: blue, fontWeight: 700 }}>Completion means something here.</span> A certified producer has practiced the call, run it from memory, and passed the gate.
+            <span style={{ color: blue, fontWeight: 700 }}>Completion means something here.</span> Review the training evidence. Then use The Confirmation to verify the skill in the work.
           </p>
         </div>
       </Reveal>
@@ -424,8 +358,7 @@ const knowledge = [
   { name: 'Why Coverage Conversations Matter', body: 'The case for leading with protection over price, and how it reframes the whole call.' },
   { name: 'The Follow-Through: Post-Sale', body: 'What happens after the bind to keep the policy and the relationship intact.' },
   { name: 'Follow-Up Is Your Lifeblood', body: 'The discipline of working every quote so none of them die in an inbox.' },
-  { name: '3 Buckets = Simplicity', body: 'The three buckets that make coverage simple to explain and easy to say yes to.' },
-  { name: 'The Closers Playbook / Objection Sheet', body: 'Optional reference for closing language and the objections producers hear most.' },
+  { name: '3 Buckets = Simplicity', body: 'Organize the producer workflow into Sold, Dashboard, and Prospects.' },
 ];
 
 const discovery = [
@@ -436,41 +369,35 @@ const discovery = [
   { name: 'Walk the Block', body: 'Present coverage highest-to-lowest with a property-damage floor and daily-cost framing.' },
 ];
 
-// Closing-objection modules on the producer-launch-hello-to-bind path.
-// Rendered as expandable cards inside the What's Inside grid.
-// TODO: wire each `slug` to its real module route once module routing exists.
+// Curriculum descriptions only; course activities run in Agency Brain.
 const closingModules = [
   {
     name: 'Stalls and Maybes',
     body: `Turn "let me think about it" into a clear yes or a real next step, never a maybe.`,
     drill: `"I want to think about it," "just email it to me," and "I want to shop around."`,
     skill: `The close ladder. Name the real fear, assume the sale twice, then ask the direct yes-or-no question and lock a specific time.`,
-    slug: 'stalls-and-maybes',
   },
   {
     name: 'Payment and Start-Date Friction',
     body: `Clear the money-mechanics hangups that stall a prospect who already said yes.`,
     drill: `"I just paid my current insurance," "don't take my card, call me on the start date," and "I'm not comfortable paying over the phone."`,
     skill: `Remove the friction with the right lever, a prorated refund, a future-dated start, or the secure-payment reassurance, then assume and ask.`,
-    slug: 'payment-start-date-friction',
   },
   {
     name: 'Price, Savings, and Coverage Value',
     body: `Beat the price objection without dropping your price.`,
     drill: `"your price is too high," "you're not saving me enough," "you saved me on home but not auto," and "I have a lower deductible now."`,
     skill: `Reframe to the gap, tell one short claim story, walk the block from high coverage down, and hold the property damage floor as your value.`,
-    slug: 'price-savings-coverage-value',
   },
   {
     name: 'Decision-Maker and Loyalty Objections',
     body: `Respect the relationship without surrendering the close.`,
     drill: `"I need to talk to my spouse," "I'm loyal to my agent," and "I prefer a local agent."`,
     skill: `Qualify who actually decides, lock the rate risk-free with a future-dated start, and reframe loyalty with better coverage and a better price.`,
-    slug: 'decision-maker-loyalty',
   },
 ];
 
-type ScenarioItem = { name: string; body: string; drill?: string; skill?: string; slug?: string };
+type ScenarioItem = { name: string; body: string; drill?: string; skill?: string };
 
 const ScenarioGrid = ({ items }: { items: ScenarioItem[] }) => (
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" style={{ borderTop: `1px solid ${ink}`, borderLeft: `1px solid ${ink}` }}>
@@ -498,16 +425,7 @@ const ScenarioGrid = ({ items }: { items: ScenarioItem[] }) => (
               <span style={{ fontWeight: 700 }}>The skill: </span>{s.skill}
             </p>
           )}
-          {s.slug && (
-            // TODO: route to the producer-launch-hello-to-bind module for this slug once module routing exists
-            <a
-              href={`#${s.slug}`}
-              style={{ display: 'inline-block', marginTop: 16, fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: blue, textDecoration: 'none' }}
-              className="hover:underline"
-            >
-              Open module →
-            </a>
-          )}
+
         </details>
       </Reveal>
     ))}
@@ -515,7 +433,7 @@ const ScenarioGrid = ({ items }: { items: ScenarioItem[] }) => (
 );
 
 const InsideSection = () => (
-  <section style={{ background: paper, padding: '120px 24px' }}>
+  <section id="curriculum" style={{ background: paper, padding: '80px 24px' }}>
     <div className="max-w-[1280px] mx-auto">
       <Reveal><Eyebrow>/ What&apos;s Inside</Eyebrow></Reveal>
       <Reveal delay={0.05}>
@@ -523,15 +441,17 @@ const InsideSection = () => (
           fontFamily: display, fontSize: 'clamp(40px, 7vw, 104px)', lineHeight: 0.95,
           letterSpacing: '-0.01em', color: ink, textTransform: 'uppercase', margin: 0, fontWeight: 400, maxWidth: 1100,
         }}>
-          Built around the exact calls your producers <span style={{ color: blue }}>actually make.</span>
+          One process. <span style={{ color: blue }}>From hello through follow-up.</span>
         </h2>
       </Reveal>
       <Reveal delay={0.12}>
         <p style={{ fontFamily: body, fontSize: 'clamp(17px, 1.6vw, 22px)', fontWeight: 400, lineHeight: 1.55, color: ink, opacity: 0.85, marginTop: 32, maxWidth: 820 }}>
-          Live voice-roleplay scenarios covering every moment that decides whether a prospect stays on the phone, or hangs up.
+          17 conversation modules plus four knowledge commitments. Orientation gets learners started; the optional resource library supports the work.
         </p>
       </Reveal>
 
+      <details className="cs-curriculum">
+        <summary>Explore the full curriculum <span aria-hidden="true">+</span></summary>
       <Reveal delay={0.1}>
         <p style={{ fontFamily: editorial, fontSize: 'clamp(16px, 1.6vw, 22px)', letterSpacing: '-0.01em', color: ink, textTransform: 'uppercase', marginTop: 64, marginBottom: 20, fontWeight: 400 }}>
           Hooks (the first close)
@@ -562,175 +482,94 @@ const InsideSection = () => (
 
       <Reveal delay={0.1}>
         <p style={{ fontFamily: editorial, fontSize: 'clamp(16px, 1.6vw, 22px)', letterSpacing: '-0.01em', color: ink, textTransform: 'uppercase', marginTop: 56, marginBottom: 20, fontWeight: 400 }}>
-          Knowledge Modules (after the roleplay track)
+          Four knowledge commitments (after the conversation track)
         </p>
       </Reveal>
       <ScenarioGrid items={knowledge} />
+      </details>
     </div>
   </section>
 );
 
-/* ══════════════════════════════════════════════════════
-   6.5 - THE DOWNLOADS (in-course materials)
-   ══════════════════════════════════════════════════════ */
-const downloadItems = [
-  'The Hello-to-Bind script',
-  'The playbook materials',
-  'The Closers Playbook and Objection Sheet',
+const producerGuides = [
+  { name: 'From hello to closed.', image: 'sales-manual.webp', alt: 'Actual cover of From hello to closed, the producer sales manual', text: 'The sales sequence, talk tracks, coverage conversations, the close, and the habits after the sale.' },
+  { name: 'The Objection Playbook', image: 'opening-objections.webp', alt: 'Actual cover of The Objection Playbook', text: 'Sixteen opening objections with responses, variations, and the reason behind the language.' },
+  { name: 'The Closing Objection Bank', image: 'closing-reference.webp', alt: 'Actual quick-reference page from The Closing Objection Bank, current Draft PDF edition', text: 'Fourteen objection scripts for hesitation, value, payment, timing, and decision-makers.', draft: true },
 ];
+
+const PagePreview = ({ file, alt, caption }: { file: string; alt: string; caption: string }) => (
+  <figure className="cs-preview">
+    <a href={`/certified-standard/${file}`} target="_blank" rel="noopener noreferrer" aria-label={`View ${caption.toLowerCase()} at full size (opens a new tab)`}>
+      <img src={`/certified-standard/${file}`} alt={alt} loading="lazy" />
+    </a>
+    <figcaption>{caption} <span aria-hidden="true">↗</span></figcaption>
+  </figure>
+);
 
 const WorkbookSection = () => (
-  <section style={{ background: ink, color: paper, padding: '120px 24px' }}>
-    <div className="max-w-[1280px] mx-auto">
-      <div className="grid grid-cols-12 gap-10 md:gap-16 items-start">
-        <div className="col-span-12 md:col-span-7">
-          <Reveal><Eyebrow onDark>/ The Downloads</Eyebrow></Reveal>
-          <Reveal delay={0.05}>
-            <h2 style={{
-              fontFamily: display, fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.95,
-              letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 32,
-            }}>
-              Download the script. <span style={{ color: blue }}>Keep the playbook.</span>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p style={{ fontFamily: body, fontSize: 'clamp(18px, 1.7vw, 22px)', fontWeight: 400, lineHeight: 1.6, color: paper, opacity: 0.9, marginBottom: 24, maxWidth: 620 }}>
-              Inside the course, producers download the Hello-to-Bind script and the playbook materials, including the Closers Playbook and the Objection Sheet.
-            </p>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <p style={{ fontFamily: body, fontSize: 'clamp(18px, 1.7vw, 22px)', fontWeight: 400, lineHeight: 1.6, color: paper, opacity: 0.9, maxWidth: 620 }}>
-              The required downloads are gated. A producer cannot advance past a module until they have grabbed the materials. Once they have them, the team keeps them.
-            </p>
-          </Reveal>
-        </div>
-
-        <div className="col-span-12 md:col-span-5">
-          <Reveal delay={0.1}>
-            <div style={{ border: `1px solid ${paper}33` }}>
-              <p style={{ fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: paper, opacity: 0.55, padding: '20px 24px 0', margin: 0 }}>
-                What they download
-              </p>
-              <ul style={{ listStyle: 'none', margin: '12px 0 8px', padding: 0 }}>
-                {downloadItems.map((d) => (
-                  <li key={d} style={{ fontFamily: display, fontSize: 'clamp(18px, 1.8vw, 24px)', letterSpacing: '-0.01em', textTransform: 'uppercase', color: paper, fontWeight: 400, padding: '14px 24px', borderTop: `1px solid ${paper}1a`, display: 'flex', alignItems: 'baseline', gap: 14 }}>
-                    <span style={{ color: blue, fontFamily: body, fontWeight: 700, fontSize: 16, flexShrink: 0 }}>+</span>{d}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
-/* ══════════════════════════════════════════════════════
-   7 - PROOF POINTS (course structure)
-   ══════════════════════════════════════════════════════ */
-const proofStats = [
-  { n: '24', label: 'active modules' },
-  { n: '75', label: 'active steps' },
-  { n: '18', label: 'live voice-roleplay skill modules' },
-  { n: '85', label: 'AI quiz prompts across 17 scored quizzes' },
-  { n: '4', label: 'required knowledge attestations' },
-  { n: '80%', label: 'default certification threshold' },
-];
-
-const ProofSection = () => (
-  <section style={{ background: paper, padding: '120px 24px', borderTop: `1px solid ${ink}` }}>
-    <div className="max-w-[1280px] mx-auto">
-      <Reveal><Eyebrow>/ By The Numbers</Eyebrow></Reveal>
-      <Reveal delay={0.05}>
-        <h2 style={{
-          fontFamily: display, fontSize: 'clamp(36px, 6vw, 88px)', lineHeight: 0.95,
-          letterSpacing: '-0.01em', color: ink, textTransform: 'uppercase', margin: 0, fontWeight: 400, maxWidth: 1000,
-        }}>
-          Depth and rigor, by the <span style={{ color: blue }}>actual course structure.</span>
-        </h2>
-      </Reveal>
-
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 mt-16" style={{ borderTop: `1px solid ${ink}`, borderLeft: `1px solid ${ink}` }}>
-        {proofStats.map((s, i) => (
-          <Reveal key={s.label} delay={(i % 6) * 0.05}>
-            <div style={{ borderRight: `1px solid ${ink}`, borderBottom: `1px solid ${ink}`, padding: '32px 20px 36px', height: '100%' }}>
-              <div style={{ fontFamily: display, fontSize: 'clamp(40px, 4vw, 60px)', lineHeight: 0.9, letterSpacing: '-0.02em', color: ink, fontWeight: 400 }}>
-                {s.n}
-              </div>
-              <p style={{ fontFamily: body, fontSize: 13, lineHeight: 1.4, color: ink, opacity: 0.65, marginTop: 12 }}>
-                {s.label}
-              </p>
-            </div>
-          </Reveal>
+  <section id="guides" className="cs-section cs-dark">
+    <div className="cs-container">
+      <Eyebrow onDark>/ The Producer Guides</Eyebrow>
+      <h2 className="cs-heading">The process stays <span>at their desk.</span></h2>
+      <p className="cs-intro">Three practical PDF guides available in the course. Language to rehearse today. References for the next real call.</p>
+      <div className="cs-guide-grid">
+        {producerGuides.map(guide => (
+          <article key={guide.name}>
+            <a href={`/certified-standard/${guide.image}`} target="_blank" rel="noopener noreferrer" aria-label={`View ${guide.name} preview at full size (opens a new tab)`}>
+              <img className="cs-guide-image" src={`/certified-standard/${guide.image}`} alt={guide.alt} loading="lazy" width="850" height="1100" />
+            </a>
+            <h3>{guide.name}</h3>
+            <p>{guide.text}</p>
+            {guide.draft && <p className="cs-draft">Current PDF edition: Draft</p>}
+          </article>
         ))}
       </div>
+      <details className="cs-inside-guides">
+        <summary>Look inside the producer guides <span aria-hidden="true">+</span></summary>
+        <div className="cs-preview-grid">
+          <PagePreview file="manual-gap.webp" alt="Sales manual coverage discovery page showing the house, personal property, and financial assets questions" caption="The coverage discovery framework" />
+          <PagePreview file="opening-index.webp" alt="The Objection Playbook index listing sixteen opening objections" caption="The opening-objection reference" />
+        </div>
+      </details>
+      <p className="cs-note">The resource-library download acknowledgment is optional. Downloading these references is not a required progression gate.</p>
     </div>
   </section>
 );
 
-/* ══════════════════════════════════════════════════════
-   8 - THE CERTIFICATION GATE
-   ══════════════════════════════════════════════════════ */
-const GateSection = () => (
-  <section style={{ background: ink, color: paper, padding: '120px 24px' }}>
-    <div className="max-w-[1080px] mx-auto">
-      <Reveal><Eyebrow onDark>/ The Certification Gate</Eyebrow></Reveal>
-      <Reveal delay={0.05}>
-        <h2 style={{
-          fontFamily: display, fontSize: 'clamp(36px, 6vw, 92px)', lineHeight: 0.95,
-          letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 40,
-        }}>
-          &ldquo;Completed&rdquo; should mean they can <span style={{ color: blue }}>actually do it.</span>
-        </h2>
-      </Reveal>
-      <Reveal delay={0.1}>
-        <p style={{ fontFamily: body, fontSize: 'clamp(18px, 1.7vw, 24px)', fontWeight: 400, lineHeight: 1.6, color: paper, opacity: 0.9, maxWidth: 880 }}>
-          Completion here is earned, not assumed. Certified Standard scores each module with an AI quiz gate set to an 80% threshold by default. A producer doesn&apos;t advance by sitting through content. They advance by proving they remember the standard. When the path is done, you have a producer who has practiced the call, run it from memory, and passed every gate.
-        </p>
-      </Reveal>
-    </div>
-  </section>
-);
-
-/* ══════════════════════════════════════════════════════
-   9 - WHO IT'S FOR
-   ══════════════════════════════════════════════════════ */
-const audiences = [
-  { num: '01', label: 'Growing agencies', body: 'Ramping new producers and tired of inconsistent calls.' },
-  { num: '02', label: 'Sales managers', body: "Who can't be on every call but need every call run right." },
-  { num: '03', label: 'Owners', body: 'Who want a repeatable standard and the evidence to coach and hold the line.' },
+const confirmationSteps = [
+  { when: 'Within 48 hours', title: 'Lead the debrief.', text: 'Use teach-back questions to hear what stuck. Agree on commitments, a baseline, and business targets.' },
+  { when: 'Week one', title: 'Watch the live proof.', text: 'Run an owner-led roleplay and review real quoted calls against the same standard.' },
+  { when: 'Days 1–30', title: 'Coach it into the work.', text: 'Hold four weekly check-ins: the numbers, one call clip, one re-rep, and one commitment.' },
+  { when: 'Day 30', title: 'Make the sign-off mean something.', text: 'Record Confirmed or Not Yet. Name the specific next step: modules to repeat and the next proof window when there is a gap.' },
 ];
 
-const WhoSection = () => (
-  <section style={{ background: paper, padding: '120px 24px' }}>
-    <div className="max-w-[1280px] mx-auto">
-      <Reveal><Eyebrow>/ Who It&apos;s For</Eyebrow></Reveal>
-      <Reveal delay={0.05}>
-        <h2 style={{
-          fontFamily: display, fontSize: 'clamp(36px, 6vw, 92px)', lineHeight: 0.95,
-          letterSpacing: '-0.01em', color: ink, textTransform: 'uppercase', margin: 0, fontWeight: 400, maxWidth: 1000,
-        }}>
-          For the team that has to run the call right, <span style={{ color: blue }}>every time.</span>
-        </h2>
-      </Reveal>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 mt-20" style={{ borderTop: `1px solid ${ink}`, borderLeft: `1px solid ${ink}` }}>
-        {audiences.map((a, i) => (
-          <Reveal key={a.num} delay={i * 0.08}>
-            <div style={{ borderRight: `1px solid ${ink}`, borderBottom: `1px solid ${ink}`, padding: '40px 28px 48px', height: '100%' }}>
-              <span style={{ fontFamily: editorial, fontSize: 20, color: blue, opacity: 0.9, letterSpacing: '-0.01em', display: 'inline-block', marginBottom: 18 }}>
-                {a.num} / 03
-              </span>
-              <h3 style={{ fontFamily: display, fontSize: 'clamp(26px, 2.6vw, 38px)', lineHeight: 0.95, letterSpacing: '-0.01em', color: ink, textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 16 }}>
-                {a.label}
-              </h3>
-              <p style={{ fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6, color: ink, opacity: 0.8 }}>
-                {a.body}
-              </p>
-            </div>
-          </Reveal>
-        ))}
+const ConfirmationSection = () => (
+  <section id="confirmation" className="cs-section">
+    <div className="cs-container">
+      <Eyebrow>/ The Owner Handoff · The Confirmation</Eyebrow>
+      <h2 className="cs-heading">Course passed.<br /><span>Now prove it on real work.</span></h2>
+      <p className="cs-intro">Training evidence gives you a place to start. The Confirmation is your owner playbook for the next 30 days: debrief, live proof, weekly coaching, and a decision you can stand behind.</p>
+      <div className="cs-confirmation-grid">
+        <div className="cs-owner-materials">
+          <figure className="cs-owner-cover">
+            <img src="/certified-standard/the-confirmation-cover.webp" alt="The Confirmation, the included owner playbook" loading="lazy" />
+            <figcaption>The fourth guide: your included owner PDF. Cover preview.</figcaption>
+          </figure>
+          <PagePreview file="owner-scoreboard.webp" alt="Actual Confirmation scoreboard with owner-entered baseline, 30-day target, and actual result columns" caption="Inside The Confirmation: the owner scoreboard" />
+        </div>
+        <ol className="cs-confirmation-steps">
+          {confirmationSteps.map(step => (
+            <li key={step.when}>
+              <p className="cs-when">{step.when}</p>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <div className="cs-evidence-boundary">
+        <h3>Training evidence is saved. Business results are yours to verify.</h3>
+        <p>Agency Brain tracks submitted training evidence. You set the business targets and record results from your own sources. The Confirmation’s business scoreboard is owner-maintained; the program does not automatically calculate it.</p>
       </div>
     </div>
   </section>
@@ -740,17 +579,17 @@ const WhoSection = () => (
    10 - PRICING (single price, single seat)
    ══════════════════════════════════════════════════════ */
 const seatFeatures = [
-  'Full certification path',
-  'Live AI roleplay (scripted and off-script)',
-  'Scored AI quiz gates at the 80% default threshold',
-  'Saved practice transcripts',
-  'Quiz scores and completion status',
-  'The 18 voice-roleplay scenarios plus knowledge modules',
-  'Gated script and playbook downloads the team keeps',
+  '17 conversation modules and four knowledge commitments',
+  'AI customer practice, scored skill checks, and scored knowledge checks',
+  '80% to pass scored checks',
+  'Saved progress, submitted answers, results, and feedback',
+  'Three producer PDF guides plus The Confirmation owner playbook',
+  'Standard one-time allowance of 750 voice minutes per learner seat',
+  'Owner workspace for seat allocation, learner progress, and voice usage',
 ];
 
 const PricingSection = () => (
-  <section style={{ background: ink, color: paper, padding: '120px 24px' }}>
+  <section id="pricing" style={{ background: ink, color: paper, padding: '120px 24px' }}>
     <div className="max-w-[1280px] mx-auto">
       <Reveal><Eyebrow onDark>/ Pricing</Eyebrow></Reveal>
       <Reveal delay={0.05}>
@@ -758,7 +597,7 @@ const PricingSection = () => (
           fontFamily: display, fontSize: 'clamp(40px, 7vw, 104px)', lineHeight: 0.95,
           letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 56,
         }}>
-          One price. <span style={{ color: blue }}>One seat.</span>
+          Set the standard. <span style={{ color: blue }}>Choose your learners.</span>
         </h2>
       </Reveal>
 
@@ -766,15 +605,15 @@ const PricingSection = () => (
         <Reveal delay={0.08}>
           <div style={{
             border: `1.5px solid ${blue}`, background: '#ffffff08',
-            padding: '44px 40px', display: 'flex', flexDirection: 'column',
+            padding: '36px 24px', display: 'flex', flexDirection: 'column',
           }}>
             <h3 style={{ fontFamily: display, fontSize: 'clamp(26px, 2.6vw, 36px)', lineHeight: 1, letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 18 }}>
-              One Producer Seat
+              One Learner Seat
             </h3>
             <div style={{ marginBottom: 28 }}>
               <span style={{ fontFamily: display, fontSize: 'clamp(44px, 5vw, 64px)', lineHeight: 1, letterSpacing: '-0.02em', color: blue, fontWeight: 400 }}>$399</span>
-              <span style={{ fontFamily: body, fontSize: 15, fontWeight: 500, color: paper, opacity: 0.6, marginLeft: 10 }}>per seat, one-time</span>
-              <p style={{ fontFamily: body, fontSize: 14, color: paper, opacity: 0.6, marginTop: 12, marginBottom: 0 }}>One seat certifies one producer, including the owner.</p>
+              <span style={{ fontFamily: body, fontSize: 15, fontWeight: 500, color: paper, opacity: 0.6, marginLeft: 10 }}>per learner seat, one time</span>
+              <p style={{ fontFamily: body, fontSize: 14, color: paper, opacity: 0.6, marginTop: 12, marginBottom: 0 }}>Purchased seats start unassigned. Managing your team uses no seat. Explicit owner self-enrollment consumes one seat.</p>
             </div>
             <ul style={{ listStyle: 'none', margin: '0 0 36px', padding: 0, display: 'grid', gap: 13 }}>
               {seatFeatures.map((f) => (
@@ -783,8 +622,7 @@ const PricingSection = () => (
                 </li>
               ))}
             </ul>
-            <a
-              href={CHECKOUT_URL}
+            <PurchaseLink
               style={{
                 fontFamily: body, fontSize: 14, fontWeight: 700, letterSpacing: '0.12em',
                 textTransform: 'uppercase', textAlign: 'center', padding: '17px 0', textDecoration: 'none',
@@ -792,14 +630,14 @@ const PricingSection = () => (
               }}
               className="hover:bg-[#2997FF] hover:border-[#2997FF] hover:text-white"
             >
-              {CHECKOUT_LABEL} · $399
-            </a>
+              {CHECKOUT_LABEL} →
+            </PurchaseLink>
           </div>
         </Reveal>
 
         <Reveal delay={0.12}>
           <p style={{ fontFamily: body, fontSize: 16, color: paper, opacity: 0.7, marginTop: 28, textAlign: 'center' }}>
-            Certifying a team? Buy one seat for each producer.
+            Buy one seat per learner. Purchase and training are delivered through Agency Brain. Available standalone; no full Agency Brain subscription required.
           </p>
         </Reveal>
       </div>
@@ -811,12 +649,15 @@ const PricingSection = () => (
    11 - QUESTIONS (objection handling)
    ══════════════════════════════════════════════════════ */
 const faqs = [
-  { q: 'Is this just content my team will click through?', a: 'No. The model is practice-first: teach, scripted AI roleplay, off-script roleplay from memory, then a scored AI quiz gate. Completion means the producer passed, not just watched.' },
-  { q: 'How do I know a producer actually learned it?', a: 'Each voice module ends with an AI quiz scored to an 80% default threshold. Practice calls are saved as transcripts so you can review and coach from real evidence.' },
-  { q: 'Will this work for new hires with no experience?', a: "Yes. It's built for producers learning the Hello-to-Bind process. They rehearse live conversations with an AI customer before taking them with real prospects." },
-  { q: 'Is this a generic sales course?', a: 'No. Every scenario is built around real insurance producer calls: auto and home lead hooks, win-backs, X-date requotes, cross-sell, objections, rapport, coverage gaps, umbrella, and the coverage presentation.' },
-  { q: 'What does a producer practice, exactly?', a: '18 live voice-roleplay scenarios covering hooks, objections, discovery, coverage gaps, umbrella positioning, the close, and closing objections, plus required knowledge modules on post-sale follow-through and follow-up discipline.' },
-  { q: 'What do I see as a manager?', a: 'Saved practice transcripts, quiz answers and scores, and completion status across your team.' },
+  { q: 'Is this for new hires or experienced producers?', a: 'Both. New producers get a defined process and a place to rehearse it. Experienced producers work on the conversations they tend to rush, avoid, or lose. Everyone works through the same required path.' },
+  { q: 'Does the owner have to buy a seat?', a: 'Managing your team uses no seat. Buy one seat for each learner taking the course. Purchased seats start unassigned. Assign them to producers or explicitly enroll yourself; owner self-enrollment consumes one seat.' },
+  { q: 'What is practice, and what is scored?', a: 'Teaching and guided scripted practice are unscored. The five hook modules also have unscored off-script practice. The other 12 off-script activities are scored skill checks. All 17 conversation modules have scored knowledge checks. Scored checks require 80% to pass. Four knowledge commitments cover protection, post-sale follow-through, follow-up, and the Sold, Dashboard, and Prospects workflow.' },
+  { q: 'What if a producer misses a knowledge check?', a: 'Review the saved feedback and complete recovery practice before retrying. After three unsuccessful quiz attempts, manager coaching and an unlock are required. The owner can review the gap and coach the next attempt.' },
+  { q: 'How much AI voice time is included?', a: 'Each learner seat includes a standard one-time allowance of 750 voice minutes for certification practice and voice assessments. Voice usage is metered. Used and remaining time are visible in the workspace.' },
+  { q: 'What can I review as an owner?', a: 'Required progress, current and next activities, coaching needs, saved answers, results, and feedback. Available practice transcripts and roleplay reports help you review the work. You can also manage recovery coaching unlocks, seat allocation, and voice usage.' },
+  { q: 'What guides are included? Are downloads required?', a: 'From hello to closed., The Objection Playbook, and The Closing Objection Bank are the producer references. The current closing-objection PDF is labeled Draft. The Confirmation is the owner playbook. The optional resource-library download acknowledgment does not block required progression.' },
+  { q: 'What do I do after the course?', a: 'Use The Confirmation for a debrief within 48 hours, owner-led roleplay and real-call review in week one, four weekly check-ins during the 30-day coaching window, and a day-30 Confirmed / Not Yet sign-off with a specific next step. You set business targets and enter results from your own sources; the training platform does not automatically calculate that scoreboard.' },
+  { q: 'Do I need a full Agency Brain subscription?', a: 'No. Certified Standard is available standalone for $399 per learner seat, one time. Purchase and training are delivered through Agency Brain. The program includes the course, practice and assessments, learner management, and the included guides. Other Agency Brain CRM, automation, and call-scoring products are separate.' },
 ];
 
 const QuestionsSection = () => (
@@ -866,12 +707,12 @@ const FinalClose = () => (
           fontFamily: display, fontSize: 'clamp(40px, 7vw, 104px)', lineHeight: 0.95,
           letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400,
         }}>
-          GIVE EVERY PRODUCER<br /><span style={{ color: blue }}>THE SAME WINNING CALL.</span>
+          GIVE EVERY PRODUCER<br /><span style={{ color: blue }}>A PROCESS YOU CAN COACH.</span>
         </h2>
       </Reveal>
       <Reveal delay={0.12}>
         <p style={{ fontFamily: body, fontSize: 'clamp(18px, 1.8vw, 24px)', lineHeight: 1.5, color: paper, opacity: 0.85, marginTop: 32, maxWidth: 680, marginInline: 'auto' }}>
-          Start certifying your team on the Hello-to-Bind standard today.
+          Give them the process to practice. Give yourself the evidence to coach it. $399 per learner seat, one time, through Agency Brain.
         </p>
       </Reveal>
       <Reveal delay={0.2}>
@@ -907,7 +748,7 @@ const BoldFooter = () => (
 
         {[
           { title: 'Product', items: [
-            { label: 'What’s inside', href: '/training' },
+            { label: 'What’s inside', href: '#curriculum' },
             { label: 'Programs', href: '/#programs' },
             { label: 'Software', href: '/#software' },
           ]},
@@ -925,9 +766,9 @@ const BoldFooter = () => (
             <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
               {col.items.map((it) => (
                 <li key={it.label} style={{ marginBottom: 8 }}>
-                  <Link to={it.href} style={{ fontFamily: body, fontSize: 14, color: paper, opacity: 0.85, textDecoration: 'none' }} className="hover:opacity-100">
+                  <a href={it.href} style={{ fontFamily: body, fontSize: 14, color: paper, opacity: 0.85, textDecoration: 'none' }} className="hover:opacity-100">
                     {it.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -948,19 +789,17 @@ const BoldFooter = () => (
    MOBILE STICKY CTA
    ══════════════════════════════════════════════════════ */
 const MobileStickyCTA = () => (
-  <div className="fixed bottom-0 left-0 right-0 md:hidden z-40" style={{ background: ink, padding: '12px 16px', borderTop: `1px solid ${paper}33` }}>
-    {/* TODO: wire to checkout/demo */}
-    <a
-      href={CHECKOUT_URL}
+  <div className="fixed bottom-0 left-0 right-0 md:hidden z-40" style={{ background: ink, padding: '12px 16px max(12px, env(safe-area-inset-bottom))', borderTop: `1px solid ${paper}33` }}>
+    <PurchaseLink
       style={{
-        fontFamily: body, fontSize: 13, fontWeight: 700, letterSpacing: '0.14em',
+        fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.04em',
         color: ink, background: paper, padding: '14px 0', width: '100%',
         border: 'none', cursor: 'pointer', textTransform: 'uppercase', textAlign: 'center',
         textDecoration: 'none', display: 'block',
       }}
     >
-      {CHECKOUT_LABEL}
-    </a>
+      Choose seats · $399 / learner · one time
+    </PurchaseLink>
   </div>
 );
 
@@ -968,24 +807,23 @@ const MobileStickyCTA = () => (
    PAGE
    ══════════════════════════════════════════════════════ */
 const BoldCertifiedStandard = () => (
-  <div style={{ background: paper, fontFamily: body, color: ink }}>
+  <div className="cs-page" style={{ background: paper, fontFamily: body, color: ink }}>
     <BoldNav />
+    <main id="main-content">
     <Hero />
     <MarqueeBands />
-    <StatStrip />
     <ProblemSection />
     <HowSection />
     <PayoffSection />
-    <InsideSection />
     <WorkbookSection />
-    <ProofSection />
-    <GateSection />
-    <WhoSection />
+    <ConfirmationSection />
+    <InsideSection />
     <PricingSection />
     <QuestionsSection />
     <FinalClose />
+    </main>
     <BoldFooter />
-    <ContentMeta lastUpdated="June 2026" />
+    <ContentMeta lastUpdated="November 2026" />
     <MobileStickyCTA />
   </div>
 );

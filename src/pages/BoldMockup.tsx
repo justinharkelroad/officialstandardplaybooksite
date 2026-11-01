@@ -829,10 +829,10 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
             <DecisionOffer
               eyebrow="AI sales certification · One-time"
               name="Certified Standard"
-              price="$399/seat"
-              description="Certify producers on the full Hello-to-Bind sales call with training, roleplay, quizzes, and scored certification."
+              price="$399/learner seat · One time"
+              description="Build producer readiness with AI practice, scored checks, practical guides, and The Confirmation owner handoff. Purchase and training through Agency Brain."
               href="/certified-standard?src=home-programs"
-              cta="Get Certified"
+              cta="Explore Certified Standard"
             />
             <DecisionOffer
               eyebrow="Team sprint"

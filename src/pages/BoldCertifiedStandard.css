@@ -1,0 +1,52 @@
+.cs-page { overflow-x: clip; }
+.cs-page section[id] { scroll-margin-top: 56px; }
+.cs-page h1, .cs-page h2 { text-wrap: balance; }
+.cs-page a:focus-visible, .cs-page summary:focus-visible { outline: 3px solid #1768b1; outline-offset: 5px; }
+.cs-page a, .cs-page summary { -webkit-tap-highlight-color: #2997ff44; }
+.cs-page summary { min-height: 44px; }
+.cs-page summary::marker, .cs-page summary::-webkit-details-marker { display: none; }
+.cs-page details[open] > summary { margin-bottom: 24px; }
+.cs-section { padding: 100px 24px; background: #F4F2EE; }
+.cs-container { max-width: 1280px; margin-inline: auto; }
+.cs-dark { background: #0A0A0B; color: #F4F2EE; }
+.cs-heading { font-family: 'Anton', 'Archivo Black', Impact, sans-serif; font-size: clamp(38px, 6vw, 88px); font-weight: 400; line-height: 1.03; letter-spacing: -.01em; text-transform: uppercase; margin: 0; max-width: 1150px; }
+.cs-heading span { color: #2997FF; }
+.cs-intro { font-size: clamp(17px, 1.6vw, 22px); line-height: 1.6; margin-top: 28px; max-width: 760px; }
+.cs-note { font-size: 14px; line-height: 1.65; max-width: 70ch; }
+.cs-dark .cs-note { color: #ceccc9; margin-top: 28px; }
+.cs-text-link { display: inline-block; margin-top: 20px; padding-block: 10px; font-size: 14px; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+.cs-check-label { display: inline-block; margin-top: 16px; padding: 7px 12px; border: 1px solid #2997ff; color: #2997ff; font-size: 13px; font-weight: 700; }
+.cs-guide-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; margin-top: 56px; }
+.cs-guide-image { width: 100%; height: auto; aspect-ratio: 850 / 1100; object-fit: contain; background: #e9e7e4; }
+.cs-guide-grid h3, .cs-confirmation-steps h3, .cs-evidence-boundary h3 { font-family: 'Anton', 'Archivo Black', Impact, sans-serif; font-size: clamp(24px, 2.5vw, 34px); line-height: 1.15; font-weight: 400; text-transform: uppercase; }
+.cs-guide-grid h3 { margin-top: 24px; }
+.cs-guide-grid p { font-size: 16px; line-height: 1.65; margin-top: 14px; }
+.cs-guide-grid .cs-draft { color: #8ec8ff; font-weight: 600; }
+.cs-inside-guides { margin-top: 48px; border-block: 1px solid #f4f2ee55; padding-block: 24px; }
+.cs-inside-guides summary, .cs-curriculum > summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 20px; font-size: 18px; font-weight: 600; }
+.cs-preview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding-top: 24px; }
+.cs-preview { margin: 0; min-width: 0; }
+.cs-preview img { display: block; width: 100%; height: auto; }
+.cs-preview figcaption, .cs-owner-cover figcaption { font-size: 13px; line-height: 1.5; margin-top: 12px; }
+.cs-preview a { display: block; }
+.cs-confirmation-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 80px; margin-top: 56px; align-items: start; }
+.cs-owner-materials { display: grid; gap: 36px; }
+.cs-owner-cover { margin: 0; }
+.cs-owner-cover img { width: 100%; max-width: 320px; height: auto; }
+.cs-confirmation-steps { list-style: none; margin: 0; padding: 0; }
+.cs-confirmation-steps li { padding: 28px 0; border-top: 1px solid #0a0a0b55; }
+.cs-confirmation-steps li:first-child { padding-top: 0; border-top: none; }
+.cs-confirmation-steps p { font-size: 17px; line-height: 1.65; margin-top: 14px; }
+.cs-confirmation-steps .cs-when { font-size: 13px; font-weight: 700; margin: 0 0 10px; text-transform: uppercase; }
+.cs-evidence-boundary { border-block: 1px solid #0a0a0b; padding-block: 32px; margin-top: 56px; }
+.cs-evidence-boundary p { max-width: 78ch; font-size: 17px; line-height: 1.65; margin-top: 16px; }
+.cs-curriculum { margin-top: 40px; border-block: 1px solid #0a0a0b; padding-block: 24px; }
+@media (max-width: 767px) {
+  .cs-page { padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
+  .cs-section { padding-block: 72px; }
+  .cs-guide-grid, .cs-confirmation-grid, .cs-preview-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .cs-guide-grid { max-width: 440px; margin-inline: auto; }
+  .cs-confirmation-steps { grid-row: 1; }
+  .cs-owner-materials { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { .cs-page * { animation: none !important; transition: none !important; } }
