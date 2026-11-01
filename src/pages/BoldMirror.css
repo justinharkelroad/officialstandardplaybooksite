@@ -767,3 +767,33 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Mirror VSL band at the top of the page (VSL funnel). */
+.mirror-vsl {
+  padding: 28px 16px 24px;
+  background: #0a0a0b;
+}
+
+.mirror-vsl > * {
+  max-width: 1040px;
+  margin-inline: auto;
+}
+
+.mirror-vsl .vslp {
+  color: #f4f2ee;
+}
+
+.mirror-vsl-note {
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(244, 242, 238, 0.6);
+}
+
+.mirror-credit {
+  margin-top: 16px;
+  padding-left: 14px;
+  border-left: 3px solid #2997ff;
+  font-size: 14px;
+  line-height: 1.55;
+}

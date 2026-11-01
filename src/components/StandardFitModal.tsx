@@ -15,6 +15,8 @@ interface StandardFitModalProps {
   /** Program this booking is for. When set, the form names the program so it
    *  reads as a program-specific booking, not a generic fit form. */
   programName?: string;
+  /** Contact details to start the form with (see BookingOnboardingForm). */
+  prefill?: { full_name?: string; email?: string; cell_phone?: string };
 }
 
 const ACUITY_BASE_URL = 'https://AGENCYCOACHING.as.me/standardfit';
@@ -27,6 +29,7 @@ const StandardFitModal = ({
   bookingBaseUrl = ACUITY_BASE_URL,
   callLengthLabel,
   programName,
+  prefill,
 }: StandardFitModalProps) => {
   const isControlled = open !== undefined;
   const redirectUrl = `${bookingBaseUrl}?utm_source=${encodeURIComponent(source)}`;
@@ -57,6 +60,7 @@ const StandardFitModal = ({
           onCompleteRedirectUrl={redirectUrl}
           callLengthLabel={callLengthLabel}
           programName={programName}
+          prefill={prefill}
         />
       </DialogContent>
     </Dialog>

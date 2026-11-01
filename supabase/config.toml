@@ -146,3 +146,8 @@ verify_jwt = true
 
 [functions.ai-install-portal-admin]
 verify_jwt = true
+
+# VSL funnel tracking. Public by design: the browser posts here directly and
+# every field is validated in the function. Writes use the service role.
+[functions.funnel-track]
+verify_jwt = false

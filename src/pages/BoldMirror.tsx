@@ -14,6 +14,10 @@ import {
   MIRROR_SALES_OFFER,
   MIRROR_SALES_FAQ,
 } from "@/data/mirrorChallengeCopy";
+import VslPlayer from "@/components/vsl/VslPlayer";
+import { VSL_VIDEOS } from "@/config/vsl";
+import { MIRROR_CREDIT_TERMS, RESULTS_DISCLAIMER } from "@/config/offers";
+import { trackFunnel, trackVslEvent } from "@/lib/funnel/track";
 import "./BoldMirror.css";
 
 const ink = "#0A0A0B";
@@ -40,6 +44,13 @@ function ChallengeLink({
     <a
       className={`mirror-button ${className}`}
       href="https://myagencybrain.com/themirrorchallenge"
+      onClick={() =>
+        trackFunnel("initiate_checkout", {
+          offer: "mirror",
+          amount: 197,
+          contentName: "Mirror Challenge",
+        })
+      }
     >
       {children}
       <ArrowRight size={18} aria-hidden="true" />
@@ -196,6 +207,10 @@ const BoldMirror = () => {
     } catch {
       /* Tracking must not block the page. */
     }
+    trackFunnel("view_content", {
+      contentName: "Mirror",
+      videoId: VSL_VIDEOS.mirror.id,
+    });
   }, []);
 
   return (
@@ -209,6 +224,10 @@ const BoldMirror = () => {
         </a>
       </header>
       <main>
+        <section className="mirror-vsl" aria-label="Mirror Challenge video">
+          <VslPlayer video={VSL_VIDEOS.mirror} onEvent={trackVslEvent} />
+          <p className="mirror-vsl-note">{RESULTS_DISCLAIMER}</p>
+        </section>
         <section className="mirror-hero" aria-labelledby="mirror-title">
           <div>
             <p className="mirror-eyebrow">
@@ -396,6 +415,7 @@ const BoldMirror = () => {
             </h2>
             <p className="mirror-price">$197</p>
             <p>{MIRROR_SALES_OFFER.priceNote}</p>
+            <p className="mirror-credit">{MIRROR_CREDIT_TERMS}</p>
           </div>
           <div>
             <ul className="mirror-check-list">
