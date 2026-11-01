@@ -44,7 +44,8 @@ function setMeta(html, key, value) {
     new RegExp(`(<meta\\s+content=")[^"]*("\\s+name="${key}")`, 'i'),
   ];
   for (const re of patterns) {
-    if (re.test(html)) return html.replace(re, `$1${v}$2`);
+    // Use a callback so prices such as $197 are literal text, not $1 replacements.
+    if (re.test(html)) return html.replace(re, (_match, before, after) => `${before}${v}${after}`);
   }
   return html; // tag not present — skip silently
 }

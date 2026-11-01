@@ -1,6 +1,12 @@
 {
   "_comment": "Source of truth for per-program social share cards (the image + caption shown in iMessage/MMS, Facebook, LinkedIn). 'image' is Justin's designed 1200x630 card under /og/. 'title' is the bold caption iMessage shows beneath the image; 'subhead' is the og:description other platforms show. Used by scripts/og-stamp.mjs to bake the tags into dist/<route>/index.html. Add a route here the moment its card image exists.",
   "routes": {
+    "/mirror": {
+      "title": "The Mirror Challenge | $197",
+      "metaTitle": "The Mirror Challenge | $197 | Standard Playbook",
+      "subhead": "Thirty-two agency systems. Eight weeks. One honest look at each. $197, one payment with no subscription. Daily emails, weekly reflections, and your finisher dossier.",
+      "image": "/og-image.png"
+    },
     "/app": {
       "title": "The Standard Playbook App",
       "metaTitle": "The Standard Playbook App",

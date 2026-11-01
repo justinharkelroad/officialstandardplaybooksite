@@ -1,576 +1,570 @@
-import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Facebook, Linkedin } from 'lucide-react';
-import standardLogo from '@/assets/standard-word-logo.png';
-import { captureMirrorAttribution } from '@/lib/mirrorAttribution';
-import { MIRROR_CHALLENGE_CHECKOUT_URL } from '@/data/offerLinks';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowDown, ArrowRight, Check, Facebook, Linkedin } from "lucide-react";
+import standardLogo from "@/assets/standard-word-logo.png";
+import { captureMirrorAttribution } from "@/lib/mirrorAttribution";
+import {
+  MIRROR_QUICK_ITEMS,
+  MIRROR_SALES_HERO,
+  MIRROR_SALES_PILLARS,
+  MIRROR_SALES_STEPS,
+  MIRROR_SALES_DOSSIER,
+  MIRROR_SALES_STORY,
+  MIRROR_SALES_TESTIMONIALS,
+  MIRROR_SALES_OFFER,
+  MIRROR_SALES_FAQ,
+} from "@/data/mirrorChallengeCopy";
+import "./BoldMirror.css";
 
-const display = '"Anton", "Archivo Black", "Oswald", Impact, sans-serif';
-const editorial = '"Archivo Black", "Anton", Impact, sans-serif';
-const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif';
-
-const ink = '#0A0A0B';
-const paper = '#F4F2EE';
-const blue = '#2997FF';
-
-const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 24 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: '-80px' }}
-    transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-    className={className}
-  >
-    {children}
-  </motion.div>
-);
-
-/* ══════════════════════════════════════════════════════
-   LOGO HEADER (no nav — ad landing)
-   ══════════════════════════════════════════════════════ */
-const LogoHeader = () => (
-  <header
-    style={{
-      background: paper,
-      padding: '20px 24px',
-      borderBottom: `1px solid ${ink}`,
-      position: 'sticky', top: 0, zIndex: 50,
-    }}
-    className="flex items-center justify-center"
-  >
-    <Link to="/" aria-label="Standard Playbook">
-      <img src={standardLogo} alt="Standard Playbook"
-        style={{ height: 22, filter: 'brightness(0)' }} />
-    </Link>
-  </header>
-);
-
-/* ══════════════════════════════════════════════════════
-   HERO
-   ══════════════════════════════════════════════════════ */
-const Hero = ({ onStart }: { onStart: () => void }) => (
-  <section style={{ background: paper, paddingTop: 60, paddingBottom: 80, position: 'relative', overflow: 'hidden' }}>
-    <div className="px-6 md:px-10 max-w-[1440px] mx-auto relative">
-      <Reveal>
-        <p style={{
-          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-          color: ink, textTransform: 'uppercase', marginBottom: 24,
-        }}>
-          / Free Agency Assessment
-        </p>
-      </Reveal>
-
-      <div className="grid grid-cols-12 gap-6 items-start">
-        <Reveal className="col-span-12 relative z-20">
-          <h1 style={{
-            fontFamily: display,
-            fontSize: 'clamp(56px, 14vw, 240px)',
-            lineHeight: 0.86, letterSpacing: '-0.02em',
-            color: ink, margin: 0, textTransform: 'uppercase', fontWeight: 400,
-          }}>
-            SCORE YOUR<br />
-            <span className="md:pl-[6vw] inline-block">AGENCY</span><br />
-            <span className="md:pl-[14vw] inline-block" style={{ color: blue }}>HONESTLY.</span>
-          </h1>
-        </Reveal>
-      </div>
-
-      <div className="grid grid-cols-12 gap-6 mt-12">
-        <Reveal delay={0.2} className="col-span-12 md:col-span-7">
-          <p style={{
-            fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55,
-            color: ink, opacity: 0.85, maxWidth: 680,
-          }}>
-            5 pillars. 32 subcategories. One number that tells you the truth. Most agency owners score under 100.
-          </p>
-        </Reveal>
-        <Reveal delay={0.3} className="col-span-12 md:col-span-5 flex md:justify-end items-start gap-3 flex-wrap">
-          <a href="#how-it-works"
-            style={{
-              fontFamily: body, fontSize: 13, fontWeight: 600, letterSpacing: '0.12em',
-              color: ink, textTransform: 'uppercase', textDecoration: 'none',
-              padding: '14px 26px', border: `1.5px solid ${ink}`, transition: 'all .25s',
-            }}
-            className="hover:bg-black hover:text-white">
-            Learn More
-          </a>
-          <button onClick={onStart}
-            style={{
-              fontFamily: body, fontSize: 13, fontWeight: 700, letterSpacing: '0.12em',
-              color: '#fff', background: ink, textTransform: 'uppercase',
-              padding: '15px 28px', border: `1.5px solid ${ink}`, cursor: 'pointer', transition: 'all .25s',
-            }}
-            className="hover:bg-[#2997FF] hover:border-[#2997FF]">
-            Start Scoring →
-          </button>
-        </Reveal>
-      </div>
-    </div>
-  </section>
-);
-
-/* ══════════════════════════════════════════════════════
-   MARQUEE
-   ══════════════════════════════════════════════════════ */
-const Marquee = ({ rotate = -3, bg = ink, color = paper, dot = blue, phrase = 'THE MIRROR · 32 QUESTIONS · 5 PILLARS · ONE HONEST SCORE' }: { rotate?: number; bg?: string; color?: string; dot?: string; phrase?: string }) => (
-  <div style={{
-    background: bg, color, transform: `rotate(${rotate}deg)`,
-    padding: '14px 0', whiteSpace: 'nowrap', overflow: 'hidden',
-    width: '120%', marginLeft: '-10%',
-    borderTop: `1px solid ${color}33`, borderBottom: `1px solid ${color}33`,
-  }}>
-    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 28, animation: 'sp-marquee 32s linear infinite' }}>
-      {Array.from({ length: 14 }).map((_, i) => (
-        <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 28 }}>
-          <span style={{ fontFamily: editorial, fontSize: 'clamp(22px, 3.4vw, 44px)', letterSpacing: '0.04em', fontWeight: 400 }}>{phrase}</span>
-          <span aria-hidden style={{ display: 'inline-block', width: 18, height: 18, borderRadius: 999, background: dot, flexShrink: 0 }} />
-        </span>
-      ))}
-    </div>
-  </div>
-);
-
-const MarqueeBands = ({ phrase }: { phrase?: string }) => (
-  <div style={{ background: paper, padding: '40px 0', position: 'relative', overflow: 'hidden' }}>
-    <Marquee rotate={-3} bg={ink} color={paper} dot={blue} phrase={phrase} />
-    <div style={{ marginTop: -24 }}>
-      <Marquee rotate={2.5} bg={paper} color={ink} dot={ink} phrase={phrase} />
-    </div>
-    <style>{`
-      @keyframes sp-marquee {
-        from { transform: translateX(0); }
-        to { transform: translateX(-50%); }
-      }
-    `}</style>
-  </div>
-);
-
-/* ══════════════════════════════════════════════════════
-   THE 5 PILLARS
-   ══════════════════════════════════════════════════════ */
-const pillars = [
-  {
-    num: '01',
-    name: 'Culture & Team',
-    detail: '10 subcategories. The people side: values, role specialization, recognition, recruiting.',
-  },
-  {
-    num: '02',
-    name: 'Systems & Rhythm',
-    detail: '6 subcategories. The cadence: huddles, scoreboards, 1:1s, monthly recap.',
-  },
-  {
-    num: '03',
-    name: 'Training & Scripts',
-    detail: '6 subcategories. The playbook: scripts, scoring calls, ongoing training, video vault.',
-  },
-  {
-    num: '04',
-    name: 'Marketing & Lead Flow',
-    detail: '6 subcategories. The fuel: CRM discipline, marketing plan, lead distribution, follow-up.',
-  },
-  {
-    num: '05',
-    name: 'Owner Command',
-    detail: '4 subcategories. The dashboard: new sale review, marketing ROI, commissions, cancellations.',
-  },
+const ink = "#0A0A0B";
+const paper = "#F4F2EE";
+const body =
+  'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif';
+const ratingLabels = [
+  "We don't have this",
+  "We've started but it's inconsistent",
+  "It exists and runs most of the time",
+  "Solid system, team follows it",
+  "Dialed in, measured, and improving",
 ];
 
-const PillarsSection = () => (
-  <section id="how-it-works" style={{ background: paper, padding: '40px 24px 120px', borderTop: `1px solid ${ink}` }}>
-    <div className="max-w-[1280px] mx-auto">
-      <div className="grid grid-cols-12 gap-6 items-end mb-16 mt-16">
-        <Reveal className="col-span-12 md:col-span-8">
-          <p style={{
-            fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-            color: ink, textTransform: 'uppercase', marginBottom: 12,
-          }}>
-            / The Pillars
-          </p>
-          <h2 style={{
-            fontFamily: display, fontSize: 'clamp(44px, 7vw, 100px)',
-            lineHeight: 0.95, letterSpacing: '-0.01em', color: ink,
-            textTransform: 'uppercase', margin: 0, fontWeight: 400,
-          }}>
-            FIVE PILLARS.<br />
-            <span style={{ color: blue }}>ONE NUMBER.</span>
-          </h2>
-        </Reveal>
-        <Reveal delay={0.1} className="col-span-12 md:col-span-4">
-          <p style={{
-            fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.65,
-            color: ink, opacity: 0.7,
-          }}>
-            Every agency runs on the same five pillars. The Mirror scores all 32 subcategories on a 1-5 scale and reveals which pillar is the bottleneck.
-          </p>
-        </Reveal>
-      </div>
+// Enrollment and payment stay in the current Agency Brain provisioning flow.
+function ChallengeLink({
+  children = MIRROR_SALES_HERO.primaryCta,
+  className = "",
+}: {
+  children?: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <a
+      className={`mirror-button ${className}`}
+      href="https://myagencybrain.com/themirrorchallenge"
+    >
+      {children}
+      <ArrowRight size={18} aria-hidden="true" />
+    </a>
+  );
+}
 
-      <div style={{ borderTop: `1px solid ${ink}` }}>
-        {pillars.map((p, i) => (
-          <Reveal key={p.num} delay={i * 0.06}>
-            <div style={{ borderBottom: `1px solid ${ink}`, padding: '36px 0' }}>
-              <div className="grid grid-cols-12 gap-6 items-baseline">
-                <div className="col-span-2 md:col-span-1">
-                  <span style={{
-                    fontFamily: editorial, fontSize: 'clamp(20px, 2vw, 26px)',
-                    color: blue, letterSpacing: '-0.01em', fontWeight: 400,
-                  }}>
-                    {p.num}
-                  </span>
-                </div>
-                <div className="col-span-10 md:col-span-6">
-                  <h3 style={{
-                    fontFamily: display, fontSize: 'clamp(28px, 4vw, 56px)',
-                    lineHeight: 0.95, letterSpacing: '-0.01em', color: ink,
-                    textTransform: 'uppercase', margin: 0, fontWeight: 400,
-                  }}>
-                    {p.name}
-                  </h3>
-                </div>
-                <div className="col-span-12 md:col-span-5">
-                  <p style={{
-                    fontFamily: body, fontSize: 15, fontWeight: 400, lineHeight: 1.55,
-                    color: ink, opacity: 0.75,
-                  }}>
-                    {p.detail}
-                  </p>
-                </div>
-              </div>
+function ScorePreview() {
+  const values = [30, 20, 17, 19, 13];
+  return (
+    <figure
+      className="mirror-score-preview"
+      aria-label="Example Mirror score of 99 out of 160"
+    >
+      <div className="mirror-preview-heading">
+        <span>The Mirror</span>
+        <span>Sample agency</span>
+      </div>
+      <div className="mirror-preview-score">
+        99<span>/ 160</span>
+      </div>
+      <p className="mirror-preview-note">32 systems. One honest picture.</p>
+      <div className="mirror-preview-pillars">
+        {MIRROR_SALES_PILLARS.map((pillar, i) => (
+          <div key={pillar.id}>
+            <div className="mirror-preview-label">
+              <span>{pillar.title}</span>
+              <span>
+                {values[i]} / {pillar.count * 5}
+              </span>
             </div>
-          </Reveal>
+            <div className="mirror-preview-track">
+              <span
+                style={{ width: `${(values[i] / (pillar.count * 5)) * 100}%` }}
+              />
+            </div>
+          </div>
         ))}
       </div>
-    </div>
-  </section>
-);
+      <figcaption>
+        Illustrative score. Your Mirror is built from your own ratings and
+        answers.
+      </figcaption>
+    </figure>
+  );
+}
 
-/* ══════════════════════════════════════════════════════
-   WHAT YOU GET — display numerals grid
-   ══════════════════════════════════════════════════════ */
-const WhatYouGet = () => (
-  <section style={{ background: ink, color: paper, padding: '120px 24px' }}>
-    <div className="max-w-[1280px] mx-auto">
-      <Reveal>
-        <p style={{
-          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-          color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 24,
-        }}>
-          / What You Get
-        </p>
-      </Reveal>
-      <Reveal delay={0.05}>
-        <h2 style={{
-          fontFamily: display, fontSize: 'clamp(36px, 6vw, 84px)',
-          lineHeight: 0.95, letterSpacing: '-0.01em', color: paper,
-          textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 64,
-        }}>
-          A NUMBER.<br />A DIAGNOSIS.<br />
-          <span style={{ color: blue }}>A NEXT MOVE.</span>
+function QuickMirror() {
+  const [ratings, setRatings] = useState<Record<string, number>>({});
+  const rated = MIRROR_QUICK_ITEMS.filter(
+    (item) => ratings[item.itemId]
+  ).length;
+  const score = Object.values(ratings).reduce((sum, value) => sum + value, 0);
+  return (
+    <section
+      id="quick-mirror"
+      className="mirror-section"
+      aria-labelledby="quick-title"
+    >
+      <div className="mirror-section-heading">
+        <h2 id="quick-title">
+          Five questions.
+          <br />
+          <span>Be honest.</span>
         </h2>
-      </Reveal>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-0" style={{ borderTop: `1px solid ${paper}33` }}>
-        {[
-          { num: '01', title: 'Your Tier Score', detail: 'A single number out of 160: Foundation, Developing, Established, Advanced, or Elite.' },
-          { num: '02', title: 'Weakest Pillar', detail: 'Which of the 5 pillars is dragging your number down, and why.' },
-          { num: '03', title: 'Full Mirror PDF', detail: 'The complete 32-subcategory breakdown emailed to you for reference.' },
-          { num: '04', title: '7-Day Breakdown', detail: 'A personalized email sequence walking you through your tier × pillar in detail.' },
-        ].map((item, i) => (
-          <Reveal key={i} delay={i * 0.07}>
-            <div style={{
-              padding: '40px 24px',
-              borderBottom: `1px solid ${paper}33`,
-              borderRight: i % 2 === 0 ? `1px solid ${paper}33` : 'none',
-            }}
-              className={i % 2 === 0 ? 'md:!border-r' : ''}
-            >
-              <p style={{
-                fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.16em',
-                color: blue, textTransform: 'uppercase', marginBottom: 14,
-              }}>
-                {item.num}
-              </p>
-              <h3 style={{
-                fontFamily: display, fontSize: 'clamp(28px, 4vw, 48px)',
-                lineHeight: 0.95, letterSpacing: '-0.01em', color: paper,
-                textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 16,
-              }}>
-                {item.title}
-              </h3>
-              <p style={{
-                fontFamily: body, fontSize: 15, fontWeight: 400, lineHeight: 1.55,
-                color: paper, opacity: 0.75, maxWidth: 460,
-              }}>
-                {item.detail}
-              </p>
-            </div>
-          </Reveal>
-        ))}
+        <p>
+          One system from each pillar. Rate each one where it actually is, not
+          where you want it to be.
+        </p>
       </div>
-    </div>
-  </section>
-);
-
-/* ══════════════════════════════════════════════════════
-   AUTHORITY BLOCK — Justin positioning
-   ══════════════════════════════════════════════════════ */
-const AuthoritySection = () => (
-  <section style={{ background: paper, padding: '120px 24px' }}>
-    <div className="max-w-[1280px] mx-auto">
-      <div className="grid grid-cols-12 gap-10 items-start">
-        <Reveal className="col-span-12 md:col-span-5">
-          <div style={{
-            background: '#fff', padding: '14px 14px 22px', maxWidth: 360,
-            transform: 'rotate(-4deg)',
-            boxShadow: '0 30px 60px -20px rgba(0,0,0,0.45)',
-            transition: 'transform .4s ease',
-            margin: '0 auto',
-          }}
-            className="hover:!rotate-0">
-            <div style={{ aspectRatio: '4/5', background: '#0A0A0B', overflow: 'hidden' }}>
-              <img src="/mirrorpic.jpg" alt="The Mirror Workbook"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      <ol className="mirror-quick-list">
+        {MIRROR_QUICK_ITEMS.map((item, i) => (
+          <li key={item.itemId}>
+            <div className="mirror-question-number" aria-hidden="true">
+              0{i + 1}
             </div>
-            <p style={{
-              fontFamily: body, fontSize: 11, fontWeight: 600, letterSpacing: '0.12em',
-              color: ink, textTransform: 'uppercase', marginTop: 12, textAlign: 'center', opacity: 0.7,
-            }}>
-              The Mirror · Workbook · Vol. 01
+            <div className="mirror-question-copy">
+              <p className="mirror-small-label">{item.pillar}</p>
+              <h3>{item.title}</h3>
+              <p>{item.question}</p>
+            </div>
+            <fieldset className="mirror-rating">
+              <legend className="sr-only">Rate {item.title}</legend>
+              <div className="mirror-rating-options">
+                {ratingLabels.map((label, n) => (
+                  <label key={label} title={label}>
+                    <input
+                      type="radio"
+                      name={`quick-${item.itemId}`}
+                      value={n + 1}
+                      checked={ratings[item.itemId] === n + 1}
+                      onChange={() =>
+                        setRatings((prev) => ({
+                          ...prev,
+                          [item.itemId]: n + 1,
+                        }))
+                      }
+                      aria-label={`${n + 1} of 5: ${label}`}
+                    />
+                    <span>{n + 1}</span>
+                  </label>
+                ))}
+              </div>
+              <p>
+                {ratings[item.itemId]
+                  ? ratingLabels[ratings[item.itemId] - 1]
+                  : "1 = not in place · 5 = dialed in"}
+              </p>
+            </fieldset>
+            {ratings[item.itemId] > 0 && (
+              <p className="mirror-at-five">
+                <strong>At a 5:</strong> {item.atFive}
+              </p>
+            )}
+          </li>
+        ))}
+      </ol>
+      <div className="mirror-quick-result">
+        <div role="status" aria-live="polite">
+          {rated === 5 ? (
+            <>
+              <p className="mirror-result-score">
+                Your quick Mirror: {score} of 25
+              </p>
+              <p>
+                That is 5 of 32. The other 27 are where owners find the
+                surprises.
+              </p>
+            </>
+          ) : (
+            <p>
+              Rate all five to see your score. {rated > 0 && `(${rated} of 5)`}
+            </p>
+          )}
+        </div>
+        {rated === 5 && <ChallengeLink>Get all 32 for $197</ChallengeLink>}
+      </div>
+      <Link className="mirror-text-link" to="/mirror/score">
+        Prefer the full free assessment? Score all 32 systems{" "}
+        <ArrowRight size={16} aria-hidden="true" />
+      </Link>
+    </section>
+  );
+}
+
+const BoldMirror = () => {
+  useEffect(() => {
+    captureMirrorAttribution();
+    const pixel = (
+      window as Window & { fbq?: (action: string, event: string) => void }
+    ).fbq;
+    try {
+      pixel?.("track", "PageView");
+    } catch {
+      /* Tracking must not block the page. */
+    }
+  }, []);
+
+  return (
+    <div className="mirror-page">
+      <header className="mirror-header">
+        <Link to="/" aria-label="Standard Playbook">
+          <img src={standardLogo} alt="Standard Playbook" />
+        </Link>
+        <a href="#offer">
+          The Mirror Challenge <span>$197</span>
+        </a>
+      </header>
+      <main>
+        <section className="mirror-hero" aria-labelledby="mirror-title">
+          <div>
+            <p className="mirror-eyebrow">
+              The Mirror Challenge for agency owners
+            </p>
+            <h1 id="mirror-title">
+              You think you
+              <br className="mirror-desktop-break" /> know your agency.
+              <br />
+              <span>Prove it.</span>
+            </h1>
+            <p className="mirror-hero-intro">{MIRROR_SALES_HERO.intro}</p>
+            <div className="mirror-actions">
+              <ChallengeLink />
+              <a className="mirror-secondary" href="#quick-mirror">
+                {MIRROR_SALES_HERO.secondaryCta}
+                <ArrowDown size={17} aria-hidden="true" />
+              </a>
+            </div>
+            <p className="mirror-hero-anchor">{MIRROR_SALES_HERO.anchor}</p>
+          </div>
+          <ScorePreview />
+        </section>
+        <div className="mirror-facts" aria-label="Challenge at a glance">
+          <span>8 weeks</span>
+          <span>32 systems</span>
+          <span>5 pillars</span>
+          <span>$197 one time</span>
+        </div>
+        <QuickMirror />
+        <section
+          className="mirror-section mirror-dark"
+          aria-labelledby="pillars-title"
+        >
+          <div className="mirror-section-heading">
+            <h2 id="pillars-title">
+              Five pillars.
+              <br />
+              <span>Thirty-two systems.</span>
+            </h2>
+            <p>
+              Every item comes with what a 5 looks like and three questions
+              written to get past the easy answer.
             </p>
           </div>
-        </Reveal>
-
-        <Reveal delay={0.15} className="col-span-12 md:col-span-7">
-          <p style={{
-            fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-            color: ink, textTransform: 'uppercase', marginBottom: 24,
-          }}>
-            / Built By An Operator
-          </p>
-          <h2 style={{
-            fontFamily: display, fontSize: 'clamp(36px, 5.4vw, 72px)',
-            lineHeight: 0.95, letterSpacing: '-0.01em', color: ink,
-            textTransform: 'uppercase', margin: 0, fontWeight: 400, marginBottom: 24,
-          }}>
-            THE MIRROR IS THE MIRROR.
+          <ul className="mirror-pillar-list">
+            {MIRROR_SALES_PILLARS.map((pillar) => (
+              <li key={pillar.id}>
+                <div>
+                  <h3>{pillar.title}</h3>
+                  <span>{pillar.count} systems</span>
+                </div>
+                <p>{pillar.line}</p>
+                <blockquote>{pillar.question}</blockquote>
+              </li>
+            ))}
+          </ul>
+        </section>
+        <section
+          id="how-it-works"
+          className="mirror-section"
+          aria-labelledby="steps-title"
+        >
+          <div className="mirror-section-heading">
+            <h2 id="steps-title">
+              How the
+              <br />
+              <span>eight weeks run.</span>
+            </h2>
+            <p>
+              Four systems a week. Space to look closer. A short reflection to
+              close each week.
+            </p>
+          </div>
+          <ol className="mirror-steps">
+            {MIRROR_SALES_STEPS.map((step, i) => (
+              <li key={step.title}>
+                <div className="mirror-step-image">
+                  <img
+                    src={step.image}
+                    alt={step.imageAlt}
+                    width={step.width}
+                    height={step.height}
+                    loading="lazy"
+                  />
+                </div>
+                <div className="mirror-step-copy">
+                  <span className="mirror-small-label">Step {i + 1}</span>
+                  <h3>{step.title}</h3>
+                  <p>{step.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+        <section
+          className="mirror-section mirror-dark mirror-dossier"
+          aria-labelledby="dossier-title"
+        >
+          <figure>
+            <img
+              src={MIRROR_SALES_DOSSIER.image}
+              alt={MIRROR_SALES_DOSSIER.imageAlt}
+              width={1800}
+              height={2500}
+              loading="lazy"
+            />
+            <figcaption>{MIRROR_SALES_DOSSIER.caption}</figcaption>
+          </figure>
+          <div>
+            <h2 id="dossier-title">
+              What you
+              <br />
+              <span>walk away with.</span>
+            </h2>
+            <p>{MIRROR_SALES_DOSSIER.intro}</p>
+            <ul className="mirror-check-list">
+              {MIRROR_SALES_DOSSIER.points.map((point) => (
+                <li key={point}>
+                  <Check size={19} aria-hidden="true" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+            <ChallengeLink />
+          </div>
+        </section>
+        <section
+          className="mirror-section mirror-story"
+          aria-labelledby="story-title"
+        >
+          <div>
+            <p className="mirror-eyebrow">Built by an operator</p>
+            <h2 id="story-title">
+              The same Mirror
+              <br />
+              <span>we work through.</span>
+            </h2>
+          </div>
+          <div>
+            {MIRROR_SALES_STORY.paragraphs.map((p) => (
+              <p key={p}>{p}</p>
+            ))}
+            <p className="mirror-signature">
+              {MIRROR_SALES_STORY.signature}
+              <span>{MIRROR_SALES_STORY.role}</span>
+            </p>
+          </div>
+        </section>
+        <section
+          className="mirror-section mirror-testimonials"
+          aria-labelledby="owners-title"
+        >
+          <h2 id="owners-title">
+            Owners are
+            <br />
+            <span>already running it.</span>
           </h2>
-          <p style={{
-            fontFamily: body, fontSize: 'clamp(16px, 1.4vw, 18px)', fontWeight: 400, lineHeight: 1.6,
-            color: ink, opacity: 0.85, maxWidth: 620,
-          }}>
-            I spent 20 years inside Allstate building, breaking, and rebuilding agencies. The Mirror is the diagnostic I run on every agency I sit down with, same 32 subcategories, same scoring discipline, same honest number. No coaching pitch. Just the truth about where you're at.
-          </p>
-        </Reveal>
-      </div>
-    </div>
-  </section>
-);
-
-/* ══════════════════════════════════════════════════════
-   THE MIRROR CHALLENGE — paid standalone, free for members
-   ══════════════════════════════════════════════════════ */
-const MirrorChallengeSection = () => (
-  <section id="mirror-challenge" style={{ background: paper, padding: '120px 24px', borderTop: `1px solid ${ink}` }}>
-    <div className="max-w-[1280px] mx-auto grid grid-cols-12 gap-8 items-end">
-      <div className="col-span-12 md:col-span-7">
-        <Reveal>
-          <p style={{
-            fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-            color: ink, textTransform: 'uppercase', marginBottom: 28,
-          }}>
-            / The Mirror Challenge
-          </p>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <h2 style={{
-            fontFamily: display, fontSize: 'clamp(40px, 7vw, 100px)',
-            lineHeight: 0.95, letterSpacing: '-0.01em', color: ink,
-            textTransform: 'uppercase', margin: 0, fontWeight: 400,
-          }}>
-            8 WEEKS.<br />
-            <span style={{ color: blue }}>32 FUNDAMENTALS.</span>
+          <div>
+            {MIRROR_SALES_TESTIMONIALS.map((quote) => (
+              <figure key={quote.name}>
+                <blockquote>
+                  {quote.paragraphs.map((p) => (
+                    <p key={p}>{p}</p>
+                  ))}
+                </blockquote>
+                <figcaption>
+                  <strong>{quote.name}</strong>
+                  <span>{quote.agency}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+        <section
+          id="offer"
+          className="mirror-section mirror-dark mirror-offer"
+          aria-labelledby="offer-title"
+        >
+          <div>
+            <h2 id="offer-title">
+              One payment.
+              <br />
+              <span>Eight weeks.</span>
+            </h2>
+            <p className="mirror-price">$197</p>
+            <p>{MIRROR_SALES_OFFER.priceNote}</p>
+          </div>
+          <div>
+            <ul className="mirror-check-list">
+              {MIRROR_SALES_OFFER.includes.map((point) => (
+                <li key={point}>
+                  <Check size={19} aria-hidden="true" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+            <p>{MIRROR_SALES_OFFER.startNote}</p>
+            <ChallengeLink />
+            <p className="mirror-purchase-note">
+              Continue to Agency Brain to enroll and pay securely through
+              Stripe. After payment, you will receive an email to set your
+              password.
+            </p>
+            <p className="mirror-purchase-note">
+              Already have Agency Brain? The challenge is included.{" "}
+              <a href="https://myagencybrain.com/themirrorchallenge">
+                Open it in Agency Brain.
+              </a>
+            </p>
+          </div>
+        </section>
+        <section className="mirror-section" aria-labelledby="faq-title">
+          <h2 id="faq-title">
+            Questions,
+            <br />
+            <span>answered.</span>
           </h2>
-        </Reveal>
-        <Reveal delay={0.2}>
-          <p style={{
-            fontFamily: body, fontSize: 'clamp(16px, 1.4vw, 18px)', fontWeight: 400, lineHeight: 1.6,
-            color: ink, opacity: 0.8, maxWidth: 620, marginTop: 32,
-          }}>
-            The score shows you the gaps. The 8-Week / 32-Day Mirror Challenge works them: instead of trying to fix 32 fundamentals at once, Agency Brain paces you through 4 per week for 8 weeks, paired with a private, managed Telegram Challenge Room.
-          </p>
-        </Reveal>
-      </div>
-      <Reveal delay={0.25} className="col-span-12 md:col-span-5">
-        <div style={{ borderTop: `4px solid ${ink}`, paddingTop: 24 }}>
-          <p style={{
-            fontFamily: display, fontSize: 'clamp(64px, 9vw, 120px)', lineHeight: 0.85,
-            letterSpacing: '-0.02em', color: ink, margin: 0, fontWeight: 400,
-          }}>
-            $197
-          </p>
-          <p style={{
-            fontFamily: body, fontSize: 12, fontWeight: 700, letterSpacing: '0.14em',
-            color: ink, opacity: 0.6, textTransform: 'uppercase', margin: '12px 0 0',
-          }}>
-            One time
-          </p>
-          <p style={{
-            fontFamily: body, fontSize: 15, fontWeight: 600, lineHeight: 1.5,
-            color: ink, margin: '20px 0 24px',
-          }}>
-            Free with Agency Brain or any Standard Playbook program.
-          </p>
-          <a href={MIRROR_CHALLENGE_CHECKOUT_URL} target="_blank" rel="noopener noreferrer"
-            style={{
-              display: 'inline-block',
-              fontFamily: body, fontSize: 13, fontWeight: 700, letterSpacing: '0.14em',
-              color: '#fff', background: ink, textTransform: 'uppercase', textDecoration: 'none',
-              padding: '16px 30px', border: `1.5px solid ${ink}`, transition: 'all .25s',
-            }}
-            className="hover:bg-[#2997FF] hover:border-[#2997FF]">
-            Buy The Challenge →
+          <div className="mirror-faq">
+            {MIRROR_SALES_FAQ.map((faq) => (
+              <details key={faq.q}>
+                <summary>
+                  {faq.q}
+                  <span aria-hidden="true">+</span>
+                </summary>
+                <p>{faq.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+        <section className="mirror-close">
+          <h2>
+            Find out what
+            <br />
+            is actually true.
+          </h2>
+          <ChallengeLink />
+          <a
+            className="mirror-text-link"
+            href="https://myagencybrain.com/themirrorchallenge#sample-title"
+          >
+            Not ready? Get the free Systems &amp; Rhythm workbook{" "}
+            <ArrowRight size={16} aria-hidden="true" />
           </a>
-        </div>
-      </Reveal>
+        </section>
+      </main>
+      <BoldFooter />
+      <div className="mirror-sticky">
+        <ChallengeLink>Start the challenge · $197</ChallengeLink>
+      </div>
     </div>
-  </section>
-);
+  );
+};
 
-/* ══════════════════════════════════════════════════════
-   AFTER THE SCORE — diagnosis → climb band
-   ══════════════════════════════════════════════════════ */
-const AfterTheScoreBand = () => (
-  <section style={{ background: ink, color: paper, padding: '120px 24px', borderTop: `1px solid ${paper}1a` }}>
-    <div className="max-w-[1280px] mx-auto">
-      <Reveal>
-        <p style={{
-          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-          color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
-        }}>
-          / After The Score
-        </p>
-      </Reveal>
-      <Reveal delay={0.1}>
-        <h2 style={{
-          fontFamily: display, fontSize: 'clamp(40px, 7vw, 100px)',
-          lineHeight: 0.95, letterSpacing: '-0.01em', color: paper,
-          textTransform: 'uppercase', margin: 0, fontWeight: 400,
-        }}>
-          YOUR NUMBER.<br />
-          <span style={{ color: blue }}>THEN THE WORK.</span>
-        </h2>
-      </Reveal>
-      <Reveal delay={0.2}>
-        <p style={{
-          fontFamily: body, fontSize: 'clamp(16px, 1.4vw, 18px)', fontWeight: 400, lineHeight: 1.6,
-          color: paper, opacity: 0.85, maxWidth: 720, marginTop: 40,
-        }}>
-          The Mirror tells you where you're at. Standard Playbook is how you climb. Every program (Boardroom, Momentum, 8-Week) plugs you into Agency Brain, the <span style={{ color: blue }}>AI</span>-equipped platform I built to make the diagnosis fixable.
-        </p>
-      </Reveal>
-    </div>
-  </section>
-);
-
-/* ══════════════════════════════════════════════════════
-   GIANT CTA — SCORE.
-   ══════════════════════════════════════════════════════ */
-const GiantCTA = ({ onStart }: { onStart: () => void }) => (
-  <section onClick={onStart}
-    style={{
-      background: ink, padding: '100px 24px 70px',
-      cursor: 'pointer', borderTop: `1px solid ${ink}`,
-    }}
-    role="button" aria-label="Start scoring">
-    <div className="max-w-[1440px] mx-auto text-center">
-      <Reveal>
-        <p style={{
-          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-          color: paper, opacity: 0.5, textTransform: 'uppercase', marginBottom: 24,
-        }}>
-          / Take The Assessment
-        </p>
-      </Reveal>
-      <Reveal delay={0.05}>
-        <h2 style={{
-          fontFamily: display, fontSize: 'clamp(72px, 22vw, 360px)',
-          lineHeight: 0.82, letterSpacing: '-0.03em', color: paper,
-          textTransform: 'uppercase', margin: 0, fontWeight: 400,
-        }}>
-          SCORE.
-        </h2>
-      </Reveal>
-      <Reveal delay={0.15}>
-        <p style={{
-          fontFamily: body, fontSize: 14, fontWeight: 500, letterSpacing: '0.06em',
-          color: paper, opacity: 0.7, marginTop: 32, textTransform: 'uppercase',
-        }}>
-          Click anywhere &nbsp;→&nbsp; 32 questions · 6 minutes · honest number
-        </p>
-      </Reveal>
-    </div>
-  </section>
-);
-
-/* ══════════════════════════════════════════════════════
-   FOOTER
-   ══════════════════════════════════════════════════════ */
 const BoldFooter = () => (
-  <footer style={{ background: ink, color: paper, padding: '60px 24px 30px' }}>
+  <footer style={{ background: ink, color: paper, padding: "60px 24px 30px" }}>
     <div className="max-w-[1280px] mx-auto">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pb-12" style={{ borderBottom: `1px solid ${paper}1a` }}>
+      <div
+        className="grid grid-cols-2 md:grid-cols-4 gap-10 pb-12"
+        style={{ borderBottom: `1px solid ${paper}1a` }}
+      >
         <div className="col-span-2">
-          <img src={standardLogo} alt="Standard Playbook"
-            style={{ height: 22, filter: 'brightness(0) invert(1)', marginBottom: 18 }} />
-          <p style={{
-            fontFamily: body, fontSize: 16, lineHeight: 1.5, marginBottom: 22,
-            maxWidth: 380, opacity: 0.85,
-          }}>
-            High-performance coaching for insurance agency owners. Raise your standard and live the playbook.
+          <img
+            src={standardLogo}
+            alt="Standard Playbook"
+            style={{
+              height: 22,
+              filter: "brightness(0) invert(1)",
+              marginBottom: 18,
+            }}
+          />
+          <p
+            style={{
+              fontFamily: body,
+              fontSize: 16,
+              lineHeight: 1.5,
+              marginBottom: 22,
+              maxWidth: 380,
+              opacity: 0.85,
+            }}
+          >
+            High-performance coaching for insurance agency owners. Raise your
+            standard and live the playbook.
           </p>
           <div className="flex items-center gap-4">
-            <a href="https://www.facebook.com/profile.php?id=61560049427918"
-              target="_blank" rel="noopener noreferrer" aria-label="Facebook"
-              style={{ color: paper, opacity: 0.6, transition: 'opacity 0.2s' }}
-              className="hover:opacity-100">
+            <a
+              href="https://www.facebook.com/profile.php?id=61560049427918"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              style={{ color: paper, opacity: 0.6, transition: "opacity 0.2s" }}
+              className="hover:opacity-100"
+            >
               <Facebook className="w-5 h-5" />
             </a>
-            <a href="https://www.linkedin.com/in/justinhark/"
-              target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
-              style={{ color: paper, opacity: 0.6, transition: 'opacity 0.2s' }}
-              className="hover:opacity-100">
+            <a
+              href="https://www.linkedin.com/in/justinhark/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              style={{ color: paper, opacity: 0.6, transition: "opacity 0.2s" }}
+              className="hover:opacity-100"
+            >
               <Linkedin className="w-5 h-5" />
             </a>
           </div>
         </div>
 
         {[
-          { title: 'Programs', items: [
-            { label: 'Boardroom', href: '/#programs' },
-            { label: 'Directive', href: '/directive' },
-            { label: '8-Week', href: '/sales-experience' },
-            { label: 'Training', href: '/training' },
-          ]},
-          { title: 'Company', items: [
-            { label: 'About', href: '/about' },
-            { label: 'Contact', href: '/contact' },
-            { label: 'Privacy', href: '/privacy' },
-            { label: 'Terms', href: '/terms' },
-          ]},
+          {
+            title: "Programs",
+            items: [
+              { label: "Boardroom", href: "/#programs" },
+              { label: "Directive", href: "/directive" },
+              { label: "8-Week", href: "/sales-experience" },
+              { label: "Training", href: "/training" },
+            ],
+          },
+          {
+            title: "Company",
+            items: [
+              { label: "About", href: "/about" },
+              { label: "Contact", href: "/contact" },
+              { label: "Privacy", href: "/privacy" },
+              { label: "Terms", href: "/terms" },
+            ],
+          },
         ].map((col) => (
           <div key={col.title}>
-            <p style={{
-              fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.16em',
-              opacity: 0.5, textTransform: 'uppercase', marginBottom: 14,
-            }}>
+            <p
+              style={{
+                fontFamily: body,
+                fontSize: 12,
+                fontWeight: 600,
+                letterSpacing: "0.16em",
+                opacity: 0.5,
+                textTransform: "uppercase",
+                marginBottom: 14,
+              }}
+            >
               {col.title}
             </p>
-            <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+            <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
               {col.items.map((it) => (
                 <li key={it.label} style={{ marginBottom: 8 }}>
-                  <Link to={it.href} style={{ fontFamily: body, fontSize: 14, color: paper, opacity: 0.85, textDecoration: 'none' }} className="hover:opacity-100">
+                  <Link
+                    to={it.href}
+                    style={{
+                      fontFamily: body,
+                      fontSize: 14,
+                      color: paper,
+                      opacity: 0.85,
+                      textDecoration: "none",
+                    }}
+                    className="hover:opacity-100"
+                  >
                     {it.label}
                   </Link>
                 </li>
@@ -581,65 +575,20 @@ const BoldFooter = () => (
       </div>
 
       <div className="pt-8 text-center">
-        <p style={{ fontFamily: body, fontSize: 11, opacity: 0.5, letterSpacing: '0.08em' }}>
-          © {new Date().getFullYear()} STANDARD PLAYBOOK INC. ALL RIGHTS RESERVED.
+        <p
+          style={{
+            fontFamily: body,
+            fontSize: 11,
+            opacity: 0.5,
+            letterSpacing: "0.08em",
+          }}
+        >
+          © {new Date().getFullYear()} STANDARD PLAYBOOK INC. ALL RIGHTS
+          RESERVED.
         </p>
       </div>
     </div>
   </footer>
 );
-
-/* ══════════════════════════════════════════════════════
-   MOBILE STICKY CTA
-   ══════════════════════════════════════════════════════ */
-const MobileStickyCTA = ({ onStart }: { onStart: () => void }) => (
-  <div className="fixed bottom-0 left-0 right-0 md:hidden z-40"
-    style={{ background: ink, padding: '12px 16px', borderTop: `1px solid ${paper}33` }}>
-    <button onClick={onStart}
-      style={{
-        fontFamily: body, fontSize: 13, fontWeight: 700, letterSpacing: '0.14em',
-        color: ink, background: paper, padding: '14px 0', width: '100%',
-        border: 'none', cursor: 'pointer', textTransform: 'uppercase',
-      }}>
-      Start Scoring
-    </button>
-  </div>
-);
-
-/* ══════════════════════════════════════════════════════
-   PAGE
-   ══════════════════════════════════════════════════════ */
-const BoldMirror = () => {
-  const navigate = useNavigate();
-
-  // Persist attribution (UTM + fbclid/gclid + referrer) so it survives the flow.
-  // Meta in-app browser partitions sessionStorage between page nav and strips utm_*,
-  // so we use localStorage with merge semantics — see src/lib/mirrorAttribution.ts.
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    captureMirrorAttribution();
-    // Meta Pixel PageView
-    try { (window as any).fbq?.('track', 'PageView'); } catch {}
-  }, []);
-
-  const onStart = () => navigate('/mirror/score');
-
-  return (
-    <div style={{ background: paper, fontFamily: body, color: ink }}>
-      <LogoHeader />
-      <Hero onStart={onStart} />
-      <MarqueeBands phrase="THE MIRROR · 32 QUESTIONS · 5 PILLARS · ONE HONEST SCORE" />
-      <PillarsSection />
-      <WhatYouGet />
-      <AuthoritySection />
-      <MarqueeBands phrase="MOST AGENCIES SCORE UNDER 100 · WHERE WILL YOU LAND" />
-      <GiantCTA onStart={onStart} />
-      <MirrorChallengeSection />
-      <AfterTheScoreBand />
-      <BoldFooter />
-      <MobileStickyCTA onStart={onStart} />
-    </div>
-  );
-};
 
 export default BoldMirror;
