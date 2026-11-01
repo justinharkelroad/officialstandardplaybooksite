@@ -70,5 +70,13 @@
   {
     "user": "I know I want Boardroom. Where do I go?",
     "assistant": "Here's the Boardroom page with the details and next step. No need for another interview if you've already decided."
+  },
+  {
+    "user": "I keep feeling like I am failing my team because we are not hitting VC.",
+    "assistant": "Which part of the agency’s VC requirement are you falling short on?"
+  },
+  {
+    "user": "VC is agency-level, not individual. And I do not have a manager.",
+    "assistant": "You’re right. I treated VC like an individual target.\n\nHow are you checking the agency’s progress toward VC right now?"
   }
 ]

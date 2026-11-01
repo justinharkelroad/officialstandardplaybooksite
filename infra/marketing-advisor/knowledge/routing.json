@@ -1,5 +1,5 @@
 {
-  "version": "standard-discovery-v3-observable-questions",
+  "version": "standard-discovery-v4-agency-metrics",
   "minQuestions": 2,
   "maxQuestions": 4,
   "rules": [
@@ -66,28 +66,28 @@
     "A healthy agency with no unmet need can receive a no-purchase recommendation immediately.",
     "Once routed, answer follow-up questions or revise the recommendation from corrections; do not restart discovery. A new conversation starts a new budget."
   ],
-  "patternGuidance": "Anonymous paraphrases of coaching research, not testimonials, verified product features or automatic product assignments. Ask about observable events and current behavior: what happened last time, what the manager did, what is written, who owns it, and what happens without owner intervention. One short question per turn. Use the answer to choose the next unanswered fact. If they say unsure, ask for a small recent example; do not restate the same abstract choice. Never ask visitors to choose coaching versus a system, software versus implementation, or a program category. Infer fit yourself from their facts, respecting preferences they volunteer. Do not manufacture a failure, missing org chart, fear, or cause. All patterns share the same total 2\u20134 question budget. If the fourth answer still leaves material uncertainty, book a fit call instead of guessing. Existing ownership, catalog boundaries and professional-care limits still apply.",
+  "patternGuidance": "Anonymous paraphrases of coaching research, not testimonials, verified product features or automatic product assignments. Ask about observable events and current behavior: what happened last time, what the manager did, what is written, who owns it, and what happens without owner intervention. One short question per turn. Use the answer to choose the next unanswered fact. If they say unsure, ask for a small recent example; do not restate the same abstract choice. Never ask visitors to choose coaching versus a system, software versus implementation, or a program category. Infer fit yourself from their facts, respecting preferences they volunteer. Do not manufacture a failure, missing org chart, fear, or cause. All patterns share the same total 2\u20134 question budget. If the fourth answer still leaves material uncertainty, book a fit call instead of guessing. Existing ownership, catalog boundaries and professional-care limits still apply. Keep the level of a metric intact: agency results are not individual quotas. Establish who reviews the work before referring to a manager.",
   "problemPatterns": [
     {
       "id": "unenforced-standards",
       "title": "My team misses the numbers and nothing happens.",
       "distinguishingQuestions": [
-        "The last time someone missed the number, what did their manager do?",
-        "What is supposed to happen when they miss it again?"
+        "What number is falling short right now?",
+        "What happens when you review that shortfall?"
       ],
       "candidateNeeds": [
         "owner-accountability",
         "build-management-system",
         "ongoing-team-coaching"
       ],
-      "guardrail": "A dashboard can expose a miss; it cannot enforce consequences. Do not label staff lazy or prescribe firing."
+      "guardrail": "A dashboard can expose a miss; it cannot enforce consequences. Do not label staff lazy or prescribe firing. Missing agency-level VC is not evidence that an individual missed a quota or that standards are unenforced. Establish the actual breakdown first."
     },
     {
       "id": "leaking-leads",
       "title": "We quote people and never follow up.",
       "distinguishingQuestions": [
         "What happens after someone gets a quote and does not buy?",
-        "How does your manager know which households still need a follow-up?"
+        "Who checks which households still need a follow-up?"
       ],
       "candidateNeeds": [
         "agency-operations",
@@ -127,7 +127,7 @@
       "title": "The activity report looks good but the real conversations are not there.",
       "distinguishingQuestions": [
         "What has to happen before your team counts a household as quoted?",
-        "How does your manager check that it actually happened?"
+        "Who checks that it actually happened?"
       ],
       "candidateNeeds": [
         "agency-operations",
@@ -160,7 +160,7 @@
         "agency-operations",
         "owner-accountability"
       ],
-      "guardrail": "Do not invent carrier bonus tiers, compensation formulas, ROI or promised financial outcomes."
+      "guardrail": "Do not invent carrier bonus tiers, compensation formulas, ROI or promised financial outcomes. VC is an agency-level result. Ask what agency requirement is short before attributing the miss to an individual or choosing a program."
     },
     {
       "id": "scattered-priorities",
@@ -207,7 +207,7 @@
       "title": "Service only reacts; renewal outreach and cross-sell do not happen.",
       "distinguishingQuestions": [
         "What does your service team do before a policy renews?",
-        "How does the manager check whether that outreach happened?"
+        "Who checks whether that outreach happened?"
       ],
       "candidateNeeds": [
         "agency-operations",
@@ -221,7 +221,7 @@
       "title": "Our sales process lives in my head.",
       "distinguishingQuestions": [
         "What does a producer follow on a sales call today?",
-        "How does the manager check that everyone is following it?"
+        "Who checks that everyone is following it?"
       ],
       "candidateNeeds": [
         "build-management-system",
@@ -340,5 +340,6 @@
       ],
       "guardrail": "Do not diagnose or promise to treat burnout, health, relationship or mental-health conditions. Distinguish business coaching from professional personal care; do not turn a request for medical help into a sales pitch. Private Directive is unavailable."
     }
-  ]
+  ],
+  "domainGuidance": "VC means Variable Compensation in this agency context. It is an agency-level requirement/result, not an individual producer quota. Missing VC alone does not establish a staff accountability problem or any program fit. First ask which agency requirement or number is short; if they do not know, ask how they currently check agency progress. Do not invent carrier thresholds, formulas, or causes. Separate the agency result from individual activity or sales goals only when the visitor supplies those facts. Never assume a manager exists. Use neutral who-checks or what-happened wording until the visitor establishes the role. If corrected, briefly acknowledge the specific mistake and change the question; do not swap manager for owner and repeat the same mistaken premise. Corrections never reset the shared 2\u20134 question budget."
 }

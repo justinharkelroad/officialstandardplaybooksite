@@ -104,6 +104,15 @@ export function validateRoutedReply(reply, decision, messages = []) {
   // Question lives in a separate field, preventing extra questions in coaching text.
   if(/[?？]/.test(reply.reply)) throw new Error('Put questions only in the question field.');
   if(decision.allowedQuestions) {
+    // Preserve agency-level metric scope even if a pattern or old reply framed
+    // it as an individual miss. These checks also run on the bounded repair.
+    if (/\b(someone|anyone|person|producer|rep|employee|individual)\b[^?!.]{0,70}\b(miss\w*|hit\w*|meet\w*|reach\w*)\b[^?!.]{0,35}\b(VC|variable compensation)\b/i.test(reply.question))
+      throw new Error('VC is an agency-level requirement, not an individual quota.');
+    if (/\b(your|their|the)\s+(sales\s+)?managers?\b/i.test(reply.question)) {
+      const roleStatement = [...messages].reverse().find(m => m.role === 'user' && /\bmanagers?\b/i.test(m.text))?.text ?? '';
+      if (!roleStatement || /\b(no\s+(sales\s+)?manager|(?:don['’]?t|do not|doesn['’]?t|does not)\s+have\s+(?:a\s+)?(?:sales\s+)?manager)\b/i.test(roleStatement))
+        throw new Error('Do not assume a manager exists; ask who reviews the work.');
+    }
     if(!/[A-Za-z].*[A-Za-z]/.test(reply.question??'') || /[\p{Cc}\p{Cf}]/u.test(reply.question??'') || !reply.question?.trim().endsWith('?') || (reply.question.match(/\?/g)||[]).length!==1 || /[？\n]/.test(reply.question))
       throw new Error('Discovery requires exactly one question.');
     if (isServiceChoiceQuestion(reply.question)) throw new Error('Ask about observable behavior, not a service-category choice.');

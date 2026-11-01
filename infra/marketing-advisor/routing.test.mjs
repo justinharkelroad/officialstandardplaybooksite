@@ -127,3 +127,42 @@ test('a factual answer between discoveries preserves the count and the next qual
   const second=await generateReply(k,msgs,'We have no management process.',{apiKey:'test',fetcher:next.fetcher});
   assert.equal(second.routing.questionsAsked,2);assert.equal(second.routing.target,'eight-week');
 });
+
+test('VC replay repairs individual-quota wording before saving a discovery turn',async()=>{
+ const text='Im not sure, I keep just failing them because we arent hitting VC';
+ const provider=fakeProvider(plan({patternId:'bonus-money-math',need:'unclear',confidence:'unclear',evidence:[text]}),[
+  {...written,reply:"Let's get specific.",question:'The last time someone missed VC, what did their manager actually do?'},
+  {...written,reply:'',question:'Which part of the agency’s VC requirement are you falling short on?'},
+ ]);
+ const result=await generateReply(k,history(1),text,{apiKey:'test',fetcher:provider.fetcher});
+ assert.equal(provider.requests.length,3);
+ assert.match(provider.requests[0].instructions,/agency-level requirement/);
+ assert.match(provider.requests[1].instructions,/agency-level requirement/);
+ assert.match(result.reply,/agency’s VC requirement/);
+ assert.equal(result.routing.questionsAsked,2);
+});
+
+test('latest no-manager correction participates in validation without resetting the budget',async()=>{
+ const text='I dont have a manager';
+ const provider=fakeProvider(plan({need:'unclear',confidence:'unclear',evidence:[text]}),[
+  {...written,question:'What did your manager actually do next?'},
+  {...written,reply:'You handle that yourself.',question:'How are you checking progress toward the agency’s VC requirement?'},
+ ]);
+ const result=await generateReply(k,[...history(2),{role:'user',text:'I have a manager.'}],text,{apiKey:'test',fetcher:provider.fetcher});
+ assert.equal(provider.requests.length,3);
+ assert.equal(result.routing.questionsAsked,3);
+});
+
+test('screenshot correction can clarify once, then hands off if the VC cause remains unknown',async()=>{
+ const text='Well its an agency level VC, not individual';
+ const p=plan({patternId:'bonus-money-math',need:'unclear',confidence:'unclear',evidence:[text]});
+ const corrected=fakeProvider(p,[{...written,reply:'You’re right. VC is agency-level. I treated it like an individual target.',question:'Which agency requirement is falling short?'}]);
+ const result=await generateReply(k,history(3),text,{apiKey:'test',fetcher:corrected.fetcher});
+ assert.equal(result.routing.questionsAsked,4);
+ const unclear=fakeProvider({...p,evidence:['I do not know.']},[{...written,reply:'We still need to identify where the agency is falling short. A fit call is the next step.'}]);
+ const final=await generateReply(k,[...history(3),{role:'assistant',text:result.reply,routing:result.routing}],'I do not know.',{apiKey:'test',fetcher:unclear.fetcher});
+ assert.equal(final.routing.mode,'handoff');
+ assert.equal(final.routing.questionsAsked,4);
+ assert.equal(final.question,'');
+ assert.equal(final.actions[0].id,'fit');
+});
