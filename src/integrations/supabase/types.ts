@@ -1239,6 +1239,7 @@ export type Database = {
           id: string
           kind: string
           name: string | null
+          notify_status: string | null
           offer: string | null
           phone: string | null
           prescription: string | null
@@ -1259,6 +1260,7 @@ export type Database = {
           id?: string
           kind: string
           name?: string | null
+          notify_status?: string | null
           offer?: string | null
           phone?: string | null
           prescription?: string | null
@@ -1279,6 +1281,7 @@ export type Database = {
           id?: string
           kind?: string
           name?: string | null
+          notify_status?: string | null
           offer?: string | null
           phone?: string | null
           prescription?: string | null

@@ -15,6 +15,13 @@
       "when": 1793565674469,
       "tag": "0001_vsl_funnel_tracking",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793565686831,
+      "tag": "0002_funnel_leads_notify_status",
+      "breakpoints": true
     }
   ]
 }
