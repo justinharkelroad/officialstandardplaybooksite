@@ -119,6 +119,15 @@ export function validateRoutedReply(reply, decision, messages = []) {
     const normalized=s=>s.toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z0-9]+/g,' ').trim();
     const priorQuestions=messages.filter(m=>m.role==='assistant').flatMap(m=>m.text.split(/\n\s*\n/).filter(p=>p.includes('?')));
     if(priorQuestions.some(q=>normalized(q)===normalized(reply.question))) throw new Error('Ask a new concrete question, not a repeated question.');
+    // Catch near-verbatim rephrasing such as "How are you checking ... right
+    // now?" → "How do you check ... today?" without equating who/what/how.
+    const terms=s=>new Set(normalized(s).split(' ').filter(w=>!['are','is','do','does','did','you','your','the','a','an','s','right','now','today','currently'].includes(w)).map(w=>w==='checking'?'check':w));
+    const current=terms(reply.question);
+    if(priorQuestions.some(q=>{
+      if(normalized(q).split(' ')[0]!==normalized(reply.question).split(' ')[0])return false;
+      const previous=terms(q),shared=[...current].filter(w=>previous.has(w)).length;
+      return Math.min(current.size,previous.size)>=4 && shared/new Set([...current,...previous]).size>=0.8;
+    }))throw new Error('Ask a new concrete question, not a repeated question.');
   } else if(reply.question?.trim()) throw new Error('Discovery budget closed: no additional question.');
   if(!decision.allowedQuestions && /\b(tell me|let me know|could you share|can you share|walk me through)\b/i.test(reply.reply))
     throw new Error('Do not disguise another discovery prompt as a statement.');
