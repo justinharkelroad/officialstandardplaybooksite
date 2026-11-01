@@ -22,6 +22,9 @@ interface BookingOnboardingFormProps {
    *  When set, the form names the program so it reads as a program-specific
    *  booking, not a generic fit form. Defaults to undefined (unchanged). */
   programName?: string;
+  /** Contact details already collected elsewhere (the funnel booking form).
+   *  Used only when this browser has no saved application yet. */
+  prefill?: { full_name?: string; email?: string; cell_phone?: string };
 }
 
 interface FormData {
@@ -103,16 +106,16 @@ const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement |
   e.currentTarget.style.background = 'transparent';
 };
 
-const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRedirectUrl, callLengthLabel = '45-min', programName }: BookingOnboardingFormProps) => {
+const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRedirectUrl, callLengthLabel = '45-min', programName, prefill }: BookingOnboardingFormProps) => {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [sessionId] = useState(() => getOrCreateSessionId(source));
   const asksInvestment = source === INVESTMENT_QUESTION_SOURCE;
   const [formData, setFormData] = useState<FormData>({
-    full_name: '',
-    email: '',
-    cell_phone: '',
+    full_name: prefill?.full_name ?? '',
+    email: prefill?.email ?? '',
+    cell_phone: prefill?.cell_phone ?? '',
     primary_carrier: '',
     whats_working: '',
     whats_not_working: '',

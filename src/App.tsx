@@ -18,8 +18,12 @@ const AIInstallReady = lazy(() => import("./pages/AIInstallReady"));
 const AIInstallReadyList = lazy(() => import("./pages/AIInstallReadyList"));
 const AIInstallPortal = lazy(() => import("./pages/AIInstallPortal"));
 const AIInstallPortalAdmin = lazy(() => import("./pages/AIInstallPortalAdmin"));
+// VSL funnel pages: lazy so the player and quiz stay out of the main bundle.
+const FunnelStart = lazy(() => import("./pages/funnel/Start"));
+const DecisionQuiz = lazy(() => import("./pages/funnel/DecisionQuiz"));
+const FunnelBook = lazy(() => import("./pages/funnel/Book"));
+const FunnelBooked = lazy(() => import("./pages/funnel/Booked"));
 import CallScoring from "./pages/CallScoring";
-import Decision from "./pages/Decision";
 import Privacy from "./pages/Privacy";
 import DataDeletion from "./pages/DataDeletion";
 import Terms from "./pages/Terms";
@@ -106,7 +110,10 @@ const App = () => (
           <Route path="/legacy-the-challenge" element={<Navigate to="/the-challenge" replace />} />
           <Route path="/formulaai" element={<Navigate to="/aiinstall" replace />} />
           <Route path="/callscoring" element={<CallScoring />} />
-          <Route path="/decision" element={<Decision />} />
+          <Route path="/start" element={<Suspense fallback={null}><FunnelStart /></Suspense>} />
+          <Route path="/decision" element={<Suspense fallback={null}><DecisionQuiz /></Suspense>} />
+          <Route path="/book" element={<Suspense fallback={null}><FunnelBook /></Suspense>} />
+          <Route path="/booked" element={<Suspense fallback={null}><FunnelBooked /></Suspense>} />
           <Route path="/about" element={<BoldAbout />} />
           <Route path="/legacy-about" element={<Navigate to="/about" replace />} />
           <Route path="/partnership" element={<Navigate to="/directive" replace />} />
