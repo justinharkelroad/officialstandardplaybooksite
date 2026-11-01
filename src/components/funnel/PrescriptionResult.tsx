@@ -1,14 +1,10 @@
-import { Link } from 'react-router-dom';
 import { MIRROR_CREDIT_TERMS, OFFERS, RESULTS_DISCLAIMER, type OfferKey } from '@/config/offers';
-import { TALK_TO_MARY_RESULTS } from '@/config/quiz';
-import { bookHref, OfferActions } from './OfferActions';
+import { OfferActions } from './OfferActions';
 
 interface PrescriptionResultProps {
   a: OfferKey;
   b: OfferKey;
   why: string;
-  /** Overrides the "Book 15 minutes with Mary" rule (booking form shows its own link). */
-  maryLink?: React.ReactNode;
 }
 
 const OfferCard = ({ offerKey, primary }: { offerKey: OfferKey; primary: boolean }) => {
@@ -32,8 +28,8 @@ const OfferCard = ({ offerKey, primary }: { offerKey: OfferKey; primary: boolean
   );
 };
 
-/** "Your prescription: X", why, the A and B offers, and the Mary link where it applies. */
-const PrescriptionResult = ({ a, b, why, maryLink }: PrescriptionResultProps) => (
+/** "Your prescription: X", why, and the A and B offers with their buttons. */
+const PrescriptionResult = ({ a, b, why }: PrescriptionResultProps) => (
   <div>
     <p className="fn-kicker">/ Your prescription</p>
     <h1 className="fn-display fn-h2">
@@ -44,11 +40,6 @@ const PrescriptionResult = ({ a, b, why, maryLink }: PrescriptionResultProps) =>
       <OfferCard offerKey={a} primary />
       <OfferCard offerKey={b} primary={false} />
     </div>
-    {maryLink ?? (TALK_TO_MARY_RESULTS.includes(a) && (
-      <p className="fn-mary">
-        Want to talk it through? <Link className="fn-link" to={bookHref(a)}>Book 15 minutes with Mary.</Link>
-      </p>
-    ))}
     <p className="fn-disclaimer">{RESULTS_DISCLAIMER}</p>
   </div>
 );

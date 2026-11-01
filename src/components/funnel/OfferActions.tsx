@@ -43,8 +43,8 @@ interface CheckoutButtonProps {
 
 /**
  * A checkout button with its price line above it. Fires InitiateCheckout and
- * hands Stripe the buyer's email and the event id on the way out. While the
- * link is still a placeholder it becomes a "Talk to Mary" booking link.
+ * hands Stripe the buyer's email and the event id on the way out. If a link
+ * is ever left empty, the button falls back to the offer's own page.
  */
 export const CheckoutButton = ({ offer, option, variant = 'ink', label }: CheckoutButtonProps) => {
   const link = checkoutLinkProps(offer, option);
@@ -54,10 +54,9 @@ export const CheckoutButton = ({ offer, option, variant = 'ink', label }: Checko
     return (
       <div className="fn-checkout">
         <p className="fn-checkout__billing">{option.billing}</p>
-        <Link className={className} to={bookHref(offer.key)}>
+        <a className={className} href={offer.page}>
           {label ?? option.label}
-        </Link>
-        <p className="fn-checkout__note">Online checkout opens soon. For now, Mary starts you on a 15-minute call.</p>
+        </a>
       </div>
     );
   }

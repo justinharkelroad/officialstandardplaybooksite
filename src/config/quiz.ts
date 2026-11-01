@@ -144,6 +144,3 @@ export const PRESCRIPTION_WHY: Record<OfferKey, string> = {
   directive:
     'The Directive is waitlist only right now. Momentum is open and gives you two 1:1 calls a month. Join the waitlist or apply for Momentum.',
 };
-
-/** Results that show "Want to talk it through? Book 15 minutes with Mary." */
-export const TALK_TO_MARY_RESULTS: OfferKey[] = ['eightWeek', 'teamStandard2x', 'teamStandard4x', 'standard90'];

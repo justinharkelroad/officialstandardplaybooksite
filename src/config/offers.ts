@@ -24,11 +24,11 @@ export type OfferKey =
 /**
  * How a booking routes for this offer:
  *  buy      checkout now, no call needed
- *  mary     a 15-minute call with Mary
  *  apply    the application and Justin's calendar
  *  waitlist not open; join the waitlist
+ * There are no sales calls with Mary (Justin, 2026-11-01).
  */
-export type OfferRoute = 'buy' | 'mary' | 'apply' | 'waitlist';
+export type OfferRoute = 'buy' | 'apply' | 'waitlist';
 
 export interface CheckoutOption {
   key: CheckoutKey;
@@ -167,7 +167,7 @@ export const OFFERS: Record<OfferKey, Offer> = {
     summary: 'Two fifty-minute team coaching and accountability calls a month, run without the owner in the room.',
     includes: ['Two 50-minute team coaching and accountability calls a month', ...TEAM_STANDARD_SHARED],
     page: '/team-standard',
-    route: 'mary',
+    route: 'buy',
     checkouts: [{ key: 'teamStandard2x', label: 'Start Team Standard', billing: '$2,500 a month · Billed monthly · Cancel any time' }],
     applySource: 'team-standard',
   },
@@ -179,7 +179,7 @@ export const OFFERS: Record<OfferKey, Offer> = {
     summary: 'Four fifty-minute team coaching and accountability calls a month, run without the owner in the room.',
     includes: ['Four 50-minute team coaching and accountability calls a month', ...TEAM_STANDARD_SHARED],
     page: '/team-standard',
-    route: 'mary',
+    route: 'buy',
     checkouts: [{ key: 'teamStandard4x', label: 'Start Team Standard 4X', billing: '$4,000 a month · Billed monthly · Cancel any time' }],
     applySource: 'team-standard',
   },
@@ -197,7 +197,7 @@ export const OFFERS: Record<OfferKey, Offer> = {
       `The guarantee: ${GUARANTEES.eightWeek}`,
     ],
     page: '/sales-experience',
-    route: 'mary',
+    route: 'buy',
     checkouts: [
       { key: 'eightWeekPif', label: 'Pay in full', billing: '$4,500, paid in full' },
       { key: 'eightWeekWeekly', label: 'Pay weekly', billing: '$625 a week for 8 weeks' },

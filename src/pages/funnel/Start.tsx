@@ -38,7 +38,6 @@ const PrescriptionCards = () => {
         <p className="fn-small" style={{ margin: 0 }}>4X is $4,000/mo.</p>
         <div className="fn-card__actions">
           <CheckoutButton offer={team} option={team.checkouts[0]} label="Start Team Standard" />
-          <Link className="fn-btn fn-btn--block fn-btn--ghost" to={bookHref('teamStandard2x')}>Talk to Mary (15 min)</Link>
         </div>
       </article>
     </div>
@@ -72,8 +71,8 @@ const PricingRow = ({ offerKey }: { offerKey: OfferKey }) => {
   } else if (option) {
     price = offer.checkouts.map((o) => o.billing).join(' or ');
     cta = link
-      ? <a className="fn-btn fn-pricing__cta" href={link.href} onClick={link.onClick}>{offer.route === 'mary' ? 'Start' : 'Buy'}</a>
-      : <Link className="fn-btn fn-pricing__cta" to={bookHref(offer.key)}>Talk to Mary</Link>;
+      ? <a className="fn-btn fn-pricing__cta" href={link.href} onClick={link.onClick}>Buy</a>
+      : <Link className="fn-btn fn-pricing__cta" to={offer.page}>Details</Link>;
   }
 
   return (
@@ -249,7 +248,6 @@ const Start = () => {
           </div>
           <PrescriptionCards />
           <div className="fn-final-actions">
-            <Link className="fn-btn fn-btn--ghost" to={bookHref('teamStandard2x')}>Talk to Mary</Link>
             <Link className="fn-btn fn-btn--ghost" to={bookHref('standard90')}>Apply</Link>
           </div>
           <p className="fn-disclaimer">{RESULTS_DISCLAIMER}</p>

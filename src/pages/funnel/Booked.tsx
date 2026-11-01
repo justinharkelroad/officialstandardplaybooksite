@@ -17,7 +17,7 @@ const video = VSL_VIDEOS['sp-precall'];
 /**
  * /booked?offer=<key>: the booking confirmation. Pre-call video, a one-page
  * price sheet for the offer they booked about, and checkout for anyone who
- * is already sure (Mary cancels the call when she sees the purchase).
+ * is already sure (the team cancels the call when they see the purchase).
  */
 const Booked = () => {
   const [params] = useSearchParams();

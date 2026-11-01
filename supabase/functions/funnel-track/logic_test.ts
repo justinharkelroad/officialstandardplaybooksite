@@ -87,11 +87,11 @@ Deno.test("lead email escapes visitor input and lists the answers", async () => 
       contact: { name: "Dan <script>alert(1)</script>", email: "dan@example.com", phone: "(260) 555-0100", agency: "Westrick & Co" },
       prescription: "teamStandard2x",
       offer: "teamStandard2x",
-      route: "mary",
+      route: "buy",
       summary: {
         prescriptionName: "Team Standard 2X",
         offerName: "Team Standard 2X",
-        routeLabel: "Booking form: sent to Mary's 15-minute calendar about Team Standard 2X",
+        routeLabel: "Booking form: shown checkout for Team Standard 2X, no call needed",
         answers: [{ question: "How many producers do you have?", answer: "4–9" }],
       },
     },
