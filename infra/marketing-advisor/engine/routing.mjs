@@ -12,7 +12,7 @@ export function routingState(messages, policy) {
 }
 
 export function planSchema(k) {
-  const offers = [...k.pack.offers.map(o => o.id), 'fit'];
+  const offers = [...k.pack.offers.map(o => o.id), ...(k.productScope ? [] : ['fit'])];
   return { type:'object', additionalProperties:false, properties:{
     patternId:{type:'string',enum:['none',...k.routing.problemPatterns.map(p=>p.id)]},
     intent:{type:'string',enum:['discover','direct-question','next-step','ready','decline','boundary']},
@@ -32,7 +32,7 @@ export function validatePlan(value, k, messages, text) {
     patternId:z.enum(['none',...k.routing.problemPatterns.map(p=>p.id)]).default('none'),
     intent:z.enum(['discover','direct-question','next-step','ready','decline','boundary']),
     need:z.enum([...k.routing.rules.map(r=>r.need),'no-gap','unclear']),
-    confidence:z.enum(['clear','unclear']),requestedOffers:z.array(z.enum([...k.pack.offers.map(o=>o.id), 'fit'])).max(2),
+    confidence:z.enum(['clear','unclear']),requestedOffers:z.array(z.enum([...k.pack.offers.map(o=>o.id), ...(k.productScope ? [] : ['fit'])])).max(2),
     evidence:z.array(z.string().min(1).max(800)).max(4),
     coachingPreference:z.enum(['yes','no','unknown']),ownsCore:z.boolean(),
     phoneCompatibility:z.enum(['supported','unsupported','unknown']),rationale:z.string().max(400),
@@ -50,6 +50,7 @@ export function validatePlan(value, k, messages, text) {
 
 export function chooseRoute(k, messages, plan) {
   const state=routingState(messages,k.routing);
+  if(k.productScope==='live-call-coach') return liveCallCoachRoute(k,state,plan);
   const decision={...state, mode:'answer',target:null,actionIds:[],reason:'Answer the visitor directly.',allowedQuestions:0};
   const finish=(mode,target,reason,actions=[])=>({...decision,mode,target,reason,actionIds:actions});
   if(plan.intent==='decline') return finish('decline',null,'Respect the refusal. Do not pitch or ask another discovery question.');
@@ -92,6 +93,22 @@ export function chooseRoute(k, messages, plan) {
   return {...decision,mode:'discover',reason:'Ask one useful question that distinguishes the remaining program fits. Ask about a recent event, current behavior, written expectations, authority or observable workflow. Infer the right help; never ask the visitor to choose a service category. Do not repeat questions or give an extended coaching lesson.',allowedQuestions:1};
 }
 
+// Product sessions never enter the shared catalog router, including legacy
+// conversations whose saved recommendation points at another offer.
+function liveCallCoachRoute(k,state,plan) {
+  const decision={...state,productScope:k.productScope,mode:'answer',target:'live-call-coach',actionIds:[],allowedQuestions:0};
+  const finish=(mode,reason,actionIds=[])=>({...decision,mode,reason,actionIds});
+  if(plan.intent==='decline') return finish('decline','Respect the refusal. No pitch or further discovery.');
+  if(plan.intent==='boundary') return finish('boundary','Stay within Live Call Coach public product and privacy boundaries. No sales pitch or other product recommendation.');
+  if(plan.intent==='direct-question') return finish('answer','Answer the Live Call Coach question directly. Explain its capabilities and limitations without a discovery interview or another product recommendation. If their setup is unsupported, state that honestly without recommending purchase.',plan.phoneCompatibility==='unsupported'?[]:['live-call-coach']);
+  if(plan.need==='no-gap' && plan.confidence==='clear') return finish('no-purchase','No purchase is needed. Do not manufacture a reason to buy Live Call Coach or another program.');
+  if(plan.phoneCompatibility==='unsupported') return finish('answer','Explain that this calling setup is unsupported. Live Call Coach requires RingCentral or Ricochet browser calling in desktop Chrome or Edge. Do not recommend buying, promise compatibility, or redirect to another product.');
+  if(['ready','next-step'].includes(plan.intent)) return finish('destination','Provide the Live Call Coach plans page only. If compatibility is unconfirmed, state the supported setup and make clear suitability is not yet verified. Correct any earlier off-product recommendation; never advance its destination.',['live-call-coach']);
+  if(plan.confidence==='clear' && plan.phoneCompatibility==='supported') return finish('recommend','Explain how Live Call Coach addresses the stated call behavior using verified features, then give its plans page. No guaranteed close rate or substitute for the manager.',['live-call-coach']);
+  if(state.questionsAsked>=k.routing.maxQuestions || state.routed) return finish('answer','Explain the relevant Live Call Coach capabilities and what remains unverified. Give its plans page for product details without asserting suitability. Discovery is finished; do not send the visitor to a fit call or another program.',['live-call-coach']);
+  return {...decision,mode:'discover',allowedQuestions:1,reason:'Briefly connect the stated call problem to a verified Live Call Coach feature, without asserting suitability. Ask one unanswered question about phone provider, browser calling versus desktop app, or desktop Chrome/Edge. If setup is already supported, clarify only the relevant call behavior. Do not interview for a training or coaching program.'};
+}
+
 export function isServiceChoiceQuestion(question) {
   return /\b(leadership (?:cadence|rhythm)|whole.agency implementation|manager.run accountability process|support modality)\b/i.test(question)
     || (/\b(want|prefer|looking for|(?:mainly )?need|kind of (?:help|support))\b/i.test(question)
@@ -99,6 +116,11 @@ export function isServiceChoiceQuestion(question) {
 }
 
 export function validateRoutedReply(reply, decision, messages = []) {
+  if(decision.productScope==='live-call-coach') {
+    const text=`${reply.reply} ${reply.question}`;
+    if(/\b(certified standard|boardroom|(?:the )?standard 90|team standard|(?:the )?directive|(?:8|eight)[ -]week|standard playbook training|(?:agency )?ai install|fit (?:call|conversation)|(?:explore|buy|purchase|recommend|try|choose|join|switch to)\s+agency\s*brain)\b/i.test(text))
+      throw new Error('Stay within Live Call Coach product scope; do not promote another offer.');
+  }
   if (/\b(leadership (?:cadence|rhythm)|support modality|implementation scope|management.system rebuild|manager.run accountability process)\b/i.test(`${reply.reply} ${reply.question}`))
     throw new Error('Use plain observable language instead of consultant jargon.');
   // Question lives in a separate field, preventing extra questions in coaching text.

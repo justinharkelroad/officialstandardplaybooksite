@@ -1,5 +1,7 @@
 # Working Rules
 
+- **Live Call Coach marketing sessions stay within that product.** Use the product-only catalog and server routing; uncertainty, incompatible phones and old off-product recommendations never authorize a different offer or fit-call redirect. [Rule and regressions](docs/incidents/2026-11-01-lcc-advisor-product-scope.md).
+
 - **The website deploys through Cloudflare from `main`, not through Lovable.**
   After website changes reach `main`, report that the Cloudflare deployment was
   triggered (or that the code is on `main`); never tell Justin to publish,
