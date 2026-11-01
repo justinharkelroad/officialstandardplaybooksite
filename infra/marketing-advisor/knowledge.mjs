@@ -3,9 +3,21 @@ export const BRANDS=['standard','agencybrain','livecallcoach'];
 export function getKnowledge(brand) {
  if(!BRANDS.includes(brand))throw new Error('Unknown brand');
  const k=structuredClone(base);
+ delete k.productProfiles;
  k.voice=k.voice.replaceAll('private prototype','public marketing guide').replaceAll('private-test','public');
  if(brand==='livecallcoach') {
-  const action=k.pack.actions.find(a=>a.id==='live-call-coach');action.url='https://livecallcoach.ai/#pricing';action.label='See Live Call Coach plans';
+  const profile=structuredClone(base.productProfiles.livecallcoach);
+  k.productScope='live-call-coach';
+  k.pack.offers=k.pack.offers.filter(o=>o.id===k.productScope);
+  Object.assign(k.pack.offers[0],profile.offer);
+  k.pack.actions=[profile.action];
+  k.pack.version=profile.routing.version;
+  k.pack.scope='Live Call Coach product guidance only; no account access or other offer recommendations';
+  k.voice=profile.voice;
+  k.examples=profile.examples;
+  k.routing=profile.routing;
+  k.hash=profile.hash;
+  k.ids=[...k.pack.principles,...k.pack.offers].map(o=>o.id);
  }
  if(brand!=='standard') {
   k.voice=k.voice.replaceAll('STANDARDAI','Stanley');

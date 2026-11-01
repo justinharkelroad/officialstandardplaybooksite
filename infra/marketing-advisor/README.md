@@ -12,7 +12,7 @@ The Standard homepage embeds STANDARDAI. Agency Brain and Live Call Coach embed 
 - A session expires after 24 hours; a Durable Object alarm removes its application data. New chat deletes the prior session and its review archive. Cloudflare/OpenAI provider retention policies still apply. No chat contents are emitted to application logs; Worker observability is disabled.
 - OpenAI Responses uses `store: false`. The existing API key is only in the Worker secret store. Never put it in Vite variables, source, assets, logs or command arguments.
 - The visible opening question counts toward the 2–4 discovery-question limit. The server validates grounded routing, refuses a fifth question and resolves action URLs from a fixed catalog. Coaching next-step replies supply `https://agencycoaching.as.me/standardfit`.
-- Three brand views share the vetted knowledge, with public product context and Stanley identity for the two software sites. No live account, billing, scheduling, call or client data access.
+- Standard and Agency Brain share the general catalog. Live Call Coach has its own product-only knowledge profile, examples, provider schemas and server route; its only product action is its plans page. Calling incompatibility or an exhausted discovery budget never redirects to another offer. Both software sites use Stanley identity. No live account, billing, scheduling, call or client data access.
 - Messages are limited to 3,000 characters, 20 visitor turns and 40,000 accumulated characters. Idempotent request IDs allow response retrieval without paying for a second completion.
 - Hashed-IP limits: 5 new chats/hour, 10/day; 30 messages/hour, 50/day. Global caps: 1,000 session creations/day and 250 message attempts/day across all three brands. Model calls have bounded retries and a 55-second deadline. Failed attempts count toward caps. These controls bound usage; they are not bot-proof identity checks.
 - API writes require same-origin requests. Static framing is restricted to each brand's canonical domains. The founder-only `/admin/*` inbox validates the Agency Brain user with Supabase Auth and checks the current admin role, then requires Justin’s immutable user ID. No public transcript-list or knowledge-download endpoint exists.
@@ -23,7 +23,7 @@ Use Node 22 or newer. From this directory: `npm ci`, `npm test`, `npm run knowle
 
 For immediate shutdown set `CHAT_ENABLED` to `false` in `wrangler.jsonc` and redeploy; fallback links remain usable. Change `DAILY_MESSAGE_LIMIT` deliberately, with budget review. Website widget removal is independent of backend shutdown. Existing session data is intentionally not shared with the local founder prototype.
 
-The generated knowledge hash identifies the four source knowledge files. It does not mean every later code change or new product fact was founder-approved. Refresh dated capacity before representing it as current; the model is instructed never to describe a snapshot as live availability.
+The general knowledge hash identifies the four base source files. The Live Call Coach hash additionally includes its product profile in `knowledge/live-call-coach.json`. It does not mean every later code change or new product fact was founder-approved. Refresh dated capacity before representing it as current; the model is instructed never to describe a snapshot as live availability.
 
 ## Marketing Conversations inbox
 

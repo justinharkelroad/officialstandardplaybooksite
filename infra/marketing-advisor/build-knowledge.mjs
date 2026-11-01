@@ -7,4 +7,6 @@ pack.status='Public marketing guide';pack.scope='Public offer guidance, no clien
 for(const row of [...pack.offers,...pack.principles])delete row.sourceRefs;
 const hash=createHash('sha256').update(p+v+e+r).digest('hex');
 const source={pack,voice:v,examples:JSON.parse(e),routing:JSON.parse(r),hash,ids:[...pack.principles,...pack.offers].map(x=>x.id)};
+const product=await read('live-call-coach.json');
+source.productProfiles={livecallcoach:{...JSON.parse(product),hash:createHash('sha256').update(p+v+e+r+product).digest('hex')}};
 await writeFile(new URL('knowledge.generated.mjs',import.meta.url),`// Generated anonymous server-only knowledge. Never serve this file.\nexport default ${JSON.stringify(source)};\n`);
