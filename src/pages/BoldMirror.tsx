@@ -5,6 +5,11 @@ import { Facebook, Linkedin } from 'lucide-react';
 import standardLogo from '@/assets/standard-word-logo.png';
 import { captureMirrorAttribution } from '@/lib/mirrorAttribution';
 import { MIRROR_CHALLENGE_CHECKOUT_URL } from '@/data/offerLinks';
+import VslPlayer from '@/components/vsl/VslPlayer';
+import { checkoutLinkProps } from '@/components/funnel/OfferActions';
+import { VSL_VIDEOS } from '@/config/vsl';
+import { MIRROR_CREDIT_TERMS, OFFERS, RESULTS_DISCLAIMER } from '@/config/offers';
+import { trackFunnel, trackVslEvent } from '@/lib/funnel/track';
 
 const display = '"Anton", "Archivo Black", "Oswald", Impact, sans-serif';
 const editorial = '"Archivo Black", "Anton", Impact, sans-serif';
@@ -44,6 +49,20 @@ const LogoHeader = () => (
         style={{ height: 22, filter: 'brightness(0)' }} />
     </Link>
   </header>
+);
+
+/* ══════════════════════════════════════════════════════
+   MIRROR VSL (top of page)
+   ══════════════════════════════════════════════════════ */
+const MirrorVsl = () => (
+  <section style={{ background: ink, padding: '32px 16px 28px' }}>
+    <div style={{ maxWidth: 1040, margin: '0 auto', color: paper }}>
+      <VslPlayer video={VSL_VIDEOS.mirror} onEvent={trackVslEvent} />
+      <p style={{ fontFamily: body, fontSize: 12, lineHeight: 1.5, color: paper, opacity: 0.6, margin: '14px 0 0' }}>
+        {RESULTS_DISCLAIMER}
+      </p>
+    </div>
+  </section>
 );
 
 /* ══════════════════════════════════════════════════════
@@ -371,7 +390,10 @@ const AuthoritySection = () => (
 /* ══════════════════════════════════════════════════════
    THE MIRROR CHALLENGE — paid standalone, free for members
    ══════════════════════════════════════════════════════ */
-const MirrorChallengeSection = () => (
+const MirrorChallengeSection = () => {
+  // Prefills the buyer's email on Stripe (so the Mirror Credit can find them) and fires InitiateCheckout.
+  const mirrorCheckout = checkoutLinkProps(OFFERS.mirror, OFFERS.mirror.checkouts[0]);
+  return (
   <section id="mirror-challenge" style={{ background: paper, padding: '120px 24px', borderTop: `1px solid ${ink}` }}>
     <div className="max-w-[1280px] mx-auto grid grid-cols-12 gap-8 items-end">
       <div className="col-span-12 md:col-span-7">
@@ -418,11 +440,18 @@ const MirrorChallengeSection = () => (
           </p>
           <p style={{
             fontFamily: body, fontSize: 15, fontWeight: 600, lineHeight: 1.5,
-            color: ink, margin: '20px 0 24px',
+            color: ink, margin: '20px 0 12px',
           }}>
             Free with Agency Brain or any Standard Playbook program.
           </p>
-          <a href={MIRROR_CHALLENGE_CHECKOUT_URL} target="_blank" rel="noopener noreferrer"
+          <p style={{
+            fontFamily: body, fontSize: 14, fontWeight: 400, lineHeight: 1.55,
+            color: ink, opacity: 0.8, margin: '0 0 24px',
+            borderLeft: `3px solid ${blue}`, paddingLeft: 14,
+          }}>
+            {MIRROR_CREDIT_TERMS}
+          </p>
+          <a href={mirrorCheckout?.href ?? MIRROR_CHALLENGE_CHECKOUT_URL} onClick={mirrorCheckout?.onClick} target="_blank" rel="noopener noreferrer"
             style={{
               display: 'inline-block',
               fontFamily: body, fontSize: 13, fontWeight: 700, letterSpacing: '0.14em',
@@ -436,7 +465,8 @@ const MirrorChallengeSection = () => (
       </Reveal>
     </div>
   </section>
-);
+  );
+};
 
 /* ══════════════════════════════════════════════════════
    AFTER THE SCORE — diagnosis → climb band
@@ -620,6 +650,7 @@ const BoldMirror = () => {
     captureMirrorAttribution();
     // Meta Pixel PageView
     try { (window as any).fbq?.('track', 'PageView'); } catch {}
+    trackFunnel('view_content', { contentName: 'Mirror', videoId: VSL_VIDEOS.mirror.id });
   }, []);
 
   const onStart = () => navigate('/mirror/score');
@@ -627,6 +658,7 @@ const BoldMirror = () => {
   return (
     <div style={{ background: paper, fontFamily: body, color: ink }}>
       <LogoHeader />
+      <MirrorVsl />
       <Hero onStart={onStart} />
       <MarqueeBands phrase="THE MIRROR · 32 QUESTIONS · 5 PILLARS · ONE HONEST SCORE" />
       <PillarsSection />

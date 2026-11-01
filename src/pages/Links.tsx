@@ -5,6 +5,7 @@ import { Facebook, Linkedin } from 'lucide-react';
 
 import standardLogo from '@/assets/standard-word-logo.png';
 import { MIRROR_CHALLENGE_CHECKOUT_URL } from '@/data/offerLinks';
+import { MIRROR_CREDIT_TERMS } from '@/config/offers';
 
 const profileImage = '/LINK%20PAGE.jpg';
 
@@ -60,6 +61,7 @@ const ownerPrograms: ProgramRow[] = [
       'Agency Brain paces you through 4 fundamentals per week for 8 weeks',
       'A private, managed Telegram Challenge Room',
       'Free with Agency Brain or any Standard Playbook program',
+      MIRROR_CREDIT_TERMS,
     ],
     href: MIRROR_CHALLENGE_CHECKOUT_URL,
     cta: 'Buy →',

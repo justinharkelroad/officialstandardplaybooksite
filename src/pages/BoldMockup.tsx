@@ -17,6 +17,7 @@ import lqsImg from '@/assets/lqs.png';
 import callScoringImg from '@/assets/call-scoring.png';
 import aiRoleplayImg from '@/assets/ai-roleplay-bot.png';
 import teamTrainingImg from '@/assets/team-training.png';
+import { MIRROR_CREDIT_TERMS } from '@/config/offers';
 
 /* ── Type stacks ───────────────────────────────────────── */
 const display = '"Anton", "Archivo Black", "Oswald", Impact, sans-serif';
@@ -759,7 +760,7 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
               eyebrow="8-week agency challenge · One-time"
               name="Mirror Challenge"
               price="$197 · Free with Agency Brain or any program"
-              description="Score your agency on the 160-point Mirror, then work 4 fundamentals a week for 8 weeks with a private Telegram Challenge Room."
+              description={`Score your agency on the 160-point Mirror, then work 4 fundamentals a week for 8 weeks with a private Telegram Challenge Room. ${MIRROR_CREDIT_TERMS}`}
               href={MIRROR_CHALLENGE_CHECKOUT_URL}
               cta="Buy the Challenge"
               external
