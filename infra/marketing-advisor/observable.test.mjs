@@ -42,3 +42,11 @@ test('discovery cannot presume a manager from an assistant question or ignore a 
  assert.throws(()=>validateRoutedReply({...base,question},decision,[{role:'user',text:'I have a manager.'},{role:'user',text:"I don't have a manager anymore."}]),/assume a manager/);
  assert.ok(validateRoutedReply({...base,question:'Who checks progress toward the agency goal?'},decision,[{role:'user',text:'I do not have a manager.'}]));
 });
+
+
+test('VC tracking questions cannot be repeated with only auxiliary verbs changed',()=>{
+ const messages=[{role:'assistant',text:'How are you checking the agency’s progress toward VC right now?'}];
+ assert.throws(()=>validateRoutedReply({...base,question:'How do you check the agency’s progress toward VC today?'},decision,messages),/repeated/);
+ assert.ok(validateRoutedReply({...base,question:'When did the agency last hit VC?'},decision,messages));
+ assert.ok(validateRoutedReply({...base,question:'Who checks the agency’s progress toward VC?'},decision,messages));
+});
