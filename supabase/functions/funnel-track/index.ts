@@ -1,13 +1,17 @@
 // Supabase Edge Functions bundle pinned npm: imports directly.
 // deno-lint-ignore no-import-prefix
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2.95.3";
+// deno-lint-ignore no-import-prefix
+import { Resend } from "npm:resend@4.0.0";
 import { sha256Hex } from "../_shared/meta-capi.ts";
+import { buildEmailHtml, escapeHtml } from "../_shared/email-template.ts";
 import { getSupabaseServiceKey } from "../_shared/supabaseKeys.ts";
 import {
   type EventRequest,
   type FunnelRequest,
   ghlLeadPayload,
   ghlVslPayload,
+  leadNotification,
   type LeadRequest,
   metaEventName,
   parseRequest,
@@ -30,11 +34,18 @@ import {
  * Meta and GHL are best effort. The row is the record; a failed forward is
  * logged and reported in the response, never retried by the browser.
  *
- * Secrets: META_PIXEL_ID, META_CAPI_TOKEN, optional META_TEST_EVENT_CODE
- * (shared with the other Meta functions), GHL_VSL_WEBHOOK_URL, and optional
- * GHL_LEAD_WEBHOOK_URL (falls back to GHL_VSL_WEBHOOK_URL).
+ * Every quiz and booking lead is also emailed to the team (Justin and Mary
+ * read info@standardplaybook.com, same as the other booking notifications).
+ *
+ * Secrets: RESEND_API_KEY (shared with the other notification functions),
+ * optional FUNNEL_LEAD_NOTIFY_TO (comma-separated; defaults to
+ * info@standardplaybook.com), META_PIXEL_ID, META_CAPI_TOKEN, optional
+ * META_TEST_EVENT_CODE (shared with the other Meta functions), and optional
+ * GHL_VSL_WEBHOOK_URL / GHL_LEAD_WEBHOOK_URL (GHL is skipped when unset).
  */
 
+const NOTIFY_FROM = "Standard Playbook <booking@standardplaybook.com>";
+const DEFAULT_NOTIFY_TO = "info@standardplaybook.com";
 const GRAPH_VERSION = Deno.env.get("META_API_VERSION")?.trim() || "v23.0";
 const FORWARD_TIMEOUT_MS = 5000;
 
@@ -135,6 +146,37 @@ async function sendGhl(url: string | undefined, body: unknown): Promise<ForwardR
   }
 }
 
+/** Emails the team about a lead. Best effort, like Meta and GHL. */
+async function notifyTeam(req: LeadRequest, watched: ReturnType<typeof summarizeVsl>): Promise<ForwardResult> {
+  const apiKey = Deno.env.get("RESEND_API_KEY")?.trim();
+  if (!apiKey) {
+    console.error("funnel-track: RESEND_API_KEY missing, lead email not sent");
+    return "skipped";
+  }
+  const to = (Deno.env.get("FUNNEL_LEAD_NOTIFY_TO") || DEFAULT_NOTIFY_TO)
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  try {
+    const n = leadNotification(req, watched, escapeHtml);
+    const { error } = await new Resend(apiKey).emails.send({
+      from: NOTIFY_FROM,
+      to,
+      replyTo: req.email,
+      subject: n.subject,
+      html: buildEmailHtml({ title: n.title, subtitle: n.subtitle, bodyContent: n.bodyHtml, eyebrow: "Funnel lead" }),
+    });
+    if (error) {
+      console.error("funnel-track: lead email", error.message);
+      return "failed";
+    }
+    return "sent";
+  } catch (error) {
+    console.error("funnel-track: lead email", error instanceof Error ? error.message : error);
+    return "failed";
+  }
+}
+
 type Db = SupabaseClient;
 
 function eventRow(req: FunnelRequest, fields: { event: string; video_id?: string | null; value?: string | null; offer?: string | null }, userAgent: string | null) {
@@ -219,7 +261,7 @@ async function handleLead(db: Db, req: LeadRequest, ip: string | null, userAgent
   const watched = summarizeVsl((history ?? []) as { event: string; video_id: string | null; value: string | null }[]);
 
   const ghlUrl = Deno.env.get("GHL_LEAD_WEBHOOK_URL")?.trim() || Deno.env.get("GHL_VSL_WEBHOOK_URL")?.trim();
-  const [meta, ghl] = await Promise.all([
+  const [meta, ghl, notify] = await Promise.all([
     sendMeta({
       req,
       eventName: "Lead",
@@ -233,6 +275,7 @@ async function handleLead(db: Db, req: LeadRequest, ip: string | null, userAgent
       },
     }),
     sendGhl(ghlUrl, ghlLeadPayload(req, watched)),
+    notifyTeam(req, watched),
   ]);
 
   const { error } = await db.from("funnel_leads").insert({
@@ -252,6 +295,7 @@ async function handleLead(db: Db, req: LeadRequest, ip: string | null, userAgent
     url: req.url,
     utm: req.utm,
     ghl_status: ghl,
+    notify_status: notify,
   });
   if (error) {
     console.error("funnel-track: insert funnel_leads", error.message);
@@ -266,7 +310,7 @@ async function handleLead(db: Db, req: LeadRequest, ip: string | null, userAgent
       ignoreDuplicates: true,
     });
 
-  return json({ ok: true, meta, ghl });
+  return json({ ok: true, meta, ghl, notify });
 }
 
 Deno.serve(async (req: Request): Promise<Response> => {

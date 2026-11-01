@@ -12,6 +12,7 @@
 import type { VslEvent } from '@/components/vsl/VslPlayer';
 import { encodeClientReference } from '@/lib/metaCheckout';
 import { readMirrorAttribution } from '@/lib/mirrorAttribution';
+import type { LeadSummary } from './leadSummary';
 
 export type FunnelEventName =
   | VslEvent['name']
@@ -193,6 +194,8 @@ export interface FunnelLead {
   offer?: string;
   route?: string;
   rule?: string;
+  /** Readable names and answers for the team notification email. */
+  summary: LeadSummary;
 }
 
 /**

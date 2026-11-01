@@ -9,6 +9,7 @@ import { JUSTIN_CALENDARS, maryCalendarUrl } from '@/config/booking';
 import { isOfferKey, OFFERS, type OfferKey } from '@/config/offers';
 import type { QuizAnswers } from '@/config/quiz';
 import { explainPrescription, prescribe } from '@/lib/funnel/prescribe';
+import { leadSummary } from '@/lib/funnel/leadSummary';
 import { captureMirrorAttribution } from '@/lib/mirrorAttribution';
 import { submitFunnelLead, type FunnelContact } from '@/lib/funnel/track';
 import './Funnel.css';
@@ -102,6 +103,7 @@ const Book = () => {
       offer,
       route,
       rule: rx.rule,
+      summary: leadSummary(answers, rx, offer),
     });
     if (route === 'apply') {
       setView({ kind: 'apply', offer, contact });

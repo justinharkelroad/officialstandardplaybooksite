@@ -5,6 +5,7 @@ import PrescriptionResult from '@/components/funnel/PrescriptionResult';
 import { FunnelFooter, FunnelHeader } from '@/components/funnel/FunnelChrome';
 import type { QuizAnswers } from '@/config/quiz';
 import { explainPrescription, prescribe, type Prescription } from '@/lib/funnel/prescribe';
+import { leadSummary } from '@/lib/funnel/leadSummary';
 import { saveAnswers } from '@/lib/funnel/funnelState';
 import { captureMirrorAttribution } from '@/lib/mirrorAttribution';
 import { submitFunnelLead } from '@/lib/funnel/track';
@@ -28,6 +29,7 @@ const DecisionQuiz = () => {
       prescription: rx.a,
       alternative: rx.b,
       rule: rx.rule,
+      summary: leadSummary(answers, rx),
     });
     setResult({ rx, answers });
     window.scrollTo({ top: 0 });
