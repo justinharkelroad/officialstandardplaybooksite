@@ -31,6 +31,14 @@ export const seoConfig: Record<string, SEOConfig> = {
     canonical: 'https://standardplaybook.com/certified-standard',
     type: 'website',
   },
+  '/mirror': {
+    title: 'The Mirror Challenge | $197 | Standard Playbook',
+    description: 'Thirty-two agency systems. Eight weeks. One honest look at each. Take The Mirror Challenge for $197, one payment with no subscription. Includes daily emails, weekly reflections, and your finisher dossier.',
+    keywords: ['mirror challenge', 'insurance agency assessment', 'agency owner systems', 'standard playbook', 'agency brain'],
+    ogImage: OG_IMAGE,
+    canonical: 'https://standardplaybook.com/mirror',
+    type: 'website',
+  },
   '/boardroom': {
     title: 'The Boardroom: Weekly Owner Accountability + Agency Brain Core | The Standard Playbook',
     description: 'Weekly Monday live coaching, the 30-minute Domino accountability loop, the 160-point Mirror & 8-Week Mirror Challenge, and full Agency Brain Core access included for $399/month.',

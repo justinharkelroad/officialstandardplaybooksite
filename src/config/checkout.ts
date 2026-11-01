@@ -27,6 +27,7 @@ export const CHECKOUT_LINKS: Record<CheckoutKey, string | null> = {
   // From /decision as of 2026-10-30 ($4,500 PIF / $625 weekly). Confirm the amounts before launch.
   eightWeekPif: 'https://link.fastpaydirect.com/payment-link/67b9e4c1020837472ed0b709',
   eightWeekWeekly: 'https://link.fastpaydirect.com/payment-link/67b9e53c156a771b286e2ca6',
+  // Agency Brain's challenge page owns email capture, Stripe and provisioning (2026-11-01).
   mirror: MIRROR_CHALLENGE_CHECKOUT_URL,
   certifiedStandard: CERTIFIED_STANDARD_CHECKOUT_URL,
   producerChallenge: 'https://myagencybrain.com/six-week-challenge',

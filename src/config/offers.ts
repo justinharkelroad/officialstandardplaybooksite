@@ -1,4 +1,5 @@
 import type { CheckoutKey } from './checkout';
+import { MIRROR_SALES_OFFER } from '@/data/mirrorChallengeCopy';
 
 /*
  * The offer catalog the funnel pages read: names, prices, what's included,
@@ -83,13 +84,8 @@ export const OFFERS: Record<OfferKey, Offer> = {
     name: 'Mirror Challenge',
     price: '$197',
     cadence: 'one time',
-    summary: 'The 8-Week / 32-Day Mirror Challenge: score your agency honestly, then work the gaps four at a time.',
-    includes: [
-      'The 32-item agency diagnostic across five pillars',
-      'Eight weeks of paced work inside Agency Brain',
-      'The private, managed Telegram Challenge Room',
-      MIRROR_FREE_LINE,
-    ],
+    summary: 'Eight weeks, 32 systems, four a week: see what is actually true in your agency.',
+    includes: [...MIRROR_SALES_OFFER.includes, MIRROR_FREE_LINE],
     page: '/mirror',
     route: 'buy',
     checkouts: [{ key: 'mirror', label: 'Start the Mirror', billing: '$197, one time' }],
