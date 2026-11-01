@@ -73,3 +73,36 @@ Deno.test("summarizes VSL history and tags", () => {
   assertEquals(summary["sp-main"], { max_milestone: 35, revealed: true, unmuted: false });
   assertEquals(vslTag({ event: "vsl_milestone", videoId: "sp-main", value: "35" }), "vsl sp-main watched 35%");
 });
+
+Deno.test("lead email escapes visitor input and lists the answers", async () => {
+  const { escapeHtml } = await import("../_shared/email-template.ts");
+  const { leadNotification } = await import("./logic.ts");
+  const parsed = parseRequest({
+    ...ids,
+    action: "lead",
+    url: "https://standardplaybook.com/book",
+    utm: { utm_source: "facebook", utm_campaign: "launch" },
+    lead: {
+      kind: "booking",
+      contact: { name: "Dan <script>alert(1)</script>", email: "dan@example.com", phone: "(260) 555-0100", agency: "Westrick & Co" },
+      prescription: "teamStandard2x",
+      offer: "teamStandard2x",
+      route: "mary",
+      summary: {
+        prescriptionName: "Team Standard 2X",
+        offerName: "Team Standard 2X",
+        routeLabel: "Booking form: sent to Mary's 15-minute calendar about Team Standard 2X",
+        answers: [{ question: "How many producers do you have?", answer: "4–9" }],
+      },
+    },
+  });
+  if (typeof parsed === "string" || parsed.action !== "lead") throw new Error(String(parsed));
+  const n = leadNotification(parsed, { "sp-main": { max_milestone: 35, revealed: true, unmuted: true } }, escapeHtml);
+  assertEquals(n.subject, "New Booking Lead: Dan <script>alert(1)</script> (Team Standard 2X)");
+  assertEquals(n.title.includes("<script>"), false);
+  assertEquals(n.bodyHtml.includes("<script>"), false);
+  assertEquals(n.bodyHtml.includes("Westrick &amp; Co"), true);
+  assertEquals(n.bodyHtml.includes("How many producers do you have?"), true);
+  assertEquals(n.bodyHtml.includes("watched 35%, reached the menu"), true);
+  assertEquals(n.bodyHtml.includes("tel:2605550100"), true);
+});

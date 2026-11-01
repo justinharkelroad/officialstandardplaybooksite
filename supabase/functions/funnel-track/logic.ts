@@ -115,7 +115,17 @@ export interface LeadRequest extends Common {
     offer: string | null;
     route: string | null;
     rule: string | null;
+    summary: LeadSummary;
   };
+}
+
+/** Human-readable lead details the browser sends for the notification email. */
+export interface LeadSummary {
+  prescriptionName: string | null;
+  alternativeName: string | null;
+  offerName: string | null;
+  routeLabel: string | null;
+  answers: { question: string; answer: string }[];
 }
 
 export type FunnelRequest = EventRequest | LeadRequest;
@@ -180,6 +190,7 @@ export function parseRequest(raw: unknown): FunnelRequest | string {
         offer: str(lead.offer, 60),
         route: str(lead.route, 20),
         rule: str(lead.rule, 20),
+        summary: summary(lead.summary),
       },
     };
   }
@@ -256,4 +267,98 @@ export function summarizeVsl(rows: { event: string; video_id: string | null; val
 
 function prefixKeys(prefix: string, obj: Record<string, string>): Record<string, string> {
   return Object.fromEntries(Object.entries(obj).map(([k, v]) => [`${prefix}${k}`, v]));
+}
+
+function summary(value: unknown): LeadSummary {
+  const v = (value && typeof value === "object" ? value : {}) as Record<string, unknown>;
+  const answers = Array.isArray(v.answers)
+    ? v.answers.slice(0, 20).flatMap((row) => {
+      const r = (row && typeof row === "object" ? row : {}) as Record<string, unknown>;
+      const question = str(r.question, 200);
+      const answer = str(r.answer, 300);
+      return question && answer ? [{ question, answer }] : [];
+    })
+    : [];
+  return {
+    prescriptionName: str(v.prescriptionName, 120),
+    alternativeName: str(v.alternativeName, 120),
+    offerName: str(v.offerName, 120),
+    routeLabel: str(v.routeLabel, 200),
+    answers,
+  };
+}
+
+/**
+ * The team notification for a quiz or booking lead, as subject plus the
+ * inner HTML for the shared email template. Every visitor-supplied value
+ * goes through `escape`.
+ */
+export function leadNotification(
+  req: LeadRequest,
+  watched: ReturnType<typeof summarizeVsl>,
+  escape: (s: string) => string,
+): { subject: string; title: string; subtitle: string; bodyHtml: string } {
+  const { lead } = req;
+  const s = lead.summary;
+  const who = lead.name || req.email;
+  const kind = lead.kind === "quiz" ? "Quiz" : "Booking";
+  const about = s.offerName || s.prescriptionName || lead.offer || lead.prescription || "";
+
+  const row = (label: string, value: string | null | undefined, href?: string) =>
+    value
+      ? `<tr><td style="padding:6px 12px 6px 0;color:#64748b;font-size:13px;white-space:nowrap;vertical-align:top;">${escape(label)}</td><td style="padding:6px 0;font-size:14px;">${
+        href ? `<a href="${escape(href)}" style="color:#0f172a;">${escape(value)}</a>` : escape(value)
+      }</td></tr>`
+      : "";
+  const table = (rows: string) =>
+    rows ? `<table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 0 20px;">${rows}</table>` : "";
+  const heading = (text: string) =>
+    `<p style="margin:0 0 8px;font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#94a3b8;">${escape(text)}</p>`;
+
+  const phoneDigits = (lead.phone ?? "").replace(/\D/g, "");
+  const contact = table(
+    row("Name", lead.name) +
+      row("Email", req.email, `mailto:${req.email}`) +
+      row("Phone", lead.phone, phoneDigits ? `tel:${phoneDigits}` : undefined) +
+      row("Agency", lead.agency),
+  );
+  const result = table(
+    row("What happened", s.routeLabel) +
+      row(lead.kind === "booking" ? "Booking about" : "Prescription", about) +
+      row(lead.kind === "booking" ? "Quiz would prescribe" : "Alternative", lead.kind === "booking" ? s.prescriptionName : s.alternativeName),
+  );
+  const answers = table(s.answers.map((a) => row(a.question, a.answer)).join(""));
+  const videos = table(
+    Object.entries(watched)
+      .map(([video, w]) =>
+        row(video, w.max_milestone ? `watched ${w.max_milestone}%${w.revealed ? ", reached the menu" : ""}` : w.unmuted ? "started with sound" : "autoplayed muted only")
+      )
+      .join(""),
+  );
+  const source = table(
+    row("Source", [req.utm.utm_source, req.utm.utm_medium, req.utm.utm_campaign].filter(Boolean).join(" / ") || null) +
+      row("Ad", req.utm.utm_content) +
+      row("First page", req.utm.landing_path) +
+      row("Submitted on", req.url),
+  );
+
+  const bodyHtml = [
+    heading("Contact"),
+    contact,
+    heading("Result"),
+    result,
+    answers && heading("Answers"),
+    answers,
+    videos && heading("Video"),
+    videos,
+    source && heading("Where they came from"),
+    source,
+  ].join("");
+
+  return {
+    subject: `New ${kind} Lead: ${who}${about ? ` (${about})` : ""}`,
+    title: escape(`${kind} lead: ${who}`),
+    subtitle: escape(s.routeLabel ?? (about ? `About ${about}` : "")),
+    bodyHtml,
+  };
 }
