@@ -2,10 +2,9 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Users, Zap, Crown, Briefcase, Shield } from 'lucide-react';
+import { ArrowRight, Users, Zap, Crown, Briefcase } from 'lucide-react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { useParallax } from '@/hooks/useParallax';
-import PartnershipSoldOutModal from '@/components/PartnershipSoldOutModal';
 
 const OffersGrid = () => {
   const { ref: sectionRef, isVisible } = useScrollReveal();
@@ -31,17 +30,6 @@ const OffersGrid = () => {
       icon: Zap,
       link: '/directive',
       color: 'primary-accent',
-    },
-    {
-      title: 'THE PARTNERSHIP',
-      description: 'Exclusive 1-on-1 coaching with Justin.',
-      copy: 'Full partnership with direct access, custom strategy, and accountability at the highest level. Limited availability.',
-      emphasis: 'This is the inner circle.',
-      italic: 'Not for everyone. Reserved for the serious.',
-      icon: Shield,
-      link: null,
-      color: 'primary',
-      soldOut: true
     },
     {
       title: '8-WEEK SALES MANAGEMENT',
@@ -142,15 +130,7 @@ const OffersGrid = () => {
                       
                       <p className="text-gray-300 italic">{program.italic}</p>
                     </div>
-                    {program.soldOut ? (
-                      <PartnershipSoldOutModal
-                        trigger={
-                          <Button className="bg-stroke/50 text-muted font-bold text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 w-full">
-                            SOLD OUT
-                          </Button>
-                        }
-                      />
-                    ) : program.comingSoon ? (
+                    {program.comingSoon ? (
                       <div className="bg-primary/20 text-primary font-bold text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 w-full text-center rounded-md">
                         2.0 COMING SOON
                       </div>

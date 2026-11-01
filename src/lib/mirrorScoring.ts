@@ -138,7 +138,7 @@ export const routeForResult = (tier: Tier, weakest: PillarKey): TierRoute => {
     };
   }
   if (tier === 'advanced' || tier === 'elite') {
-    // Directive + Partnership are sold out, so the top tiers route to the
+    // Directive is waitlist only, so the top tiers route to the
     // by-application offers. A team-pillar weakness goes to The Team Standard
     // (fix the team); anything else goes to Standard 90 (owner-level 1:1).
     if (weakest === 'culture_team') {
