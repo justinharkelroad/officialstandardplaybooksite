@@ -8,6 +8,27 @@
       "when": 1793365019209,
       "tag": "0000_add_investment_ready_to_booking_leads",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793565674469,
+      "tag": "0001_vsl_funnel_tracking",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793565686831,
+      "tag": "0002_funnel_leads_notify_status",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1793565698163,
+      "tag": "0003_vsl_funnel_service_role_grants",
+      "breakpoints": true
     }
   ]
 }
