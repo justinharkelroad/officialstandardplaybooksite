@@ -2,12 +2,7 @@ import { Link } from 'react-router-dom';
 import { checkoutUrl } from '@/config/checkout';
 import { OFFERS, type CheckoutOption, type Offer, type OfferKey } from '@/config/offers';
 import { checkoutClientReference, getKnownEmail, trackFunnel } from '@/lib/funnel/track';
-
-/** First dollar amount in a billing line, for Meta's value field. */
-export const amountFrom = (billing: string): number | undefined => {
-  const match = billing.match(/\$([\d,]+(?:\.\d+)?)/);
-  return match ? Number(match[1].replace(/,/g, '')) : undefined;
-};
+import { amountFrom } from '@/lib/funnel/purchase';
 
 export const bookHref = (offer: OfferKey) => `/book?offer=${offer}`;
 

@@ -143,11 +143,13 @@ export interface TrackOptions {
   /** Dollar value for Meta (InitiateCheckout, Purchase). */
   amount?: number;
   contentName?: string;
+  /** A fixed id (Purchase derives one from the Stripe session) so repeats dedupe. */
+  eventId?: string;
 }
 
 /** Record one funnel event. Returns the event id (for Stripe handoff). */
 export function trackFunnel(name: FunnelEventName, options: TrackOptions = {}): string {
-  const eventId = newEventId();
+  const eventId = options.eventId ?? newEventId();
   if (typeof window === 'undefined') return eventId;
   const params: Record<string, unknown> = {};
   if (options.videoId) params.video_id = options.videoId;
