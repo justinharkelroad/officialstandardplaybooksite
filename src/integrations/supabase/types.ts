@@ -645,6 +645,81 @@ export type Database = {
         }
         Relationships: []
       }
+      eight_week_payments: {
+        Row: {
+          amount_paid: number | null
+          created_at: string
+          paid_at: string
+          stripe_invoice_id: string
+          stripe_subscription_id: string
+        }
+        Insert: {
+          amount_paid?: number | null
+          created_at?: string
+          paid_at: string
+          stripe_invoice_id: string
+          stripe_subscription_id: string
+        }
+        Update: {
+          amount_paid?: number | null
+          created_at?: string
+          paid_at?: string
+          stripe_invoice_id?: string
+          stripe_subscription_id?: string
+        }
+        Relationships: []
+      }
+      eight_week_purchases: {
+        Row: {
+          amount_total: number | null
+          cancel_reminder_sent_at: string | null
+          created_at: string
+          currency: string | null
+          email: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          plan: string
+          purchase_email_sent_at: string | null
+          purchased_at: string
+          stripe_checkout_session_id: string
+          stripe_payment_link_id: string
+          stripe_subscription_id: string | null
+        }
+        Insert: {
+          amount_total?: number | null
+          cancel_reminder_sent_at?: string | null
+          created_at?: string
+          currency?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          plan: string
+          purchase_email_sent_at?: string | null
+          purchased_at: string
+          stripe_checkout_session_id: string
+          stripe_payment_link_id: string
+          stripe_subscription_id?: string | null
+        }
+        Update: {
+          amount_total?: number | null
+          cancel_reminder_sent_at?: string | null
+          created_at?: string
+          currency?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          plan?: string
+          purchase_email_sent_at?: string | null
+          purchased_at?: string
+          stripe_checkout_session_id?: string
+          stripe_payment_link_id?: string
+          stripe_subscription_id?: string | null
+        }
+        Relationships: []
+      }
       flow_challenge_logs: {
         Row: {
           ai_challenge: string | null
