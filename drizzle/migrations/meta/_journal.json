@@ -29,6 +29,13 @@
       "when": 1793565698163,
       "tag": "0003_vsl_funnel_service_role_grants",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1793610290947,
+      "tag": "0004_eight_week_purchases",
+      "breakpoints": true
     }
   ]
 }
