@@ -422,7 +422,21 @@ const Terms = () => {
 
               {/* Section 21 */}
               <div>
-                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">21. Contact Information</h2>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">21. Text Messages (SMS)</h2>
+                <p>When you give us your mobile phone number and agree to receive text messages, for example when you book a call with us, Standard Playbook INC may send you text messages about your appointments and your work with us, such as booking confirmations, appointment reminders, and replies to messages you send us.</p>
+                <ul className="list-disc list-inside space-y-2 ml-4 mt-4">
+                  <li>Message frequency varies. Message and data rates may apply.</li>
+                  <li>You can opt out at any time by replying STOP. You will receive one message confirming that you have opted out, and no further messages after that.</li>
+                  <li>For help, reply HELP, email info@standardplaybook.com, or call +1 (260) 515-1349.</li>
+                  <li>Agreeing to receive text messages is not a condition of any purchase.</li>
+                  <li>Wireless carriers are not liable for delayed or undelivered messages.</li>
+                </ul>
+                <p className="mt-4">We handle your mobile number as described in our <Link to="/privacy" className="text-primary underline underline-offset-4">Privacy Policy</Link>. We do not share mobile information or text messaging opt-in data with third parties or affiliates for marketing or promotional purposes.</p>
+              </div>
+
+              {/* Section 22 */}
+              <div>
+                <h2 className="font-rajdhani font-bold text-3xl uppercase tracking-wide text-white mb-6">22. Contact Information</h2>
                 <p>If you have questions about these Terms of Service, please contact us:</p>
                 <div className="bg-dark-card border border-primary/20 rounded-lg p-6 mt-4">
                   <p><strong>Standard Playbook INC</strong></p>
@@ -435,7 +449,7 @@ const Terms = () => {
 
               <div className="border-t border-primary/20 pt-8">
                 <p className="text-gray-400 text-center">
-                  Last updated: February 12, 2025
+                  Last updated: November 5, 2026
                 </p>
               </div>
             </div>

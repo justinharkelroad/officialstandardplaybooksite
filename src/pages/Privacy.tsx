@@ -114,6 +114,9 @@ const policySections = [
           <li>
             <strong>Resend</strong> for transactional email delivery.
           </li>
+          <li>
+            <strong>Twilio</strong> for text message (SMS) delivery.
+          </li>
         </ul>
         <p>
           When you use an AI or voice feature, the content needed to fulfill
@@ -126,7 +129,31 @@ const policySections = [
     ),
   },
   {
-    title: "5. Storage and security",
+    title: "5. Text messages (SMS)",
+    content: (
+      <>
+        <p>
+          If you give us your mobile phone number and agree to receive text
+          messages, for example when you book a call with us, we use that
+          number to send messages about your appointments and your work with
+          Standard Playbook, such as booking confirmations, reminders, and
+          replies to messages you send us. Message frequency varies. Message
+          and data rates may apply. Reply STOP at any time to stop receiving
+          messages, or HELP for help.
+        </p>
+        <p>
+          No mobile information will be shared with third parties or
+          affiliates for marketing or promotional purposes. Text messaging
+          opt-in data and consent will not be shared with any third parties.
+          We provide your number only to the service providers that deliver
+          our messages, such as Twilio, solely to send the messages you have
+          agreed to receive.
+        </p>
+      </>
+    ),
+  },
+  {
+    title: "6. Storage and security",
     content: (
       <>
         <p>
@@ -140,7 +167,7 @@ const policySections = [
     ),
   },
   {
-    title: "6. Retention and deletion",
+    title: "7. Retention and deletion",
     content: (
       <>
         <p>
@@ -161,7 +188,7 @@ const policySections = [
     ),
   },
   {
-    title: "7. Your choices and rights",
+    title: "8. Your choices and rights",
     content: (
       <>
         <p>
@@ -179,7 +206,7 @@ const policySections = [
     ),
   },
   {
-    title: "8. Children",
+    title: "9. Children",
     content: (
       <p>
         The Service is intended for adults and is not directed to anyone under
@@ -190,7 +217,7 @@ const policySections = [
     ),
   },
   {
-    title: "9. Changes to this policy",
+    title: "10. Changes to this policy",
     content: (
       <p>
         We may update this policy as the Service changes. We will post the
@@ -255,7 +282,7 @@ const Privacy = () => (
               info@standardplaybook.com
             </a>
             <p className="mt-8 text-sm text-gray-400">
-              Last updated: July 24, 2026
+              Last updated: November 5, 2026
             </p>
           </section>
         </div>
