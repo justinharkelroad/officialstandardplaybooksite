@@ -84,7 +84,7 @@ export function chooseRoute(k, messages, plan) {
   if((state.questionsAsked>=k.routing.minQuestions || state.routed) && offer && !offer.actionId && plan.confidence==='clear')
     return finish('handoff','fit',`${offer.name} matches the requested type of help but is unavailable. Explain that clearly and offer a fit conversation to discuss alternatives, not to reserve the unavailable offer. Do not keep qualifying an unavailable program.`,['fit']);
   const canRecommend=Boolean(offer?.actionId) && plan.confidence==='clear'
-    && !(plan.coachingPreference==='no' && ['boardroom','eight-week','standard90','team-standard','directive'].includes(offerId))
+    && !(plan.coachingPreference==='no' && ['boardroom','eight-week','standard90','team-standard','momentum','directive'].includes(offerId))
     && !(offerId==='live-call-coach' && plan.phoneCompatibility!=='supported');
   if((state.questionsAsked>=k.routing.minQuestions || state.routed) && canRecommend)
     return finish('recommend',offerId,'Recommend this single best fit, explain why using the visitor’s evidence, and give its next step. No additional discovery question. Respect price, availability and inclusions.',[offer.actionId]);

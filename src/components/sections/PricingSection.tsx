@@ -72,7 +72,7 @@ const PricingSection = () => {
           <Card className="bg-dark-card border-primary relative card-hover animate-pulse-neon">
             <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
               <span className="bg-primary text-white px-4 py-1 rounded-pill text-sm font-semibold uppercase tracking-wide">
-                Waitlist
+                Waitlist Only
               </span>
             </div>
             <CardHeader className="text-center">
@@ -110,7 +110,7 @@ const PricingSection = () => {
                   + More
                 </li>
               </ul>
-              <a href="/directive">
+              <a href="/directive?waitlist=1">
                 <Button className="btn-primary w-full bg-primary-accent hover:bg-primary-light">
                   JOIN THE WAITLIST
                 </Button>

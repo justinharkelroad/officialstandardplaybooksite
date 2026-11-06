@@ -711,13 +711,43 @@ type DecisionOfferProps = {
   href: string;
   cta: string;
   external?: boolean;
+  /** Small availability tag shown by the name, e.g. "1 Seat Left" or "Waitlist Only". */
+  badge?: string;
+  /** "scarce" = filled accent (last seats); "muted" = outline (waitlist). */
+  badgeTone?: 'scarce' | 'muted';
 };
 
-const DecisionOffer = ({ eyebrow, name, price, description, href, cta, external }: DecisionOfferProps) => (
+const DecisionOffer = ({ eyebrow, name, price, description, href, cta, external, badge, badgeTone = 'scarce' }: DecisionOfferProps) => (
   <article className="decision-offer">
     <div>
       <p className="decision-offer-eyebrow">{eyebrow}</p>
-      <h4>{name}</h4>
+      <h4>
+        {name}
+        {badge && (
+          <span
+            style={{
+              display: 'inline-block',
+              marginLeft: 12,
+              verticalAlign: 'middle',
+              fontFamily: body,
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              padding: '5px 10px',
+              lineHeight: 1,
+              whiteSpace: 'nowrap',
+              // The home program board sits on a dark (ink) panel, so the muted
+              // tone uses paper, not ink, to stay visible.
+              ...(badgeTone === 'scarce'
+                ? { background: blue, color: '#fff', border: `1.5px solid ${blue}` }
+                : { background: 'transparent', color: paper, border: `1.5px solid ${paper}` }),
+            }}
+          >
+            {badge}
+          </span>
+        )}
+      </h4>
     </div>
     {price && <p className="decision-offer-price">{price}</p>}
     <p className="decision-offer-copy">{description}</p>
@@ -781,6 +811,8 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
             <DecisionOffer
               eyebrow="Two 1:1 calls a month + Agency Brain Pro"
               name="Momentum"
+              badge="1 Seat Left"
+              badgeTone="scarce"
               price="$2.5k/month"
               description="Directive-level work, twice the conversation. Problems get caught in two weeks, not four."
               href="/momentum"
@@ -810,9 +842,11 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
             <DecisionOffer
               eyebrow="Private 1:1 coaching · Waitlist"
               name="The Directive"
+              badge="Waitlist Only"
+              badgeTone="muted"
               price="$1.5k/month · Waitlist"
               description="Monthly 2-hour private sessions with Justin. Currently waitlist only. Want in now? Momentum is open."
-              href="/directive"
+              href="/directive?waitlist=1"
               cta="Join the waitlist"
             />
           </div>

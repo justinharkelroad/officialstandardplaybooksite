@@ -38,12 +38,21 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
   <section style={{ background: paper, paddingTop: 56 + 24, paddingBottom: 60, position: 'relative', overflow: 'hidden' }}>
     <div className="px-6 md:px-10 max-w-[1440px] mx-auto relative">
       <Reveal>
-        <p style={{
-          fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
-          color: ink, textTransform: 'uppercase', marginBottom: 24,
-        }}>
-          / Momentum · 1:1 Coaching · $2.5k/mo
-        </p>
+        <div className="flex items-center gap-3 flex-wrap" style={{ marginBottom: 24 }}>
+          <p style={{
+            fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
+            color: ink, textTransform: 'uppercase', margin: 0,
+          }}>
+            / Momentum · 1:1 Coaching · $2.5k/mo
+          </p>
+          <span style={{
+            fontFamily: body, fontSize: 10, fontWeight: 700, letterSpacing: '0.14em',
+            textTransform: 'uppercase', padding: '5px 10px', lineHeight: 1, whiteSpace: 'nowrap',
+            background: blue, color: '#fff', border: `1.5px solid ${blue}`,
+          }}>
+            1 Seat Left
+          </span>
+        </div>
       </Reveal>
 
       <div className="grid grid-cols-12 gap-6 items-start">
@@ -446,7 +455,7 @@ const GiantCTA = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 14, fontWeight: 500, letterSpacing: '0.06em',
           color: paper, opacity: 0.7, marginTop: 32, textTransform: 'uppercase',
         }}>
-          $2.5k/mo &nbsp;·&nbsp; Applications Open
+          $2.5k/mo &nbsp;·&nbsp; 1 Seat Left
         </p>
       </Reveal>
       <Reveal delay={0.2}>

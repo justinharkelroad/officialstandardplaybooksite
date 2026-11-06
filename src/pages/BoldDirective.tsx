@@ -613,7 +613,11 @@ const MobileStickyCTA = ({ onApply }: { onApply: () => void }) => (
    PAGE
    ══════════════════════════════════════════════════════ */
 const BoldDirective = () => {
-  const [applyOpen, setApplyOpen] = useState(false);
+  // Open the waitlist form straight away when a CTA elsewhere routed here with
+  // ?waitlist=1, so people don't have to click twice to join.
+  const [applyOpen, setApplyOpen] = useState(
+    () => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('waitlist') === '1',
+  );
 
   // The Directive is waitlist only. Every CTA opens the waitlist form, which
   // reuses the Directive application table and notification.

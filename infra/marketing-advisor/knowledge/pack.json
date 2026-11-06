@@ -150,19 +150,53 @@
     {
       "id": "directive",
       "name": "The Directive",
-      "summary": "Private 1:1 owner coaching focused on strategy, accountability and implementation.",
-      "fits": "An owner wanting direct, individualized work with Justin.",
-      "notFor": "A recommendation to enroll immediately: this offer is sold out.",
-      "price": "Withheld. Do not quote a price for an unavailable offer.",
-      "availability": "Sold out. Applications closed in current local page copy. No promised reopen date or waitlist.",
-      "includes": [],
+      "summary": "Private, high-touch 1:1 owner coaching with Justin, focused on strategy, accountability and implementation. Currently waitlist only.",
+      "fits": "An owner wanting the most direct, individualized work with Justin who is willing to wait for a seat to open.",
+      "notFor": "A recommendation to enroll immediately: the Directive is not currently enrolling and runs a waitlist. An owner who wants to start 1:1 work now should look at Momentum.",
+      "price": "Listed at $1,500 per month on the Directive page. Do not present this as an active enrollment: the waitlist does not reserve a seat or set a start date.",
+      "availability": "Waitlist only, confirmed by Justin on November 6, 2026. Not currently enrolling. Owners can join the Directive waitlist to be contacted when a seat opens; joining does not reserve a seat or set a date. Momentum is the open 1:1 option right now.",
+      "includes": [
+        "Everything in Boardroom",
+        "Monthly 2-hour private sessions with Justin",
+        "Custom Agency Brain buildout for the agency",
+        "Direct access between sessions"
+      ],
       "excludes": [],
       "sourceRefs": [
         "src/pages/BoldDirective.tsx",
-        "src/pages/Decision.tsx"
+        "src/pages/Decision.tsx",
+        "Justin’s direct confirmation · November 6, 2026"
       ],
-      "review": "Sold-out state overrides older catalog entries marked open.",
-      "actionId": null
+      "review": "Waitlist-only state, confirmed by Justin on November 6, 2026, supersedes the earlier sold-out/no-waitlist entry. Joining the waitlist is not enrollment; never claim an open seat or a start date.",
+      "actionId": "directive"
+    },
+    {
+      "id": "momentum",
+      "name": "Momentum",
+      "summary": "Private 1:1 owner coaching with Justin on a twice-a-month cadence, plus the weekly Monday group call, Boardroom tools and Agency Brain Pro. The open 1:1 option.",
+      "fits": "An owner who wants direct, individualized 1:1 work with Justin and is ready to start now.",
+      "notFor": "Someone who only wants software, group-only coaching, or who is not ready for 1:1 investment.",
+      "price": "$2,500 per month. Justin confirmed Momentum as the open 1:1 option on November 6, 2026.",
+      "availability": "Open by application. Justin’s latest capacity update, November 6, 2026: one seat remaining. Capacity is set by Justin and can change; this is a dated snapshot, not live inventory or a reservation. Do not manufacture urgency.",
+      "includes": [
+        "Two 90-minute 1:1 coaching and implementation calls per month",
+        "Weekly group coaching call, Monday 1pm EST",
+        "Agency Brain Pro"
+      ],
+      "excludes": [],
+      "sourceRefs": [
+        "src/pages/BoldMomentum.tsx",
+        "src/pages/Decision.tsx",
+        "Justin’s direct confirmation · November 6, 2026"
+      ],
+      "review": "Open 1:1 option with one seat remaining, confirmed by Justin on November 6, 2026. Describe the seat count as a dated snapshot; do not guarantee the seat is still open or create urgency.",
+      "actionId": "momentum",
+      "capacity": {
+        "type": "owner-set",
+        "spots": 1,
+        "confirmedOn": "2026-11-06",
+        "source": "founder-2026-11-06"
+      }
     },
     {
       "id": "eight-week",
@@ -360,6 +394,16 @@
       "url": "https://standardplaybook.com/boardroom"
     },
     {
+      "id": "momentum",
+      "label": "Apply for Momentum",
+      "url": "https://standardplaybook.com/momentum"
+    },
+    {
+      "id": "directive",
+      "label": "Join the Directive waitlist",
+      "url": "https://standardplaybook.com/directive?waitlist=1"
+    },
+    {
       "id": "eight-week",
       "label": "Explore the 8-Week Experience",
       "url": "https://standardplaybook.com/8-week"
@@ -413,7 +457,8 @@
   "openQuestions": [
     "Confirm the eight-week experience’s precise entitlements and current openings. Pricing is confirmed: $4,500 paid in full or 8 × $625 ($5,000 total).",
     "Confirm pricing and detailed commercial terms for Standard 90, Team Standard and Certified Standard. Capacity is confirmed separately.",
-    "Keep owner-set capacity current: Standard 90 has 1 spot and Team Standard has 4 as of October 31, 2026; these are snapshots, not live inventory. Certified Standard has no enrollment-capacity limit.",
+    "Keep owner-set capacity current: Momentum has 1 seat as of November 6, 2026; Standard 90 has 1 spot and Team Standard has 4 as of October 31, 2026; these are snapshots, not live inventory. Certified Standard has no enrollment-capacity limit.",
+    "The Directive is waitlist only as of November 6, 2026 (not sold-out-with-no-waitlist). Momentum is the open 1:1 option. Joining the Directive waitlist does not reserve a seat or set a date.",
     "Confirm which phrases and sample responses Justin would actually use in a first conversation.",
     "Founder approval in this prototype applies only to this exact knowledge-pack hash, not a public launch."
   ]

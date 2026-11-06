@@ -119,6 +119,10 @@ interface Program {
   price: string | null;
   soldOut: boolean;
   action: Action;
+  /** Small availability tag by the title, e.g. "1 Seat Left" or "Waitlist Only". */
+  badge?: string;
+  /** "scarce" = filled accent (last seats); "muted" = outline (waitlist). */
+  badgeTone?: 'scarce' | 'muted';
 }
 
 const coachingPrograms: Program[] = [
@@ -135,6 +139,8 @@ const coachingPrograms: Program[] = [
     ],
     price: '$2.5k/mo',
     soldOut: false,
+    badge: '1 Seat Left',
+    badgeTone: 'scarce',
     action: { kind: 'link', cta: 'Apply', href: '/momentum' },
   },
   {
@@ -151,6 +157,8 @@ const coachingPrograms: Program[] = [
     ],
     price: '$1.5k/mo · Waitlist',
     soldOut: false,
+    badge: 'Waitlist Only',
+    badgeTone: 'muted',
     action: { kind: 'directive' },
   },
   {
@@ -247,12 +255,25 @@ const CoachingCard = ({ program, onDirectiveClick }: { program: Program; onDirec
       }}>
         {program.label}
       </p>
-      <h3 style={{
-        fontFamily: sf, fontSize: 28, fontWeight: 600, lineHeight: 1.14,
-        letterSpacing: '0.196px', color: '#1d1d1f', marginBottom: 8,
-      }}>
-        {program.title}
-      </h3>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', marginBottom: 8 }}>
+        <h3 style={{
+          fontFamily: sf, fontSize: 28, fontWeight: 600, lineHeight: 1.14,
+          letterSpacing: '0.196px', color: '#1d1d1f', margin: 0,
+        }}>
+          {program.title}
+        </h3>
+        {program.badge && !isSoldOut && (
+          <span style={{
+            fontFamily: sf, fontSize: 11, fontWeight: 600, letterSpacing: '0.3px',
+            textTransform: 'uppercase', padding: '4px 10px', borderRadius: 980, lineHeight: 1, whiteSpace: 'nowrap',
+            ...(program.badgeTone === 'muted'
+              ? { background: 'rgba(0,0,0,0.06)', color: '#1d1d1f' }
+              : { background: '#0071e3', color: '#fff' }),
+          }}>
+            {program.badge}
+          </span>
+        )}
+      </div>
       <p style={{
         fontFamily: sf, fontSize: 17, fontWeight: 400, lineHeight: 1.47, letterSpacing: '-0.374px',
         color: 'rgba(0,0,0,0.48)', marginBottom: expanded ? 16 : 24, flex: expanded ? undefined : 1,

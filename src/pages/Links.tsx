@@ -47,6 +47,10 @@ type ProgramRow = {
   href?: string;
   cta?: string;
   soldOut?: boolean;
+  /** Small availability tag by the name, e.g. "1 Seat Left" or "Waitlist Only". */
+  badge?: string;
+  /** "scarce" = filled accent (last seats); "muted" = outline (waitlist). */
+  badgeTone?: 'scarce' | 'muted';
 };
 
 const ownerPrograms: ProgramRow[] = [
@@ -88,6 +92,8 @@ const ownerPrograms: ProgramRow[] = [
     name: 'Momentum',
     tier: '1:1 Coaching + Agency Brain Pro',
     price: '$2.5k/mo',
+    badge: '1 Seat Left',
+    badgeTone: 'scarce',
     description: 'Directive-level work, twice the conversation. Problems get caught in two weeks, not four, and there\'s always a next call on the calendar.',
     details: [
       'Two 90-minute 1:1 coaching and implementation calls per month',
@@ -135,6 +141,8 @@ const ownerPrograms: ProgramRow[] = [
     name: 'The Directive',
     tier: '1:1 Coaching · Waitlist',
     price: '$1.5k/mo · Waitlist',
+    badge: 'Waitlist Only',
+    badgeTone: 'muted',
     description: 'High-touch 1:1 implementation and pressure-tested accountability. Currently waitlist only. Want in now? Momentum is open.',
     details: [
       'Everything included in Boardroom +',
@@ -142,7 +150,7 @@ const ownerPrograms: ProgramRow[] = [
       'Custom Agency Brain buildout for your agency',
       'Direct access between sessions',
     ],
-    href: '/directive',
+    href: '/directive?waitlist=1',
     cta: 'Join the waitlist →',
   },
 ];
@@ -272,7 +280,7 @@ const ProgramRowItem = ({ p }: { p: ProgramRow }) => {
           {p.num}
         </span>
 
-        <div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
           <h4 style={{
             fontFamily: display,
             fontSize: 'clamp(22px, 3.2vw, 38px)',
@@ -281,6 +289,17 @@ const ProgramRowItem = ({ p }: { p: ProgramRow }) => {
           }}>
             {p.name}
           </h4>
+          {p.badge && (
+            <span style={{
+              fontFamily: body, fontSize: 10, fontWeight: 700, letterSpacing: '0.14em',
+              textTransform: 'uppercase', padding: '5px 10px', lineHeight: 1, whiteSpace: 'nowrap',
+              ...(p.badgeTone === 'muted'
+                ? { background: 'transparent', color: ink, border: `1.5px solid ${ink}` }
+                : { background: blue, color: '#fff', border: `1.5px solid ${blue}` }),
+            }}>
+              {p.badge}
+            </span>
+          )}
         </div>
 
         {isSoldOut ? (
