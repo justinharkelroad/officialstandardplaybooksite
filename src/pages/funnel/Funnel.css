@@ -372,54 +372,166 @@
   border-top: 1.5px solid var(--fn-ink);
 }
 
-.fn-pricing li {
+.fn-price-row {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto;
+  grid-template-columns: 44px minmax(0, 1.5fr) minmax(130px, auto) auto;
   align-items: center;
-  gap: 16px;
-  padding: 18px 0;
+  gap: clamp(16px, 2.4vw, 32px);
+  padding: clamp(22px, 2.8vw, 30px) 8px;
   border-bottom: 1px solid var(--fn-line);
+  transition: background 0.25s ease;
 }
 
-.fn-pricing__name {
+/* Blue edge accent on hover — the editorial house tell. */
+.fn-price-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--fn-blue);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.25s ease;
+}
+
+.fn-price-row:hover {
+  background: rgba(10, 10, 11, 0.03);
+}
+
+.fn-price-row:hover::before {
+  transform: scaleY(1);
+}
+
+.fn-price-row__num {
+  font-family: var(--fn-display);
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--fn-ink);
+  opacity: 0.32;
+}
+
+.fn-price-row__body {
+  min-width: 0;
+}
+
+.fn-price-row__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.fn-price-row__name {
   margin: 0;
-  font-size: 17px;
-  font-weight: 800;
+  font-family: var(--fn-display);
+  font-weight: 400;
+  font-size: clamp(21px, 2.6vw, 32px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
 }
 
-.fn-pricing__summary {
-  margin: 4px 0 0;
-  font-size: 14px;
-  color: var(--fn-muted);
-}
-
-.fn-pricing__price {
-  margin: 0;
-  font-size: 15px;
+.fn-price-row__badge {
+  font-size: 10px;
   font-weight: 700;
-}
-
-.fn-pricing__cta {
-  font-size: 12px;
-  min-height: 44px;
-  padding: 10px 16px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 9px;
+  line-height: 1;
   white-space: nowrap;
 }
 
-@media (max-width: 640px) {
-  .fn-pricing li {
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 6px 14px;
+.fn-price-row__badge--muted {
+  color: var(--fn-ink);
+  border: 1.5px solid var(--fn-ink);
+}
+
+.fn-price-row__badge--scarce {
+  color: #fff;
+  background: var(--fn-blue);
+  border: 1.5px solid var(--fn-blue);
+}
+
+.fn-price-row__summary {
+  margin: 10px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--fn-muted);
+  max-width: 52ch;
+}
+
+.fn-price-row__price {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: right;
+}
+
+.fn-price-row__amount {
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.fn-price-row__amount--text {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.fn-price-row__cadence {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fn-muted);
+}
+
+.fn-price-row__cta {
+  font-size: 12px;
+  min-height: 46px;
+  padding: 12px 22px;
+  white-space: nowrap;
+  justify-self: end;
+}
+
+@media (max-width: 760px) {
+  .fn-price-row {
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "num  body  body"
+      "price price cta";
+    row-gap: 16px;
+    column-gap: 14px;
+    align-items: start;
   }
 
-  .fn-pricing__price {
-    grid-column: 1;
-    grid-row: 2;
+  .fn-price-row__num {
+    grid-area: num;
+    font-size: 16px;
+    padding-top: 2px;
   }
 
-  .fn-pricing__cta {
-    grid-column: 2;
-    grid-row: 1 / span 2;
+  .fn-price-row__body {
+    grid-area: body;
+  }
+
+  .fn-price-row__price {
+    grid-area: price;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+    text-align: left;
+    align-self: center;
+  }
+
+  .fn-price-row__cta {
+    grid-area: cta;
+    align-self: center;
   }
 }
 
