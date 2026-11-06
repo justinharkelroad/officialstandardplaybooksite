@@ -31,17 +31,19 @@ test('direct factual detours answer without spending a discovery question',()=>{
     assert.equal(routeMetadata(k,r,plan()).questionsAsked,n);
   }
 });
-test('ready buyers and explicit fit-call requests skip discovery; closed Directive is not sold',()=>{
+test('ready buyers and explicit fit-call requests skip discovery; waitlisted Directive routes to its waitlist, not a sale',()=>{
   assert.equal(chooseRoute(k,[],plan({intent:'ready',requestedOffers:['boardroom']})).mode,'destination');
   assert.deepEqual(chooseRoute(k,[],plan({intent:'ready',requestedOffers:['fit']})).actionIds,['fit']);
-  assert.equal(chooseRoute(k,[],plan({intent:'ready',requestedOffers:['directive']})).mode,'handoff');
+  const directive=chooseRoute(k,[],plan({intent:'ready',requestedOffers:['directive']}));
+  assert.equal(directive.mode,'destination');
+  assert.deepEqual(directive.actionIds,['directive']);
   assert.deepEqual(chooseRoute(k,[],plan({intent:'ready',requestedOffers:['ai-install']})).actionIds,['ai-install']);
 });
-test('a clear private-coaching need hands off after two questions when the matching offer is closed',()=>{
+test('a clear private-coaching need recommends the open Momentum seat after two questions',()=>{
  const p=plan({need:'private-owner-coaching'});
  assert.equal(chooseRoute(k,history(1),p).mode,'discover');
  for(const n of [2,3,4]) {
-  const r=chooseRoute(k,history(n),p);assert.equal(r.mode,'handoff');assert.equal(r.target,'fit');assert.equal(r.allowedQuestions,0);assert.match(r.reason,/unavailable/);
+  const r=chooseRoute(k,history(n),p);assert.equal(r.mode,'recommend');assert.equal(r.target,'momentum');assert.deepEqual(r.actionIds,['momentum']);assert.equal(r.allowedQuestions,0);
  }
 });
 test('no purchase, refusal and already-owned benefits never force a sale',()=>{
