@@ -45,24 +45,28 @@ const PrescriptionCards = () => {
   );
 };
 
-const PricingRow = ({ offerKey }: { offerKey: OfferKey }) => {
+const PricingRow = ({ offerKey, index }: { offerKey: OfferKey; index: number }) => {
   const offer = OFFERS[offerKey];
   const option = offer.checkouts[0];
   const link = option ? checkoutLinkProps(offer, option) : null;
 
-  let price: string = offer.price ? `${offer.price} ${offer.cadence}` : offer.cadence;
+  // Headline figure + a small cadence line, with route-specific treatment.
+  const amount = offer.price;
+  let cadence: string = offer.cadence;
+  let badge: { label: string; tone: 'scarce' | 'muted' } | null = null;
   let cta: React.ReactNode;
+
   if (offer.route === 'waitlist') {
-    price = 'Waitlist';
-    cta = <Link className="fn-btn fn-btn--ghost fn-pricing__cta" to={offer.page}>Join waitlist</Link>;
+    badge = { label: 'Waitlist Only', tone: 'muted' };
+    cadence = '/mo';
+    cta = <Link className="fn-btn fn-btn--ghost fn-price-row__cta" to={`${offer.page}?waitlist=1`}>Join waitlist</Link>;
   } else if (offer.route === 'apply') {
-    cta = <Link className="fn-btn fn-pricing__cta" to={bookHref(offer.key)}>Apply</Link>;
+    cta = <Link className="fn-btn fn-price-row__cta" to={bookHref(offer.key)}>Apply</Link>;
   } else if (offer.external) {
     const { external } = offer;
-    price = external.billing;
     cta = (
       <a
-        className="fn-btn fn-pricing__cta"
+        className="fn-btn fn-price-row__cta"
         href={external.href}
         onClick={() => trackFunnel('initiate_checkout', { offer: offer.key, amount: amountFrom(external.billing), contentName: offer.name })}
       >
@@ -70,24 +74,36 @@ const PricingRow = ({ offerKey }: { offerKey: OfferKey }) => {
       </a>
     );
   } else if (option) {
-    price = offer.checkouts.map((o) => o.billing).join(' or ');
     cta = link
-      ? <a className="fn-btn fn-pricing__cta" href={link.href} onClick={link.onClick}>Buy</a>
-      : <Link className="fn-btn fn-pricing__cta" to={offer.page}>Details</Link>;
+      ? <a className="fn-btn fn-price-row__cta" href={link.href} onClick={link.onClick}>Buy</a>
+      : <Link className="fn-btn fn-price-row__cta" to={offer.page}>Details</Link>;
   }
 
   return (
-    <li>
-      <div>
-        <p className="fn-pricing__name">{offer.name}</p>
-        <p className="fn-pricing__summary">
+    <li className="fn-price-row">
+      <span className="fn-price-row__num" aria-hidden="true">{String(index).padStart(2, '0')}</span>
+      <div className="fn-price-row__body">
+        <div className="fn-price-row__head">
+          <h3 className="fn-price-row__name">{offer.name}</h3>
+          {badge && <span className={`fn-price-row__badge fn-price-row__badge--${badge.tone}`}>{badge.label}</span>}
+        </div>
+        <p className="fn-price-row__summary">
           {offer.summary}
           {offerKey === 'directive' && (
             <> Want in now? <Link className="fn-link" to="/momentum">Momentum is open.</Link></>
           )}
         </p>
       </div>
-      <p className="fn-pricing__price">{price}</p>
+      <p className="fn-price-row__price">
+        {amount
+          ? (
+            <>
+              <span className="fn-price-row__amount">{amount}</span>
+              <span className="fn-price-row__cadence">{cadence}</span>
+            </>
+          )
+          : <span className="fn-price-row__amount fn-price-row__amount--text">{cadence}</span>}
+      </p>
       {cta}
     </li>
   );
@@ -157,7 +173,7 @@ const Start = () => {
             <h2 className="fn-display fn-h2">The full price list.</h2>
           </div>
           <ul className="fn-pricing">
-            {START_PRICING_ORDER.map((key) => <PricingRow key={key} offerKey={key} />)}
+            {START_PRICING_ORDER.map((key, i) => <PricingRow key={key} offerKey={key} index={i + 1} />)}
           </ul>
           <p className="fn-credit">{MIRROR_CREDIT_TERMS}</p>
         </div>
