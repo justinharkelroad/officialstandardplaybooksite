@@ -819,9 +819,9 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
               cta="See Momentum"
             />
             <DecisionOffer
-              eyebrow="Focused 90-day one-on-one path"
+              eyebrow="Focused 90-day one-on-one path · By application"
               name="Standard 90"
-              price="$15k"
+              price="Apply to see the investment"
               description="Daily 1:1 work for 90 days with you, your manager, and your team. Framework live by day 90 or Justin keeps working free."
               href="/standard90"
               cta="See Standard 90"

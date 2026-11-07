@@ -182,7 +182,7 @@ const OfferFacts = () => (
         ['One agency', 'A dedicated build'],
         ['Owner + manager + team', 'Built together'],
         ['90 days', 'Author, sign, live'],
-        ['$15k', '$5k/mo × 3 · By application'],
+        ['By application', 'Apply to see the investment'],
       ].map(([value, label], i) => (
         <div key={value} style={{ padding: '24px 16px', borderLeft: i === 0 ? 'none' : `1px solid ${ink}22` }}>
           <p style={{ fontFamily: editorial, fontSize: 'clamp(16px, 1.5vw, 21px)', lineHeight: 1.05, color: i === 2 ? blue : ink, textTransform: 'uppercase', margin: 0 }}>{value}</p>
@@ -969,16 +969,16 @@ const OfferSection = ({ onApply }: { onApply: () => void }) => (
               The Investment
             </p>
             <p style={{
-              fontFamily: display, fontSize: 'clamp(56px, 8vw, 104px)', lineHeight: 0.9,
+              fontFamily: display, fontSize: 'clamp(44px, 6vw, 80px)', lineHeight: 0.92,
               letterSpacing: '-0.02em', color: paper, margin: 0, fontWeight: 400,
             }}>
-              $15k
+              Apply to see<br />the investment
             </p>
             <p style={{
               fontFamily: editorial, fontSize: 'clamp(16px, 1.8vw, 22px)', lineHeight: 1.1,
               color: paper, opacity: 0.75, textTransform: 'uppercase', margin: '12px 0 0', fontWeight: 400,
             }}>
-              $5k a month × 3
+              By application
             </p>
           </div>
           <ul className="md:col-span-7" style={{ listStyle: 'none', margin: 0, padding: 0 }}>

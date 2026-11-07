@@ -207,8 +207,8 @@ export const OFFERS: Record<OfferKey, Offer> = {
   standard90: {
     key: 'standard90',
     name: 'Standard 90',
-    price: '$15,000',
-    cadence: '($5,000/mo × 3)',
+    price: null,
+    cadence: 'Apply to see the investment.',
     summary: 'Ninety days of daily 1:1 work to rebuild how the whole agency runs.',
     includes: [
       'Daily 1:1 work for 90 days with the owner, the manager if there is one, and the team',

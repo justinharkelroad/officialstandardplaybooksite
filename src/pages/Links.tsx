@@ -110,7 +110,7 @@ const ownerPrograms: ProgramRow[] = [
     num: '04',
     name: 'Standard 90',
     tier: '90-Day 1:1 Coaching · By Application',
-    price: '$15k ($5k/mo × 3)',
+    price: 'Apply to see the investment',
     description: 'A 90-day action map for the agency owner who is done being the operating system. Framework live by day 90 or Justin keeps working free.',
     details: [
       'Daily 1:1 work for 90 days with the owner, the manager if there is one, and the team',
