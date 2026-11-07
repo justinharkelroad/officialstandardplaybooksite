@@ -56,5 +56,6 @@ export const START_PRICING_ORDER = [
   'eightWeek',
   'standard90',
   'ascension',
+  'momentum',
   'directive',
 ] as const;

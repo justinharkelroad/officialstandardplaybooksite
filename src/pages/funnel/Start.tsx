@@ -61,6 +61,7 @@ const PricingRow = ({ offerKey, index }: { offerKey: OfferKey; index: number }) 
     cadence = '/mo';
     cta = <Link className="fn-btn fn-btn--ghost fn-price-row__cta" to={`${offer.page}?waitlist=1`}>Join waitlist</Link>;
   } else if (offer.route === 'apply') {
+    if (offerKey === 'momentum') badge = { label: '1 Seat Left', tone: 'scarce' };
     cta = <Link className="fn-btn fn-price-row__cta" to={bookHref(offer.key)}>Apply</Link>;
   } else if (offer.external) {
     const { external } = offer;
