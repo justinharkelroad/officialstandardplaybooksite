@@ -2835,9 +2835,9 @@ const AppShowcaseSection = () => (
           <span style={{ color: blue }}>IN YOUR HAND.</span>
         </h2>
         <p style={{ fontFamily: body, fontSize: 'clamp(16px, 1.5vw, 20px)', lineHeight: 1.6, color: paper, opacity: 0.8, margin: '28px 0 10px', maxWidth: 820 }}>
-          Agency Brain comes in your seat — on the web and the iOS app. Your Boardroom Domino, your team’s Core 4
-          streaks, and your live sales numbers, wherever you are. Step up to one-on-one coaching and your AI Brain Trust
-          joins the room.
+          Agency Brain comes in your seat — on the web and the iOS &amp; Android app. Your Boardroom Domino, your
+          team’s Core 4 streaks, and your live sales numbers, wherever you are. Step up to one-on-one coaching and your
+          AI Brain Trust joins the room.
         </p>
       </Reveal>
     </div>
@@ -2885,7 +2885,7 @@ const AppShowcaseSection = () => (
     <div className="max-w-[1280px] mx-auto px-6">
       <Reveal delay={0.1}>
         <p style={{ fontFamily: body, fontSize: 13, fontWeight: 600, letterSpacing: '0.08em', color: paper, opacity: 0.55, textTransform: 'uppercase', margin: '44px 0 0' }}>
-          Agency Brain Core included with every Boardroom seat · iOS + web
+          Agency Brain Core included with every Boardroom seat · iOS, Android &amp; web
         </p>
       </Reveal>
     </div>
