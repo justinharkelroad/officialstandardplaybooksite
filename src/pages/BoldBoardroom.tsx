@@ -5,6 +5,15 @@ import { Facebook, Linkedin, Lock, Check, Flame, Eye, ShieldCheck, ArrowUpRight 
 import BoldNav from '@/components/BoldNav';
 
 import standardLogo from '@/assets/standard-word-logo.png';
+import appBoardroom from '@/assets/app-boardroom.png';
+import appBoardOfBrains from '@/assets/app-board-of-brains.png';
+import appBoardMeeting from '@/assets/app-board-meeting.png';
+import appMission from '@/assets/app-mission.png';
+import appRhythm from '@/assets/app-rhythm.png';
+import appPulse from '@/assets/app-pulse.png';
+import appTeamGrowth from '@/assets/app-team-growth.png';
+import appTargets from '@/assets/app-targets.png';
+import appFlows from '@/assets/app-flows.png';
 
 /* ── Bold editorial type stack ─────────────────────────── */
 const display = '"Anton", "Archivo Black", "Oswald", Impact, sans-serif';
@@ -2766,6 +2775,76 @@ const ownerSystem = [
   },
 ];
 
+/* ══════════════════════════════════════════════════════
+   APP SHOWCASE — the included platform, on the phone
+   ══════════════════════════════════════════════════════ */
+const appScreens = [
+  { img: appBoardroom, tab: 'Coaching · Boardroom', desc: 'Your weekly Big Domino and your coach’s letter.' },
+  { img: appBoardOfBrains, tab: 'Coaching · Board of Brains', desc: 'Four specialist AI advisors, on call.' },
+  { img: appBoardMeeting, tab: 'Coaching · Board Meeting', desc: 'A live board meeting grounded in your real numbers.' },
+  { img: appMission, tab: 'Coaching · 1:1 Mission', desc: 'Your coaching focus and commitments, synced to Today.' },
+  { img: appRhythm, tab: 'Today · My Rhythm', desc: 'Core 4 and daily Power Plays, kept on a streak.' },
+  { img: appPulse, tab: 'Pulse', desc: 'Live written premium, policies, and team activity.' },
+  { img: appTeamGrowth, tab: 'Today · Team Growth', desc: 'Your whole team’s Core 4 streaks, every day.' },
+  { img: appTargets, tab: 'Targets', desc: 'Weekly drives linked to your 90-day missions.' },
+  { img: appFlows, tab: 'Flows', desc: 'AI-guided daily flows and feedback notes.' },
+];
+
+const AppShowcaseSection = () => (
+  <section id="app" style={{ background: ink, color: paper, padding: '120px 0 128px', borderTop: `1px solid ${ink}` }}>
+    <style>{`
+      .ab-rail { display:flex; gap:28px; overflow-x:auto; scroll-snap-type:x mandatory; padding:12px 24px 8px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+      .ab-rail::-webkit-scrollbar { height:0; width:0; display:none; }
+      .ab-phone { scroll-snap-align:center; flex:0 0 auto; width:clamp(226px, 66vw, 272px); }
+      .ab-phone img { width:100%; height:auto; display:block; border-radius:34px; border:1px solid rgba(244,242,238,0.09); box-shadow:0 30px 66px rgba(0,0,0,0.55); }
+      .ab-phone figcaption { margin-top:20px; }
+      .ab-phone .ab-tab { display:block; font-family:${body}; font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:${blue}; margin-bottom:7px; }
+      .ab-phone .ab-desc { display:block; font-family:${body}; font-size:14px; line-height:1.5; color:${paper}; opacity:0.78; }
+    `}</style>
+    <div className="max-w-[1280px] mx-auto px-6">
+      <Reveal>
+        <p style={{ fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em', color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 20 }}>
+          / The platform, in your pocket
+        </p>
+        <h2 style={{ fontFamily: display, fontSize: 'clamp(42px, 6.8vw, 98px)', lineHeight: 0.94, letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400 }}>
+          THE WHOLE SYSTEM.
+          <br />
+          <span style={{ color: blue }}>IN YOUR HAND.</span>
+        </h2>
+        <p style={{ fontFamily: body, fontSize: 'clamp(16px, 1.5vw, 20px)', lineHeight: 1.6, color: paper, opacity: 0.8, margin: '28px 0 10px', maxWidth: 820 }}>
+          Agency Brain comes in your seat — on the web and the iOS app. Your Boardroom Domino, your AI Brain Trust, your
+          team’s Core 4 streaks, and your live sales numbers, wherever you are.
+        </p>
+        <p style={{ fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.1em', color: paper, opacity: 0.45, textTransform: 'uppercase', margin: '0 0 8px' }}>
+          Swipe through the app →
+        </p>
+      </Reveal>
+    </div>
+    <Reveal delay={0.05}>
+      <div style={{ maxWidth: 1440, margin: '0 auto' }}>
+        <div className="ab-rail">
+          {appScreens.map((screen) => (
+            <figure key={screen.tab} className="ab-phone" style={{ margin: 0 }}>
+              <img src={screen.img} alt={`AgencyBrain app — ${screen.tab}`} loading="lazy" />
+              <figcaption>
+                <span className="ab-tab">{screen.tab}</span>
+                <span className="ab-desc">{screen.desc}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </Reveal>
+    <div className="max-w-[1280px] mx-auto px-6">
+      <Reveal delay={0.1}>
+        <p style={{ fontFamily: body, fontSize: 13, fontWeight: 600, letterSpacing: '0.08em', color: paper, opacity: 0.55, textTransform: 'uppercase', margin: '36px 0 0' }}>
+          Included with every Boardroom seat · iOS + web
+        </p>
+      </Reveal>
+    </div>
+  </section>
+);
+
 const OwnerSystemSection = () => (
   <section style={{ background: paper, padding: '112px 24px 128px', borderTop: `1px solid ${ink}` }}>
     <div className="max-w-[1180px] mx-auto">
@@ -3631,6 +3710,7 @@ const BoldBoardroom = () => (
     <WeeklyCallSection />
     <MirrorExperienceSection />
     <IncludesSection />
+    <AppShowcaseSection />
     <OwnerSystemSection />
     <PricingSection />
     <ProofSection />
