@@ -11,7 +11,7 @@ import standardLogo from '@/assets/standard-word-logo.png';
 import { MIRROR_CHALLENGE_CHECKOUT_URL } from '@/data/offerLinks';
 import spIconWhite from '@/assets/sp-icon-white.png';
 import spIconBlue from '@/assets/sp-icon-blue.png';
-import salesDashImg from '@/assets/sales-dashboard.png';
+import appPulse from '@/assets/app-pulse.png';
 import salesAnalyticsImg from '@/assets/sales-analytics.png';
 import lqsImg from '@/assets/lqs.png';
 import callScoringImg from '@/assets/call-scoring.png';
@@ -524,18 +524,19 @@ const AgencyBrainBand = () => (
           style={{
             position: 'absolute',
             right: '4vw',
-            top: '-10%',
-            width: 'min(38vw, 480px)',
-            transform: 'rotate(8deg)',
-            boxShadow: '0 30px 80px -20px rgba(0,0,0,0.6)',
-            background: '#fff',
-            border: `1px solid ${paper}33`,
+            top: '-6%',
+            width: 'min(34vw, 430px)',
+            transform: 'rotate(7deg)',
+            borderRadius: 44,
+            overflow: 'hidden',
+            border: '1px solid rgba(244,242,238,0.12)',
+            boxShadow: '0 40px 90px -18px rgba(0,0,0,0.75)',
             zIndex: 5,
           }}
         >
           <img
-            src={salesDashImg}
-            alt="Agency Brain Dashboard"
+            src={appPulse}
+            alt="AgencyBrain app — Sales Pulse"
             style={{ width: '100%', height: 'auto', display: 'block' }}
           />
         </div>
