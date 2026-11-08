@@ -653,7 +653,7 @@ const PolaroidGrid = () => (
                 <img
                   src={p.img}
                   alt={p.label}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%) contrast(1.05)' }}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', filter: 'grayscale(100%) contrast(1.05)' }}
                 />
               </div>
               <figcaption style={{
