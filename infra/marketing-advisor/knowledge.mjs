@@ -29,3 +29,12 @@ export function getKnowledge(brand) {
 }
 
 export const OPENERS={standard:"What’s happening in your agency that you want to change?",agencybrain:"What’s taking more work than it should in your agency right now?",livecallcoach:"Where are your reps getting stuck on calls?"};
+
+// Page the visitor came from. 'home' is the default; 'start' is the VSL funnel.
+// Validated as a fixed enum, exactly like brand, so the client can never supply
+// a free prompt. A surface only swaps the opener; routing stays grounded.
+export const SURFACES=['home','start'];
+export const SURFACE_OPENERS={
+ 'standard:start':"You just watched the whole case, so let’s not waste it. Tell me what you want to change in your agency, and whether you’re ready to move now or want to talk it through first.",
+};
+export function openerFor(brand,surface){return SURFACE_OPENERS[brand+':'+surface]??OPENERS[brand];}

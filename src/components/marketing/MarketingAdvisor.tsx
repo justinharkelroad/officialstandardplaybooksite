@@ -6,13 +6,19 @@ import './MarketingAdvisor.css';
 
 const SERVICE = 'https://standard-marketing-advisor.justin-15e.workers.dev';
 
-/** Mounted only by public marketing pages; never included in the app shell. */
-export function MarketingAdvisor({ brand }: { brand: AdvisorBrand }) {
+/**
+ * Mounted only by public marketing pages; never included in the app shell.
+ * `surface` is an optional hint (e.g. 'start') passed through to the worker so
+ * it can tailor the conversation to that page. Unknown to the worker until it
+ * reads the param, it is a harmless no-op on the URL until then.
+ */
+export function MarketingAdvisor({ brand, surface }: { brand: AdvisorBrand; surface?: string }) {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
   if (!advisorAllowed(brand, window.location.hostname, pathname, import.meta.env.DEV)) return null;
   const name = brand === 'standard' ? 'STANDARDAI' : 'Stanley';
   const image = brand === 'standard' ? '/standardai.png' : '/stanley.webp';
+  const convoSrc = `${SERVICE}/?brand=${brand}${surface ? `&surface=${encodeURIComponent(surface)}` : ''}`;
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger className={`marketing-advisor-launcher marketing-advisor-${brand}`} aria-label={`Chat with ${name}`}>
@@ -28,7 +34,7 @@ export function MarketingAdvisor({ brand }: { brand: AdvisorBrand }) {
             <Dialog.Close aria-label="Close chat">×</Dialog.Close>
           </div>
           <Dialog.Description id="advisor-description" className="sr-only">A short conversation to help you find the right next step. This is an AI guide.</Dialog.Description>
-          <iframe title={`${name} conversation`} src={`${SERVICE}/?brand=${brand}`} referrerPolicy="no-referrer" />
+          <iframe title={`${name} conversation`} src={convoSrc} referrerPolicy="no-referrer" />
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
