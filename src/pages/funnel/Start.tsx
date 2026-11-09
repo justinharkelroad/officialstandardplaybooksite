@@ -40,7 +40,7 @@ const PrescriptionCards = () => {
         <div className="fn-card__actions">
           <div className="fn-checkout">
             <p className="fn-checkout__billing">A conversation with Justin</p>
-            <Link className="fn-btn fn-btn--block" to="/book">Book a call</Link>
+            <Link className="fn-btn fn-btn--block" to="/book-call">Book a call</Link>
           </div>
         </div>
       </article>
