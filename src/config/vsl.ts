@@ -25,15 +25,22 @@ export const VSL_VIDEOS = {
     src: '/video/team-standard-hero.mp4',
     poster: '/video/team-standard-hero-poster.jpg',
     captionsSrc: '/video/vsl-placeholder-captions.vtt',
+    // 9-segment arc from the recorded Part I-IV + cap 14-18 cuts. Starts are
+    // from raw segment lengths (no trims or section-card gaps yet); dial to the
+    // second once Derek stitches the final cut. revealAt lands where Part IV
+    // says "the pricing shows up underneath."
     chapters: [
       { title: 'Who this is for', start: 0 },
-      { title: "It's not a sales problem", start: 45 },
-      { title: 'What a standard looks like', start: 80 },
-      { title: 'What changes in 90 days', start: 115 },
-      { title: 'Your two options', start: 150 },
-      { title: 'What happens next', start: 180 },
+      { title: 'Who I am', start: 30 },
+      { title: 'Why consistency breaks', start: 63 },
+      { title: "It's a standard problem", start: 107 },
+      { title: 'How Standard works', start: 168 },
+      { title: 'Inside the room', start: 240 },
+      { title: "Which one's for you", start: 311 },
+      { title: 'The guarantee', start: 369 },
+      { title: 'Make the choice', start: 400 },
     ],
-    revealAt: 165,
+    revealAt: 160,
     milestones: MILESTONES,
   },
   'sp-precall': {

@@ -2,7 +2,7 @@ import {authorizeAdmin,adminCors} from './admin-auth.mjs';
 import {MarketingInbox,inboxStub,snapshot,REVIEW_POLICY} from './inbox.mjs';
 export {MarketingInbox};
 import {generateReply} from './engine/core.mjs';
-import {getKnowledge,BRANDS,OPENERS} from './knowledge.mjs';
+import {getKnowledge,BRANDS,SURFACES,openerFor} from './knowledge.mjs';
 import {TTL,MAX_TURNS,TOKEN_PATTERN,HOSTS,validMessage,clientSession,digest,randomToken,json} from './security.mjs';
 const unavailable=()=>json({error:'Chat is unavailable right now. You can still use the next-step link below.'},503);
 async function body(request) {
@@ -43,9 +43,9 @@ export default {
     const ipHash=await digest(request.headers.get('CF-Connecting-IP')||'local-development');
     if(url.pathname==='/api/session' && request.method==='POST') {
      const input=await body(request);
-     if(Object.keys(input).some(key=>!['brand','reviewPolicy'].includes(key))||!BRANDS.includes(input.brand)||(input.reviewPolicy!==undefined&&input.reviewPolicy!==REVIEW_POLICY))return json({error:'Invalid chat request.'},400);
+     if(Object.keys(input).some(key=>!['brand','reviewPolicy','surface'].includes(key))||!BRANDS.includes(input.brand)||(input.reviewPolicy!==undefined&&input.reviewPolicy!==REVIEW_POLICY)||(input.surface!==undefined&&!SURFACES.includes(input.surface)))return json({error:'Invalid chat request.'},400);
      if(!await consume(env,'create-ip-'+ipHash,{hour:5,day:10})||!await consume(env,'create-global',{day:1000}))return json({error:'Too many new chats. Please return to your existing conversation or try again later.'},429);
-     const token=randomToken();const result=await sessionStub(env,token).fetch('https://session/init',{method:'POST',body:JSON.stringify({brand:input.brand,reviewPolicy:input.reviewPolicy})});
+     const token=randomToken();const result=await sessionStub(env,token).fetch('https://session/init',{method:'POST',body:JSON.stringify({brand:input.brand,reviewPolicy:input.reviewPolicy,surface:input.surface})});
      if(!result.ok)return unavailable();return json({token,session:await result.json()});
     }
     const token=request.headers.get('Authorization')?.replace(/^Bearer /,'');
@@ -100,8 +100,9 @@ export class VisitorSession {
   try {
    if(path==='/init') {
     if(await this.ctx.storage.get('session'))return json({error:'Already started.'},409);
-    const {brand,reviewPolicy}=await request.json();if(!BRANDS.includes(brand))return json({error:'Invalid brand.'},400);
-    const now=Date.now();const session={id:crypto.randomUUID(),brand,reviewPolicy,createdAt:now,updatedAt:now,expiresAt:now+TTL,messages:[{id:crypto.randomUUID(),at:now,role:"assistant",text:OPENERS[brand],routing:{askedQuestion:true,stage:"discovery"}}],receipts:[]};
+    const {brand,reviewPolicy,surface}=await request.json();if(!BRANDS.includes(brand))return json({error:'Invalid brand.'},400);
+    const useSurface=SURFACES.includes(surface)?surface:'home';
+    const now=Date.now();const session={id:crypto.randomUUID(),brand,surface:useSurface,reviewPolicy,createdAt:now,updatedAt:now,expiresAt:now+TTL,messages:[{id:crypto.randomUUID(),at:now,role:"assistant",text:openerFor(brand,useSurface),routing:{askedQuestion:true,stage:"discovery"}}],receipts:[]};
     session.archiveDirty=reviewPolicy===REVIEW_POLICY;
     await this.ctx.storage.put('session',session);await this.ctx.storage.setAlarm(session.archiveDirty?Math.min(Date.now()+60000,session.expiresAt):session.expiresAt);
     try{await this.sync(session);}catch{/* The durable alarm retries; creation still returns the visitor credential. */}

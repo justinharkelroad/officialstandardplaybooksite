@@ -11,6 +11,7 @@ import { GUARANTEES, MIRROR_CREDIT_TERMS, OFFERS, RESULTS_DISCLAIMER, type Offer
 import { DEMO_CLIPS, NOT_FOR, OBJECTION_CLIPS, PROOF_CLIPS, PROOF_QUOTE, START_PRICING_ORDER } from '@/config/startPage';
 import { captureMirrorAttribution } from '@/lib/mirrorAttribution';
 import { trackFunnel, trackVslEvent } from '@/lib/funnel/track';
+import { MarketingAdvisor } from '@/components/marketing/MarketingAdvisor';
 import './Funnel.css';
 
 const video = VSL_VIDEOS['sp-main'];
@@ -20,25 +21,27 @@ const formatTime = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s %
 /** The two prescription cards plus the side links. Same block at the top and bottom of the page. */
 const PrescriptionCards = () => {
   const boardroom = OFFERS.boardroom;
-  const team = OFFERS.teamStandard2x;
   return (
     <div className="fn-cards">
       <article className="fn-card fn-card--primary">
         <span className="fn-card__tag">A · {boardroom.name}</span>
         <p className="fn-card__price">$399<small>/mo</small></p>
-        <p className="fn-card__fit">For owners running it mostly alone, or with fewer than four producers.</p>
-        <p className="fn-small" style={{ margin: 0 }}>Agency Brain Core included.</p>
+        <p className="fn-card__fit">Start in the room this week. Weekly group coaching, Agency Brain Core included.</p>
+        <p className="fn-small" style={{ margin: 0 }}>Monday 1pm EST.</p>
         <div className="fn-card__actions">
           <CheckoutButton offer={boardroom} option={boardroom.checkouts[0]} variant="blue" label="Join the Boardroom" />
         </div>
       </article>
       <article className="fn-card">
-        <span className="fn-card__tag">B · Team Standard 2X</span>
-        <p className="fn-card__price">$2,500<small>/mo</small></p>
-        <p className="fn-card__fit">For owners whose team doesn't follow through when they're not watching.</p>
-        <p className="fn-small" style={{ margin: 0 }}>4X is $4,000/mo.</p>
+        <span className="fn-card__tag">B · Book a call</span>
+        <p className="fn-card__price" style={{ fontSize: 38 }}>1:1<small> · 45 min</small></p>
+        <p className="fn-card__fit">For owners ready for a bigger move, and the commitment it takes.</p>
+        <p className="fn-small" style={{ margin: 0 }}>Come ready to decide. Justin will ask if you are.</p>
         <div className="fn-card__actions">
-          <CheckoutButton offer={team} option={team.checkouts[0]} label="Start Team Standard" />
+          <div className="fn-checkout">
+            <p className="fn-checkout__billing">A conversation with Justin</p>
+            <Link className="fn-btn fn-btn--block" to="/book">Book a call</Link>
+          </div>
         </div>
       </article>
     </div>
@@ -156,13 +159,17 @@ const Start = () => {
                   <Link className="fn-link" to="/sales-experience">The 8-Week, $4,500 or $625/week</Link>
                 </p>
                 <p style={{ margin: 0 }}>
+                  Team that won't follow through when you're not watching?{' '}
+                  <Link className="fn-link" to="/team-standard">Team Standard, $2,500/mo</Link>
+                </p>
+                <p style={{ margin: 0 }}>
                   Not sure? <Link className="fn-link" to="/decision">Take the 2-minute quiz</Link>
                 </p>
               </div>
               <p className="fn-disclaimer">{RESULTS_DISCLAIMER}</p>
             </div>
           ) : (
-            <p className="fn-menu-wait">Your two options appear here at {formatTime(video.revealAt)} in the video.</p>
+            <p className="fn-menu-wait">Your two ways in appear here at {formatTime(video.revealAt)} in the video.</p>
           )}
         </div>
       </section>
@@ -273,6 +280,7 @@ const Start = () => {
       </section>
 
       <FunnelFooter />
+      <MarketingAdvisor brand="standard" surface="start" />
     </main>
   );
 };

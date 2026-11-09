@@ -5,6 +5,8 @@ const configs={
  livecallcoach:{name:'Stanley',image:'/stanley.webp',subtitle:'Your Live Call Coach guide.',hello:'Where are your reps getting stuck on calls?',disclosure:'Stanley is an AI product guide, with no access to your calls or account.',fallback:'https://livecallcoach.ai/#pricing',label:'See Live Call Coach',privacy:'https://myagencybrain.com/privacy'},
 };
 const brand=new URL(location.href).searchParams.get('brand')||'standard';
+// Which page embedded the chat. Sent on session start; the Worker validates it.
+const surface=new URL(location.href).searchParams.get('surface')||undefined;
 const config=configs[brand]||configs.standard;
 const $=id=>document.getElementById(id);
 document.body.dataset.brand=brand;document.title=config.name;
@@ -31,7 +33,7 @@ function recordClick(messageId,actionIndex){
 $('fallback').addEventListener('click',()=>recordClick('fallback',0));
 function render(){ $('messages').replaceChildren();if(!session?.messages.length){bubble(config.hello,'assistant');return;}for(const m of session.messages){for(const text of m.role==='assistant'?replyBubbles(m.text):[m.text])bubble(text,m.role);actions(m.actions,m.id);}}
 async function api(path,method='GET',data){const response=await fetch(path,{method,headers:{...(data?{'Content-Type':'application/json'}:{}),...(token?{Authorization:'Bearer '+token}:{})},body:data?JSON.stringify(data):undefined,signal:AbortSignal.timeout(65000)});const result=await response.json();if(!response.ok){if(response.status===410||response.status===401){remember(null);session=null;pending=null;}throw new Error(result.error||'Chat is unavailable. Please try again.');}return result;}
-async function ensureSession(){if(session)return;if(token){try{session=await api('/api/session');if(session.brand!==brand){remember(null);session=null;}else return;}catch(e){if(token)throw e;}}const result=await api('/api/session','POST',{brand,reviewPolicy:'2026-10-31-review-v1'});remember(result.token);session=result.session;}
+async function ensureSession(){if(session)return;if(token){try{session=await api('/api/session');if(session.brand!==brand){remember(null);session=null;}else return;}catch(e){if(token)throw e;}}const result=await api('/api/session','POST',{brand,reviewPolicy:'2026-10-31-review-v1',...(surface?{surface}:{})});remember(result.token);session=result.session;}
 $('skip').onclick=()=>playback?.abort();
 $('fresh').onclick=async()=>{if(busy)return;lock(true);showError('');try{if(token)await api('/api/session','DELETE');remember(null);session=null;pending=null;$('message').value='';render();}catch(e){showError(e.message);}finally{lock(false);$('message').focus();}};
 $('composer').onsubmit=async event=>{event.preventDefault();if(busy)return;const draft=$('message').value;const text=draft.trim();if(!text)return;lock(true);$('message').value='';showError('');$('typing').hidden=false;
