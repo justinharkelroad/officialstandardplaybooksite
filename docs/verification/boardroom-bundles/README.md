@@ -12,13 +12,13 @@ No Stripe objects, billing functions, or Mirror Credit rules were changed. No ne
 
 ## Customer safeguards
 
-Checkout URLs never render while this site's session is checking, signed in, or unavailable. An explicit new-customer confirmation is required after a successful signed-out session check. Sign-in removes checkout links; sign-out resets confirmation. Session failures/timeouts fail closed, including an empty initial auth event after a failed session read.
+Checkout URLs never render while this site's session is checking, signed in, or unavailable. Public signed-out visitors get direct Stripe checkout links immediately, with no checkbox or confirmation prerequisite. Signed-in accounts get working Agency Brain management links. Session failures offer a refresh action; loading is explicitly labeled. Session failures/timeouts fail closed, including an empty initial auth event after a failed session read.
 
-The marketing site's origin cannot read an Agency Brain session on `myagencybrain.com`. The explicit confirmation addresses this boundary without claiming cross-domain detection. Existing Boardroom/Agency Brain customers are directed to the app to upgrade their current subscription. No public checkout component is imported into member routes.
+The marketing site's origin cannot read an Agency Brain session on `myagencybrain.com`; cross-domain detection is not claimed. Existing Boardroom/Agency Brain customers are directed to the app to upgrade their current subscription. No public checkout component is imported into member routes.
 
 ## Verification
 
-- `npm run test:boardroom`: 9 passing tests, including exact URLs/prices, confirmation, signed-in states, auth races/errors/timeouts, and checkout ownership/route boundaries.
+- `npm run test:boardroom`: 8 passing tests, including immediately usable exact URLs/prices, no checkbox prerequisite, signed-in management links, auth races/errors/timeouts, and checkout ownership/route boundaries.
 - `npm run test:unit`: 42 passing tests.
 - Funnel and Certified Standard tests: 17 passing tests.
 - ESLint on all changed TypeScript files, TypeScript app check, `git diff --check`, and production build passed.

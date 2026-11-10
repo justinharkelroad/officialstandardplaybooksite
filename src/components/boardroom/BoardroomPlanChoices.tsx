@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 // Public, new-customer offers only. Existing customers upgrade inside Agency Brain.
 // Billing truth: agencybrain/_shared/boardroomCheckout.ts; feature truth:
 // agencybrain/src/components/subscription/CoreProUpgradeModal.tsx.
@@ -30,8 +28,7 @@ const plans = [
 export type CheckoutAudience = 'checking' | 'signed-out' | 'signed-in' | 'error';
 
 export default function BoardroomPlanChoices({ audience }: { audience: CheckoutAudience }) {
-  const [confirmedNewCustomer, setConfirmedNewCustomer] = useState(false);
-  const canPurchase = audience === 'signed-out' && confirmedNewCustomer;
+  const canPurchase = audience === 'signed-out';
 
   return (
     <section id="pricing" className="br-plans" aria-labelledby="br-plans-title">
@@ -50,15 +47,7 @@ export default function BoardroomPlanChoices({ audience }: { audience: CheckoutA
           {audience === 'signed-in' ? (
             <p>You’re signed in. Manage your existing membership and software in Agency Brain to avoid a second subscription.</p>
           ) : (
-            <>
-              <p>Already have Boardroom or Agency Brain? <a href="https://myagencybrain.com">Open Agency Brain to upgrade your existing subscription.</a></p>
-              {audience === 'signed-out' && (
-                <label className="br-plans-confirm">
-                  <input type="checkbox" checked={confirmedNewCustomer} onChange={(event) => setConfirmedNewCustomer(event.target.checked)} />
-                  <span>I’m a new customer. I don’t already have a Boardroom or Agency Brain subscription.</span>
-                </label>
-              )}
-            </>
+            <p>Already have Boardroom or Agency Brain? <a href="https://myagencybrain.com">Open Agency Brain to upgrade your existing subscription.</a></p>
           )}
           {audience === 'signed-in' && <a href="https://myagencybrain.com">Open Agency Brain →</a>}
         </div>
@@ -76,8 +65,12 @@ export default function BoardroomPlanChoices({ audience }: { audience: CheckoutA
               <ul>{plan.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
               {canPurchase ? (
                 <a className="br-plan-cta" href={plan.url} target="_blank" rel="noopener noreferrer">Join {plan.name} <span aria-hidden="true">↗</span></a>
+              ) : audience === 'signed-in' ? (
+                <a className="br-plan-cta" href="https://myagencybrain.com">Manage in Agency Brain <span aria-hidden="true">→</span></a>
+              ) : audience === 'error' ? (
+                <button className="br-plan-cta" onClick={() => window.location.reload()}>Refresh checkout</button>
               ) : (
-                <button className="br-plan-cta" disabled>Join {plan.name}</button>
+                <button className="br-plan-cta" disabled>Loading checkout…</button>
               )}
             </article>
           ))}
