@@ -9,8 +9,6 @@
 .br-plans-access { margin: 28px 0; font-size: 14px; line-height: 1.6; }
 .br-plans-access p { margin: 0 0 12px; }
 .br-plans-access a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
-.br-plans-confirm { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-weight: 600; padding: 12px 0; }
-.br-plans-confirm input { margin-top: 3px; width: 20px; height: 20px; flex-shrink: 0; accent-color: #0a0a0b; }
 .br-plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); border: 1px solid #0a0a0b; gap: 1px; background: #0a0a0b; }
 .br-plan { background: #fff; padding: clamp(24px, 2.6vw, 36px); display: flex; flex-direction: column; min-width: 0; }
 .br-plan-software { font-size: 12px; line-height: 1.5; font-weight: 700; text-transform: uppercase; margin: 0 0 12px; }
@@ -23,9 +21,9 @@
 .br-plan-detail { font-size: 15px; line-height: 1.6; margin: 0 0 24px; min-height: 72px; }
 .br-plan ul { padding: 0; margin: 0 0 32px; list-style: none; flex: 1; }
 .br-plan li { font-size: 14px; line-height: 1.6; padding: 12px 0; border-top: 1px solid #0a0a0b26; }
-.br-plan-cta { display: flex; justify-content: space-between; align-items: center; gap: 8px; width: 100%; padding: 16px; background: #0a0a0b; color: #fff; border: 1px solid #0a0a0b; font: inherit; font-size: 13px; font-weight: 700; text-decoration: none; min-height: 52px; }
-a.br-plan-cta:hover { background: #234d73; border-color: #234d73; }
+.br-plan-cta { display: flex; justify-content: space-between; align-items: center; gap: 8px; width: 100%; padding: 16px; background: #0a0a0b; color: #fff; border: 1px solid #0a0a0b; font: inherit; font-size: 13px; font-weight: 700; text-decoration: none; min-height: 52px; cursor: pointer; }
+.br-plan-cta:not(:disabled):hover { background: #234d73; border-color: #234d73; }
 .br-plan-cta:disabled { background: #e4e2de; color: #55534f; border-color: #b7b4ae; cursor: not-allowed; }
-.br-plans a:focus-visible, .br-plans input:focus-visible { outline: 3px solid #0071e3; outline-offset: 5px; }
+.br-plans a:focus-visible, .br-plans button:focus-visible { outline: 3px solid #0071e3; outline-offset: 5px; }
 .br-plans-footnote { font-size: 13px; line-height: 1.7; margin: 24px 0 0; max-width: 85ch; }
 @media (max-width: 600px) { .br-plans { padding: 64px 20px 96px; } .br-plan-detail, .br-plan-breakdown { min-height: 0; } }

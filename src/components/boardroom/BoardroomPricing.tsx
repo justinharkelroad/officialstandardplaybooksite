@@ -9,6 +9,5 @@ export default function BoardroomPricing() {
 
   useEffect(() => watchCheckoutAudience(supabase.auth, setAudience), []);
 
-  // Remount on auth transitions so a previous new-customer confirmation cannot survive sign-in/sign-out.
-  return <BoardroomPlanChoices key={audience} audience={audience} />;
+  return <BoardroomPlanChoices audience={audience} />;
 }

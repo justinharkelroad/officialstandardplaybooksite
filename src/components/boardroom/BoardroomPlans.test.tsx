@@ -15,19 +15,20 @@ const expected = [
   ['Boardroom Pro', '$699', 'https://buy.stripe.com/bJe8wP3GKfT89S835y4Vy0L'],
 ];
 
-for (const audience of ['checking', 'signed-out', 'signed-in', 'error'] as const) {
-  test(`no purchase links before new-customer confirmation (${audience})`, () => {
+for (const audience of ['checking', 'signed-in', 'error'] as const) {
+  test(`no purchase links while account access is ${audience}`, () => {
     const html = renderToStaticMarkup(<BoardroomPlanChoices audience={audience} />);
     assert.ok(!html.includes('buy.stripe.com'));
-    assert.equal((html.match(/disabled=""/g) ?? []).length, 3);
+    assert.equal((html.match(/disabled=""/g) ?? []).length, audience === 'checking' ? 3 : 0);
     if (audience === 'signed-in') {
       assert.ok(!html.includes('type="checkbox"'));
       assert.match(html, /avoid a second subscription/);
+      assert.equal((html.match(/Manage in Agency Brain/g) ?? []).length, 3);
     }
   });
 }
 
-test('each displayed price and tier opens its exact checkout only after explicit confirmation', async () => {
+test('every signed-out visitor gets all three direct checkout links without a checkbox or extra step', async () => {
   const dom = new JSDOM('<div id="root"></div>', { url: 'http://localhost/boardroom' });
   Object.assign(globalThis, { window: dom.window, document: dom.window.document, IS_REACT_ACT_ENVIRONMENT: true });
   const container = dom.window.document.getElementById('root')!;
@@ -35,8 +36,9 @@ test('each displayed price and tier opens its exact checkout only after explicit
   const render = async (audience: CheckoutAudience) => act(() => root.render(<BoardroomPlanChoices key={audience} audience={audience} />));
   try {
     await render('signed-out');
-    assert.equal(container.querySelectorAll('a[href^="https://buy.stripe.com"]').length, 0);
-    await act(() => (container.querySelector('input') as HTMLInputElement).click());
+    assert.equal(container.querySelectorAll('a[href^="https://buy.stripe.com"]').length, 3);
+    assert.equal(container.querySelectorAll('input[type="checkbox"]').length, 0);
+    assert.equal(container.querySelectorAll('button:disabled').length, 0);
     for (const [name, price, url] of expected) {
       const card = container.querySelector(`article[aria-label="${name}"]`)!;
       assert.equal(card.querySelector('.br-plan-price strong')?.textContent, price);
@@ -48,13 +50,10 @@ test('each displayed price and tier opens its exact checkout only after explicit
     assert.match(container.textContent!, /240 minutes per month/);
     assert.match(container.textContent!, /600 Studio roleplay minutes per month/);
     assert.ok(!container.textContent!.includes('$197'));
-    await act(() => (container.querySelector('input') as HTMLInputElement).click());
-    assert.equal(container.querySelectorAll('a[href^="https://buy.stripe.com"]').length, 0);
-    await act(() => (container.querySelector('input') as HTMLInputElement).click());
     await render('signed-in');
     assert.equal(container.querySelectorAll('a[href^="https://buy.stripe.com"]').length, 0);
     await render('signed-out');
-    assert.equal(container.querySelectorAll('a[href^="https://buy.stripe.com"]').length, 0);
+    assert.equal(container.querySelectorAll('a[href^="https://buy.stripe.com"]').length, 3);
   } finally {
     await act(() => root.unmount());
     dom.window.close();
