@@ -40,9 +40,10 @@
       "image": "/og/directive.jpg"
     },
     "/boardroom": {
-      "title": "The Boardroom",
-      "subhead": "The $399/mo mastermind for insurance agency owners who want more.",
-      "image": "/og/boardroom.jpg"
+      "title": "Boardroom + Agency Brain Core, Plus or Pro",
+      "subhead": "Weekly coaching for insurance agency owners. Choose Boardroom with Core at $399/mo, Boardroom Plus at $549/mo, or Boardroom Pro at $699/mo. Compare plans.",
+      "image": "/og/boardroom.jpg",
+      "metaTitle": "Boardroom + Agency Brain Core, Plus or Pro | Standard Playbook"
     },
     "/certified-standard": {
       "title": "Certified Standard | Producer Readiness & Owner Confirmation",

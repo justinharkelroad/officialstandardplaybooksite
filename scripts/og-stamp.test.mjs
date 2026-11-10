@@ -11,6 +11,8 @@ test('stamps literal prices and special characters into social metadata', () => 
   try {
     mkdirSync(join(root, 'scripts'));
     mkdirSync(join(root, 'dist'));
+    mkdirSync(join(root, 'src/data'), { recursive: true });
+    copyFileSync(new URL('../src/data/boardroomSchema.mjs', import.meta.url), join(root, 'src/data/boardroomSchema.mjs'));
     copyFileSync(new URL('./og-stamp.mjs', import.meta.url), join(root, 'scripts/og-stamp.mjs'));
     const title = 'The Mirror Challenge | $197';
     const subhead = 'Eight weeks. $197. Systems & Rhythm. "One payment."';

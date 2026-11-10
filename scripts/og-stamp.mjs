@@ -21,6 +21,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { boardroomServiceSchema } from '../src/data/boardroomSchema.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -72,6 +73,12 @@ function stamp(template, route, cfg) {
     html = setMeta(html, 'googlebot', cfg.robots);
   }
   html = html.replace(/(<link\s+rel="canonical"\s+href=")[^"]*(")/i, `$1${url}$2`);
+  if (route === '/boardroom') {
+    // Crawlers receive the same offers before JavaScript runs. useSEO replaces
+    // this marked block during hydration, avoiding duplicate Service entities.
+    const json = JSON.stringify(boardroomServiceSchema).replace(/</g, '\\u003c');
+    html = html.replace('</head>', `<script type="application/ld+json" data-dynamic="true">${json}</script>\n</head>`);
+  }
   return html;
 }
 

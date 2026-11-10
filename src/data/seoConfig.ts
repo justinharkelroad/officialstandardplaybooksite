@@ -40,11 +40,12 @@ export const seoConfig: Record<string, SEOConfig> = {
     type: 'website',
   },
   '/boardroom': {
-    title: 'The Boardroom: Weekly Owner Accountability + Agency Brain Core | The Standard Playbook',
-    description: 'Weekly Monday live coaching, the 30-minute Domino accountability loop, the 160-point Mirror & 8-Week Mirror Challenge, and full Agency Brain Core access included for $399/month.',
-    keywords: ['agency mastermind', 'insurance agency owners', 'weekly agency coaching', 'agency brain core', 'the mirror diagnostic', 'domino accountability', 'standard playbook boardroom'],
-    ogImage: OG_IMAGE,
-    type: 'article',
+    title: 'Boardroom + Agency Brain Core, Plus or Pro | Standard Playbook',
+    description: 'Weekly coaching for insurance agency owners. Choose Boardroom with Core at $399/mo, Boardroom Plus at $549/mo, or Boardroom Pro at $699/mo. Compare plans.',
+    keywords: ['agency mastermind', 'insurance agency owners', 'weekly agency coaching', 'agency brain core', 'agency brain plus', 'agency brain pro', 'standard playbook boardroom'],
+    ogImage: 'https://standardplaybook.com/og/boardroom.jpg',
+    canonical: 'https://standardplaybook.com/boardroom',
+    type: 'website',
     structuredData: structuredDataByRoute['/boardroom'],
   },
   '/directive': {

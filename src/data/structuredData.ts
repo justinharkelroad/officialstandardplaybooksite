@@ -1,5 +1,6 @@
 // Structured data (JSON-LD) schemas for all pages
 // Each page can have multiple schema objects
+import { boardroomServiceSchema } from './boardroomSchema.mjs';
 
 const BASE_URL = 'https://standardplaybook.com';
 
@@ -121,18 +122,11 @@ export const structuredDataByRoute: Record<string, object[]> = {
   ],
 
   '/boardroom': [
-    serviceSchema({
-      name: "The Boardroom",
-      url: "/boardroom",
-      description: "Weekly group coaching and software-enforced accountability for insurance agency owners. Live Monday calls at 1:00 PM ET, the 30-minute Domino & Mirror accountability loop, daily Telegram access, the 8-Week Mirror Challenge, and full Agency Brain Core access ($299/mo standalone value) included for $399/month.",
-      serviceType: "Business Coaching Mastermind & Agency Operating Software",
-      audience: "Insurance Agency Owners, Principal Agents, and Key Leaders",
-      price: "399",
-    }),
+    boardroomServiceSchema,
     courseSchema({
       name: "The Boardroom",
       url: "/boardroom",
-      description: "Weekly Monday live coaching, Domino accountability loop, and Agency Brain Core operating system for insurance agency owners",
+      description: "Weekly Monday live coaching and the Domino accountability loop for insurance agency owners, with Agency Brain Core, Plus or Pro software options.",
     }),
     breadcrumb("The Boardroom", "/boardroom"),
     faqSchema([
@@ -150,7 +144,7 @@ export const structuredDataByRoute: Record<string, object[]> = {
       },
       {
         question: "Is the full $299/month Agency Brain Core platform really included?",
-        answer: "Yes. Standalone Agency Brain Core is $299/month. Your $399/month Boardroom membership includes full Agency Brain Core access plus weekly live Monday coaching ($100/mo — $25/week): 20 AI-scored calls per month, unlimited Staff Portal seats, Scorecards, Leaderboards, LQS Roadmap, 5 Agency HQs, Standard Playbook Training, Core 4, all 7 Daily Flows, and 5 ROI Forecasters.",
+        answer: "Yes. Standalone Agency Brain Core is $299/month. The $399/month Boardroom membership includes Core with 20 AI-scored calls per month. New customers can also join with Plus for $549/month ($399 Boardroom + $150 Plus) or Pro for $699/month ($399 Boardroom + $300 Pro). Existing customers upgrade inside Agency Brain so the change applies to their current subscription with prorated billing.",
       },
     ]),
   ],
