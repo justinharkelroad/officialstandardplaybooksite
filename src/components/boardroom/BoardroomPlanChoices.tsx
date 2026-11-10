@@ -66,7 +66,9 @@ export default function BoardroomPlanChoices({ audience }: { audience: CheckoutA
         <div className="br-plans-grid">
           {plans.map((plan) => (
             <article key={plan.name} className="br-plan" aria-label={plan.name}>
-              <p className="br-plan-software">{plan.software} included</p>
+              <p className="br-plan-software">
+                {plan.software}{plan.name === 'Boardroom' && <> <span className="br-plan-value">($299/mo value)</span></>} included
+              </p>
               <h3>{plan.name}</h3>
               <p className="br-plan-price"><strong>${plan.price}</strong><span>/month</span></p>
               <p className="br-plan-breakdown">{plan.breakdown}</p>

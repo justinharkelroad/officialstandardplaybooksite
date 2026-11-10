@@ -16,6 +16,7 @@
     "lint": "eslint .",
     "test:unit": "tsx --test src/app/lib/*.test.ts",
     "test:boardroom": "tsx --tsconfig tsconfig.app.json --test src/components/boardroom/BoardroomPlans.test.tsx",
+    "test:boardroom:seo": "npm run build:pages && tsx --tsconfig tsconfig.app.json --test src/data/boardroomSeo.test.ts && node --test scripts/og-stamp.test.mjs",
     "preview": "vite preview",
     "preview:mobile": "vite preview --config vite.mobile.config.ts",
     "mobile:assets:android": "node scripts/generate-android-brand-assets.mjs",

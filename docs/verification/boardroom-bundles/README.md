@@ -31,3 +31,13 @@ The repository's existing package manifest and lockfile are out of sync for `dri
 ## Screenshots from the built page
 
 [Desktop, 1440px](desktop.png) · [Phone, 390px](phone.png)
+
+## SEO and included-value follow-up
+
+The Core card now labels the included software as **Agency Brain Core ($299/mo value)**, with the value in blue. The membership price remains $399/month.
+
+Search, Open Graph and Twitter descriptions name Core/Plus/Pro at $399/$549/$699 per month. FAQ structured data and both AI-readable reference files agree. The same Service schema supplies three named monthly USD offers to the browser and the static Cloudflare HTML, so JavaScript-free crawlers receive the prices too. The browser replaces the marked static block instead of adding a duplicate. Offer URLs use the guarded public pricing section.
+
+Validation: `npm run test:boardroom:seo` passed the production Pages build, four pricing/metadata/schema regressions and the OG-stamping regression. All nine checkout tests, app type checking and changed-file lint passed. Browser inspection found exactly one Service schema with three offers after hydration; the blue label and page fit 320px, 390px and 1440px widths without horizontal overflow.
+
+[Updated Core card, desktop](core-value-desktop.png) · [Updated Core card, phone](core-value-phone.png)
