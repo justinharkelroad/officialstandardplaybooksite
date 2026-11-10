@@ -18,7 +18,7 @@ const html = () => new JSDOM(readFileSync('dist/boardroom/index.html', 'utf8')).
 const schemas = (doc: Document) => Array.from(doc.querySelectorAll('script[type="application/ld+json"]')).map((script) => JSON.parse(script.textContent!));
 
 test('the three schema offers match the visible plans, USD prices and monthly billing', () => {
-  const doc = new JSDOM(renderToStaticMarkup(createElement(BoardroomPlanChoices, { audience: 'signed-out' }))).window.document;
+  const doc = new JSDOM(renderToStaticMarkup(createElement(BoardroomPlanChoices))).window.document;
   assert.equal(boardroomServiceSchema.offers.length, 3);
   assert.equal(structuredDataByRoute['/boardroom'][0], boardroomServiceSchema);
   for (const [index, plan] of expected.entries()) {

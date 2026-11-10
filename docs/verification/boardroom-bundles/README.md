@@ -12,13 +12,13 @@ No Stripe objects, billing functions, or Mirror Credit rules were changed. No ne
 
 ## Customer safeguards
 
-Checkout URLs never render while this site's session is checking, signed in, or unavailable. Public signed-out visitors get direct Stripe checkout links immediately, with no checkbox or confirmation prerequisite. Signed-in accounts get working Agency Brain management links. Session failures offer a refresh action; loading is explicitly labeled. Session failures/timeouts fail closed, including an empty initial auth event after a failed session read.
+The three purchase buttons on the public sales page always use the supplied Stripe Payment Links. They do not depend on this marketing site's login, session checks or account data. There is no checkbox, loading gate or account-management substitution. Existing customers have a separately labeled advisory link to upgrade inside Agency Brain.
 
 The marketing site's origin cannot read an Agency Brain session on `myagencybrain.com`; cross-domain detection is not claimed. Existing Boardroom/Agency Brain customers are directed to the app to upgrade their current subscription. No public checkout component is imported into member routes.
 
 ## Verification
 
-- `npm run test:boardroom`: 8 passing tests, including immediately usable exact URLs/prices, no checkbox prerequisite, signed-in management links, auth races/errors/timeouts, and checkout ownership/route boundaries.
+- `npm run test:boardroom`: 3 passing regressions for exact URLs/prices, immediate links despite a stored website login, no login-based substitution, and checkout ownership/member-route boundaries.
 - `npm run test:unit`: 42 passing tests.
 - Funnel and Certified Standard tests: 17 passing tests.
 - ESLint on all changed TypeScript files, TypeScript app check, `git diff --check`, and production build passed.
