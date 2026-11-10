@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Facebook, Linkedin, Lock, Check, Flame, Eye, ShieldCheck, ArrowUpRight } from 'lucide-react';
 import BoldNav from '@/components/BoldNav';
+import BoardroomPricing from '@/components/boardroom/BoardroomPricing';
 
 import standardLogo from '@/assets/standard-word-logo.png';
 import appBoardroom from '@/assets/app-boardroom.png';
@@ -26,7 +27,7 @@ const paper = '#F4F2EE';
 const blue = '#2997FF';
 
 /* ── Stripe links ──────────────────────────────────────── */
-const STRIPE_JOIN = 'https://buy.stripe.com/cNi6oH2CGeP4aWcbC44Vy0z';
+const PLAN_CHOICES = '#pricing';
 
 /* ── Hero video (9:16 vertical Vimeo embed) ───────────── */
 const HERO_VIDEO =
@@ -142,7 +143,7 @@ const Hero = () => {
           </h1>
         </Reveal>
 
-        <div className="grid grid-cols-12 gap-6 mt-10 items-start">
+        <div className="grid grid-cols-12 gap-x-0 gap-y-6 lg:gap-x-6 mt-10 items-start">
           <Reveal delay={0.15} className="col-span-12 lg:col-span-7">
             <p
               style={{
@@ -187,9 +188,7 @@ const Hero = () => {
               See The 30-Min Loop
             </a>
             <a
-              href={STRIPE_JOIN}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={PLAN_CHOICES}
               style={{
                 fontFamily: body,
                 fontSize: 13,
@@ -205,13 +204,13 @@ const Hero = () => {
               }}
               className="hover:bg-[#2997FF] hover:border-[#2997FF]"
             >
-              Claim Your Seat — $399/Mo &rarr;
+              Choose Your Plan — From $399/Mo &rarr;
             </a>
           </Reveal>
         </div>
 
         {/* 2-Column Hero Showcase: 9:16 Vertical Video + Live Software Loop Preview */}
-        <div className="grid grid-cols-12 gap-8 lg:gap-10 mt-14 items-center">
+        <div className="grid grid-cols-12 gap-x-0 gap-y-8 lg:gap-10 mt-14 items-center">
           {/* Left: Square 1:1 Vimeo Video (Matches native 1:1 dimensions of 1213715494) */}
           <Reveal delay={0.3} className="col-span-12 lg:col-span-5">
             <p
@@ -702,8 +701,8 @@ const MarqueeBands = () => (
 const ProblemPromise = () => (
   <section style={{ background: paper, padding: '112px 24px 128px' }}>
     <div className="max-w-[1180px] mx-auto">
-      <div className="grid grid-cols-12 gap-10 md:gap-16">
-        <Reveal className="col-span-12 md:col-span-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
+        <Reveal className="min-w-0">
           <p
             style={{
               fontFamily: body,
@@ -749,7 +748,7 @@ const ProblemPromise = () => (
           </p>
         </Reveal>
 
-        <Reveal delay={0.1} className="col-span-12 md:col-span-6">
+        <Reveal delay={0.1} className="min-w-0">
           <p
             style={{
               fontFamily: body,
@@ -981,7 +980,7 @@ const BoardroomLoopSection = () => (
               </span>
             </div>
 
-            <div className="grid grid-cols-12 gap-8 mt-7 items-center">
+            <div className="grid grid-cols-12 gap-x-0 gap-y-8 lg:gap-x-8 mt-7 items-center">
               <div className="col-span-12 lg:col-span-6">
                 <p
                   style={{
@@ -1389,7 +1388,7 @@ const BoardroomLoopSection = () => (
               border: `1.5px solid ${ink}`,
             }}
           >
-            <div className="grid grid-cols-12 gap-6 items-center">
+            <div className="grid grid-cols-12 gap-x-0 gap-y-6 lg:gap-x-6 items-center">
               <div className="col-span-12 lg:col-span-8">
                 <div className="flex flex-wrap items-center gap-3 mb-3">
                   <span
@@ -1614,7 +1613,7 @@ const WeeklyCallSection = () => (
           </p>
         </Reveal>
 
-        <div className="grid grid-cols-12 gap-8 lg:gap-6">
+        <div className="grid grid-cols-12 gap-x-0 gap-y-8 lg:gap-6">
           {weeklyMoves.map((m, i) => (
             <Reveal
               key={m.label}
@@ -1704,7 +1703,7 @@ const WeeklyCallSection = () => (
               background: '#fff',
             }}
           >
-            <div className="grid grid-cols-12 gap-6 items-center">
+            <div className="grid grid-cols-12 gap-x-0 gap-y-6 md:gap-x-6 items-center">
               <div className="col-span-12 md:col-span-5">
                 <p
                   style={{
@@ -1834,7 +1833,7 @@ const MirrorExperienceSection = () => (
       </Reveal>
 
       {/* LAYER 01 + LAYER 03 TOP GRID */}
-      <div className="grid grid-cols-12 gap-8 mb-10">
+      <div className="grid grid-cols-12 gap-x-0 gap-y-8 lg:gap-x-8 mb-10">
         {/* LAYER 01: THE WEEKLY MIRROR + THE ROOM */}
         <Reveal className="col-span-12 lg:col-span-6">
           <div
@@ -2143,7 +2142,7 @@ const MirrorExperienceSection = () => (
             border: `1.5px solid ${paper}`,
           }}
         >
-          <div className="grid grid-cols-12 gap-6 items-end pb-8" style={{ borderBottom: `1px solid ${ink}` }}>
+          <div className="grid grid-cols-12 gap-x-0 gap-y-6 lg:gap-x-6 items-end pb-8" style={{ borderBottom: `1px solid ${ink}` }}>
             <div className="col-span-12 lg:col-span-8">
               <p
                 style={{
@@ -2666,7 +2665,7 @@ const IncludesSection = () => {
               padding: '28px 28px',
             }}
           >
-            <div className="grid grid-cols-12 gap-6 items-center">
+            <div className="grid grid-cols-12 gap-x-0 gap-y-6 lg:gap-x-6 items-center">
               <div className="col-span-12 lg:col-span-5">
                 <p
                   style={{
@@ -2995,258 +2994,6 @@ const OwnerSystemSection = () => (
 /* ══════════════════════════════════════════════════════
    10 · PRICING SECTION (HIGH-CONTRAST VALUE STACK)
    ══════════════════════════════════════════════════════ */
-const PricingSection = () => (
-  <section id="pricing" style={{ background: paper, padding: '120px 24px', borderTop: `1px solid ${ink}` }}>
-    <div className="max-w-[1280px] mx-auto">
-      <p
-        style={{
-          fontFamily: body,
-          fontSize: 12,
-          fontWeight: 600,
-          letterSpacing: '0.18em',
-          color: ink,
-          textTransform: 'uppercase',
-          marginBottom: 28,
-        }}
-      >
-        / Claim Your Seat
-      </p>
-
-      <div className="grid grid-cols-12 gap-8 items-start">
-        <div className="col-span-12 lg:col-span-7">
-          <p
-            style={{
-              fontFamily: body,
-              fontSize: 12,
-              fontWeight: 700,
-              letterSpacing: '0.18em',
-              color: ink,
-              opacity: 0.65,
-              textTransform: 'uppercase',
-              marginBottom: 12,
-            }}
-          >
-            Boardroom Membership + Agency Brain Core &middot; Monthly
-          </p>
-          <div style={{ position: 'relative', display: 'inline-block', paddingBottom: 8 }}>
-            <h2
-              style={{
-                fontFamily: display,
-                fontSize: 'clamp(72px, 17vw, 240px)',
-                lineHeight: 0.85,
-                letterSpacing: '-0.04em',
-                color: ink,
-                margin: 0,
-                fontWeight: 400,
-              }}
-            >
-              $399
-            </h2>
-            <p
-              style={{
-                fontFamily: editorial,
-                fontSize: 'clamp(22px, 2.8vw, 40px)',
-                lineHeight: 1,
-                letterSpacing: '-0.01em',
-                color: blue,
-                margin: '14px 0 0',
-                fontWeight: 400,
-                textTransform: 'uppercase',
-              }}
-            >
-              / month &middot; No Contract
-            </p>
-          </div>
-
-          <p
-            style={{
-              fontFamily: body,
-              fontSize: 16,
-              fontWeight: 400,
-              lineHeight: 1.6,
-              color: ink,
-              opacity: 0.85,
-              marginTop: 24,
-              maxWidth: 560,
-            }}
-          >
-            Your full <strong style={{ fontWeight: 700 }}>Agency Brain Core ($299/mo standalone value)</strong>{' '}
-            subscription plus weekly live Monday coaching at 1:00 PM ET, the 30-minute software accountability loop,
-            daily Telegram access to Justin and the room, and the 8-Week Mirror Challenge—for just{' '}
-            <strong style={{ fontWeight: 700 }}>$100/mo ($25/week) above standalone Core</strong>.
-          </p>
-
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <a
-              href={STRIPE_JOIN}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                fontFamily: body,
-                fontSize: 13,
-                fontWeight: 700,
-                letterSpacing: '0.14em',
-                color: '#fff',
-                background: ink,
-                textTransform: 'uppercase',
-                textDecoration: 'none',
-                padding: '17px 32px',
-                border: `1.5px solid ${ink}`,
-                transition: 'all .25s',
-              }}
-              className="hover:bg-[#2997FF] hover:border-[#2997FF]"
-            >
-              Claim Your Seat &rarr;
-            </a>
-            <span
-              style={{
-                fontFamily: body,
-                fontSize: 12,
-                fontWeight: 600,
-                letterSpacing: '0.08em',
-                color: ink,
-                opacity: 0.65,
-                textTransform: 'uppercase',
-              }}
-            >
-              Instant Agency Brain + Boardroom Provisioning
-            </span>
-          </div>
-        </div>
-
-        {/* Right: Value Stack + The Standard Promise */}
-        <div className="col-span-12 lg:col-span-5 space-y-5">
-          <div
-            style={{
-              background: '#fff',
-              border: `1.5px solid ${ink}`,
-              padding: '28px 26px',
-            }}
-          >
-            <p
-              style={{
-                fontFamily: body,
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: '0.16em',
-                color: blue,
-                textTransform: 'uppercase',
-                margin: '0 0 14px',
-              }}
-            >
-              Everything Included At $399/Mo
-            </p>
-            <ul style={{ listStyle: 'none', margin: 0, padding: 0 }} className="space-y-3">
-              {[
-                ['Agency Brain Core Platform', '$299/mo Standalone Value'],
-                ['Weekly Monday Live Coaching Call', '1:00 PM ET · $25/wk Delta'],
-                ['30-Min Pre-Call Software Loop', 'Return · Domino · Flow'],
-                ['Daily Telegram Room + Direct Line', 'Voice & Video Access'],
-                ['Unlimited Staff Portal Logins', 'Whole Team Included'],
-                ['20 AI Call Scores Per Month', 'Standard Call Scoring'],
-                ['160-Pt Mirror + 8-Week Challenge', 'Free ($197 Value)'],
-              ].map(([item, tag]) => (
-                <li
-                  key={item}
-                  className="flex items-center justify-between gap-3 pb-2.5"
-                  style={{ borderBottom: `1px solid ${ink}18` }}
-                >
-                  <span
-                    className="flex items-center gap-2"
-                    style={{ fontFamily: body, fontSize: 13.5, fontWeight: 600, color: ink }}
-                  >
-                    <Check className="w-4 h-4 flex-shrink-0" style={{ color: blue }} />
-                    {item}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: body,
-                      fontSize: 11,
-                      fontWeight: 700,
-                      letterSpacing: '0.06em',
-                      color: ink,
-                      opacity: 0.6,
-                      textTransform: 'uppercase',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {tag}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div
-            style={{
-              background: ink,
-              color: paper,
-              padding: '28px 26px',
-            }}
-          >
-            <p
-              style={{
-                fontFamily: body,
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: '0.16em',
-                color: blue,
-                textTransform: 'uppercase',
-                marginBottom: 10,
-              }}
-            >
-              The Standard Promise
-            </p>
-            <p
-              style={{
-                fontFamily: display,
-                fontSize: 'clamp(24px, 2.8vw, 32px)',
-                lineHeight: 1.05,
-                letterSpacing: '-0.01em',
-                color: paper,
-                textTransform: 'uppercase',
-                margin: '0 0 12px',
-                fontWeight: 400,
-              }}
-            >
-              Stop guessing. Start leading.
-            </p>
-            <p
-              style={{
-                fontFamily: body,
-                fontSize: 14,
-                fontWeight: 400,
-                lineHeight: 1.6,
-                color: paper,
-                opacity: 0.85,
-                margin: 0,
-              }}
-            >
-              You will always know the exact Domino you declared, the gap you worked, and the Monday you have to answer
-              for it. The software holds the record. The room brings the pressure. You bring the execution.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <p
-        style={{
-          fontFamily: body,
-          fontSize: 11,
-          lineHeight: 1.55,
-          color: ink,
-          opacity: 0.58,
-          margin: '56px 0 0',
-          maxWidth: 880,
-        }}
-      >
-        Live Monday attendance is coach-verified and streak-tracked. Call recordings and anonymized recaps are archived
-        privately inside Agency Brain for active members. No income or sales results are promised or implied; outcomes
-        depend on your market and your execution.
-      </p>
-    </div>
-  </section>
-);
 
 /* ══════════════════════════════════════════════════════
    11 · OPERATOR PROOF
@@ -3362,7 +3109,7 @@ const faq = [
   },
   {
     q: 'Is the full $299/month Agency Brain Core platform really included?',
-    a: 'Yes. Standalone Agency Brain Core is $299/month. For $399/month ($100/mo more than standalone software—$25 per Monday call), your Boardroom membership includes full Agency Brain Core access: 20 AI-scored calls per month, unlimited Staff Portal seats, real-time Scorecards and KPI rings, Leaderboards, LQS Roadmap, 5 Agency HQs (Renewal, Cancel Audit, Winback, Cross-Sale, Life Referral), the Standard Playbook Training Platform, Core 4, all 7 Daily Flows, and 5 ROI Forecasters. If you ever want Plus (+$150/mo) or Pro (+$300/mo), you only pay the software difference.',
+    a: 'Yes. Standalone Agency Brain Core is $299/month. For $399/month ($100/mo more than standalone software—$25 per Monday call), your Boardroom membership includes full Agency Brain Core access: 20 AI-scored calls per month, unlimited Staff Portal seats, real-time Scorecards and KPI rings, Leaderboards, LQS Roadmap, 5 Agency HQs (Renewal, Cancel Audit, Winback, Cross-Sale, Life Referral), the Standard Playbook Training Platform, Core 4, all 7 Daily Flows, and 5 ROI Forecasters. New customers can also join with Plus for $549/month ($399 Boardroom + $150 Plus) or Pro for $699/month ($399 Boardroom + $300 Pro). Already have Boardroom or Agency Brain? Upgrade inside Agency Brain so the change applies to your existing subscription with prorated billing.',
   },
   {
     q: 'What happens between Monday calls?',
@@ -3527,9 +3274,7 @@ const FAQSection = () => {
    ══════════════════════════════════════════════════════ */
 const GiantCTA = () => (
   <a
-    href={STRIPE_JOIN}
-    target="_blank"
-    rel="noopener noreferrer"
+    href={PLAN_CHOICES}
     style={{
       background: ink,
       padding: '100px 24px 70px',
@@ -3585,7 +3330,7 @@ const GiantCTA = () => (
             textTransform: 'uppercase',
           }}
         >
-          Claim Your Seat at $399/mo (Includes $299/mo Agency Brain Core) &nbsp;&rarr;
+          Choose Boardroom + Core, Plus or Pro — From $399/mo &nbsp;&rarr;
         </p>
       </Reveal>
     </div>
@@ -3718,9 +3463,7 @@ const MobileStickyCTA = () => (
     style={{ background: ink, padding: '12px 16px', borderTop: `1px solid ${paper}33` }}
   >
     <a
-      href={STRIPE_JOIN}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={PLAN_CHOICES}
       style={{
         fontFamily: body,
         fontSize: 13,
@@ -3738,7 +3481,7 @@ const MobileStickyCTA = () => (
         textDecoration: 'none',
       }}
     >
-      Claim Your Seat — $399/Mo &rarr;
+      Choose Your Plan — From $399/Mo &rarr;
     </a>
   </div>
 );
@@ -3759,7 +3502,7 @@ const BoldBoardroom = () => (
     <IncludesSection />
     <AppShowcaseSection />
     <OwnerSystemSection />
-    <PricingSection />
+    <BoardroomPricing />
     <ProofSection />
     <FAQSection />
     <GiantCTA />
