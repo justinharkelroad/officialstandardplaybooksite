@@ -3037,7 +3037,7 @@ const ProofSection = () => (
         {[
           ['20 years', 'Building & scaling agencies'],
           ['$3.6M', 'Agency exit in 2019'],
-          ['234+', 'Coaching sessions analyzed'],
+          ['1500+', 'Coaching sessions analyzed'],
         ].map(([value, label], i) => (
           <Reveal key={value} delay={i * 0.05}>
             <div
