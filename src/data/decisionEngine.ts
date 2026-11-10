@@ -107,7 +107,7 @@ export const OFFER_CATALOG: { version: string; currency: string; offers: Offer[]
       },
       notes: ["Month-to-month. No contract."],
       links: {
-        checkout: "https://buy.stripe.com/cNi6oH2CGeP4aWcbC44Vy0z",
+        checkout: "/boardroom#pricing",
         details: "https://standardplaybook.com/boardroom"
       },
       display_order: 10

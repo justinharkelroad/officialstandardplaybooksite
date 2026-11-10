@@ -15,6 +15,7 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "test:unit": "tsx --test src/app/lib/*.test.ts",
+    "test:boardroom": "tsx --tsconfig tsconfig.app.json --test src/components/boardroom/BoardroomPlans.test.tsx",
     "preview": "vite preview",
     "preview:mobile": "vite preview --config vite.mobile.config.ts",
     "mobile:assets:android": "node scripts/generate-android-brand-assets.mjs",

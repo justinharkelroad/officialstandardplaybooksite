@@ -60,7 +60,7 @@ const PricingSection = () => {
                   Daily Telegram Room + Direct Line to Justin
                 </li>
               </ul>
-              <a href="https://buy.stripe.com/cNi6oH2CGeP4aWcbC44Vy0z" target="_blank" rel="noopener noreferrer">
+              <a href="/boardroom#pricing" target="_blank" rel="noopener noreferrer">
                 <Button className="btn-primary w-full">
                   JOIN THE BOARDROOM
                 </Button>

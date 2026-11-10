@@ -175,7 +175,7 @@ const coachingPrograms: Program[] = [
     ],
     price: '$399/mo',
     soldOut: false,
-    action: { kind: 'link', cta: 'Join The Boardroom', href: 'https://buy.stripe.com/cNi6oH2CGeP4aWcbC44Vy0z', external: true },
+    action: { kind: 'link', cta: 'Join The Boardroom', href: '/boardroom#pricing', external: true },
   },
   {
     label: 'Manager Training',

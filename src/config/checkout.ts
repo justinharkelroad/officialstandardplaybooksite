@@ -19,8 +19,8 @@ export type CheckoutKey =
   | 'producerChallenge';
 
 export const CHECKOUT_LINKS: Record<CheckoutKey, string | null> = {
-  // Live Boardroom link used site-wide since the $399 change (2026-10-20).
-  boardroom: 'https://buy.stripe.com/cNi6oH2CGeP4aWcbC44Vy0z',
+  // Public plan choices own all new Boardroom checkouts and existing-customer guidance.
+  boardroom: '/boardroom#pricing',
   // Stripe payment links from Justin, checked 2026-11-01 (product and amount on each page).
   teamStandard2x: 'https://buy.stripe.com/14AbJ14KO7mC6FWay04Vy0t', // TEAMSTANDARD 2X, $2,500/month
   teamStandard4x: 'https://buy.stripe.com/8x2dR9dhk8qG8O4dKc4Vy0s', // TEAMSTANDARD 4X, $4,000/month

@@ -369,7 +369,7 @@ const offerCards = [
     ],
     price: '$399/mo',
     cta: 'Join The Boardroom',
-    href: 'https://buy.stripe.com/cNi6oH2CGeP4aWcbC44Vy0z',
+    href: '/boardroom#pricing',
     action: 'link' as const,
   },
   {

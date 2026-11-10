@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const BoardroomPricing = () => {
   const handleJoinNow = () => {
-    window.open('https://buy.stripe.com/cNi6oH2CGeP4aWcbC44Vy0z', '_blank');
+    window.open('/boardroom#pricing', '_blank');
   };
 
   return (

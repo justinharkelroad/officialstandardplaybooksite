@@ -706,7 +706,7 @@ const coachingPrograms = [
     price: '$399/mo',
     soldOut: false,
     action: 'link' as const,
-    href: 'https://buy.stripe.com/cNi6oH2CGeP4aWcbC44Vy0z',
+    href: '/boardroom#pricing',
     cta: 'Join The Boardroom',
   },
   {
