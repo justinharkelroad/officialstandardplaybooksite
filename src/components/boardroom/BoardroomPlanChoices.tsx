@@ -25,11 +25,7 @@ const plans = [
   },
 ] as const;
 
-export type CheckoutAudience = 'checking' | 'signed-out' | 'signed-in' | 'error';
-
-export default function BoardroomPlanChoices({ audience }: { audience: CheckoutAudience }) {
-  const canPurchase = audience === 'signed-out';
-
+export default function BoardroomPlanChoices() {
   return (
     <section id="pricing" className="br-plans" aria-labelledby="br-plans-title">
       <div className="br-plans-inner">
@@ -41,15 +37,8 @@ export default function BoardroomPlanChoices({ audience }: { audience: CheckoutA
           <p>Monday live coaching at 1:00 PM ET · Return &amp; Report, Domino Builder and Domino Flow · Private Telegram room and direct access to Justin · 8-Week Mirror Challenge</p>
         </div>
 
-        <div className="br-plans-access" aria-live="polite">
-          {audience === 'checking' && <p>Checking account access…</p>}
-          {audience === 'error' && <p>We couldn’t check your account. Refresh this page before starting a new membership.</p>}
-          {audience === 'signed-in' ? (
-            <p>You’re signed in. Manage your existing membership and software in Agency Brain to avoid a second subscription.</p>
-          ) : (
-            <p>Already have Boardroom or Agency Brain? <a href="https://myagencybrain.com">Open Agency Brain to upgrade your existing subscription.</a></p>
-          )}
-          {audience === 'signed-in' && <a href="https://myagencybrain.com">Open Agency Brain →</a>}
+        <div className="br-plans-access">
+          <p>Already have Boardroom or Agency Brain? <a href="https://myagencybrain.com">Open Agency Brain to upgrade your existing subscription.</a></p>
         </div>
 
         <div className="br-plans-grid">
@@ -63,15 +52,7 @@ export default function BoardroomPlanChoices({ audience }: { audience: CheckoutA
               <p className="br-plan-breakdown">{plan.breakdown}</p>
               <p className="br-plan-detail">{plan.detail}</p>
               <ul>{plan.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
-              {canPurchase ? (
-                <a className="br-plan-cta" href={plan.url} target="_blank" rel="noopener noreferrer">Join {plan.name} <span aria-hidden="true">↗</span></a>
-              ) : audience === 'signed-in' ? (
-                <a className="br-plan-cta" href="https://myagencybrain.com">Manage in Agency Brain <span aria-hidden="true">→</span></a>
-              ) : audience === 'error' ? (
-                <button className="br-plan-cta" onClick={() => window.location.reload()}>Refresh checkout</button>
-              ) : (
-                <button className="br-plan-cta" disabled>Loading checkout…</button>
-              )}
+              <a className="br-plan-cta" href={plan.url} target="_blank" rel="noopener noreferrer">Join {plan.name} <span aria-hidden="true">↗</span></a>
             </article>
           ))}
         </div>
