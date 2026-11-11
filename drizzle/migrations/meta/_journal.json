@@ -36,6 +36,13 @@
       "when": 1793610290947,
       "tag": "0004_eight_week_purchases",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1794422118314,
+      "tag": "0005_waitlist_state_and_program",
+      "breakpoints": true
     }
   ]
 }
