@@ -156,3 +156,7 @@ verify_jwt = false
 # every request is checked against the Stripe webhook signature.
 [functions.eight-week-billing]
 verify_jwt = false
+
+# AI Install waitlist: forwards each signup to Agency Brain's house CRM (crm-lead-intake), server to server.
+[functions.ai-install-waitlist-lead]
+verify_jwt = false
