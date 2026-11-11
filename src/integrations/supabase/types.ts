@@ -624,8 +624,6 @@ export type Database = {
           full_name: string
           id: string
           message: string | null
-          program: string
-          state: string | null
         }
         Insert: {
           agency_name?: string | null
@@ -635,8 +633,6 @@ export type Database = {
           full_name: string
           id?: string
           message?: string | null
-          program?: string
-          state?: string | null
         }
         Update: {
           agency_name?: string | null
@@ -646,8 +642,6 @@ export type Database = {
           full_name?: string
           id?: string
           message?: string | null
-          program?: string
-          state?: string | null
         }
         Relationships: []
       }
