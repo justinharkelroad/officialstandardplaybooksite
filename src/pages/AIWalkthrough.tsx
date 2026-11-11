@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import TextOptIn from '@/components/TextOptIn';
 import { Download, CheckCircle } from 'lucide-react';
 import standardLogo from '@/assets/standard-word-logo.png';
 
@@ -15,6 +16,7 @@ const AIWalkthrough = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ full_name: '', email: '', cell_phone: '' });
+  const [textOk, setTextOk] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,7 +48,7 @@ const AIWalkthrough = () => {
       // Send email notification
       try {
         await supabase.functions.invoke('send-walkthrough-notification', {
-          body: { full_name: form.full_name, email: form.email, cell_phone: form.cell_phone },
+          body: { full_name: form.full_name, email: form.email, cell_phone: form.cell_phone, text_ok: textOk },
         });
       } catch (emailErr) {
         console.error('Email notification failed:', emailErr);
@@ -112,6 +114,10 @@ const AIWalkthrough = () => {
                     className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 focus:border-primary"
                     required
                   />
+                  {/* The box behind this form is white, so darker than the form's own light labels. */}
+                  <div className="text-gray-600">
+                    <TextOptIn id="walkthrough-text-ok" checked={textOk} onChange={setTextOk} style={{ marginTop: 8 }} />
+                  </div>
                 </div>
               </div>
 

@@ -16,6 +16,7 @@ interface WebsitesInquiry {
   agency_name?: string;
   timeline?: string;
   message?: string;
+  text_ok?: boolean;
 }
 
 const esc = (s: string) =>
@@ -68,6 +69,7 @@ const handler = async (req: Request): Promise<Response> => {
     const crmLead = sendToAgencyBrain({
       form: "websites", name: inquiry.full_name, email: inquiry.email, phone: inquiry.phone,
       business: inquiry.agency_name, detail: [inquiry.timeline && `timeline ${inquiry.timeline}`, inquiry.message].filter(Boolean).join(". "),
+      text_ok: inquiry.text_ok === true,
     });
 
     const emailResponse = await resend.emails.send({

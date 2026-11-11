@@ -23,6 +23,7 @@ import {
 import { scoreAssessment, type QuestionScores } from '@/lib/mirrorScoring';
 import { captureMirrorAttribution, readMirrorAttribution } from '@/lib/mirrorAttribution';
 import { supabase } from '@/integrations/supabase/client';
+import TextOptIn from '@/components/TextOptIn';
 
 const display = '"Anton", "Archivo Black", "Oswald", Impact, sans-serif';
 const body = 'Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif';
@@ -454,6 +455,8 @@ const CaptureScreen = ({
   setEmail,
   setPhone,
   setCarrier,
+  textOk,
+  setTextOk,
   onSubmit,
   submitting,
   error,
@@ -466,6 +469,8 @@ const CaptureScreen = ({
   setEmail: (s: string) => void;
   setPhone: (s: string) => void;
   setCarrier: (v: CarrierValue) => void;
+  textOk: boolean;
+  setTextOk: (v: boolean) => void;
   onSubmit: () => void;
   submitting: boolean;
   error: string | null;
@@ -575,6 +580,7 @@ const CaptureScreen = ({
             onBlur={handleBlur}
             style={lineFieldStyle}
           />
+          <TextOptIn id="mirror-text-ok" checked={textOk} onChange={setTextOk} style={{ marginTop: 12 }} />
         </div>
 
         <div style={{ marginBottom: 36 }}>
@@ -647,6 +653,7 @@ const BoldMirrorScore = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [carrier, setCarrier] = useState<CarrierValue | ''>('');
+  const [textOk, setTextOk] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -780,7 +787,8 @@ const BoldMirrorScore = () => {
       // Fire Edge Function (non-blocking — don't fail the user-facing flow if it errors).
       try {
         await supabase.functions.invoke('send-mirror-notification', {
-          body: { ...payload, id: submissionId },
+          // text_ok is not a mirror_submissions column: it only goes to the notification (and Agency Brain).
+          body: { ...payload, id: submissionId, text_ok: textOk },
         });
       } catch (fnErr) {
         console.error('send-mirror-notification failed', fnErr);
@@ -801,7 +809,7 @@ const BoldMirrorScore = () => {
       setError('Something went wrong saving your score. Please try again.');
       setSubmitting(false);
     }
-  }, [answers, email, fullName, phone, carrier, navigate]);
+  }, [answers, email, fullName, phone, carrier, textOk, navigate]);
 
   return (
     <div style={{ background: paper, fontFamily: body, color: ink, minHeight: '100vh' }}>
@@ -826,6 +834,8 @@ const BoldMirrorScore = () => {
             setEmail={setEmail}
             setPhone={setPhone}
             setCarrier={setCarrier}
+            textOk={textOk}
+            setTextOk={setTextOk}
             onSubmit={handleSubmit}
             submitting={submitting}
             error={error}

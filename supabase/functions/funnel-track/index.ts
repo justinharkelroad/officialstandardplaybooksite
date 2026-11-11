@@ -307,6 +307,7 @@ async function handleLead(db: Db, req: LeadRequest, ip: string | null, userAgent
       form: lead.kind === "quiz" ? "decision_quiz" : "book_call",
       name: lead.name, email: req.email, phone: lead.phone, business: lead.agency,
       detail: lead.summary?.prescriptionName ? `recommended ${lead.summary.prescriptionName}` : null,
+      text_ok: lead.text_ok,
     }),
   ]);
   console.log("funnel-track: Agency Brain lead", crm);
