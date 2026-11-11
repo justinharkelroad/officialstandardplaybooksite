@@ -263,6 +263,11 @@ function WaitlistForm() {
 
       if (error) throw error;
 
+      // Also into Agency Brain's CRM as a warm lead. Not awaited: the signup is already saved.
+      void supabase.functions
+        .invoke("ai-install-waitlist-lead", { body: { full_name: normalizedName, email: normalizedEmail } })
+        .catch((crmError) => console.error("AI Install lead to Agency Brain failed", crmError));
+
       const trackedWindow = window as typeof window & {
         fbq?: (...args: unknown[]) => void;
       };

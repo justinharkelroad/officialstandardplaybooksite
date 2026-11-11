@@ -185,6 +185,8 @@ export interface FunnelContact {
   email: string;
   phone: string;
   agency: string;
+  /** Ticked the optional "text me" box on the contact step. Sent with the lead, never saved in the browser. */
+  textOk?: boolean;
 }
 
 export interface FunnelLead {

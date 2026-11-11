@@ -18,6 +18,7 @@ interface WaitlistApplication {
   agency_name: string;
   state?: string;
   message: string;
+  text_ok?: boolean;
 }
 
 const PROGRAM_NAMES: Record<string, string> = {
@@ -73,6 +74,7 @@ const handler = async (req: Request): Promise<Response> => {
       form: app.program === "momentum" ? "momentum" : "directive",
       name: app.full_name, email: app.email, phone: app.cell_phone,
       business: app.agency_name, state: app.state, detail: app.message,
+      text_ok: app.text_ok === true,
     });
 
     const emailResponse = await resend.emails.send({
