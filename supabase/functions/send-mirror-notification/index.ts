@@ -1367,6 +1367,33 @@ async function sendDrip(s: MirrorSubmission): Promise<ScheduledSendResult[]> {
    HTTP HANDLER
    ══════════════════════════════════════════════════════ */
 
+// Agency Brain house CRM: each lead from this form also goes into the CRM as warm, through
+// Agency Brain's crm-lead-intake function (matched against who is already there, never doubled).
+// Best effort: skipped until AGENCYBRAIN_LEAD_INTAKE_SECRET is set, and a failure never fails the form.
+const AGENCYBRAIN_LEAD_URL = Deno.env.get("AGENCYBRAIN_LEAD_INTAKE_URL")?.trim() ||
+  "https://wjqyccbytctqwceuhzhk.supabase.co/functions/v1/crm-lead-intake";
+
+async function sendToAgencyBrain(lead: Record<string, unknown>): Promise<string> {
+  const secret = Deno.env.get("AGENCYBRAIN_LEAD_INTAKE_SECRET")?.trim();
+  if (!secret) return "skipped";
+  try {
+    const res = await fetch(AGENCYBRAIN_LEAD_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-lead-intake-secret": secret },
+      body: JSON.stringify(lead),
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!res.ok) {
+      console.error("Agency Brain lead:", res.status, (await res.text()).slice(0, 200));
+      return `failed_${res.status}`;
+    }
+    return "sent";
+  } catch (error) {
+    console.error("Agency Brain lead:", error instanceof Error ? error.message : error);
+    return "failed";
+  }
+}
+
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -1389,6 +1416,11 @@ const handler = async (req: Request): Promise<Response> => {
 
     const tierLabel = TIER_LABELS[s.tier] ?? s.tier;
     const pillarLabel = PILLAR_LABELS[s.weakest_pillar] ?? s.weakest_pillar;
+
+    const crmLead = sendToAgencyBrain({
+      form: "mirror_score", name: s.full_name, email: s.email, phone: s.phone,
+      detail: `scored ${s.total_score}/160 (${tierLabel}), weakest pillar ${pillarLabel}, carrier ${s.carrier}`,
+    });
     const pillarRows = Object.entries(s.pillar_scores)
       .map(([k, v]) =>
         `<li><strong>${PILLAR_LABELS[k as MirrorPillar] ?? k}:</strong> ${v}</li>`
@@ -1462,9 +1494,10 @@ const handler = async (req: Request): Promise<Response> => {
       results: dripResults,
     };
     console.log("Mirror notification sent. Drip:", JSON.stringify(dripSummary));
+    const crm = await crmLead;
 
     return new Response(
-      JSON.stringify({ ok: true, internal, drip: dripSummary }),
+      JSON.stringify({ ok: true, internal, drip: dripSummary, crm }),
       { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } },
     );
   } catch (error: any) {

@@ -241,6 +241,33 @@ async function handleEvent(db: Db, req: EventRequest, ip: string | null, userAge
   return json({ ok: true, meta, ghl });
 }
 
+// Agency Brain house CRM: each lead from this form also goes into the CRM as warm, through
+// Agency Brain's crm-lead-intake function (matched against who is already there, never doubled).
+// Best effort: skipped until AGENCYBRAIN_LEAD_INTAKE_SECRET is set, and a failure never fails the form.
+const AGENCYBRAIN_LEAD_URL = Deno.env.get("AGENCYBRAIN_LEAD_INTAKE_URL")?.trim() ||
+  "https://wjqyccbytctqwceuhzhk.supabase.co/functions/v1/crm-lead-intake";
+
+async function sendToAgencyBrain(lead: Record<string, unknown>): Promise<string> {
+  const secret = Deno.env.get("AGENCYBRAIN_LEAD_INTAKE_SECRET")?.trim();
+  if (!secret) return "skipped";
+  try {
+    const res = await fetch(AGENCYBRAIN_LEAD_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-lead-intake-secret": secret },
+      body: JSON.stringify(lead),
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!res.ok) {
+      console.error("Agency Brain lead:", res.status, (await res.text()).slice(0, 200));
+      return `failed_${res.status}`;
+    }
+    return "sent";
+  } catch (error) {
+    console.error("Agency Brain lead:", error instanceof Error ? error.message : error);
+    return "failed";
+  }
+}
+
 async function handleLead(db: Db, req: LeadRequest, ip: string | null, userAgent: string | null) {
   const { lead } = req;
 
@@ -261,7 +288,7 @@ async function handleLead(db: Db, req: LeadRequest, ip: string | null, userAgent
   const watched = summarizeVsl((history ?? []) as { event: string; video_id: string | null; value: string | null }[]);
 
   const ghlUrl = Deno.env.get("GHL_LEAD_WEBHOOK_URL")?.trim() || Deno.env.get("GHL_VSL_WEBHOOK_URL")?.trim();
-  const [meta, ghl, notify] = await Promise.all([
+  const [meta, ghl, notify, crm] = await Promise.all([
     sendMeta({
       req,
       eventName: "Lead",
@@ -276,7 +303,13 @@ async function handleLead(db: Db, req: LeadRequest, ip: string | null, userAgent
     }),
     sendGhl(ghlUrl, ghlLeadPayload(req, watched)),
     notifyTeam(req, watched),
+    sendToAgencyBrain({
+      form: lead.kind === "quiz" ? "decision_quiz" : "book_call",
+      name: lead.name, email: req.email, phone: lead.phone, business: lead.agency,
+      detail: lead.summary?.prescriptionName ? `recommended ${lead.summary.prescriptionName}` : null,
+    }),
   ]);
+  console.log("funnel-track: Agency Brain lead", crm);
 
   const { error } = await db.from("funnel_leads").insert({
     kind: lead.kind,
