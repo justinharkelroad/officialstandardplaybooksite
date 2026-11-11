@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
 import BoldNav from '@/components/BoldNav';
-import StandardFitModal from '@/components/StandardFitModal';
+import WaitlistModal from '@/components/WaitlistModal';
+import BoardroomEntryNudge from '@/components/BoardroomEntryNudge';
 import ContentMeta from '@/components/ContentMeta';
 
 import standardLogo from '@/assets/standard-word-logo.png';
@@ -43,14 +44,14 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, textTransform: 'uppercase', margin: 0,
           }}>
-            / Momentum · 1:1 Coaching · $2.5k/mo
+            / Momentum · 1:1 Coaching · Waitlist
           </p>
           <span style={{
             fontFamily: body, fontSize: 10, fontWeight: 700, letterSpacing: '0.14em',
             textTransform: 'uppercase', padding: '5px 10px', lineHeight: 1, whiteSpace: 'nowrap',
             background: blue, color: '#fff', border: `1.5px solid ${blue}`,
           }}>
-            1 Seat Left
+            Waitlist Only
           </span>
         </div>
       </Reveal>
@@ -94,7 +95,7 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
               padding: '15px 28px', border: `1.5px solid ${ink}`, cursor: 'pointer', transition: 'all .25s',
             }}
             className="hover:bg-[#2997FF] hover:border-[#2997FF]">
-            Apply
+            Join the Waitlist
           </button>
         </Reveal>
       </div>
@@ -404,7 +405,7 @@ const InvestmentSection = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 'clamp(16px, 1.6vw, 20px)', fontWeight: 400, lineHeight: 1.55,
           color: ink, opacity: 0.7, marginTop: 32, maxWidth: 640, marginInline: 'auto',
         }}>
-          Two 90-minute 1:1 calls, the Monday group call, Boardroom tools, Agency Brain Pro, and Telegram access. Problems get caught in two weeks, not four.
+          Two 90-minute 1:1 calls, the Monday group call, Boardroom tools, Agency Brain Pro, and Telegram access. Problems get caught in two weeks, not four. Momentum is waitlist only right now.
         </p>
       </Reveal>
       <Reveal delay={0.3}>
@@ -416,7 +417,7 @@ const InvestmentSection = ({ onApply }: { onApply: () => void }) => (
             transition: 'all .25s', marginTop: 36,
           }}
           className="hover:bg-[#2997FF] hover:border-[#2997FF]">
-          Apply for Momentum
+          Join the Waitlist
         </button>
       </Reveal>
     </div>
@@ -455,7 +456,7 @@ const GiantCTA = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 14, fontWeight: 500, letterSpacing: '0.06em',
           color: paper, opacity: 0.7, marginTop: 32, textTransform: 'uppercase',
         }}>
-          $2.5k/mo &nbsp;·&nbsp; 1 Seat Left
+          $2.5k/mo &nbsp;·&nbsp; Waitlist Only
         </p>
       </Reveal>
       <Reveal delay={0.2}>
@@ -467,7 +468,7 @@ const GiantCTA = ({ onApply }: { onApply: () => void }) => (
             transition: 'all .25s', marginTop: 28,
           }}
           className="hover:bg-[#2997FF] hover:border-[#2997FF] hover:text-white">
-          Apply
+          Join the Waitlist
         </button>
       </Reveal>
     </div>
@@ -561,7 +562,7 @@ const MobileStickyCTA = ({ onApply }: { onApply: () => void }) => (
         color: ink, background: paper, padding: '14px 0', width: '100%',
         border: 'none', cursor: 'pointer', textTransform: 'uppercase',
       }}>
-      Apply for Momentum
+      Join the Waitlist
     </button>
   </div>
 );
@@ -570,7 +571,11 @@ const MobileStickyCTA = ({ onApply }: { onApply: () => void }) => (
    PAGE
    ══════════════════════════════════════════════════════ */
 const BoldMomentum = () => {
-  const [applyOpen, setApplyOpen] = useState(false);
+  // Open the waitlist form straight away when a CTA routed here with
+  // ?waitlist=1, matching the Directive page.
+  const [applyOpen, setApplyOpen] = useState(
+    () => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('waitlist') === '1',
+  );
   const openApply = () => setApplyOpen(true);
 
   return (
@@ -583,15 +588,11 @@ const BoldMomentum = () => {
       <NumbersSection />
       <InvestmentSection onApply={openApply} />
       <GiantCTA onApply={openApply} />
+      <BoardroomEntryNudge programName="Momentum" variant="waitlist" />
       <BoldFooter />
       <ContentMeta lastUpdated="October 2026" />
       <MobileStickyCTA onApply={openApply} />
-      <StandardFitModal
-        open={applyOpen}
-        onOpenChange={setApplyOpen}
-        source="momentum"
-        programName="Momentum"
-      />
+      <WaitlistModal program="momentum" open={applyOpen} onOpenChange={setApplyOpen} />
     </div>
   );
 };

@@ -15,7 +15,9 @@ test('quiz summary names the prescription and labels every answer', () => {
 
 test('booking summary says where the lead was sent', () => {
   const rx = prescribe(answers);
-  assert.equal(leadSummary(answers, rx, 'eightWeek').routeLabel, 'Booking form: shown checkout for 8-Week Sales Management Experience, no call needed');
+  assert.equal(leadSummary(answers, rx, 'eightWeek').routeLabel, "Booking form: sent to the 8-Week Sales Management Experience application and Justin's calendar");
   assert.equal(leadSummary(answers, rx, 'standard90').routeLabel, "Booking form: sent to the Standard 90 application and Justin's calendar");
   assert.equal(leadSummary(answers, rx, 'boardroom').routeLabel, 'Booking form: shown checkout for The Boardroom, no call needed');
+  assert.equal(leadSummary(answers, rx, 'momentum').routeLabel, 'Booking form: sent to the Momentum waitlist');
+  assert.equal(leadSummary(answers, rx, 'teamStandard2x').routeLabel, "Booking form: sent to the Team Standard 2X application and Justin's calendar");
 });

@@ -20,10 +20,6 @@ test('the same session always gets the same hex event id', async () => {
 test('each site checkout key maps to its offer and the amount charged today', () => {
   const expected: Record<string, [string, number]> = {
     boardroom: ['boardroom', 399],
-    teamStandard2x: ['teamStandard2x', 2500],
-    teamStandard4x: ['teamStandard4x', 4000],
-    eightWeekPif: ['eightWeek', 4500],
-    eightWeekWeekly: ['eightWeek', 625],
   };
   for (const [key, [offer, amount]] of Object.entries(expected)) {
     const found = checkoutOptionFor(key);
@@ -31,6 +27,15 @@ test('each site checkout key maps to its offer and the amount charged today', ()
     assert.equal(amountFrom(found!.option.billing), amount, key);
   }
   assert.equal(checkoutOptionFor('nope'), null);
+});
+
+test('capacity-limited offers no longer check out on the site (they book a call)', () => {
+  // Team Standard and the 8-Week moved from direct checkout to book-a-call
+  // (Justin, 2026-11-11), so their Stripe keys no longer resolve to an on-site
+  // checkout option even though the payment links still exist in config.
+  for (const key of ['teamStandard2x', 'teamStandard4x', 'eightWeekPif', 'eightWeekWeekly']) {
+    assert.equal(checkoutOptionFor(key), null, key);
+  }
 });
 
 test('the redirect keeps Stripe\'s placeholder intact', () => {

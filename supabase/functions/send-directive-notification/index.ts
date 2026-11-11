@@ -9,13 +9,24 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-interface DirectiveApplication {
+interface WaitlistApplication {
+  // "directive" or "momentum" — both waitlists share this function and table.
+  program?: string;
   full_name: string;
   email: string;
   cell_phone: string;
   agency_name: string;
+  state?: string;
   message: string;
 }
+
+const PROGRAM_NAMES: Record<string, string> = {
+  directive: "The Directive",
+  momentum: "Momentum",
+};
+
+const programLabel = (program?: string) =>
+  (program && PROGRAM_NAMES[program]) || "The Directive";
 
 // Agency Brain house CRM: each lead from this form also goes into the CRM as warm, through
 // Agency Brain's crm-lead-intake function (matched against who is already there, never doubled).
@@ -50,46 +61,51 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const app: DirectiveApplication = await req.json();
+    const app: WaitlistApplication = await req.json();
 
     if (!app.full_name || !app.email) {
       throw new Error("Missing required fields");
     }
 
+    const program = programLabel(app.program);
+
     const crmLead = sendToAgencyBrain({
-      form: "directive", name: app.full_name, email: app.email, phone: app.cell_phone,
-      business: app.agency_name, detail: app.message,
+      form: app.program === "momentum" ? "momentum" : "directive",
+      name: app.full_name, email: app.email, phone: app.cell_phone,
+      business: app.agency_name, state: app.state, detail: app.message,
     });
 
     const emailResponse = await resend.emails.send({
       from: "Standard Playbook <booking@standardplaybook.com>",
       to: ["info@standardplaybook.com"],
-      subject: `New Directive Application: ${app.full_name}`,
+      subject: `New ${program} Waitlist Signup: ${app.full_name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h1 style="color: #1a1a2e; border-bottom: 2px solid #4a6cf7; padding-bottom: 10px;">New Directive Application</h1>
-          
+          <h1 style="color: #1a1a2e; border-bottom: 2px solid #4a6cf7; padding-bottom: 10px;">New ${program} Waitlist Signup</h1>
+
           <div style="background: #f8f9fa; border-radius: 8px; padding: 20px; margin: 20px 0;">
             <h2 style="color: #333; margin-top: 0;">Contact Information</h2>
             <p><strong>Name:</strong> ${app.full_name}</p>
             <p><strong>Email:</strong> <a href="mailto:${app.email}">${app.email}</a></p>
             <p><strong>Cell Phone:</strong> <a href="tel:${app.cell_phone}">${app.cell_phone}</a></p>
-            <p><strong>Agency Name:</strong> ${app.agency_name}</p>
+            <p><strong>Agency Name:</strong> ${app.agency_name || 'Not provided.'}</p>
+            <p><strong>State:</strong> ${app.state || 'Not provided.'}</p>
+            <p><strong>Program:</strong> ${program}</p>
           </div>
 
           <div style="background: #f8f9fa; border-radius: 8px; padding: 20px; margin: 20px 0;">
-            <h2 style="color: #333; margin-top: 0;">Their Message</h2>
+            <h2 style="color: #333; margin-top: 0;">Why ${program} / what they want to talk about</h2>
             <p>${app.message || 'No message provided.'}</p>
           </div>
 
           <p style="color: #666; font-size: 12px; margin-top: 30px;">
-            This application was submitted via the Directive application form on the website.
+            This signup was submitted via the ${program} waitlist form on the website.
           </p>
         </div>
       `,
     });
 
-    console.log("Directive notification sent:", emailResponse);
+    console.log("Waitlist notification sent:", emailResponse);
 
     await crmLead;
 
@@ -98,7 +114,7 @@ const handler = async (req: Request): Promise<Response> => {
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   } catch (error: any) {
-    console.error("Error sending directive notification:", error);
+    console.error("Error sending waitlist notification:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
       { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
