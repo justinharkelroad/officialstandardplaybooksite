@@ -30,9 +30,9 @@ const programLabel = (program?: string) =>
 
 /**
  * Who receives a "more information" inquiry from a waitlist member.
- * Defaults to the shared inbox. Set the WAITLIST_INQUIRY_RECIPIENTS secret
- * (comma-separated, e.g. "justin@...,mary@...") to send it straight to Justin
- * and Mary — no code change needed.
+ * Defaults to Justin's shared inbox plus Mary. Override with the
+ * WAITLIST_INQUIRY_RECIPIENTS secret (comma-separated) to change the list
+ * later without a code change.
  */
 function recipients(): string[] {
   const configured = Deno.env.get("WAITLIST_INQUIRY_RECIPIENTS")?.trim();
@@ -40,7 +40,7 @@ function recipients(): string[] {
     const list = configured.split(",").map((s) => s.trim()).filter(Boolean);
     if (list.length) return list;
   }
-  return ["info@standardplaybook.com"];
+  return ["info@standardplaybook.com", "mary@standardplaybook.com"];
 }
 
 const esc = (s: string) =>
