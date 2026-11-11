@@ -5,6 +5,7 @@ import { Facebook, Linkedin } from 'lucide-react';
 import BoldNav from '@/components/BoldNav';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import ContentMeta from '@/components/ContentMeta';
+import BoardroomEntryNudge from '@/components/BoardroomEntryNudge';
 
 import standardLogo from '@/assets/standard-word-logo.png';
 
@@ -1059,6 +1060,7 @@ const BoldTeamStandard = () => {
       <OfferAndFilter onApply={openApply} />
       <Questions />
       <FinalClose onApply={openApply} />
+      <BoardroomEntryNudge programName="Team Standard" variant="call" />
       <BoldFooter />
       <ContentMeta lastUpdated="June 2026" />
       <MobileStickyCTA onApply={openApply} />

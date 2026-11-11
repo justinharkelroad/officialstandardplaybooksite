@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
 import BoldNav from '@/components/BoldNav';
-import DirectiveApplicationModal from '@/components/DirectiveApplicationModal';
+import WaitlistModal from '@/components/WaitlistModal';
+import BoardroomEntryNudge from '@/components/BoardroomEntryNudge';
 import StandardFitModal from '@/components/StandardFitModal';
 import ContentMeta from '@/components/ContentMeta';
 
@@ -633,10 +634,11 @@ const BoldDirective = () => {
       <NumbersSection />
       <ValuesSection onApply={openApply} />
       <GiantCTA onApply={openApply} />
+      <BoardroomEntryNudge programName="Directive" variant="waitlist" />
       <BoldFooter />
       <ContentMeta lastUpdated="March 2026" />
       <MobileStickyCTA onApply={openApply} />
-      <DirectiveApplicationModal open={applyOpen} onOpenChange={setApplyOpen} />
+      <WaitlistModal program="directive" open={applyOpen} onOpenChange={setApplyOpen} />
     </div>
   );
 };

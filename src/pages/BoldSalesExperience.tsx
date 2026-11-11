@@ -5,6 +5,7 @@ import { Facebook, Linkedin } from 'lucide-react';
 import BoldNav from '@/components/BoldNav';
 import StandardFitModal from '@/components/StandardFitModal';
 import ContentMeta from '@/components/ContentMeta';
+import BoardroomEntryNudge from '@/components/BoardroomEntryNudge';
 
 import standardLogo from '@/assets/standard-word-logo.png';
 import agencyBrainLogo from '@/assets/agency-brain-logo.png';
@@ -1281,6 +1282,7 @@ const BoldSalesExperience = ({ autoOpenBooking = false }: { autoOpenBooking?: bo
       <WhoForSection />
       <QuestionsSection />
       <FinalClose onApply={openApply} />
+      <BoardroomEntryNudge programName="the 8-Week" variant="call" />
       <BoldFooter />
       <ContentMeta lastUpdated="June 2026" />
       <MobileStickyCTA onApply={openApply} />

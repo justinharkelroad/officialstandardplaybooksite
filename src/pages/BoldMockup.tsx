@@ -812,12 +812,12 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
             <DecisionOffer
               eyebrow="Two 1:1 calls a month + Agency Brain Pro"
               name="Momentum"
-              badge="1 Seat Left"
-              badgeTone="scarce"
-              price="$2.5k/month"
-              description="Directive-level work, twice the conversation. Problems get caught in two weeks, not four."
-              href="/momentum"
-              cta="See Momentum"
+              badge="Waitlist Only"
+              badgeTone="muted"
+              price="$2.5k/month · Waitlist"
+              description="Directive-level work, twice the conversation. Currently waitlist only — start in the weekly Boardroom while a seat opens."
+              href="/momentum?waitlist=1"
+              cta="Join the waitlist"
             />
             <DecisionOffer
               eyebrow="Focused 90-day one-on-one path · By application"
@@ -846,7 +846,7 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
               badge="Waitlist Only"
               badgeTone="muted"
               price="$1.5k/month · Waitlist"
-              description="Monthly 2-hour private sessions with Justin. Currently waitlist only. Want in now? Momentum is open."
+              description="Monthly 2-hour private sessions with Justin. Currently waitlist only — start in the weekly Boardroom while a seat opens."
               href="/directive?waitlist=1"
               cta="Join the waitlist"
             />

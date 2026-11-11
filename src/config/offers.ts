@@ -167,8 +167,9 @@ export const OFFERS: Record<OfferKey, Offer> = {
     summary: 'Two fifty-minute team coaching and accountability calls a month, run without the owner in the room.',
     includes: ['Two 50-minute team coaching and accountability calls a month', ...TEAM_STANDARD_SHARED],
     page: '/team-standard',
-    route: 'buy',
-    checkouts: [{ key: 'teamStandard2x', label: 'Start Team Standard', billing: '$2,500 a month · Billed monthly · Cancel any time' }],
+    // Capacity-limited: no direct checkout. Every CTA books a fit call (Justin, 2026-11-11).
+    route: 'apply',
+    checkouts: [],
     applySource: 'team-standard',
   },
   teamStandard4x: {
@@ -179,8 +180,9 @@ export const OFFERS: Record<OfferKey, Offer> = {
     summary: 'Four fifty-minute team coaching and accountability calls a month, run without the owner in the room.',
     includes: ['Four 50-minute team coaching and accountability calls a month', ...TEAM_STANDARD_SHARED],
     page: '/team-standard',
-    route: 'buy',
-    checkouts: [{ key: 'teamStandard4x', label: 'Start Team Standard 4X', billing: '$4,000 a month · Billed monthly · Cancel any time' }],
+    // Capacity-limited: no direct checkout. Every CTA books a fit call (Justin, 2026-11-11).
+    route: 'apply',
+    checkouts: [],
     applySource: 'team-standard',
   },
   eightWeek: {
@@ -197,11 +199,9 @@ export const OFFERS: Record<OfferKey, Offer> = {
       `The guarantee: ${GUARANTEES.eightWeek}`,
     ],
     page: '/sales-experience',
-    route: 'buy',
-    checkouts: [
-      { key: 'eightWeekPif', label: 'Pay in full', billing: '$4,500, paid in full' },
-      { key: 'eightWeekWeekly', label: 'Pay weekly', billing: '$625 a week for 8 weeks' },
-    ],
+    // Capacity-limited: no direct checkout. Every CTA books the 8-Week call (Justin, 2026-11-11).
+    route: 'apply',
+    checkouts: [],
     applySource: 'eight-week',
   },
   standard90: {
@@ -239,15 +239,16 @@ export const OFFERS: Record<OfferKey, Offer> = {
     key: 'momentum',
     name: 'Momentum',
     price: '$2,500',
-    cadence: '/mo',
-    summary: 'Directive-level work, twice the conversation.',
+    cadence: '/mo · Waitlist',
+    summary: 'Directive-level work, twice the conversation. Waitlist only.',
     includes: [
       'Two 90-minute 1:1 coaching and implementation calls a month',
       'Weekly group coaching call, Monday 1pm EST',
       'Agency Brain Pro',
     ],
     page: '/momentum',
-    route: 'apply',
+    // Full right now: join the waitlist, no direct booking (Justin, 2026-11-11).
+    route: 'waitlist',
     checkouts: [],
     applySource: 'momentum',
   },

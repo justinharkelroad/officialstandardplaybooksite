@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import BoldNav from '@/components/BoldNav';
 import StandardFitModal from '@/components/StandardFitModal';
 import ContentMeta from '@/components/ContentMeta';
+import BoardroomEntryNudge from '@/components/BoardroomEntryNudge';
 
 import standardLogo from '@/assets/standard-word-logo.png';
 
@@ -1276,6 +1277,7 @@ const BoldStandard90 = () => {
       <OfferSection onApply={openApply} />
       <QuestionsSection />
       <FinalClose onApply={openApply} />
+      <BoardroomEntryNudge programName="Standard 90" variant="call" />
       <BoldFooter />
       <ContentMeta lastUpdated="July 2026" />
       <MobileStickyCTA onApply={openApply} />

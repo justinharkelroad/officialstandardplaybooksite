@@ -140,7 +140,7 @@ export const PRESCRIPTION_WHY: Record<OfferKey, string> = {
   ascension:
     'You said {problem}. The Ascension is twelve weeks of private coaching with Justin across Body, Being, Balance and Business. Apply to see the investment.',
   momentum:
-    'You have {producers} and said {problem}. Momentum gives you two 90-minute 1:1 calls with Justin every month plus the Monday group call. Problems get caught in two weeks, not four.',
+    'You have {producers} and said {problem}. Momentum gives you two 90-minute 1:1 calls with Justin every month plus the Monday group call. It is waitlist only right now — join the waitlist and start in the weekly Boardroom while you wait.',
   directive:
-    'The Directive is waitlist only right now. Momentum is open and gives you two 1:1 calls a month. Join the waitlist or apply for Momentum.',
+    'The Directive and Momentum are both waitlist only right now. Join the waitlist, and start in the weekly Boardroom group coaching to learn the systems while a seat opens.',
 };
