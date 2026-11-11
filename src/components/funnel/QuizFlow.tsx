@@ -3,6 +3,7 @@ import { QUIZ_QUESTIONS, type QuizAnswers, type QuizQuestionId } from '@/config/
 import { isCompleteAnswers } from '@/lib/funnel/prescribe';
 import { readAnswers, readContact, saveAnswers, saveContact } from '@/lib/funnel/funnelState';
 import type { FunnelContact } from '@/lib/funnel/track';
+import TextOptIn from '@/components/TextOptIn';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -49,6 +50,7 @@ const QuizFlow = ({ contactTitle, contactNote, submitLabel, onComplete, onStep }
     return firstOpen === -1 ? 0 : firstOpen;
   });
   const [showErrors, setShowErrors] = useState(false);
+  const [textOk, setTextOk] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   const total = QUIZ_QUESTIONS.length + 1;
@@ -88,7 +90,7 @@ const QuizFlow = ({ contactTitle, contactNote, submitLabel, onComplete, onStep }
       agency: contact.agency.trim(),
     };
     saveContact(clean);
-    onComplete(answers, clean);
+    onComplete(answers, { ...clean, textOk });
   };
 
   const progress = Math.round(((step + (onContactStep ? 0.5 : 0)) / total) * 100);
@@ -155,6 +157,7 @@ const QuizFlow = ({ contactTitle, contactNote, submitLabel, onComplete, onStep }
                 </div>
               );
             })}
+            <TextOptIn id="fn-text-ok" checked={textOk} onChange={setTextOk} style={{ marginBottom: 16 }} />
             <button type="submit" className="fn-btn fn-btn--blue fn-btn--block">{submitLabel}</button>
           </div>
         </form>

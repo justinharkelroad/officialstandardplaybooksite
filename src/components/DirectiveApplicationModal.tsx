@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import TextOptIn from '@/components/TextOptIn';
 import standardLogo from '@/assets/standard-word-logo.png';
 
 /* ── Bold editorial type stack ─────────────────────────── */
@@ -58,6 +59,7 @@ const onBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => 
 const DirectiveApplicationModal = ({ open, onOpenChange }: DirectiveApplicationModalProps) => {
   const [form, setForm] = useState({ full_name: '', email: '', cell_phone: '', agency_name: '', message: '' });
   const [submitting, setSubmitting] = useState(false);
+  const [textOk, setTextOk] = useState(false);
 
   const formatPhone = (value: string) => {
     const digits = value.replace(/\D/g, '').slice(0, 10);
@@ -90,11 +92,13 @@ const DirectiveApplicationModal = ({ open, onOpenChange }: DirectiveApplicationM
           cell_phone: form.cell_phone.trim(),
           agency_name: form.agency_name.trim(),
           message: form.message.trim(),
+          text_ok: textOk && Boolean(form.cell_phone.trim()),
         },
       });
 
       toast.success("You're on the waitlist. We'll be in touch when a seat opens.");
       setForm({ full_name: '', email: '', cell_phone: '', agency_name: '', message: '' });
+      setTextOk(false);
       onOpenChange(false);
     } catch (err) {
       console.error(err);
@@ -203,6 +207,7 @@ const DirectiveApplicationModal = ({ open, onOpenChange }: DirectiveApplicationM
                 value={form.cell_phone}
                 onChange={e => setForm(f => ({ ...f, cell_phone: formatPhone(e.target.value) }))}
                 style={inputStyle} onFocus={onFocus} onBlur={onBlur} />
+              <TextOptIn id="directive-text-ok" checked={textOk} onChange={setTextOk} style={{ marginTop: 10 }} />
             </div>
             <div>
               <label style={labelStyle}>Agency Name</label>

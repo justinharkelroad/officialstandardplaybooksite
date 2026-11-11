@@ -41,6 +41,17 @@ Deno.test("a lead needs an email", () => {
   );
 });
 
+Deno.test("a lead carries the text me box only when it was ticked", () => {
+  const lead = (textOk: unknown) => {
+    const parsed = parseRequest({ ...ids, action: "lead", lead: { kind: "quiz", contact: { email: "a@b.test", phone: "2605550100", textOk } } });
+    return typeof parsed === "string" ? parsed : parsed.action === "lead" ? parsed.lead.text_ok : "not a lead";
+  };
+  assertEquals(lead(true), true);
+  assertEquals(lead(false), false);
+  assertEquals(lead("yes"), false);
+  assertEquals(lead(undefined), false);
+});
+
 Deno.test("lead payload flattens answers for GHL", () => {
   const parsed = parseRequest({
     ...ids,

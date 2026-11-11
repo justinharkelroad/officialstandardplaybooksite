@@ -42,13 +42,13 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { full_name, email, cell_phone } = await req.json();
+    const { full_name, email, cell_phone, text_ok } = await req.json();
 
     if (!full_name || !email) {
       throw new Error("Missing required fields");
     }
 
-    const crmLead = sendToAgencyBrain({ form: "ai_walkthrough", name: full_name, email, phone: cell_phone });
+    const crmLead = sendToAgencyBrain({ form: "ai_walkthrough", name: full_name, email, phone: cell_phone, text_ok: text_ok === true });
 
     const emailResponse = await resend.emails.send({
       from: "Standard Playbook <booking@standardplaybook.com>",

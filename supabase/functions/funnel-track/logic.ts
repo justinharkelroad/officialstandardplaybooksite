@@ -109,6 +109,8 @@ export interface LeadRequest extends Common {
     name: string | null;
     phone: string | null;
     agency: string | null;
+    /** Ticked the optional "text me" box (forwarded to Agency Brain as a text opt-in). */
+    text_ok: boolean;
     answers: Record<string, string>;
     prescription: string | null;
     alternative: string | null;
@@ -184,6 +186,7 @@ export function parseRequest(raw: unknown): FunnelRequest | string {
         name: str(contact.name, 200),
         phone: str(contact.phone, 40),
         agency: str(contact.agency, 200),
+        text_ok: contact.textOk === true,
         answers: answers(lead.answers),
         prescription: str(lead.prescription, 60),
         alternative: str(lead.alternative, 60),

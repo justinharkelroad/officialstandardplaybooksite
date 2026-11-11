@@ -15,6 +15,7 @@ interface DirectiveApplication {
   cell_phone: string;
   agency_name: string;
   message: string;
+  text_ok?: boolean;
 }
 
 // Agency Brain house CRM: each lead from this form also goes into the CRM as warm, through
@@ -58,7 +59,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const crmLead = sendToAgencyBrain({
       form: "directive", name: app.full_name, email: app.email, phone: app.cell_phone,
-      business: app.agency_name, detail: app.message,
+      business: app.agency_name, detail: app.message, text_ok: app.text_ok === true,
     });
 
     const emailResponse = await resend.emails.send({

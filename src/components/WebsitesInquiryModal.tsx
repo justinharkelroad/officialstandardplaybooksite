@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import TextOptIn from '@/components/TextOptIn';
 
 const sf = '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif';
 
@@ -20,6 +21,7 @@ const WebsitesInquiryModal = ({ open, onOpenChange }: WebsitesInquiryModalProps)
     message: '',
   });
   const [submitting, setSubmitting] = useState(false);
+  const [textOk, setTextOk] = useState(false);
 
   const formatPhone = (value: string) => {
     const digits = value.replace(/\D/g, '').slice(0, 10);
@@ -44,12 +46,14 @@ const WebsitesInquiryModal = ({ open, onOpenChange }: WebsitesInquiryModalProps)
           agency_name: form.agency_name.trim(),
           timeline: form.timeline.trim(),
           message: form.message.trim(),
+          text_ok: textOk && Boolean(form.phone.trim()),
         },
       });
       if (error) throw error;
 
       toast.success("Thanks, we'll be in touch within one business day.");
       setForm({ full_name: '', email: '', phone: '', agency_name: '', timeline: '', message: '' });
+      setTextOk(false);
       onOpenChange(false);
     } catch (err) {
       console.error(err);
@@ -144,6 +148,7 @@ const WebsitesInquiryModal = ({ open, onOpenChange }: WebsitesInquiryModalProps)
               onChange={e => setForm(f => ({ ...f, phone: formatPhone(e.target.value) }))}
               style={inputStyle}
             />
+            <TextOptIn id="websites-text-ok" checked={textOk} onChange={setTextOk} style={{ marginTop: 10 }} />
           </div>
           <div>
             <label style={labelStyle}>Agency Name</label>

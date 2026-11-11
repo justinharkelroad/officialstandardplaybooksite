@@ -1420,6 +1420,7 @@ const handler = async (req: Request): Promise<Response> => {
     const crmLead = sendToAgencyBrain({
       form: "mirror_score", name: s.full_name, email: s.email, phone: s.phone,
       detail: `scored ${s.total_score}/160 (${tierLabel}), weakest pillar ${pillarLabel}, carrier ${s.carrier}`,
+      text_ok: (s as { text_ok?: unknown }).text_ok === true,
     });
     const pillarRows = Object.entries(s.pillar_scores)
       .map(([k, v]) =>
