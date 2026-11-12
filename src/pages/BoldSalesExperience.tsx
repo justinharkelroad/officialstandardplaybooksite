@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
 import BoldNav from '@/components/BoldNav';
-import StandardFitModal from '@/components/StandardFitModal';
+import WaitlistModal from '@/components/WaitlistModal';
 import ContentMeta from '@/components/ContentMeta';
 import BoardroomEntryNudge from '@/components/BoardroomEntryNudge';
 
@@ -30,17 +30,11 @@ const blue = '#2997FF';
 
 /*
  * SINGLE CTA DESTINATION.
- * This page has exactly one job: get the right agency owner to book their
- * 8-Week call. Every primary CTA opens the site-native booking flow
- * (StandardFitModal -> BookingOnboardingForm -> Acuity scheduler) and routes
- * to the 8-WEEK scheduler below, NOT the general fit-call link. The modal is
- * named to the program so captured leads are 8-Week leads you can market to.
- * To repoint the scheduler, change BOOK_URL in this one place.
+ * The 8-Week is waitlist only (Justin, 2026-11-11). Every primary CTA opens
+ * the shared waitlist form (WaitlistModal, program "eight-week").
  */
-const BOOK_URL = 'https://AGENCYCOACHING.as.me/8week';
-const CTA_LABEL = 'Book Your 8-Week Call';
-const CTA_MICROCOPY = 'Book a short call. We will make sure the 8-Week fits your agency, then get you started.';
-const CTA_SOURCE = '8-week-sales-experience';
+const CTA_LABEL = 'Join the Waitlist';
+const CTA_MICROCOPY = "The 8-Week is full right now. Join the waitlist and we will reach out personally when a spot opens.";
 const PROGRAM_NAME = '8-Week Sales Management Experience';
 
 /* ── Reveal helper ─────────────────────────────────────── */
@@ -1244,22 +1238,15 @@ const MobileStickyCTA = ({ onApply }: { onApply: () => void }) => (
    ══════════════════════════════════════════════════════ */
 const BoldSalesExperience = ({ autoOpenBooking = false }: { autoOpenBooking?: boolean }) => {
   const [applyOpen, setApplyOpen] = useState(false);
+  // ?waitlist=1 (from site-wide waitlist CTAs) opens the form straight away.
+  const wantsWaitlist = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('waitlist') === '1';
 
-  const openApply = () => {
-    // Fire the existing Meta Pixel conversion event on every CTA, matching
-    // the site convention used in BoldStandard90 / BookingOnboardingForm.
-    try {
-      (window as any).fbq?.('track', 'InitiateCheckout', { content_name: `${PROGRAM_NAME} Booking` });
-    } catch {
-      /* analytics is best-effort; never block the CTA */
-    }
-    setApplyOpen(true);
-  };
+  const openApply = () => setApplyOpen(true);
 
   // The /8-week route passes autoOpenBooking so the page opens straight into
-  // the 8-Week booking flow (not the general fit call).
+  // the 8-Week waitlist form.
   useEffect(() => {
-    if (autoOpenBooking) openApply();
+    if (autoOpenBooking || wantsWaitlist) openApply();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoOpenBooking]);
 
@@ -1282,18 +1269,11 @@ const BoldSalesExperience = ({ autoOpenBooking = false }: { autoOpenBooking?: bo
       <WhoForSection />
       <QuestionsSection />
       <FinalClose onApply={openApply} />
-      <BoardroomEntryNudge programName="the 8-Week" variant="call" />
+      <BoardroomEntryNudge programName="the 8-Week" variant="waitlist" />
       <BoldFooter />
       <ContentMeta lastUpdated="June 2026" />
       <MobileStickyCTA onApply={openApply} />
-      <StandardFitModal
-        open={applyOpen}
-        onOpenChange={setApplyOpen}
-        source={CTA_SOURCE}
-        bookingBaseUrl={BOOK_URL}
-        callLengthLabel="8-Week"
-        programName={PROGRAM_NAME}
-      />
+      <WaitlistModal program="eight-week" open={applyOpen} onOpenChange={setApplyOpen} />
     </div>
   );
 };

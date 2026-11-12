@@ -23,6 +23,8 @@ interface WaitlistInquiry {
 const PROGRAM_NAMES: Record<string, string> = {
   directive: "The Directive",
   momentum: "Momentum",
+  "team-standard": "Team Standard",
+  "eight-week": "The 8-Week Sales Management Experience",
 };
 
 const programLabel = (program?: string) =>
