@@ -998,3 +998,25 @@
   .ab-tiers { grid-template-columns: 1fr; }
   .ab-box__foot { flex-direction: column; align-items: stretch; text-align: center; }
 }
+
+/* ---- /prep: featured (open) Boardroom row with the Agency Brain Core callout ---- */
+.fn-price-row--featured { align-items: start; margin: 10px 0; padding: clamp(26px, 3vw, 36px) clamp(14px, 2vw, 24px); background: #fff; border: 1.5px solid var(--fn-ink); box-shadow: 6px 6px 0 var(--fn-blue); }
+.fn-price-row--featured::before { transform: scaleY(1); width: 4px; }
+.fn-price-row--featured:hover { background: #fff; }
+.fn-price-row--featured .fn-price-row__summary { color: var(--fn-ink); font-size: 15px; }
+.fn-price-row--featured .fn-price-row__amount { font-size: clamp(24px, 2.6vw, 30px); }
+
+.ab-included { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; margin-top: 16px; padding: 12px 18px; border-radius: 12px; background: #111111; box-shadow: 0 0 0 1px rgba(207, 99, 16, 0.45), 0 10px 26px -14px rgba(207, 99, 16, 0.7); font-family: "DM Sans", "Inter", system-ui, sans-serif; }
+.ab-included__logo { display: block; width: 128px; height: auto; }
+.ab-included__text { font-size: 14px; color: #c9c9c9; }
+.ab-included__text strong { color: #faaf6e; font-weight: 800; }
+
+.fn-featured-list { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 22px; }
+.fn-featured-list li { position: relative; padding-left: 22px; font-size: 14px; line-height: 1.4; color: var(--fn-ink); }
+.fn-featured-list li::before { content: ""; position: absolute; left: 0; top: 4px; width: 10px; height: 6px; border-left: 2px solid var(--fn-blue); border-bottom: 2px solid var(--fn-blue); transform: rotate(-45deg); }
+
+@media (max-width: 760px) {
+  .fn-price-row--featured { box-shadow: 4px 4px 0 var(--fn-blue); }
+  .fn-featured-list { grid-template-columns: 1fr; }
+  .ab-included { display: flex; }
+}

@@ -16,6 +16,9 @@ const video = VSL_VIDEOS['sp-precall'];
 /** Coaching list: everything on /start except the Agency Brain software rows. */
 const COACHING_ORDER = START_PRICING_ORDER.filter((key) => !key.startsWith('agencyBrain'));
 
+/** The program /prep steers most people toward: shown open with every benefit (Justin, 2026-11-12). */
+const FEATURED_KEY = 'boardroom';
+
 /** Agency Brain's three levels, matching the in-app plan comparison. */
 const AGENCY_BRAIN_TIERS = [
   {
@@ -148,17 +151,36 @@ const FitPrep = () => {
             {COACHING_ORDER.map((key, i) => {
               const offer = OFFERS[key];
               const external = /^https?:\/\//.test(offer.page);
+              const featured = key === FEATURED_KEY;
               return (
-                <li className="fn-price-row" key={key}>
+                <li className={`fn-price-row${featured ? ' fn-price-row--featured' : ''}`} key={key}>
                   <span className="fn-price-row__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                   <div className="fn-price-row__body">
                     <div className="fn-price-row__head">
                       <h3 className="fn-price-row__name">{offer.name}</h3>
+                      {featured && (
+                        <span className="fn-price-row__badge fn-price-row__badge--scarce">Recommended</span>
+                      )}
                       {offer.route === 'waitlist' && (
                         <span className="fn-price-row__badge fn-price-row__badge--muted">Waitlist Only</span>
                       )}
                     </div>
                     <p className="fn-price-row__summary">{offer.summary}</p>
+                    {featured && (
+                      <>
+                        <div className="ab-included">
+                          <img className="ab-included__logo" src="/ab-white.png" alt="Agency Brain" width={1920} height={500} />
+                          <span className="ab-included__text">
+                            <strong>Core included</strong> &middot; a $299/mo software plan, at no extra cost
+                          </span>
+                        </div>
+                        <ul className="fn-featured-list">
+                          {offer.includes
+                            .filter((item) => item !== 'Agency Brain Core')
+                            .map((item) => <li key={item}>{item}</li>)}
+                        </ul>
+                      </>
+                    )}
                   </div>
                   <p className="fn-price-row__price">
                     {offer.price ? (
@@ -170,7 +192,9 @@ const FitPrep = () => {
                       <span className="fn-price-row__amount fn-price-row__amount--text">{offer.cadence}</span>
                     )}
                   </p>
-                  {external ? (
+                  {featured ? (
+                    <Link className="fn-btn fn-btn--blue fn-price-row__cta" to={offer.page} target="_blank">See the Boardroom</Link>
+                  ) : external ? (
                     <a className="fn-btn fn-btn--ghost fn-price-row__cta" href={offer.page} target="_blank" rel="noreferrer">Details</a>
                   ) : (
                     <Link className="fn-btn fn-btn--ghost fn-price-row__cta" to={offer.page} target="_blank">Details</Link>
