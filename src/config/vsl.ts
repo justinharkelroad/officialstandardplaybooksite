@@ -45,17 +45,15 @@ export const VSL_VIDEOS = {
   },
   'sp-precall': {
     id: 'sp-precall',
-    vimeoId: 'PLACEHOLDER_SP_PRECALL',
-    src: '/video/boardroom-summary.mp4',
-    poster: '/video/boardroom-summary-poster.jpg',
-    captionsSrc: '/video/vsl-placeholder-captions.vtt',
-    chapters: [
-      { title: 'Before our call', start: 0 },
-      { title: "What we'll cover", start: 30 },
-      { title: 'What to have ready', start: 70 },
-      { title: "If you're already sure", start: 105 },
-    ],
-    revealAt: 105,
+    // Real pre-call video ("Are you a fit for Standard?", Vimeo 1190956500),
+    // self-hosted because Vimeo embeds 401 for this account. Captions are
+    // burned in, so no captionsSrc. Neither page using it (/prep, /booked)
+    // acts on revealAt, so it sits at the end. (Justin, 2026-11-12)
+    vimeoId: '1190956500',
+    src: '/video/standard-fit-precall.mp4',
+    poster: '/video/standard-fit-precall-poster.jpg',
+    chapters: [{ title: 'Are you a fit for Standard?', start: 0 }],
+    revealAt: 81,
     milestones: MILESTONES,
   },
   mirror: {
