@@ -15,11 +15,11 @@ const paper = '#F4F2EE';
 const blue = '#2997FF';
 
 /**
- * The two waitlist-only programs. Both share one form, one table
+ * The waitlist-only programs (Team Standard and the 8-Week added 2026-11-11). All share one form, one table
  * (`directive_applications`, tagged by `program`) and one notification
  * function; the copy below is all that differs. (Justin, 2026-11-11.)
  */
-export type WaitlistProgram = 'directive' | 'momentum';
+export type WaitlistProgram = 'directive' | 'momentum' | 'team-standard' | 'eight-week';
 
 const PROGRAMS: Record<WaitlistProgram, { name: string; eyebrow: string; intro: string }> = {
   directive: {
@@ -33,6 +33,18 @@ const PROGRAMS: Record<WaitlistProgram, { name: string; eyebrow: string; intro: 
     eyebrow: '/ Momentum',
     intro:
       "Momentum is full right now. Join the waitlist and we'll reach out personally when a seat opens.",
+  },
+  'team-standard': {
+    name: 'Team Standard',
+    eyebrow: '/ Team Standard',
+    intro:
+      "Team Standard is full right now. Join the waitlist and we'll reach out personally when a spot opens.",
+  },
+  'eight-week': {
+    name: 'The 8-Week Sales Management Experience',
+    eyebrow: '/ The 8-Week',
+    intro:
+      "The 8-Week is full right now. Join the waitlist and we'll reach out personally when a spot opens.",
   },
 };
 
@@ -429,7 +441,7 @@ const WaitlistModal = ({ program, open, onOpenChange }: WaitlistModalProps) => {
                   maxWidth: 400,
                 }}
               >
-                We'll reach out personally when a seat in {copy.name} opens.
+                We'll reach out personally when a spot in {copy.name} opens.
               </p>
 
               {/* Boardroom = the way in */}

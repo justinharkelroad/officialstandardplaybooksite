@@ -102,7 +102,7 @@ export const OfferActions = ({ offerKey, variant = 'ink', primaryOnly = false }:
     return (
       <div className="fn-checkout">
         <p className="fn-checkout__billing">Waitlist only</p>
-        <Link className={ghostClass} to={offer.page}>Join the waitlist</Link>
+        <Link className={ghostClass} to={`${offer.page}?waitlist=1`}>Join the waitlist</Link>
       </div>
     );
   }

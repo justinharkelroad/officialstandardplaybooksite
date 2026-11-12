@@ -61,7 +61,7 @@ const PricingRow = ({ offerKey, index }: { offerKey: OfferKey; index: number }) 
 
   if (offer.route === 'waitlist') {
     badge = { label: 'Waitlist Only', tone: 'muted' };
-    cadence = '/mo';
+    cadence = offer.cadence.replace(' · Waitlist', '');
     cta = <Link className="fn-btn fn-btn--ghost fn-price-row__cta" to={`${offer.page}?waitlist=1`}>Join waitlist</Link>;
   } else if (offer.route === 'apply') {
     if (offerKey === 'momentum') badge = { label: '1 Seat Left', tone: 'scarce' };
@@ -156,11 +156,11 @@ const Start = () => {
               <div className="fn-menu-links">
                 <p style={{ margin: 0 }}>
                   Sales manager problem instead?{' '}
-                  <Link className="fn-link" to="/sales-experience">The 8-Week, $4,500 or $625/week</Link>
+                  <Link className="fn-link" to="/sales-experience">The 8-Week (waitlist only)</Link>
                 </p>
                 <p style={{ margin: 0 }}>
                   Team that won't follow through when you're not watching?{' '}
-                  <Link className="fn-link" to="/team-standard">Team Standard, $2,500/mo</Link>
+                  <Link className="fn-link" to="/team-standard">Team Standard (waitlist only)</Link>
                 </p>
                 <p style={{ margin: 0 }}>
                   Not sure? <Link className="fn-link" to="/decision">Take the 2-minute quiz</Link>

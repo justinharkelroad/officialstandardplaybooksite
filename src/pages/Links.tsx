@@ -193,8 +193,10 @@ const teamPrograms: ProgramRow[] = [
   {
     num: '03',
     name: '8 Week Experience',
-    tier: 'Sales Management Training',
-    price: '$4.5k or $625/week',
+    tier: 'Sales Management Training · Waitlist',
+    price: '$4.5k or $625/week · Waitlist',
+    badge: 'Waitlist Only',
+    badgeTone: 'muted',
     description: 'For teams stuck in "great month / bad month" cycles. A full sales management system install in 8 weeks.',
     details: [
       '8 live coaching calls over 8 weeks',
@@ -204,14 +206,16 @@ const teamPrograms: ProgramRow[] = [
       'Manager playbook + scripts',
       'Full money back: stay in the 8 weeks, do the work, and if you want your money back, ask',
     ],
-    href: '/sales-experience',
-    cta: 'Learn More →',
+    href: '/sales-experience?waitlist=1',
+    cta: 'Join the waitlist →',
   },
   {
     num: '04',
     name: 'The Team Standard',
-    tier: 'Sales Team Accountability · By Application',
-    price: '2X $2.5k/mo · 4X $4k/mo',
+    tier: 'Sales Team Accountability · Waitlist',
+    price: '2X $2.5k/mo · 4X $4k/mo · Waitlist',
+    badge: 'Waitlist Only',
+    badgeTone: 'muted',
     description: 'An accountability system for your sales team, run personally by Justin, with you out of the room. Team Standard 2X or 4X.',
     details: [
       '2X: two fifty-minute team coaching and accountability calls a month',
@@ -223,8 +227,8 @@ const teamPrograms: ProgramRow[] = [
       'Owner gets the Monday Boardroom call and all live events',
       'Mirror Challenge free',
     ],
-    href: '/team-standard',
-    cta: 'See The Standard →',
+    href: '/team-standard?waitlist=1',
+    cta: 'Join the waitlist →',
   },
 ];
 

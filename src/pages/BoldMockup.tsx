@@ -885,20 +885,24 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
           <h4 id="lead-the-team">Lead the team</h4>
           <div className="decision-details-grid decision-details-grid--two">
             <DecisionOffer
-              eyebrow="Manager training"
+              eyebrow="Manager training · Waitlist"
               name="8 Week Experience"
-              price="$4.5k or $625/week"
+              badge="Waitlist Only"
+              badgeTone="muted"
+              price="$4.5k or $625/week · Waitlist"
               description="Install a complete sales-management system through eight live coaching calls and a manager playbook."
-              href="/sales-experience"
-              cta="See the Experience"
+              href="/sales-experience?waitlist=1"
+              cta="Join the waitlist"
             />
             <DecisionOffer
-              eyebrow="Sales team accountability · By application"
+              eyebrow="Sales team accountability · Waitlist"
               name="The Team Standard"
-              price="2X $2.5k/mo · 4X $4k/mo"
+              badge="Waitlist Only"
+              badgeTone="muted"
+              price="2X $2.5k/mo · 4X $4k/mo · Waitlist"
               description="Two or four fifty-minute team accountability calls a month, Weekly Return & Reports to the owner, and Agency Brain Pro."
-              href="/team-standard"
-              cta="See The Standard"
+              href="/team-standard?waitlist=1"
+              cta="Join the waitlist"
             />
           </div>
         </section>

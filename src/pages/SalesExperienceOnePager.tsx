@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import StandardFitModal from '@/components/StandardFitModal';
+import WaitlistModal from '@/components/WaitlistModal';
 import standardLogo from '@/assets/standard-word-logo.png';
 import './SalesExperienceOnePager.css';
 
-const BOOK_URL = 'https://AGENCYCOACHING.as.me/8week';
-const PROGRAM_NAME = 'The 8-Week Sales Management Experience';
 const STORAGE_BASE = 'https://puidotfmyrouxezsorlt.supabase.co/storage/v1/object/public/public';
 const dashboardImage = `${STORAGE_BASE}/Sales%20Experience%20Dashboard.png`;
 const trainingImage = `${STORAGE_BASE}/Training%20Modules%20w%20Feedback.png`;
@@ -104,18 +102,11 @@ const deliverables = [
 ];
 
 const SalesExperienceOnePager = () => {
-  const [applicationOpen, setApplicationOpen] = useState(false);
-
-  const openApplication = () => {
-    try {
-      (window as Window & { fbq?: (...args: unknown[]) => void }).fbq?.('track', 'InitiateCheckout', {
-        content_name: `${PROGRAM_NAME} Application`,
-      });
-    } catch {
-      // Analytics is best-effort and must never block the application.
-    }
-    setApplicationOpen(true);
-  };
+  // The 8-Week is waitlist only (Justin, 2026-11-11). ?waitlist=1 opens the form straight away.
+  const [applicationOpen, setApplicationOpen] = useState(
+    () => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('waitlist') === '1',
+  );
+  const openApplication = () => setApplicationOpen(true);
 
   return (
     <main className="eightweek-page">
@@ -125,7 +116,7 @@ const SalesExperienceOnePager = () => {
             <img src={standardLogo} alt="The Standard Playbook" />
           </Link>
           <button type="button" className="eightweek-nav__apply" onClick={openApplication}>
-            Apply now
+            Join the waitlist
           </button>
         </div>
       </header>
@@ -142,7 +133,7 @@ const SalesExperienceOnePager = () => {
               Your sales manager authors the process, numbers, and consequences your agency runs on. Signed and operating by week eight.
             </p>
             <button type="button" className="eightweek-cta" onClick={openApplication}>
-              Apply for the 8-Week
+              Join the Waitlist
               <span aria-hidden="true">↗</span>
             </button>
           </div>
@@ -330,7 +321,7 @@ const SalesExperienceOnePager = () => {
             <strong>$4.5k</strong>
             <span>or $625 per week</span>
             <button type="button" className="eightweek-cta" onClick={openApplication}>
-              Apply for the 8-Week
+              Join the Waitlist
               <span aria-hidden="true">↗</span>
             </button>
           </div>
@@ -340,7 +331,7 @@ const SalesExperienceOnePager = () => {
       <section className="eightweek-section eightweek-faq">
         <div className="eightweek-shell eightweek-faq__grid">
           <div>
-            <p className="eightweek-kicker">Before you apply</p>
+            <p className="eightweek-kicker">Before you join</p>
             <h2>Questions, answered.</h2>
           </div>
           <div className="eightweek-faq__list">
@@ -373,7 +364,7 @@ const SalesExperienceOnePager = () => {
           <h2>Stop managing a coin flip.</h2>
           <p>Build the system your sales manager and team can run without guessing.</p>
           <button type="button" className="eightweek-cta eightweek-cta--light" onClick={openApplication}>
-            Apply for the 8-Week
+            Join the Waitlist
             <span aria-hidden="true">↗</span>
           </button>
         </div>
@@ -386,14 +377,7 @@ const SalesExperienceOnePager = () => {
         </div>
       </footer>
 
-      <StandardFitModal
-        open={applicationOpen}
-        onOpenChange={setApplicationOpen}
-        source="8-week-sales-experience"
-        bookingBaseUrl={BOOK_URL}
-        callLengthLabel="strategy"
-        programName={PROGRAM_NAME}
-      />
+      <WaitlistModal program="eight-week" open={applicationOpen} onOpenChange={setApplicationOpen} />
     </main>
   );
 };

@@ -70,9 +70,9 @@ export interface TierRoute {
 
 const ACUITY = 'https://AGENCYCOACHING.as.me/MIRROR';
 const BOARDROOM_HREF = '/boardroom';
-const EIGHTWEEK_HREF = '/8-week-apply';
+const EIGHTWEEK_HREF = '/8-week-apply?waitlist=1'; // waitlist only (Justin, 2026-11-11)
 const STANDARD90_HREF = '/standard90';
-const TEAMSTANDARD_HREF = '/team-standard';
+const TEAMSTANDARD_HREF = '/team-standard?waitlist=1'; // waitlist only (Justin, 2026-11-11)
 
 /** The always-available "soft" CTA: book a 45-min Mirror call. */
 export const BOOKING_CTA: TierRoute = {
@@ -124,7 +124,7 @@ export const routeForResult = (tier: Tier, weakest: PillarKey): TierRoute => {
   if (tier === 'established') {
     if (isP2or3) {
       return {
-        ctaLabel: 'Apply for 8-Week',
+        ctaLabel: 'Join the 8-Week waitlist',
         ctaHref: EIGHTWEEK_HREF,
         ctaKind: 'internal',
         brevoTag: `tier:established+pillar:${weakest}`,
@@ -143,7 +143,7 @@ export const routeForResult = (tier: Tier, weakest: PillarKey): TierRoute => {
     // (fix the team); anything else goes to Standard 90 (owner-level 1:1).
     if (weakest === 'culture_team') {
       return {
-        ctaLabel: 'Apply for The Team Standard',
+        ctaLabel: 'Join The Team Standard waitlist',
         ctaHref: TEAMSTANDARD_HREF,
         ctaKind: 'internal',
         brevoTag: `tier:${tier}+pillar:${weakest}`,

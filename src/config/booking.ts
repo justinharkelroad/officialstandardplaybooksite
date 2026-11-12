@@ -1,8 +1,9 @@
 /*
  * Calendars the booking form routes to. The by-application / capacity-limited
- * offers book a call: Standard 90, Ascension, Team Standard (2X and 4X), and
- * the 8-Week Experience. Momentum and The Directive are waitlist only and do
- * not book a call from the funnel (Justin, 2026-11-11).
+ * offers book a call: Standard 90 and Ascension. Momentum, The Directive, Team
+ * Standard (2X and 4X) and the 8-Week are waitlist only and do not book a call
+ * from the funnel (Justin, 2026-11-11). Their calendars stay listed below for
+ * when they reopen.
  *
  * To land bookers on the confirmation page with the pre-call video, set each
  * calendar's "redirect after booking" in Acuity to

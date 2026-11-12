@@ -167,8 +167,8 @@ export const OFFERS: Record<OfferKey, Offer> = {
     summary: 'Two fifty-minute team coaching and accountability calls a month, run without the owner in the room.',
     includes: ['Two 50-minute team coaching and accountability calls a month', ...TEAM_STANDARD_SHARED],
     page: '/team-standard',
-    // Capacity-limited: no direct checkout. Every CTA books a fit call (Justin, 2026-11-11).
-    route: 'apply',
+    // Full right now: join the waitlist, no booking (Justin, 2026-11-11).
+    route: 'waitlist',
     checkouts: [],
     applySource: 'team-standard',
   },
@@ -180,8 +180,8 @@ export const OFFERS: Record<OfferKey, Offer> = {
     summary: 'Four fifty-minute team coaching and accountability calls a month, run without the owner in the room.',
     includes: ['Four 50-minute team coaching and accountability calls a month', ...TEAM_STANDARD_SHARED],
     page: '/team-standard',
-    // Capacity-limited: no direct checkout. Every CTA books a fit call (Justin, 2026-11-11).
-    route: 'apply',
+    // Full right now: join the waitlist, no booking (Justin, 2026-11-11).
+    route: 'waitlist',
     checkouts: [],
     applySource: 'team-standard',
   },
@@ -199,8 +199,8 @@ export const OFFERS: Record<OfferKey, Offer> = {
       `The guarantee: ${GUARANTEES.eightWeek}`,
     ],
     page: '/sales-experience',
-    // Capacity-limited: no direct checkout. Every CTA books the 8-Week call (Justin, 2026-11-11).
-    route: 'apply',
+    // Full right now: join the waitlist, no booking (Justin, 2026-11-11).
+    route: 'waitlist',
     checkouts: [],
     applySource: 'eight-week',
   },

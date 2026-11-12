@@ -124,11 +124,11 @@ export const PRESCRIPTION_WHY: Record<OfferKey, string> = {
   standard90:
     "You have {producers}, said {problem}, and have {budget} to put behind it. Standard 90 is 90 days of daily 1:1 work with you, your manager and your team, with two calls every week. If your framework isn't live by day 90, Justin keeps working free until it is.",
   eightWeek:
-    'You said {manager} and {problem}. The 8-Week installs that system: the sales process, the scorecard and the weekly rhythm your manager runs without you. Stay in the 8 weeks, do the work, and if you want your money back, ask.',
+    'You said {manager} and {problem}. The 8-Week installs that system: the sales process, the scorecard and the weekly rhythm your manager runs without you. Stay in the 8 weeks, do the work, and if you want your money back, ask. It is waitlist only right now: join the waitlist and start in the weekly Boardroom while a spot opens.',
   teamStandard2x:
-    "You have {producers} and said {problem}. Team Standard puts your team on two calls a month with Justin, without you in the room, and you get the Weekly Return & Reports. With {budget} for growth, it's the fastest way to make the standard theirs.",
+    "You have {producers} and said {problem}. Team Standard puts your team on two calls a month with Justin, without you in the room, and you get the Weekly Return & Reports. With {budget} for growth, it's the fastest way to make the standard theirs. It is waitlist only right now: join the waitlist and start in the weekly Boardroom while a spot opens.",
   teamStandard4x:
-    "You have {producers} and said {problem}. Team Standard 4X puts your team on four calls a month with Justin, without you in the room, and you get the Weekly Return & Reports. At your size and with {budget} for growth, the extra calls keep every producer accountable.",
+    "You have {producers} and said {problem}. Team Standard 4X puts your team on four calls a month with Justin, without you in the room, and you get the Weekly Return & Reports. At your size and with {budget} for growth, the extra calls keep every producer accountable. It is waitlist only right now: join the waitlist and start in the weekly Boardroom while a spot opens.",
   mirror:
     'Your budget is {budget} right now, so start where it costs the least. The Mirror Challenge scores your agency across five pillars, then works the gaps for eight weeks. Your $197 comes off your first month of Agency Brain or the Boardroom when you move up.',
   boardroom:

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import StandardFitModal from '@/components/StandardFitModal';
+import WaitlistModal from '@/components/WaitlistModal';
 import SEOHead from '@/components/SEOHead';
 
 import standardLogo from '@/assets/standard-word-logo.png';
@@ -59,7 +59,7 @@ const LogoHeader = () => (
 
 /* ── Primary CTA button ─────────────────────────────────── */
 const BookCallButton = ({
-  label = 'Book Your Strategy Call',
+  label = 'Join the Waitlist',
   onClick,
   size = 'default',
   variant = 'filled',
@@ -984,7 +984,7 @@ const FAQSection = () => {
 };
 
 /* ══════════════════════════════════════════════════════
-   FINAL CTA — APPLY.
+   FINAL CTA — WAITLIST.
    ══════════════════════════════════════════════════════ */
 const FinalCTASection = ({ onBookCall }: { onBookCall: () => void }) => (
   <section
@@ -993,7 +993,7 @@ const FinalCTASection = ({ onBookCall }: { onBookCall: () => void }) => (
       background: ink, padding: '100px 24px 70px',
       cursor: 'pointer', borderTop: `1px solid ${ink}`,
     }}
-    role="button" aria-label="Book a strategy call"
+    role="button" aria-label="Join the 8-Week waitlist"
   >
     <div className="max-w-[1440px] mx-auto text-center">
       <Reveal>
@@ -1010,7 +1010,7 @@ const FinalCTASection = ({ onBookCall }: { onBookCall: () => void }) => (
           lineHeight: 0.82, letterSpacing: '-0.03em', color: paper,
           textTransform: 'uppercase', margin: 0, fontWeight: 400,
         }}>
-          APPLY.
+          WAITLIST.
         </h2>
       </Reveal>
       <Reveal delay={0.15}>
@@ -1018,7 +1018,7 @@ const FinalCTASection = ({ onBookCall }: { onBookCall: () => void }) => (
           fontFamily: body, fontSize: 14, fontWeight: 500, letterSpacing: '0.06em',
           color: paper, opacity: 0.75, marginTop: 32, textTransform: 'uppercase',
         }}>
-          Click anywhere &nbsp;→&nbsp; 45 minutes with Justin · No pitch deck · Money-back guarantee
+          Click anywhere &nbsp;→&nbsp; The 8-Week is full · Join the waitlist · Money-back guarantee
         </p>
       </Reveal>
     </div>
@@ -1063,7 +1063,10 @@ const MinimalFooter = () => (
    PAGE
    ══════════════════════════════════════════════════════ */
 const BoldEightWeekApply = () => {
-  const [bookingOpen, setBookingOpen] = useState(false);
+  // The 8-Week is waitlist only (Justin, 2026-11-11). ?waitlist=1 opens the form straight away.
+  const [bookingOpen, setBookingOpen] = useState(
+    () => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('waitlist') === '1',
+  );
   const openBooking = () => setBookingOpen(true);
 
   return (
@@ -1084,7 +1087,7 @@ const BoldEightWeekApply = () => {
       <FAQSection />
       <FinalCTASection onBookCall={openBooking} />
       <MinimalFooter />
-      <StandardFitModal open={bookingOpen} onOpenChange={setBookingOpen} source="8-week-apply" />
+      <WaitlistModal program="eight-week" open={bookingOpen} onOpenChange={setBookingOpen} />
     </div>
   );
 };

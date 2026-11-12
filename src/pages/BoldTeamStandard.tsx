@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
 import BoldNav from '@/components/BoldNav';
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import WaitlistModal from '@/components/WaitlistModal';
 import ContentMeta from '@/components/ContentMeta';
 import BoardroomEntryNudge from '@/components/BoardroomEntryNudge';
 
@@ -20,12 +20,9 @@ const paper = '#F4F2EE';
 const blue = '#2997FF';
 
 /*
-  CTA destination: the single action is "Apply for a Fit Call".
-  Clicking opens a name-only intake, then redirects straight to
-  the booking calendar (see ApplyModal / BOOKING_URL below).
-  To change the calendar, edit BOOKING_URL in one place.
+  CTA destination: the single action is "Join the Waitlist" (Team Standard is waitlist only, Justin 2026-11-11).
+  Clicking opens the shared waitlist form (WaitlistModal).
 */
-const BOOKING_URL = 'https://AGENCYCOACHING.as.me/teamstandard';
 
 // Hero video (square / 1:1). Self-hosted first-party native video (was Vimeo 1203069018,
 // which 401'd at Vimeo's edge despite public settings). Poster shows if src is ever emptied.
@@ -64,7 +61,7 @@ const PrimaryCTA = ({
       }}
       className={dark ? 'hover:bg-[#2997FF] hover:text-white hover:border-[#2997FF]' : 'hover:bg-[#2997FF] hover:border-[#2997FF]'}
     >
-      Apply for a Fit Call
+      Join the Waitlist
     </button>
     <p style={{
       fontFamily: body, fontSize: 13, fontWeight: 400, lineHeight: 1.5,
@@ -87,7 +84,7 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          2X or 4X. One Team, One Standard. By Application.
+          2X or 4X. One Team, One Standard. Waitlist Only.
         </p>
       </Reveal>
 
@@ -117,7 +114,7 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
           </div>
           <div className="grid grid-cols-2 gap-x-6 gap-y-5" style={{ marginTop: 36, maxWidth: 620, borderTop: `1px solid ${ink}`, paddingTop: 22 }}>
             {[
-              ['By application', 'Personally run'],
+              ['Waitlist only', 'Personally run'],
               ['Handful of teams', 'Limited capacity'],
               ['12-week cycle, billed monthly', 'Monthly owner check-in'],
               ['$2.5k or $4k', 'Team Standard 2X or 4X'],
@@ -585,7 +582,7 @@ const TwoWaysIn = ({ onApply }: { onApply: () => void }) => (
 
       <Reveal delay={0.1}>
         <p style={{ fontFamily: body, fontSize: 'clamp(16px, 1.5vw, 19px)', fontWeight: 400, lineHeight: 1.6, color: ink, opacity: 0.8, maxWidth: 820, margin: '48px 0 40px' }}>
-          Both are dedicated to your team alone, nothing shared, nothing recycled. By application, and I cap it to a handful of teams, because it is me in there, not a bench of junior coaches.
+          Both are dedicated to your team alone, nothing shared, nothing recycled. Waitlist only right now: I cap it to a handful of teams, because it is me in there, not a bench of junior coaches.
         </p>
       </Reveal>
       <Reveal delay={0.14}>
@@ -930,7 +927,7 @@ const MobileStickyCTA = ({ onApply }: { onApply: () => void }) => (
         color: ink, background: paper, padding: '14px 0', width: '100%',
         border: 'none', cursor: 'pointer', textTransform: 'uppercase',
       }}>
-      Apply for a Fit Call
+      Join the Waitlist
     </button>
   </div>
 );
@@ -940,94 +937,11 @@ const MobileStickyCTA = ({ onApply }: { onApply: () => void }) => (
 /* ══════════════════════════════════════════════════════
    PAGE
    ══════════════════════════════════════════════════════ */
-/* ── Apply modal: name only, then straight to the booking calendar ── */
-const ApplyModal = ({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) => {
-  const [first, setFirst] = useState('');
-  const [last, setLast] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-  const ready = first.trim().length > 0 && last.trim().length > 0 && emailOk && phone.trim().length >= 7;
-
-  const go = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!ready) return;
-    const url = new URL(BOOKING_URL);
-    url.searchParams.set('firstName', first.trim());
-    url.searchParams.set('lastName', last.trim());
-    url.searchParams.set('email', email.trim());
-    url.searchParams.set('phone', phone.trim());
-    window.location.href = url.toString();
-  };
-
-  const field: React.CSSProperties = {
-    fontFamily: body, fontSize: 15, color: ink, background: paper,
-    border: `1.5px solid ${ink}`, padding: '13px 14px', width: '100%',
-    outline: 'none', borderRadius: 0,
-  };
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        className="sm:max-w-[460px] p-0"
-        style={{
-          background: paper, color: ink, borderRadius: 0,
-          border: `1.5px solid ${ink}`, boxShadow: '0 30px 80px -10px rgba(0,0,0,0.5)',
-          fontFamily: body, gap: 0,
-        }}
-      >
-        <DialogTitle className="sr-only">Apply for a Fit Call</DialogTitle>
-        <form onSubmit={go} style={{ padding: '40px 36px' }}>
-          <p style={{
-            fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.18em',
-            color: blue, textTransform: 'uppercase', marginBottom: 14,
-          }}>
-            The Team Standard
-          </p>
-          <h3 style={{
-            fontFamily: display, fontSize: 'clamp(28px, 5vw, 40px)', lineHeight: 0.98,
-            letterSpacing: '-0.01em', color: ink, textTransform: 'uppercase', margin: '0 0 10px', fontWeight: 400,
-          }}>
-            Apply for a Fit Call
-          </h3>
-          <p style={{ fontFamily: body, fontSize: 14, lineHeight: 1.5, color: ink, opacity: 0.7, margin: '0 0 26px' }}>
-            Your details, then I will take you straight to my calendar to book the call.
-          </p>
-
-          <div style={{ display: 'grid', gap: 14 }}>
-            <input style={field} type="text" placeholder="First name" value={first}
-              onChange={(e) => setFirst(e.target.value)} autoFocus required aria-label="First name" />
-            <input style={field} type="text" placeholder="Last name" value={last}
-              onChange={(e) => setLast(e.target.value)} required aria-label="Last name" />
-            <input style={field} type="email" placeholder="Email" value={email}
-              onChange={(e) => setEmail(e.target.value)} required aria-label="Email" />
-            <input style={field} type="tel" placeholder="Phone" value={phone}
-              onChange={(e) => setPhone(e.target.value)} required aria-label="Phone" />
-          </div>
-
-          <button type="submit" disabled={!ready}
-            style={{
-              fontFamily: body, fontSize: 14, fontWeight: 700, letterSpacing: '0.12em',
-              color: '#fff', background: ink, textTransform: 'uppercase',
-              padding: '16px 0', width: '100%', marginTop: 22,
-              border: `1.5px solid ${ink}`, cursor: ready ? 'pointer' : 'not-allowed',
-              opacity: ready ? 1 : 0.45, transition: 'all .25s',
-            }}
-            className={ready ? 'hover:bg-[#2997FF] hover:border-[#2997FF]' : ''}
-          >
-            Continue to Booking
-          </button>
-          <p style={{ fontFamily: body, fontSize: 12, lineHeight: 1.5, color: ink, opacity: 0.55, margin: '14px 0 0', textAlign: 'center' }}>
-            {CTA_MICROCOPY}
-          </p>
-        </form>
-      </DialogContent>
-    </Dialog>
-  );
-};
-
 const BoldTeamStandard = () => {
-  const [applyOpen, setApplyOpen] = useState(false);
+  // Opens the waitlist form straight away when a CTA routed here with ?waitlist=1.
+  const [applyOpen, setApplyOpen] = useState(
+    () => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('waitlist') === '1',
+  );
 
   const openApply = () => setApplyOpen(true);
 
@@ -1036,7 +950,7 @@ const BoldTeamStandard = () => {
     document.title = 'The Team Standard';
     const meta = document.querySelector('meta[name="description"]');
     const prevDesc = meta?.getAttribute('content') ?? null;
-    const desc = 'An accountability system for your sales team, run personally, with you out of the room. By application.';
+    const desc = 'An accountability system for your sales team, run personally, with you out of the room. Waitlist only.';
     if (meta) meta.setAttribute('content', desc);
     return () => {
       document.title = prevTitle;
@@ -1060,11 +974,11 @@ const BoldTeamStandard = () => {
       <OfferAndFilter onApply={openApply} />
       <Questions />
       <FinalClose onApply={openApply} />
-      <BoardroomEntryNudge programName="Team Standard" variant="call" />
+      <BoardroomEntryNudge programName="Team Standard" variant="waitlist" />
       <BoldFooter />
       <ContentMeta lastUpdated="June 2026" />
       <MobileStickyCTA onApply={openApply} />
-      <ApplyModal open={applyOpen} onOpenChange={setApplyOpen} />
+      <WaitlistModal program="team-standard" open={applyOpen} onOpenChange={setApplyOpen} />
     </div>
   );
 };
