@@ -152,7 +152,7 @@ export const OFFERS: Record<OfferKey, Offer> = {
       'Boardroom tool access inside Agency Brain',
       'Agency Brain Core',
       'Telegram',
-      'Both Fort Wayne member events',
+      '2027 in-person events',
       'Mirror Challenge free',
     ],
     page: '/boardroom',

@@ -2342,8 +2342,8 @@ const softwareCategories: SoftwareCategory[] = [
         detail: 'Grant trusted managers or key leaders access to /staff/boardroom when you bring them into the work.',
       },
       {
-        title: 'Both Fort Wayne Member Events',
-        detail: 'Two in-person Boardroom member events in Fort Wayne, included with your seat.',
+        title: '2027 In-Person Events',
+        detail: 'In-person Boardroom member events in 2027, included with your seat.',
       },
     ],
   },

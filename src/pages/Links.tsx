@@ -81,7 +81,7 @@ const ownerPrograms: ProgramRow[] = [
       'Boardroom tool access inside Agency Brain',
       'Agency Brain Core included',
       'Telegram access',
-      'Both Fort Wayne member events',
+      '2027 in-person events',
       'Mirror Challenge free',
     ],
     href: '/boardroom',
