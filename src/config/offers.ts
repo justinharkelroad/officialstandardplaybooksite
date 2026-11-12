@@ -55,7 +55,7 @@ export interface Offer {
   applySource?: string;
 }
 
-export const AGENCY_BRAIN_PLANS_URL = 'https://myagencybrain.com/2027';
+export const AGENCY_BRAIN_PLANS_URL = 'https://myagencybrain.com/info#features';
 
 export const MIRROR_CREDIT_TERMS =
   "The Mirror pays for itself. Your $197 comes off your first month of Agency Brain or Boardroom, until 14 days after the Mirror ends. One per agency. Doesn't apply to Live Call Coach seats or programs.";
