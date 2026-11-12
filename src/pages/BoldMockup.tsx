@@ -800,7 +800,7 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
               eyebrow="Weekly group coaching + Agency Brain Core"
               name="The Boardroom"
               price="$399/month"
-              description="Weekly Monday group coaching, Boardroom tools inside Agency Brain, Agency Brain Core, Telegram, both Fort Wayne member events, and the Mirror Challenge free."
+              description="Weekly Monday group coaching, Boardroom tools inside Agency Brain, Agency Brain Core, Telegram, 2027 in-person events, and the Mirror Challenge free."
               href="/boardroom"
               cta="See The Boardroom"
             />
