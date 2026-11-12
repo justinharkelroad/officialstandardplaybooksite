@@ -5,16 +5,13 @@ import VslPlayer from '@/components/vsl/VslPlayer';
 import BookingOnboardingForm from '@/components/BookingOnboardingForm';
 import { FunnelFooter, FunnelHeader } from '@/components/funnel/FunnelChrome';
 import { VSL_VIDEOS } from '@/config/vsl';
-import { OFFERS, RESULTS_DISCLAIMER } from '@/config/offers';
+import { AGENCY_BRAIN_PLANS_URL, OFFERS, RESULTS_DISCLAIMER } from '@/config/offers';
 import { START_PRICING_ORDER } from '@/config/startPage';
 import { captureMirrorAttribution } from '@/lib/mirrorAttribution';
 import { trackVslEvent } from '@/lib/funnel/track';
 import './Funnel.css';
 
 const video = VSL_VIDEOS['sp-precall'];
-
-/** Agency Brain features page for the /prep software box (Justin, 2026-11-12). */
-const AGENCY_BRAIN_INFO_URL = 'https://myagencybrain.com/info#features';
 
 /** Coaching list: everything on /start except the Agency Brain software rows. */
 const COACHING_ORDER = START_PRICING_ORDER.filter((key) => !key.startsWith('agencyBrain'));
@@ -134,7 +131,7 @@ const FitPrep = () => {
             </ul>
             <div className="ab-box__foot">
               <p className="ab-box__addon">Add Live Call Coach to any level: $129 per rep a month.</p>
-              <a className="ab-box__cta" href={AGENCY_BRAIN_INFO_URL} target="_blank" rel="noreferrer">See Agency Brain plans</a>
+              <a className="ab-box__cta" href={AGENCY_BRAIN_PLANS_URL} target="_blank" rel="noreferrer">See Agency Brain plans</a>
             </div>
           </div>
         </div>
