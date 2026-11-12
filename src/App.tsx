@@ -24,6 +24,7 @@ const DecisionQuiz = lazy(() => import("./pages/funnel/DecisionQuiz"));
 const FunnelBook = lazy(() => import("./pages/funnel/Book"));
 const FunnelBookCall = lazy(() => import("./pages/funnel/BookCall"));
 const FunnelBooked = lazy(() => import("./pages/funnel/Booked"));
+const FunnelFitPrep = lazy(() => import("./pages/funnel/FitPrep"));
 const FunnelThanks = lazy(() => import("./pages/funnel/Thanks"));
 import CallScoring from "./pages/CallScoring";
 import Privacy from "./pages/Privacy";
@@ -117,6 +118,7 @@ const App = () => (
           <Route path="/book" element={<Suspense fallback={null}><FunnelBook /></Suspense>} />
           <Route path="/book-call" element={<Suspense fallback={null}><FunnelBookCall /></Suspense>} />
           <Route path="/booked" element={<Suspense fallback={null}><FunnelBooked /></Suspense>} />
+          <Route path="/prep" element={<Suspense fallback={null}><FunnelFitPrep /></Suspense>} />
           <Route path="/thanks" element={<Suspense fallback={null}><FunnelThanks /></Suspense>} />
           <Route path="/about" element={<BoldAbout />} />
           <Route path="/legacy-about" element={<Navigate to="/about" replace />} />
