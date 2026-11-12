@@ -355,11 +355,11 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
       }}>
         / {programName
           ? programName
-          : (step === 1 && source === 'standard-fit' ? 'Background Info' : (step === 1 ? 'Contact' : 'About You'))}
+          : (step === 1 && source.startsWith('standard-fit') ? 'Background Info' : (step === 1 ? 'Contact' : 'About You'))}
       </p>
       <h2 style={headlineStyle}>
         {step === 1
-          ? (programName ? 'Book Your\nStrategy Call.' : (source === 'standard-fit' ? 'Background\nInfo for Call' : 'Contact\nInformation.'))
+          ? (programName ? 'Book Your\nStrategy Call.' : (source.startsWith('standard-fit') ? 'Background\nInfo for Call' : 'Contact\nInformation.'))
           : 'Tell Us\nAbout You.'}
       </h2>
 
