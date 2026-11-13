@@ -1,7 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
-
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const NOTIFICATION_RECIPIENTS = ["mary@standardplaybook.com", "info@standardplaybook.com"];
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -31,9 +29,8 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error("Missing required fields");
     }
 
-    const emailResponse = await resend.emails.send({
+    const notification = {
       from: "Standard Playbook <booking@standardplaybook.com>",
-      to: ["info@standardplaybook.com"],
       subject: `New Booking Lead: ${lead.full_name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -65,9 +62,23 @@ const handler = async (req: Request): Promise<Response> => {
           </p>
         </div>
       `,
-    });
+    };
 
-    console.log("Booking notification sent:", emailResponse);
+    const response = await fetch("https://api.resend.com/emails/batch", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
+      },
+      body: JSON.stringify(NOTIFICATION_RECIPIENTS.map(to => ({ ...notification, to: [to] }))),
+      signal: AbortSignal.timeout(10000),
+    });
+    if (!response.ok) {
+      console.error("Booking notification rejected:", response.status);
+      throw new Error("The notification could not be sent. Please contact info@standardplaybook.com.");
+    }
+    const emailResponse = await response.json();
+    console.log("Booking notifications accepted by provider");
 
     return new Response(JSON.stringify(emailResponse), {
       status: 200,
@@ -76,7 +87,7 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error: any) {
     console.error("Error sending booking notification:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: "The notification could not be sent. Please contact info@standardplaybook.com." }),
       { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   }
