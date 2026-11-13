@@ -72,6 +72,9 @@ function stamp(template, route, cfg) {
     html = setMeta(html, 'robots', cfg.robots);
     html = setMeta(html, 'googlebot', cfg.robots);
   }
+  // index.html carries the homepage's og:video. Drop it so no other route
+  // inherits the homepage clip, then add this route's own video if it has one.
+  html = html.replace(/[ \t]*<meta\s+property="og:video(?::[a-z_]+)?"[^>]*>\n?/gi, '');
   if (cfg.video) {
     // Animated card for surfaces that play og:video. og:image stays the still
     // (the video's final frame), which is all iMessage/SMS/Telegram show.

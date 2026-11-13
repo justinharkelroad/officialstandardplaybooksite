@@ -19,7 +19,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     title: 'Insurance Agency Coaching for Owners Who Want More | The Standard Playbook',
     description: 'High-performance coaching for insurance agency owners. Boardroom, Momentum, Team Standard, and Ascension programs built by a 20-year Allstate operator.',
     keywords: ['insurance agency coaching', 'business coaching', 'elite entrepreneurs', 'agency mastermind', 'sales training', 'producer development', 'standard playbook', 'Fort Wayne coaching'],
-    ogImage: OG_IMAGE,
+    ogImage: 'https://standardplaybook.com/og/home.jpg',
     type: 'website',
     structuredData: structuredDataByRoute['/'],
   },
