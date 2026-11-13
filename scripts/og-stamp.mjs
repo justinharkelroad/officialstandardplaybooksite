@@ -72,6 +72,19 @@ function stamp(template, route, cfg) {
     html = setMeta(html, 'robots', cfg.robots);
     html = setMeta(html, 'googlebot', cfg.robots);
   }
+  if (cfg.video) {
+    // Animated card for surfaces that play og:video. og:image stays the still
+    // (the video's final frame), which is all iMessage/SMS/Telegram show.
+    const vid = `${BASE_URL}${cfg.video}`;
+    const tags = [
+      ['og:video', vid],
+      ['og:video:secure_url', vid],
+      ['og:video:type', 'video/mp4'],
+      ['og:video:width', '1200'],
+      ['og:video:height', '630'],
+    ].map(([k, v]) => `<meta property="${k}" content="${esc(v)}" />`).join('\n    ');
+    html = html.replace('</head>', `    ${tags}\n</head>`);
+  }
   html = html.replace(/(<link\s+rel="canonical"\s+href=")[^"]*(")/i, `$1${url}$2`);
   if (route === '/boardroom') {
     // Crawlers receive the same offers before JavaScript runs. useSEO replaces

@@ -123,6 +123,14 @@
       "title": "Momentum",
       "subhead": "Directive-level work, twice the conversation. Two 90-minute 1:1 calls a month with Justin, plus Agency Brain Pro.",
       "image": "/og-image.png"
+    },
+    "/prep": {
+      "title": "Two things before we talk",
+      "metaTitle": "Prep For Your Call | The Standard Playbook",
+      "subhead": "Watch the video, then fill out your background form. Two steps, about three minutes, so the call goes to your agency.",
+      "image": "/og/prep.jpg",
+      "video": "/video/prep-og.mp4",
+      "robots": "noindex, nofollow"
     }
   }
 }

@@ -21,6 +21,7 @@
     "preview:mobile": "vite preview --config vite.mobile.config.ts",
     "mobile:assets:android": "node scripts/generate-android-brand-assets.mjs",
     "og:calls": "node scripts/generate-calls-og.mjs",
+    "og:prep": "bun scripts/generate-prep-og.mjs",
     "mobile:check-bundle": "node scripts/mobile-inspect-bundle.mjs",
     "mobile:sync": "npm run build:mobile && cap sync",
     "mobile:ios": "npm run mobile:sync && cap open ios",
