@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import standardLogo from '@/assets/standard-word-logo.png';
 
@@ -108,6 +108,11 @@ const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement |
 
 const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRedirectUrl, callLengthLabel = '45-min', programName, prefill }: BookingOnboardingFormProps) => {
   const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const submitting = useRef(false);
+  const mounted = useRef(true);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [sessionId] = useState(() => getOrCreateSessionId(source));
@@ -226,11 +231,16 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
   const handleBack = () => setStep(1);
 
   const handleComplete = async () => {
-    if (!isStep2Valid()) return;
+    if (!isStep2Valid() || submitting.current) return;
+    submitting.current = true;
+    setIsSubmitting(true);
+    setSubmitError(null);
     try {
       await supabase.from('booking_leads').update({ completed: true, source }).eq('session_id', sessionId);
-      supabase.functions.invoke('send-booking-notification', {
+      const { data: receipt, error: submitFailure } = await supabase.functions.invoke('send-booking-notification', {
         body: {
+          source,
+          session_id: sessionId,
           full_name: formData.full_name,
           email: formData.email,
           cell_phone: formData.cell_phone,
@@ -239,7 +249,9 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
           whats_not_working: formData.whats_not_working,
           desired_outcome: formData.desired_outcome,
         },
-      }).catch(err => console.error('Email notification error:', err));
+      });
+      if (submitFailure || receipt?.ok !== true || receipt?.crm !== 'saved') throw new Error('Prep receipt was not confirmed');
+      if (!mounted.current) return;
       if (typeof window !== 'undefined' && typeof (window as any).fbq === 'function') {
         (window as any).fbq('track', 'Lead', {
           content_name: programName ? `${programName} Pre-Form` : 'Strategy Call Pre-Form',
@@ -252,7 +264,11 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
         onComplete();
       }
     } catch (error) {
-      console.error('Error completing form:', error);
+      console.error('Error completing form');
+      if (mounted.current) setSubmitError('We could not confirm your form was received. Please contact info@standardplaybook.com so we can help.');
+    } finally {
+      submitting.current = false;
+      if (mounted.current) setIsSubmitting(false);
     }
   };
 
@@ -506,13 +522,14 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
               )}
             </div>
           )}
+          {submitError && <p role="alert" style={{ color: '#b91c1c', fontFamily: body }}>{submitError}</p>}
           <div style={{ display: 'flex', gap: 12, marginTop: 12 }}>
-            <button onClick={handleBack} style={secondaryButtonStyle} className="hover:bg-black hover:text-white">
+            <button disabled={isSubmitting} onClick={handleBack} style={secondaryButtonStyle} className="hover:bg-black hover:text-white">
               ← Back
             </button>
             <button
               onClick={handleComplete}
-              disabled={!isStep2Valid()}
+              disabled={!isStep2Valid() || isSubmitting}
               style={{
                 ...primaryButtonStyle,
                 opacity: isStep2Valid() ? 1 : 0.35,
@@ -520,7 +537,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
               }}
               className={isStep2Valid() ? 'hover:bg-[#2997FF] hover:border-[#2997FF]' : ''}
             >
-              Continue →
+              {isSubmitting ? 'Submitting…' : 'Continue →'}
             </button>
           </div>
         </div>
