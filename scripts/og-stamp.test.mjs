@@ -44,7 +44,7 @@ test('stamps literal prices and special characters into social metadata', () => 
   }
 });
 
-test('stamps og:video tags only for routes that declare a video', () => {
+test('stamps og:video only for routes that declare one, never the homepage clip', () => {
   const root = mkdtempSync(join(tmpdir(), 'prep-og-'));
   try {
     mkdirSync(join(root, 'scripts'));
@@ -58,6 +58,8 @@ test('stamps og:video tags only for routes that declare a video', () => {
     } }));
     writeFileSync(join(root, 'dist/index.html'), `<html><head><title>Original</title>
       <meta property="og:image" content="Original">
+      <meta property="og:video" content="https://standardplaybook.com/video/home-og.mp4" />
+      <meta property="og:video:type" content="video/mp4" />
       <link rel="canonical" href="https://example.com">
       </head></html>`);
     execFileSync(process.execPath, [join(root, 'scripts/og-stamp.mjs')], {
@@ -71,6 +73,7 @@ test('stamps og:video tags only for routes that declare a video', () => {
     assert.equal(meta(prep, 'og:video:type'), 'video/mp4');
     assert.equal(meta(prep, 'og:video:width'), '1200');
     assert.equal(meta(prep, 'og:video:height'), '630');
+    assert.equal(prep.querySelectorAll('meta[property="og:video"]').length, 1, 'homepage clip must not survive alongside the route clip');
     const calls = new JSDOM(readFileSync(join(root, 'dist/calls/index.html'), 'utf8')).window.document;
     assert.equal(calls.querySelectorAll('meta[property^="og:video"]').length, 0);
   } finally {
