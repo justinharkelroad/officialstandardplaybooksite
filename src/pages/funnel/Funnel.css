@@ -853,6 +853,7 @@
 .fn-objection__stats > div {
   display: flex;
   flex-direction: column-reverse;
+  justify-content: flex-end;
   gap: 6px;
   padding-top: 10px;
   border-top: 2px solid var(--fn-ink);
@@ -1260,6 +1261,7 @@
 .ab-included__logo { display: block; width: 128px; height: auto; }
 .ab-included__text { font-size: 14px; color: #c9c9c9; }
 .ab-included__text strong { color: #faaf6e; font-weight: 800; }
+.fn-card .ab-included { margin-top: 0; align-self: flex-start; }
 
 .fn-featured-list { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 22px; }
 .fn-featured-list li { position: relative; padding-left: 22px; font-size: 14px; line-height: 1.4; color: var(--fn-ink); }
