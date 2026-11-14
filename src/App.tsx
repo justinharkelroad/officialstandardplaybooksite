@@ -19,7 +19,7 @@ const AIInstallReadyList = lazy(() => import("./pages/AIInstallReadyList"));
 const AIInstallPortal = lazy(() => import("./pages/AIInstallPortal"));
 const AIInstallPortalAdmin = lazy(() => import("./pages/AIInstallPortalAdmin"));
 // VSL funnel pages: lazy so the player and quiz stay out of the main bundle.
-const FunnelStart = lazy(() => import("./pages/funnel/Start"));
+// Start is the exception: it is the homepage (Justin, 2026-11-14), so it loads eagerly.
 const DecisionQuiz = lazy(() => import("./pages/funnel/DecisionQuiz"));
 const FunnelBook = lazy(() => import("./pages/funnel/Book"));
 const FunnelBookCall = lazy(() => import("./pages/funnel/BookCall"));
@@ -43,6 +43,7 @@ import Presentation from "./pages/Presentation";
 import StandardFit from "./pages/StandardFit";
 import AIWalkthrough from "./pages/AIWalkthrough";
 import BoldMockup from "./pages/BoldMockup";
+import FunnelStart from "./pages/funnel/Start";
 import BoldSalesExperience from "./pages/BoldSalesExperience";
 import SalesExperienceOnePager from "./pages/SalesExperienceOnePager";
 import BoldDirective from "./pages/BoldDirective";
@@ -88,7 +89,7 @@ const App = () => (
         <SEOHead />
         <ScrollToTop />
         <Routes>
-          <Route path="/" element={<BoldMockup />} />
+          <Route path="/" element={<FunnelStart home />} />
           <Route path="/bold" element={<BoldMockup />} />
           <Route path="/apple" element={<Navigate to="/" replace />} />
           <Route path="/legacy" element={<Navigate to="/" replace />} />
@@ -113,7 +114,7 @@ const App = () => (
           <Route path="/legacy-the-challenge" element={<Navigate to="/the-challenge" replace />} />
           <Route path="/formulaai" element={<Navigate to="/aiinstall" replace />} />
           <Route path="/callscoring" element={<CallScoring />} />
-          <Route path="/start" element={<Suspense fallback={null}><FunnelStart /></Suspense>} />
+          <Route path="/start" element={<FunnelStart />} />
           <Route path="/decision" element={<Suspense fallback={null}><DecisionQuiz /></Suspense>} />
           <Route path="/book" element={<Suspense fallback={null}><FunnelBook /></Suspense>} />
           <Route path="/book-call" element={<Suspense fallback={null}><FunnelBookCall /></Suspense>} />

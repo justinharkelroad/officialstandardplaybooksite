@@ -1634,7 +1634,7 @@ const GiantCTA = () => {
 /* ══════════════════════════════════════════════════════
    FOOTER — newsprint multi-column
    ══════════════════════════════════════════════════════ */
-const BoldFooter = () => (
+export const BoldFooter = () => (
   <footer style={{ background: ink, color: paper, padding: '60px 24px 30px' }}>
     <div className="max-w-[1280px] mx-auto">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pb-12" style={{ borderBottom: `1px solid ${paper}1a` }}>
@@ -1665,7 +1665,7 @@ const BoldFooter = () => (
 
         {[
           { title: 'Programs', items: [
-            { label: 'Boardroom', href: '#programs' },
+            { label: 'Boardroom', to: '/boardroom' },
             { label: 'Directive', to: '/directive' },
             { label: '8-Week', to: '/sales-experience' },
             { label: 'Training', to: '/training' },
@@ -1687,15 +1687,9 @@ const BoldFooter = () => (
             <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
               {col.items.map((it) => (
                 <li key={it.label} style={{ marginBottom: 8 }}>
-                  {it.to ? (
-                    <Link to={it.to} style={{ fontFamily: body, fontSize: 14, color: paper, opacity: 0.85, textDecoration: 'none' }} className="hover:opacity-100">
-                      {it.label}
-                    </Link>
-                  ) : (
-                    <a href={it.href} style={{ fontFamily: body, fontSize: 14, color: paper, opacity: 0.85, textDecoration: 'none' }} className="hover:opacity-100">
-                      {it.label}
-                    </a>
-                  )}
+                  <Link to={it.to} style={{ fontFamily: body, fontSize: 14, color: paper, opacity: 0.85, textDecoration: 'none' }} className="hover:opacity-100">
+                    {it.label}
+                  </Link>
                 </li>
               ))}
             </ul>
