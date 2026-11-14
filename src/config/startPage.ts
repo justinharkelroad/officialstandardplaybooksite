@@ -10,10 +10,11 @@ export interface Clip {
   poster?: string;
 }
 
+/** Agency Brain demo clips (Vimeo 1232020191, 1232445423, 1231995597; 1080p downloads, 2026-11-13). */
 export const DEMO_CLIPS: Clip[] = [
-  { title: 'A scored sales call', src: null },
-  { title: 'Live Call Coach, live', src: null },
-  { title: 'A weekly scorecard', src: null },
+  { title: 'A scored sales call', src: '/video/agency-brain-call-scoring.mp4', poster: '/video/agency-brain-call-scoring-poster.jpg' },
+  { title: 'Live Call Coach, live', src: '/video/agency-brain-live-call-coach.mp4', poster: '/video/agency-brain-live-call-coach-poster.jpg' },
+  { title: 'A weekly scorecard', src: '/video/agency-brain-scorecards.mp4', poster: '/video/agency-brain-scorecards-poster.jpg' },
 ];
 
 /** The one video case study on /start. */
