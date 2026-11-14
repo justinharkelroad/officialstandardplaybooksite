@@ -30,7 +30,7 @@ const MirrorTierCard = ({ pillarName, copy }: MirrorTierCardProps) => (
         marginBottom: 12,
       }}
     >
-      / Your Weakest Pillar
+      Your Weakest Pillar
     </p>
     <h3
       style={{

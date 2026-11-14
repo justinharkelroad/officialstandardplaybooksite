@@ -50,7 +50,7 @@ const FitPrep = () => {
 
       <section className="fn-hero">
         <div className="fn-shell">
-          <p className="fn-kicker">/ Before your call</p>
+          <p className="fn-kicker">Before your call</p>
           <h1 className="fn-display fn-h1">Two things <span className="fn-accent">before we talk.</span></h1>
           <p className="fn-lede">Watch the video. Then fill out the form below so the call goes to your agency, not background questions.</p>
           <div className="fn-player">
@@ -67,14 +67,14 @@ const FitPrep = () => {
       <section className="fn-section" id="form">
         <div className="fn-shell fn-shell--narrow">
           <div className="fn-section-head">
-            <p className="fn-kicker">/ Required</p>
+            <p className="fn-kicker">Required</p>
             <h2 className="fn-display fn-h2">Your background form.</h2>
             <p className="fn-small" style={{ margin: '8px 0 0' }}>Required before your call. Two steps, about three minutes.</p>
           </div>
           <div style={{ border: '1.5px solid #0A0A0B', maxWidth: 560 }}>
             {submitted ? (
               <div style={{ background: '#F4F2EE', padding: '40px 28px' }}>
-                <p className="fn-kicker">/ Received</p>
+                <p className="fn-kicker">Received</p>
                 <h3 className="fn-display fn-h3" style={{ margin: 0 }}>You're all set.</h3>
                 <p style={{ margin: '12px 0 0' }}>
                   Justin will review this before your call. Keep the calendar invite, and come ready to decide.
@@ -92,7 +92,7 @@ const FitPrep = () => {
       <section className="fn-section">
         <div className="fn-shell">
           <div className="fn-section-head">
-            <p className="fn-kicker">/ Coaching</p>
+            <p className="fn-kicker">Coaching</p>
             <h2 className="fn-display fn-h2">The coaching programs.</h2>
             <p className="fn-small" style={{ margin: '8px 0 0' }}>Look these over before the call so we can talk about the one that fits.</p>
           </div>

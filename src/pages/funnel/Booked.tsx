@@ -47,7 +47,7 @@ const Booked = () => {
 
       <section className="fn-hero">
         <div className="fn-shell">
-          <p className="fn-kicker">/ You're booked</p>
+          <p className="fn-kicker">You're booked</p>
           <h1 className="fn-display fn-h1">Watch this <span className="fn-accent">before the call.</span></h1>
           <p className="fn-lede">It answers the questions most owners bring, so the call goes to your agency.</p>
           <div className="fn-player">

@@ -356,7 +356,7 @@ const BoldMirrorResults = () => {
               fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
               color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 32,
             }}>
-              / Your Mirror
+              Your Mirror
             </p>
           </Reveal>
 
@@ -415,7 +415,7 @@ const BoldMirrorResults = () => {
               fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
               color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 12,
             }}>
-              / Pillar Breakdown
+              Pillar Breakdown
             </p>
             <h2 style={{
               fontFamily: display, fontSize: 'clamp(36px, 5vw, 64px)',
@@ -538,7 +538,7 @@ const BoldMirrorResults = () => {
               fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
               color: paper, opacity: 0.5, textTransform: 'uppercase', marginBottom: 24,
             }}>
-              / Your Move
+              Your Move
             </p>
           </Reveal>
           <Reveal delay={0.05}>

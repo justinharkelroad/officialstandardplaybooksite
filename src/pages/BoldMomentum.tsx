@@ -44,7 +44,7 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, textTransform: 'uppercase', margin: 0,
           }}>
-            / Momentum · 1:1 Coaching · Waitlist
+            Momentum · 1:1 Coaching · Waitlist
           </p>
           <span style={{
             fontFamily: body, fontSize: 10, fontWeight: 700, letterSpacing: '0.14em',
@@ -150,7 +150,7 @@ const ProblemSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Problem
+          The Problem
         </p>
       </Reveal>
       <Reveal delay={0.1}>
@@ -236,7 +236,7 @@ const PillarsSection = () => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, textTransform: 'uppercase', marginBottom: 12,
           }}>
-            / What's Inside
+            What's Inside
           </p>
           <h2 style={{
             fontFamily: display, fontSize: 'clamp(44px, 7vw, 100px)',
@@ -327,7 +327,7 @@ const NumbersSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / The Numbers
+          The Numbers
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -387,7 +387,7 @@ const InvestmentSection = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Investment
+          The Investment
         </p>
       </Reveal>
       <Reveal delay={0.1}>
@@ -439,7 +439,7 @@ const GiantCTA = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.5, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / Your Move
+          Your Move
         </p>
       </Reveal>
       <Reveal delay={0.05}>

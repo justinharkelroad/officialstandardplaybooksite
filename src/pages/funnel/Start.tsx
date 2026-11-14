@@ -159,7 +159,7 @@ const Start = ({ home = false }: { home?: boolean }) => {
 
       <section className="fn-hero">
         <div className="fn-shell">
-          <p className="fn-kicker">/ For insurance agency owners</p>
+          <p className="fn-kicker">For insurance agency owners</p>
           <h1 className="fn-display fn-h1">
             Your agency doesn't have a sales problem. <span className="fn-accent">It has a standard problem.</span>
           </h1>
@@ -172,7 +172,7 @@ const Start = ({ home = false }: { home?: boolean }) => {
 
           {revealed ? (
             <div className="fn-menu" id="menu" style={{ marginTop: 40 }}>
-              <p className="fn-kicker">/ Your prescription</p>
+              <p className="fn-kicker">Your prescription</p>
               <h2 className="fn-display fn-h2" style={{ marginBottom: 24 }}>Pick the one that fits.</h2>
               <PrescriptionCards />
               <div className="fn-menu-links">
@@ -199,7 +199,7 @@ const Start = ({ home = false }: { home?: boolean }) => {
       <section className="fn-section" id="programs">
         <div className="fn-shell">
           <div className="fn-section-head">
-            <p className="fn-kicker">/ Every way to work with us</p>
+            <p className="fn-kicker">Every way to work with us</p>
             <h2 className="fn-display fn-h2">The full price list.</h2>
           </div>
           <ul className="fn-pricing">
@@ -225,7 +225,7 @@ const Start = ({ home = false }: { home?: boolean }) => {
       <section className="fn-section">
         <div className="fn-shell">
           <div className="fn-section-head">
-            <p className="fn-kicker">/ Proof</p>
+            <p className="fn-kicker">Proof</p>
             <h2 className="fn-display fn-h2">Owners who raised it.</h2>
           </div>
           <div className="fn-proof-feature">
@@ -266,7 +266,7 @@ const Start = ({ home = false }: { home?: boolean }) => {
       <section className="fn-section fn-section--ink">
         <div className="fn-shell">
           <div className="fn-section-head">
-            <p className="fn-kicker">/ Guarantees</p>
+            <p className="fn-kicker">Guarantees</p>
             <h2 className="fn-display fn-h2">We carry the risk.</h2>
           </div>
           <div className="fn-guarantees">
@@ -285,7 +285,7 @@ const Start = ({ home = false }: { home?: boolean }) => {
       <section className="fn-section">
         <div className="fn-shell">
           <div className="fn-section-head">
-            <p className="fn-kicker">/ Straight answers</p>
+            <p className="fn-kicker">Straight answers</p>
             <h2 className="fn-display fn-h2">What owners ask first.</h2>
           </div>
           <div className="fn-objections">
@@ -322,7 +322,7 @@ const Start = ({ home = false }: { home?: boolean }) => {
       <section className="fn-section">
         <div className="fn-shell fn-shell--narrow">
           <div className="fn-section-head">
-            <p className="fn-kicker">/ Who this isn't for</p>
+            <p className="fn-kicker">Who this isn't for</p>
             <h2 className="fn-display fn-h2">Not for everyone.</h2>
           </div>
           <ul className="fn-notfor">
@@ -334,7 +334,7 @@ const Start = ({ home = false }: { home?: boolean }) => {
       <section className="fn-section">
         <div className="fn-shell">
           <div className="fn-section-head">
-            <p className="fn-kicker">/ Your move</p>
+            <p className="fn-kicker">Your move</p>
             <h2 className="fn-display fn-h2">Raise your standard.</h2>
           </div>
           <PrescriptionCards />

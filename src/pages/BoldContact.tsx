@@ -42,7 +42,7 @@ const Hero = ({ onBookCall }: { onBookCall: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / Contact
+          Contact
         </p>
       </Reveal>
 
@@ -154,7 +154,7 @@ const ContactMethodsSection = () => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, textTransform: 'uppercase', marginBottom: 12,
           }}>
-            / Reach Out
+            Reach Out
           </p>
           <h2 style={{
             fontFamily: display, fontSize: 'clamp(44px, 7vw, 100px)',
@@ -253,7 +253,7 @@ const LocationSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Based In
+          Based In
         </p>
       </Reveal>
       <Reveal delay={0.1}>
@@ -295,7 +295,7 @@ const GiantCTA = ({ onBookCall }: { onBookCall: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, opacity: 0.5, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / Skip The Email
+          Skip The Email
         </p>
       </Reveal>
       <Reveal delay={0.05}>

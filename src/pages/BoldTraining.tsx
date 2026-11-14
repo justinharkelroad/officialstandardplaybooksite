@@ -48,7 +48,7 @@ const Hero = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / Team Training · Inside Agency Brain
+          Team Training · Inside Agency Brain
         </p>
       </Reveal>
       <Reveal>
@@ -403,7 +403,7 @@ const LibrarySection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Library
+          The Library
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -562,7 +562,7 @@ const TwoLibrariesSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Two Libraries In One
+          Two Libraries In One
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -635,7 +635,7 @@ const BuildYourOwnSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Build Your Own
+          Build Your Own
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -723,7 +723,7 @@ const AIComprehensionSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Comprehension, Not Completion
+          Comprehension, Not Completion
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -811,7 +811,7 @@ const AIContentSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Plus & Pro · AI Content Generator
+          Plus & Pro · AI Content Generator
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -899,7 +899,7 @@ const HowItWorksSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / How It Works
+          How It Works
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -982,7 +982,7 @@ const SampleLessonsSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Sample Lessons
+          Sample Lessons
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -1049,7 +1049,7 @@ const AlwaysGrowingSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Still Building
+          Still Building
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -1145,7 +1145,7 @@ const PlansSection = () => {
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
           }}>
-            / What's In Each Plan
+            What's In Each Plan
           </p>
         </Reveal>
         <Reveal delay={0.05}>
@@ -1308,7 +1308,7 @@ const GiantCTA = () => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, opacity: 0.5, textTransform: 'uppercase', marginBottom: 24,
           }}>
-            / Ships With The Product
+            Ships With The Product
           </p>
         </Reveal>
         <Reveal delay={0.05}>

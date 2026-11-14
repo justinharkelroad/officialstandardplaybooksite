@@ -438,7 +438,7 @@ const Calls = () => {
               fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
               color: paper, textTransform: 'uppercase', marginBottom: 24, opacity: 0.85,
             }}>
-              / Recurring Calls
+              Recurring Calls
             </p>
           </Reveal>
 
@@ -524,7 +524,7 @@ const Calls = () => {
               fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
               color: ink, textTransform: 'uppercase', marginBottom: 24, marginTop: 24,
             }}>
-              / Drop-in · 1-on-1
+              Drop-in · 1-on-1
             </p>
           </Reveal>
 
@@ -607,7 +607,7 @@ const Calls = () => {
               fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
               color: ink, textTransform: 'uppercase', marginBottom: 24,
             }}>
-              / Directive · Monthly 2-Hour
+              Directive · Monthly 2-Hour
             </p>
           </Reveal>
 

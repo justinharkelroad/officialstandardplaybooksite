@@ -87,7 +87,7 @@ const Book = () => {
       <div className={view.kind === 'form' ? 'fn-shell fn-shell--narrow' : 'fn-shell'}>
         {view.kind === 'form' && (
           <>
-            {offerName && <p className="fn-kicker" style={{ marginTop: 28, marginBottom: 0 }}>/ Booking about {offerName}</p>}
+            {offerName && <p className="fn-kicker" style={{ marginTop: 28, marginBottom: 0 }}>Booking about {offerName}</p>}
             <QuizFlow
               contactTitle="Where do we reach you?"
               contactNote="We use this to confirm your call. No spam."
@@ -109,7 +109,7 @@ const Book = () => {
 
         {view.kind === 'apply' && (
           <div className="fn-stepper">
-            <p className="fn-kicker">/ Application</p>
+            <p className="fn-kicker">Application</p>
             <h1 className="fn-display fn-h2">Apply for {OFFERS[view.offer].name}.</h1>
             <p className="fn-result-why">
               {OFFERS[view.offer].name} is by application. A few questions about your agency, then you pick a time on Justin's calendar.

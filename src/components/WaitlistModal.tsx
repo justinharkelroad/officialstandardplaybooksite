@@ -24,25 +24,25 @@ export type WaitlistProgram = 'directive' | 'momentum' | 'team-standard' | 'eigh
 const PROGRAMS: Record<WaitlistProgram, { name: string; eyebrow: string; intro: string }> = {
   directive: {
     name: 'The Directive',
-    eyebrow: '/ The Directive',
+    eyebrow: 'The Directive',
     intro:
       "The Directive is full right now. Join the waitlist and we'll reach out personally when a seat opens.",
   },
   momentum: {
     name: 'Momentum',
-    eyebrow: '/ Momentum',
+    eyebrow: 'Momentum',
     intro:
       "Momentum is full right now. Join the waitlist and we'll reach out personally when a seat opens.",
   },
   'team-standard': {
     name: 'Team Standard',
-    eyebrow: '/ Team Standard',
+    eyebrow: 'Team Standard',
     intro:
       "Team Standard is full right now. Join the waitlist and we'll reach out personally when a spot opens.",
   },
   'eight-week': {
     name: 'The 8-Week Sales Management Experience',
-    eyebrow: '/ The 8-Week',
+    eyebrow: 'The 8-Week',
     intro:
       "The 8-Week is full right now. Join the waitlist and we'll reach out personally when a spot opens.",
   },

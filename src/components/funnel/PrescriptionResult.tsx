@@ -31,7 +31,7 @@ const OfferCard = ({ offerKey, primary }: { offerKey: OfferKey; primary: boolean
 /** "Your prescription: X", why, and the A and B offers with their buttons. */
 const PrescriptionResult = ({ a, b, why }: PrescriptionResultProps) => (
   <div>
-    <p className="fn-kicker">/ Your prescription</p>
+    <p className="fn-kicker">Your prescription</p>
     <h1 className="fn-display fn-h2">
       Your prescription: <span className="fn-accent">{OFFERS[a].name}.</span>
     </h1>

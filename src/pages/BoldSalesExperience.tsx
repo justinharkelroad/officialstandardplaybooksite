@@ -103,7 +103,7 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / 8-Week Sales Management Experience
+          8-Week Sales Management Experience
         </p>
       </Reveal>
 
@@ -222,7 +222,7 @@ const GuaranteeBand = () => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 16,
           }}>
-            / The Guarantee
+            The Guarantee
           </p>
           <h2 style={{
             fontFamily: display, fontSize: 'clamp(40px, 7vw, 96px)',
@@ -266,7 +266,7 @@ const ProblemSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Problem
+          The Problem
         </p>
       </Reveal>
       <Reveal delay={0.1}>
@@ -314,7 +314,7 @@ const PromiseSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Promise
+          The Promise
         </p>
       </Reveal>
       <Reveal delay={0.1}>
@@ -366,7 +366,7 @@ const HowItWorks = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / How It Works
+          How It Works
         </p>
       </Reveal>
       <Reveal delay={0.06}>
@@ -426,7 +426,7 @@ const TeamMoves = () => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 24,
           }}>
-            / Not Just The Manager
+            Not Just The Manager
           </p>
           <h2 style={{
             fontFamily: display, fontSize: 'clamp(36px, 6vw, 88px)',
@@ -485,7 +485,7 @@ const SystemsSection = () => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, textTransform: 'uppercase', marginBottom: 12,
           }}>
-            / What You Walk Away With
+            What You Walk Away With
           </p>
           <h2 style={{
             fontFamily: display, fontSize: 'clamp(44px, 7vw, 100px)',
@@ -596,7 +596,7 @@ const ArcSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / The Path
+          The Path
         </p>
       </Reveal>
       <Reveal delay={0.06}>
@@ -666,7 +666,7 @@ const WhatYouGet = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / What You Get
+          What You Get
         </p>
       </Reveal>
       <Reveal delay={0.06}>
@@ -747,7 +747,7 @@ const AgencyBrainBand = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / Software Is Leverage
+          Software Is Leverage
         </p>
       </Reveal>
       <Reveal delay={0.1}>
@@ -843,7 +843,7 @@ const SuccessStory = () => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 24,
           }}>
-            / Proof
+            Proof
           </p>
           <h2 style={{
             fontFamily: display, fontSize: 'clamp(40px, 6.5vw, 92px)',
@@ -938,7 +938,7 @@ const InvestmentSection = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Investment
+          The Investment
         </p>
       </Reveal>
 
@@ -996,7 +996,7 @@ const WhoForSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / Who It Is For
+          Who It Is For
         </p>
       </Reveal>
       <Reveal delay={0.06}>
@@ -1068,7 +1068,7 @@ const QuestionsSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 12,
         }}>
-          / Questions
+          Questions
         </p>
       </Reveal>
       <Reveal delay={0.05}>

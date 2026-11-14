@@ -160,7 +160,7 @@ const DirectiveApplicationModal = ({ open, onOpenChange }: DirectiveApplicationM
             fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.18em',
             color: blue, textTransform: 'uppercase', marginBottom: 10,
           }}>
-            / The Directive
+            The Directive
           </p>
           <h2 style={{
             fontFamily: display,
