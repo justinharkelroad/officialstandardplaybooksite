@@ -106,8 +106,17 @@ const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement |
   e.currentTarget.style.background = 'transparent';
 };
 
+const CONTACT_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const CONTACT_PHONE_RE = /^[\d\s()+-]{10,}$/;
+
+/** True when name, email and phone are all present and pass the step-1 checks. */
+const isContactComplete = (c?: { full_name?: string; email?: string; cell_phone?: string }) =>
+  Boolean(c?.full_name?.trim() && CONTACT_EMAIL_RE.test(c.email ?? '') && CONTACT_PHONE_RE.test((c.cell_phone ?? '').replace(/\s/g, '')));
+
 const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRedirectUrl, callLengthLabel = '45-min', programName, prefill }: BookingOnboardingFormProps) => {
-  const [step, setStep] = useState(1);
+  // Contact already collected upstream (e.g. the /book-call chat): skip straight
+  // to the background questions. Back still lets them edit it. (Justin, 2026-11-14)
+  const [step, setStep] = useState(() => (isContactComplete(prefill) ? 2 : 1));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const submitting = useRef(false);
@@ -116,6 +125,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [sessionId] = useState(() => getOrCreateSessionId(source));
+  const [initialContact] = useState(() => prefill);
   const asksInvestment = source === INVESTMENT_QUESTION_SOURCE;
   const [formData, setFormData] = useState<FormData>({
     full_name: prefill?.full_name ?? '',
@@ -140,9 +150,9 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
           .maybeSingle();
         if (data && !error) {
           setFormData({
-            full_name: data.full_name || '',
-            email: data.email || '',
-            cell_phone: data.cell_phone || '',
+            full_name: data.full_name || initialContact?.full_name || '',
+            email: data.email || initialContact?.email || '',
+            cell_phone: data.cell_phone || initialContact?.cell_phone || '',
             primary_carrier: data.primary_carrier || '',
             whats_working: data.whats_working || '',
             whats_not_working: data.whats_not_working || '',
@@ -158,7 +168,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
       }
     };
     loadExistingSession();
-  }, [sessionId]);
+  }, [sessionId, initialContact]);
 
   const saveToDatabase = useCallback(async (formValues: FormData) => {
     setIsSaving(true);
@@ -208,15 +218,7 @@ const BookingOnboardingForm = ({ onComplete, source = 'eight-week', onCompleteRe
     updateField('cell_phone', formatPhoneNumber(e.target.value));
   };
 
-  const isStep1Valid = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[\d\s\-\(\)\+]{10,}$/;
-    return (
-      formData.full_name.trim() !== '' &&
-      emailRegex.test(formData.email) &&
-      phoneRegex.test(formData.cell_phone.replace(/\s/g, ''))
-    );
-  };
+  const isStep1Valid = () => isContactComplete(formData);
 
   const isStep2Valid = () => (
     formData.primary_carrier.trim() !== '' &&

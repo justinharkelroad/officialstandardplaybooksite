@@ -331,9 +331,6 @@ const Start = () => {
             <h2 className="fn-display fn-h2">Raise your standard.</h2>
           </div>
           <PrescriptionCards />
-          <div className="fn-final-actions">
-            <Link className="fn-btn fn-btn--ghost" to={bookHref('standard90')}>Apply</Link>
-          </div>
           <p className="fn-disclaimer">{RESULTS_DISCLAIMER}</p>
         </div>
       </section>
