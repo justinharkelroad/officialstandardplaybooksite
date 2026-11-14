@@ -25,17 +25,19 @@ export const VSL_VIDEOS = {
     // Final cut v2 (2026-11-13): the nine numbered "N. ... - 4K.mov" clips
     // joined in Justin's order, each trimmed where it cuts to its black
     // STANDARD end card (the last clip keeps it), 1080p, -16 LUFS, 8:02.
+    // v3 (2026-11-14): Justin moved "Make the choice" (clip 7) to the end,
+    // after 8 and 9, so it closes on "Make the choice, get out of here." 8:02.
     // v1 repeated chapter 1's audio under every later chapter; v2 is checked
     // by transcribing each chapter's first and last seconds.
     // Hosted on Cloudflare R2 (bucket `standard-media`) because it is over the
     // 25 MiB Pages file limit; its host must stay in media-src in
     // public/_headers. Captions are burned in, so no captionsSrc.
     // New cut = new filename (the file is served immutable).
-    src: 'https://media.standardplaybook.com/vsl/standard-vsl-2026-11-13-v2.mp4',
+    src: 'https://media.standardplaybook.com/vsl/standard-vsl-2026-11-14-v3.mp4',
     poster: '/video/standard-vsl-poster.jpg',
     // Starts are the measured seams of the joined file (seconds). revealAt is
     // "The pricing for everything we have is going to show up underneath."
-    // Order is Justin's numbered clip order (2026-11-13).
+    // Order: clips 1-6, 8, 9, then 7 (Justin, 2026-11-14).
     chapters: [
       { title: 'Who this is for', start: 0 },
       { title: 'Why consistency breaks', start: 29.2 },
@@ -43,9 +45,9 @@ export const VSL_VIDEOS = {
       { title: 'Who I am', start: 106.2 },
       { title: 'How Standard works', start: 167.2 },
       { title: 'Inside the room', start: 240.5 },
-      { title: 'Make the choice', start: 312.9 },
-      { title: 'The guarantee', start: 387.5 },
-      { title: "Which one's for you", start: 420.0 },
+      { title: 'The guarantee', start: 312.9 },
+      { title: "Which one's for you", start: 345.4 },
+      { title: 'Make the choice', start: 404.5 },
     ],
     revealAt: 96,
     milestones: MILESTONES,
