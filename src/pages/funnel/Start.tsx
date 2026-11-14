@@ -8,7 +8,7 @@ import { bookHref, checkoutLinkProps, CheckoutButton } from '@/components/funnel
 import { amountFrom } from '@/lib/funnel/purchase';
 import { VSL_VIDEOS } from '@/config/vsl';
 import { GUARANTEES, MIRROR_CREDIT_TERMS, OFFERS, RESULTS_DISCLAIMER, type OfferKey } from '@/config/offers';
-import { DEMO_CLIPS, NOT_FOR, OBJECTION_CLIPS, PROOF_FEATURE, PROOF_TESTIMONIALS, START_PRICING_ORDER } from '@/config/startPage';
+import { DEMO_CLIPS, NOT_FOR, OBJECTIONS, PROOF_FEATURE, PROOF_TESTIMONIALS, START_PRICING_ORDER } from '@/config/startPage';
 import { captureMirrorAttribution } from '@/lib/mirrorAttribution';
 import { trackFunnel, trackVslEvent } from '@/lib/funnel/track';
 import { MarketingAdvisor } from '@/components/marketing/MarketingAdvisor';
@@ -17,6 +17,17 @@ import './Funnel.css';
 const video = VSL_VIDEOS['sp-main'];
 
 const formatTime = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+
+/** Renders an objection punch line; words wrapped in *asterisks* get the accent. */
+const Punch = ({ text }: { text: string }) => (
+  <>
+    {text.split(/(\*[^*]+\*)/).filter(Boolean).map((part, i) =>
+      part.startsWith('*')
+        ? <span key={i} className="fn-accent">{part.slice(1, -1)}</span>
+        : <span key={i}>{part}</span>,
+    )}
+  </>
+);
 
 /** The two prescription cards plus the side links. Same block at the top and bottom of the page. */
 const PrescriptionCards = () => {
@@ -260,17 +271,35 @@ const Start = () => {
       </section>
 
       <section className="fn-section">
-        <div className="fn-shell fn-shell--narrow">
+        <div className="fn-shell">
           <div className="fn-section-head">
             <p className="fn-kicker">/ Straight answers</p>
             <h2 className="fn-display fn-h2">What owners ask first.</h2>
           </div>
-          <div className="fn-accordion">
-            {OBJECTION_CLIPS.map((clip) => (
-              <details key={clip.title}>
-                <summary>{clip.title}</summary>
-                <div className="fn-accordion__body">
-                  <ClipFrame clip={{ ...clip, title: '' }} />
+          <div className="fn-objections">
+            {OBJECTIONS.map((o, i) => (
+              <details key={o.q} className="fn-objection" name="objections">
+                <summary>
+                  <span className="fn-objection__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="fn-objection__q">{o.q}</span>
+                  <span className="fn-objection__icon" aria-hidden="true" />
+                </summary>
+                <div className="fn-objection__answer">
+                  <p className="fn-display fn-objection__punch"><Punch text={o.punch} /></p>
+                  <div className="fn-objection__body">
+                    {o.body.map((line) => <p key={line}>{line}</p>)}
+                  </div>
+                  {o.stats && (
+                    <dl className="fn-objection__stats">
+                      {o.stats.map((s) => (
+                        <div key={s.label}>
+                          <dt>{s.label}</dt>
+                          <dd className="fn-display">{s.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+                  {o.link && <Link className="fn-link fn-objection__link" to={o.link.to}>{o.link.label} →</Link>}
                 </div>
               </details>
             ))}
