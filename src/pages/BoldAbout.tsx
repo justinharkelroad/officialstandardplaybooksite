@@ -43,7 +43,7 @@ const Hero = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / About
+          About
         </p>
       </Reveal>
 
@@ -158,7 +158,7 @@ const FounderSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Founder
+          Founder
         </p>
       </Reveal>
 
@@ -230,7 +230,7 @@ const MissionSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Mission
+          The Mission
         </p>
       </Reveal>
       <Reveal delay={0.1}>
@@ -285,7 +285,7 @@ const ValuesSection = () => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, textTransform: 'uppercase', marginBottom: 12,
           }}>
-            / Our Values
+            Our Values
           </p>
           <h2 style={{
             fontFamily: display, fontSize: 'clamp(44px, 7vw, 100px)',
@@ -356,7 +356,7 @@ const StorySection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Our Story
+          Our Story
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -442,7 +442,7 @@ const BrandsSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Our Brands
+          Our Brands
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -533,7 +533,7 @@ const GiantCTA = () => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, opacity: 0.5, textTransform: 'uppercase', marginBottom: 24,
           }}>
-            / The Standard
+            The Standard
           </p>
         </Reveal>
         <Reveal delay={0.05}>

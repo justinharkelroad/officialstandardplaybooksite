@@ -314,7 +314,7 @@ const MissionSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Mission
+          The Mission
         </p>
       </Reveal>
       <Reveal delay={0.1}>
@@ -409,7 +409,7 @@ const BuilderSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Builder
+          The Builder
         </p>
       </Reveal>
       <Reveal delay={0.1}>
@@ -468,7 +468,7 @@ const AgencyBrainBand = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, textTransform: 'uppercase', marginBottom: 24, opacity: 0.6,
         }}>
-          / Introducing
+          Introducing
         </p>
       </Reveal>
 
@@ -604,7 +604,7 @@ const PolaroidGrid = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 16,
         }}>
-          / The Evidence
+          The Evidence
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -955,7 +955,7 @@ const DecisionProgramsSection = () => {
     <section id="programs" className="decision-board">
       <div className="decision-board-layout">
         <header className="decision-board-intro">
-          <p>/ Programs</p>
+          <p>Programs</p>
           <h2>What needs to change first?</h2>
           <div className="decision-board-intro-rule" aria-hidden />
           <p>Choose the problem you need solved. We’ll show you the shortest path.</p>
@@ -1406,7 +1406,7 @@ const SoftwareDetail = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / Inside Agency Brain
+          Inside Agency Brain
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -1498,7 +1498,7 @@ const DailyPracticeSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, textTransform: 'uppercase', marginBottom: 24, opacity: 0.6,
         }}>
-          / The Daily Practice
+          The Daily Practice
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -1600,7 +1600,7 @@ const GiantCTA = () => {
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: paper, opacity: 0.5, textTransform: 'uppercase', marginBottom: 24,
           }}>
-            / Your Move
+            Your Move
           </p>
         </Reveal>
         <Reveal delay={0.05}>

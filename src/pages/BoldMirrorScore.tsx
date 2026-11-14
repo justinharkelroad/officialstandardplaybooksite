@@ -115,7 +115,7 @@ const StickyHeader = ({
           margin: 0,
         }}
       >
-        / Question {questionNum} of {totalQuestions}
+        Question {questionNum} of {totalQuestions}
       </p>
     </div>
   </div>

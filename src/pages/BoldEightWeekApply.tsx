@@ -111,7 +111,7 @@ const HeroSection = ({ onBookCall }: { onBookCall: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / 8-Week Sales Management Experience · Application
+          8-Week Sales Management Experience · Application
         </p>
       </Reveal>
 
@@ -225,7 +225,7 @@ const ProblemSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Problem
+          The Problem
         </p>
       </Reveal>
       <Reveal delay={0.1}>
@@ -264,7 +264,7 @@ const PromiseSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Promise
+          The Promise
         </p>
       </Reveal>
       <Reveal delay={0.1}>
@@ -312,7 +312,7 @@ const SystemsSection = ({ onBookCall }: { onBookCall: () => void }) => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, textTransform: 'uppercase', marginBottom: 12,
           }}>
-            / What You Walk Away With
+            What You Walk Away With
           </p>
           <h2 style={{
             fontFamily: display, fontSize: 'clamp(44px, 7vw, 100px)',
@@ -396,7 +396,7 @@ const HowItWorksSection = () => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 12,
           }}>
-            / How It Works
+            How It Works
           </p>
           <h2 style={{
             fontFamily: display, fontSize: 'clamp(40px, 7vw, 100px)',
@@ -460,7 +460,7 @@ const WhatsIncludedSection = ({ onBookCall }: { onBookCall: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / What's Included
+          What's Included
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -554,7 +554,7 @@ const ToolsSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Platform
+          The Platform
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -633,7 +633,7 @@ const TestimonialsSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Testimonials
+          Testimonials
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -744,7 +744,7 @@ const FitSection = ({ onBookCall }: { onBookCall: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Fit Check
+          Fit Check
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -851,7 +851,7 @@ const GuaranteeSection = () => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 16,
           }}>
-            / The Guarantee
+            The Guarantee
           </p>
           <h2 style={{
             fontFamily: display, fontSize: 'clamp(40px, 7vw, 96px)',
@@ -903,7 +903,7 @@ const FAQSection = () => {
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, textTransform: 'uppercase', marginBottom: 28,
           }}>
-            / Questions
+            Questions
           </p>
         </Reveal>
         <Reveal delay={0.05}>
@@ -1001,7 +1001,7 @@ const FinalCTASection = ({ onBookCall }: { onBookCall: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.5, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / Ready to stop being the sales manager?
+          Ready to stop being the sales manager?
         </p>
       </Reveal>
       <Reveal delay={0.05}>

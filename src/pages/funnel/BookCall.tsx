@@ -118,7 +118,7 @@ const BookCall = () => {
 
       <section className="fn-hero">
         <div className="fn-shell fn-shell--narrow">
-          <p className="fn-kicker">/ Book a call</p>
+          <p className="fn-kicker">Book a call</p>
           <h1 className="fn-display fn-h2" style={{ marginBottom: 24 }}>Let's get you with Justin.</h1>
 
           <div className="bc-log" role="log" aria-live="polite">

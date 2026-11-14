@@ -10,7 +10,7 @@ const blue = '#2997FF';
 const CertifiedStandardBand = () => (
   <section aria-labelledby="certified-standard-heading" style={{ background: ink, color: paper, padding: '100px 24px', fontFamily: body }}>
     <div className="max-w-[1280px] mx-auto">
-      <p style={{ fontSize: 12, fontWeight: 600, letterSpacing: '.18em', textTransform: 'uppercase', color: blue, marginBottom: 24 }}>/ Certified Standard</p>
+      <p style={{ fontSize: 12, fontWeight: 600, letterSpacing: '.18em', textTransform: 'uppercase', color: blue, marginBottom: 24 }}>Certified Standard</p>
       <h2 id="certified-standard-heading" style={{ fontFamily: display, fontSize: 'clamp(40px, 7vw, 100px)', lineHeight: 1, textTransform: 'uppercase', fontWeight: 400, letterSpacing: '-.01em', maxWidth: 1100, textWrap: 'balance' }}>
         A process they can practice.<br /><span style={{ color: blue }}>Evidence you can coach.</span>
       </h2>

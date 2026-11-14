@@ -109,7 +109,7 @@ const Hero = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / By Application. Personal And Hands On.
+          By Application. Personal And Hands On.
         </p>
       </Reveal>
 
@@ -298,7 +298,7 @@ const MirrorSection = () => {
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, textTransform: 'uppercase', marginBottom: 12,
           }}>
-            / The Honest Mirror
+            The Honest Mirror
           </p>
           <h2 style={{
             fontFamily: display, fontSize: 'clamp(44px, 7vw, 100px)',
@@ -447,7 +447,7 @@ const DifferentSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 12,
         }}>
-          / Why This Is Different
+          Why This Is Different
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -533,7 +533,7 @@ const PathSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.55, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / The Path
+          The Path
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -677,7 +677,7 @@ const MachineSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 12,
         }}>
-          / The Machine
+          The Machine
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -776,7 +776,7 @@ const WalkOutSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 12,
         }}>
-          / What You Walk Out With
+          What You Walk Out With
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -851,7 +851,7 @@ const WhoSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 12,
         }}>
-          / Who I Am
+          Who I Am
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -928,7 +928,7 @@ const OfferSection = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.55, textTransform: 'uppercase', marginBottom: 12,
         }}>
-          / The Offer And The Filter
+          The Offer And The Filter
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -1074,7 +1074,7 @@ const QuestionsSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 12,
         }}>
-          / Questions
+          Questions
         </p>
       </Reveal>
       <Reveal delay={0.05}>

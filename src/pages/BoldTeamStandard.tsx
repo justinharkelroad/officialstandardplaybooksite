@@ -212,7 +212,7 @@ const WhyNeverTruth = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Why You Never Get The Truth
+          Why You Never Get The Truth
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -258,7 +258,7 @@ const CostOfStaying = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Cost Of Staying
+          The Cost Of Staying
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -286,7 +286,7 @@ const ThirtyDaysIn = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, opacity: 0.65, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / The Possibility
+          The Possibility
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -340,7 +340,7 @@ const WhyDifferent = () => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, textTransform: 'uppercase', marginBottom: 18,
           }}>
-            / The Difference
+            The Difference
           </p>
           <h2 style={{
             fontFamily: display, fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.95,
@@ -413,7 +413,7 @@ const HowItWorks = () => (
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, textTransform: 'uppercase', marginBottom: 12,
           }}>
-            / How It Works
+            How It Works
           </p>
           <h2 style={{
             fontFamily: display, fontSize: 'clamp(44px, 7vw, 100px)', lineHeight: 0.95,
@@ -502,7 +502,7 @@ const TwoWaysIn = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 18,
         }}>
-          / Two Ways In
+          Two Ways In
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -612,7 +612,7 @@ const Principles = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 18,
         }}>
-          / Non-Negotiables
+          Non-Negotiables
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -651,7 +651,7 @@ const WhyMe = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Me, Not A Course
+          Me, Not A Course
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -688,7 +688,7 @@ const OfferAndFilter = ({ onApply }: { onApply: () => void }) => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 18,
         }}>
-          / Who It Is For
+          Who It Is For
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -779,7 +779,7 @@ const Questions = () => {
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, textTransform: 'uppercase', marginBottom: 18,
           }}>
-            / Questions
+            Questions
           </p>
         </Reveal>
         <Reveal delay={0.05}>

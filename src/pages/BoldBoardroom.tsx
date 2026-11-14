@@ -225,7 +225,7 @@ const Hero = () => {
                 marginBottom: 14,
               }}
             >
-              // Watch: The Boardroom In Two Minutes
+              Watch: The Boardroom In Two Minutes
             </p>
             <motion.div
               whileHover={{ rotate: 0 }}
@@ -328,7 +328,7 @@ const Hero = () => {
                     marginBottom: 8,
                   }}
                 >
-                  // 30 Minutes Before Every Monday Call (Click a Stage)
+                  30 Minutes Before Every Monday Call (Click a Stage)
                 </p>
                 <h2
                   style={{
@@ -715,7 +715,7 @@ const ProblemPromise = () => (
               marginBottom: 14,
             }}
           >
-            / The Isolation Trap
+            The Isolation Trap
           </p>
           <h2
             style={{
@@ -760,7 +760,7 @@ const ProblemPromise = () => (
               marginBottom: 14,
             }}
           >
-            / The Weekly Mechanism
+            The Weekly Mechanism
           </p>
           <h2
             style={{
@@ -883,7 +883,7 @@ const BoardroomLoopSection = () => (
               marginBottom: 20,
             }}
           >
-            / Inside Agency Brain &middot; The 30-Minute Pre-Call Loop
+            Inside Agency Brain &middot; The 30-Minute Pre-Call Loop
           </p>
         </Reveal>
         <Reveal delay={0.05}>
@@ -1568,7 +1568,7 @@ const WeeklyCallSection = () => (
               marginBottom: 24,
             }}
           >
-            / The Weekly Live Call &middot; Mondays at 1:00 PM ET
+            The Weekly Live Call &middot; Mondays at 1:00 PM ET
           </p>
         </Reveal>
         <Reveal delay={0.05}>
@@ -1716,7 +1716,7 @@ const WeeklyCallSection = () => (
                     margin: '0 0 8px',
                   }}
                 >
-                  / Coach-Verified Attendance Streaks
+                  Coach-Verified Attendance Streaks
                 </p>
                 <p
                   style={{
@@ -1792,7 +1792,7 @@ const MirrorExperienceSection = () => (
             marginBottom: 20,
           }}
         >
-          / The Mirror Experience &middot; Three Layers Of Truth
+          The Mirror Experience &middot; Three Layers Of Truth
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -2467,7 +2467,7 @@ const IncludesSection = () => {
               marginBottom: 20,
             }}
           >
-            / What Comes With Your Seat
+            What Comes With Your Seat
           </p>
           <h2
             style={{
@@ -2678,7 +2678,7 @@ const IncludesSection = () => {
                     margin: '0 0 6px',
                   }}
                 >
-                  / Want More AI Firepower Later?
+                  Want More AI Firepower Later?
                 </p>
                 <h4
                   style={{
@@ -2826,7 +2826,7 @@ const AppShowcaseSection = () => (
     <div className="max-w-[1280px] mx-auto px-6">
       <Reveal>
         <p style={{ fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em', color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 20 }}>
-          / The platform, in your pocket
+          The platform, in your pocket
         </p>
         <h2 style={{ fontFamily: display, fontSize: 'clamp(42px, 6.8vw, 98px)', lineHeight: 0.94, letterSpacing: '-0.01em', color: paper, textTransform: 'uppercase', margin: 0, fontWeight: 400 }}>
           THE WHOLE SYSTEM.
@@ -2906,7 +2906,7 @@ const OwnerSystemSection = () => (
             marginBottom: 20,
           }}
         >
-          / The Core Four Operating System
+          The Core Four Operating System
         </p>
         <h2
           style={{
@@ -3138,7 +3138,7 @@ const FAQSection = () => {
               marginBottom: 28,
             }}
           >
-            / The Questions
+            The Questions
           </p>
         </Reveal>
         <Reveal delay={0.05}>
@@ -3299,7 +3299,7 @@ const GiantCTA = () => (
             marginBottom: 24,
           }}
         >
-          / Your Seat In The Room + Agency Brain Core
+          Your Seat In The Room + Agency Brain Core
         </p>
       </Reveal>
       <Reveal delay={0.05}>

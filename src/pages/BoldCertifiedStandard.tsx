@@ -77,7 +77,7 @@ const Hero = () => (
   <section style={{ background: paper, paddingTop: 56 + 36, paddingBottom: 80, position: 'relative', overflow: 'hidden' }}>
     <div className="px-6 md:px-10 max-w-[1440px] mx-auto relative">
       <Reveal>
-        <Eyebrow>/ For agency owners and sales managers developing producers</Eyebrow>
+        <Eyebrow>For agency owners and sales managers developing producers</Eyebrow>
       </Reveal>
 
       <Reveal className="relative z-20">
@@ -169,7 +169,7 @@ const pains = [
 const ProblemSection = () => (
   <section style={{ background: paper, padding: '120px 24px', borderTop: `1px solid ${ink}` }}>
     <div className="max-w-[1280px] mx-auto">
-      <Reveal><Eyebrow>/ The Calls You Recognize</Eyebrow></Reveal>
+      <Reveal><Eyebrow>The Calls You Recognize</Eyebrow></Reveal>
       <Reveal delay={0.05}>
         <h2 style={{
           fontFamily: display, fontSize: 'clamp(40px, 7vw, 100px)', lineHeight: 0.95,
@@ -216,7 +216,7 @@ const loop = [
 const HowSection = () => (
   <section style={{ background: ink, color: paper, padding: '120px 24px' }}>
     <div className="max-w-[1280px] mx-auto">
-      <Reveal><Eyebrow onDark>/ How It Works</Eyebrow></Reveal>
+      <Reveal><Eyebrow onDark>How It Works</Eyebrow></Reveal>
       <Reveal delay={0.05}>
         <h2 style={{
           fontFamily: display, fontSize: 'clamp(32px, 4.6vw, 68px)', lineHeight: 0.98,
@@ -285,7 +285,7 @@ const PayoffSection = () => (
     <div className="max-w-[1280px] mx-auto">
       <Reveal>
         <p style={{ fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em', color: ink, opacity: 0.9, textTransform: 'uppercase', marginBottom: 24 }}>
-          / The Owner’s View
+          The Owner’s View
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -435,7 +435,7 @@ const ScenarioGrid = ({ items }: { items: ScenarioItem[] }) => (
 const InsideSection = () => (
   <section id="curriculum" style={{ background: paper, padding: '80px 24px' }}>
     <div className="max-w-[1280px] mx-auto">
-      <Reveal><Eyebrow>/ What&apos;s Inside</Eyebrow></Reveal>
+      <Reveal><Eyebrow>What&apos;s Inside</Eyebrow></Reveal>
       <Reveal delay={0.05}>
         <h2 style={{
           fontFamily: display, fontSize: 'clamp(40px, 7vw, 104px)', lineHeight: 0.95,
@@ -509,7 +509,7 @@ const PagePreview = ({ file, alt, caption }: { file: string; alt: string; captio
 const WorkbookSection = () => (
   <section id="guides" className="cs-section cs-dark">
     <div className="cs-container">
-      <Eyebrow onDark>/ The Producer Guides</Eyebrow>
+      <Eyebrow onDark>The Producer Guides</Eyebrow>
       <h2 className="cs-heading">The process stays <span>at their desk.</span></h2>
       <p className="cs-intro">Three practical PDF guides available in the course. Language to rehearse today. References for the next real call.</p>
       <div className="cs-guide-grid">
@@ -546,7 +546,7 @@ const confirmationSteps = [
 const ConfirmationSection = () => (
   <section id="confirmation" className="cs-section">
     <div className="cs-container">
-      <Eyebrow>/ The Owner Handoff · The Confirmation</Eyebrow>
+      <Eyebrow>The Owner Handoff · The Confirmation</Eyebrow>
       <h2 className="cs-heading">Course passed.<br /><span>Now prove it on real work.</span></h2>
       <p className="cs-intro">Training evidence gives you a place to start. The Confirmation is your owner playbook for the next 30 days: debrief, live proof, weekly coaching, and a decision you can stand behind.</p>
       <div className="cs-confirmation-grid">
@@ -591,7 +591,7 @@ const seatFeatures = [
 const PricingSection = () => (
   <section id="pricing" style={{ background: ink, color: paper, padding: '120px 24px' }}>
     <div className="max-w-[1280px] mx-auto">
-      <Reveal><Eyebrow onDark>/ Pricing</Eyebrow></Reveal>
+      <Reveal><Eyebrow onDark>Pricing</Eyebrow></Reveal>
       <Reveal delay={0.05}>
         <h2 style={{
           fontFamily: display, fontSize: 'clamp(40px, 7vw, 104px)', lineHeight: 0.95,
@@ -663,7 +663,7 @@ const faqs = [
 const QuestionsSection = () => (
   <section style={{ background: paper, padding: '120px 24px' }}>
     <div className="max-w-[1080px] mx-auto">
-      <Reveal><Eyebrow>/ Questions</Eyebrow></Reveal>
+      <Reveal><Eyebrow>Questions</Eyebrow></Reveal>
       <Reveal delay={0.05}>
         <h2 style={{
           fontFamily: display, fontSize: 'clamp(44px, 7vw, 100px)', lineHeight: 0.95,

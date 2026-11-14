@@ -57,7 +57,7 @@ const Hero = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / Producer Challenge · 6 Weeks · $299
+          Producer Challenge · 6 Weeks · $299
         </p>
       </Reveal>
 
@@ -89,7 +89,7 @@ const Hero = () => (
             fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.18em',
             color: ink, opacity: 0.5, textTransform: 'uppercase', marginBottom: 14,
           }}>
-            // Watch The Walkthrough
+            Watch The Walkthrough
           </p>
           <motion.div
             whileHover={{ rotate: 0 }}
@@ -132,7 +132,7 @@ const Hero = () => (
                 fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.18em',
                 color: red, textTransform: 'uppercase', marginBottom: 10,
               }}>
-                / The Problem
+                The Problem
               </p>
               <p style={{
                 fontFamily: editorial, fontSize: 'clamp(18px, 2.2vw, 24px)',
@@ -161,7 +161,7 @@ const Hero = () => (
                 fontFamily: body, fontSize: 11, fontWeight: 700, letterSpacing: '0.18em',
                 color: blue, textTransform: 'uppercase', marginBottom: 10,
               }}>
-                / The Possibility
+                The Possibility
               </p>
               <p style={{
                 fontFamily: editorial, fontSize: 'clamp(18px, 2.2vw, 24px)',
@@ -293,7 +293,7 @@ const CorePromiseSection = () => {
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, textTransform: 'uppercase', marginBottom: 28,
           }}>
-            / The Core Promise
+            The Core Promise
           </p>
         </Reveal>
         <Reveal delay={0.05}>
@@ -398,7 +398,7 @@ const SystemNotCourseSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Why It's Different
+          Why It's Different
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -468,7 +468,7 @@ const AccountabilitySection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Accountability Engine
+          The Accountability Engine
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -585,7 +585,7 @@ const DailyRhythmSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Daily Rhythm
+          The Daily Rhythm
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -664,7 +664,7 @@ const CurriculumSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Curriculum
+          The Curriculum
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -735,7 +735,7 @@ const CulturalSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Beyond Skills
+          Beyond Skills
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -810,7 +810,7 @@ const TechStackSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Technology
+          The Technology
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -925,7 +925,7 @@ const ROISection = () => {
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, textTransform: 'uppercase', marginBottom: 28,
           }}>
-            / The Return
+            The Return
           </p>
         </Reveal>
         <Reveal delay={0.05}>
@@ -992,7 +992,7 @@ const OutcomeSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.6, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / The Ultimate Outcome
+          The Ultimate Outcome
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -1067,7 +1067,7 @@ const LogisticsSection = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Logistics
+          Logistics
         </p>
       </Reveal>
       <Reveal delay={0.05}>
@@ -1128,7 +1128,7 @@ const FinalCTA = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: ink, textTransform: 'uppercase', marginBottom: 28,
         }}>
-          / Lock It In
+          Lock It In
         </p>
       </Reveal>
 
@@ -1245,7 +1245,7 @@ const FAQSection = () => {
             fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
             color: ink, textTransform: 'uppercase', marginBottom: 28,
           }}>
-            / Questions
+            Questions
           </p>
         </Reveal>
         <Reveal delay={0.05}>
@@ -1342,7 +1342,7 @@ const GiantCTA = () => (
           fontFamily: body, fontSize: 12, fontWeight: 600, letterSpacing: '0.18em',
           color: paper, opacity: 0.5, textTransform: 'uppercase', marginBottom: 24,
         }}>
-          / Your Move
+          Your Move
         </p>
       </Reveal>
       <Reveal delay={0.05}>

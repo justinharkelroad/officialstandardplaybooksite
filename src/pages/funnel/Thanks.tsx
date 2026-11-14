@@ -60,7 +60,7 @@ const Thanks = () => {
 
       <section className="fn-hero" style={{ minHeight: "62vh" }}>
         <div className="fn-shell fn-shell--narrow">
-          <p className="fn-kicker">/ Payment received</p>
+          <p className="fn-kicker">Payment received</p>
           <h1 className="fn-display fn-h1">You're <span className="fn-accent">in.</span></h1>
           {found && <p className="fn-lede">{found.offer.name} · {found.option.billing}</p>}
           <p className="fn-lede">Your receipt is on its way to your inbox.</p>
