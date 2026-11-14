@@ -96,7 +96,7 @@ export const OBJECTIONS: Objection[] = [
       "Owners who don't have time are usually running an agency that only works when they're in it. That's the standard problem.",
     ],
     stats: [
-      { value: '60', label: 'Minutes live, Monday 1pm EST' },
+      { value: '60', label: 'Minutes live, Mondays' },
       { value: '30', label: 'Minute pre-call loop' },
       { value: '1', label: 'Domino a week' },
     ],
@@ -172,7 +172,6 @@ export const START_PRICING_ORDER = [
   'mirror',
   'certifiedStandard',
   'producerChallenge',
-  'agencyBrainPlusLcc',
   'boardroom',
   'teamStandard2x',
   'teamStandard4x',

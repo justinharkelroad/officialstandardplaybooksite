@@ -12,6 +12,7 @@ import { DEMO_CLIPS, NOT_FOR, OBJECTIONS, PROOF_FEATURE, PROOF_TESTIMONIALS, STA
 import { captureMirrorAttribution } from '@/lib/mirrorAttribution';
 import { trackFunnel, trackVslEvent } from '@/lib/funnel/track';
 import { MarketingAdvisor } from '@/components/marketing/MarketingAdvisor';
+import { AgencyBrainBox, AgencyBrainIncluded } from '@/components/funnel/AgencyBrain';
 import './Funnel.css';
 
 const video = VSL_VIDEOS['sp-main'];
@@ -37,7 +38,8 @@ const PrescriptionCards = () => {
       <article className="fn-card fn-card--primary">
         <span className="fn-card__tag">A · {boardroom.name}</span>
         <p className="fn-card__price">$399<small>/mo</small></p>
-        <p className="fn-card__fit">Start in the room this week. Weekly group coaching, Agency Brain Core included.</p>
+        <p className="fn-card__fit">Start in the room this week. Weekly group coaching.</p>
+        <AgencyBrainIncluded />
         <p className="fn-small" style={{ margin: 0 }}>Monday 1pm EST.</p>
         <div className="fn-card__actions">
           <CheckoutButton offer={boardroom} option={boardroom.checkouts[0]} variant="blue" label="Join the Boardroom" />
@@ -108,6 +110,7 @@ const PricingRow = ({ offerKey, index }: { offerKey: OfferKey; index: number }) 
             <> Want in now? <Link className="fn-link" to="/momentum">Momentum is open.</Link></>
           )}
         </p>
+        {offerKey === 'boardroom' && <AgencyBrainIncluded />}
       </div>
       <p className="fn-price-row__price">
         {amount
@@ -197,6 +200,8 @@ const Start = () => {
           <p className="fn-credit">{MIRROR_CREDIT_TERMS}</p>
         </div>
       </section>
+
+      <AgencyBrainBox id="agency-brain" />
 
       <section className="fn-section fn-section--ink">
         <div className="fn-shell">
