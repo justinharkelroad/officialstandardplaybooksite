@@ -219,4 +219,12 @@ export const seoConfig: Record<string, SEOConfig> = {
     type: 'website',
     structuredData: structuredDataByRoute['/blog'],
   },
+  // The previous homepage, kept reachable but out of search (Justin, 2026-11-14).
+  '/bold': {
+    title: 'The Standard Playbook (classic homepage)',
+    description: 'The previous Standard Playbook homepage.',
+    keywords: [],
+    canonical: 'https://standardplaybook.com/',
+    noindex: true,
+  },
 };

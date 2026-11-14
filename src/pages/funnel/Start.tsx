@@ -13,6 +13,8 @@ import { captureMirrorAttribution } from '@/lib/mirrorAttribution';
 import { trackFunnel, trackVslEvent } from '@/lib/funnel/track';
 import { MarketingAdvisor } from '@/components/marketing/MarketingAdvisor';
 import { AgencyBrainBox, AgencyBrainIncluded } from '@/components/funnel/AgencyBrain';
+import BoldNav from '@/components/BoldNav';
+import { BoldFooter } from '@/pages/BoldMockup';
 import './Funnel.css';
 
 const video = VSL_VIDEOS['sp-main'];
@@ -127,27 +129,33 @@ const PricingRow = ({ offerKey, index }: { offerKey: OfferKey; index: number }) 
   );
 };
 
-const Start = () => {
+/**
+ * /start (ad traffic) and / (the homepage, Justin 2026-11-14) are the same page.
+ * `home` swaps the funnel chrome for the site nav and footer, uses the
+ * homepage SEO from seoConfig['/'], and skips the view_content event so
+ * homepage visits don't count as VSL-funnel views in ad tracking.
+ */
+const Start = ({ home = false }: { home?: boolean }) => {
   const [revealed, setRevealed] = useState(false);
   const viewed = useRef(false);
 
   useEffect(() => {
     captureMirrorAttribution();
-    if (viewed.current) return;
+    if (home || viewed.current) return;
     viewed.current = true;
     trackFunnel('view_content', { contentName: 'Standard Playbook VSL', videoId: video.id });
-  }, []);
+  }, [home]);
 
   return (
-    <main className="funnel-page">
-      <SEOHead
+    <main className="funnel-page" style={home ? { paddingTop: 56 } : undefined}>
+      {home ? <SEOHead /> : <SEOHead
         config={{
           title: 'Raise Your Standard | The Standard Playbook',
           description: "Your agency doesn't have a sales problem. It has a standard problem. Watch the video, then pick your prescription.",
           canonical: 'https://standardplaybook.com/start',
         }}
-      />
-      <FunnelHeader />
+      />}
+      {home ? <BoldNav /> : <FunnelHeader />}
 
       <section className="fn-hero">
         <div className="fn-shell">
@@ -188,7 +196,7 @@ const Start = () => {
         </div>
       </section>
 
-      <section className="fn-section">
+      <section className="fn-section" id="programs">
         <div className="fn-shell">
           <div className="fn-section-head">
             <p className="fn-kicker">/ Every way to work with us</p>
@@ -201,7 +209,7 @@ const Start = () => {
         </div>
       </section>
 
-      <AgencyBrainBox id="agency-brain" />
+      <AgencyBrainBox id={home ? 'software' : 'agency-brain'} />
 
       <section className="fn-section fn-section--ink">
         <div className="fn-shell">
@@ -335,8 +343,8 @@ const Start = () => {
         </div>
       </section>
 
-      <FunnelFooter />
-      <MarketingAdvisor brand="standard" surface="start" />
+      {home ? <BoldFooter /> : <FunnelFooter />}
+      <MarketingAdvisor brand="standard" surface={home ? undefined : 'start'} />
     </main>
   );
 };
