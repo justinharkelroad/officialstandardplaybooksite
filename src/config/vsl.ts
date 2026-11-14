@@ -22,25 +22,28 @@ export const VSL_VIDEOS = {
   'sp-main': {
     id: 'sp-main',
     vimeoId: 'PLACEHOLDER_SP_MAIN',
-    src: '/video/team-standard-hero.mp4',
-    poster: '/video/team-standard-hero-poster.jpg',
-    captionsSrc: '/video/vsl-placeholder-captions.vtt',
-    // 9-segment arc from the recorded Part I-IV + cap 14-18 cuts. Starts are
-    // from raw segment lengths (no trims or section-card gaps yet); dial to the
-    // second once Derek stitches the final cut. revealAt lands where Part IV
-    // says "the pricing shows up underneath."
+    // Final cut (2026-11-13): the nine "- 4K.mov" chapter clips joined in
+    // order, each trimmed where it cuts to its black STANDARD end card (the
+    // last clip keeps it), 1080p, -16 LUFS, 8:02. Hosted on Cloudflare R2
+    // because it is over the 25 MiB Pages file limit; its host must stay in
+    // media-src in public/_headers. Captions are burned in, so no captionsSrc.
+    // R2 bucket `standard-media`. New cut = new dated filename (served immutable).
+    src: 'https://media.standardplaybook.com/vsl/standard-vsl-2026-11-13.mp4',
+    poster: '/video/standard-vsl-poster.jpg',
+    // Starts are the measured seams of the joined file (seconds). revealAt is
+    // "The pricing for everything we have is going to show up underneath."
     chapters: [
       { title: 'Who this is for', start: 0 },
-      { title: 'Who I am', start: 30 },
-      { title: 'Why consistency breaks', start: 63 },
-      { title: "It's a standard problem", start: 107 },
-      { title: 'How Standard works', start: 168 },
-      { title: 'Inside the room', start: 240 },
-      { title: "Which one's for you", start: 311 },
-      { title: 'The guarantee', start: 369 },
-      { title: 'Make the choice', start: 400 },
+      { title: 'Who I am', start: 29.2 },
+      { title: 'Why consistency breaks', start: 90.2 },
+      { title: "It's a standard problem", start: 123.7 },
+      { title: 'How Standard works', start: 167.2 },
+      { title: 'Inside the room', start: 240.5 },
+      { title: "Which one's for you", start: 312.9 },
+      { title: 'The guarantee', start: 372.1 },
+      { title: 'Make the choice', start: 404.6 },
     ],
-    revealAt: 160,
+    revealAt: 157,
     milestones: MILESTONES,
   },
   'sp-precall': {
