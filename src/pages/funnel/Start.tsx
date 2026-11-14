@@ -12,7 +12,7 @@ import { DEMO_CLIPS, NOT_FOR, OBJECTIONS, PROOF_FEATURE, PROOF_TESTIMONIALS, STA
 import { captureMirrorAttribution } from '@/lib/mirrorAttribution';
 import { trackFunnel, trackVslEvent } from '@/lib/funnel/track';
 import { MarketingAdvisor } from '@/components/marketing/MarketingAdvisor';
-import { AgencyBrainBox, AgencyBrainIncluded } from '@/components/funnel/AgencyBrain';
+import { AGENCY_BRAIN_FEATURES_URL, AgencyBrainBox, AgencyBrainIncluded } from '@/components/funnel/AgencyBrain';
 import BoldNav from '@/components/BoldNav';
 import { BoldFooter } from '@/pages/BoldMockup';
 import './Funnel.css';
@@ -209,19 +209,18 @@ const Start = ({ home = false }: { home?: boolean }) => {
         </div>
       </section>
 
-      <AgencyBrainBox id={home ? 'software' : 'agency-brain'} />
-
-      <section className="fn-section fn-section--ink">
-        <div className="fn-shell">
-          <div className="fn-section-head">
-            <p className="fn-kicker">/ Inside Agency Brain</p>
-            <h2 className="fn-display fn-h2">See it working.</h2>
-          </div>
+      <AgencyBrainBox id={home ? 'software' : 'agency-brain'} flush>
+        <div className="ab-demo">
+          <p className="ab-box__kicker">Inside Agency Brain</p>
+          <h3 className="ab-demo__title">See it working.</h3>
           <div className="fn-clips">
             {DEMO_CLIPS.map((clip) => <ClipFrame key={clip.title} clip={clip} loop />)}
           </div>
+          <div className="ab-demo__foot">
+            <a className="ab-box__cta ab-box__cta--ghost" href={AGENCY_BRAIN_FEATURES_URL} target="_blank" rel="noreferrer">See more features →</a>
+          </div>
         </div>
-      </section>
+      </AgencyBrainBox>
 
       <section className="fn-section">
         <div className="fn-shell">

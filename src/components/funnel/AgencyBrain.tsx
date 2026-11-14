@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { AGENCY_BRAIN_PLANS_URL } from '@/config/offers';
 
 /** Agency Brain's three levels, matching the in-app plan comparison. */
@@ -25,11 +26,18 @@ const AGENCY_BRAIN_TIERS = [
   },
 ];
 
-/** The branded Agency Brain software box (three tiers + Live Call Coach add-on). Used on /start and /prep. */
-export const AgencyBrainBox = ({ id }: { id?: string }) => (
-  <section className="fn-section" id={id}>
+export const AGENCY_BRAIN_FEATURES_URL = 'https://myagencybrain.com/info';
+
+/**
+ * The branded Agency Brain software box (three tiers + Live Call Coach add-on).
+ * Default: a dark card on the paper page (/prep). `flush`: the card dissolves
+ * into a full-width black section and `children` (e.g. the demo clips) render
+ * inside it, so pricing and features read as one section (/start, Justin 2026-11-14).
+ */
+export const AgencyBrainBox = ({ id, flush = false, children }: { id?: string; flush?: boolean; children?: ReactNode }) => (
+  <section className={flush ? 'fn-section fn-section--ink' : 'fn-section'} id={id}>
     <div className="fn-shell">
-      <div className="ab-box">
+      <div className={flush ? 'ab-box ab-box--flush' : 'ab-box'}>
         <div className="ab-box__head">
           <img className="ab-box__logo" src="/ab-white.png" alt="Agency Brain" width={1920} height={500} />
           <p className="ab-box__kicker">The software</p>
@@ -52,6 +60,7 @@ export const AgencyBrainBox = ({ id }: { id?: string }) => (
           <p className="ab-box__addon">Add Live Call Coach to any level: $129 per rep a month.</p>
           <a className="ab-box__cta" href={AGENCY_BRAIN_PLANS_URL} target="_blank" rel="noreferrer">See Agency Brain plans</a>
         </div>
+        {children}
       </div>
     </div>
   </section>
