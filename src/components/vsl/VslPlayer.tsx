@@ -679,6 +679,8 @@ const PLAYER_CSS = `
 .vslp-chapters button { display: inline-flex; align-items: baseline; gap: 8px; padding: 9px 12px; border: 1.5px solid currentColor; background: transparent; color: inherit; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; opacity: .72; white-space: nowrap; }
 .vslp-chapters button.is-current { opacity: 1; border-color: var(--vslp-accent); color: var(--vslp-accent); }
 .vslp-chapter-time { font-size: 11px; font-variant-numeric: tabular-nums; opacity: .7; }
+/* Wider screens: wrap so every chapter is visible. A mouse wheel can't scroll sideways on Windows. Phones keep the swipe row. */
+@media (min-width: 700px) { .vslp-chapters { flex-wrap: wrap; overflow-x: visible; } }
 @media (max-width: 520px) {
   .vslp-time { display: none; }
   .vslp-cta { padding: 12px 16px; gap: 8px; font-size: 13px; }
