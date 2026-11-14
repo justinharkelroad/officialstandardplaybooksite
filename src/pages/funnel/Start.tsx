@@ -8,7 +8,7 @@ import { bookHref, checkoutLinkProps, CheckoutButton } from '@/components/funnel
 import { amountFrom } from '@/lib/funnel/purchase';
 import { VSL_VIDEOS } from '@/config/vsl';
 import { GUARANTEES, MIRROR_CREDIT_TERMS, OFFERS, RESULTS_DISCLAIMER, type OfferKey } from '@/config/offers';
-import { DEMO_CLIPS, NOT_FOR, OBJECTION_CLIPS, PROOF_CLIPS, PROOF_QUOTE, START_PRICING_ORDER } from '@/config/startPage';
+import { DEMO_CLIPS, NOT_FOR, OBJECTION_CLIPS, PROOF_FEATURE, PROOF_TESTIMONIALS, START_PRICING_ORDER } from '@/config/startPage';
 import { captureMirrorAttribution } from '@/lib/mirrorAttribution';
 import { trackFunnel, trackVslEvent } from '@/lib/funnel/track';
 import { MarketingAdvisor } from '@/components/marketing/MarketingAdvisor';
@@ -205,13 +205,38 @@ const Start = () => {
             <p className="fn-kicker">/ Proof</p>
             <h2 className="fn-display fn-h2">Owners who raised it.</h2>
           </div>
-          <div className="fn-clips">
-            {PROOF_CLIPS.map((clip) => <ClipFrame key={clip.title} clip={clip} />)}
+          <div className="fn-proof-feature">
+            <div className="fn-clip__frame">
+              <video
+                src={PROOF_FEATURE.clip.src}
+                poster={PROOF_FEATURE.clip.poster}
+                controls
+                playsInline
+                preload="none"
+                aria-label={PROOF_FEATURE.clip.title}
+              />
+            </div>
+            <blockquote className="fn-quote fn-proof-feature__quote">
+              <p>"{PROOF_FEATURE.quote}"</p>
+              <cite>
+                {PROOF_FEATURE.author}
+                <span>{PROOF_FEATURE.role}</span>
+              </cite>
+            </blockquote>
           </div>
-          <blockquote className="fn-quote">
-            <p>"{PROOF_QUOTE.text}"</p>
-            <cite>{PROOF_QUOTE.author}</cite>
-          </blockquote>
+          <ul className="fn-testimonials" aria-label="What owners say">
+            {PROOF_TESTIMONIALS.map((t) => (
+              <li key={t.name} className="fn-testimonial">
+                <blockquote>
+                  <p>“{t.quote}”</p>
+                  <footer>
+                    <strong>{t.name}</strong>
+                    {t.role && <span>{t.role}</span>}
+                  </footer>
+                </blockquote>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

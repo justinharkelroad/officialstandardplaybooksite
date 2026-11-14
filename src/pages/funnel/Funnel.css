@@ -604,6 +604,99 @@
   font-weight: 700;
 }
 
+/* ── Proof: one featured video + written testimonials ──── */
+
+/* Dan's testimonial is a vertical phone video (720x1280). */
+.fn-proof-feature {
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+}
+
+.fn-proof-feature .fn-clip__frame {
+  aspect-ratio: 9 / 16;
+  background: var(--fn-ink);
+}
+
+.fn-proof-feature__quote {
+  margin: 0;
+}
+
+.fn-proof-feature__quote p {
+  font-size: clamp(32px, 5vw, 64px);
+}
+
+.fn-proof-feature__quote cite span {
+  display: block;
+  margin-top: 4px;
+  color: var(--fn-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fn-testimonials {
+  margin: clamp(40px, 6vw, 72px) 0 0;
+  padding: 0;
+  list-style: none;
+  columns: 3 280px;
+  column-gap: clamp(20px, 3vw, 40px);
+}
+
+.fn-testimonial {
+  break-inside: avoid;
+  margin: 0 0 clamp(20px, 3vw, 32px);
+  padding-top: 18px;
+  border-top: 2px solid var(--fn-ink);
+}
+
+.fn-testimonial blockquote {
+  margin: 0;
+}
+
+.fn-testimonial p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.fn-testimonial footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin-top: 14px;
+}
+
+.fn-testimonial footer strong {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fn-testimonial footer span {
+  color: var(--fn-blue-ink);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .fn-proof-feature {
+    grid-template-columns: 1fr;
+  }
+
+  .fn-proof-feature .fn-clip__frame {
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto;
+  }
+}
+
 /* ── Guarantees ────────────────────────────────────────── */
 
 .fn-guarantees {
