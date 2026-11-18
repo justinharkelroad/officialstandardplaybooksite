@@ -205,8 +205,11 @@ const Ascension = () => {
         <div className="ascension-shell ascension-promise__inner">
           <p className="ascension-kicker">The promise</p>
           <blockquote>
-            For 12 weeks, you will keep your word in all four areas. Your Flows and voice drops are witnessed daily in Telegram, your 60-point game is scored in Agency Brain, and drift is confronted with love on the spot.
+            For 12 weeks, you keep your word in all four areas.
           </blockquote>
+          <p className="ascension-promise__body">
+            Your Flows and voice drops are witnessed daily in Telegram, your 60-point week is scored inside Agency Brain, and drift is confronted with love on the spot.
+          </p>
           <p className="ascension-promise__note">No revenue guarantees. We lock your boundaries, extract your standard onto paper, and let the weekly evidence stack.</p>
         </div>
       </section>
