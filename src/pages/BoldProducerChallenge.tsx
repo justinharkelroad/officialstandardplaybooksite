@@ -1463,25 +1463,24 @@ const MobileStickyCTA = () => (
    PAGE
    ══════════════════════════════════════════════════════ */
 const BoldProducerChallenge = () => {
-  // Load Wistia player scripts on mount
+  // Load Wistia player scripts once without tearing down custom-element scripts on SPA navigation
   useEffect(() => {
-    const wistiaPlayerScript = document.createElement('script');
-    wistiaPlayerScript.src = 'https://fast.wistia.com/player.js';
-    wistiaPlayerScript.async = true;
-    document.body.appendChild(wistiaPlayerScript);
+    const playerSrc = 'https://fast.wistia.com/player.js';
+    if (!document.querySelector(`script[src="${playerSrc}"]`)) {
+      const wistiaPlayerScript = document.createElement('script');
+      wistiaPlayerScript.src = playerSrc;
+      wistiaPlayerScript.async = true;
+      document.body.appendChild(wistiaPlayerScript);
+    }
 
-    const wistiaEmbedScript = document.createElement('script');
-    wistiaEmbedScript.src = 'https://fast.wistia.com/embed/1bz6nrl5ip.js';
-    wistiaEmbedScript.async = true;
-    wistiaEmbedScript.type = 'module';
-    document.body.appendChild(wistiaEmbedScript);
-
-    return () => {
-      const wp = document.querySelector('script[src="https://fast.wistia.com/player.js"]');
-      if (wp) document.body.removeChild(wp);
-      const we = document.querySelector('script[src="https://fast.wistia.com/embed/1bz6nrl5ip.js"]');
-      if (we) document.body.removeChild(we);
-    };
+    const embedSrc = 'https://fast.wistia.com/embed/1bz6nrl5ip.js';
+    if (!document.querySelector(`script[src="${embedSrc}"]`)) {
+      const wistiaEmbedScript = document.createElement('script');
+      wistiaEmbedScript.src = embedSrc;
+      wistiaEmbedScript.async = true;
+      wistiaEmbedScript.type = 'module';
+      document.body.appendChild(wistiaEmbedScript);
+    }
   }, []);
 
   return (
