@@ -64,9 +64,9 @@ export const seoConfig: Record<string, SEOConfig> = {
     type: 'article',
   },
   '/ascension': {
-    title: 'The Standard Ascension | One-on-One Private Mentorship',
-    description: 'A 12-week private mentorship with Justin Harkelroad. One business target, all four areas of your life on the board, and weekly evidence you cannot hide from.',
-    keywords: ['private mentorship', 'one on one business coaching', 'agency owner mentorship', '12 week coaching', 'standard ascension', 'standard playbook'],
+    title: 'The Standard Ascension | 12-Week Private 1:1 Mentorship',
+    description: 'Twelve weeks of private 1:1 mentorship with Justin Harkelroad. Lock your 12-Week Game across Body, Being, Balance, and Business inside Agency Brain, with daily Flows and voice drops in Telegram and a 60-point weekly scoreboard.',
+    keywords: ['private mentorship', 'one on one business coaching', 'agency owner mentorship', '12 week coaching', 'standard ascension', 'standard playbook', 'agency brain'],
     ogImage: 'https://standardplaybook.com/og/ascension.png',
     canonical: 'https://standardplaybook.com/ascension',
     type: 'article',

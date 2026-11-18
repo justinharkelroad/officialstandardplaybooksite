@@ -7,9 +7,9 @@ import SEOHead from '@/components/SEOHead';
 import './TheTool.css';
 
 const cascade = [
-  { label: 'Quarter', title: 'Quarterly target', copy: 'The 90-day direction you choose in each domain.' },
-  { label: 'Month', title: 'Monthly mission', copy: 'The measurable bridge that keeps the quarter close.' },
-  { label: 'Week', title: 'Weekly priority', copy: 'The plays and one big thing that make the week count.' },
+  { label: 'Quarter', title: '12-Week Game', copy: 'The 12-week targets you lock in each domain.' },
+  { label: 'Month', title: 'Monthly mission', copy: 'The measurable 4-week cycle that keeps the target close.' },
+  { label: 'Week', title: 'Weekly Drives & Plays', copy: 'Up to four Weekly Drives and twenty weekday Power Plays that make the week count.' },
   { label: 'Today', title: "Today's proof", copy: 'The action you completed and the evidence you recorded.' },
 ];
 
@@ -29,9 +29,9 @@ const rhythm = [
   },
   {
     cadence: 'Weekly',
-    title: 'Turn priorities into plays.',
-    copy: 'Move work from the Bench into scheduled Power Plays, choose one big thing, then close the loop in your weekly Debrief.',
-    detail: 'Up to 21 Playbook points',
+    title: 'Turn priorities into Drives and Plays.',
+    copy: 'Move work from the Bench into scheduled weekday Power Plays, lock up to four Weekly Drives, then close the loop in your weekly Debrief.',
+    detail: 'Up to 25 Playbook points',
   },
   {
     cadence: 'Monthly',
@@ -41,18 +41,18 @@ const rhythm = [
   },
   {
     cadence: 'Quarterly',
-    title: 'Build the 90-day cascade.',
-    copy: 'Brainstorm targets, sharpen measurability, choose the primary outcome, and carry it into missions and daily actions.',
+    title: 'Build the 12-week cascade.',
+    copy: 'Brainstorm targets, sharpen measurability, map three 4-week Mission Cycles, and carry them into weekly Drives and daily habits.',
     detail: 'Up to two targets per domain',
   },
 ];
 
 const appMap = [
-  ['Hub', 'See the quarter, month, week, and day in one current operating view.'],
-  ['Daily', 'Track Core 4 completion, notes, streaks, and the live weekly score.'],
-  ['Weekly', 'Manage the Bench, scheduled Power Plays, and One Big Thing.'],
-  ['Monthly', 'Own one active mission per domain for the calendar month.'],
-  ['Quarterly', 'Build targets, missions, daily actions, and the full cascade.'],
+  ['Hub', 'See the 12-Week Game, month, week, and day in one current operating view.'],
+  ['Daily', 'Track Core 4 completion, notes, streaks, and the live 60-point weekly score.'],
+  ['Weekly', 'Manage the Bench, weekday Power Plays, and up to four Weekly Drives.'],
+  ['Monthly', 'Own one active mission per domain for the current cycle.'],
+  ['12-Week Game', 'Build targets, Mission Cycles, daily actions, and the full cascade.'],
   ['Flows', 'Run guided coaching sessions by text or voice and search the Library.'],
   ['Reflection', 'Synthesize the week across the Flows you actually completed.'],
   ['Debrief', 'Review the evidence, compare performance, and seal the week.'],
@@ -190,7 +190,7 @@ const TheTool = () => {
         <section className="the-tool-score" aria-labelledby="score-title">
           <div className="the-tool-shell the-tool-score__grid">
             <div className="the-tool-score__statement">
-              <span className="the-tool-score__number">56</span>
+              <span className="the-tool-score__number">60</span>
               <div>
                 <p className="the-tool-eyebrow">One weekly evidence score</p>
                 <h2 id="score-title">Track the work. See the pattern.</h2>
@@ -204,12 +204,12 @@ const TheTool = () => {
               <b aria-hidden="true">+</b>
               <div><strong>7</strong><span>Flows</span></div>
               <b aria-hidden="true">+</b>
-              <div><strong>21</strong><span>Playbook</span></div>
+              <div><strong>25</strong><span>Playbook</span></div>
               <b aria-hidden="true">=</b>
-              <div className="is-total"><strong>56</strong><span>Total</span></div>
+              <div className="is-total"><strong>60</strong><span>Total</span></div>
             </div>
             <p className="the-tool-score__note">
-              A completed Flow earns one point for that calendar day. Power Plays earn up to 20 weekday points, plus one point for the One Big Thing.
+              Core 4 (4/day) and Flow (1/day) run all seven days, weekends included. Power Plays run Monday–Friday only (up to 4/day for 20 points), plus up to 4 points for Weekly Drives and 1 Sweep Bonus when all 20 Power Plays and every declared Drive are complete.
             </p>
           </div>
         </section>
@@ -307,7 +307,7 @@ const TheTool = () => {
                 <span>Weekly Debrief</span>
                 <h3>Close the week. Open the next one.</h3>
                 <p>
-                  Review every score, name gratitude and corrections, move actions to the Bench, choose next week’s One Big Thing, and seal the record.
+                  Review every score, name gratitude and corrections, move actions to the Bench, set next week’s Drives, and seal the record.
                 </p>
               </article>
               <article className="the-tool-reinforce__audio">

@@ -836,7 +836,7 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
               eyebrow="Private 12-week mentorship · By application"
               name="The Standard Ascension"
               price="Apply to see the investment"
-              description="One business target and all four areas of life on the board, with a private call every week and daily interaction with Justin."
+              description="One stretch business target and all four areas of life locked on a 60-point weekly board in Agency Brain, with daily Flows and voice drops in Telegram plus a private 1:1 call every week."
               href="/ascension"
               cta="Explore Ascension"
             />
@@ -1392,7 +1392,7 @@ const featureGroups = [
     items: [
       { name: 'Team Training', line: 'A full library with structured tracks, right inside the app.' },
       { name: 'AI Roleplay Trainer', line: 'Producers sharpen the pitch anytime, against an AI that talks back.' },
-      { name: 'Habit Tracking', line: 'Core 4 + Flow: daily practice gamified, 56 points a week, team leaderboards.' },
+      { name: 'Habit Tracking', line: 'Core 4 + Flow + Playbook: daily practice gamified, 60 points a week, team leaderboards.' },
       { name: 'Target Setting', line: 'A 90-day action map: quarterly goals broken into daily habits.' },
     ],
   },
@@ -1545,7 +1545,7 @@ const DailyPracticeSection = () => (
           fontFamily: display, fontSize: 'clamp(22px, 2.4vw, 34px)', fontWeight: 400, lineHeight: 1.2,
           color: paper, textTransform: 'uppercase', letterSpacing: '-0.01em', marginTop: 64, marginBottom: 0,
         }}>
-          <span style={{ color: blue }}>56 points a week</span> across Core 4 + Flow.
+          <span style={{ color: blue }}>60 points a week</span> across Core 4, Flow + Playbook.
         </p>
         <p style={{
           fontFamily: body, fontSize: 16, fontWeight: 400, lineHeight: 1.6,
