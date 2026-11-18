@@ -425,6 +425,10 @@
   flex-wrap: wrap;
 }
 
+.fn-price-row--clickable {
+  cursor: pointer;
+}
+
 .fn-price-row__name {
   margin: 0;
   font-family: var(--fn-display);
@@ -433,6 +437,39 @@
   line-height: 1;
   letter-spacing: -0.01em;
   text-transform: uppercase;
+}
+
+.fn-price-row__name-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.fn-price-row__name-link:hover,
+.fn-price-row__name-link:focus-visible,
+.fn-price-row--clickable:hover .fn-price-row__name-link {
+  color: var(--fn-blue);
+}
+
+.fn-price-row__name-arrow {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.58em;
+  font-weight: 800;
+  line-height: 1;
+  opacity: 0.35;
+  transform: translateY(-0.08em);
+  transition: opacity 0.18s ease, transform 0.18s ease, color 0.18s ease;
+}
+
+.fn-price-row__name-link:hover .fn-price-row__name-arrow,
+.fn-price-row__name-link:focus-visible .fn-price-row__name-arrow,
+.fn-price-row--clickable:hover .fn-price-row__name-arrow {
+  opacity: 1;
+  color: var(--fn-blue);
+  transform: translate(2px, -0.08em);
 }
 
 .fn-price-row__badge {

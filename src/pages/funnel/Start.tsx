@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SEOHead from '@/components/SEOHead';
 import VslPlayer from '@/components/vsl/VslPlayer';
 import ClipFrame from '@/components/funnel/ClipFrame';
@@ -64,9 +64,11 @@ const PrescriptionCards = () => {
 };
 
 const PricingRow = ({ offerKey, index }: { offerKey: OfferKey; index: number }) => {
+  const navigate = useNavigate();
   const offer = OFFERS[offerKey];
   const option = offer.checkouts[0];
   const link = option ? checkoutLinkProps(offer, option) : null;
+  const externalPage = /^https?:\/\//.test(offer.page);
 
   // Headline figure + a small cadence line, with route-specific treatment.
   const amount = offer.price;
@@ -98,12 +100,34 @@ const PricingRow = ({ offerKey, index }: { offerKey: OfferKey; index: number }) 
       : <Link className="fn-btn fn-price-row__cta" to={offer.page}>Details</Link>;
   }
 
+  const handleRowClick = (e: React.MouseEvent<HTMLLIElement>) => {
+    if ((e.target as HTMLElement).closest('a, button')) return;
+    if (window.getSelection()?.toString()) return;
+    if (externalPage) {
+      window.open(offer.page, '_blank', 'noopener,noreferrer');
+    } else {
+      navigate(offer.page);
+    }
+  };
+
   return (
-    <li className="fn-price-row">
+    <li className="fn-price-row fn-price-row--clickable" onClick={handleRowClick}>
       <span className="fn-price-row__num" aria-hidden="true">{String(index).padStart(2, '0')}</span>
       <div className="fn-price-row__body">
         <div className="fn-price-row__head">
-          <h3 className="fn-price-row__name">{offer.name}</h3>
+          <h3 className="fn-price-row__name">
+            {externalPage ? (
+              <a className="fn-price-row__name-link" href={offer.page} target="_blank" rel="noreferrer">
+                <span>{offer.name}</span>
+                <span className="fn-price-row__name-arrow" aria-hidden="true">↗</span>
+              </a>
+            ) : (
+              <Link className="fn-price-row__name-link" to={offer.page}>
+                <span>{offer.name}</span>
+                <span className="fn-price-row__name-arrow" aria-hidden="true">→</span>
+              </Link>
+            )}
+          </h3>
           {badge && <span className={`fn-price-row__badge fn-price-row__badge--${badge.tone}`}>{badge.label}</span>}
         </div>
         <p className="fn-price-row__summary">

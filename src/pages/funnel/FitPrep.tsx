@@ -106,7 +106,19 @@ const FitPrep = () => {
                   <span className="fn-price-row__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                   <div className="fn-price-row__body">
                     <div className="fn-price-row__head">
-                      <h3 className="fn-price-row__name">{offer.name}</h3>
+                      <h3 className="fn-price-row__name">
+                        {external ? (
+                          <a className="fn-price-row__name-link" href={offer.page} target="_blank" rel="noreferrer">
+                            <span>{offer.name}</span>
+                            <span className="fn-price-row__name-arrow" aria-hidden="true">↗</span>
+                          </a>
+                        ) : (
+                          <Link className="fn-price-row__name-link" to={offer.page} target="_blank">
+                            <span>{offer.name}</span>
+                            <span className="fn-price-row__name-arrow" aria-hidden="true">↗</span>
+                          </Link>
+                        )}
+                      </h3>
                       {featured && (
                         <span className="fn-price-row__badge fn-price-row__badge--scarce">Recommended</span>
                       )}

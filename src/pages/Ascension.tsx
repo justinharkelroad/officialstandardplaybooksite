@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import StandardFitModal from '@/components/StandardFitModal';
+import { bookHref } from '@/components/funnel/OfferActions';
 import standardLogo from '@/assets/standard-word-logo.png';
 import './Ascension.css';
 
@@ -100,10 +99,10 @@ const deliverables = [
   'A sealed 12-week record of proof and a repeatable standard for your next quarter',
 ];
 
-const Ascension = () => {
-  const [applicationOpen, setApplicationOpen] = useState(false);
+const applyHref = bookHref('ascension');
 
-  const openApplication = () => {
+const Ascension = () => {
+  const trackApplication = () => {
     try {
       (window as Window & { fbq?: (...args: unknown[]) => void }).fbq?.('track', 'Lead', {
         content_name: 'The Standard Ascension Application',
@@ -111,7 +110,6 @@ const Ascension = () => {
     } catch {
       // Analytics is best-effort and must never block the application.
     }
-    setApplicationOpen(true);
   };
 
   return (
@@ -121,9 +119,9 @@ const Ascension = () => {
           <Link to="/" aria-label="The Standard Playbook home" className="ascension-nav__brand">
             <img src={standardLogo} alt="The Standard Playbook" />
           </Link>
-          <button type="button" className="ascension-nav__apply" onClick={openApplication}>
+          <Link to={applyHref} className="ascension-nav__apply" onClick={trackApplication}>
             Apply for Ascension
-          </button>
+          </Link>
         </div>
       </header>
 
@@ -135,10 +133,10 @@ const Ascension = () => {
             <p className="ascension-hero__intro">
               Twelve weeks. One stretch business target. All four areas of life locked inside Agency Brain, with daily Flows and voice drops in Telegram plus a private 1:1 call every week.
             </p>
-            <button type="button" className="ascension-cta" onClick={openApplication}>
+            <Link to={applyHref} className="ascension-cta" onClick={trackApplication}>
               Apply for Ascension
               <span aria-hidden="true">↗</span>
-            </button>
+            </Link>
           </div>
 
           <div className="ascension-hero__media">
@@ -304,10 +302,10 @@ const Ascension = () => {
               <li><span>02</span>We review the fit</li>
               <li><span>03</span>Qualified owners schedule a private call</li>
             </ol>
-            <button type="button" className="ascension-cta ascension-cta--dark" onClick={openApplication}>
+            <Link to={applyHref} className="ascension-cta ascension-cta--dark" onClick={trackApplication}>
               Apply for Ascension
               <span aria-hidden="true">↗</span>
-            </button>
+            </Link>
           </aside>
         </div>
       </section>
@@ -317,10 +315,10 @@ const Ascension = () => {
           <img src={standardLogo} alt="" aria-hidden="true" />
           <h2>You versus you.</h2>
           <p>One-on-one private mentorship for the next 12 weeks.</p>
-          <button type="button" className="ascension-cta" onClick={openApplication}>
+          <Link to={applyHref} className="ascension-cta" onClick={trackApplication}>
             Apply for Ascension
             <span aria-hidden="true">↗</span>
-          </button>
+          </Link>
         </div>
       </section>
 
@@ -330,14 +328,6 @@ const Ascension = () => {
           <p>© {new Date().getFullYear()} The Standard Playbook</p>
         </div>
       </footer>
-
-      <StandardFitModal
-        open={applicationOpen}
-        onOpenChange={setApplicationOpen}
-        source="ascension"
-        callLengthLabel="45-min"
-        programName="The Standard Ascension"
-      />
     </main>
   );
 };
