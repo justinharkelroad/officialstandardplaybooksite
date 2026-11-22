@@ -25,10 +25,8 @@ const ROUTES = [
   '/ascension',
   '/momentum',
   '/sales-experience',
-  '/producer-power-up',
   '/callscoring',
   '/calls',
-  '/the-challenge',
   // '/app' excluded: AppRedirect immediately navigates to external URL
   '/appinfo',
   '/thetool',

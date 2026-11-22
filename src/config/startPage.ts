@@ -171,7 +171,6 @@ export const NOT_FOR = [
 export const START_PRICING_ORDER = [
   'mirror',
   'certifiedStandard',
-  'producerChallenge',
   'boardroom',
   'teamStandard2x',
   'teamStandard4x',

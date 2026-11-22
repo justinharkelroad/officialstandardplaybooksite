@@ -8,7 +8,6 @@ import OffersGrid from '@/components/sections/OffersGrid';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import ClosingCTA from '@/components/sections/ClosingCTA';
 import StickyCTA from '@/components/StickyCTA';
-import PromoBanner from '@/components/PromoBanner';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -35,7 +34,6 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
-      <PromoBanner />
       <HeroSection onScrollToSection={scrollToSection} />
       <VideoFlowSection />
       <OutcomeSection />

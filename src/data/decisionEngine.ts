@@ -190,20 +190,6 @@ export const OFFER_CATALOG: { version: string; currency: string; offers: Offer[]
       display_order: 40
     },
     {
-      slug: "producer-challenge",
-      name: "Producer Power Up Challenge",
-      type: "program",
-      price: 299,
-      billing_cycle: "one_time",
-      status: "open",
-      inclusions: {
-        duration_weeks: 6,
-        app_access: "Stack Access"
-      },
-      links: { checkout: "URL_PLACEHOLDER" },
-      display_order: 50
-    },
-    {
       slug: "scs-30",
       name: "Standard Call Scoring: 30",
       type: "saas",
@@ -270,11 +256,6 @@ export const DECISION_RULES: {
       if_any_tags: ["prefers_group_only"],
       recommend: ["boardroom"],
       why: "You prefer group cadence without 1:1."
-    },
-    {
-      if_any_tags: ["producer_skill_sprint"],
-      recommend: ["producer-challenge"],
-      why: "You want a 6-week producer-focused sprint."
     }
   ],
   constraints: {
@@ -287,11 +268,6 @@ export const DECISION_RULES: {
       when_recommended: ["sales-experience"],
       also_show: ["scs-50"],
       note: "Pair SCS for weekly call grading while deploying process."
-    },
-    {
-      name: "Directive + Producer Challenge",
-      when_recommended: ["directive"],
-      also_show: ["producer-challenge"]
     }
   ]
 };
@@ -315,7 +291,6 @@ export const INTAKE_SCHEMA: {
       options: [
         "Deploy sales process",
         "Manager training",
-        "Producer skill sprint",
         "Time management for call reviews",
         "Accountability systems",
         "Community and cadence"
@@ -341,7 +316,6 @@ export const INTAKE_SCHEMA: {
   tag_map: {
     "Deploy sales process": "deploy_sales_process",
     "Manager training": "manager_training",
-    "Producer skill sprint": "producer_skill_sprint",
     "Time management for call reviews": "time_management_for_call_reviews",
     "Group only": "prefers_group_only",
     "1:1 + group": "wants_one_on_one",

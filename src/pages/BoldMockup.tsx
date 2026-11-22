@@ -861,7 +861,7 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
       <div className="decision-team-groups">
         <section aria-labelledby="train-the-team">
           <h4 id="train-the-team">Train the team</h4>
-          <div className="decision-details-grid decision-details-grid--two">
+          <div className="decision-details-grid">
             <DecisionOffer
               eyebrow="AI sales certification · One-time"
               name="Certified Standard"
@@ -869,15 +869,6 @@ const PathDetails = ({ path }: { path: DecisionPathId }) => {
               description="Build producer readiness with AI practice, scored checks, practical guides, and The Confirmation owner handoff. Purchase and training through Agency Brain."
               href="/certified-standard?src=home-programs"
               cta="Explore Certified Standard"
-            />
-            <DecisionOffer
-              eyebrow="Team sprint"
-              name="6 Week Producer Challenge"
-              price="$299/producer"
-              description="Six weeks of sales-process training, daily habits, action takeaways, and owner visibility."
-              href="https://myagencybrain.com/six-week-challenge"
-              cta="Start the Challenge"
-              external
             />
           </div>
         </section>

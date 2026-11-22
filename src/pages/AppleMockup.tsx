@@ -728,24 +728,6 @@ const coachingPrograms = [
     href: '/sales-experience',
     cta: 'Learn More',
   },
-  {
-    label: 'Team Sprint',
-    title: '6 Week Producer Challenge',
-    description: 'For owners who need producers executing now, not "eventually."',
-    details: [
-      '30 Training Modules',
-      '7 Sunday Target Setting Modules',
-      'Direct Reflection & Action Item Takeaways',
-      'Agency Owner/Mgr have full view of takeaways',
-      'Sales Process Training',
-      'Daily Habit Training',
-    ],
-    price: '$299 per producer',
-    soldOut: false,
-    action: 'link' as const,
-    href: 'https://myagencybrain.com/six-week-challenge',
-    cta: 'Start the Challenge',
-  },
 ];
 
 /* --- Software plans --- */
@@ -1109,8 +1091,8 @@ const ProgramsSection = () => {
                   <CoachingCard key={program.title} program={program} onDirectiveClick={() => setDirectiveModalOpen(true)} />
                 ))}
               </div>
-              {/* Bottom row: Boardroom, 8 Week, 6 Week */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Bottom row: Boardroom, 8 Week */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {coachingPrograms.slice(2).map((program) => (
                   <CoachingCard key={program.title} program={program} onDirectiveClick={() => setDirectiveModalOpen(true)} />
                 ))}

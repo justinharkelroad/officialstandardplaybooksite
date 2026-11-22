@@ -135,8 +135,6 @@ export const PRESCRIPTION_WHY: Record<OfferKey, string> = {
     'You have {producers} and said {problem}. The Boardroom puts you on a call with Justin and other owners every Monday, with Agency Brain Core included. It is the lowest-cost way to stop making every decision alone.',
   certifiedStandard:
     'You have {producers} and said {problem}. Certified Standard certifies each producer on the Standard Playbook sales process. Every seat is a one-time $399.',
-  producerChallenge:
-    'You have {producers} and said {problem}. The 6-Week Producer Challenge gets producers executing in six weeks with 30 trainings. It is $299 per producer.',
   ascension:
     'You said {problem}. The Ascension is twelve weeks of private coaching with Justin across Body, Being, Balance and Business. Apply to see the investment.',
   momentum:

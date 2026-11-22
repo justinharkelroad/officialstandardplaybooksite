@@ -9,7 +9,6 @@ import { MIRROR_SALES_OFFER } from '@/data/mirrorChallengeCopy';
 export type OfferKey =
   | 'mirror'
   | 'certifiedStandard'
-  | 'producerChallenge'
   | 'agencyBrainCore'
   | 'agencyBrainPlusLcc'
   | 'boardroom'
@@ -100,17 +99,6 @@ export const OFFERS: Record<OfferKey, Offer> = {
     page: '/certified-standard',
     route: 'buy',
     checkouts: [{ key: 'certifiedStandard', label: 'Choose seats', billing: '$399 per seat, one time' }],
-  },
-  producerChallenge: {
-    key: 'producerChallenge',
-    name: '6-Week Producer Challenge',
-    price: '$299',
-    cadence: 'per producer',
-    summary: 'Six weeks, 30 trainings, for producers who need to execute now.',
-    includes: ['30 training modules', 'Sunday target setting', 'Owner and manager view of every takeaway'],
-    page: '/the-challenge',
-    route: 'buy',
-    checkouts: [{ key: 'producerChallenge', label: 'Start the Challenge', billing: '$299 per producer, one time' }],
   },
   agencyBrainCore: {
     key: 'agencyBrainCore',

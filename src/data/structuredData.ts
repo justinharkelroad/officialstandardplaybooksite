@@ -230,23 +230,6 @@ export const structuredDataByRoute: Record<string, object[]> = {
     breadcrumb("Terms of Service", "/terms"),
   ],
 
-  '/the-challenge': [
-    serviceSchema({
-      name: "The 6 Week Producer Challenge",
-      url: "/the-challenge",
-      description: "A 42-day execution system for one insurance producer. Daily modules, daily accountability, and a weekly Discovery Stack.",
-      serviceType: "Insurance Agency Intensive Program",
-      audience: "Insurance Agency Owners",
-      price: "299",
-    }),
-    courseSchema({
-      name: "The 6 Week Producer Challenge",
-      url: "/the-challenge",
-      description: "A 42-day producer execution system with daily modules and daily accountability",
-    }),
-    breadcrumb("The 6 Week Producer Challenge", "/the-challenge"),
-  ],
-
   '/blog': [
     breadcrumb("Blog", "/blog"),
   ],

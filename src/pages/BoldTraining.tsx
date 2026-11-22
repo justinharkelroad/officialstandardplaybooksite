@@ -1369,7 +1369,6 @@ const BoldFooter = () => (
             { label: 'Boardroom', href: '/boardroom' },
             { label: 'Directive', href: '/directive' },
             { label: '8-Week', href: '/sales-experience' },
-            { label: 'Producer Challenge', href: '/the-challenge' },
           ]},
           { title: 'Company', items: [
             { label: 'About', href: '/about' },

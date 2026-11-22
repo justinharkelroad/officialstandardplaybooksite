@@ -143,42 +143,6 @@ The program addresses common agency problems: inconsistent sales processes, lack
 
 ---
 
-### The 6 Week Producer Challenge
-URL: https://standardplaybook.com/the-challenge
-Price: $299/producer
-
-The 6 Week Producer Challenge transforms insurance producers from reactive chaos to systematic execution in 42 days. This is a system, not a course — designed for agency owners who want unprecedented visibility into their producer's development.
-
-Structure:
-- 30 weekday video modules (3-5 minutes each, 10-15 minutes total daily commitment)
-- Rolling enrollment: sign up by Friday, start Monday
-- Weekly Discovery Stacks on Fridays (20-30 minutes)
-- Daily action declarations and submissions
-- 60-day full access to The Standard App (The Armory, Core 4 Tracker, 19 Stacking frameworks)
-- Daily owner reports via email showing producer engagement and action commitments
-
-The Core 4 System: Identity, Habits, Systems, Accountability, Results — five pillars that drive systematic execution.
-
-After completion, producers can continue with Standard programs at a 25% lifetime discount.
-
-FAQ:
-Q: When does the challenge start?
-A: Rolling enrollment. Sign up any producer by Friday and they begin the following Monday.
-
-Q: How much time does this require daily?
-A: 3-5 minutes for the video module, 10-15 minutes total including action declarations. Weekly Discovery Stack takes 20-30 minutes on Fridays.
-
-Q: What if my producer misses a day?
-A: All content remains accessible throughout the 6-week period. Producers can catch up, and you'll see completion status in daily reports.
-
-Q: What access do I get as the owner?
-A: Every daily action report via email, plus full PDF of each weekly Discovery Stack.
-
-Q: What's included in the app access?
-A: 60 days of The Standard App including The Armory (30 training modules), Core 4 Tracker (habit gamification), and all 19 Stacking frameworks.
-
----
-
 ## Technology
 
 ### Standard Call Scoring — AI-Powered Call Evaluation

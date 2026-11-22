@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Users, Zap, Crown, Briefcase } from 'lucide-react';
+import { ArrowRight, Users, Zap, Briefcase } from 'lucide-react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { useParallax } from '@/hooks/useParallax';
 
@@ -40,17 +40,6 @@ const OffersGrid = () => {
       icon: Briefcase,
       link: '/sales-experience',
       color: 'primary',
-    },
-    {
-      title: 'PRODUCER CHALLENGE',
-      description: 'For managers and agents ready to dominate.',
-      copy: 'A 6-week intensive that transforms average producers into elite performers. Your agency deserves better than mediocrity.',
-      emphasis: 'Average is the enemy of excellence.',
-      italic: 'Stop accepting excuses. Start demanding results.',
-      icon: Crown,
-      link: null,
-      color: 'primary-accent',
-      comingSoon: true,
     },
     {
       title: 'CALL SCORING',
@@ -130,19 +119,13 @@ const OffersGrid = () => {
                       
                       <p className="text-gray-300 italic">{program.italic}</p>
                     </div>
-                    {program.comingSoon ? (
-                      <div className="bg-primary/20 text-primary font-bold text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 w-full text-center rounded-md">
-                        2.0 COMING SOON
-                      </div>
-                    ) : (
-                      <Button 
-                        onClick={() => navigate(program.link)}
-                        className="btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 w-full button-press"
-                      >
-                        LEARN MORE
-                        <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 ml-2" />
-                      </Button>
-                    )}
+                    <Button 
+                      onClick={() => navigate(program.link)}
+                      className="btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 w-full button-press"
+                    >
+                      LEARN MORE
+                      <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 ml-2" />
+                    </Button>
                   </CardContent>
                 </Card>
               </div>

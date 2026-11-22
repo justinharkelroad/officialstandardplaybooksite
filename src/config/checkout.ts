@@ -15,8 +15,7 @@ export type CheckoutKey =
   | 'eightWeekPif'
   | 'eightWeekWeekly'
   | 'mirror'
-  | 'certifiedStandard'
-  | 'producerChallenge';
+  | 'certifiedStandard';
 
 export const CHECKOUT_LINKS: Record<CheckoutKey, string | null> = {
   // Public plan choices own all new Boardroom checkouts and existing-customer guidance.
@@ -29,7 +28,6 @@ export const CHECKOUT_LINKS: Record<CheckoutKey, string | null> = {
   // Agency Brain's challenge page owns email capture, Stripe and provisioning (2026-11-01).
   mirror: MIRROR_CHALLENGE_CHECKOUT_URL,
   certifiedStandard: CERTIFIED_STANDARD_CHECKOUT_URL,
-  producerChallenge: 'https://myagencybrain.com/six-week-challenge',
 };
 
 /**

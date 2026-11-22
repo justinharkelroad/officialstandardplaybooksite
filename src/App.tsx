@@ -31,7 +31,6 @@ import Privacy from "./pages/Privacy";
 import DataDeletion from "./pages/DataDeletion";
 import Terms from "./pages/Terms";
 import ThankYou from "./pages/ThankYou";
-import ChallengeThankYou from "./pages/ChallengeThankYou";
 import Links from "./pages/Links";
 import BoldMomentum from "./pages/BoldMomentum";
 import Blog from "./pages/Blog";
@@ -49,7 +48,6 @@ import SalesExperienceOnePager from "./pages/SalesExperienceOnePager";
 import BoldDirective from "./pages/BoldDirective";
 import BoldBoardroom from "./pages/BoldBoardroom";
 import BoldAbout from "./pages/BoldAbout";
-import BoldProducerChallenge from "./pages/BoldProducerChallenge";
 import BoldTraining from "./pages/BoldTraining";
 import BoldEightWeekApply from "./pages/BoldEightWeekApply";
 import BoldContact from "./pages/BoldContact";
@@ -108,10 +106,6 @@ const App = () => (
           <Route path="/apple-sales-experience" element={<Navigate to="/8-week" replace />} />
           <Route path="/8-week-apply" element={<BoldEightWeekApply />} />
           <Route path="/legacy-8-week-apply" element={<Navigate to="/8-week-apply" replace />} />
-          <Route path="/producer-power-up" element={<Navigate to="/the-challenge" replace />} />
-          <Route path="/the-challenge" element={<BoldProducerChallenge />} />
-          <Route path="/thechallenge" element={<Navigate to="/the-challenge" replace />} />
-          <Route path="/legacy-the-challenge" element={<Navigate to="/the-challenge" replace />} />
           <Route path="/formulaai" element={<Navigate to="/aiinstall" replace />} />
           <Route path="/callscoring" element={<CallScoring />} />
           <Route path="/start" element={<FunnelStart />} />
@@ -130,12 +124,10 @@ const App = () => (
           <Route path="/data-deletion" element={<DataDeletion />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/thank-you" element={<ThankYou />} />
-          <Route path="/challenge-thank-you" element={<ChallengeThankYou />} />
           <Route path="/links" element={<Links />} />
           <Route path="/move" element={<BoldMove />} />
           <Route path="/welcometocoaching" element={<WelcomeToCoaching />} />
           <Route path="/welcomeboardroom" element={<WelcomeBoardroom />} />
-          <Route path="/PPUC" element={<Navigate to="/the-challenge" replace />} />
           <Route path="/presentation" element={<Presentation />} />
           <Route path="/new" element={<Navigate to="/" replace />} />
           <Route path="/fit" element={<StandardFit />} />

@@ -195,14 +195,6 @@ export const seoConfig: Record<string, SEOConfig> = {
     type: 'article',
     structuredData: structuredDataByRoute['/terms'],
   },
-  '/the-challenge': {
-    title: 'The 6 Week Producer Challenge | Insurance Producer Execution System | Standard Playbook',
-    description: 'A 42-day execution system for one insurance producer. Daily modules, daily accountability, and a weekly Discovery Stack reported to the owner.',
-    keywords: ['producer challenge', 'insurance producer training', 'producer accountability', 'sales producer development', 'agency coaching'],
-    ogImage: OG_IMAGE,
-    type: 'article',
-    structuredData: structuredDataByRoute['/the-challenge'],
-  },
   '/8-week-apply': {
     title: '8-Week Sales Management Experience | Apply Now | The Standard Playbook',
     description: 'Stop managing chaos. Start running a system. Book a 45-minute strategy call with Justin. Built for Allstate, Farmers, and State Farm agency owners.',

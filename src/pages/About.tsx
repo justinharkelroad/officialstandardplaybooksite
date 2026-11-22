@@ -252,8 +252,8 @@ const About = () => {
                 </p>
                 <p>
                   <strong className="text-white">The Standard Playbook</strong> is our coaching and training brand,
-                  encompassing all our coaching programs (Boardroom, Directive, Partnership),
-                  the 6 Week Producer Challenge, and the Sales Experience training.
+                  encompassing all our coaching programs (Boardroom, Directive, Partnership)
+                  and the Sales Experience training.
                 </p>
                 <p>
                   <strong className="text-white">Agency Brain</strong> is our technology platform brand,

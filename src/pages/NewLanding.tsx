@@ -373,29 +373,6 @@ const offerCards = [
     action: 'link' as const,
   },
   {
-    label: 'TEAM EXECUTION SPRINT',
-    title: '6 Week Producer Challenge',
-    description: 'For owners who need producers executing now, not "eventually."',
-    bullets: [
-      '42-day producer execution system',
-      'Daily reports + weekly reflections',
-      'Sales process + accountability installed',
-    ],
-    backBullets: [
-      '30 Training Modules',
-      '7 Sunday Target Setting Modules',
-      'Direct Reflection & Action Item Takeaways',
-      'Agency Owner/Mgr have full view of the takeaways',
-      'Sales Process Training',
-      'Daily Habit Training',
-    ],
-    price: '$299 per producer',
-    cta: 'Start the 6 Week Challenge',
-    href: 'https://myagencybrain.com/six-week-challenge',
-    action: 'link' as const,
-    
-  },
-  {
     label: 'MANAGER TRAINING',
     title: '8 Week Experience',
     description: 'For teams stuck in "great month / bad month" cycles.',

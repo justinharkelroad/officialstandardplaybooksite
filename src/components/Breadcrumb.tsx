@@ -13,7 +13,6 @@ const Breadcrumb = () => {
       'directive': 'Directive',
       'momentum': 'Momentum',
       'sales-experience': 'Sales Experience',
-      'producer-power-up': 'Producer Power Up',
       'about': 'About',
       'contact': 'Contact',
       'privacy': 'Privacy Policy',

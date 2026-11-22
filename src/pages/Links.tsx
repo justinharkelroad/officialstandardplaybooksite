@@ -175,23 +175,6 @@ const teamPrograms: ProgramRow[] = [
   },
   {
     num: '02',
-    name: '6 Week Producer Challenge',
-    tier: 'Team Sprint',
-    price: '$299/producer',
-    description: 'For owners who need producers executing now, not "eventually."',
-    details: [
-      '30 Training Modules',
-      '7 Sunday Target Setting Modules',
-      'Direct Reflection & Action Item Takeaways',
-      'Agency Owner/Mgr have full view of takeaways',
-      'Sales Process Training',
-      'Daily Habit Training',
-    ],
-    href: 'https://myagencybrain.com/six-week-challenge',
-    cta: 'Learn More →',
-  },
-  {
-    num: '03',
     name: '8 Week Experience',
     tier: 'Sales Management Training · Waitlist',
     price: '$4.5k or $625/week · Waitlist',
@@ -210,7 +193,7 @@ const teamPrograms: ProgramRow[] = [
     cta: 'Join the waitlist →',
   },
   {
-    num: '04',
+    num: '03',
     name: 'The Team Standard',
     tier: 'Sales Team Accountability · Waitlist',
     price: '2X $2.5k/mo · 4X $4k/mo · Waitlist',

@@ -17,7 +17,6 @@ const StickyCTA = () => {
         };
       case '/directive':
       case '/sales-experience':
-      case '/producer-challenge':
       case '/':
       default:
         return {

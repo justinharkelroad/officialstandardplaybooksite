@@ -111,6 +111,9 @@ export function findConflicts(ogRoutes, seoTs) {
 const RETIRED_OFFERS = [
   'Owner Challenge',
   'Producer Power-Up',
+  // Retired 2026-11-22 pending a full revamp. Remove this line when the new
+  // version is ready to publish under the same name.
+  'Producer Challenge',
   'Standard Stack',
   'Arsenal Level',
   'FORMULA50',
