@@ -3,6 +3,7 @@ name: handoff
 title: Session handoff
 description: AI Install session handoff. Create or update SESSION-HANDOFF.md so a fresh conversation can resume the build. Use when the owner says handoff, save my session, or is ending a work session.
 stage: any
+order: 7
 creates: SESSION-HANDOFF.md
 ---
 

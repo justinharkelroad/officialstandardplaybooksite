@@ -3,6 +3,7 @@ name: resume
 title: Resume the build
 description: AI Install resume. Read the session handoff, verify the files it names, and report the exact next step. Use when the owner says resume, where was I, or pick up the build in a new conversation.
 stage: any
+order: 9
 creates: none
 ---
 

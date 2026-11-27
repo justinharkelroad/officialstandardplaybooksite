@@ -3,6 +3,7 @@ name: phase-1-about-me
 title: Phase 1. About me
 description: AI Install Phase 1. Interview the owner and create about-me.md. Use when the owner says phase 1, about me, or wants to start the Day 1 build.
 stage: day-1
+order: 2
 creates: about-me.md
 ---
 

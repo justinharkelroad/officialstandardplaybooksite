@@ -254,6 +254,29 @@ test("a build that fails on the second platform leaves no zip behind for the fir
   assert.deepEqual(zips, []);
 });
 
+test("connector module: ordered steps, tokens left in place, no receipt, starter files per platform", async () => {
+  const out = tmp("aii-connector-");
+  buildPlugins(join(repoRoot, "resources", "aiinstall"), out);
+  const file = join(out, "connector", "aiInstallContent.generated.ts");
+  const mod = await import(file);
+  const names = mod.AI_INSTALL_STEPS.map((step: { name: string }) => step.name);
+  assert.equal(names[0], "ready");
+  assert.equal(names[1], "phase-1-about-me");
+  assert.ok(names.indexOf("check-day-1") < names.indexOf("phase-6-project"));
+  assert.equal(names.at(-1), "check-day-2");
+  const memory = mod.AI_INSTALL_STEPS.find((step: { name: string }) => step.name === "memory");
+  assert.match(memory.body, /\{\{MASTER_FILE\}\}/);
+  assert.doesNotMatch(memory.body, /CLAUDE\.md|AGENTS\.md/);
+  assert.doesNotMatch(mod.AI_INSTALL_RULES, /AII-R1\|/);
+  assert.match(mod.AI_INSTALL_RULES, /Never invent numbers/);
+  assert.equal(mod.AI_INSTALL_TOKENS.claude.MASTER_FILE, "CLAUDE.md");
+  assert.equal(mod.AI_INSTALL_TOKENS.codex.MASTER_FILE, "AGENTS.md");
+  assert.deepEqual(Object.keys(mod.AI_INSTALL_STARTER_FILES.claude), ["CLAUDE-STARTER.md"]);
+  assert.deepEqual(Object.keys(mod.AI_INSTALL_STARTER_FILES.codex), ["AGENTS-STARTER.md"]);
+  assert.ok(mod.AI_INSTALL_STARTER_FILES.common["memory/glossary.md"].includes("PIF"));
+  assert.ok(!("README-START-HERE.md" in mod.AI_INSTALL_STARTER_FILES.claude));
+});
+
 test("guard 1: Claude build rejects Codex and .agents/skills", () => {
   buildRejects({ phaseBody: "Use Codex." }, /guard 1[\s\S]*claude[\s\S]*"Codex"/);
   buildRejects({ phaseBody: "See .agents/skills." }, /guard 1[\s\S]*"\.agents\/skills"/);

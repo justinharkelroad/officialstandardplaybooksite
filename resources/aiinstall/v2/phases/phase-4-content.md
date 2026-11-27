@@ -3,6 +3,7 @@ name: phase-4-content
 title: Phase 4. Content strategy
 description: AI Install Phase 4. Record the owner's real content program in content-strategy.md. Use when the owner says phase 4, content strategy, or content system.
 stage: day-1
+order: 5
 creates: content-strategy.md
 ---
 

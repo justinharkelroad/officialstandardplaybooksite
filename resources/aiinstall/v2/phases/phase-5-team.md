@@ -3,6 +3,7 @@ name: phase-5-team
 title: Phase 5. Team members
 description: AI Install Phase 5. Build team-members.md from the roster and an interview. Use when the owner says phase 5, team members, or my team.
 stage: day-1
+order: 6
 creates: team-members.md
 ---
 

@@ -3,6 +3,7 @@ name: phase-3-rules
 title: Phase 3. Working preferences and safety rules
 description: AI Install Phase 3. Interview the owner and create working-preferences.md with the four safety rules. Use when the owner says phase 3, working preferences, safety rules, or rules of engagement.
 stage: day-1
+order: 4
 creates: working-preferences.md
 ---
 

@@ -3,6 +3,7 @@ name: ready
 title: Pre-work readiness check
 description: Run the AI Install pre-work readiness check. Use when the owner says ready, readiness check, pre-work check, or wants to confirm their MY BIZ BRAIN setup before the workshop.
 stage: prework
+order: 1
 creates: READY.txt
 ---
 

@@ -3,6 +3,7 @@ name: phase-6-project
 title: Phase 6. Active project
 description: AI Install Phase 6. Interview the owner and create one project file in current-projects. Run once per project. Use when the owner says phase 6, active project, new project file, or add a project.
 stage: day-2
+order: 10
 creates: current-projects/<project-name>.md
 ---
 

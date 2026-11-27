@@ -3,6 +3,7 @@ name: memory
 title: Memory system and master file
 description: AI Install memory system. Build the master index file and the memory folders, then walk the glossary. Use when the owner says memory system, master file, build my index, or glossary walk.
 stage: day-2
+order: 12
 creates: the master file, memory/people/, memory/projects/, memory/context/company.md
 ---
 

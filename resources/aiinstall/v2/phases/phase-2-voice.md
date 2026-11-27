@@ -3,6 +3,7 @@ name: phase-2-voice
 title: Phase 2. Brand voice
 description: AI Install Phase 2. Extract the owner's voice from real writing samples and create brand-voice.md. Use when the owner says phase 2, brand voice, or my voice.
 stage: day-1
+order: 3
 creates: brand-voice.md
 ---
 

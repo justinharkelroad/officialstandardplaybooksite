@@ -3,6 +3,7 @@ name: check-day-2
 title: Day 2 completion check
 description: AI Install Day 2 completion check. Read-only check of projects, memory system, and cold tests. Use when the owner says check day 2, day 2 complete, or final check. Run in a fresh conversation.
 stage: day-2
+order: 14
 creates: none
 ---
 

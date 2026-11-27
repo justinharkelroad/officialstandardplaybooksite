@@ -3,6 +3,7 @@ name: cleanup
 title: Pre-index cleanup
 description: AI Install pre-index cleanup. Audit the workspace for duplicates, conflicts, and stale files before the memory system is built. Use when the owner says cleanup, pre-index audit, or clean the workspace.
 stage: day-2
+order: 11
 creates: none
 ---
 

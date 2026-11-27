@@ -3,6 +3,7 @@ name: cold-test
 title: Cold memory test
 description: AI Install cold memory test. Prove a fresh conversation can find the truth from the master file alone. Use when the owner says cold test, load test, or memory test. Run only in a brand new conversation.
 stage: day-2
+order: 13
 creates: none
 ---
 

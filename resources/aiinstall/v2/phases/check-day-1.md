@@ -3,6 +3,7 @@ name: check-day-1
 title: Day 1 completion check
 description: AI Install Day 1 completion check. Read-only check that the five foundation files exist and were tested. Use when the owner says check day 1, day 1 complete, or am I ready for day 2. Run in a fresh conversation.
 stage: day-1
+order: 8
 creates: none
 ---
 

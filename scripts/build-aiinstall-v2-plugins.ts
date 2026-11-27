@@ -76,6 +76,8 @@ export interface Phase {
   description: string;
   stage: string;
   creates: string;
+  /** Run order for the connector listing; phases without one sort last. */
+  order: number;
   body: string;
   file: string;
 }
@@ -228,6 +230,7 @@ export function loadPhases(phasesDir: string): Phase[] {
       description: data.description ?? "",
       stage: data.stage ?? "",
       creates: data.creates ?? "",
+      order: Number.isFinite(Number(data.order)) && data.order !== undefined && data.order.trim() !== "" ? Number(data.order) : 999,
       body,
       file,
     });
@@ -372,6 +375,75 @@ function renderReadme(phases: Phase[], platform: Platform): string {
   ].join("\n");
 }
 
+// ---------------------------------------------------------------------------
+// Connector output
+// ---------------------------------------------------------------------------
+
+/** The receipt is for pasting into the portal. The connector records results itself, so it is left out. */
+export function stripReceiptSection(rules: string): string {
+  const at = rules.indexOf("\n## Receipt");
+  return (at === -1 ? rules : rules.slice(0, at)).replace(/\s+$/, "");
+}
+
+function starterFilesFor(dir: string, onlyFile?: string): Record<string, string> {
+  const files: Record<string, string> = {};
+  if (!existsSync(dir)) return files;
+  for (const file of listFiles(dir)) {
+    const rel = relative(dir, file).split("\\").join("/");
+    if (onlyFile && rel !== onlyFile) continue;
+    const text = readTextFileIfText(file);
+    if (text !== null) files[rel] = text;
+  }
+  return files;
+}
+
+/**
+ * One TypeScript module for the AgencyBrain connector, generated from the same
+ * phase files as the plugins so the two delivery routes cannot drift. Tokens
+ * are left in place: the connector substitutes them for the app in use.
+ */
+export function renderConnectorModule(phases: Phase[], rules: string, starterSrc: string): string {
+  const ordered = [...phases].sort((a, b) => a.order - b.order || a.name.localeCompare(b.name));
+  const steps = ordered.map((phase) => ({
+    name: phase.name,
+    title: phase.title,
+    description: phase.description,
+    stage: phase.stage,
+    creates: phase.creates,
+    body: phase.body.replace(/^\s+|\s+$/g, ""),
+  }));
+  const starter = {
+    common: starterFilesFor(join(starterSrc, "common")),
+    claude: starterFilesFor(join(starterSrc, "claude"), TOKENS.claude.STARTER_FILE),
+    codex: starterFilesFor(join(starterSrc, "codex"), TOKENS.codex.STARTER_FILE),
+  };
+  const json = (value: unknown) => JSON.stringify(value, null, 2);
+  const text = [
+    "// GENERATED FILE. Do not edit by hand.",
+    "// Source: officialstandardplaybooksite, resources/aiinstall/v2/phases/*.md and shared/operating-rules.md",
+    "// Regenerate there with `bun run build:aiinstall-v2`, then copy dist-aiinstall-v2/connector/ here.",
+    "",
+    `export const AI_INSTALL_CONTENT_VERSION = ${json(VERSION)};`,
+    "",
+    `export const AI_INSTALL_TOKENS: Record<"claude" | "codex", Record<string, string>> = ${json(TOKENS)};`,
+    "",
+    `export const AI_INSTALL_RULES: string = ${json(stripReceiptSection(rules))};`,
+    "",
+    "export type AiInstallStep = { name: string; title: string; description: string; stage: string; creates: string; body: string };",
+    "",
+    `export const AI_INSTALL_STEPS: AiInstallStep[] = ${json(steps)};`,
+    "",
+    `export const AI_INSTALL_STARTER_FILES: Record<"common" | "claude" | "codex", Record<string, string>> = ${json(starter)};`,
+    "",
+  ].join("\n");
+  if (text.includes(EM_DASH)) throw new BuildError(5, "em dash found in connector output");
+  return text;
+}
+
+function writeConnectorModule(phases: Phase[], rules: string, starterSrc: string, file: string): void {
+  writeText(file, renderConnectorModule(phases, rules, starterSrc));
+}
+
 function zipFolder(cwd: string, folder: string, zipPath: string): void {
   rmSync(zipPath, { force: true });
   try {
@@ -473,6 +545,8 @@ export function buildPlugins(sourceRoot: string, outDir: string): BuildResult {
 
     runGuards(platform, platformDir, commandFiles);
   }
+
+  writeConnectorModule(phases, rules, starterSrc, join(out, "connector", "aiInstallContent.generated.ts"));
 
   // Zip only after every platform has passed its guards, so a failed build
   // never leaves a shippable zip for one platform behind.
