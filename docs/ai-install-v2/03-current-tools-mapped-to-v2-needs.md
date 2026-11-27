@@ -87,7 +87,7 @@ A consumer and small-business agent with real-time voice, avatars, and smartwatc
 | # | Need | Status today | What v2 can do |
 |---|---|---|---|
 | 1 | Voice interviews | **Available on Codex.** ChatGPT Voice works in Codex and Work on desktop. Claude has voice mode in the composer; inside Cowork tasks is not verified | Run the Phase 1, 3, 5, and 6 interviews by voice. Test Cowork voice on a real attendee setup before promising it on the Claude track |
-| 2 | Phases as installable commands | **Available on both.** Skills and plugins exist on both platforms | Ship one "AI Install" plugin per platform with a skill per phase (prompt, test, pass condition, repair). Replaces most copy and paste. Confirm individual-plan install on Claude first |
+| 2 | Phases as installable commands | **Available on both.** Skills and plugins exist on both platforms | Ship one "AI Install" plugin per platform with a skill per phase (prompt, test, pass condition, repair). Replaces most copy and paste. Individual install on Claude Pro is confirmed in the docs (Section 5) |
 | 3 | Completion reporting to the portal | **No native feature.** | Build a small portal connector with one write action: "report phase result." The phase skill calls it with pass or fail and file names only, never contents. This is new engineering on our side |
 | 4 | Morning brief, dashboard, scheduled upkeep | **Available**, with the local-folder limit in Section 1 | Brief: Cowork cloud scheduled task or Duet on Claude; dots Scheduled on OpenAI. Dashboard: a Cowork artifact fed by connectors. Design both against the cloud-readable layer |
 | 5 | Direct AgencyBrain data | **Partly proven.** An AgencyBrain connector is live in the Claude account this research ran in, with read tools for scorecards, call scoring, renewals, cancel audit, win-back, and producer performance, plus draft tools | Make "connect AgencyBrain" a build step so project numbers come from the system. Not verified: whether any attendee can install it, and whether an equivalent exists for ChatGPT |
@@ -107,18 +107,31 @@ A consumer and small-business agent with real-time voice, avatars, and smartwatc
 4. **The four safety rules need a fifth layer.** v1 rules govern drafts. Proactive agents can send, pay, sign, and delete with approval. v2 must teach the approval settings on each product (Duet's ask-first list, dots Custom Rules, Cowork scheduled-task approvals) as part of Phase 3.
 5. **The privacy promise needs rewording.** v1 said the files stay on the owner's computer. Any cloud brief sends some context to the cloud. The honest v2 line is that the owner chooses exactly what the cloud layer contains.
 
-## 5. Verify before building
+## 5. Checks run on 2026-11-27
 
-Each is a short hands-on test, about 15 to 30 minutes, on a real Pro account for each vendor.
+These were run after the first draft of this file. Where a result changes a row in Section 3, the result here is the current one.
 
-1. Can an individual Claude Pro user install a custom plugin from a ZIP or a personal marketplace URL with no admin?
-2. Does Python run inside the Cowork VM, and does `install-standard-skills.py` pass 5/5 there?
-3. Can a Cowork cloud scheduled task read a file the owner saved to their Claude account, and how does a file get there from the local folder?
-4. Does voice mode work inside a Cowork task on desktop?
-5. Can Claude Duet use a custom connector such as AgencyBrain?
-6. Can attendees add the AgencyBrain connector themselves, and is there a ChatGPT-side equivalent?
-7. For a non-technical owner on the OpenAI track, is ChatGPT Work or Codex the right surface for a local folder?
-8. Does a live Cowork artifact refresh on its own or only on a manual Refresh?
+### Settled
+
+1. **Individual plugin install on Claude: yes.** Anthropic's plugin docs say plugins are "available to all paid plans (Pro, Max, Ultra, Team, Enterprise)." An individual goes to Customize > Plugins > Add > Upload plugin and selects a `.zip` or `.plugin` file. A second route, Add > Add marketplace, takes a Git repo URL. Limits: 5,000 files and 200 MB. An installed plugin is saved to the account, so it is also available in Cowork and Claude Code. Sharing by link is Team and Enterprise only. Anthropic does not review uploaded plugins. Vendor doc; not clicked through in the app.
+2. **How a phase would be started in Cowork.** A plugin command runs by typing `/plugin-name:command`, or the owner describes the task and Claude loads the matching skill. Vendor doc.
+3. **A plugin can carry a connector, but does not connect it.** A remote connector listed in the plugin shows on the plugin's Connectors tab, and each user adds it and signs in. "Adding a plugin doesn't add a connector to your account or sign you in to anything." So "connect AgencyBrain" stays its own build step. Vendor doc.
+4. **The v1.2.0 installer works and its check is real.** Run on a scratch copy of the Claude pre-work pack on this Mac (Python 3.14.6): self-tests passed 5/5, five skills landed in `.claude/skills`, and the receipt was written. Control: with one skill folder deleted, the installer stopped with an error and wrote no receipt. The installer and analyzer import only the Python standard library, so there are no packages to install. Hands-on.
+
+### Partly settled
+
+5. **Python on the owner's computer may not be needed on Claude.** In chat and Cowork, a skill's folder is "copied into the code execution sandbox" and scripts run on what that environment provides. Code execution must be turned on in Settings > Capabilities. The Python version in that sandbox is not stated, and the installer was not run there. Since the analyzer is standard-library only, the odds are good. One run inside a real Cowork task settles it.
+6. **AgencyBrain connector.** In the connector registry for this account it appears as a per-agency connector ("AgencyBrain - Cedar Grove") served from `api.myagencybrain.com`, connected and enabled. That shows the connector is a hosted service an agency account signs in to, not something tied to this computer. AgencyBrain's own help library has no article on connecting Claude or ChatGPT, so how a customer gets it, and on which AgencyBrain plans, has to come from the AgencyBrain side. No ChatGPT-side equivalent was found.
+
+### Could not be tested from here
+
+Each needs a person in the app, about 15 to 30 minutes.
+
+7. Can a Cowork cloud scheduled task read a file saved to the Claude account, and how does a file get there from the local folder? The plugin docs do not say whether plugins load in scheduled tasks either.
+8. Does voice mode work inside a Cowork task on desktop?
+9. Can Claude Duet use a custom connector such as AgencyBrain? Duet is not mentioned anywhere in the plugin docs. This needs an account that is off the waitlist.
+10. For a non-technical owner on the OpenAI track, is ChatGPT Work or Codex the right surface for a local folder?
+11. Does a live Cowork artifact refresh on its own or only on a manual Refresh? The article that covers this could not be located.
 
 ## 6. Sources
 
@@ -141,6 +154,12 @@ Vendor pages read 2026-11-27:
 - [Package your plugin](https://developers.openai.com/plugins/build/plugins.md)
 - [ChatGPT Work and Codex](https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex)
 - [ChatGPT and Codex changelog](https://developers.openai.com/codex/changelog?type=codex-app)
+- [Claude plugins overview](https://claude.com/docs/plugins/overview)
+- [Plugin structure and testing](https://claude.com/docs/plugins/build)
+- [Plugin feature support across platforms](https://claude.com/docs/plugins/platform-support)
+- [Use plugins in Claude](https://support.claude.com/en/articles/13837440-use-plugins-in-claude)
+- [Use skills in Claude](https://support.claude.com/en/articles/12512180-use-skills-in-claude)
+- [Create custom skills](https://claude.com/docs/skills/how-to)
 
 Press coverage (not vendor-confirmed):
 
