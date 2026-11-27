@@ -105,7 +105,7 @@ This keeps the v1 privacy promise honest: the owner sees and approves the exact 
 2. Create `MY BIZ BRAIN` and copy in the starter files.
 3. Install the AI Install plugin.
 4. Connect calendar and email.
-5. If on AgencyBrain Plus or higher, or Boardroom members on any plan: connect AgencyBrain using the guide in AgencyBrain Settings.
+5. If on AgencyBrain Plus or higher, or a Boardroom member on any plan: connect AgencyBrain using the guide in AgencyBrain Settings.
 6. Gather the five raw-material items (unchanged from v1).
 7. Run `ready`. It creates `READY.txt` and reports what is connected.
 8. Submit the screenshot through `/aiinstall/ready` (unchanged).
