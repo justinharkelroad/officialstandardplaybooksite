@@ -58,7 +58,9 @@ Each command carries four parts taken straight from the v1 guides: the interview
 
 - One content source in the repo: `resources/aiinstall/v2/phases/<name>.md`.
 - A build script emits two packages: a Claude plugin (`.claude-plugin/plugin.json`, uploaded as a ZIP through Customize > Plugins) and a Codex plugin (installed from a marketplace source).
-- The master file name (`CLAUDE.md` or `AGENTS.md`) and skill folder (`.claude/skills` or `.agents/skills`) are the only platform differences, set by the build script.
+- The master file name (`CLAUDE.md` or `AGENTS.md`) and skill folder (`.claude/skills` or `.agents/skills`) are set by the build script.
+- Found during the build (2026-11-27): Codex plugins have no commands folder. On Claude each phase is a command, run as `/ai-install:phase-1-about-me`. On Codex each phase is a skill, run as `$phase-1-about-me`. The content is identical.
+- Every command ends by printing a one-line receipt (`AII-R1|command|PASS or FAIL|files|date`) for the portal. It carries file names only.
 - The build fails if a Claude package references `AGENTS.md` or the reverse. This carries over the v1 platform-separation rule.
 - The report skills and starter files move into the same source tree. This fixes the v1 problem of portal ZIPs having no source in the repo.
 
