@@ -196,12 +196,12 @@ Each must be shown to pass on a clean test account on both platforms before v2 i
 
 | # | Item | Who | Blocks |
 |---|---|---|---|
-| O1 | Can Claude Duet use the AgencyBrain connector? | Justin, one question in Duet | Only the optional Duet segment |
+| O1 | Can Claude Duet use the AgencyBrain connector? **Likely yes.** Asked in Duet on 2026-11-27, it said a remote connector with a public address, added as a custom connector on the Claude account, works, and that connectors load when a session starts. AgencyBrain's connector is that kind. Not yet shown with a real AgencyBrain answer inside Duet | Justin, one AgencyBrain question in Duet | Only the optional Duet segment |
 | O2 | ChatGPT Work or Codex as the surface for non-technical owners on the OpenAI track | 30-minute hands-on | W4 wording for the Codex pre-work page |
 | O3 | Does a live Cowork dashboard refresh on its own? | 15-minute hands-on | Dashboard copy only |
 | O4 | Do plugin commands load inside a cloud scheduled task? | 15-minute hands-on | Nothing, by design: the brief task carries its own instructions |
 | O5 | Does the report-skill installer pass inside the Cowork sandbox with no local Python? | 15-minute hands-on | Whether the self-serve report track needs a Python note |
-| O6 | Next cohort date, price, and seat count | Justin | W4 and W8 |
+| O6 | Next cohort date, price, and seat count. **TBD (Justin, 2026-11-27): the waitlist is still being built.** The landing page stays in waitlist mode, and W4 and W8 are written with the date, price, and seat count read from one cohort config that is empty until set | Justin | Final copy in W4 and W8 only |
 
 ## 10. Build order
 

@@ -145,7 +145,7 @@ These were run after the first draft of this file. Where a result changes a row 
 
 Each needs a person in the app, about 15 to 30 minutes.
 
-10. Can Claude Duet use the AgencyBrain custom connector? Duet is not mentioned anywhere in the plugin docs.
+10. Can Claude Duet use the AgencyBrain custom connector? Likely yes: asked directly on 2026-11-27, Duet said a remote connector with a public address added to the Claude account works, and a connector that only runs on the laptop does not. AgencyBrain's connector is the hosted kind. Still to do: one real AgencyBrain question answered inside Duet.
 11. For a non-technical owner on the OpenAI track, is ChatGPT Work or Codex the right surface for a local folder?
 12. Does a live Cowork artifact refresh on its own or only on a manual Refresh? The article that covers this could not be located.
 
