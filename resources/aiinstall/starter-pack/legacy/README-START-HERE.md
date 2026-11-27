@@ -23,6 +23,6 @@ These are the four starter-pack setup steps, not the full readiness checklist. C
 
 ## Required final screenshot
 
-After all six checks are complete, take one screenshot showing `MY BIZ BRAIN` open in your selected app with `READY.txt` visible. Submit it through the [pre-work confirmation form](https://standardplaybook.com/aiinstall/ready) by end of day Monday, August 24. Do not email the screenshot unless Mary asks you to.
+After all six checks are complete, take one screenshot showing `MY BIZ BRAIN` open in your selected app with `READY.txt` visible. Submit it through the [pre-work confirmation form](https://standardplaybook.com/aiinstall/ready) by your pre-work deadline. Do not email the screenshot unless Mary asks you to.
 
 Never put passwords, account keys, API keys, or login credentials in `MY BIZ BRAIN`.

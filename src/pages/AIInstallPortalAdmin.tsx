@@ -37,6 +37,11 @@ import {
   type AiInstallPortalPlatform,
 } from "@/lib/aiInstallPortal";
 
+import {
+  describeAiInstallReceiptResult,
+  summarizeAiInstallReceipts,
+} from "@/lib/aiInstallReceipts";
+
 import "./AIInstallPortal.css";
 import "./AIInstallPortalAdmin.css";
 
@@ -91,6 +96,7 @@ function AdminWorkspace() {
     code: string;
   } | null>(null);
   const [testimonialPromptEnabled, setTestimonialPromptEnabled] = useState(true);
+  const [receiptsUnavailable, setReceiptsUnavailable] = useState(false);
   const [filter, setFilter] = useState<"all" | "active" | "revoked">("all");
 
   const refresh = useCallback(async () => {
@@ -99,6 +105,7 @@ function AdminWorkspace() {
       const result = await loadAiInstallPortalAdminRows();
       setRows(result.rows);
       setTestimonialPromptEnabled(result.testimonialPromptEnabled);
+      setReceiptsUnavailable(result.receiptsUnavailable);
     } catch (readError) {
       setError(readError instanceof Error ? readError.message : "Could not load portal access.");
       setRows([]);
@@ -241,6 +248,7 @@ function AdminWorkspace() {
 
           {notice && <p className="aipa-notice" role="status"><Check size={16} />{notice}</p>}
           {error && <p className="aipa-error" role="alert">{error}</p>}
+          {receiptsUnavailable && <p className="aipa-error" role="alert">Step receipts could not be loaded, so the Steps column is empty for now. Refresh the list in a minute. If it keeps happening, the database update for step receipts has not been applied yet.</p>}
           {activationCredential && (
             <section className="aipa-credential" aria-label="One-time activation code">
               <div>
@@ -268,7 +276,7 @@ function AdminWorkspace() {
           ) : (
             <div className="aipa-table-wrap">
               <table className="aipa-table">
-                <thead><tr><th>Attendee</th><th>Access</th><th>Activity</th><th>Day 1</th><th>Day 2</th><th>Files</th><th>Ready</th><th>Testimonial</th><th><span className="sr-only">Actions</span></th></tr></thead>
+                <thead><tr><th>Attendee</th><th>Access</th><th>Activity</th><th>Day 1</th><th>Day 2</th><th>Files</th><th>Ready</th><th>Steps</th><th>Testimonial</th><th><span className="sr-only">Actions</span></th></tr></thead>
                 <tbody>
                   {visible.map((row) => (
                     <tr key={row.id} className={!row.is_active ? "is-revoked" : ""}>
@@ -279,6 +287,7 @@ function AdminWorkspace() {
                       <td><ProgressCell value={row.progress["day-2"]?.max_progress ?? 0} complete={Boolean(row.progress["day-2"]?.completed_at)} /></td>
                       <td><strong>{row.downloads.count}</strong><small>{row.downloads.last_at ? formatDate(row.downloads.last_at) : "No downloads"}</small></td>
                       <td>{row.ready_submitted_at ? <span className="aipa-ready"><Check size={14} />Yes</span> : <span className="aipa-muted">No</span>}</td>
+                      <td><StepsCell receipts={row.receipts} /></td>
                       <td>{row.testimonial ? <button type="button" className="aipa-review-video" disabled={busyId !== null} onClick={() => void reviewTestimonial(row)}><Video size={14} />{busyId === `${row.id}:testimonial` ? "Opening" : "Review"}<small>{formatDate(row.testimonial.submitted_at)}</small></button> : <span className="aipa-muted">Not submitted</span>}</td>
                       <td>
                         <div className="aipa-row-actions">
@@ -548,6 +557,35 @@ function GrantAccessForm({ onGranted, onError }: {
         <button type="submit" disabled={submitting}>{submitting ? <LoaderCircle className="aipa-spin" /> : <KeyRound size={16} />}{submitting ? "Granting" : "Grant seat"}</button>
       </form>
     </section>
+  );
+}
+
+function StepsCell({ receipts }: { receipts: AiInstallPortalAdminRow["receipts"] }) {
+  const summary = summarizeAiInstallReceipts(receipts);
+  return (
+    <div className="aipa-steps">
+      <strong>{summary.passed} of {summary.total} passed</strong>
+      <span className="aipa-steps-checks">
+        <span className={`aipa-steps-check is-${(summary.day1 ?? "none").toLowerCase()}`}>Day 1 check: {describeAiInstallReceiptResult(summary.day1)}</span>
+        <span className={`aipa-steps-check is-${(summary.day2 ?? "none").toLowerCase()}`}>Day 2 check: {describeAiInstallReceiptResult(summary.day2)}</span>
+      </span>
+      <details>
+        <summary>See every step</summary>
+        <table className="aipa-steps-detail">
+          <thead><tr><th>Step</th><th>Result</th><th>Files</th><th>Date</th></tr></thead>
+          <tbody>
+            {summary.steps.map((step) => (
+              <tr key={step.name} className={step.result ? `is-${step.result.toLowerCase()}` : "is-empty"}>
+                <td>{step.label}</td>
+                <td>{describeAiInstallReceiptResult(step.result)}</td>
+                <td>{step.files ?? ""}</td>
+                <td>{step.date ?? ""}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </details>
+    </div>
   );
 }
 

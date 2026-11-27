@@ -1,6 +1,10 @@
 import { supabase } from "@/integrations/supabase/client";
 import * as tus from "tus-js-client";
 
+import type { AiInstallReceipt, AiInstallRejectedReceiptLine } from "./aiInstallReceipts";
+
+export type { AiInstallReceipt, AiInstallRejectedReceiptLine } from "./aiInstallReceipts";
+
 export type AiInstallPortalPlatform = "claude" | "codex" | "both";
 export type AiInstallVideoId = "day-1" | "day-2";
 
@@ -25,6 +29,7 @@ export interface AiInstallPortalStatus {
     title: string;
   }>;
   progress: AiInstallPortalProgress[];
+  receipts?: AiInstallReceipt[];
   testimonial?: {
     enabled: boolean;
     intro_vimeo_id: string;
@@ -61,11 +66,19 @@ export interface AiInstallPortalAdminRow {
   downloads: { count: number; last_at: string | null };
   ready_submitted_at: string | null;
   testimonial: AiInstallPortalTestimonial | null;
+  receipts?: AiInstallReceipt[];
 }
 
 export interface AiInstallPortalAdminData {
   rows: AiInstallPortalAdminRow[];
   testimonialPromptEnabled: boolean;
+  receiptsUnavailable: boolean;
+}
+
+export interface AiInstallReceiptSubmission {
+  recorded: number;
+  rejected: AiInstallRejectedReceiptLine[];
+  receipts: AiInstallReceipt[];
 }
 
 export async function loadAiInstallPortalStatus(): Promise<AiInstallPortalStatus> {
@@ -93,6 +106,13 @@ export async function getAiInstallPortalDownload(assetId: string): Promise<strin
   return result.url;
 }
 
+export async function submitAiInstallReceipts(text: string): Promise<AiInstallReceiptSubmission> {
+  return invokeFunction<AiInstallReceiptSubmission>("ai-install-portal", {
+    action: "receipts_submit",
+    text,
+  });
+}
+
 export async function recordAiInstallPortalSignOut(): Promise<void> {
   await invokeFunction("ai-install-portal", { action: "sign_out" });
 }
@@ -101,6 +121,7 @@ export async function loadAiInstallPortalAdminRows(): Promise<AiInstallPortalAdm
   const result = await invokeFunction<{
     rows: AiInstallPortalAdminRow[];
     testimonial_prompt_enabled: boolean;
+    receipts_unavailable?: boolean;
   }>(
     "ai-install-portal-admin",
     { action: "list" },
@@ -108,6 +129,7 @@ export async function loadAiInstallPortalAdminRows(): Promise<AiInstallPortalAdm
   return {
     rows: result.rows,
     testimonialPromptEnabled: result.testimonial_prompt_enabled ?? false,
+    receiptsUnavailable: result.receipts_unavailable ?? false,
   };
 }
 

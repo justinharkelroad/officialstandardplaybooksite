@@ -6,5 +6,5 @@ not expose these copies at stable public URLs.
 
 Run `npm run sync:aiinstall-portal-assets` with `SUPABASE_URL` and
 `SUPABASE_SERVICE_ROLE_KEY` set to create or update the private bucket and
-upload the seven protected files. The Edge Function returns a five-minute
+upload the nine protected files (the first cohort's seven, plus the two AI Install plugin packages built by `bun run build:aiinstall-v2`). The Edge Function returns a five-minute
 signed URL only after validating active email access and platform entitlement.

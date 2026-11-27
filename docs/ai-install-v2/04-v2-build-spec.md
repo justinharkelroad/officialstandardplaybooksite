@@ -258,3 +258,14 @@ Each must be shown to pass on a clean test account on both platforms before v2 i
 6. **W4, W7, W8.** Pages, guides, copy. 2 to 3 days.
 7. **Acceptance checks.** All twelve, both platforms. 1 day.
 8. **W9** only if the coach uses the receipt data in the first v2 cohort.
+
+## 11. Build status, 2026-11-27 (W4 to W7)
+
+Committed on this branch, not pushed, nothing deployed.
+
+- **Cohort settings.** One file, `supabase/functions/_shared/ai-install-cohort.ts`, holds the dates, pre-work deadline, session hours, price, seat count, and the `portalShowsV2` switch. Everything is empty today. The website reads it through `src/lib/aiInstallCohort.ts`; the purchase email reads it directly. No page or email carries a date of its own any more.
+- **W4, pre-work.** Both pre-work pages are rewritten around four setup steps (install, create and open the folder, connect AgencyBrain, connect calendar and email), the two routes side by side, the readiness step, and the same six checks and `READY.txt` screenshot. The confirmation page, the purchase email, and the starter pack READMEs match. The purchase email is Edge Function code, so it reaches buyers only after Justin deploys `stripe-ai-install-webhook`.
+- **W5, receipts.** Parser, migration (`ai_install_portal_receipts`), portal action, admin "Steps" cell, and the portal receipt box are written and unit tested. Not run against a real database. The migration must be applied before the two portal functions are deployed. The receipt box is hidden while `portalShowsV2` is false.
+- **W6, portal resources.** The two plugin packages are added, not swapped in. Change from the table above: the first cohort's four ZIPs stay, because alumni replays refer to them. The plugin appears only when `portalShowsV2` is true. The two plugin ZIPs still have to be synced to the private bucket.
+- **W7, guides.** Day 1 and Day 2 guides are rewritten as Markdown in `resources/aiinstall/v2/guides/`. They are not yet PDFs and are not in the portal; the portal still serves the first cohort's PDFs.
+- **Not done.** W8 landing page copy. The share images for the pre-work pages still say "AUGUST 26-27" (`scripts/generate-aiinstall-prework-og.mjs`). The portal pages were not opened in a browser, since they need a signed-in member.

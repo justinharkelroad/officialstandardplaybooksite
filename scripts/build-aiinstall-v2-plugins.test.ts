@@ -365,3 +365,23 @@ test("real resources tree builds into a temp dir with one command per phase file
   assert.deepEqual(readdirSync(skillsDir).sort(), expected);
   for (const name of expected) assert.ok(existsSync(join(skillsDir, name, "SKILL.md")));
 });
+
+test("the two day guides cover every workshop step and name no step that does not exist", () => {
+  const v2 = join(repoRoot, "resources", "aiinstall", "v2");
+  const steps = readdirSync(join(v2, "phases"))
+    .filter((f) => f.endsWith(".md"))
+    .map((f) => f.replace(/\.md$/, ""));
+  const guides = ["day-1-guide.md", "day-2-guide.md"]
+    .map((f) => readFileSync(join(v2, "guides", f), "utf8"))
+    .join("\n");
+
+  for (const step of steps) {
+    if (step === "ready") continue; // pre-work, taught on the pre-work page
+    assert.ok(guides.includes("`" + step + "`"), `guides never mention ${step}`);
+  }
+  const named = [...guides.matchAll(/^#{2,3} Step: `([^`]+)`/gm)].map((m) => m[1]);
+  assert.ok(named.length >= 15);
+  for (const name of named) assert.ok(steps.includes(name), `guide names unknown step ${name}`);
+  assert.ok(!guides.includes("—"), "no em dash in the guides");
+  assert.ok(!/August|\$997/.test(guides), "guides carry no cohort date or price");
+});

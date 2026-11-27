@@ -215,3 +215,256 @@ export async function requirePortalAccess(
 
   return { userId: data.user.id, access, supabase };
 }
+
+// ---------------------------------------------------------------------------
+// Phase receipts
+//
+// Workshop attendees on the fallback (plugin) route finish each step with one
+// receipt line printed by their AI. They paste it into the portal. Only the
+// line is stored, never file contents.
+//
+//   AII-R1|<step name>|<PASS or FAIL>|<file names, comma separated, or none>|<YYYY-MM-DD>
+// ---------------------------------------------------------------------------
+
+/** The 20 step names in workshop order. A test keeps this equal to resources/aiinstall/v2/phases. */
+export const AI_INSTALL_RECEIPT_STEPS = [
+  "ready",
+  "phase-1-about-me",
+  "phase-2-voice",
+  "phase-3-rules",
+  "phase-4-content",
+  "phase-5-team",
+  "handoff",
+  "check-day-1",
+  "resume",
+  "phase-6-project",
+  "cleanup",
+  "memory",
+  "cold-test",
+  "brief-setup",
+  "dashboard",
+  "build-skill",
+  "upkeep-setup",
+  "check-day-2",
+  "apply-updates",
+  "team-pack",
+] as const;
+
+export type AiInstallReceiptStep = typeof AI_INSTALL_RECEIPT_STEPS[number];
+export type AiInstallReceiptResult = "PASS" | "FAIL";
+
+export const AI_INSTALL_RECEIPT_PREFIX = "AII-R1";
+export const AI_INSTALL_RECEIPT_MAX_TEXT_LENGTH = 8000;
+export const AI_INSTALL_RECEIPT_MAX_LINES = 40;
+export const AI_INSTALL_RECEIPT_MAX_FILES_LENGTH = 500;
+const RECEIPT_ECHO_MAX_LENGTH = 200;
+
+export interface ParsedAiInstallReceipt {
+  step: AiInstallReceiptStep;
+  result: AiInstallReceiptResult;
+  files: string;
+  date: string;
+}
+
+export interface RejectedAiInstallReceiptLine {
+  /** 1-based line number in the pasted text, or 0 when the reason is about the whole paste. */
+  lineNumber: number;
+  /** The offending line, cleaned and shortened so it is safe to show as plain text. */
+  line: string;
+  /** Plain-English reason that says what to fix. */
+  reason: string;
+}
+
+export interface ParsedAiInstallReceipts {
+  receipts: ParsedAiInstallReceipt[];
+  rejected: RejectedAiInstallReceiptLine[];
+}
+
+const RECEIPT_STEP_SET: ReadonlySet<string> = new Set(AI_INSTALL_RECEIPT_STEPS);
+
+// C0 and C1 controls, line and paragraph separators, zero-width characters and
+// bidirectional overrides. None belong in a file name shown to an admin.
+const UNSAFE_CODE_POINT_RANGES: ReadonlyArray<readonly [number, number]> = [
+  [0x0000, 0x001f],
+  [0x007f, 0x009f],
+  [0x200b, 0x200f],
+  [0x2028, 0x202e],
+  [0x2060, 0x2069],
+  [0xfeff, 0xfeff],
+];
+
+function isUnsafeReceiptCodePoint(codePoint: number): boolean {
+  return UNSAFE_CODE_POINT_RANGES.some(([low, high]) =>
+    codePoint >= low && codePoint <= high
+  );
+}
+
+export function stripUnsafeReceiptCharacters(value: string): string {
+  let cleaned = "";
+  for (const character of value) {
+    if (!isUnsafeReceiptCodePoint(character.codePointAt(0) ?? 0)) {
+      cleaned += character;
+    }
+  }
+  return cleaned;
+}
+
+export function isRealCalendarDate(value: string): boolean {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return false;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  // Date.UTC maps years 0 to 99 to 1900 to 1999, so those years never round trip.
+  return date.getUTCFullYear() === year &&
+    date.getUTCMonth() === month - 1 &&
+    date.getUTCDate() === day;
+}
+
+function echoReceiptLine(line: string): string {
+  const cleaned = stripUnsafeReceiptCharacters(line).trim();
+  return cleaned.length > RECEIPT_ECHO_MAX_LENGTH
+    ? `${cleaned.slice(0, RECEIPT_ECHO_MAX_LENGTH)}...`
+    : cleaned;
+}
+
+/** Cuts a line down to the receipt itself: drops chat text before it and quotes, backticks or spaces after it. */
+function extractReceiptCandidate(line: string): string | null {
+  const start = line.search(/AII-R/i);
+  if (start === -1) return null;
+  return line
+    .slice(start)
+    .replace(/[\s`"'*]+$/u, "")
+    .trim();
+}
+
+export function parseAiInstallReceipts(text: string): ParsedAiInstallReceipts {
+  const receipts: ParsedAiInstallReceipt[] = [];
+  const rejected: RejectedAiInstallReceiptLine[] = [];
+
+  if (typeof text !== "string" || text.trim() === "") {
+    rejected.push({
+      lineNumber: 0,
+      line: "",
+      reason: "Nothing was pasted. Paste the receipt line your AI printed, then try again.",
+    });
+    return { receipts, rejected };
+  }
+
+  let input = text;
+  if (input.length > AI_INSTALL_RECEIPT_MAX_TEXT_LENGTH) {
+    input = input.slice(0, AI_INSTALL_RECEIPT_MAX_TEXT_LENGTH);
+    rejected.push({
+      lineNumber: 0,
+      line: "",
+      reason:
+        `That paste was longer than ${AI_INSTALL_RECEIPT_MAX_TEXT_LENGTH} characters, so only the first part was read. Paste fewer receipts at a time.`,
+    });
+  }
+
+  const lines = input.split(/\r\n|\r|\n/);
+  const indexByStep = new Map<string, number>();
+  let candidateCount = 0;
+  let skippedCount = 0;
+
+  lines.forEach((rawLine, index) => {
+    const candidate = extractReceiptCandidate(rawLine);
+    if (candidate === null) return;
+
+    candidateCount += 1;
+    if (candidateCount > AI_INSTALL_RECEIPT_MAX_LINES) {
+      skippedCount += 1;
+      return;
+    }
+
+    const lineNumber = index + 1;
+    const reject = (reason: string) => {
+      rejected.push({ lineNumber, line: echoReceiptLine(candidate), reason });
+    };
+
+    const fields = candidate.split("|").map((field) => field.trim());
+    if (fields[0] !== AI_INSTALL_RECEIPT_PREFIX) {
+      reject(
+        `The line must start with ${AI_INSTALL_RECEIPT_PREFIX} in capital letters. Copy the whole receipt line again.`,
+      );
+      return;
+    }
+    if (fields.length !== 5) {
+      reject(
+        `A receipt has five parts separated by | but this line has ${fields.length}. Copy the whole line again without changing it.`,
+      );
+      return;
+    }
+
+    const [, step, result, rawFiles, date] = fields;
+    if (!RECEIPT_STEP_SET.has(step)) {
+      reject(
+        `"${echoReceiptLine(step).slice(0, 60)}" is not a step name this workshop uses. Copy the receipt exactly as your AI printed it.`,
+      );
+      return;
+    }
+    if (result !== "PASS" && result !== "FAIL") {
+      reject("The result must be exactly PASS or FAIL in capital letters.");
+      return;
+    }
+    if (!isRealCalendarDate(date)) {
+      reject("The date must be a real date written as YYYY-MM-DD, for example 2027-02-10.");
+      return;
+    }
+
+    const files = stripUnsafeReceiptCharacters(rawFiles).trim();
+    if (files === "") {
+      reject('The file names part is empty. It should list file names or say "none".');
+      return;
+    }
+    if (files.length > AI_INSTALL_RECEIPT_MAX_FILES_LENGTH) {
+      reject(
+        `The file names part is longer than ${AI_INSTALL_RECEIPT_MAX_FILES_LENGTH} characters. Ask your AI to print the receipt again with file names only.`,
+      );
+      return;
+    }
+
+    const earlier = indexByStep.get(step);
+    if (earlier !== undefined) {
+      const replaced = receipts[earlier];
+      rejected.push({
+        lineNumber: 0,
+        line: "",
+        reason:
+          `The step ${replaced.step} appeared more than once in this paste. Only the last one was recorded.`,
+      });
+      receipts.splice(earlier, 1);
+      for (const [key, value] of indexByStep) {
+        if (value > earlier) indexByStep.set(key, value - 1);
+      }
+    }
+    indexByStep.set(step, receipts.length);
+    receipts.push({
+      step: step as AiInstallReceiptStep,
+      result,
+      files: files.toLowerCase() === "none" ? "none" : files,
+      date,
+    });
+  });
+
+  if (candidateCount === 0) {
+    rejected.push({
+      lineNumber: 0,
+      line: "",
+      reason:
+        `No receipt line was found. A receipt starts with ${AI_INSTALL_RECEIPT_PREFIX}. Paste the line your AI printed at the end of the step.`,
+    });
+  }
+
+  if (skippedCount > 0) {
+    rejected.push({
+      lineNumber: 0,
+      line: "",
+      reason:
+        `Only the first ${AI_INSTALL_RECEIPT_MAX_LINES} receipt lines are read at a time. ${skippedCount} more were skipped. Paste them again in a smaller batch.`,
+    });
+  }
+
+  return { receipts, rejected };
+}

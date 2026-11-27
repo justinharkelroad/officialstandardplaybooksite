@@ -50,6 +50,18 @@ const session: AiInstallCheckoutSession = {
   created: 1784952000,
 };
 
+const FIRST_COHORT = {
+  dayOne: "2026-08-26",
+  dayTwo: "2026-08-27",
+  preworkDeadline: "2026-08-24",
+  checkupCall: "2026-09-24",
+  sessionHours: "1:00 PM to 5:00 PM Eastern",
+  checkupHours: "1:00 PM to 2:00 PM Eastern",
+  priceUsd: 997,
+  seats: 50,
+  portalShowsV2: true,
+};
+
 Deno.test("normalizes the free-text Claude or Codex answer", () => {
   assertEquals(
     normalizeToolChoice("Anthropic Claude"),
@@ -138,7 +150,7 @@ Deno.test("renders the functional email with the correct branch and escaped buye
     claudePreworkUrl: "https://example.com/claude",
     codexPreworkUrl: "https://example.com/codex",
     readyUrl: "https://example.com/ready",
-  });
+  }, FIRST_COHORT);
 
   assertEquals(
     email.subject,
@@ -195,7 +207,14 @@ Deno.test("renders the functional email with the correct branch and escaped buye
     "Email should include both setup support addresses",
   );
   assert(
-    email.html.includes("September 24, 2026, 1:00 PM to 2:00 PM EST"),
+    email.html.includes(
+      "Thursday, September 24, 2026, 1:00 PM to 2:00 PM Eastern",
+    ) &&
+      email.html.includes(
+        "Wednesday, August 26, 2026, 1:00 PM to 5:00 PM Eastern",
+      ) &&
+      email.html.includes("due Monday, August 24") &&
+      email.html.includes("Registration is capped at 50 paid seats."),
     "Email should include the confirmed check-up call",
   );
   assert(
@@ -277,5 +296,76 @@ Deno.test("shows both pre-work tracks when the buyer has not chosen a platform",
   assert(
     email.html.includes("https://example.com/codex-starter-pack.zip"),
     "Undecided buyers should get the Codex starter pack",
+  );
+});
+
+Deno.test("an unset cohort sends no date, no deadline, and no seat count", () => {
+  const purchase = extractAiInstallPurchase(session, 1784952001);
+  const email = renderAiInstallPurchaseEmail(purchase, {
+    codexPreworkUrl: "https://example.com/codex",
+    readyUrl: "https://example.com/ready",
+  }, {
+    dayOne: null,
+    dayTwo: null,
+    preworkDeadline: null,
+    checkupCall: null,
+    sessionHours: null,
+    checkupHours: null,
+    priceUsd: null,
+    seats: null,
+    portalShowsV2: false,
+  });
+
+  for (
+    const stale of [
+      "August",
+      "September",
+      "2026",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "paid seats",
+    ]
+  ) {
+    assert(!email.html.includes(stale), `Unset cohort must not mention ${stale}`);
+  }
+  assert(
+    email.html.includes("sent to you as soon as the dates are set"),
+    "Unset cohort should say the dates are still to come",
+  );
+  assert(
+    email.html.includes("before your pre-work deadline"),
+    "Policy should fall back to the pre-work deadline wording",
+  );
+});
+
+Deno.test("the email describes the connect-first pre-work, not the old starter pack test", () => {
+  const purchase = extractAiInstallPurchase(session, 1784952001);
+  const email = renderAiInstallPurchaseEmail(purchase, {
+    codexPreworkUrl: "https://example.com/codex",
+    codexStarterPackUrl: "https://example.com/codex-starter-pack.zip",
+    readyUrl: "https://example.com/ready",
+  }, FIRST_COHORT);
+
+  assert(
+    email.html.includes("Connect AgencyBrain from AgencyBrain Settings"),
+    "Email should lead with the AgencyBrain connection",
+  );
+  assert(
+    email.html.includes("Run the readiness step from your pre-work page"),
+    "Email should name the readiness step",
+  );
+  assert(
+    email.html.includes("On the plugin route only"),
+    "Starter pack should be offered for the plugin route only",
+  );
+  assert(
+    !email.html.includes("Run the READY.txt test on the page"),
+    "The old paste-in test should be gone",
+  );
+  assert(
+    email.html.includes("six readiness checks") &&
+      email.html.includes("READY.txt visible"),
+    "Six checks and the READY.txt screenshot must stay",
   );
 });
