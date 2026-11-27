@@ -26,6 +26,22 @@ const DAY_TWO_GUIDE: AiInstallPortalResource = {
   kind: "PDF",
 };
 
+// The connect-first guides for the next cohort. Listed beside the first
+// cohort's guides, never in place of them, because the replays follow those.
+const V2_DAY_ONE_GUIDE: AiInstallPortalResource = {
+  id: "day-1-guide-v2",
+  title: "Day 1 Guide: Build the Brain",
+  detail: "The step-by-step guide for the connect-first workshop",
+  kind: "PDF",
+};
+
+const V2_DAY_TWO_GUIDE: AiInstallPortalResource = {
+  id: "day-2-guide-v2",
+  title: "Day 2 Guide: Make It Run",
+  detail: "Morning brief, dashboard, custom skill, and weekly upkeep",
+  kind: "PDF",
+};
+
 const PLATFORM_RESOURCES = {
   claude: {
     prework: {
@@ -90,15 +106,20 @@ export function getAiInstallPortalResourcePlan(
 } {
   const platforms = platform === "both" ? ["claude", "codex"] as const : [platform];
   const prework = platforms.map((name) => PLATFORM_RESOURCES[name].prework);
-  const dayTwo = [DAY_TWO_GUIDE, ...platforms.map((name) => PLATFORM_RESOURCES[name].skills)];
+  const dayOne = options.showV2 ? [V2_DAY_ONE_GUIDE, ...DAY_ONE_RESOURCES] : [...DAY_ONE_RESOURCES];
+  const dayTwo = [
+    ...(options.showV2 ? [V2_DAY_TWO_GUIDE] : []),
+    DAY_TWO_GUIDE,
+    ...platforms.map((name) => PLATFORM_RESOURCES[name].skills),
+  ];
 
   const plugin = options.showV2 ? platforms.map((name) => PLATFORM_RESOURCES[name].plugin) : [];
 
   return {
     prework: [...prework],
     plugin: [...plugin],
-    dayOne: [...DAY_ONE_RESOURCES],
+    dayOne: [...dayOne],
     dayTwo: [...dayTwo],
-    resourceCount: prework.length + plugin.length + DAY_ONE_RESOURCES.length + dayTwo.length,
+    resourceCount: prework.length + plugin.length + dayOne.length + dayTwo.length,
   };
 }

@@ -36,6 +36,18 @@ export const PORTAL_ASSETS: Record<string, PortalAsset> = {
     filename: "Ai Install Day 2 Guide.pdf",
     platform: "both",
   },
+  "day-1-guide-v2": {
+    id: "day-1-guide-v2",
+    path: "common/ai-install-v2-day-1-guide.pdf",
+    filename: "AI Install Day 1 Guide - Build the Brain.pdf",
+    platform: "both",
+  },
+  "day-2-guide-v2": {
+    id: "day-2-guide-v2",
+    path: "common/ai-install-v2-day-2-guide.pdf",
+    filename: "AI Install Day 2 Guide - Make It Run.pdf",
+    platform: "both",
+  },
   "skills-guide": {
     id: "skills-guide",
     path: "common/standard-playbook-skills.pdf",

@@ -47,9 +47,35 @@ test("the v2 portal adds only the plugin for the member's own platform", () => {
   assert.deepEqual(claude.plugin.map((resource) => resource.id), ["claude-plugin"]);
   assert.deepEqual(codex.plugin.map((resource) => resource.id), ["codex-plugin"]);
   assert.deepEqual(both.plugin.map((resource) => resource.id), ["claude-plugin", "codex-plugin"]);
-  assert.equal(claude.resourceCount, 6);
-  assert.equal(both.resourceCount, 9);
+  assert.equal(claude.resourceCount, 8);
+  assert.equal(both.resourceCount, 11);
   assert.match(claude.plugin[0].detail, /cannot connect AgencyBrain/);
   assert.doesNotMatch(JSON.stringify(codex), /claude-plugin|CLAUDE-STARTER/);
   assert.doesNotMatch(JSON.stringify(claude), /codex-plugin|AGENTS-STARTER/);
+});
+
+test("the v2 portal lists the new day guides first and keeps the first cohort's guides", () => {
+  const off = getAiInstallPortalResourcePlan("claude", { showV2: false });
+  const on = getAiInstallPortalResourcePlan("claude", { showV2: true });
+
+  assert.deepEqual(off.dayOne.map((resource) => resource.id), ["day-1-guide", "skills-guide"]);
+  assert.deepEqual(off.dayTwo.map((resource) => resource.id), ["day-2-guide", "claude-skills"]);
+  assert.deepEqual(on.dayOne.map((resource) => resource.id), ["day-1-guide-v2", "day-1-guide", "skills-guide"]);
+  assert.deepEqual(on.dayTwo.map((resource) => resource.id), ["day-2-guide-v2", "day-2-guide", "claude-skills"]);
+});
+
+test("every resource the portal can list has a file the function can serve", async () => {
+  const { readFileSync, existsSync } = await import("node:fs");
+  const source = readFileSync("supabase/functions/ai-install-portal/index.ts", "utf8");
+  const both = getAiInstallPortalResourcePlan("both", { showV2: true });
+  const listed = [...both.prework, ...both.plugin, ...both.dayOne, ...both.dayTwo];
+
+  for (const resource of listed) {
+    const entry = new RegExp(`"${resource.id}": \\{[^}]*?path: "([^"]+)"`).exec(source);
+    assert.ok(entry, `ai-install-portal has no asset entry for ${resource.id}`);
+    assert.ok(
+      existsSync(`resources/aiinstall/portal-assets/${entry[1]}`),
+      `portal-assets is missing ${entry[1]} for ${resource.id}`,
+    );
+  }
 });

@@ -6,6 +6,8 @@
   "scripts": {
     "build:aiinstall-packs": "bash scripts/build-aiinstall-starter-packs.sh",
     "build:aiinstall-v2": "bun scripts/build-aiinstall-v2-plugins.ts",
+    "build:aiinstall-guides": "bun scripts/build-aiinstall-v2-guides.ts",
+    "test:aiinstall-guides": "bun test scripts/build-aiinstall-v2-guides.test.ts",
     "test:aiinstall-v2": "bun test scripts/build-aiinstall-v2-plugins.test.ts",
     "sync:aiinstall-portal-assets": "node scripts/sync-aiinstall-portal-assets.mjs",
     "dev": "vite",
