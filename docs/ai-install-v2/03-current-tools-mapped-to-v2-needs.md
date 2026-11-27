@@ -90,7 +90,7 @@ A consumer and small-business agent with real-time voice, avatars, and smartwatc
 | 2 | Phases as installable commands | **Available on both.** Skills and plugins exist on both platforms | Ship one "AI Install" plugin per platform with a skill per phase (prompt, test, pass condition, repair). Replaces most copy and paste. Individual install on Claude Pro is confirmed in the docs (Section 5) |
 | 3 | Completion reporting to the portal | **No native feature.** | Build a small portal connector with one write action: "report phase result." The phase skill calls it with pass or fail and file names only, never contents. This is new engineering on our side |
 | 4 | Morning brief, dashboard, scheduled upkeep | **Available**, with the local-folder limit in Section 1 | Brief: Cowork cloud scheduled task or Duet on Claude; dots Scheduled on OpenAI. Dashboard: a Cowork artifact fed by connectors. Design both against the cloud-readable layer |
-| 5 | Direct AgencyBrain data | **Partly proven.** An AgencyBrain connector is live in the Claude account this research ran in, with read tools for scorecards, call scoring, renewals, cancel audit, win-back, and producer performance, plus draft tools | Make "connect AgencyBrain" a build step so project numbers come from the system. Not verified: whether any attendee can install it, and whether an equivalent exists for ChatGPT |
+| 5 | Direct AgencyBrain data | **Partly proven.** An AgencyBrain connector is live in the Claude account this research ran in, with read tools for scorecards, call scoring, renewals, cancel audit, win-back, and producer performance, plus draft tools | Make "connect AgencyBrain" a pre-work step so project numbers come from the system. Confirmed in the AgencyBrain repo: self-serve for owners on Plus or higher, on Claude and on ChatGPT and Codex (Section 5, item 6) |
 | 6 | Report skills without local Python | **Not verified.** Cowork's VM ships Node.js packages; Python there is unconfirmed | Either test the v1.2.0 installer inside the Cowork VM, or port the analyzer to JavaScript. If AgencyBrain data covers the same questions, the export-based skills become the fallback, not the main path |
 | 7 | Automated memory upkeep | **Partly available.** Cowork project memory persists across sessions. Codex memories exist but are off by default. dots memory cannot be inspected | Keep files as the source of truth. Add a weekly scheduled "propose updates" task that drafts edits for the owner to approve. Do not rely on dots memory for anything that must be auditable |
 | 8 | Phone or second device | **Available with a condition.** Cowork sessions follow the account; Codex pairs by QR code. Both need the desktop app open to touch local files | Drop GitHub from the curriculum. Teach "start from your phone" and set the expectation that local files need the computer on |
@@ -103,7 +103,7 @@ A consumer and small-business agent with real-time voice, avatars, and smartwatc
 
 1. **The undelivered Day 2 items are now the easy part.** Morning brief, dashboard, and scheduled upkeep are native features on both platforms. v2 can lead with them instead of ending on them.
 2. **The hard part moved to connections.** The value now depends on which systems are connected (calendar, email, AgencyBrain) more than on how much is typed into files. Pre-work should include connector setup.
-3. **Plan requirements go up.** Duet and dots are gated: waitlists, higher tiers, country limits. A v2 that depends on either cannot promise every attendee will have access. Cowork scheduled tasks are the only proactive feature confirmed on every paid Claude plan.
+3. **Plan requirements go up.** Duet and dots are gated: waitlists, higher tiers, country limits. A v2 that depends on either cannot promise every attendee will have access. Plain scheduled tasks exist on both platforms and are the safe base to teach (see the parity table in Section 5).
 4. **The four safety rules need a fifth layer.** v1 rules govern drafts. Proactive agents can send, pay, sign, and delete with approval. v2 must teach the approval settings on each product (Duet's ask-first list, dots Custom Rules, Cowork scheduled-task approvals) as part of Phase 3.
 5. **The privacy promise needs rewording.** v1 said the files stay on the owner's computer. Any cloud brief sends some context to the cloud. The honest v2 line is that the owner chooses exactly what the cloud layer contains.
 
@@ -121,17 +121,47 @@ These were run after the first draft of this file. Where a result changes a row 
 ### Partly settled
 
 5. **Python on the owner's computer may not be needed on Claude.** In chat and Cowork, a skill's folder is "copied into the code execution sandbox" and scripts run on what that environment provides. Code execution must be turned on in Settings > Capabilities. The Python version in that sandbox is not stated, and the installer was not run there. Since the analyzer is standard-library only, the odds are good. One run inside a real Cowork task settles it.
-6. **AgencyBrain connector.** In the connector registry for this account it appears as a per-agency connector ("AgencyBrain - Cedar Grove") served from `api.myagencybrain.com`, connected and enabled. That shows the connector is a hosted service an agency account signs in to, not something tied to this computer. AgencyBrain's own help library has no article on connecting Claude or ChatGPT, so how a customer gets it, and on which AgencyBrain plans, has to come from the AgencyBrain side. No ChatGPT-side equivalent was found.
+### Settled after reading the AgencyBrain repository (origin/main, 2026-11-27)
 
-### Could not be tested from here
+6. **The AgencyBrain connector is a shipped, self-serve product feature on both platforms.** Source: `supabase/functions/agencybrain-mcp/` and the Settings setup guide on `origin/main`.
+   - **What it is.** One hosted server (a Supabase Edge Function) that speaks the standard connector protocol over HTTP with OAuth sign-in. Nothing is installed on the owner's computer.
+   - **Who can connect.** Only the agency owner. Plans: AgencyBrain Plus and Pro, 1:1 Coaching, and Boardroom members on any plan. Core is refused. Managers, key employees, and staff can never authorize. Eligibility is rechecked on every request, so a downgrade or suspension cuts access at once.
+   - **How an owner connects.** In AgencyBrain, Settings has a "Claude & ChatGPT" section with a connector address to copy. In Claude: Settings > Connectors > Add custom connector, paste, sign in as the owner, Allow. In ChatGPT or Codex: Customize > Plugins > Add > Add custom MCP server, paste, OAuth, Allow. "ChatGPT and Codex share one Plugins screen, so adding it once works in both." There is also a Codex command-line path.
+   - **Privacy control.** Customer details (names, phones, emails, policy numbers) are off by default per connection and the owner can turn them on or revoke the connection in Settings.
+   - **What it can do.** Read tools across quotes, sales, producers, lead-source ROI, renewals, cross-sale, scorecards, Phone Hub, Cancel Audit, Winback, payouts, training, the weekly briefing, and Mission Control commitments. Draft tools that save a proposal the owner must review and turn on inside AgencyBrain (comp plan, scorecard, sequence, call scoring template, roleplay, training course, lead form, sales process, setup changes). 67 tools are live in the session this research ran in. Nothing goes live without the owner.
+   - **Limits.** 30 tool calls per minute per connection. Access tokens last one hour and refresh for 30 days.
+   - **Usage so far.** An internal review dated 2026-11-25 counted 30 approved connections across 21 agencies in the first four days. That figure is from that document, not re-queried.
+   - **Muse.** A separate Muse connector exists in the repo as a local test package only. Its README says it "is not a directory-approved connector and must not be described as one."
+   - **What this means for v2.** "Connect AgencyBrain" can be a pre-work step with an existing in-product guide. The gate is the attendee's AgencyBrain plan (Plus or higher), not anything technical. Attendees who are not AgencyBrain customers, or are on Core, need the v1 export-based skills as their path.
+
+7. **A scheduled task cannot read the local folder while the laptop is closed. This is answered by the docs and did not need a hands-on test.** On Claude, cloud scheduled tasks use connectors, skills, plugins, and files saved to the Claude account; pointing one at a local folder turns on "Require this computer," and then it "runs only while your computer is awake and Claude Desktop is open." On Codex, scheduled tasks on a local project need "the computer on and the app running." Both platforms behave the same way here. What remains unknown is narrower: the smoothest way to get an owner-approved summary of the brain into a place the cloud task can read.
+
+### Reported by Justin
+
+8. **Voice works in Cowork.** Confirmed by use, 2026-11-27.
+9. **Claude Duet access: yes.** Justin's account is off the waitlist, so the AgencyBrain-in-Duet test can be run.
+
+### Still open
 
 Each needs a person in the app, about 15 to 30 minutes.
 
-7. Can a Cowork cloud scheduled task read a file saved to the Claude account, and how does a file get there from the local folder? The plugin docs do not say whether plugins load in scheduled tasks either.
-8. Does voice mode work inside a Cowork task on desktop?
-9. Can Claude Duet use a custom connector such as AgencyBrain? Duet is not mentioned anywhere in the plugin docs. This needs an account that is off the waitlist.
-10. For a non-technical owner on the OpenAI track, is ChatGPT Work or Codex the right surface for a local folder?
-11. Does a live Cowork artifact refresh on its own or only on a manual Refresh? The article that covers this could not be located.
+10. Can Claude Duet use the AgencyBrain custom connector? Duet is not mentioned anywhere in the plugin docs.
+11. For a non-technical owner on the OpenAI track, is ChatGPT Work or Codex the right surface for a local folder?
+12. Does a live Cowork artifact refresh on its own or only on a manual Refresh? The article that covers this could not be located.
+
+### Correction: platform parity on scheduled work
+
+An earlier summary of this research said only Claude had a confirmed proactive feature. That was wrong. **Codex has scheduled tasks**, and Codex cloud tasks "can continue while your computer is asleep." The accurate comparison:
+
+| | Claude | OpenAI |
+|---|---|---|
+| Scheduled tasks exist | Yes | Yes |
+| Run with the laptop closed | Yes, cloud scheduled tasks on every paid plan | Yes for Codex cloud tasks; needs a cloud environment set up first. Plans for scheduled tasks are not stated on the page read |
+| Read the local folder on a schedule | Only with the computer awake | Only with the computer on and the app running |
+| AgencyBrain connector | Yes | Yes, one install covers ChatGPT and Codex |
+| Always-on agent that messages first | Duet (waitlist preview) | dots (Pro, Business Premium, selected Plus) |
+
+Neither platform is ahead in a way that forces the v2 choice. The platform decision can be made on teaching simplicity.
 
 ## 6. Sources
 
