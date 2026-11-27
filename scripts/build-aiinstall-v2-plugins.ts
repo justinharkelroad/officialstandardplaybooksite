@@ -12,6 +12,7 @@
  * Output (outDir, default dist-aiinstall-v2): a Claude (Cowork) plugin and an
  * OpenAI Codex plugin, workspace starter folders, report skills, and zips.
  */
+import { createHash } from "node:crypto";
 import {
   cpSync,
   existsSync,
@@ -402,6 +403,28 @@ function starterFilesFor(dir: string, onlyFile?: string): Record<string, string>
  * phase files as the plugins so the two delivery routes cannot drift. Tokens
  * are left in place: the connector substitutes them for the app in use.
  */
+/**
+ * One fingerprint for everything the connector serves. The AgencyBrain copy
+ * recomputes it in a test, so a hand edit there fails, and the sync check
+ * here compares it with AgencyBrain main, so a stale copy is caught.
+ */
+export function connectorFingerprint(content: {
+  version: unknown;
+  tokens: unknown;
+  rules: unknown;
+  steps: unknown;
+  starterFiles: unknown;
+}): string {
+  const canonical = JSON.stringify([
+    content.version,
+    content.tokens,
+    content.rules,
+    content.steps,
+    content.starterFiles,
+  ]);
+  return createHash("sha256").update(canonical).digest("hex");
+}
+
 export function renderConnectorModule(phases: Phase[], rules: string, starterSrc: string): string {
   const ordered = [...phases].sort((a, b) => a.order - b.order || a.name.localeCompare(b.name));
   const steps = ordered.map((phase) => ({
@@ -418,6 +441,14 @@ export function renderConnectorModule(phases: Phase[], rules: string, starterSrc
     codex: starterFilesFor(join(starterSrc, "codex"), TOKENS.codex.STARTER_FILE),
   };
   const json = (value: unknown) => JSON.stringify(value, null, 2);
+  const strippedRules = stripReceiptSection(rules);
+  const fingerprint = connectorFingerprint({
+    version: VERSION,
+    tokens: TOKENS,
+    rules: strippedRules,
+    steps,
+    starterFiles: starter,
+  });
   const text = [
     "// GENERATED FILE. Do not edit by hand.",
     "// Source: officialstandardplaybooksite, resources/aiinstall/v2/phases/*.md and shared/operating-rules.md",
@@ -425,9 +456,12 @@ export function renderConnectorModule(phases: Phase[], rules: string, starterSrc
     "",
     `export const AI_INSTALL_CONTENT_VERSION = ${json(VERSION)};`,
     "",
+    "// sha256 of JSON.stringify([VERSION, TOKENS, RULES, STEPS, STARTER_FILES]).",
+    `export const AI_INSTALL_CONTENT_FINGERPRINT = ${json(fingerprint)};`,
+    "",
     `export const AI_INSTALL_TOKENS: Record<"claude" | "codex", Record<string, string>> = ${json(TOKENS)};`,
     "",
-    `export const AI_INSTALL_RULES: string = ${json(stripReceiptSection(rules))};`,
+    `export const AI_INSTALL_RULES: string = ${json(strippedRules)};`,
     "",
     "export type AiInstallStep = { name: string; title: string; description: string; stage: string; creates: string; body: string };",
     "",

@@ -6,6 +6,14 @@ import { fileURLToPath } from "node:url";
 
 import sharp from "sharp";
 
+// Run with bun so the TypeScript cohort settings can be imported:
+//   bun run og:aiinstall-prework
+import { getAiInstallCohortLabels } from "../supabase/functions/_shared/ai-install-cohort.ts";
+
+// The share image shows the workshop dates only once they are set.
+const cohortDates = getAiInstallCohortLabels().dates;
+const dateLine = cohortDates ? cohortDates.toUpperCase() : "NEW DATES SOON";
+
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const root = join(scriptDir, "..");
 const iconData = readFileSync(join(root, "src/assets/sp-icon-blue.png")).toString("base64");
@@ -69,7 +77,7 @@ function cardSvg({ tool, platform, primary, secondary }) {
       <text x="950" y="518" fill="#F4F2EE" font-family="Arial, sans-serif"
         font-size="24" font-weight="900" letter-spacing="1">AI INSTALL</text>
       <text x="950" y="575" fill="#2997FF" font-family="Arial, sans-serif"
-        font-size="14" font-weight="800" letter-spacing="2.5">AUGUST 26-27</text>
+        font-size="14" font-weight="800" letter-spacing="2.5">${dateLine}</text>
       <text x="950" y="600" fill="#F4F2EE" font-family="Arial, sans-serif"
         font-size="13" font-weight="700" letter-spacing="2">LIVE ON ZOOM</text>
 
