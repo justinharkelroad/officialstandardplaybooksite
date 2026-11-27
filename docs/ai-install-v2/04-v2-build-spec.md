@@ -15,16 +15,16 @@ Same product, same core idea: the owner builds a brain as a folder of files they
 - Owner-only by default; team access is a separate, generated package.
 - Both platforms supported. File 03 found no gap between them that forces a choice.
 
-## 3. Decisions this spec assumes
+## 3. Decisions
 
-Each is a default. Change any of them and the affected section changes with it.
+Confirmed by Justin on 2026-11-27, including the Python exception in D4.
 
 | # | Decision | Default in this spec | Why |
 |---|---|---|---|
 | D1 | Platform stance | Claude and Codex, equal, from one content source | Parity on scheduled work and on the AgencyBrain connector |
 | D2 | Proactive feature taught | Plain scheduled tasks on both platforms. Duet and dots shown as optional | Duet is a waitlist preview; dots are plan-gated. Scheduled tasks are available to every attendee |
-| D3 | AgencyBrain | A pre-work step for owners on Plus or higher. Everyone else uses the export-based report skills | Connector eligibility is owner-only, Plus, Pro, 1:1 Coaching, or Boardroom |
-| D4 | Report skill language | Keep the v1.2.0 Python analyzer for now; do not port | It passed 5/5 on a clean run and uses only the standard library. Porting to TypeScript is 2 to 3 days with no attendee-visible gain. This is an exception to the TypeScript-only rule and needs Justin's yes |
+| D3 | AgencyBrain | A pre-work step for owners on Plus or higher, or Boardroom members on any plan. Everyone else uses the export-based report skills | Connector eligibility is owner-only, Plus, Pro, 1:1 Coaching, or Boardroom |
+| D4 | Report skill language | Keep the v1.2.0 Python analyzer for now; do not port | It passed 5/5 on a clean run and uses only the standard library. Porting to TypeScript is 2 to 3 days with no attendee-visible gain. This is an exception to the TypeScript-only rule, approved by Justin 2026-11-27 |
 | D5 | Pre-work gate | Keep the `READY.txt` screenshot through `/aiinstall/ready`, and add an automated readiness check beside it | The repo's working rules require the screenshot. Removing it means editing that rule first |
 | D6 | Completion reporting | Ship the simple version first (a receipt code the attendee pastes into the portal), then the connector version | The simple version is about half a day of work; the connector is 3 to 5 days |
 
@@ -105,7 +105,7 @@ This keeps the v1 privacy promise honest: the owner sees and approves the exact 
 2. Create `MY BIZ BRAIN` and copy in the starter files.
 3. Install the AI Install plugin.
 4. Connect calendar and email.
-5. If on AgencyBrain Plus or higher: connect AgencyBrain using the guide in AgencyBrain Settings.
+5. If on AgencyBrain Plus or higher, or Boardroom members on any plan: connect AgencyBrain using the guide in AgencyBrain Settings.
 6. Gather the five raw-material items (unchanged from v1).
 7. Run `ready`. It creates `READY.txt` and reports what is connected.
 8. Submit the screenshot through `/aiinstall/ready` (unchanged).
@@ -188,7 +188,7 @@ Each must be shown to pass on a clean test account on both platforms before v2 i
 
 ## 8. What the offer can say, and cannot
 
-**Can say, once the acceptance checks pass:** voice-led build; installable commands instead of prompts; live AgencyBrain numbers for owners on Plus or higher; a morning brief that runs with the laptop closed; a weekly dashboard; one custom skill; a weekly upkeep routine with owner approval.
+**Can say, once the acceptance checks pass:** voice-led build; installable commands instead of prompts; live AgencyBrain numbers for owners on Plus or higher, or Boardroom members on any plan; a morning brief that runs with the laptop closed; a weekly dashboard; one custom skill; a weekly upkeep routine with owner approval.
 
 **Cannot say:** that files never leave the computer (the approved summary does); that every attendee gets AgencyBrain data (plan-gated); that Duet or dots are included (optional, access varies); that the brain updates itself (it proposes, the owner approves); any revenue or productivity result.
 
@@ -201,12 +201,11 @@ Each must be shown to pass on a clean test account on both platforms before v2 i
 | O3 | Does a live Cowork dashboard refresh on its own? | 15-minute hands-on | Dashboard copy only |
 | O4 | Do plugin commands load inside a cloud scheduled task? | 15-minute hands-on | Nothing, by design: the brief task carries its own instructions |
 | O5 | Does the report-skill installer pass inside the Cowork sandbox with no local Python? | 15-minute hands-on | Whether the self-serve report track needs a Python note |
-| O6 | Decisions D1 through D6 confirmed or changed | Justin | Start of W1 |
-| O7 | Next cohort date, price, and seat count | Justin | W4 and W8 |
+| O6 | Next cohort date, price, and seat count | Justin | W4 and W8 |
 
 ## 10. Build order
 
-1. **O6 first.** Confirm the six decisions. 15 minutes.
+1. **Decisions.** Done 2026-11-27.
 2. **W1 and W2.** Content source and build script. After this, v1 can already be delivered as commands. 2 days.
 3. **W3.** New commands, starting with `brief-setup`, since it carries the main new promise. 2 to 3 days.
 4. **Dry run.** Justin runs the full two days alone on a clean folder on each platform and times every block against section 5. 1 day.
