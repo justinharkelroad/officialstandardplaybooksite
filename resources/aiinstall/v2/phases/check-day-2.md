@@ -1,9 +1,9 @@
 ---
 name: check-day-2
 title: Day 2 completion check
-description: AI Install Day 2 completion check. Read-only check of projects, memory system, and cold tests. Use when the owner says check day 2, day 2 complete, or final check. Run in a fresh conversation.
+description: AI Install Day 2 completion check. Read-only check of projects, memory system, cold tests, morning brief, custom skill, and upkeep. Use when the owner says check day 2, day 2 complete, or final check. Run in a fresh conversation.
 stage: day-2
-order: 14
+order: 18
 creates: none
 ---
 
@@ -22,17 +22,20 @@ Outcome: a read-only verdict on whether the Day 2 build is finished. Do not chan
    5. The master file index has no broken pointers and no unsupported facts.
    6. A fresh-conversation person test passed.
    7. A fresh-conversation project test passed.
-   8. `SESSION-HANDOFF.md` records the current Day 2 state.
+   8. `morning-brief/brief-instructions.md` exists, and the handoff records that the owner approved the summary and graded a test brief.
+   9. One custom skill exists under `{{SKILLS_DIR}}/` and the handoff records that it ran on a real case.
+   10. `upkeep/upkeep-instructions.md` exists.
+   11. `SESSION-HANDOFF.md` records the current Day 2 state.
 3. List anything missing, incomplete, unsupported, or untested.
 4. End the body of your reply with exactly one of these two lines, then the receipt:
    - `DAY 2 COMPLETE`
    - `DAY 2 NOT COMPLETE`
 
-Do not return `DAY 2 COMPLETE` if any of the eight items is false or untested.
+Do not return `DAY 2 COMPLETE` if any of the eleven items is false or untested.
 
 ## Pass condition
 
-- All eight items above are true and supported by a file.
+- All eleven items above are true and supported by a file.
 
 ## If the result is DAY 2 NOT COMPLETE
 

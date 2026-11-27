@@ -263,7 +263,10 @@ test("connector module: ordered steps, tokens left in place, no receipt, starter
   assert.equal(names[0], "ready");
   assert.equal(names[1], "phase-1-about-me");
   assert.ok(names.indexOf("check-day-1") < names.indexOf("phase-6-project"));
-  assert.equal(names.at(-1), "check-day-2");
+  assert.ok(names.indexOf("cold-test") < names.indexOf("brief-setup"));
+  assert.ok(names.indexOf("upkeep-setup") < names.indexOf("check-day-2"));
+  assert.ok(names.indexOf("check-day-2") < names.indexOf("apply-updates"));
+  assert.equal(names.at(-1), "team-pack");
   const memory = mod.AI_INSTALL_STEPS.find((step: { name: string }) => step.name === "memory");
   assert.match(memory.body, /\{\{MASTER_FILE\}\}/);
   assert.doesNotMatch(memory.body, /CLAUDE\.md|AGENTS\.md/);

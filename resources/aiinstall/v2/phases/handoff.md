@@ -23,7 +23,7 @@ Outcome: a bridge between conversations. The handoff is not the memory system. T
    6. Memory-system structure and master file name
    7. Decisions made
    8. Instructions and operating rules
-   9. Skills installed and the installation receipt result
+   9. Skills, morning brief, dashboard, and upkeep: what exists and what was tested
    10. Tests run and what passed or failed
    11. Incomplete work
    12. Exact current state
