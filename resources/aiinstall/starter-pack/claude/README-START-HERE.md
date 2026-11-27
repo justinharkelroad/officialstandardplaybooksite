@@ -12,11 +12,11 @@ Welcome. This pack gives your brain a head start so build time is build time.
 3. Add your gathered materials. A `gathered-materials` folder inside `MY BIZ BRAIN` is fine. Put your writing samples, team roster, project list, and agency facts there. For tools, create one simple Word, text, or Markdown list naming each paid tool and what you use it for. Screenshots are not needed.
 4. Open `MY BIZ BRAIN` in Cowork once and make sure the starter-pack files appear.
 
-These are the four starter-pack setup steps. They are not the full readiness checklist. Return to the [Claude pre-work page](https://standardplaybook.com/aiinstall/prework/claude), run the `READY.txt` test, and complete all six checks under **Final check**.
+These are the four starter-pack setup steps. They are not the full readiness checklist. Return to the [Claude pre-work page](https://standardplaybook.com/aiinstall/prework/claude), run the readiness step, and complete all six checks under **Final check**.
 
 ## Required final screenshot
 
-After all six checks are complete, take one screenshot showing `MY BIZ BRAIN` open inside Cowork with `READY.txt` visible. Submit it through the [pre-work confirmation form](https://standardplaybook.com/aiinstall/ready) by end of day Monday, August 24. Do not email the screenshot unless Mary asks you to.
+After all six checks are complete, take one screenshot showing `MY BIZ BRAIN` open inside Cowork with `READY.txt` visible. Submit it through the [pre-work confirmation form](https://standardplaybook.com/aiinstall/ready) by your pre-work deadline. Do not email the screenshot unless Mary asks you to.
 
 ## What NOT to do
 

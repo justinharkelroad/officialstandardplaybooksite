@@ -41,6 +41,7 @@ Deno.serve(async (req) => {
         readyResult,
         settingsResult,
         testimonialResult,
+        receiptsResult,
       ] = await Promise.all([
         supabase
           .from("ai_install_portal_access")
@@ -70,12 +71,37 @@ Deno.serve(async (req) => {
           .select("id, access_id, original_filename, size_bytes, submitted_at")
           .eq("status", "uploaded")
           .order("submitted_at", { ascending: false }),
+        supabase
+          .from("ai_install_portal_receipts")
+          .select("access_id, step, result, files, receipt_date, updated_at"),
       ]);
 
       const firstError = accessResult.error ?? progressResult.error ??
         eventResult.error ?? readyResult.error ?? settingsResult.error ??
         testimonialResult.error;
       if (firstError) throw firstError;
+      // Receipts are an add-on. If they cannot be read (for example the
+      // migration is not applied yet) the attendee list must still load, so
+      // the response says so and the page shows a notice.
+      if (receiptsResult.error) {
+        console.error(
+          "ai-install-portal-admin: receipts lookup failed",
+          receiptsResult.error,
+        );
+      }
+
+      const receiptsByAccess = new Map<string, Array<Record<string, unknown>>>();
+      for (const receipt of receiptsResult.error ? [] : receiptsResult.data ?? []) {
+        const current = receiptsByAccess.get(receipt.access_id) ?? [];
+        current.push({
+          step: receipt.step,
+          result: receipt.result,
+          files: receipt.files,
+          receipt_date: receipt.receipt_date,
+          updated_at: receipt.updated_at,
+        });
+        receiptsByAccess.set(receipt.access_id, current);
+      }
 
       const progressByAccess = new Map<string, Record<string, unknown>>();
       for (const item of progressResult.data ?? []) {
@@ -130,6 +156,7 @@ Deno.serve(async (req) => {
         ready_submitted_at:
           readyByEmail.get(normalizePortalEmail(access.email)) ?? null,
         testimonial: testimonialByAccess.get(access.id) ?? null,
+        receipts: receiptsByAccess.get(access.id) ?? [],
       }));
 
       return jsonResponse({
@@ -137,6 +164,7 @@ Deno.serve(async (req) => {
         rows,
         testimonial_prompt_enabled:
           settingsResult.data?.testimonial_prompt_enabled ?? true,
+        receipts_unavailable: Boolean(receiptsResult.error),
       });
     }
 

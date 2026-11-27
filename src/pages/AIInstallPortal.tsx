@@ -27,11 +27,20 @@ import {
   recordAiInstallPortalSignOut,
   recordAiInstallVideoEvent,
   skipAiInstallTestimonial,
+  submitAiInstallReceipts,
   uploadAiInstallTestimonial,
   type AiInstallPortalProgress,
   type AiInstallPortalStatus,
+  type AiInstallReceipt,
+  type AiInstallRejectedReceiptLine,
   type AiInstallVideoId,
 } from "@/lib/aiInstallPortal";
+import { AI_INSTALL_COHORT } from "@/lib/aiInstallCohort";
+import {
+  describeAiInstallReceiptResult,
+  describeAiInstallReceiptSubmission,
+  summarizeAiInstallReceipts,
+} from "@/lib/aiInstallReceipts";
 import {
   getAiInstallPortalResourcePlan,
   type AiInstallPortalPreworkResource,
@@ -493,6 +502,22 @@ function PortalWorkspace({ status }: { status: AiInstallPortalStatus }) {
                 />
               ))}
             </div>
+            {resourcePlan.plugin.length > 0 && (
+              <div className="aip-day-resources">
+                <span className="aip-day-resources-label">Cannot connect AgencyBrain? Use the plugin</span>
+                {resourcePlan.plugin.map((resource) => (
+                  <ResourceDownloadButton
+                    key={resource.id}
+                    resource={resource}
+                    downloading={downloadId === resource.id}
+                    onDownload={() => void download(resource)}
+                  />
+                ))}
+                {resourcePlan.plugin.some((resource) => resource.id === downloadError?.resourceId) && (
+                  <p role="alert">{downloadError?.message}</p>
+                )}
+              </div>
+            )}
             <a href="#day-1" className="aip-start-next">Pre-work complete? Continue to Day 1 <ChevronRight size={17} /></a>
           </div>
         </section>
@@ -530,6 +555,8 @@ function PortalWorkspace({ status }: { status: AiInstallPortalStatus }) {
           </div>
         </section>
 
+        {AI_INSTALL_COHORT.portalShowsV2 && <ReceiptsSection initialReceipts={status.receipts ?? []} />}
+
         <footer className="aip-footer">
           <div className="aip-shell">
             <img src={standardLogo} alt="Standard Playbook" />
@@ -538,6 +565,91 @@ function PortalWorkspace({ status }: { status: AiInstallPortalStatus }) {
         </footer>
       </main>
     </div>
+  );
+}
+
+function ReceiptsSection({ initialReceipts }: { initialReceipts: AiInstallReceipt[] }) {
+  const [receipts, setReceipts] = useState<AiInstallReceipt[]>(initialReceipts);
+  const [text, setText] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<{ recorded: number; rejected: AiInstallRejectedReceiptLine[] } | null>(null);
+  const summary = useMemo(() => summarizeAiInstallReceipts(receipts), [receipts]);
+
+  const submit = async (event: FormEvent) => {
+    event.preventDefault();
+    if (submitting) return;
+    setSubmitting(true);
+    setError(null);
+    setResult(null);
+    try {
+      const submission = await submitAiInstallReceipts(text);
+      setReceipts(submission.receipts);
+      setResult({ recorded: submission.recorded, rejected: submission.rejected });
+      if (submission.recorded > 0 && submission.rejected.length === 0) setText("");
+    } catch (submitError) {
+      setError(submitError instanceof Error ? submitError.message : "Could not save your receipt. Check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <section className="aip-receipts" id="step-receipts" aria-labelledby="receipts-title">
+      <div className="aip-shell">
+        <div className="aip-section-head">
+          <div><p className="aip-index">03 / Progress</p><h2 id="receipts-title">Step receipts</h2></div>
+          <p>When your AI finishes a step, it prints one receipt line. Paste it here so your coach can see where you are. Only that line is saved. Your files stay on your computer.</p>
+        </div>
+
+        <div className="aip-receipts-grid">
+          <form className="aip-receipts-form" onSubmit={submit}>
+            <label htmlFor="receipt-text">Paste your receipt</label>
+            <textarea
+              id="receipt-text"
+              value={text}
+              maxLength={8000}
+              rows={5}
+              disabled={submitting}
+              onChange={(event) => setText(event.target.value)}
+              placeholder="AII-R1|phase-1-about-me|PASS|about-me.md|2027-02-10"
+            />
+            <button type="submit" className="aip-primary-button" disabled={submitting || text.trim() === ""}>
+              {submitting ? "Saving" : "Save receipt"}
+            </button>
+
+            {error && <p className="aip-receipts-error" role="alert">{error}</p>}
+            {result && (
+              <div className="aip-receipts-result" role="status">
+                <p><strong>{describeAiInstallReceiptSubmission(result.recorded, result.rejected.length)}</strong></p>
+                {result.rejected.length > 0 && (
+                  <ul>
+                    {result.rejected.map((item, index) => (
+                      <li key={`${item.lineNumber}:${index}`}>
+                        {item.line && <code>{item.line}</code>}
+                        <span>{item.lineNumber > 0 ? `Line ${item.lineNumber}: ` : ""}{item.reason}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
+          </form>
+
+          <div className="aip-receipts-list">
+            <p className="aip-receipts-count"><strong>{summary.passed} of {summary.total}</strong> steps passed</p>
+            <ol>
+              {summary.steps.map((step) => (
+                <li key={step.name} className={step.result ? `is-${step.result.toLowerCase()}` : "is-empty"}>
+                  <span>{step.label}</span>
+                  <em>{describeAiInstallReceiptResult(step.result)}</em>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 

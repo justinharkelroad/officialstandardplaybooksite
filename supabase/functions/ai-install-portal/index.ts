@@ -4,9 +4,11 @@ import {
   isResponse,
   jsonResponse,
 } from "../_shared/memberAuth.ts";
+import type { SupabaseClient } from "https://esm.sh/@supabase/supabase-js@2";
 import {
   type AiInstallPlatform,
   canAccessPortalAsset,
+  parseAiInstallReceipts,
   requirePortalAccess,
   shouldCountPortalSession,
 } from "../_shared/ai-install-portal.ts";
@@ -58,6 +60,18 @@ export const PORTAL_ASSETS: Record<string, PortalAsset> = {
     filename: "AI Install Codex Starter Pack.zip",
     platform: "codex",
   },
+  "claude-plugin": {
+    id: "claude-plugin",
+    path: "claude/ai-install-claude-plugin.zip",
+    filename: "AI Install Plugin - Claude.zip",
+    platform: "claude",
+  },
+  "codex-plugin": {
+    id: "codex-plugin",
+    path: "codex/ai-install-codex-plugin.zip",
+    filename: "AI Install Plugin - Codex.zip",
+    platform: "codex",
+  },
   "codex-skills": {
     id: "codex-skills",
     path: "codex/standard-agency-intelligence-skills-codex.zip",
@@ -70,6 +84,8 @@ const PORTAL_VIDEOS = [
   { id: "day-1", vimeo_id: "1221779945", title: "Agency AI Install - Day 1" },
   { id: "day-2", vimeo_id: "1222026378", title: "Agency AI Install - Day 2" },
 ] as const;
+
+const RECEIPT_COLUMNS = "step, result, files, receipt_date, updated_at";
 
 const TESTIMONIAL_BUCKET = "ai-install-testimonials";
 const TESTIMONIAL_VIMEO_ID = "1222084782";
@@ -124,8 +140,8 @@ Deno.serve(async (req) => {
         if (sessionEventError) throw sessionEventError;
       }
 
-      const [progressResult, settingsResult, testimonialResult] = await Promise
-        .all([
+      const [progressResult, settingsResult, testimonialResult, receiptsResult] =
+        await Promise.all([
           supabase
             .from("ai_install_portal_progress")
             .select(
@@ -145,10 +161,23 @@ Deno.serve(async (req) => {
             .order("submitted_at", { ascending: false })
             .limit(1)
             .maybeSingle(),
+          supabase
+            .from("ai_install_portal_receipts")
+            .select(RECEIPT_COLUMNS)
+            .eq("access_id", access.id),
         ]);
       const firstError = progressResult.error ?? settingsResult.error ??
         testimonialResult.error;
       if (firstError) throw firstError;
+      // A receipts problem (for example the table is not deployed yet) must
+      // never lock attendees out of their replays, so it is logged and the
+      // list is returned empty instead of failing the whole portal load.
+      if (receiptsResult.error) {
+        console.error(
+          "ai-install-portal: receipts lookup failed",
+          receiptsResult.error,
+        );
+      }
 
       return jsonResponse({
         ok: true,
@@ -160,6 +189,7 @@ Deno.serve(async (req) => {
         },
         videos: PORTAL_VIDEOS,
         progress: progressResult.data ?? [],
+        receipts: receiptsResult.error ? [] : receiptsResult.data ?? [],
         testimonial: {
           enabled: settingsResult.data?.testimonial_prompt_enabled ?? true,
           intro_vimeo_id: TESTIMONIAL_VIMEO_ID,
@@ -167,6 +197,43 @@ Deno.serve(async (req) => {
           submitted_at: testimonialResult.data?.submitted_at ??
             access.testimonial_submitted_at,
         },
+      });
+    }
+
+    if (action === "receipts_submit") {
+      const text = typeof body.text === "string" ? body.text : "";
+      if (text.trim() === "") {
+        return errorResponse(
+          "Paste the receipt line your AI printed, then try again.",
+          400,
+        );
+      }
+
+      const parsed = parseAiInstallReceipts(text);
+      if (parsed.receipts.length > 0) {
+        const now = new Date().toISOString();
+        // Identity comes from the verified session, never from the request body.
+        const { error: upsertError } = await supabase
+          .from("ai_install_portal_receipts")
+          .upsert(
+            parsed.receipts.map((receipt) => ({
+              access_id: access.id,
+              step: receipt.step,
+              result: receipt.result,
+              files: receipt.files,
+              receipt_date: receipt.date,
+              updated_at: now,
+            })),
+            { onConflict: "access_id,step" },
+          );
+        if (upsertError) throw upsertError;
+      }
+
+      return jsonResponse({
+        ok: true,
+        recorded: parsed.receipts.length,
+        rejected: parsed.rejected,
+        receipts: await listMemberReceipts(supabase, access.id),
       });
     }
 
@@ -434,6 +501,18 @@ Deno.serve(async (req) => {
     return errorResponse("Portal request failed", 500);
   }
 });
+
+async function listMemberReceipts(
+  supabase: SupabaseClient,
+  accessId: string,
+) {
+  const { data, error } = await supabase
+    .from("ai_install_portal_receipts")
+    .select(RECEIPT_COLUMNS)
+    .eq("access_id", accessId);
+  if (error) throw error;
+  return data ?? [];
+}
 
 function normalizeVideoId(value: unknown): VideoId | null {
   return value === "day-1" || value === "day-2" ? value : null;

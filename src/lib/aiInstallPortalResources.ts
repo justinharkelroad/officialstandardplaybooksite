@@ -1,3 +1,5 @@
+import { AI_INSTALL_COHORT } from "./aiInstallCohort";
+
 export type AiInstallResourcePlatform = "claude" | "codex" | "both";
 
 export interface AiInstallPortalResource {
@@ -40,6 +42,12 @@ const PLATFORM_RESOURCES = {
       detail: "Complete skill files installed during Day 2",
       kind: "ZIP",
     },
+    plugin: {
+      id: "claude-plugin",
+      title: "AI Install Plugin for Claude",
+      detail: "Only if you cannot connect AgencyBrain. Upload it in Customize, then Plugins. Do not unzip it.",
+      kind: "ZIP",
+    },
   },
   codex: {
     prework: {
@@ -56,11 +64,26 @@ const PLATFORM_RESOURCES = {
       detail: "Complete skill files installed during Day 2",
       kind: "ZIP",
     },
+    plugin: {
+      id: "codex-plugin",
+      title: "AI Install Plugin for Codex",
+      detail: "Only if you cannot connect AgencyBrain. Follow the README inside to install it.",
+      kind: "ZIP",
+    },
   },
 } as const;
 
-export function getAiInstallPortalResourcePlan(platform: AiInstallResourcePlatform): {
+/**
+ * The plugin is the fallback for owners who cannot connect AgencyBrain. It is
+ * listed only once the cohort settings turn the v2 portal on, so the first
+ * cohort's alumni keep seeing exactly what they were given.
+ */
+export function getAiInstallPortalResourcePlan(
+  platform: AiInstallResourcePlatform,
+  options: { showV2: boolean } = { showV2: AI_INSTALL_COHORT.portalShowsV2 },
+): {
   prework: AiInstallPortalPreworkResource[];
+  plugin: AiInstallPortalResource[];
   dayOne: AiInstallPortalResource[];
   dayTwo: AiInstallPortalResource[];
   resourceCount: number;
@@ -69,10 +92,13 @@ export function getAiInstallPortalResourcePlan(platform: AiInstallResourcePlatfo
   const prework = platforms.map((name) => PLATFORM_RESOURCES[name].prework);
   const dayTwo = [DAY_TWO_GUIDE, ...platforms.map((name) => PLATFORM_RESOURCES[name].skills)];
 
+  const plugin = options.showV2 ? platforms.map((name) => PLATFORM_RESOURCES[name].plugin) : [];
+
   return {
     prework: [...prework],
+    plugin: [...plugin],
     dayOne: [...DAY_ONE_RESOURCES],
     dayTwo: [...dayTwo],
-    resourceCount: prework.length + DAY_ONE_RESOURCES.length + dayTwo.length,
+    resourceCount: prework.length + plugin.length + DAY_ONE_RESOURCES.length + dayTwo.length,
   };
 }

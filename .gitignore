@@ -54,3 +54,4 @@ android/*.jks
 android/*.keystore
 android/key.properties
 *.mobileprovision
+dist-aiinstall-v2/

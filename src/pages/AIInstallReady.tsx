@@ -3,6 +3,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import standardLogo from "@/assets/standard-word-logo.png";
 import playbookIcon from "@/assets/sp-icon-black.png";
 import { supabase } from "@/integrations/supabase/client";
+import { getAiInstallCohortLabels } from "@/lib/aiInstallCohort";
 
 // The READY page hangs off /aiinstall, so it inherits that page's tokens and
 // base styles verbatim rather than restating them. Only form-specific rules
@@ -11,10 +12,14 @@ import "./AIInstall.css";
 import "./AIInstallReady.css";
 
 const PAGE_TITLE = "Confirm Your Pre-work | The Agency AI Install";
-const PAGE_DESCRIPTION =
-  "Confirm your AI Install pre-work is done. First name, last name, email, your platform, and one screenshot. Deadline: end of day Monday, August 24.";
+const COHORT = getAiInstallCohortLabels();
+const PAGE_DESCRIPTION = COHORT.deadline
+  ? `Confirm your AI Install pre-work is done. First name, last name, email, your platform, and one screenshot. Deadline: ${COHORT.deadline}.`
+  : "Confirm your AI Install pre-work is done. First name, last name, email, your platform, and one screenshot.";
 const PAGE_URL = "https://standardplaybook.com/aiinstall/ready";
-const DEADLINE = "End of day Monday, August 24";
+const DEADLINE = COHORT.deadlineDay
+  ? `End of day ${COHORT.deadlineDay}`
+  : "Sent with your workshop dates";
 const MAX_BYTES = 10 * 1024 * 1024;
 const SUBMIT_TIMEOUT_MS = 30_000;
 

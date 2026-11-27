@@ -706,3 +706,100 @@
     text-align: left;
   }
 }
+
+/* Two routes: connected to AgencyBrain, or the plugin installed by hand. */
+.aip-routes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 28px;
+  border: 1px solid var(--aip-rule);
+}
+
+.aip-route {
+  padding: 32px 28px;
+}
+
+.aip-route--plugin {
+  border-left: 1px solid var(--aip-rule);
+}
+
+.aip-route__tag {
+  color: var(--aii-blue-dark);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.aip-route h3 {
+  margin-top: 16px !important;
+  font-family: var(--aii-editorial);
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  text-transform: uppercase;
+}
+
+.aip-route ul,
+.aip-route ol {
+  margin: 20px 0 0;
+  padding-left: 20px;
+  color: #5a5a5a;
+  line-height: 1.56;
+}
+
+.aip-route ul {
+  list-style: disc;
+}
+
+.aip-route ol {
+  list-style: decimal;
+}
+
+.aip-route li + li {
+  margin-top: 10px;
+}
+
+.aip-route a {
+  border-bottom: 1px solid currentColor;
+  color: var(--aii-blue-dark);
+  font-weight: 700;
+}
+
+.aip-route__note {
+  margin-top: 20px !important;
+  color: #5a5a5a;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.aip-prompt-stack {
+  display: grid;
+  gap: 20px;
+}
+
+.aip-prompt__label {
+  margin: 0 !important;
+  padding: 14px 30px;
+  border-bottom: 1px solid rgb(255 255 255 / 0.54);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.aip-prompt-stack .aip-prompt pre {
+  min-height: 0;
+  padding: 24px 30px;
+}
+
+@media (max-width: 900px) {
+  .aip-routes {
+    grid-template-columns: 1fr;
+  }
+
+  .aip-route--plugin {
+    border-top: 1px solid var(--aip-rule);
+    border-left: 0;
+  }
+}

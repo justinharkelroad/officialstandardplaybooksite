@@ -1,3 +1,8 @@
+import {
+  AI_INSTALL_COHORT,
+  type AiInstallCohort,
+  getAiInstallCohortLabels,
+} from "./ai-install-cohort.ts";
 export type AiInstallToolChoice = "claude" | "codex" | "undecided";
 
 interface CheckoutCustomField {
@@ -160,7 +165,23 @@ export function extractAiInstallPurchase(
 export function renderAiInstallPurchaseEmail(
   purchase: AiInstallPurchase,
   resources: AiInstallEmailResources,
+  cohort: AiInstallCohort = AI_INSTALL_COHORT,
 ): AiInstallEmail {
+  const when = getAiInstallCohortLabels(cohort);
+  const pending = "sent to you as soon as the dates are set";
+  const preheader = when.dates && when.deadlineDay
+    ? `Block ${when.dates} and finish your 90-minute pre-work by ${when.deadlineDay}.`
+    : "Finish your 90-minute pre-work before day one.";
+  const preworkHeading = when.deadlineDay
+    ? `Your pre-work | about 90 minutes | due ${when.deadlineDay}`
+    : "Your pre-work | about 90 minutes";
+  const finishHeading = when.deadlineShort
+    ? `Finish by ${when.deadlineShort}`
+    : "Finish before day one";
+  const deadlineRef = when.deadlineShort ?? "your pre-work deadline";
+  const seatPolicy = cohort.seats === null
+    ? "One purchase equals one attendee."
+    : `One purchase equals one attendee. Registration is capped at ${cohort.seats} paid seats. After ${cohort.seats} paid seats, registration moves to a waitlist. Free members do not count against the paid-seat cap.`;
   const firstName = purchase.fullName?.split(/\s+/)[0] || "there";
   const selectedPrework = purchase.toolChoice === "claude"
     ? resources.claudePreworkUrl
@@ -226,6 +247,9 @@ export function renderAiInstallPurchaseEmail(
   const starterPackButtons = selectedStarterPacks
     .map((resource) => resourceButton(resource.label, resource.url))
     .join("");
+  const starterPackNote = selectedStarterPacks.length > 0
+    ? `<p style="margin:0 0 12px;">On the plugin route only, you also copy in the starter pack:</p>`
+    : "";
   const readyButton = resources.readyUrl
     ? resourceButton("Submit your required screenshot", resources.readyUrl)
     : "";
@@ -257,7 +281,7 @@ export function renderAiInstallPurchaseEmail(
   </head>
   <body style="margin:0;background:#f4f2ee;color:#0a0a0b;font-family:Arial,Helvetica,sans-serif;">
     <div style="display:none;max-height:0;overflow:hidden;opacity:0;">
-      Block August 26-27 and finish your 90-minute pre-work by Monday, August 24.
+      ${escapeHtml(preheader)}
     </div>
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f2ee;">
       <tr>
@@ -279,17 +303,17 @@ export function renderAiInstallPurchaseEmail(
                 <p style="margin:0 0 16px;">Welcome, ${
       escapeHtml(firstName)
     }.</p>
-                <p style="margin:0 0 16px;">You just bought two afternoons that end with a working AI co-working brain, built by you, in the room with me, and running before you wake up Friday the 28th.</p>
+                <p style="margin:0 0 16px;">You just bought two afternoons that end with a working AI co-working brain, built by you, in the room with me, and running before you wake up the morning after day two.</p>
                 <p style="margin:0;">Here is everything you need, and the one thing I need from you.</p>
               </td>
             </tr>
             <tr>
               <td style="padding:28px 24px;border-top:1px solid #d6d3cd;font-size:16px;line-height:1.6;">
                 <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">The details</p>
-                <p style="margin:0 0 6px;"><strong>Day one:</strong> Wednesday, August 26, 2026, 1:00 PM to 5:00 PM Eastern</p>
-                <p style="margin:0 0 6px;"><strong>Day two:</strong> Thursday, August 27, 2026, 1:00 PM to 5:00 PM Eastern</p>
+                <p style="margin:0 0 6px;"><strong>Day one:</strong> ${escapeHtml(when.dayOneLine ?? pending)}</p>
+                <p style="margin:0 0 6px;"><strong>Day two:</strong> ${escapeHtml(when.dayTwoLine ?? pending)}</p>
                 <p style="margin:0 0 6px;"><strong>Where:</strong> live on Zoom; register with the button below</p>
-                <p style="margin:0 0 6px;"><strong>Check-up call:</strong> September 24, 2026, 1:00 PM to 2:00 PM EST</p>
+                <p style="margin:0 0 6px;"><strong>Check-up call:</strong> ${escapeHtml(when.checkupLine ?? pending)}</p>
                 <p style="margin:0 0 18px;"><strong>Recordings:</strong> both sessions, sent within 7 days after we wrap</p>
                 ${zoomButton}
                 ${calendarButton}
@@ -301,13 +325,13 @@ export function renderAiInstallPurchaseEmail(
                 <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">What this is</p>
                 <p style="margin:0 0 16px;"><strong>This is a build, not a webinar.</strong> You will work the entire time, in your own folder, on your own business. Camera on, folder open. I build on screen, you build with me, and we checkpoint at every phase so nobody gets left behind.</p>
                 <p style="margin:0 0 16px;">Day one, your brain learns who you are: your story, your voice pulled from your real writing, your rules, your team, and your projects.</p>
-                <p style="margin:0;">Day two, we make it permanent and put it to work: the memory system, your skill library, and your first automations. Before we log off Thursday, your morning brief is scheduled to run Friday morning whether you open your laptop or not.</p>
+                <p style="margin:0;">Day two, we make it permanent and put it to work: the memory system, your morning brief, your weekly dashboard, and one custom skill. Before we log off on day two, your morning brief is scheduled to run the next morning whether you open your laptop or not.</p>
               </td>
             </tr>
             <tr>
               <td style="padding:28px 24px;border-top:1px solid #d6d3cd;font-size:16px;line-height:1.6;">
-                <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">Your pre-work | about 90 minutes | due Monday, August 24</p>
-                <p style="margin:0 0 16px;"><strong>No pre-work, no build.</strong> The room moves fast because everyone shows up staged. Do this early in the week, not Sunday night.</p>
+                <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">${escapeHtml(preworkHeading)}</p>
+                <p style="margin:0 0 16px;"><strong>No pre-work, no build.</strong> The room moves fast because everyone shows up staged. Do this early, not the night before.</p>
                 <p style="margin:0 0 12px;">${
       escapeHtml(preworkInstruction)
     }</p>
@@ -317,30 +341,32 @@ export function renderAiInstallPurchaseEmail(
                   <li style="margin:0 0 8px;">Get your subscription live and the desktop app installed for ${
       escapeHtml(toolLabel)
     }.</li>
-                  <li style="margin:0 0 8px;">Create one folder called <strong>MY BIZ BRAIN</strong> and copy in the starter pack.</li>
+                  <li style="margin:0 0 8px;">Create one folder called <strong>MY BIZ BRAIN</strong> and open it in the app.</li>
+                  <li style="margin:0 0 8px;">Connect AgencyBrain from AgencyBrain Settings, then connect your calendar and email in the app. If you cannot connect AgencyBrain, your pre-work page shows the plugin route.</li>
                   <li style="margin:0 0 8px;">Add 5 to 10 real writing samples, your team roster, active projects, agency basics, and the tools you pay for.</li>
-                  <li style="margin:0 0 8px;">Run the READY.txt test on the page. It takes 30 seconds and proves your setup works.</li>
+                  <li style="margin:0 0 8px;">Run the readiness step from your pre-work page. It checks your folder and creates READY.txt.</li>
                   ${claudeConnectorNote}
                 </ul>
+                ${starterPackNote}
                 ${starterPackButtons}
               </td>
             </tr>
             <tr>
               <td style="padding:28px 24px;border-top:1px solid #d6d3cd;font-size:16px;line-height:1.6;">
-                <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">Finish by August 24</p>
+                <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">${escapeHtml(finishHeading)}</p>
                 <p style="margin:0 0 16px;">Complete all six readiness checks on your pre-work page. The four numbered cards near the top are setup steps, not the final checklist.</p>
                 <p style="margin:0 0 16px;"><strong>A screenshot is required.</strong> After all six checks are complete, take one screenshot showing your MY BIZ BRAIN folder open in Cowork or Codex with READY.txt visible. Submit it through the confirmation form; do not email it unless Mary asks you to.</p>
                 ${readyButton}
-                <p style="margin:0 0 16px;"><strong>All purchases are nonrefundable. Your seat may be transferred to another person before August 24. If your pre-work is incomplete by August 24, your registration moves to a future workshop.</strong></p>
-                <p style="margin:0;">One purchase equals one attendee. Registration is capped at 50 paid seats. After 50 paid seats, registration moves to a waitlist. Free members do not count against the paid-seat cap.</p>
+                <p style="margin:0 0 16px;"><strong>All purchases are nonrefundable. Your seat may be transferred to another person before ${escapeHtml(deadlineRef)}. If your pre-work is incomplete by ${escapeHtml(deadlineRef)}, your registration moves to a future workshop.</strong></p>
+                <p style="margin:0;">${escapeHtml(seatPolicy)}</p>
               </td>
             </tr>
             <tr>
               <td style="padding:28px 24px;border-top:1px solid #d6d3cd;font-size:16px;line-height:1.6;">
                 <p style="margin:0 0 14px;color:#2997ff;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">If you get stuck</p>
                 <p style="margin:0 0 16px;">For setup help, email <a href="mailto:mary@standardplaybook.com">mary@standardplaybook.com</a> or <a href="mailto:info@standardplaybook.com">info@standardplaybook.com</a>. Mary will also be in the room both days as live tech help.</p>
-                <p style="margin:0 0 16px;">Do the pre-work this week, show up Wednesday with your folder open, and two afternoons from now the thing everyone keeps talking about will be running your morning instead of living in a tab.</p>
-                <p style="margin:0 0 22px;">See you on the 26th. Let's go.</p>
+                <p style="margin:0 0 16px;">Do the pre-work early, show up on day one with your folder open, and two afternoons from now the thing everyone keeps talking about will be running your morning instead of living in a tab.</p>
+                <p style="margin:0 0 22px;">See you in the room. Let's go.</p>
                 <p style="margin:0;">Your Friend &amp; Potential Coach,<br><strong>Justin E Harkelroad</strong><br>Standardplaybook.com<br>(260) 515-1349</p>
               </td>
             </tr>

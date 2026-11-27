@@ -1,0 +1,11 @@
+{
+  "name": "standard-agency-intelligence",
+  "version": "1.2.0",
+  "skills": [
+    "agency-quote-conversion",
+    "agency-retention-rescue",
+    "agency-commission-audit",
+    "agency-owner-review",
+    "agency-cross-sell"
+  ]
+}

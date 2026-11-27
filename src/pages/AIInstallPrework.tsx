@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import standardLogo from "@/assets/standard-word-logo.png";
+import { getAiInstallCohortLabels } from "@/lib/aiInstallCohort";
 
 import "./AIInstall.css";
 import "./AIInstallPrework.css";
@@ -22,10 +23,19 @@ interface SetupStep {
   copy: ReactNode;
 }
 
+const COHORT = getAiInstallCohortLabels();
+const PRICE_NOTE = COHORT.price
+  ? `not included in the ${COHORT.price}`
+  : "not included in the workshop price";
+
+const PAGE_DESCRIPTION =
+  "Get your computer ready for the workshop. You will install the app, create one folder, connect your tools, load your raw material, and prove it works. Do this early, not the night before.";
+
 const PLATFORM_CONFIG: Record<
   AIInstallPlatform,
   {
     label: string;
+    workspace: string;
     pageTitle: string;
     description: string;
     ogImage: string;
@@ -38,14 +48,17 @@ const PLATFORM_CONFIG: Record<
     alternateLabel: string;
     requirements: ReactNode;
     setupSteps: SetupStep[];
+    pluginInstall: ReactNode;
+    connectedPrompt: string;
+    pluginPrompt: string;
     readinessItems: ChecklistItem[];
   }
 > = {
   claude: {
     label: "Claude",
+    workspace: "Cowork",
     pageTitle: "Claude Pre-Work | The Agency AI Install",
-    description:
-      "Get your computer ready for the workshop. You will install the app, create one folder, load it with your raw material, and prove it works. Do this early in the week, not the night before.",
+    description: PAGE_DESCRIPTION,
     ogImage: "/og/ai-install-claude-prework.png",
     starterPackUrl: "/aiinstall/ai-install-claude-starter-pack.zip",
     downloadUrl: "https://claude.com/download",
@@ -58,8 +71,8 @@ const PLATFORM_CONFIG: Record<
     requirements: (
       <>
         Before you begin: Cowork requires a Claude <strong>Pro, Max, Team, or Enterprise</strong>
-        {" "}subscription, billed by Anthropic (roughly $20 and up per month, not included in the
-        $997). If you can sign in on the desktop app, you are set.
+        {" "}subscription, billed by Anthropic (roughly $20 and up per month, {PRICE_NOTE}). If
+        you can sign in on the desktop app, you are set.
       </>
     ),
     setupSteps: [
@@ -69,36 +82,41 @@ const PLATFORM_CONFIG: Record<
           "Click Download Claude above. Install the desktop app, open it, and sign in with the account you will use during the workshop.",
       },
       {
-        title: "Create your workshop folder.",
+        title: "Create your folder and open it.",
         copy: (
           <>
-            Open Finder on a Mac or File Explorer on Windows. Open Documents and create a new
-            folder named <strong>MY BIZ BRAIN</strong>. (That is what Justin&apos;s is called. One
-            folder, this name, so the room moves together.)
+            In Documents, create a new folder named <strong>MY BIZ BRAIN</strong>. One folder, this
+            name, so the room moves together. Then start a <strong>Cowork</strong> task in the
+            Claude app, connect <strong>Documents &gt; MY BIZ BRAIN</strong>, and allow access.
           </>
         ),
       },
       {
-        title: "Copy in the starter pack.",
+        title: "Connect AgencyBrain.",
         copy: (
           <>
-            Download the <a href="/aiinstall/ai-install-claude-starter-pack.zip">starter pack</a> and copy its files into{" "}
-            <strong>MY BIZ BRAIN</strong>, keeping the folder structure. The README inside takes
-            2 minutes and tells you exactly where things go.
+            In AgencyBrain, open <strong>Settings</strong>, then{" "}
+            <strong>Claude &amp; ChatGPT</strong>, and follow the setup guide. This is how the
+            workshop steps reach your app. Cannot connect? Use the plugin route below.
           </>
         ),
       },
       {
-        title: "Open the folder in Cowork.",
-        copy: (
-          <>
-            Open the Claude desktop app and start a <strong>Cowork</strong> task. When it asks which
-            folder to work in, connect <strong>Documents &gt; MY BIZ BRAIN</strong> and allow access.
-            You should see your starter pack files listed.
-          </>
-        ),
+        title: "Connect calendar and email.",
+        copy:
+          "In Claude, open Customize, then Connectors, and connect the calendar and email you run the agency on. You approve each one. Nothing gets sent without your say.",
       },
     ],
+    pluginInstall: (
+      <>
+        In Claude, open <strong>Customize</strong>, then <strong>Plugins</strong>, choose{" "}
+        <strong>Add</strong>, then <strong>Upload plugin</strong>, and pick the plugin file you
+        downloaded. Do not unzip it first.
+      </>
+    ),
+    connectedPrompt:
+      "Use AgencyBrain to run the AI Install readiness step. I am using Claude Cowork.",
+    pluginPrompt: "/ai-install:ready",
     readinessItems: [
       {
         id: "plan",
@@ -116,29 +134,29 @@ const PLATFORM_CONFIG: Record<
         copy: "I connected the folder inside Documents and allowed access.",
       },
       {
-        id: "proof",
-        title: "I passed the READY.txt test.",
-        copy: "The app created the file and I can see it inside my folder.",
+        id: "connected",
+        title: "My tools are connected.",
+        copy:
+          "AgencyBrain is connected, or the AI Install plugin is installed. My calendar and email are connected.",
       },
       {
         id: "context",
-        title: "My raw material and the starter pack are in the folder.",
+        title: "My raw material is in the folder, and passwords are out.",
         copy:
-          "Writing samples, team roster, projects, agency basics, tools list, and the starter pack files.",
+          "Writing samples, team roster, projects, agency basics, and tools list. No passwords or account keys. Those live in your password manager.",
       },
       {
-        id: "privacy",
-        title: "No passwords or account keys are in the folder.",
-        copy:
-          "Login credentials live in your password manager, not in the brain. (That is the only thing to pull out.)",
+        id: "proof",
+        title: "I passed the readiness step.",
+        copy: "The app reported every item OK, created READY.txt, and I can see it in my folder.",
       },
     ],
   },
   codex: {
     label: "Codex",
+    workspace: "Codex",
     pageTitle: "Codex Pre-Work | The Agency AI Install",
-    description:
-      "Get your computer ready for the workshop. You will install the app, create one folder, load it with your raw material, and prove it works. Do this early in the week, not the night before.",
+    description: PAGE_DESCRIPTION,
     ogImage: "/og/ai-install-codex-prework.png",
     starterPackUrl: "/aiinstall/ai-install-codex-starter-pack.zip",
     downloadUrl: "https://chatgpt.com/download/",
@@ -147,8 +165,14 @@ const PLATFORM_CONFIG: Record<
     officialGuideLabel: "Official Codex guide",
     alternatePath: "/aiinstall/prework/claude",
     alternateLabel: "Using Claude instead?",
-    requirements:
-      "Before you begin: Codex requires a ChatGPT plan that includes it, billed by OpenAI (not included in the $997). A free account will not run what we build on day two. If you are unsure your plan includes Codex, open the app and check before Monday the 24th; if you cannot see Codex, upgrade or write Mary.",
+    requirements: (
+      <>
+        Before you begin: Codex requires a ChatGPT plan that includes it, billed by OpenAI (
+        {PRICE_NOTE}). A free account will not run what we build on day two. If you are unsure your
+        plan includes Codex, open the app and check well before your pre-work deadline. If you
+        cannot see Codex, upgrade your plan.
+      </>
+    ),
     setupSteps: [
       {
         title: "Download ChatGPT and sign in.",
@@ -156,36 +180,41 @@ const PLATFORM_CONFIG: Record<
           "Click Download ChatGPT above. Install the desktop app, open it, and sign in with the account you will use during the workshop.",
       },
       {
-        title: "Create your workshop folder.",
+        title: "Create your folder and open it.",
         copy: (
           <>
-            Open Finder on a Mac or File Explorer on Windows. Open Documents and create a new
-            folder named <strong>MY BIZ BRAIN</strong>. (That is what Justin&apos;s is called. One
-            folder, this name, so the room moves together.)
+            In Documents, create a new folder named <strong>MY BIZ BRAIN</strong>. One folder, this
+            name, so the room moves together. Then open ChatGPT, use the menu in the top left to
+            select <strong>Codex</strong>, choose <strong>Documents &gt; MY BIZ BRAIN</strong>, and
+            allow access.
           </>
         ),
       },
       {
-        title: "Copy in the starter pack.",
+        title: "Connect AgencyBrain.",
         copy: (
           <>
-            Download the <a href="/aiinstall/ai-install-codex-starter-pack.zip">starter pack</a> and copy its files into{" "}
-            <strong>MY BIZ BRAIN</strong>, keeping the folder structure. The README inside takes
-            2 minutes and tells you exactly where things go.
+            In AgencyBrain, open <strong>Settings</strong>, then{" "}
+            <strong>Claude &amp; ChatGPT</strong>, and follow the setup guide. One setup covers
+            ChatGPT and Codex. This is how the workshop steps reach your app. Cannot connect? Use
+            the plugin route below.
           </>
         ),
       },
       {
-        title: "Open the folder in Codex.",
-        copy: (
-          <>
-            Open ChatGPT, use the menu in the top left to select <strong>Codex</strong>, and choose
-            the <strong>Documents &gt; MY BIZ BRAIN</strong> folder. Allow access. You should see
-            your starter pack files listed.
-          </>
-        ),
+        title: "Connect calendar and email.",
+        copy:
+          "In ChatGPT settings, open the connected apps list and connect the calendar and email you run the agency on. You approve each one. Nothing gets sent without your say.",
       },
     ],
+    pluginInstall: (
+      <>
+        Open the plugin file&apos;s README and follow its install steps for Codex. Once installed,
+        you start a step by typing its name with a dollar sign in front.
+      </>
+    ),
+    connectedPrompt: "Use AgencyBrain to run the AI Install readiness step. I am using Codex.",
+    pluginPrompt: "$ready",
     readinessItems: [
       {
         id: "plan",
@@ -203,25 +232,31 @@ const PLATFORM_CONFIG: Record<
         copy: "I selected the folder inside Documents and allowed access.",
       },
       {
-        id: "proof",
-        title: "I passed the READY.txt test.",
-        copy: "The app created the file and I can see it inside my folder.",
+        id: "connected",
+        title: "My tools are connected.",
+        copy:
+          "AgencyBrain is connected, or the AI Install plugin is installed. My calendar and email are connected.",
       },
       {
         id: "context",
-        title: "My raw material and the starter pack are in the folder.",
+        title: "My raw material is in the folder, and passwords are out.",
         copy:
-          "Writing samples, team roster, projects, agency basics, tools list, and the starter pack files.",
+          "Writing samples, team roster, projects, agency basics, and tools list. No passwords or account keys. Those live in your password manager.",
       },
       {
-        id: "privacy",
-        title: "No passwords or account keys are in the folder.",
-        copy:
-          "Login credentials live in your password manager, not in the brain. (That is the only thing to pull out.)",
+        id: "proof",
+        title: "I passed the readiness step.",
+        copy: "The app reported every item OK, created READY.txt, and I can see it in my folder.",
       },
     ],
   },
 };
+
+const CONNECTED_BENEFITS = [
+  "The workshop steps arrive inside your app. Nothing to download, nothing to update.",
+  "Your starter files are added for you during the readiness step.",
+  "Project numbers, the morning brief, and the weekly dashboard read your real AgencyBrain numbers.",
+];
 
 const CONTEXT_ITEMS: ChecklistItem[] = [
   {
@@ -255,9 +290,6 @@ const CONTEXT_ITEMS: ChecklistItem[] = [
       "Every subscription and tool the agency currently pays for. One list. This becomes fuel on day one.",
   },
 ];
-
-const TEST_PROMPT =
-  "Inside the open MY BIZ BRAIN folder, create a file named READY.txt containing\nexactly: AI Install [FIRST NAME] [LAST NAME] ready for August 26.";
 
 function setMetaTag(name: string, content: string, attribute: "name" | "property" = "name") {
   let element = document.querySelector(`meta[${attribute}="${name}"]`) as HTMLMetaElement | null;
@@ -293,7 +325,7 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
   const readinessItems = config.readinessItems;
   const storageKey = `ai-install-prework:${selectedPlatform}`;
   const [completed, setCompleted] = useState<string[]>([]);
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState<"connected" | "plugin" | null>(null);
 
   useEffect(() => {
     const pageUrl = `https://standardplaybook.com/aiinstall/prework/${selectedPlatform}`;
@@ -356,13 +388,15 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
     });
   };
 
-  const copyPrompt = async () => {
+  const copyPrompt = async (route: "connected" | "plugin") => {
     try {
-      await navigator.clipboard.writeText(TEST_PROMPT);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
+      await navigator.clipboard.writeText(
+        route === "connected" ? config.connectedPrompt : config.pluginPrompt,
+      );
+      setCopied(route);
+      window.setTimeout(() => setCopied(null), 1800);
     } catch {
-      setCopied(false);
+      setCopied(null);
     }
   };
 
@@ -385,14 +419,14 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
         <section className="aip-hero">
           <div className="aii-shell aip-hero__grid">
             <div className="aip-hero__copy">
-              <p className="aii-kicker">BEFORE AUGUST 26 &middot; ABOUT 90 MINUTES</p>
+              <p className="aii-kicker">{COHORT.beforeDayOne} &middot; ABOUT 90 MINUTES</p>
               <h1 className="aip-title">
                 <span>{config.label}</span> Pre-Work.
               </h1>
               <p className="aip-hero__subhead">
                 Get your computer ready for the workshop. You will install the app, create one
-                folder, load it with your raw material, and prove it works. Do this early in the
-                week, not the night before.
+                folder, connect your tools, load your raw material, and prove it works. Do this
+                early, not the night before.
               </p>
               <div className="aip-hero__actions">
                 <a
@@ -431,7 +465,7 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
           <div className="aii-shell">
             <div className="aip-section__heading">
               <span>01</span>
-              <h2>Install the app and connect your folder.</h2>
+              <h2>Install the app and connect your tools.</h2>
             </div>
             <p className="aip-requirement">{config.requirements}</p>
             <div className="aip-setup-grid">
@@ -443,31 +477,41 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
                 </article>
               ))}
             </div>
-          </div>
-        </section>
 
-        <section className="aip-section aip-proof">
-          <div className="aii-shell aip-proof__grid">
-            <div>
-              <div className="aip-section__heading">
-                <span>02</span>
-                <h2>Make sure the app can use your folder.</h2>
-              </div>
-              <p>
-                {selectedPlatform === "claude" ? (
-                  <>Open Cowork with your <strong>MY BIZ BRAIN</strong> folder connected.</>
-                ) : (
-                  <>Open Codex with your <strong>MY BIZ BRAIN</strong> folder selected.</>
-                )} Copy the instruction below, paste it into the chat, and send it. If READY.txt
-                shows up in your folder, your setup works. That file is also how we confirm your
-                seat, so leave it there.
-              </p>
-            </div>
-            <div className="aip-prompt">
-              <pre><code>{TEST_PROMPT}</code></pre>
-              <button type="button" onClick={copyPrompt}>
-                {copied ? "Copied" : "Copy test prompt"}
-              </button>
+            <div className="aip-routes">
+              <article className="aip-route aip-route--connected">
+                <p className="aip-route__tag">CONNECTED TO AGENCYBRAIN</p>
+                <h3>What connected owners get.</h3>
+                <ul>
+                  {CONNECTED_BENEFITS.map((benefit) => (
+                    <li key={benefit}>{benefit}</li>
+                  ))}
+                </ul>
+                <p className="aip-route__note">
+                  The connection is open to owners on AgencyBrain Plus, Pro, or 1:1 Coaching, and to
+                  Boardroom members on any plan.
+                </p>
+              </article>
+
+              <article className="aip-route aip-route--plugin">
+                <p className="aip-route__tag">CANNOT CONNECT? THE PLUGIN ROUTE</p>
+                <h3>Same steps, installed by hand.</h3>
+                <ol>
+                  <li>
+                    Sign in to your <a href="/aiinstall/portal">AI Install portal</a> and download
+                    the AI Install plugin for {config.label}.
+                  </li>
+                  <li>{config.pluginInstall}</li>
+                  <li>
+                    Download the <a href={config.starterPackUrl}>starter pack</a> and copy its files
+                    into <strong>MY BIZ BRAIN</strong>, keeping the folders as they are.
+                  </li>
+                </ol>
+                <p className="aip-route__note">
+                  The plugin runs every workshop step. It does not bring in your AgencyBrain numbers,
+                  so you type those in yourself.
+                </p>
+              </article>
             </div>
           </div>
         </section>
@@ -475,7 +519,7 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
         <section className="aip-section aip-materials">
           <div className="aii-shell">
             <div className="aip-section__heading">
-              <span>03</span>
+              <span>02</span>
               <h2>Add the information we will use during the workshop.</h2>
             </div>
             <p className="aip-section__intro">
@@ -496,8 +540,43 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
               One rule of craft: the brain runs on context, not databases. Samples, lists, and
               summaries go IN the folder. Raw exports and data dumps stay where they live (your
               desktop, your Drive); during the build you will point the brain at them when you want
-              something analyzed. Folders full of dumps make a slower, dumber brain.
+              something analyzed. Folders full of dumps make a slower, dumber brain. Passwords and
+              account keys never go in the folder.
             </p>
+          </div>
+        </section>
+
+        <section className="aip-section aip-proof">
+          <div className="aii-shell aip-proof__grid">
+            <div>
+              <div className="aip-section__heading">
+                <span>03</span>
+                <h2>Run the readiness step.</h2>
+              </div>
+              <p>
+                Open {config.workspace} with your <strong>MY BIZ BRAIN</strong> folder connected.
+                Copy the line for your route, paste it into the chat, and send it. The app checks
+                your folder, tells you anything that is missing, and creates READY.txt when
+                everything is in place. That file is also how we confirm your seat, so leave it
+                there.
+              </p>
+            </div>
+            <div className="aip-prompt-stack">
+              <div className="aip-prompt">
+                <p className="aip-prompt__label">Connected to AgencyBrain</p>
+                <pre><code>{config.connectedPrompt}</code></pre>
+                <button type="button" onClick={() => void copyPrompt("connected")}>
+                  {copied === "connected" ? "Copied" : "Copy this line"}
+                </button>
+              </div>
+              <div className="aip-prompt">
+                <p className="aip-prompt__label">Using the plugin</p>
+                <pre><code>{config.pluginPrompt}</code></pre>
+                <button type="button" onClick={() => void copyPrompt("plugin")}>
+                  {copied === "plugin" ? "Copied" : "Copy this line"}
+                </button>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -509,7 +588,7 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
             </div>
             <p className="aip-section__intro">
               Check each line on the computer you will bring. These are the six readiness checks;
-              the four cards above were setup steps. Your progress stays in this browser.
+              the four cards at the top were setup steps. Your progress stays in this browser.
             </p>
             <div className="aip-checklist__items">
               {readinessItems.map((item) => {
@@ -539,25 +618,34 @@ export default function AIInstallPrework({ platform }: AIInstallPreworkProps) {
           <div className="aii-shell aip-finish__grid">
             <div>
               <p>{isReady ? "PRE-WORK COMPLETE" : `${totalCount - completedCount} CHECKS LEFT`}</p>
-              <h2>{isReady ? "One last step: prove it to Mary." : "Finish this before day one."}</h2>
+              <h2>{isReady ? "One last step: send the screenshot." : "Finish this before day one."}</h2>
               {isReady ? (
                 <div className="aip-finish__instructions">
                   <p>
-                    Take one screenshot: your <strong>MY BIZ BRAIN</strong> folder open inside
-                    <strong>{selectedPlatform === "claude" ? " Cowork" : " Codex"}</strong>, READY.txt
-                    visible. Reply to your welcome email with it. Mary confirms every seat
-                    personally, and your seat is confirmed when she replies. Submit the same
-                    screenshot through the <a href="/aiinstall/ready">pre-work confirmation form</a>.
+                    Take one screenshot: your <strong>MY BIZ BRAIN</strong> folder open inside{" "}
+                    <strong>{config.workspace}</strong>, READY.txt visible. Submit it through the{" "}
+                    <a href="/aiinstall/ready">pre-work confirmation form</a>. Your seat is
+                    confirmed when the screenshot is reviewed.
                   </p>
                   <p>
-                    Deadline: <strong>end of day Monday, August 24.</strong> Pre-work not confirmed
-                    by then means your seat moves to a later date. The room builds, it does not wait.
+                    {COHORT.deadline ? (
+                      <>
+                        Deadline: <strong>{COHORT.deadline}.</strong> Pre-work not confirmed by then
+                        means your seat moves to a later date. The room builds, it does not wait.
+                      </>
+                    ) : (
+                      <>
+                        Your deadline arrives with your workshop dates. Pre-work not confirmed by
+                        then means your seat moves to a later date. The room builds, it does not
+                        wait.
+                      </>
+                    )}
                   </p>
                 </div>
               ) : null}
             </div>
             <div className="aip-finish__aside">
-              <span>August 26-27 &middot; 1 to 5 PM Eastern</span>
+              <span>{COHORT.schedule}</span>
               <a href={config.alternatePath}>{config.alternateLabel}</a>
             </div>
           </div>
