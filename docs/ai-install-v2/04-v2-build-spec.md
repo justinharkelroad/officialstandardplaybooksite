@@ -30,9 +30,41 @@ Confirmed by Justin on 2026-11-27, including the Python exception in D4.
 
 ## 4. The four new building blocks
 
-### 4.1 The AI Install plugin (one per platform)
+### 4.0 Delivery: the AgencyBrain connector first, the plugin as fallback
 
-One package the attendee installs once. It replaces every pasted prompt in the Day 1 and Day 2 guides.
+Decided by Justin on 2026-11-27, after the first plugin build. This changes how section 4.1 is delivered, not what the phases contain.
+
+**Primary route: the AgencyBrain connector.** Attendees connect AgencyBrain during pre-work. The connector then serves the AI Install phases itself, the same way it already serves the comp plan and scorecard guides. The owner says "start phase 1" and the AI fetches the phase guide from the connector and runs it.
+
+Why this is the primary route:
+
+- One setup step. No ZIP upload and no second install.
+- One version everywhere. The same connector works in Claude, ChatGPT, and Codex, and likely Duet.
+- Updates are instant. A phase changed on the server is live for every attendee on their next session.
+- The coach can see the room. The connector already records which owner called which tool, so phase progress is visible without anyone pasting a receipt.
+
+**Fallback route: the plugin in 4.1.** AI Install must still work for a buyer who cannot connect AgencyBrain (not a customer, or on Core). They install the plugin built from the same phase files and run the same phases. They do not get live AgencyBrain numbers in projects, the brief, or the dashboard.
+
+**The upsell moment.** A buyer on the fallback route sees, live in the room, what connected attendees get: numbers that fill themselves in and a brief built on real data. That is a natural point to offer AgencyBrain Plus. It should be stated plainly on the pre-work page ("connected owners get X") and never hidden until the call.
+
+**What must be built in the AgencyBrain repository** (new work, not yet started):
+
+| Piece | What it does |
+|---|---|
+| `get_ai_install_guide` | With no phase named, returns the list of phases and the order. With a phase and the app in use, returns that phase's full guide: interview, test, pass condition, repair, and the shared operating rules |
+| `report_ai_install_phase` | Records phase name, pass or fail, and file names for the connected owner. No file contents |
+| Phase content | Generated from the same source files in this repository, so the connector and the plugin can never drift. The build script gains a third output for this |
+| Coach view | A way for the coach to see phase results per attendee. Where it lives (AgencyBrain admin or the AI Install portal) is open item O7 |
+
+**What changes elsewhere in this spec:**
+
+- Pre-work step 3 becomes "connect AgencyBrain, or if you cannot, install the plugin."
+- Completion reporting (4.4, D6): connected attendees are tracked by the connector. The pasted receipt remains for fallback attendees only.
+- The platform-separation guards still apply to the plugin. The connector route needs the app named at call time so the guide uses the right master file name.
+
+### 4.1 The AI Install plugin (fallback route, one per platform)
+
+One package the attendee installs once. It replaces every pasted prompt in the Day 1 and Day 2 guides. Built and committed on 2026-11-27; not yet installed in a real app.
 
 **Contents**
 
@@ -203,6 +235,8 @@ Each must be shown to pass on a clean test account on both platforms before v2 i
 | O3 | Does a live Cowork dashboard refresh on its own? | 15-minute hands-on | Dashboard copy only |
 | O4 | Do plugin commands load inside a cloud scheduled task? | 15-minute hands-on | Nothing, by design: the brief task carries its own instructions |
 | O5 | Does the report-skill installer pass inside the Cowork sandbox with no local Python? | 15-minute hands-on | Whether the self-serve report track needs a Python note |
+| O7 | Where the coach sees phase progress for connected attendees: AgencyBrain admin, or the AI Install portal reading it from AgencyBrain | Justin | The coach view only |
+| O8 | Should buying AI Install grant temporary connector access to a buyer on Core, or is the plugin fallback plus the upsell the intended path? Current answer: fallback plus upsell | Justin | Nothing; recorded so it is a choice, not an accident |
 | O6 | Next cohort date, price, and seat count. **TBD (Justin, 2026-11-27): the waitlist is still being built.** The landing page stays in waitlist mode, and W4 and W8 are written with the date, price, and seat count read from one cohort config that is empty until set | Justin | Final copy in W4 and W8 only |
 
 ## 10. Build order
